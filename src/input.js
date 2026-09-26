@@ -50,10 +50,9 @@ export class Input {
     if (!this.enabled || this.joyId !== null) return;
     e.preventDefault();
     this.joyId = e.pointerId;
-    const zr = this.joyZone.getBoundingClientRect();
-    this.origin = { x: e.clientX, y: e.clientY };
-    this.joyBase.style.left = `${e.clientX - zr.left}px`;
-    this.joyBase.style.top = `${e.clientY - zr.top}px`;
+    const r = this.joyZone.getBoundingClientRect();
+    this.origin = { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    this.joyRadius = Math.max(30, r.width * 0.4);
     this.joyBase.classList.add('active');
     this.updateJoy(e.clientX, e.clientY);
   }
@@ -74,18 +73,17 @@ export class Input {
       this.joy.x = this.joy.y = 0;
       this.joyKnob.style.transform = 'translate(-50%, -50%)';
       this.joyBase.classList.remove('active');
-      this.joyBase.style.left = '';
-      this.joyBase.style.top = '';
     }
     if (this.pointer && e.pointerId === this.pointer.id) this.pointer = null;
   }
 
   updateJoy(x, y) {
+    const R = this.joyRadius || JOY_RADIUS;
     let dx = x - this.origin.x, dy = y - this.origin.y;
     const d = Math.hypot(dx, dy);
-    if (d > JOY_RADIUS) { dx *= JOY_RADIUS / d; dy *= JOY_RADIUS / d; }
+    if (d > R) { dx *= R / d; dy *= R / d; }
     this.joyKnob.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
-    const nx = dx / JOY_RADIUS, ny = -dy / JOY_RADIUS;
+    const nx = dx / R, ny = -dy / R;
     const mag = Math.hypot(nx, ny);
     if (mag < 0.15) { this.joy.x = this.joy.y = 0; return; }
     const k = Math.min(1, (mag - 0.15) / 0.7) / mag;

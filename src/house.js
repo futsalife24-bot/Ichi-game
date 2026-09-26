@@ -8,12 +8,16 @@ import { canvasTexture, roundRect, signTexture, FONT, EMOJI_FONT } from './canva
 import { NUM_WORDS, PRAISE, pick, shuffle } from './quests.js';
 
 export const HOUSE_ORIGIN = new THREE.Vector3(1000, 0, 0);
-const HALF_W = 8, BACK = -6, FRONT = 6;
+const HALF_W = 11, BACK = -9, FRONT = 6;
+const WALL_H = 5.4;
+const MID_Z = (FRONT + BACK) / 2;
+// こたえの マットを おく おく（ボードの まえ）
+const PAD_Z = -4.2;
 // おうちの なかは へやぜんたいが みえる こていカメラ
-export const HOUSE_CAM = { pos: new THREE.Vector3(0, 12, 14), look: new THREE.Vector3(0, 0, -2.6), follow: 0.25 };
+export const HOUSE_CAM = { pos: new THREE.Vector3(0, 14, 13.5), look: new THREE.Vector3(0, 0, -4.2), follow: 0.25 };
 const EXIT = { x: 0, z: 5.3 };
 export const HOUSE_SPAWN = { x: 0, z: 3.4 };
-const PAD_R = 1.2;
+const PAD_R = 1.45;
 
 const THINGS = [
   { e: '🍪', name: 'クッキー' }, { e: '🍎', name: 'りんご' }, { e: '⭐', name: 'おほしさま' },
@@ -131,18 +135,19 @@ export class House {
       }
     });
     floorTex.wrapS = floorTex.wrapT = THREE.RepeatWrapping;
-    floorTex.repeat.set(2, 1.5);
+    floorTex.repeat.set(2, 2);
     const floor = new THREE.Mesh(new THREE.PlaneGeometry(HALF_W * 2 + 0.6, FRONT - BACK + 0.6), new THREE.MeshLambertMaterial({ map: floorTex }));
     floor.rotation.x = -Math.PI / 2;
+    floor.position.z = MID_Z;
     floor.receiveShadow = true;
     g.add(floor);
 
     // かべ
-    this.box(HALF_W * 2 + 0.6, 5, 0.3, 0xffe6d5, 0, 2.5, BACK - 0.15, false);
+    this.box(HALF_W * 2 + 0.6, WALL_H, 0.3, 0xffe6d5, 0, WALL_H / 2, BACK - 0.15, false);
     this.box(HALF_W * 2 + 0.6, 1.2, 0.34, 0xf5c7a4, 0, 0.6, BACK - 0.13, false);
     for (const s of [-1, 1]) {
-      this.box(0.3, 5, FRONT - BACK + 0.3, 0xfff0e2, s * (HALF_W + 0.15), 2.5, 0, false);
-      this.box(0.34, 1.2, FRONT - BACK + 0.3, 0xf5c7a4, s * (HALF_W + 0.13), 0.6, 0, false);
+      this.box(0.3, WALL_H, FRONT - BACK + 0.3, 0xfff0e2, s * (HALF_W + 0.15), WALL_H / 2, MID_Z, false);
+      this.box(0.34, 1.2, FRONT - BACK + 0.3, 0xf5c7a4, s * (HALF_W + 0.13), 0.6, MID_Z, false);
       // まえの ひくい かべ（でぐちの ところは あいている）
       this.box(HALF_W - 1.3, 0.6, 0.3, 0xfff0e2, s * (HALF_W + 1.3) / 2, 0.3, FRONT + 0.15, false);
     }
@@ -163,19 +168,19 @@ export class House {
 
     // まど
     for (const s of [-1, 1]) {
-      this.box(1.7, 1.9, 0.1, 0xffffff, s * 6.6, 2.5, BACK + 0.02, false);
+      this.box(1.7, 1.9, 0.1, 0xffffff, s * 7.8, 2.5, BACK + 0.02, false);
       const glass = new THREE.Mesh(new THREE.PlaneGeometry(1.4, 1.6), new THREE.MeshBasicMaterial({ color: 0xa8e4ff }));
-      glass.position.set(s * 6.6, 2.5, BACK + 0.08);
+      glass.position.set(s * 7.8, 2.5, BACK + 0.08);
       g.add(glass);
-      g.add(ball(0xffffff, 0.3, s * 6.6 - 0.3, 2.7, BACK + 0.1, 1.2, 0.6, 0.2));
-      g.add(ball(0xffffff, 0.22, s * 6.6 + 0.3, 2.8, BACK + 0.1, 1.2, 0.6, 0.2));
-      for (const k of [-1, 1]) this.box(0.3, 2.1, 0.12, 0xff9fb8, s * 6.6 + k * 0.95, 2.55, BACK + 0.12, false);
+      g.add(ball(0xffffff, 0.3, s * 7.8 - 0.3, 2.7, BACK + 0.1, 1.2, 0.6, 0.2));
+      g.add(ball(0xffffff, 0.22, s * 7.8 + 0.3, 2.8, BACK + 0.1, 1.2, 0.6, 0.2));
+      for (const k of [-1, 1]) this.box(0.3, 2.1, 0.12, 0xff9fb8, s * 7.8 + k * 0.95, 2.55, BACK + 0.12, false);
     }
 
     // とけい
     this.clockTex = canvasTexture(256, 256, (x) => this.drawClock(x));
     const clock = new THREE.Mesh(new THREE.CircleGeometry(0.6, 32), new THREE.MeshBasicMaterial({ map: this.clockTex }));
-    clock.position.set(-6.6, 4.3, BACK + 0.05);
+    clock.position.set(-6.4, 4.4, BACK + 0.05);
     g.add(clock);
 
     // ラグ
@@ -187,41 +192,41 @@ export class House {
         x.fill();
       });
     });
-    const rug = new THREE.Mesh(new THREE.CircleGeometry(4.2, 40), new THREE.MeshLambertMaterial({ map: rugTex }));
+    const rug = new THREE.Mesh(new THREE.CircleGeometry(5.2, 40), new THREE.MeshLambertMaterial({ map: rugTex }));
     rug.rotation.x = -Math.PI / 2;
-    rug.position.set(0, 0.01, 0.6);
+    rug.position.set(0, 0.01, PAD_Z + 0.4);
     rug.receiveShadow = true;
     g.add(rug);
 
     // ベッド と くまの ぬいぐるみ
-    this.box(2.4, 0.6, 3.2, 0xb07245, -6.6, 0.3, -4.2);
-    this.box(2.2, 0.35, 3.0, 0xffffff, -6.6, 0.75, -4.2);
-    this.box(2.25, 0.2, 1.9, 0xff9fb8, -6.6, 0.95, -3.7);
-    this.box(1.2, 0.3, 0.7, 0xfff6dc, -6.6, 1.05, -5.25);
-    this.box(2.4, 1.4, 0.2, 0xb07245, -6.6, 0.7, -5.8);
+    this.box(2.4, 0.6, 3.2, 0xb07245, -(HALF_W - 1.5), 0.3, BACK + 1.8);
+    this.box(2.2, 0.35, 3.0, 0xffffff, -(HALF_W - 1.5), 0.75, BACK + 1.8);
+    this.box(2.25, 0.2, 1.9, 0xff9fb8, -(HALF_W - 1.5), 0.95, BACK + 2.3);
+    this.box(1.2, 0.3, 0.7, 0xfff6dc, -(HALF_W - 1.5), 1.05, BACK + 0.75);
+    this.box(2.4, 1.4, 0.2, 0xb07245, -(HALF_W - 1.5), 0.7, BACK + 0.2);
     const teddy = makeHero('kuma');
     teddy.root.scale.setScalar(0.45);
-    teddy.root.position.set(-6.3, 1.05, -4.6);
+    teddy.root.position.set(-(HALF_W - 1.8), 1.05, BACK + 1.4);
     teddy.root.rotation.y = 0.3;
     g.add(teddy.root);
-    this.addCollider(-6.6, -4.9, 1.3);
-    this.addCollider(-6.6, -3.4, 1.3);
+    this.addCollider(-(HALF_W - 1.5), BACK + 1.1, 1.3);
+    this.addCollider(-(HALF_W - 1.5), BACK + 2.6, 1.3);
 
     // ほんだな
-    this.box(2.6, 2.8, 0.8, 0xc98a55, 6.5, 1.4, -5.5);
+    this.box(2.6, 2.8, 0.8, 0xc98a55, HALF_W - 1.6, 1.4, BACK + 0.5);
     const bookCols = [0xff6f91, 0x3d9bff, 0xffd23d, 0x2fbf4f, 0x9b5cff, 0xff9a1f];
     for (let r = 0; r < 3; r++) {
-      this.box(2.4, 0.08, 0.7, 0x9a6b43, 6.5, 0.5 + r * 0.85, -5.35);
+      this.box(2.4, 0.08, 0.7, 0x9a6b43, HALF_W - 1.6, 0.5 + r * 0.85, BACK + 0.65);
       for (let i = 0; i < 7; i++) {
         const h = 0.5 + ((i * 7 + r * 3) % 4) * 0.06;
-        this.box(0.26, h, 0.5, bookCols[(i + r) % bookCols.length], 5.5 + i * 0.32, 0.55 + r * 0.85 + h / 2, -5.3);
+        this.box(0.26, h, 0.5, bookCols[(i + r) % bookCols.length], HALF_W - 2.6 + i * 0.32, 0.55 + r * 0.85 + h / 2, BACK + 0.7);
       }
     }
-    this.addCollider(6.5, -5.4, 1.5);
+    this.addCollider(HALF_W - 1.6, BACK + 0.6, 1.5);
 
     // おもちゃばこ と すうじの つみき
-    this.box(1.8, 0.9, 1.3, 0xff9a1f, 6.8, 0.45, 2.2);
-    this.box(1.9, 0.12, 1.4, 0xffd23d, 6.8, 0.95, 2.2);
+    this.box(1.8, 0.9, 1.3, 0xff9a1f, HALF_W - 1.4, 0.45, 2.2);
+    this.box(1.9, 0.12, 1.4, 0xffd23d, HALF_W - 1.4, 0.95, 2.2);
     ['1', '2', '3'].forEach((n, i) => {
       const tex = canvasTexture(128, 128, (x) => {
         x.fillStyle = PAD_COLORS[i];
@@ -233,19 +238,19 @@ export class House {
         x.fillText(n, 64, 70);
       });
       const b = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.5, 0.5), new THREE.MeshLambertMaterial({ map: tex }));
-      b.position.set(6.3 + i * 0.5, 1.26, 2.2 + (i % 2) * 0.15);
+      b.position.set(HALF_W - 1.9 + i * 0.5, 1.26, 2.2 + (i % 2) * 0.15);
       b.rotation.y = (i - 1) * 0.3;
       b.castShadow = true;
       g.add(b);
     });
-    this.addCollider(6.8, 2.2, 1.2);
+    this.addCollider(HALF_W - 1.4, 2.2, 1.2);
 
     // うえきばち
-    g.add(cyl(0xc9694f, 0.45, 0.7, -7.0, 0.35, 4.6));
-    g.add(ball(0x4caf50, 0.7, -7.0, 1.2, 4.6));
-    g.add(ball(0x66bb6a, 0.5, -6.7, 1.6, 4.4));
-    g.add(ball(0xff8fc8, 0.12, -7.2, 1.7, 4.9));
-    this.addCollider(-7.0, 4.6, 0.8);
+    g.add(cyl(0xc9694f, 0.45, 0.7, -(HALF_W - 1), 0.35, 4.6));
+    g.add(ball(0x4caf50, 0.7, -(HALF_W - 1), 1.2, 4.6));
+    g.add(ball(0x66bb6a, 0.5, -(HALF_W - 1.3), 1.6, 4.4));
+    g.add(ball(0xff8fc8, 0.12, -(HALF_W - 0.8), 1.7, 4.9));
+    this.addCollider(-(HALF_W - 1), 4.6, 0.8);
   }
 
   drawClock(x) {
@@ -274,10 +279,10 @@ export class House {
   }
 
   buildBoard() {
-    this.box(9.8, 4.5, 0.15, 0xb07245, 0, 2.75, BACK + 0.05, false);
+    this.box(11.4, 5.1, 0.15, 0xb07245, 0, 2.85, BACK + 0.05, false);
     this.boardTex = canvasTexture(1024, 448, (x, w, h) => this.drawBoard(x, w, h));
-    const board = new THREE.Mesh(new THREE.PlaneGeometry(9.4, 4.1), new THREE.MeshBasicMaterial({ map: this.boardTex }));
-    board.position.set(0, 2.75, BACK + 0.14);
+    const board = new THREE.Mesh(new THREE.PlaneGeometry(11, 4.8), new THREE.MeshBasicMaterial({ map: this.boardTex }));
+    board.position.set(0, 2.85, BACK + 0.14);
     this.group.add(board);
     this.boardView = { mode: 'welcome' };
   }
@@ -383,7 +388,7 @@ export class House {
     const spots = [];
     const plx = this.player.pos.x - HOUSE_ORIGIN.x, plz = this.player.pos.z - HOUSE_ORIGIN.z;
     for (let tries = 0; spots.length < n && tries < 500; tries++) {
-      const x = -5.8 + Math.random() * 11.6, z = -2.6 + Math.random() * 6.2;
+      const x = -(HALF_W - 2.6) + Math.random() * (HALF_W - 2.6) * 2, z = BACK + 2.4 + Math.random() * (-0.6 - BACK - 2.4);
       if (Math.hypot(x - EXIT.x, z - EXIT.z) < 2.6) continue;
       if (Math.hypot(x - plx, z - plz) < 2.2) continue;
       if (this.colliders.some((c) => Math.hypot(x - (c.x - HOUSE_ORIGIN.x), z - (c.z - HOUSE_ORIGIN.z)) < c.r + PAD_R + 0.2)) continue;
@@ -431,9 +436,9 @@ export class House {
   }
 
   threePads(values, kind, emoji) {
-    const xs = [-4.4, 0, 4.4];
+    const xs = [-5.5, 0, 5.5];
     const cols = shuffle(PAD_COLORS);
-    values.forEach((n, i) => this.makePad({ kind, n, emoji }, cols[i], xs[i], 0.4));
+    values.forEach((n, i) => this.makePad({ kind, n, emoji }, cols[i], xs[i], PAD_Z));
   }
 
   setup_count() {
