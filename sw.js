@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v5';
+const VERSION = 'kirakira-v6';
 const ASSETS = [
   './',
   './index.html',
@@ -22,6 +22,8 @@ const ASSETS = [
   './src/save.js',
   './src/house.js',
   './src/canvas.js',
+  './src/lines.js',
+  './voice/index.json',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/icon-maskable-512.png',
@@ -29,7 +31,18 @@ const ASSETS = [
 ];
 
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(VERSION).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
+  e.waitUntil(
+    caches.open(VERSION)
+      .then(async (c) => {
+        await c.addAll(ASSETS);
+        // こえの ファイルも ぜんぶ（オフラインでも しゃべれるように）
+        try {
+          const idx = await (await fetch('./voice/index.json')).json();
+          await c.addAll(Object.keys(idx).map((h) => `./voice/${h}.mp3`));
+        } catch { /* つぎの きどうで また ためす */ }
+      })
+      .then(() => self.skipWaiting()),
+  );
 });
 
 self.addEventListener('activate', (e) => {
