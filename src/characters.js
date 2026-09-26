@@ -172,9 +172,9 @@ export function makeHero(kind) {
 
 export const ACCESSORIES = [
   { id: 'ribbon', stars: 5, name: 'リボン', emoji: '🎀' },
-  { id: 'hat', stars: 10, name: 'むぎわら ぼうし', emoji: '👒' },
-  { id: 'flower', stars: 15, name: 'おはなの かんむり', emoji: '🌸' },
-  { id: 'crown', stars: 20, name: 'きんの おうかん', emoji: '👑' },
+  { id: 'hat', stars: 10, name: 'むぎわら\u00a0ぼうし', emoji: '👒' },
+  { id: 'flower', stars: 15, name: 'おはなの\u00a0かんむり', emoji: '🌸' },
+  { id: 'crown', stars: 20, name: 'きんの\u00a0おうかん', emoji: '👑' },
 ];
 
 export function accessoryForStars(stars) {

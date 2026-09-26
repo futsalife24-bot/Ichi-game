@@ -21,6 +21,10 @@ html, body {
   -webkit-user-select: none;
   -webkit-touch-callout: none;
   overscroll-behavior: none;
+  /* ことばの とちゅうで 改行しない（スペースの ところで 折り返す） */
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  line-break: strict;
 }
 
 #game { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; touch-action: none; }
@@ -111,7 +115,7 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 /* ---------- じまく */
 #subtitle {
   position: absolute; left: 50%; bottom: calc(var(--u) * 4 + var(--safe-b)); transform: translate(-50%, 30%);
-  max-width: 48vw; text-align: center;
+  max-width: 58vw; text-align: center; text-wrap: balance;
   background: rgba(255,255,255,.94); border-radius: calc(var(--u) * 3);
   padding: calc(var(--u) * 1.5) calc(var(--u) * 3);
   font-size: calc(var(--u) * 4.6); font-weight: 800; line-height: 1.4;
@@ -154,7 +158,7 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 }
 .reward-title { font-size: calc(var(--u) * 6); font-weight: 900; color: #ff6f91; }
 .reward-emoji { font-size: calc(var(--u) * 20); line-height: 1.2; }
-.reward-name { font-size: calc(var(--u) * 5.5); font-weight: 800; }
+.reward-name { text-wrap: balance; font-size: calc(var(--u) * 5.5); font-weight: 800; }
 
 /* ---------- タイトル */
 .screen { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
@@ -165,7 +169,7 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 .logo span:nth-child(3n) { -webkit-text-stroke-color: #2fbf4f; animation-delay: .3s; }
 .logo span:nth-child(5n) { -webkit-text-stroke-color: #ff9a1f; animation-delay: .45s; }
 @keyframes wave { 50% { transform: translateY(calc(var(--u) * -1.5)); } }
-.choose { margin: calc(var(--u) * 1) 0 0; font-size: calc(var(--u) * 5.5); font-weight: 800; background: rgba(255,255,255,.85); padding: calc(var(--u) * .8) calc(var(--u) * 4); border-radius: 999px; }
+.choose { text-wrap: balance; margin: calc(var(--u) * 1) 0 0; font-size: calc(var(--u) * 5.5); font-weight: 800; background: rgba(255,255,255,.85); padding: calc(var(--u) * .8) calc(var(--u) * 4); border-radius: 999px; }
 #heroes { display: flex; gap: calc(var(--u) * 4); }
 .hero-btn {
   width: calc(var(--u) * 24); height: calc(var(--u) * 28); border-radius: calc(var(--u) * 5);

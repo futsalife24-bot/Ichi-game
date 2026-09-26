@@ -158,7 +158,7 @@ function worldEvents(dt) {
     rainbowCool = 40;
     audio.sparkle();
     effects.burst(new THREE.Vector3(rb.x, p.y + 5, rb.z), { n: 50, speed: 5, up: 2 });
-    voice.say('にじ の いろ！ あか、 オレンジ、 きいろ、 みどり、 みずいろ、 あお、 むらさき！', 'にじの いろ：あか・オレンジ・きいろ・みどり・みずいろ・あお・むらさき');
+    voice.say('にじ の いろ！ あか、 オレンジ、 きいろ、 みどり、 みずいろ、 あお、 むらさき！', 'にじの いろ： あか・ オレンジ・ きいろ・ みどり・ みずいろ・ あお・ むらさき');
   }
   const o = LANDMARKS.owl;
   if (owlCool <= 0 && Math.hypot(p.x - o.x, p.z - o.z) < 2.3 && quests.state === 'active') {

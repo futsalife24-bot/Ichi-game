@@ -1,6 +1,10 @@
 // がめんの ひょうじ（HUD）
 const $ = (id) => document.getElementById(id);
 
+// じょし（を・が・は…）は まえの ことばと くっつけて、ことばの とちゅうで 改行しない
+const PARTICLE = /\s(を|が|は|の|に|へ|で|と|も|って|だよ|だね|でした|こ)(?=[\s！？。、]|$)/g;
+export const noBreak = (text) => text.replace(PARTICLE, '\u00a0$1');
+
 export class UI {
   constructor() {
     this.hud = $('hud');
@@ -57,7 +61,7 @@ export class UI {
   questDone() { this.card.classList.add('done'); }
 
   subtitle(text, ms = 2500) {
-    this.subtitleEl.textContent = text;
+    this.subtitleEl.textContent = noBreak(text);
     this.subtitleEl.classList.add('show');
     clearTimeout(this.subTimer);
     this.subTimer = setTimeout(() => this.subtitleEl.classList.remove('show'), ms);
@@ -79,7 +83,7 @@ export class UI {
 
   reward(acc) {
     this.rewardEl.querySelector('.reward-emoji').textContent = acc.emoji;
-    this.rewardEl.querySelector('.reward-name').textContent = acc.name;
+    this.rewardEl.querySelector('.reward-name').textContent = noBreak(acc.name);
     this.rewardEl.classList.remove('show');
     void this.rewardEl.offsetWidth;
     this.rewardEl.classList.add('show');
