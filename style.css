@@ -85,12 +85,14 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 .round-btn.off::after { content: ''; position: absolute; left: 15%; right: 15%; top: 50%; height: 3px; background: #e44; transform: rotate(-45deg); border-radius: 2px; }
 
 /* ---------- スティック */
-#joyZone { position: absolute; left: 0; bottom: 0; width: 40vw; height: 62vh; }
+/* スティックは ひだりしたに こてい（それ いがいの ばしょは タップで えらべる） */
+#joyZone {
+  position: absolute; left: calc(var(--u) * 6 + var(--safe-l)); bottom: calc(var(--u) * 6 + var(--safe-b));
+  width: calc(var(--u) * 30); height: calc(var(--u) * 30); border-radius: 50%;
+}
 #joyBase {
-  position: absolute; left: calc(var(--u) * 20 + var(--safe-l)); top: calc(100% - var(--u) * 20 - var(--safe-b));
-  width: calc(var(--u) * 26); height: calc(var(--u) * 26); transform: translate(-50%, -50%);
+  position: absolute; inset: 0;
   border-radius: 50%; background: rgba(255,255,255,.35); border: calc(var(--u) * .8) solid rgba(255,255,255,.8);
-  transition: opacity .2s;
   pointer-events: none;
 }
 #joyBase.active { background: rgba(255,255,255,.5); }
