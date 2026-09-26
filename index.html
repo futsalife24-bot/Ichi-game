@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>キラキラ アイランド</title>
+  <meta name="description" content="3Dの しまで どうぶつたちと あそびながら いろ・かず・かたち・もじを おぼえる ちいくゲーム">
+  <meta name="theme-color" content="#6ec6ff">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="キラキラ">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+    { "imports": { "three": "./vendor/three.module.js" } }
+  </script>
+</head>
+<body>
+  <canvas id="game"></canvas>
+
+  <div id="hud" class="hidden">
+    <div id="stars" class="pill"><span class="star">⭐</span><span id="starCount">0</span></div>
+
+    <button id="questCard" class="hidden" aria-label="もういちど きく">
+      <div id="questIcon"></div>
+      <div class="quest-body">
+        <div id="questText"></div>
+        <div id="questProgress"></div>
+      </div>
+      <div class="quest-ear">🔊</div>
+    </button>
+
+    <div id="settings">
+      <button id="btnBgm" class="round-btn" aria-label="おんがく">🎵</button>
+      <button id="btnVoice" class="round-btn" aria-label="こえ">🗣️</button>
+      <button id="btnHome" class="round-btn" aria-label="タイトルへ">🏠</button>
+    </div>
+
+    <div id="joyZone"><div id="joyBase"><div id="joyKnob"></div></div></div>
+    <button id="btnJump" aria-label="ジャンプ"><span class="jump-icon">⤴</span><span>ジャンプ</span></button>
+
+    <div id="subtitle"></div>
+    <div id="bigPop"></div>
+    <div id="numPop"></div>
+    <div id="reward"><div class="reward-title">ごほうび！</div><div class="reward-emoji"></div><div class="reward-name"></div></div>
+  </div>
+
+  <div id="title" class="screen">
+    <h1 class="logo"><span>キ</span><span>ラ</span><span>キ</span><span>ラ</span><br><span>ア</span><span>イ</span><span>ラ</span><span>ン</span><span>ド</span></h1>
+    <p class="choose">だれで あそぶ？ えらんでね</p>
+    <div id="heroes"></div>
+    <p id="titleStars"></p>
+    <p class="parents">おうちの かたへ：よこむき で あそびます。おとが でます。</p>
+  </div>
+
+  <div id="rotate" class="screen">
+    <div class="rotate-icon">📱</div>
+    <p>よこに してね</p>
+  </div>
+
+  <noscript>JavaScript を オンに してね</noscript>
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

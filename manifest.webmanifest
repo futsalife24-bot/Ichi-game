@@ -1,0 +1,18 @@
+{
+  "name": "キラキラ アイランド",
+  "short_name": "キラキラ",
+  "description": "3Dの しまで どうぶつたちと あそびながら いろ・かず・かたち・もじを おぼえる ちいくゲーム",
+  "lang": "ja",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "landscape",
+  "background_color": "#bde8ff",
+  "theme_color": "#6ec6ff",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
