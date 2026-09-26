@@ -61,6 +61,9 @@ export class AudioEngine {
       this.sfx = ctx.createGain();
       this.sfx.gain.value = 0.9;
       this.sfx.connect(this.master);
+      this.voiceOut = ctx.createGain();
+      this.voiceOut.gain.value = 1.0;
+      this.voiceOut.connect(this.master);
       const len = ctx.sampleRate * 0.5;
       this.noise = ctx.createBuffer(1, len, ctx.sampleRate);
       const d = this.noise.getChannelData(0);

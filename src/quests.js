@@ -7,8 +7,7 @@ import {
 } from './props.js';
 
 const TYPES = ['color', 'count', 'shape', 'animal', 'moji'];
-export const NUM_WORDS = ['いち', 'に', 'さん', 'よん', 'ご', 'ろく', 'なな', 'はち', 'きゅう', 'じゅう'];
-export const PRAISE = ['すごい！', 'やったね！', 'じょうず！', 'できたね！', 'ばっちり！', 'さすが！'];
+import { L, PRAISE, withPraise } from './lines.js';
 const HINT_AFTER = 18;
 
 export const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
@@ -97,7 +96,7 @@ export class QuestManager {
     this.hinted = false;
     this.ui.setQuest(this.quest.card);
     this.audio.sparkle();
-    this.voice.say(this.quest.say, this.quest.sub ?? this.quest.say);
+    this.voice.say(this.quest.line);
   }
 
   setup_color() {
@@ -112,7 +111,7 @@ export class QuestManager {
     });
     Object.assign(this.quest, {
       target,
-      say: `${target.adj} ふうせん を みつけてね！`,
+      line: L.colorAsk(target),
       card: { icon: balloonSVG(target.css), text: `${target.adj} ふうせん` },
     });
   }
@@ -125,8 +124,7 @@ export class QuestManager {
     spots.forEach((s) => this.addItem(makeFruit(kind), s, { yOff: 0.55, radius: 1.0, correct: true, data: kind }));
     Object.assign(this.quest, {
       need: Math.min(need, spots.length),
-      say: `${f.name} を ${NUM_WORDS[need - 1]}こ あつめてね！`,
-      sub: `${f.name} を ${need}こ あつめてね！`,
+      line: L.countAsk(f, need),
       card: { icon: `<span class="emoji">${f.emoji}</span>`, text: `${f.name} を ${need}こ`, progress: { need, emoji: f.emoji } },
       fruit: f,
     });
@@ -143,7 +141,7 @@ export class QuestManager {
     });
     Object.assign(this.quest, {
       target,
-      say: `${target.name} の かたち を さがしてね！`,
+      line: L.shapeAsk(target),
       card: { icon: shapeSVG(target.id), text: `${target.name} を さがそう` },
     });
   }
@@ -155,8 +153,7 @@ export class QuestManager {
     const a = ANIMALS[kind];
     Object.assign(this.quest, {
       target: kind,
-      say: `${a.sound} って なく どうぶつ は だあれ？ あいに いこう！`,
-      sub: `「${a.sound}」 って なくのは だあれ？`,
+      line: L.animalAsk(a),
       card: { icon: '<span class="emoji">🔊</span>', text: `「${a.sound}」は だあれ？` },
     });
   }
@@ -174,7 +171,7 @@ export class QuestManager {
     });
     Object.assign(this.quest, {
       target,
-      say: `${target.word} の 「${target.ch}」 は どれかな？ さがしてね！`,
+      line: L.mojiAsk(target),
       card: { icon: `<span class="emoji">${target.emoji}</span><span class="moji">${target.ch}</span>`, text: `${target.word} の「${target.ch}」` },
     });
   }
@@ -182,7 +179,7 @@ export class QuestManager {
   repeat() {
     if (this.state !== 'active' || !this.quest) return;
     this.audio.tap();
-    this.voice.say(this.quest.say, this.quest.sub ?? this.quest.say);
+    this.voice.say(this.quest.line);
   }
 
   // ------------------------------------------------ まいフレーム
@@ -265,24 +262,24 @@ export class QuestManager {
       this.ui.setProgress(q.got);
       this.ui.popNumber(q.got);
       if (q.got >= q.need) {
-        this.complete(`${NUM_WORDS[q.need - 1]}！ ${q.fruit.name} が ${NUM_WORDS[q.need - 1]}こ！`, `${q.need}！ ${q.fruit.name} が ${q.need}こ！`);
+        this.complete(L.countDone(q.fruit, q.need));
       } else {
-        this.voice.say(NUM_WORDS[q.got - 1], `${q.got}`);
+        this.voice.say(L.countTick(q.got));
       }
       return;
     }
     if (q.type === 'color') {
       this.audio.pop();
       this.burstAt(it, [q.target.hex, 0xffffff]);
-      this.complete(`${q.target.name}！ せいかい！`);
+      this.complete(L.colorRight(q.target));
     } else if (q.type === 'shape') {
       this.audio.collect();
       this.burstAt(it, [0xffd23d, 0xffffff]);
-      this.complete(`${q.target.name}！ せいかい！`);
+      this.complete(L.shapeRight(q.target));
     } else if (q.type === 'moji') {
       this.audio.collect();
       this.burstAt(it, [0xffd23d, 0xffffff]);
-      this.complete(`「${q.target.ch}」！ ${q.target.word} の 「${q.target.ch}」 だね！`);
+      this.complete(L.mojiRight(q.target));
     }
   }
 
@@ -292,9 +289,9 @@ export class QuestManager {
     it.jiggle = 1;
     this.audio.wrong();
     const q = this.quest;
-    if (q.type === 'color') this.voice.say(`それは ${it.data.name}。 ${q.target.adj} ふうせん は どこかな？`);
-    else if (q.type === 'shape') this.voice.say(`それは ${it.data.name}。 ${q.target.name} は どこかな？`);
-    else if (q.type === 'moji') this.voice.say(`それは 「${it.data.ch}」。 ${it.data.word} の 「${it.data.ch}」 だよ。`);
+    if (q.type === 'color') this.voice.say(L.colorWrong(it.data, q.target));
+    else if (q.type === 'shape') this.voice.say(L.shapeWrong(it.data, q.target));
+    else if (q.type === 'moji') this.voice.say(L.mojiWrong(it.data));
   }
 
   /** どうぶつに あった とき（animals から よばれる） */
@@ -303,13 +300,13 @@ export class QuestManager {
     const q = this.quest;
     if (this.state === 'active' && q?.type === 'animal') {
       if (a.kind === q.target) {
-        this.complete(`ぴんぽーん！ ${a.def.san} でした！ ${a.def.sound}！`);
+        this.complete(L.animalRight(a.def));
       } else {
-        this.voice.say(`ぼくは ${a.def.name}。 ${a.def.sound}！ ${ANIMALS[q.target].sound} は ぼくじゃないよ。`);
+        this.voice.say(L.animalWrong(a.def, ANIMALS[q.target]));
       }
       return;
     }
-    this.voice.say(`${a.def.san} だよ。 ${a.def.sound}！`);
+    this.voice.say(L.animalHello(a.def));
   }
 
   showHint() {
@@ -331,7 +328,7 @@ export class QuestManager {
       return best ? best.obj.position : null;
     };
     this.effects.showGuide(getTarget);
-    this.voice.say(`やじるし の ほう だよ！ ${this.quest.sub ?? this.quest.say}`);
+    this.voice.say(L.hint(this.quest.line));
   }
 
   /** ほしを 1こ ふやす。ごほうびの だんかいに なったら その アクセサリーを かえす */
@@ -348,16 +345,16 @@ export class QuestManager {
     this.audio.reward();
     this.effects.confetti(this.player.pos);
     this.ui.reward(acc);
-    this.voice.say(`ほし が ${this.save.stars}こ！ ごほうび に ${acc.name} を もらったよ！ にあってるね！`);
+    this.voice.say(L.reward(this.save.stars, acc));
   }
 
-  complete(msg, sub) {
+  complete(line) {
     this.state = 'done';
     this.timer = 3.4;
     this.effects.hideGuide();
     this.pendingReward = this.awardStar();
     const praise = pick(PRAISE);
-    this.voice.say(`${msg} ${praise}`, `${sub ?? msg} ${praise}`);
+    this.voice.say(withPraise(line, praise));
     this.audio.fanfare();
     this.effects.confetti(this.player.pos);
     this.player.celebrate();

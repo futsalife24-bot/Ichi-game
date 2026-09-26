@@ -193,6 +193,7 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 .hero-name { font-size: calc(var(--u) * 5.5); font-weight: 900; }
 #titleStars { margin: 0; font-size: calc(var(--u) * 5); font-weight: 800; min-height: 1em; }
 .parents { margin: 0; font-size: calc(var(--u) * 2.8); opacity: .75; }
+.credit { position: absolute; bottom: calc(var(--u) * 1.5); right: calc(var(--u) * 3 + var(--safe-r)); margin: 0; font-size: calc(var(--u) * 2.2); opacity: .6; }
 
 /* ---------- たてむき */
 #rotate { display: none; background: #6ec6ff; color: #fff; z-index: 10; font-size: 8vw; font-weight: 900; }

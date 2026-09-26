@@ -5,7 +5,8 @@
 import * as THREE from 'three';
 import { toon, ball, cyl, makeHero } from './characters.js';
 import { canvasTexture, roundRect, signTexture, FONT, EMOJI_FONT } from './canvas.js';
-import { NUM_WORDS, PRAISE, pick, shuffle } from './quests.js';
+import { pick, shuffle } from './quests.js';
+import { L, PRAISE, THINGS, withPraise, numWord } from './lines.js';
 
 export const HOUSE_ORIGIN = new THREE.Vector3(1000, 0, 0);
 const HALF_W = 11, BACK = -9, FRONT = 6;
@@ -19,14 +20,9 @@ const EXIT = { x: 0, z: 5.3 };
 export const HOUSE_SPAWN = { x: 0, z: 3.4 };
 const PAD_R = 1.45;
 
-const THINGS = [
-  { e: '🍪', name: 'クッキー' }, { e: '🍎', name: 'りんご' }, { e: '⭐', name: 'おほしさま' },
-  { e: '🎈', name: 'ふうせん' }, { e: '🐟', name: 'おさかな' }, { e: '🍓', name: 'いちご' },
-  { e: '🚗', name: 'くるま' }, { e: '🌸', name: 'おはな' }, { e: '🐥', name: 'ひよこ' }, { e: '🍩', name: 'ドーナツ' },
-];
 const GAMES = ['count', 'order', 'match'];
 const PAD_COLORS = ['#ff6f91', '#3d9bff', '#2fbf4f', '#ff9a1f', '#9b5cff', '#ffc21a', '#20b8c4'];
-const WORD = (n) => NUM_WORDS[n - 1];
+const WORD = numWord;
 
 const randInt = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
 
@@ -407,7 +403,7 @@ export class House {
     this.clearPads();
     this.setBoard({ mode: 'welcome' });
     this.ui.setQuest({ icon: '<span class="emoji">🏠</span>', text: 'かずの おうち' });
-    this.voice.say('かずの おうち へ ようこそ！ すうじ で あそぼう！');
+    this.voice.say(L.houseWelcome());
     this.audio.sparkle();
   }
 
@@ -432,7 +428,7 @@ export class House {
     this.state = 'play';
     this.ui.setQuest(this.card);
     this.audio.sparkle();
-    this.voice.say(this.say, this.sub ?? this.say);
+    this.voice.say(this.line);
   }
 
   threePads(values, kind, emoji) {
@@ -449,7 +445,7 @@ export class House {
     this.thing = thing;
     this.threePads(shuffle([n, ...distractors(n, max, 2)]), 'num');
     this.setBoard({ mode: 'count', n, thing, highlight: -1 });
-    this.say = `${thing.name} は いくつ あるかな？ おなじ すうじ に のってね！`;
+    this.line = L.houseCountAsk(thing);
     this.card = { icon: `<span class="emoji">${thing.e}</span>`, text: 'いくつ あるかな？' };
   }
 
@@ -462,8 +458,7 @@ export class House {
     this.orderMax = count;
     this.next = 1;
     this.setBoard({ mode: 'order', n: count, next: 1 });
-    this.say = `いち から ${WORD(count)} まで、 じゅんばん に のってね！`;
-    this.sub = `1 から ${count} まで じゅんばんに のってね！`;
+    this.line = L.houseOrderAsk(count);
     this.card = { icon: '<span class="moji">1→</span>', text: `1 から ${count} まで` };
   }
 
@@ -475,15 +470,14 @@ export class House {
     this.thing = thing;
     this.threePads(shuffle([n, ...distractors(n, max, 2)]), 'dots', thing.e);
     this.setBoard({ mode: 'match', n });
-    this.say = `${WORD(n)} と おなじ かず の おさら は どれかな？`;
-    this.sub = `${n} と おなじ かずの おさらは どれかな？`;
+    this.line = L.houseMatchAsk(n);
     this.card = { icon: `<span class="moji">${n}</span>`, text: 'おなじ かずは どれ？' };
   }
 
   repeat() {
     if (this.state !== 'play') return;
     this.audio.tap();
-    this.voice.say(this.say, this.sub ?? this.say);
+    this.voice.say(this.line);
   }
 
   /** タップで えらぶ */
@@ -505,18 +499,18 @@ export class House {
       this.countAlong = null;
       if (this.game === 'count') {
         this.setBoard({ mode: 'count', n: this.answer, thing: this.thing, highlight: this.answer - 1 });
-        this.finish(`${WORD(this.answer)}！ ${this.thing.name} が ${WORD(this.answer)}こ！`, `${this.answer}！ ${this.thing.name}が ${this.answer}こ！`);
+        this.finish(L.houseCountRight(this.answer, this.thing));
       } else {
-        this.finish(`${WORD(this.answer)}こ の おさら！ せいかい！`, `${this.answer}こ の おさら！ せいかい！`);
+        this.finish(L.houseMatchRight(this.answer));
       }
       return;
     }
     this.audio.wrong();
     if (this.game === 'count') {
-      this.voice.say(`それは ${WORD(pad.n)}。 いっしょに かぞえて みよう！`, `それは ${pad.n}。 いっしょに かぞえて みよう！`);
+      this.voice.say(L.houseCountWrong(pad.n));
       this.countAlong = { i: -1, timer: 2.2 };
     } else {
-      this.voice.say(`それは ${WORD(pad.n)}こ。 ${WORD(this.answer)}こ の おさら を さがしてね！`, `それは ${pad.n}こ。 ${this.answer}こ の おさらを さがしてね！`);
+      this.voice.say(L.houseMatchWrong(pad.n, this.answer));
     }
   }
 
@@ -530,14 +524,14 @@ export class House {
       this.next++;
       this.setBoard({ mode: 'order', n: this.orderMax, next: this.next });
       if (this.next > this.orderMax) {
-        this.finish(`${WORD(this.orderMax)}！ ぜんぶ できたね！`, `${this.orderMax}！ ぜんぶ できたね！`);
+        this.finish(L.houseOrderDone(this.orderMax));
       } else {
-        this.voice.say(WORD(pad.n), String(pad.n));
+        this.voice.say(L.countTick(pad.n));
       }
     } else if (this.wrongCool <= 0) {
       this.wrongCool = 2;
       this.audio.wrong();
-      this.voice.say(`それは ${WORD(pad.n)}。 つぎ は ${WORD(this.next)} だよ！`, `それは ${pad.n}。 つぎは ${this.next} だよ！`);
+      this.voice.say(L.houseOrderWrong(pad.n, this.next));
     }
   }
 
@@ -545,13 +539,13 @@ export class House {
     return new THREE.Vector3(HOUSE_ORIGIN.x + pad.lx, HOUSE_ORIGIN.y + 0.5, HOUSE_ORIGIN.z + pad.lz);
   }
 
-  finish(msg, sub) {
+  finish(line) {
     this.state = 'done';
     this.timer = 3.4;
     this.countAlong = null;
     this.pendingReward = this.quests.awardStar();
     const praise = pick(PRAISE);
-    this.voice.say(`${msg} ${praise}`, `${sub ?? msg} ${praise}`);
+    this.voice.say(withPraise(line, praise));
     this.audio.fanfare();
     this.effects.confetti(this.player.pos);
     this.player.celebrate();
@@ -622,11 +616,11 @@ export class House {
     if (c.i < this.answer) {
       this.setBoard({ mode: 'count', n: this.answer, thing: this.thing, highlight: c.i });
       this.audio.count(c.i + 1);
-      this.voice.say(WORD(c.i + 1), String(c.i + 1));
+      this.voice.say(L.countTick(c.i + 1));
       c.timer = 0.85;
     } else {
       this.countAlong = null;
-      this.voice.say(`${WORD(this.answer)}こ だね！ ${WORD(this.answer)} の すうじ に のってね！`, `${this.answer}こ だね！ ${this.answer} の すうじに のってね！`);
+      this.voice.say(L.houseCountAlongEnd(this.answer));
     }
   }
 }

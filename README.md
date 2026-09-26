@@ -54,10 +54,12 @@ Three.js 製で、ビルド不要の静的サイト。PWA としてホーム画�
 
 - **BGM**：Web Audio API でその場で演奏するオリジナル曲（音源ファイルなし）
 - **効果音**：ジャンプ・きのこ・正解・かぞえる音（ドレミ）・ファンファーレなど、すべて合成
-- **声**：Web Speech API（端末の日本語音声）で読み上げ。字幕も表示
+- **声**：事前に作った音声ファイル（`voice/*.mp3`、Open JTalk ＋ HTS Voice “Mei”）を再生。字幕も表示
+  - 端末の読み上げ機能に頼らないので、日本語の読み上げがない端末（Fire タブレットなど）やオフラインでも喋ります
+  - 音声ファイルがないセリフのときだけ、端末の読み上げ（Web Speech API）を使います
 - 右上 🎵 で BGM、🗣️ で声を ON/OFF、🏠 でキャラ選択へ
 
-> iPhone/iPad で声が出ないときは：マナーモード解除、「設定 > アクセシビリティ > 読み上げコンテンツ > 声」で日本語音声（Kyoko など）をダウンロードしてください。
+> 声が出ないときは、まず端末の音量・マナーモードを確認してください。
 
 ## 公開（GitHub Pages）
 
@@ -88,6 +90,9 @@ src/animals.js     どうぶつの散歩とあいさつ
 src/quests.js      知育クエストの進行・ヒント・ごほうび
 src/house.js       おうちの中の部屋と すうじミニゲーム
 src/canvas.js      黒板・かんばん などの 文字テクスチャ
+src/lines.js       セリフ（声）の文面をすべてここに集約
+voice/             セリフの音声ファイル（tools/gen-voice.mjs で生成）
+tools/             音声ファイルの生成スクリプト
 src/props.js       ふうせん・くだもの・かたち・もじブロック
 src/audio.js       BGM と効果音（Web Audio）
 src/voice.js       音声読み上げ（Web Speech）
@@ -98,9 +103,24 @@ vendor/            three.js r186（MIT）
 3D モデルはすべて Three.js のコードで作っているので、Blender なしで色や形をかえられます。
 将来 Blender で作ったモデルを使いたくなったら、glTF（.glb）で書き出して `GLTFLoader` で読み込めます。
 
+### セリフ（声）を変える・増やす
+
+セリフはすべて `src/lines.js` にあります。変更したら音声ファイルを作り直してください（文ごとの mp3 を作り、使わなくなったファイルは消します）。
+
+```sh
+sudo apt-get install open-jtalk open-jtalk-mecab-naist-jdic lame
+# MMDAgent_Example（https://sourceforge.net/projects/mmdagent/）の Voice/mei/mei_happy.htsvoice を用意
+MEI_VOICE=/path/to/mei_happy.htsvoice node --import ./tools/register.mjs tools/gen-voice.mjs
+```
+
+### クレジット
+
+- 声：HTS Voice “Mei” © 2009-2018 Nagoya Institute of Technology, Department of Computer Science（[CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)）／ 音声合成：[Open JTalk](https://open-jtalk.sourceforge.net/)
+- 3D：[three.js](https://threejs.org/)（MIT）
+
 ### カスタマイズのヒント
 
 - 進行度をリセット：ブラウザのサイトデータを消去（`localStorage` の `kirakira-island-save-v1`）
-- 新しいことばを追加：`src/props.js` の `MOJI`
+- 新しいことばを追加：`src/props.js` の `MOJI`（追加したら音声ファイルも作り直す）
 - 曲を変える：`src/audio.js` の `MELODY` / `CHORDS`
 - ファイルを更新したら `sw.js` の `VERSION` を上げると、インストール済みアプリにも確実に反映されます

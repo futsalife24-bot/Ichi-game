@@ -12,6 +12,7 @@ import { QuestManager } from './quests.js';
 import { House, HOUSE_ORIGIN, HOUSE_SPAWN, HOUSE_CAM } from './house.js';
 import { HEROES, accessoryForStars } from './characters.js';
 import { loadSave, writeSave } from './save.js';
+import { L } from './lines.js';
 
 const $ = (id) => document.getElementById(id);
 const canvas = $('game');
@@ -35,6 +36,7 @@ const audio = new AudioEngine();
 const voice = new Voice({
   onSubtitle: (text, ms) => ui.subtitle(text, ms),
   onSpeaking: (on) => audio.duck(on),
+  audio,
 });
 voice.enabled = save.voice;
 
@@ -86,7 +88,7 @@ function startGame(kind) {
   mode = 'play';
   requestLandscape();
   const name = HEROES[kind].name;
-  setTimeout(() => voice.say(`${name}さん、 キラキラ アイランド へ ようこそ！ いっしょに あそぼう！`), 150);
+  setTimeout(() => voice.say(L.welcome(name)), 150);
   quests.start(4.5);
   updateToggles();
 }
@@ -131,7 +133,7 @@ $('btnVoice').addEventListener('click', () => {
   persist();
   voice.enabled = save.voice;
   if (!save.voice) voice.stop();
-  else voice.say('こえ を だすよ！');
+  else voice.say(L.voiceOn());
   updateToggles();
 });
 $('btnHome').addEventListener('click', backToTitle);
@@ -175,13 +177,13 @@ function worldEvents(dt) {
     rainbowCool = 40;
     audio.sparkle();
     effects.burst(new THREE.Vector3(rb.x, p.y + 5, rb.z), { n: 50, speed: 5, up: 2 });
-    voice.say('にじ の いろ！ あか、 オレンジ、 きいろ、 みどり、 みずいろ、 あお、 むらさき！', 'にじの いろ： あか・ オレンジ・ きいろ・ みどり・ みずいろ・ あお・ むらさき');
+    voice.say(L.rainbow());
   }
   const o = LANDMARKS.owl;
   if (owlCool <= 0 && Math.hypot(p.x - o.x, p.z - o.z) < 2.3 && quests.state === 'active') {
     owlCool = 25;
     audio.meet();
-    voice.say(`ほー ほー。 ${quests.quest.sub ?? quests.quest.say}`);
+    voice.say(L.owl(quests.quest.line));
   }
 }
 
@@ -350,4 +352,4 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
 }
 
 // デバッグ用
-window.__game = { camera, scene, player, quests, animals, world, house, save, startGame, enterHouse, get place() { return place; } };
+window.__game = { voice, camera, scene, player, quests, animals, world, house, save, startGame, enterHouse, get place() { return place; } };
