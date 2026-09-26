@@ -1,6 +1,7 @@
 // しまの せかい：地形・海・空・木・お花・きのこ・にじ・おうち
 import * as THREE from 'three';
 import { toon, ball, cone, cyl, makeOwl } from './characters.js';
+import { signTexture } from './canvas.js';
 
 export const ISLAND_R = 36;
 export const WATER_Y = -0.35;
@@ -82,6 +83,17 @@ export class World {
   }
 
   reserve(x, z, r) { this.reserved.push({ x, z, r }); }
+
+  // ---- プレイヤーの いどう に つかう（おうちの なか と おなじ かたち）
+  groundAt(x, z) { return getHeight(x, z); }
+
+  clampPos(p) {
+    const r = Math.hypot(p.x, p.z), maxR = ISLAND_R - 2;
+    if (r <= maxR) return false;
+    p.x *= maxR / r;
+    p.z *= maxR / r;
+    return true;
+  }
 
   /** 物が置けるか（障害物・予約地・島の外をさける） */
   isFree(x, z, clearance, { ignoreReserved = false } = {}) {
@@ -263,6 +275,28 @@ export class World {
       this.chimneyPuff.add(p);
     }
     this.chimneyPuff.position.copy(this.chimneyPos);
+
+    // かんばん と はいりぐちの マット
+    const sign = new THREE.Mesh(new THREE.PlaneGeometry(1.9, 0.6), new THREE.MeshBasicMaterial({ map: signTexture('かずの おうち') }));
+    sign.position.set(0, 2.25, 1.66);
+    g.add(sign);
+    const mat = new THREE.Mesh(new THREE.CylinderGeometry(0.95, 0.95, 0.06, 28), toon(0xffd23d));
+    mat.position.set(0, 0.14, 3.2);
+    g.add(mat);
+    const glow = new THREE.Mesh(
+      new THREE.TorusGeometry(1.05, 0.08, 8, 32),
+      new THREE.MeshBasicMaterial({ color: 0xfff6a0, transparent: true, opacity: 0.8 }),
+    );
+    glow.rotation.x = Math.PI / 2;
+    glow.position.set(0, 0.2, 3.2);
+    g.add(glow);
+    this.doorGlow = glow;
+    const ry = g.rotation.y;
+    this.houseDoor = { x: x + Math.sin(ry) * 3.2, z: z + Math.cos(ry) * 3.2, yaw: ry };
+    const matY = getHeight(this.houseDoor.x, this.houseDoor.z) - g.position.y;
+    mat.position.y = matY + 0.04;
+    glow.position.y = matY + 0.1;
+
     this.scene.add(g);
     this.colliders.push({ x, z, r: 2.6 });
   }
@@ -558,6 +592,8 @@ export class World {
       p.scale.setScalar(0.2 + k * 0.5);
       p.material.opacity = 0.8 * (1 - k);
     });
+    const gs = 1 + Math.sin(t * 4) * 0.08;
+    this.doorGlow.scale.set(gs, gs, 1);
     // ふくろう
     const owl = this.owl;
     owl.pivot.rotation.z = Math.sin(t * 1.5) * 0.05;

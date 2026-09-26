@@ -9,6 +9,7 @@ import { UI } from './ui.js';
 import { Effects } from './effects.js';
 import { Animals } from './animals.js';
 import { QuestManager } from './quests.js';
+import { House, HOUSE_ORIGIN, HOUSE_SPAWN, HOUSE_CAM } from './house.js';
 import { HEROES, accessoryForStars } from './characters.js';
 import { loadSave, writeSave } from './save.js';
 
@@ -23,6 +24,9 @@ renderer.shadowMap.type = THREE.PCFShadowMap;
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 700);
 const CAM_OFFSET = new THREE.Vector3(0, 9, 11);
+const camTarget = new THREE.Vector3();
+const lookAt = new THREE.Vector3(0, 1, 0);
+const lookTarget = new THREE.Vector3();
 
 const save = loadSave();
 const persist = () => writeSave(save);
@@ -43,11 +47,14 @@ const input = new Input({
   canvas, joyZone: $('joyZone'), joyBase: $('joyBase'), joyKnob: $('joyKnob'), jumpBtn: $('btnJump'),
 });
 const quests = new QuestManager({ scene, world, player, animals, ui, audio, voice, effects, save, persist });
-animals.onMeet = (a) => { if (mode === 'play') quests.onAnimalMeet(a); };
+animals.onMeet = (a) => { if (mode === 'play' && place === 'island') quests.onAnimalMeet(a); };
+const house = new House(scene, { player, audio, voice, ui, effects, quests });
 ui.setStars(save.stars);
 ui.setQuest(null);
 
 let mode = 'title';
+let place = 'island'; // 'island' | 'house'
+const env = () => (place === 'house' ? house : world);
 
 // ------------------------------------------------ タイトル → スタート
 function buildTitle() {
@@ -86,6 +93,7 @@ function startGame(kind) {
 
 function backToTitle() {
   audio.tap();
+  if (place === 'house') leaveHouse(true);
   quests.stop();
   input.enabled = false;
   input.reset();
@@ -127,21 +135,30 @@ $('btnVoice').addEventListener('click', () => {
   updateToggles();
 });
 $('btnHome').addEventListener('click', backToTitle);
-$('questCard').addEventListener('click', () => quests.repeat());
+$('questCard').addEventListener('click', () => (place === 'house' ? house.repeat() : quests.repeat()));
 
 // ------------------------------------------------ タップした ばしょ へ あるく
 const raycaster = new THREE.Raycaster();
 const ndc = new THREE.Vector2();
 const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
 const hit = new THREE.Vector3();
-function screenToGround(x, y) {
+function setRay(x, y) {
   ndc.set((x / window.innerWidth) * 2 - 1, -(y / window.innerHeight) * 2 + 1);
   raycaster.setFromCamera(ndc, camera);
+}
+// おうちでは マットを タップして えらべる
+input.onTap = (x, y) => {
+  if (mode !== 'play' || place !== 'house') return false;
+  setRay(x, y);
+  return house.tap(raycaster);
+};
+function screenToGround(x, y) {
+  setRay(x, y);
   let h = player.pos.y;
   for (let i = 0; i < 3; i++) {
     plane.constant = -h;
     if (!raycaster.ray.intersectPlane(plane, hit)) return null;
-    h = getHeight(hit.x, hit.z);
+    h = env().groundAt(hit.x, hit.z);
   }
   return hit;
 }
@@ -168,6 +185,99 @@ function worldEvents(dt) {
   }
 }
 
+// ------------------------------------------------ おうちに はいる／でる
+const fadeEl = $('fade');
+let doorArmed = true;
+let transitioning = false;
+function transition(fn) {
+  if (transitioning) return;
+  transitioning = true;
+  input.enabled = false;
+  input.reset();
+  fadeEl.classList.add('show');
+  setTimeout(() => {
+    fn();
+    fadeEl.classList.remove('show');
+    setTimeout(() => {
+      transitioning = false;
+      if (mode === 'play') input.enabled = true;
+    }, 250);
+  }, 380);
+}
+
+// おうちの なかでは しまの ものを かくす
+const keepVisible = () => new Set([house.group, player.model.root, player.marker, effects.mesh, effects.arrow, effects.beam, world.sunLight, world.sunLight.target, world.hemi]);
+let hiddenOutdoor = [];
+function setOutdoorVisible(on) {
+  if (!on) {
+    const keep = keepVisible();
+    hiddenOutdoor = scene.children.filter((o) => o.visible && !keep.has(o));
+    for (const o of hiddenOutdoor) o.visible = false;
+    scene.background = new THREE.Color(0xffe9cf);
+  } else {
+    for (const o of hiddenOutdoor) o.visible = true;
+    hiddenOutdoor = [];
+    scene.background = null;
+  }
+}
+
+/** カメラの めざす いち（しまでは プレイヤーを おう／おうちでは へや ぜんたい） */
+function cameraGoal() {
+  if (place === 'house') {
+    const dx = (player.pos.x - HOUSE_ORIGIN.x) * HOUSE_CAM.follow;
+    camTarget.copy(HOUSE_ORIGIN).add(HOUSE_CAM.pos).setX(HOUSE_ORIGIN.x + dx);
+    lookTarget.copy(HOUSE_ORIGIN).add(HOUSE_CAM.look).setX(HOUSE_ORIGIN.x + dx);
+  } else {
+    camTarget.copy(player.pos).add(CAM_OFFSET);
+    lookTarget.set(player.pos.x, player.pos.y + 1.0, player.pos.z);
+  }
+}
+
+function snapCamera() {
+  cameraGoal();
+  camera.position.copy(camTarget);
+  lookAt.copy(lookTarget);
+  camera.lookAt(lookAt);
+}
+
+function enterHouse() {
+  audio.meet();
+  transition(() => {
+    quests.pause();
+    setOutdoorVisible(false);
+    place = 'house';
+    player.teleport(HOUSE_ORIGIN.x + HOUSE_SPAWN.x, HOUSE_ORIGIN.y, HOUSE_ORIGIN.z + HOUSE_SPAWN.z, Math.PI);
+    house.enter();
+    snapCamera();
+  });
+}
+
+function leaveHouse(instant = false) {
+  const go = () => {
+    house.exit();
+    setOutdoorVisible(true);
+    place = 'island';
+    const d = world.houseDoor;
+    const x = d.x + Math.sin(d.yaw) * 1.6, z = d.z + Math.cos(d.yaw) * 1.6;
+    player.teleport(x, getHeight(x, z), z, d.yaw);
+    doorArmed = false;
+    quests.resume();
+    snapCamera();
+  };
+  if (instant) go();
+  else { audio.meet(); transition(go); }
+}
+
+function doorCheck() {
+  const d = world.houseDoor;
+  const dist = Math.hypot(player.pos.x - d.x, player.pos.z - d.z);
+  if (dist > 2.2) doorArmed = true;
+  if (doorArmed && dist < 1.0 && !transitioning) {
+    doorArmed = false;
+    enterHouse();
+  }
+}
+
 // ------------------------------------------------ リサイズ・向き
 function resize() {
   const w = window.innerWidth, h = window.innerHeight;
@@ -188,9 +298,6 @@ document.addEventListener('gesturestart', (e) => e.preventDefault());
 document.addEventListener('contextmenu', (e) => e.preventDefault());
 
 // ------------------------------------------------ ループ
-const camTarget = new THREE.Vector3();
-const lookAt = new THREE.Vector3(0, 1, 0);
-const lookTarget = new THREE.Vector3();
 camera.position.set(30, 16, 30);
 let last = performance.now();
 let time = 0;
@@ -201,16 +308,23 @@ function frame(now) {
   time += dt;
 
   if (mode === 'play') {
-    if (input.pointer) {
-      const g = screenToGround(input.pointer.x, input.pointer.y);
-      if (g) player.setTarget(g);
+    const ptr = input.pointer;
+    if (ptr) {
+      if (!ptr.tapped) {
+        const g = screenToGround(ptr.x, ptr.y);
+        if (g) player.setTarget(g);
+      }
     }
-    player.update(dt, input, world, audio);
-    animals.update(dt, time, player);
-    quests.update(dt, time);
-    worldEvents(dt);
-    camTarget.copy(player.pos).add(CAM_OFFSET);
-    lookTarget.set(player.pos.x, player.pos.y + 1.0, player.pos.z);
+    player.update(dt, input, env(), audio);
+    if (place === 'island') {
+      animals.update(dt, time, player);
+      quests.update(dt, time);
+      worldEvents(dt);
+      doorCheck();
+    } else if (house.update(dt, time) === 'exit' && !transitioning) {
+      leaveHouse();
+    }
+    cameraGoal();
     const k = 1 - Math.exp(-4 * dt);
     camera.position.lerp(camTarget, k);
     lookAt.lerp(lookTarget, k * 1.5);
@@ -236,4 +350,4 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
 }
 
 // デバッグ用
-window.__game = { scene, player, quests, animals, world, save, startGame };
+window.__game = { camera, scene, player, quests, animals, world, house, save, startGame, enterHouse, get place() { return place; } };

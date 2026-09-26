@@ -1,7 +1,7 @@
 :root {
   --font: "Hiragino Maru Gothic ProN", "Hiragino Sans", "BIZ UDPGothic", "Noto Sans JP", "Noto Sans CJK JP", "Yu Gothic", system-ui, sans-serif;
   --ink: #4a3226;
-  --u: min(1vh, 1.8vw);
+  --u: min(1vh, 0.65vw);
   --safe-l: env(safe-area-inset-left, 0px);
   --safe-r: env(safe-area-inset-right, 0px);
   --safe-b: env(safe-area-inset-bottom, 0px);
@@ -57,17 +57,18 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
   background: #fffdf5; border-radius: calc(var(--u) * 4);
   padding: calc(var(--u) * 1.5) calc(var(--u) * 3.5) calc(var(--u) * 1.5) calc(var(--u) * 2);
   box-shadow: 0 calc(var(--u) * 1) 0 rgba(0,0,0,.14), 0 0 0 calc(var(--u) * .7) #ffd23d inset;
-  max-width: 62vw;
+  max-width: calc(100vw - var(--u) * 78);
 }
 #questCard.enter { animation: cardIn .6s cubic-bezier(.2,1.6,.4,1); }
 #questCard.done { animation: cardDone .8s ease forwards; }
 @keyframes cardIn { from { transform: translateX(-50%) translateY(-150%) scale(.6); } to { transform: translateX(-50%); } }
 @keyframes cardDone { 30% { transform: translateX(-50%) scale(1.12); } 100% { transform: translateX(-50%) scale(1); background: #eaffd8; } }
-#questIcon { width: calc(var(--u) * 12); height: calc(var(--u) * 12); display: flex; align-items: center; justify-content: center; flex: none; }
-#questIcon .emoji { font-size: calc(var(--u) * 10); line-height: 1; }
-#questIcon .moji { font-size: calc(var(--u) * 10); font-weight: 900; margin-left: calc(var(--u) * 1); color: #ff5a7a; }
+#questIcon { width: calc(var(--u) * 10.5); height: calc(var(--u) * 10.5); display: flex; align-items: center; justify-content: center; flex: none; }
+#questIcon .emoji { font-size: calc(var(--u) * 9); line-height: 1; }
+#questIcon .moji { font-size: calc(var(--u) * 9); font-weight: 900; margin-left: calc(var(--u) * 1); color: #ff5a7a; }
 #questIcon:has(.moji) { width: auto; }
-#questText { font-size: calc(var(--u) * 6); font-weight: 800; white-space: nowrap; }
+#questText { font-size: calc(var(--u) * 5.2); font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.quest-body { min-width: 0; }
 #questProgress { display: flex; gap: calc(var(--u) * .8); margin-top: calc(var(--u) * .8); }
 #questProgress .slot { font-size: calc(var(--u) * 5); filter: grayscale(1) opacity(.35); transition: filter .2s, transform .2s; }
 #questProgress .slot.got { filter: none; transform: scale(1.15); }
@@ -159,6 +160,10 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 .reward-title { font-size: calc(var(--u) * 6); font-weight: 900; color: #ff6f91; }
 .reward-emoji { font-size: calc(var(--u) * 20); line-height: 1.2; }
 .reward-name { text-wrap: balance; font-size: calc(var(--u) * 5.5); font-weight: 800; }
+
+/* ---------- ばめん きりかえ */
+#fade { position: fixed; inset: 0; background: #fff4df; opacity: 0; pointer-events: none; transition: opacity .35s ease; z-index: 5; }
+#fade.show { opacity: 1; }
 
 /* ---------- タイトル */
 .screen { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }

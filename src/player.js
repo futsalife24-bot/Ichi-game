@@ -1,7 +1,7 @@
 // しゅじんこう の うごき
 import * as THREE from 'three';
 import { makeHero, makeAccessory } from './characters.js';
-import { getHeight, ISLAND_R } from './world.js';
+import { getHeight } from './world.js';
 
 const SPEED = 6.2;
 const GRAVITY = 26;
@@ -67,15 +67,19 @@ export class Player {
     this.spin = 1;
   }
 
-  reset() {
-    this.pos.set(0, getHeight(0, 2), 2);
+  reset() { this.teleport(0, getHeight(0, 2), 2, 0); }
+
+  teleport(x, y, z, yaw) {
+    this.pos.set(x, y, z);
     this.vel.set(0, 0, 0);
-    this.yaw = 0;
+    this.yaw = yaw;
     this.target = null;
+    this.onGround = true;
     this.sync();
   }
 
-  update(dt, input, world, audio) {
+  /** env: いまいる ばしょ（しま または おうちの なか）。colliders / bouncers / groundAt / clampPos をもつ */
+  update(dt, input, env, audio) {
     let mx = 0, mz = 0;
     const m = input.getMove();
     if (m.x !== 0 || m.y !== 0) {
@@ -101,7 +105,7 @@ export class Player {
     this.pos.z += this.vel.z * dt;
 
     // ぶつかり
-    for (const c of world.colliders) {
+    for (const c of env.colliders) {
       const dx = this.pos.x - c.x, dz = this.pos.z - c.z;
       const d = Math.hypot(dx, dz);
       const min = c.r + BODY_R;
@@ -110,16 +114,10 @@ export class Player {
         this.pos.z = c.z + (dz / d) * min;
       }
     }
-    const r = Math.hypot(this.pos.x, this.pos.z);
-    const maxR = ISLAND_R - 2;
-    if (r > maxR) {
-      this.pos.x *= maxR / r;
-      this.pos.z *= maxR / r;
-      if (this.target) this.target = null;
-    }
+    if (env.clampPos(this.pos)) this.target = null;
 
     // たて の うごき
-    const ground = getHeight(this.pos.x, this.pos.z);
+    const ground = env.groundAt(this.pos.x, this.pos.z);
     if (input.consumeJump() && this.onGround) {
       this.vel.y = JUMP_V;
       this.onGround = false;
@@ -139,14 +137,14 @@ export class Player {
     }
 
     // きのこ で ぽよーん
-    for (const b of world.bouncers) {
+    for (const b of env.bouncers) {
       const d = Math.hypot(this.pos.x - b.x, this.pos.z - b.z);
       if (d < b.r + 0.3 && this.vel.y <= 0 && this.pos.y < b.top + 0.1 && this.pos.y > b.top - 1.4) {
         this.pos.y = b.top;
         this.vel.y = BOUNCE_V;
         this.onGround = false;
         this.squash = 0.8;
-        world.bounceMushroom(b);
+        env.bounceMushroom?.(b);
         audio.boing();
       }
     }
