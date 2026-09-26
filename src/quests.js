@@ -7,12 +7,12 @@ import {
 } from './props.js';
 
 const TYPES = ['color', 'count', 'shape', 'animal', 'moji'];
-const NUM_WORDS = ['いち', 'に', 'さん', 'よん', 'ご', 'ろく', 'なな', 'はち', 'きゅう', 'じゅう'];
-const PRAISE = ['すごい！', 'やったね！', 'じょうず！', 'できたね！', 'ばっちり！', 'さすが！'];
+export const NUM_WORDS = ['いち', 'に', 'さん', 'よん', 'ご', 'ろく', 'なな', 'はち', 'きゅう', 'じゅう'];
+export const PRAISE = ['すごい！', 'やったね！', 'じょうず！', 'できたね！', 'ばっちり！', 'さすが！'];
 const HINT_AFTER = 18;
 
-const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
-const shuffle = (arr) => {
+export const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+export const shuffle = (arr) => {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -334,39 +334,63 @@ export class QuestManager {
     this.voice.say(`やじるし の ほう だよ！ ${this.quest.sub ?? this.quest.say}`);
   }
 
+  /** ほしを 1こ ふやす。ごほうびの だんかいに なったら その アクセサリーを かえす */
+  awardStar() {
+    this.save.stars++;
+    this.persist();
+    this.ui.setStars(this.save.stars, true);
+    return ACCESSORIES.find((a) => a.stars === this.save.stars) ?? null;
+  }
+
+  presentReward(acc) {
+    this.player.setAccessory(acc.id);
+    this.player.celebrate();
+    this.audio.reward();
+    this.effects.confetti(this.player.pos);
+    this.ui.reward(acc);
+    this.voice.say(`ほし が ${this.save.stars}こ！ ごほうび に ${acc.name} を もらったよ！ にあってるね！`);
+  }
+
   complete(msg, sub) {
     this.state = 'done';
     this.timer = 3.4;
     this.effects.hideGuide();
-    this.save.stars++;
-    this.persist();
+    this.pendingReward = this.awardStar();
     const praise = pick(PRAISE);
     this.voice.say(`${msg} ${praise}`, `${sub ?? msg} ${praise}`);
     this.audio.fanfare();
     this.effects.confetti(this.player.pos);
     this.player.celebrate();
     this.ui.celebrate(praise);
-    this.ui.setStars(this.save.stars, true);
     this.ui.questDone();
     for (const it of this.items) it.alive = false;
   }
 
   afterDone() {
     this.clearItems();
-    const acc = ACCESSORIES.find((a) => a.stars === this.save.stars);
+    this.ui.setQuest(null);
+    const acc = this.pendingReward;
+    this.pendingReward = null;
     if (acc) {
       this.state = 'reward';
       this.timer = 5;
-      this.player.setAccessory(acc.id);
-      this.player.celebrate();
-      this.audio.reward();
-      this.effects.confetti(this.player.pos);
-      this.ui.reward(acc);
-      this.voice.say(`ほし が ${this.save.stars}こ！ ごほうび に ${acc.name} を もらったよ！ にあってるね！`);
-      this.ui.setQuest(null);
+      this.presentReward(acc);
+    } else {
+      this.start(1.2);
+    }
+  }
+
+  // ---- おうちに はいる／でる とき
+  pause() { this.effects.hideGuide(); }
+
+  resume() {
+    if (this.state === 'active' && this.quest) {
+      this.ui.setQuest(this.quest.card);
+      if (this.quest.type === 'count') this.ui.setProgress(this.quest.got);
+      this.elapsed = 0;
+      this.hinted = false;
     } else {
       this.ui.setQuest(null);
-      this.start(1.2);
     }
   }
 }

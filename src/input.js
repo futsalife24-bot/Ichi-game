@@ -14,6 +14,7 @@ export class Input {
     this.keys = new Set();
     this.pointer = null; // {id, x, y} 画面を おしている ゆび
     this.enabled = false;
+    this.onTap = null;
 
     joyZone.addEventListener('pointerdown', (e) => this.joyDown(e));
     window.addEventListener('pointermove', (e) => this.onMove(e), { passive: false });
@@ -32,7 +33,9 @@ export class Input {
     canvas.addEventListener('pointerdown', (e) => {
       if (!this.enabled || this.pointer) return;
       e.preventDefault();
-      this.pointer = { id: e.pointerId, x: e.clientX, y: e.clientY, fresh: true };
+      this.pointer = { id: e.pointerId, x: e.clientX, y: e.clientY };
+      // タップした ものを すぐに えらぶ（えらべたら その ゆびでは あるかない）
+      this.pointer.tapped = this.onTap?.(e.clientX, e.clientY) === true;
     });
 
     window.addEventListener('keydown', (e) => {
