@@ -28,6 +28,14 @@ export class Player {
     this.target = null;
     this.accessoryId = null;
     this.model = null;
+    // きの うしろに かくれても わかる めじるし
+    this.marker = new THREE.Mesh(
+      new THREE.ConeGeometry(0.22, 0.4, 4),
+      new THREE.MeshBasicMaterial({ color: 0xffd23d, depthTest: false, transparent: true, opacity: 0.9 }),
+    );
+    this.marker.rotation.x = Math.PI;
+    this.marker.renderOrder = 10;
+    scene.add(this.marker);
     this.setKind(kind);
   }
 
@@ -181,6 +189,11 @@ export class Player {
   sync() {
     const root = this.model.root;
     root.position.copy(this.pos);
+    if (this.marker) {
+      const t = performance.now() / 1000;
+      this.marker.position.set(this.pos.x, this.pos.y + 2.55 + Math.sin(t * 4) * 0.12, this.pos.z);
+      this.marker.rotation.y = t * 2;
+    }
     root.rotation.y = this.yaw + (this.spin > 0 ? (1 - this.spin) * Math.PI * 2 : 0);
   }
 }
