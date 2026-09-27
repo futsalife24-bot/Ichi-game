@@ -1,4 +1,4 @@
-// しまの せかい：地形・海・空・木・お花・きのこ・にじ・おうち
+// しまの せかい：地形・海・空・木・お花・きのこ・にじ・がっこう・おうち
 import * as THREE from 'three';
 import { toon, ball, cone, cyl, makeOwl } from './characters.js';
 import { signTexture, canvasTexture } from './canvas.js';
@@ -37,7 +37,7 @@ export function mulberry32(seed) {
 export const LANDMARKS = {
   spawn: { x: 0, z: 2 },
   owl: { x: 3, z: -2.5 },
-  house: { x: -12, z: -14 },
+  school: { x: -12, z: -14 },
   rainbow: { x: 10, z: 8, radius: 6 },
   myHouse: { x: 21, z: 5 },
   shop: { x: -20, z: 13 },
@@ -74,7 +74,7 @@ export class World {
 
     this.reserve(LANDMARKS.spawn.x, LANDMARKS.spawn.z, 5);
     this.reserve(LANDMARKS.owl.x, LANDMARKS.owl.z, 2);
-    this.reserve(LANDMARKS.house.x, LANDMARKS.house.z, 5);
+    this.reserve(LANDMARKS.school.x, LANDMARKS.school.z, 5);
     this.reserve(LANDMARKS.rainbow.x, LANDMARKS.rainbow.z, 7.5);
     this.reserve(LANDMARKS.myHouse.x, LANDMARKS.myHouse.z, 5.5);
     this.reserve(LANDMARKS.shop.x, LANDMARKS.shop.z, 6);
@@ -87,7 +87,7 @@ export class World {
     this.buildTerrain();
     this.buildWater();
     this.buildClouds();
-    this.buildHouse();
+    this.buildSchool();
     this.buildMyHouse();
     this.buildRainbow();
     this.buildOwl();
@@ -207,7 +207,7 @@ export class World {
     const grassA = new THREE.Color(0x86dc5c), grassB = new THREE.Color(0x5ec04c), grassC = new THREE.Color(0xa5e36a);
     const sand = new THREE.Color(0xf6e4a6), wetSand = new THREE.Color(0xd9c083), path = new THREE.Color(0xecd29a);
     const paths = [
-      [LANDMARKS.spawn, LANDMARKS.house],
+      [LANDMARKS.spawn, LANDMARKS.school],
       [LANDMARKS.spawn, { x: LANDMARKS.rainbow.x, z: LANDMARKS.rainbow.z }],
       [LANDMARKS.spawn, ANIMAL_HOMES.hiyoko],
       [{ x: LANDMARKS.rainbow.x, z: LANDMARKS.rainbow.z }, ANIMAL_HOMES.hitsuji],
@@ -288,8 +288,8 @@ export class World {
     }
   }
 
-  /** おうち（そとがわ）。はいりぐちの マット の いち を かえす */
-  buildCottage({ x, z, wall, roof, door, sign, signOpts, matColor = 0xffd23d, glowColor = 0xfff6a0, chimney = false }) {
+  /** たてもの（そとがわ）。はいりぐちの マット の いち を かえす。decorate(g) で かざりを たせる */
+  buildCottage({ x, z, wall, roof, door, sign, signOpts, matColor = 0xffd23d, glowColor = 0xfff6a0, chimney = false, decorate }) {
     const g = new THREE.Group();
     const y = getHeight(x, z);
     g.position.set(x, y - 0.1, z);
@@ -354,20 +354,55 @@ export class World {
     const matY = getHeight(doorPos.x, doorPos.z) - g.position.y;
     mat.position.y = matY + 0.04;
     glow.position.y = matY + 0.1;
+    decorate?.(g);
 
     this.scene.add(g);
     this.colliders.push({ x, z, r: 2.6 });
     return doorPos;
   }
 
-  buildHouse() {
-    this.houseDoor = this.buildCottage({ ...LANDMARKS.house, wall: 0xfff0d4, roof: 0xff6f61, door: 0xb07245, sign: 'かずの おうち', chimney: true });
+  buildSchool() {
+    this.schoolDoor = this.buildCottage({
+      ...LANDMARKS.school, wall: 0xfff6e0, roof: 0x4caf50, door: 0x3d7bff, sign: 'かずの がっこう',
+      signOpts: { bg: '#f1ffe0', border: '#4caf50', fg: '#2f6b3a' },
+      decorate: (g) => {
+        // とけいだい と かね
+        const tower = new THREE.Group();
+        tower.position.set(0, 3.2, 0.7);
+        const body = new THREE.Mesh(new THREE.BoxGeometry(1.2, 2.0, 1.2), toon(0xfff6e0));
+        body.position.y = 0.9;
+        body.castShadow = true;
+        tower.add(body);
+        const top = new THREE.Mesh(new THREE.ConeGeometry(1.05, 1.0, 4), toon(0xff6f61));
+        top.position.y = 2.4;
+        top.rotation.y = Math.PI / 4;
+        top.castShadow = true;
+        tower.add(top);
+        const face = new THREE.Mesh(new THREE.CircleGeometry(0.42, 24), new THREE.MeshBasicMaterial({ map: canvasTexture(128, 128, (x) => {
+          x.fillStyle = '#fffdf5'; x.beginPath(); x.arc(64, 64, 62, 0, Math.PI * 2); x.fill();
+          x.strokeStyle = '#4a3226'; x.lineWidth = 6; x.stroke();
+          x.lineCap = 'round'; x.lineWidth = 7;
+          x.beginPath(); x.moveTo(64, 64); x.lineTo(64, 24); x.stroke();
+          x.strokeStyle = '#ff6f91'; x.beginPath(); x.moveTo(64, 64); x.lineTo(92, 64); x.stroke();
+        }) }));
+        face.position.set(0, 1.1, 0.61);
+        tower.add(face);
+        tower.add(ball(0xffc93d, 0.22, 0, 1.95, 0));
+        g.add(tower);
+        // はた
+        g.add(cyl(0xdddddd, 0.05, 3.6, 2.5, 1.8, 1.9));
+        const flag = new THREE.Mesh(new THREE.PlaneGeometry(0.9, 0.55), new THREE.MeshLambertMaterial({ color: 0xff6f91, side: THREE.DoubleSide }));
+        flag.position.set(2.95, 3.3, 1.9);
+        g.add(flag);
+        this.flag = flag;
+      },
+    });
   }
 
   buildMyHouse() {
     this.roomDoor = this.buildCottage({
       ...LANDMARKS.myHouse, wall: 0xe8f4ff, roof: 0x4f9dff, door: 0x7a5238, sign: 'じぶんの おうち',
-      signOpts: { bg: '#eaf6ff', border: '#4f9dff', fg: '#2d4a8a' }, matColor: 0x8fd0ff, glowColor: 0xd8f0ff,
+      signOpts: { bg: '#eaf6ff', border: '#4f9dff', fg: '#2d4a8a' }, matColor: 0x8fd0ff, glowColor: 0xd8f0ff, chimney: true,
     });
     // ポスト と はな
     const { x, z } = LANDMARKS.myHouse;
@@ -757,8 +792,9 @@ export class World {
         p.mesh.instanceMatrix.needsUpdate = true;
       }
     }
-    // えんとつの けむり
-    this.chimneyPuff.children.forEach((p, i) => {
+    // えんとつの けむり・がっこうの はた
+    if (this.flag) this.flag.rotation.y = Math.sin(t * 3) * 0.25;
+    this.chimneyPuff?.children.forEach((p, i) => {
       const k = (t * 0.35 + i / 3) % 1;
       p.position.set(Math.sin(k * 4 + i) * 0.2, k * 2.2, 0);
       p.scale.setScalar(0.2 + k * 0.5);

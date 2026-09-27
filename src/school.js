@@ -1,23 +1,23 @@
-// かずの おうち：おうちの なかで あそぶ すうじの ミニゲーム
+// かずの がっこう：きょうしつで ふくろう せんせい と あそぶ すうじの ミニゲーム
 //  - いくつ？   ：ボードの えを かぞえて、おなじ すうじの マットに のる（タップでも OK）
 //  - じゅんばん ：1 から じゅんばんに すうじの マットを ふむ
 //  - おなじ かず：ボードの すうじと おなじ かずの おさらを えらぶ
 import * as THREE from 'three';
-import { toon, ball, cyl, makeHero } from './characters.js';
+import { toon, ball, cyl, makeOwl } from './characters.js';
 import { canvasTexture, roundRect, signTexture, FONT, EMOJI_FONT } from './canvas.js';
 import { pick, shuffle } from './quests.js';
 import { L, PRAISE, THINGS, withPraise, numWord } from './lines.js';
 
-export const HOUSE_ORIGIN = new THREE.Vector3(1000, 0, 0);
+export const SCHOOL_ORIGIN = new THREE.Vector3(1000, 0, 0);
 const HALF_W = 11, BACK = -9, FRONT = 6;
 const WALL_H = 5.4;
 const MID_Z = (FRONT + BACK) / 2;
 // こたえの マットを おく おく（ボードの まえ）
 const PAD_Z = -4.2;
-// おうちの なかは へやぜんたいが みえる こていカメラ
-export const HOUSE_CAM = { pos: new THREE.Vector3(0, 14, 13.5), look: new THREE.Vector3(0, 0, -4.2), follow: 0.25 };
+// きょうしつは へやぜんたいが みえる こていカメラ
+export const SCHOOL_CAM = { pos: new THREE.Vector3(0, 14, 13.5), look: new THREE.Vector3(0, 0, -4.2), follow: 0.25 };
 const EXIT = { x: 0, z: 5.3 };
-export const HOUSE_SPAWN = { x: 0, z: 3.4 };
+export const SCHOOL_SPAWN = { x: 0, z: 3.4 };
 const PAD_R = 1.45;
 
 const GAMES = ['count', 'order', 'match'];
@@ -75,11 +75,11 @@ function boardTitle(x, w, text) {
   x.fillText(text, w / 2, 64);
 }
 
-export class House {
+export class School {
   constructor(scene, { player, audio, voice, ui, effects, quests }) {
     Object.assign(this, { scene, player, audio, voice, ui, effects, quests });
     this.group = new THREE.Group();
-    this.group.position.copy(HOUSE_ORIGIN);
+    this.group.position.copy(SCHOOL_ORIGIN);
     this.group.visible = false;
     scene.add(this.group);
     this.colliders = [];
@@ -94,19 +94,19 @@ export class House {
   }
 
   // ---- プレイヤーの いどう に つかう
-  groundAt() { return HOUSE_ORIGIN.y; }
+  groundAt() { return SCHOOL_ORIGIN.y; }
 
   clampPos(p) {
-    const lx = p.x - HOUSE_ORIGIN.x, lz = p.z - HOUSE_ORIGIN.z;
+    const lx = p.x - SCHOOL_ORIGIN.x, lz = p.z - SCHOOL_ORIGIN.z;
     const cx = Math.max(-HALF_W + 0.6, Math.min(HALF_W - 0.6, lx));
     const cz = Math.max(BACK + 0.7, Math.min(FRONT - 0.3, lz));
     if (cx === lx && cz === lz) return false;
-    p.x = HOUSE_ORIGIN.x + cx;
-    p.z = HOUSE_ORIGIN.z + cz;
+    p.x = SCHOOL_ORIGIN.x + cx;
+    p.z = SCHOOL_ORIGIN.z + cz;
     return true;
   }
 
-  addCollider(x, z, r) { this.colliders.push({ x: HOUSE_ORIGIN.x + x, z: HOUSE_ORIGIN.z + z, r }); }
+  addCollider(x, z, r) { this.colliders.push({ x: SCHOOL_ORIGIN.x + x, z: SCHOOL_ORIGIN.z + z, r }); }
 
   box(w, h, d, color, x, y, z, shadow = true) {
     const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), toon(color));
@@ -194,19 +194,26 @@ export class House {
     rug.receiveShadow = true;
     g.add(rug);
 
-    // ベッド と くまの ぬいぐるみ
-    this.box(2.4, 0.6, 3.2, 0xb07245, -(HALF_W - 1.5), 0.3, BACK + 1.8);
-    this.box(2.2, 0.35, 3.0, 0xffffff, -(HALF_W - 1.5), 0.75, BACK + 1.8);
-    this.box(2.25, 0.2, 1.9, 0xff9fb8, -(HALF_W - 1.5), 0.95, BACK + 2.3);
-    this.box(1.2, 0.3, 0.7, 0xfff6dc, -(HALF_W - 1.5), 1.05, BACK + 0.75);
-    this.box(2.4, 1.4, 0.2, 0xb07245, -(HALF_W - 1.5), 0.7, BACK + 0.2);
-    const teddy = makeHero('kuma');
-    teddy.root.scale.setScalar(0.45);
-    teddy.root.position.set(-(HALF_W - 1.8), 1.05, BACK + 1.4);
-    teddy.root.rotation.y = 0.3;
-    g.add(teddy.root);
-    this.addCollider(-(HALF_W - 1.5), BACK + 1.1, 1.3);
-    this.addCollider(-(HALF_W - 1.5), BACK + 2.6, 1.3);
+    // ふくろう せんせい と きょうたく
+    const tx = -(HALF_W - 1.9), tz = BACK + 1.3;
+    this.teacher = makeOwl();
+    this.teacher.root.position.set(tx, 0, tz);
+    this.teacher.root.rotation.y = 0.35;
+    g.add(this.teacher.root);
+    this.box(2.4, 1.0, 0.9, 0xc98a55, tx + 0.3, 0.5, tz + 1.4);
+    this.box(2.6, 0.1, 1.0, 0xe8b77e, tx + 0.3, 1.05, tz + 1.4);
+    g.add(ball(0xff3b3b, 0.16, tx + 1.0, 1.25, tz + 1.4));
+    this.addCollider(tx, tz, 0.9);
+    this.addCollider(tx + 0.3, tz + 1.4, 1.3);
+
+    // せいとの つくえ と いす
+    for (const [dx, dz] of [[-(HALF_W - 2.2), 2.0], [-(HALF_W - 4.6), 2.0], [HALF_W - 4.4, 3.4]]) {
+      for (const sx of [-1, 1]) for (const sz of [-1, 1]) g.add(cyl(0x9a6b43, 0.05, 0.7, dx + sx * 0.45, 0.35, dz + sz * 0.3));
+      this.box(1.1, 0.08, 0.75, 0xe8b77e, dx, 0.72, dz);
+      this.box(0.55, 0.06, 0.5, 0x8fd0ff, dx, 0.42, dz + 0.7);
+      this.box(0.55, 0.5, 0.06, 0x8fd0ff, dx, 0.7, dz + 0.95);
+      this.addCollider(dx, dz + 0.3, 0.8);
+    }
 
     // ほんだな
     this.box(2.6, 2.8, 0.8, 0xc98a55, HALF_W - 1.6, 1.4, BACK + 0.5);
@@ -294,7 +301,7 @@ export class House {
     x.textAlign = 'center';
     x.textBaseline = 'middle';
     if (v.mode === 'welcome') {
-      boardTitle(x, w, 'かずの おうち');
+      boardTitle(x, w, 'かずの がっこう');
       x.fillStyle = '#ffe066';
       x.font = `bold 170px ${FONT}`;
       x.fillText('1 2 3', w / 2, 270);
@@ -376,18 +383,18 @@ export class House {
 
   /** プレイヤーが いま のっている マットは ふんだ あつかいに しない */
   markOccupied() {
-    const lx = this.player.pos.x - HOUSE_ORIGIN.x, lz = this.player.pos.z - HOUSE_ORIGIN.z;
+    const lx = this.player.pos.x - SCHOOL_ORIGIN.x, lz = this.player.pos.z - SCHOOL_ORIGIN.z;
     for (const p of this.pads) p.occupied = Math.hypot(lx - p.lx, lz - p.lz) < PAD_R + 0.3;
   }
 
   randomPadSpots(n) {
     const spots = [];
-    const plx = this.player.pos.x - HOUSE_ORIGIN.x, plz = this.player.pos.z - HOUSE_ORIGIN.z;
+    const plx = this.player.pos.x - SCHOOL_ORIGIN.x, plz = this.player.pos.z - SCHOOL_ORIGIN.z;
     for (let tries = 0; spots.length < n && tries < 500; tries++) {
       const x = -(HALF_W - 2.6) + Math.random() * (HALF_W - 2.6) * 2, z = BACK + 2.4 + Math.random() * (-0.6 - BACK - 2.4);
       if (Math.hypot(x - EXIT.x, z - EXIT.z) < 2.6) continue;
       if (Math.hypot(x - plx, z - plz) < 2.2) continue;
-      if (this.colliders.some((c) => Math.hypot(x - (c.x - HOUSE_ORIGIN.x), z - (c.z - HOUSE_ORIGIN.z)) < c.r + PAD_R + 0.2)) continue;
+      if (this.colliders.some((c) => Math.hypot(x - (c.x - SCHOOL_ORIGIN.x), z - (c.z - SCHOOL_ORIGIN.z)) < c.r + PAD_R + 0.2)) continue;
       if (spots.some((s) => Math.hypot(s.x - x, s.z - z) < PAD_R * 2 + 0.7)) continue;
       spots.push({ x, z });
     }
@@ -402,9 +409,9 @@ export class House {
     this.timer = 3.2;
     this.clearPads();
     this.setBoard({ mode: 'welcome' });
-    this.ui.setQuest({ icon: '<span class="emoji">🏠</span>', text: 'かずの おうち' });
-    this.voice.say(L.houseWelcome());
-    this.audio.sparkle();
+    this.ui.setQuest({ icon: '<span class="emoji">🏫</span>', text: 'かずの がっこう' });
+    this.voice.say(L.schoolWelcome(), { who: { name: 'ふくろう せんせい', pitch: 300 } });
+    this.audio.melody([76, 72, 74, 67, 67, 74, 76, 72], 0.32); // キーンコーンカーンコーン
   }
 
   exit() {
@@ -445,7 +452,7 @@ export class House {
     this.thing = thing;
     this.threePads(shuffle([n, ...distractors(n, max, 2)]), 'num');
     this.setBoard({ mode: 'count', n, thing, highlight: -1 });
-    this.line = L.houseCountAsk(thing);
+    this.line = L.schoolCountAsk(thing);
     this.card = { icon: `<span class="emoji">${thing.e}</span>`, text: 'いくつ あるかな？' };
   }
 
@@ -458,7 +465,7 @@ export class House {
     this.orderMax = count;
     this.next = 1;
     this.setBoard({ mode: 'order', n: count, next: 1 });
-    this.line = L.houseOrderAsk(count);
+    this.line = L.schoolOrderAsk(count);
     this.card = { icon: '<span class="moji">1→</span>', text: `1 から ${count} まで` };
   }
 
@@ -470,7 +477,7 @@ export class House {
     this.thing = thing;
     this.threePads(shuffle([n, ...distractors(n, max, 2)]), 'dots', thing.e);
     this.setBoard({ mode: 'match', n });
-    this.line = L.houseMatchAsk(n);
+    this.line = L.schoolMatchAsk(n);
     this.card = { icon: `<span class="moji">${n}</span>`, text: 'おなじ かずは どれ？' };
   }
 
@@ -499,18 +506,18 @@ export class House {
       this.countAlong = null;
       if (this.game === 'count') {
         this.setBoard({ mode: 'count', n: this.answer, thing: this.thing, highlight: this.answer - 1 });
-        this.finish(L.houseCountRight(this.answer, this.thing));
+        this.finish(L.schoolCountRight(this.answer, this.thing));
       } else {
-        this.finish(L.houseMatchRight(this.answer));
+        this.finish(L.schoolMatchRight(this.answer));
       }
       return;
     }
     this.audio.wrong();
     if (this.game === 'count') {
-      this.voice.say(L.houseCountWrong(pad.n));
+      this.voice.say(L.schoolCountWrong(pad.n));
       this.countAlong = { i: -1, timer: 2.2 };
     } else {
-      this.voice.say(L.houseMatchWrong(pad.n, this.answer));
+      this.voice.say(L.schoolMatchWrong(pad.n, this.answer));
     }
   }
 
@@ -524,19 +531,19 @@ export class House {
       this.next++;
       this.setBoard({ mode: 'order', n: this.orderMax, next: this.next });
       if (this.next > this.orderMax) {
-        this.finish(L.houseOrderDone(this.orderMax));
+        this.finish(L.schoolOrderDone(this.orderMax));
       } else {
         this.voice.say(L.countTick(pad.n));
       }
     } else if (this.wrongCool <= 0) {
       this.wrongCool = 2;
       this.audio.wrong();
-      this.voice.say(L.houseOrderWrong(pad.n, this.next));
+      this.voice.say(L.schoolOrderWrong(pad.n, this.next));
     }
   }
 
   padWorldPos(pad) {
-    return new THREE.Vector3(HOUSE_ORIGIN.x + pad.lx, HOUSE_ORIGIN.y + 0.5, HOUSE_ORIGIN.z + pad.lz);
+    return new THREE.Vector3(SCHOOL_ORIGIN.x + pad.lx, SCHOOL_ORIGIN.y + 0.5, SCHOOL_ORIGIN.z + pad.lz);
   }
 
   finish(line) {
@@ -556,7 +563,7 @@ export class House {
   // ------------------------------------------------ まいフレーム（'exit' を かえしたら そとへ）
   update(dt, t) {
     const p = this.player.pos;
-    const lx = p.x - HOUSE_ORIGIN.x, lz = p.z - HOUSE_ORIGIN.z;
+    const lx = p.x - SCHOOL_ORIGIN.x, lz = p.z - SCHOOL_ORIGIN.z;
     const exitD = Math.hypot(lx - EXIT.x, lz - EXIT.z);
     if (exitD > 2.0) this.exitArmed = true;
     if (this.exitArmed && exitD < 0.9) return 'exit';
@@ -582,7 +589,7 @@ export class House {
       }
     } else if (this.state === 'play') {
       for (const pad of this.pads) {
-        const on = Math.hypot(lx - pad.lx, lz - pad.lz) < PAD_R - 0.1 && p.y < HOUSE_ORIGIN.y + 0.8;
+        const on = Math.hypot(lx - pad.lx, lz - pad.lz) < PAD_R - 0.1 && p.y < SCHOOL_ORIGIN.y + 0.8;
         if (on && !pad.occupied) this.select(pad);
         pad.occupied = on;
       }
@@ -599,6 +606,8 @@ export class House {
     }
     const gs = 1 + Math.sin(t * 4) * 0.08;
     this.exitGlow.scale.set(gs, gs, 1);
+    this.teacher.pivot.rotation.z = Math.sin(t * 1.5) * 0.06;
+    for (const e of this.teacher.eyes) e.scale.y = 0.085 * ((t % 3.5) < 0.12 ? 0.15 : 1);
     if (Math.floor(t) !== this.lastClock) {
       this.lastClock = Math.floor(t);
       if (this.lastClock % 20 === 0) this.clockTex.userData.redraw((x) => this.drawClock(x));
@@ -620,7 +629,7 @@ export class House {
       c.timer = 0.85;
     } else {
       this.countAlong = null;
-      this.voice.say(L.houseCountAlongEnd(this.answer));
+      this.voice.say(L.schoolCountAlongEnd(this.answer));
     }
   }
 }

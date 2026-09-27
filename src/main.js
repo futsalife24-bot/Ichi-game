@@ -9,7 +9,7 @@ import { UI } from './ui.js';
 import { Effects } from './effects.js';
 import { Animals } from './animals.js';
 import { QuestManager } from './quests.js';
-import { House, HOUSE_ORIGIN, HOUSE_SPAWN, HOUSE_CAM } from './house.js';
+import { School, SCHOOL_ORIGIN, SCHOOL_SPAWN, SCHOOL_CAM } from './school.js';
 import { Room, ROOM_ORIGIN, ROOM_SPAWN, ROOM_CAM } from './room.js';
 import { Climate } from './climate.js';
 import { Life } from './life.js';
@@ -56,7 +56,7 @@ const input = new Input({
 });
 const quests = new QuestManager({ scene, world, player, animals, ui, audio, voice, effects, save, persist });
 animals.onMeet = (a) => { if (mode === 'play' && place === 'island') quests.onAnimalMeet(a); };
-const house = new House(scene, { player, audio, voice, ui, effects, quests });
+const school = new School(scene, { player, audio, voice, ui, effects, quests });
 const room = new Room(scene, { player, audio, voice, ui, save, persist, climate });
 const life = new Life({ scene, world, player, ui, audio, voice, effects, save, persist, quests, climate });
 life.onBells = refreshHud;
@@ -67,8 +67,8 @@ ui.setQuest(null);
 refreshHud();
 
 let mode = 'title';
-let place = 'island'; // 'island' | 'house' | 'room'
-const env = () => (place === 'house' ? house : place === 'room' ? room : world);
+let place = 'island'; // 'island' | 'school' | 'room'
+const env = () => (place === 'school' ? school : place === 'room' ? room : world);
 
 function refreshHud() {
   ui.setBells(save.bells, save.seeds);
@@ -161,7 +161,7 @@ $('btnVoice').addEventListener('click', () => {
   updateToggles();
 });
 $('btnHome').addEventListener('click', backToTitle);
-$('questCard').addEventListener('click', () => (place === 'house' ? house.repeat() : place === 'island' ? quests.repeat() : null));
+$('questCard').addEventListener('click', () => (place === 'school' ? school.repeat() : place === 'island' ? quests.repeat() : null));
 $('btnZukan').addEventListener('click', () => openZukan());
 $('btnCloset').addEventListener('click', () => openCloset());
 
@@ -225,7 +225,7 @@ function setRay(x, y) {
 input.onTap = (x, y) => {
   if (mode !== 'play' || place === 'island') return false;
   setRay(x, y);
-  return (place === 'house' ? house : room).tap(raycaster);
+  return (place === 'school' ? school : room).tap(raycaster);
 };
 function screenToGround(x, y) {
   setRay(x, y);
@@ -280,7 +280,7 @@ function transition(fn) {
 }
 
 // おうちの なかでは しまの ものを かくす
-const keepVisible = () => new Set([house.group, room.group, player.model.root, player.marker, effects.mesh, effects.arrow, effects.beam, world.sunLight, world.sunLight.target, world.hemi]);
+const keepVisible = () => new Set([school.group, room.group, player.model.root, player.marker, effects.mesh, effects.arrow, effects.beam, world.sunLight, world.sunLight.target, world.hemi]);
 let hiddenOutdoor = [];
 function setOutdoorVisible(on) {
   if (!on) {
@@ -298,7 +298,7 @@ function setOutdoorVisible(on) {
 /** カメラの めざす いち（しまでは プレイヤーを おう／おうちでは へや ぜんたい） */
 function cameraGoal() {
   if (place !== 'island') {
-    const [origin, cam] = place === 'house' ? [HOUSE_ORIGIN, HOUSE_CAM] : [ROOM_ORIGIN, ROOM_CAM];
+    const [origin, cam] = place === 'school' ? [SCHOOL_ORIGIN, SCHOOL_CAM] : [ROOM_ORIGIN, ROOM_CAM];
     const dx = (player.pos.x - origin.x) * cam.follow;
     camTarget.copy(origin).add(cam.pos).setX(origin.x + dx);
     lookTarget.copy(origin).add(cam.look).setX(origin.x + dx);
@@ -316,7 +316,7 @@ function snapCamera() {
 }
 
 const PLACES = {
-  house: { inside: house, origin: HOUSE_ORIGIN, spawn: HOUSE_SPAWN, door: () => world.houseDoor },
+  school: { inside: school, origin: SCHOOL_ORIGIN, spawn: SCHOOL_SPAWN, door: () => world.schoolDoor },
   room: { inside: room, origin: ROOM_ORIGIN, spawn: ROOM_SPAWN, door: () => world.roomDoor },
 };
 
@@ -352,7 +352,7 @@ function leavePlace(instant = false) {
   else { audio.meet(); transition(go); }
 }
 
-const doorArmed = { house: true, room: true };
+const doorArmed = { school: true, room: true };
 function doorCheck() {
   for (const [key, pl] of Object.entries(PLACES)) {
     const d = pl.door();
@@ -465,7 +465,7 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
 
 // デバッグ用
 window.__game = {
-  voice, camera, scene, player, quests, animals, world, house, room, life, climate, save, startGame, enterPlace, openZukan, openCloset,
+  voice, camera, scene, player, quests, animals, world, school, room, life, climate, save, startGame, enterPlace, openZukan, openCloset,
   warp(x, z) { player.teleport(x, env().groundAt(x, z), z, 0); snapCamera(); },
   get place() { return place; },
 };

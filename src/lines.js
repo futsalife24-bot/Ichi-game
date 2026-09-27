@@ -92,18 +92,18 @@ export const L = {
   wear: (c) => line(`${c.name}！ にあってるね！`),
   roomWelcome: () => line('じぶんの おうち だよ！ かぐ を おいて かざろう！'),
 
-  // ---- かずの おうち
-  houseWelcome: () => line('かずの おうち へ ようこそ！ すうじ で あそぼう！'),
-  houseCountAsk: (thing) => line(`${thing.name} は いくつ あるかな？ おなじ すうじ に のってね！`),
-  houseCountRight: (n, thing) => line(`${W(n)}！ ${thing.name} が ${W(n)}こ！`, `${n}！ ${thing.name}が ${n}こ！`),
-  houseCountWrong: (m) => line(`それは ${W(m)}。 いっしょに かぞえて みよう！`, `それは ${m}。 いっしょに かぞえて みよう！`),
-  houseCountAlongEnd: (n) => line(`${W(n)}こ だね！ ${W(n)} の すうじ に のってね！`, `${n}こ だね！ ${n} の すうじに のってね！`),
-  houseOrderAsk: (n) => line(`いち から ${W(n)} まで、 じゅんばん に のってね！`, `1 から ${n} まで じゅんばんに のってね！`),
-  houseOrderWrong: (m, next) => line(`それは ${W(m)}。 つぎ は ${W(next)} だよ！`, `それは ${m}。 つぎは ${next} だよ！`),
-  houseOrderDone: (n) => line(`${W(n)}！ ぜんぶ できたね！`, `${n}！ ぜんぶ できたね！`),
-  houseMatchAsk: (n) => line(`${W(n)} と おなじ かず の おさら は どれかな？`, `${n} と おなじ かずの おさらは どれかな？`),
-  houseMatchRight: (n) => line(`${W(n)}こ の おさら！ せいかい！`, `${n}こ の おさら！ せいかい！`),
-  houseMatchWrong: (m, n) => line(`それは ${W(m)}こ。 ${W(n)}こ の おさら を さがしてね！`, `それは ${m}こ。 ${n}こ の おさらを さがしてね！`),
+  // ---- かずの がっこう
+  schoolWelcome: () => line('かずの がっこう へ ようこそ！ すうじ で あそぼう！'),
+  schoolCountAsk: (thing) => line(`${thing.name} は いくつ あるかな？ おなじ すうじ に のってね！`),
+  schoolCountRight: (n, thing) => line(`${W(n)}！ ${thing.name} が ${W(n)}こ！`, `${n}！ ${thing.name}が ${n}こ！`),
+  schoolCountWrong: (m) => line(`それは ${W(m)}。 いっしょに かぞえて みよう！`, `それは ${m}。 いっしょに かぞえて みよう！`),
+  schoolCountAlongEnd: (n) => line(`${W(n)}こ だね！ ${W(n)} の すうじ に のってね！`, `${n}こ だね！ ${n} の すうじに のってね！`),
+  schoolOrderAsk: (n) => line(`いち から ${W(n)} まで、 じゅんばん に のってね！`, `1 から ${n} まで じゅんばんに のってね！`),
+  schoolOrderWrong: (m, next) => line(`それは ${W(m)}。 つぎ は ${W(next)} だよ！`, `それは ${m}。 つぎは ${next} だよ！`),
+  schoolOrderDone: (n) => line(`${W(n)}！ ぜんぶ できたね！`, `${n}！ ぜんぶ できたね！`),
+  schoolMatchAsk: (n) => line(`${W(n)} と おなじ かず の おさら は どれかな？`, `${n} と おなじ かずの おさらは どれかな？`),
+  schoolMatchRight: (n) => line(`${W(n)}こ の おさら！ せいかい！`, `${n}こ の おさら！ せいかい！`),
+  schoolMatchWrong: (m, n) => line(`それは ${W(m)}こ。 ${W(n)}こ の おさら を さがしてね！`, `それは ${m}こ。 ${n}こ の おさらを さがしてね！`),
 };
 
 /** せいかいの ことば ＋ ほめことば */
@@ -161,22 +161,22 @@ export function allLines() {
   for (const m of MOJI) { add(L.mojiAsk(m)); add(L.mojiRight(m)); add(L.mojiWrong(m)); }
   for (const acc of ACCESSORIES) add(L.reward(acc.stars, acc));
 
-  add(L.houseWelcome());
+  add(L.schoolWelcome());
   for (const t of THINGS) {
-    add(L.houseCountAsk(t));
-    for (const n of range(1, 10)) add(L.houseCountRight(n, t));
+    add(L.schoolCountAsk(t));
+    for (const n of range(1, 10)) add(L.schoolCountRight(n, t));
   }
   for (const n of range(1, 10)) {
-    add(L.houseCountWrong(n));
-    add(L.houseCountAlongEnd(n));
-    add(L.houseMatchAsk(n));
-    add(L.houseMatchRight(n));
-    for (const m of range(1, 10)) add(L.houseMatchWrong(m, n));
+    add(L.schoolCountWrong(n));
+    add(L.schoolCountAlongEnd(n));
+    add(L.schoolMatchAsk(n));
+    add(L.schoolMatchRight(n));
+    for (const m of range(1, 10)) add(L.schoolMatchWrong(m, n));
   }
   for (const n of range(1, 6)) {
-    add(L.houseOrderAsk(n));
-    add(L.houseOrderDone(n));
-    for (const m of range(1, 6)) add(L.houseOrderWrong(m, n));
+    add(L.schoolOrderAsk(n));
+    add(L.schoolOrderDone(n));
+    for (const m of range(1, 6)) add(L.schoolOrderWrong(m, n));
   }
 
   // ---- しまの くらし
