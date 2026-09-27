@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v6';
+const VERSION = 'kirakira-v7';
 const ASSETS = [
   './',
   './index.html',
@@ -23,6 +23,12 @@ const ASSETS = [
   './src/house.js',
   './src/canvas.js',
   './src/lines.js',
+  './src/catalog.js',
+  './src/climate.js',
+  './src/critters.js',
+  './src/furniture.js',
+  './src/life.js',
+  './src/room.js',
   './voice/index.json',
   './icons/icon-192.png',
   './icons/icon-512.png',

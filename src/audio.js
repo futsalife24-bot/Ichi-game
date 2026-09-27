@@ -6,22 +6,54 @@ const toMidi = (n) => {
 };
 const mtof = (m) => 440 * Math.pow(2, (m - 69) / 12);
 
-// のんびり たのしい しまの うた（1小節 = 8分音符 × 8）
-const MELODY = [
-  'E5 . G5 . E5 . C5 .', 'F5 . A5 . A5 G5 F5 .', 'D5 . G5 . G5 F5 E5 D5', 'E5 . C5 . C5 . - -',
-  'A4 . C5 . E5 . A5 .', 'G5 . F5 . E5 . C5 .', 'D5 E5 F5 . E5 . D5 .', 'C5 . . . - - - -',
-  'A5 . A5 . G5 . F5 .', 'G5 . E5 . C5 . E5 .', 'F5 . E5 . D5 . F5 .', 'E5 . D5 . B4 . G4 .',
-  'A4 . C5 . F5 . A5 .', 'G5 . E5 . G5 . C6 .', 'B5 . A5 . G5 . D5 .', 'C5 . . . E5 . G5 .',
-];
-const CHORDS = ['C', 'F', 'G', 'C', 'Am', 'F', 'G', 'C', 'F', 'C', 'Dm', 'G', 'F', 'C', 'G', 'C'];
+// しまの うた（1小節 = 8分音符 × 8）。じかんで かわる。
+const SONGS = {
+  // ひる：のんびり たのしい
+  hiru: {
+    bpm: 112,
+    melody: [
+      'E5 . G5 . E5 . C5 .', 'F5 . A5 . A5 G5 F5 .', 'D5 . G5 . G5 F5 E5 D5', 'E5 . C5 . C5 . - -',
+      'A4 . C5 . E5 . A5 .', 'G5 . F5 . E5 . C5 .', 'D5 E5 F5 . E5 . D5 .', 'C5 . . . - - - -',
+      'A5 . A5 . G5 . F5 .', 'G5 . E5 . C5 . E5 .', 'F5 . E5 . D5 . F5 .', 'E5 . D5 . B4 . G4 .',
+      'A4 . C5 . F5 . A5 .', 'G5 . E5 . G5 . C6 .', 'B5 . A5 . G5 . D5 .', 'C5 . . . E5 . G5 .',
+    ],
+    chords: ['C', 'F', 'G', 'C', 'Am', 'F', 'G', 'C', 'F', 'C', 'Dm', 'G', 'F', 'C', 'G', 'C'],
+  },
+  // あさ：げんきに おはよう
+  asa: {
+    bpm: 126,
+    melody: [
+      'C5 . E5 . G5 . E5 .', 'F5 . A5 . G5 . E5 .', 'D5 . F5 . E5 . C5 .', 'D5 . . . G4 . . .',
+      'C5 . E5 . G5 . C6 .', 'A5 . G5 . F5 . E5 .', 'D5 . E5 . F5 . D5 .', 'C5 . . . - - - -',
+    ],
+    chords: ['C', 'F', 'Dm', 'G', 'C', 'F', 'G', 'C'],
+  },
+  // ゆうがた：すこし ゆっくり
+  yugata: {
+    bpm: 96,
+    melody: [
+      'G5 . . . E5 . C5 .', 'A5 . . . F5 . . .', 'G5 . F5 . E5 . D5 .', 'E5 . . . - - - -',
+      'A4 . C5 . E5 . . .', 'F5 . E5 . D5 . . .', 'D5 . E5 . F5 . B4 .', 'C5 . . . - - - -',
+    ],
+    chords: ['C', 'F', 'G', 'C', 'Am', 'Dm', 'G', 'C'],
+  },
+  // よる：こもりうた
+  yoru: {
+    bpm: 80,
+    soft: true,
+    melody: [
+      'E5 . . . G5 . . .', 'F5 . E5 . D5 . . .', 'C5 . . . E5 . . .', 'D5 . . . . . - -',
+      'E5 . . . G5 . . .', 'A5 . G5 . F5 . . .', 'E5 . D5 . . . B4 .', 'C5 . . . . . - -',
+    ],
+    chords: ['C', 'F', 'Am', 'G', 'C', 'F', 'G', 'C'],
+  },
+};
 const CHORD_DEF = {
   C: [48, [60, 64, 67]], F: [53, [60, 65, 69]], G: [55, [59, 62, 67]], Am: [57, [57, 60, 64]], Dm: [50, [57, 62, 65]],
 };
-const BPM = 112;
-const STEP = 60 / BPM / 2;
 
-function parseMelody() {
-  const steps = MELODY.flatMap((bar) => bar.trim().split(/\s+/));
+function parseMelody(melody) {
+  const steps = melody.flatMap((bar) => bar.trim().split(/\s+/));
   return steps.map((s, i) => {
     if (s === '.' || s === '-') return null;
     let len = 1;
@@ -29,7 +61,10 @@ function parseMelody() {
     return { freq: mtof(toMidi(s)), len };
   });
 }
-const EVENTS = parseMelody();
+for (const song of Object.values(SONGS)) {
+  song.events = parseMelody(song.melody);
+  song.step = 60 / song.bpm / 2;
+}
 
 // ドレミ（かぞえる おと）
 const COUNT_NOTES = [72, 74, 76, 77, 79, 81, 83, 84, 86, 88].map(mtof);
@@ -41,6 +76,16 @@ export class AudioEngine {
     this.playing = false;
     this.musicVol = 0.55;
     this.ducked = false;
+    this.song = SONGS.hiru;
+    this.nextSong = null;
+  }
+
+  /** じかんに あわせた きょく（しょうせつの きれめで かわる） */
+  setSong(id) {
+    const song = SONGS[id] ?? SONGS.hiru;
+    if (song === this.song) { this.nextSong = null; return; }
+    if (!this.playing) this.song = song;
+    else this.nextSong = song;
   }
 
   unlock() {
@@ -115,17 +160,32 @@ export class AudioEngine {
     const now = this.ctx.currentTime;
     if (this.nextTime < now - 0.2) this.nextTime = now + 0.05;
     while (this.nextTime < now + 0.15) {
+      if (this.nextSong && this.step % 8 === 0) {
+        this.song = this.nextSong;
+        this.nextSong = null;
+        this.step = 0;
+      }
       this.playStep(this.step, this.nextTime);
-      this.nextTime += STEP;
-      this.step = (this.step + 1) % EVENTS.length;
+      this.nextTime += this.song.step;
+      this.step = (this.step + 1) % this.song.events.length;
     }
   }
 
   playStep(i, t) {
     const bar = Math.floor(i / 8), s = i % 8;
-    const [root, triad] = CHORD_DEF[CHORDS[bar]];
-    const ev = EVENTS[i];
-    if (ev) this.pluck(ev.freq, t, ev.len * STEP);
+    const song = this.song;
+    const [root, triad] = CHORD_DEF[song.chords[bar]];
+    const ev = song.events[i];
+    if (song.soft) {
+      if (ev) {
+        this.voiceNote('sine', ev.freq, t, ev.len * song.step + 0.3, 0.16, this.music, 0.03);
+        this.voiceNote('sine', ev.freq * 2, t, 0.2, 0.02, this.music, 0.01);
+      }
+      if (s === 0) for (const m of triad) this.voiceNote('sine', mtof(m), t, song.step * 7, 0.04, this.music, 0.2);
+      if (s === 0 || s === 4) this.voiceNote('sine', mtof(root), t, 0.6, 0.18, this.music, 0.02);
+      return;
+    }
+    if (ev) this.pluck(ev.freq, t, ev.len * song.step);
     if (s === 0 || s === 4) this.voiceNote('sine', mtof(root), t, 0.32, 0.28, this.music, 0.01);
     if (s === 2 || s === 6) for (const m of triad) this.voiceNote('triangle', mtof(m), t, 0.14, 0.05, this.music, 0.005);
     this.shaker(t, s % 2 === 1 ? 0.05 : 0.025);
@@ -269,5 +329,90 @@ export class AudioEngine {
   tap() {
     if (!this.ok) return;
     this.voiceNote('sine', 660, this.now, 0.08, 0.12);
+  }
+
+  /** どうぶつご（ぽこぽこ）。pitch = こえの たかさ */
+  babble(pitch = 400, n = 7) {
+    if (!this.ok) return;
+    const t0 = this.now + 0.02;
+    const scale = [0, 2, 4, 7, 9, 12];
+    for (let i = 0; i < n; i++) {
+      const t = t0 + i * 0.075;
+      const f = pitch * Math.pow(2, scale[Math.floor(Math.random() * scale.length)] / 12);
+      const o = this.voiceNote('square', f, t, 0.05, 0.035);
+      o.frequency.exponentialRampToValueAtTime(f * 1.25, t + 0.05);
+      this.voiceNote('triangle', f, t, 0.06, 0.08);
+    }
+  }
+
+  /** あめの おと（ざーっ） */
+  setRain(on) {
+    if (!this.ctx) return;
+    if (on && !this.rainSrc) {
+      const src = this.ctx.createBufferSource();
+      src.buffer = this.noise;
+      src.loop = true;
+      const f = this.ctx.createBiquadFilter();
+      f.type = 'lowpass';
+      f.frequency.value = 2400;
+      this.rainGain = this.ctx.createGain();
+      this.rainGain.gain.value = 0.0001;
+      src.connect(f).connect(this.rainGain).connect(this.sfx);
+      src.start();
+      this.rainSrc = src;
+      this.rainGain.gain.setTargetAtTime(0.07, this.now, 1.5);
+    } else if (!on && this.rainSrc) {
+      const src = this.rainSrc;
+      this.rainSrc = null;
+      this.rainGain.gain.setTargetAtTime(0.0001, this.now, 1.2);
+      setTimeout(() => { try { src.stop(); } catch { /* noop */ } }, 5000);
+    }
+  }
+
+  noiseBurst(freq, dur, vol, type = 'bandpass', delay = 0) {
+    if (!this.ok) return;
+    const ctx = this.ctx, t = this.now + delay;
+    const src = ctx.createBufferSource();
+    src.buffer = this.noise;
+    const f = ctx.createBiquadFilter();
+    f.type = type;
+    f.frequency.value = freq;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(vol, t);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    src.connect(f).connect(g).connect(this.sfx);
+    src.start(t, Math.random() * 0.3, dur + 0.05);
+  }
+
+  rustle() { this.noiseBurst(3000, 0.5, 0.25); this.noiseBurst(5000, 0.35, 0.15, 'highpass', 0.12); }
+  swing() { this.noiseBurst(1200, 0.18, 0.3); }
+  splash() { this.noiseBurst(900, 0.45, 0.45, 'lowpass'); this.noiseBurst(2500, 0.3, 0.2, 'bandpass', 0.05); }
+  dig() { this.noiseBurst(500, 0.15, 0.6, 'lowpass'); this.noiseBurst(500, 0.15, 0.6, 'lowpass', 0.3); }
+
+  coin() {
+    if (!this.ok) return;
+    const t = this.now;
+    this.voiceNote('square', 1976, t, 0.08, 0.05);
+    this.voiceNote('square', 2637, t + 0.08, 0.3, 0.05);
+    this.voiceNote('triangle', 2637, t + 0.08, 0.3, 0.1);
+  }
+
+  /** つかまえた！（たったったったーん） */
+  caught() {
+    if (!this.ok) return;
+    const t = this.now;
+    [[67, 0], [72, 0.1], [76, 0.2], [79, 0.3]].forEach(([m, d]) => this.voiceNote('triangle', mtof(m), t + d, 0.12, 0.16));
+    this.voiceNote('triangle', mtof(84), t + 0.42, 0.6, 0.16);
+    this.voiceNote('sine', mtof(88), t + 0.42, 0.5, 0.05);
+  }
+
+  /** ピアノ など：ドレミ… */
+  melody(notes, gap = 0.18) {
+    if (!this.ok) return;
+    const t = this.now;
+    notes.forEach((m, i) => {
+      this.voiceNote('triangle', mtof(m), t + i * gap, 0.4, 0.14);
+      this.voiceNote('sine', mtof(m + 12), t + i * gap, 0.25, 0.04);
+    });
   }
 }

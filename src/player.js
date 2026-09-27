@@ -1,6 +1,7 @@
 // しゅじんこう の うごき
 import * as THREE from 'three';
-import { makeHero, makeAccessory } from './characters.js';
+import { makeHero, makeAccessory, makeFaceWear, dressBody } from './characters.js';
+import { makeTool, emojiSprite } from './critters.js';
 import { getHeight } from './world.js';
 
 const SPEED = 6.2;
@@ -26,8 +27,11 @@ export class Player {
     this.squash = 0;
     this.spin = 0;
     this.target = null;
-    this.accessoryId = null;
+    this.outfit = { hat: null, face: null, body: null };
+    this.worn = [];
     this.model = null;
+    this.toolTimer = 0;
+    this.holdTimer = 0;
     // きの うしろに かくれても わかる めじるし
     this.marker = new THREE.Mesh(
       new THREE.ConeGeometry(0.22, 0.4, 4),
@@ -44,20 +48,48 @@ export class Player {
     this.kind = kind;
     this.model = makeHero(kind);
     this.scene.add(this.model.root);
-    const acc = this.accessoryId;
-    this.accessoryId = null;
-    this.setAccessory(acc);
+    this.worn = [];
+    this.tool = null;
+    this.setOutfit(this.outfit);
     this.sync();
   }
 
-  setAccessory(id) {
-    if (this.accessory) this.model.head.remove(this.accessory);
-    this.accessory = null;
-    this.accessoryId = id;
-    if (id) {
-      this.accessory = makeAccessory(id);
-      this.model.head.add(this.accessory);
+  /** きせかえ：{ hat, face, body }（ない ところは なにも つけない） */
+  setOutfit(outfit) {
+    for (const m of this.worn) m.parent?.remove(m);
+    this.worn = [];
+    this.outfit = { hat: null, face: null, body: null, ...outfit };
+    const { hat, face, body } = this.outfit;
+    const wear = (obj) => { this.model.head.add(obj); this.worn.push(obj); };
+    if (hat) wear(makeAccessory(hat));
+    if (face) wear(makeFaceWear(face));
+    if (body) this.worn.push(...dressBody(this.model, body));
+  }
+
+  /** ぼうし だけ かえる（ごほうび） */
+  setAccessory(id) { this.setOutfit({ ...this.outfit, hat: id }); }
+
+  /** どうぐを もって つかう（dur びょう） */
+  useTool(id, dur = 0.8) {
+    if (this.tool?.userData.id !== id) {
+      if (this.tool) this.model.pivot.remove(this.tool);
+      this.tool = makeTool(id);
+      this.tool.userData.id = id;
+      this.tool.position.set(0.52, 0.62, 0.12);
+      this.model.pivot.add(this.tool);
     }
+    this.tool.visible = true;
+    this.toolTimer = dur;
+    this.toolDur = dur;
+  }
+
+  /** とった ものを あたまの うえに かかげる */
+  holdUp(emoji, dur = 1.8) {
+    if (this.held) this.model.root.remove(this.held);
+    this.held = emojiSprite(emoji, 0.95);
+    this.held.position.set(0, 2.55, 0);
+    this.model.root.add(this.held);
+    this.holdTimer = dur;
   }
 
   setTarget(v) { this.target = v ? v.clone() : null; }
@@ -169,6 +201,27 @@ export class Player {
     md.armL.position.z = 0.05 - Math.sin(p) * 0.14 * walk;
     md.armR.position.z = 0.05 + Math.sin(p) * 0.14 * walk;
     md.armL.position.y = md.armR.position.y = this.onGround ? 0.66 : 0.9;
+    // かかげる／どうぐ
+    if (this.holdTimer > 0) {
+      this.holdTimer -= dt;
+      md.armL.position.set(-0.42, 1.12, 0.05);
+      md.armR.position.set(0.42, 1.12, 0.05);
+      if (this.held) this.held.position.y = 2.55 + Math.sin(Math.min(1, this.holdTimer) * Math.PI) * 0.1;
+      if (this.holdTimer <= 0 && this.held) { this.model.root.remove(this.held); this.held = null; }
+    } else {
+      md.armL.position.x = -0.5;
+      md.armR.position.x = 0.5;
+    }
+    if (this.tool) {
+      this.toolTimer -= dt;
+      this.tool.visible = this.toolTimer > 0;
+      const k = 1 - Math.max(0, this.toolTimer) / (this.toolDur || 1);
+      const id = this.tool.userData.id;
+      if (id === 'ami') this.tool.rotation.set(-1.4 + Math.sin(k * Math.PI) * 2.2, 0, -0.2);
+      else if (id === 'sao') this.tool.rotation.set(k < 0.2 ? -0.3 - k * 5 : 1.1, 0, 0);
+      else if (id === 'scoop') this.tool.rotation.set(1.2 + Math.sin(k * Math.PI * 4) * 0.5, 0, 0);
+      else if (id === 'jouro') this.tool.rotation.set(0.3 + Math.sin(k * Math.PI) * 0.6, 0, 0);
+    }
 
     md.pivot.position.y = Math.abs(Math.sin(p)) * 0.09 * walk;
     md.pivot.rotation.z = Math.sin(p) * 0.07 * walk;

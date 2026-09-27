@@ -36,9 +36,13 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 #hud { position: fixed; inset: 0; pointer-events: none; }
 #hud > * { pointer-events: auto; }
 
-/* ---------- ほし */
-.pill {
+/* ---------- ほし・ベル・とけい */
+#pills {
   position: absolute; top: calc(var(--u) * 3); left: calc(var(--u) * 3 + var(--safe-l));
+  display: flex; flex-direction: column; align-items: flex-start; gap: calc(var(--u) * 1.2);
+  pointer-events: none !important;
+}
+.pill {
   background: rgba(255,255,255,.92); border-radius: 999px;
   padding: calc(var(--u) * 1.2) calc(var(--u) * 3);
   font-size: calc(var(--u) * 6); font-weight: 800;
@@ -47,6 +51,8 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
   pointer-events: none !important;
 }
 .pill .star { font-size: 1.1em; }
+.pill.small { font-size: calc(var(--u) * 4); padding: calc(var(--u) * .8) calc(var(--u) * 2.4); }
+.pill .seed { margin-left: calc(var(--u) * 1.5); }
 .pill.bump { animation: bump .6s ease; }
 @keyframes bump { 30% { transform: scale(1.35); } 60% { transform: scale(.95); } }
 
@@ -115,17 +121,28 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 #btnJump .jump-icon { font-size: 1.8em; }
 #btnJump.pressed { transform: translateY(calc(var(--u) * 1)); box-shadow: 0 calc(var(--u) * .2) 0 #d93b62; }
 
-/* ---------- じまく */
+/* ---------- ふきだし（じまく） */
 #subtitle {
-  position: absolute; left: 50%; bottom: calc(var(--u) * 4 + var(--safe-b)); transform: translate(-50%, 30%);
-  max-width: 58vw; text-align: center; text-wrap: balance;
-  background: rgba(255,255,255,.94); border-radius: calc(var(--u) * 3);
-  padding: calc(var(--u) * 1.5) calc(var(--u) * 3);
+  position: absolute; left: 50%; bottom: calc(var(--u) * 5 + var(--safe-b)); transform: translate(-50%, 30%) scale(.9);
+  max-width: 58vw; min-width: calc(var(--u) * 40); text-align: center; text-wrap: balance;
+  background: #fffdf3; border-radius: calc(var(--u) * 6);
+  padding: calc(var(--u) * 2.4) calc(var(--u) * 5);
   font-size: calc(var(--u) * 4.6); font-weight: 800; line-height: 1.4;
-  box-shadow: 0 calc(var(--u) * .8) 0 rgba(0,0,0,.12);
-  opacity: 0; transition: opacity .25s, transform .25s; pointer-events: none !important;
+  box-shadow: 0 calc(var(--u) * .9) 0 rgba(120,90,50,.18), 0 0 0 calc(var(--u) * .6) #f3e2bf inset;
+  opacity: 0; transition: opacity .25s, transform .3s cubic-bezier(.2,1.6,.4,1); pointer-events: none !important;
 }
-#subtitle.show { opacity: 1; transform: translate(-50%, 0); }
+#subtitle::after {
+  content: ''; position: absolute; left: 50%; bottom: calc(var(--u) * -2.2); transform: translateX(-50%);
+  border: calc(var(--u) * 2.4) solid transparent; border-top-color: #fffdf3; border-bottom: 0;
+}
+#subtitle.show { opacity: 1; transform: translate(-50%, 0) scale(1); }
+#subName {
+  position: absolute; left: calc(var(--u) * 3); top: calc(var(--u) * -3.2);
+  background: #ff9a3c; color: #fff; border-radius: 999px; padding: calc(var(--u) * .4) calc(var(--u) * 2.4);
+  font-size: calc(var(--u) * 3.4); transform: rotate(-4deg);
+  box-shadow: 0 calc(var(--u) * .5) 0 rgba(0,0,0,.12);
+}
+#subText .rest { opacity: 0; }
 
 /* ---------- おおきな もじ */
 #bigPop, #numPop {
@@ -202,3 +219,96 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 @media (orientation: portrait) and (max-width: 900px) {
   #rotate { display: flex; }
 }
+
+/* ---------- よこの ボタン（ずかん・きせかえ） */
+#sideBtns {
+  position: absolute; right: calc(var(--u) * 7 + var(--safe-r)); bottom: calc(var(--u) * 36 + var(--safe-b));
+  display: flex; flex-direction: column; gap: calc(var(--u) * 2);
+}
+.side-btn {
+  position: relative; width: calc(var(--u) * 14); height: calc(var(--u) * 14); border-radius: calc(var(--u) * 4);
+  background: #fffdf5; box-shadow: 0 calc(var(--u) * .9) 0 rgba(0,0,0,.15);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.1;
+}
+.side-btn:active { transform: translateY(calc(var(--u) * .6)); box-shadow: 0 calc(var(--u) * .3) 0 rgba(0,0,0,.15); }
+.side-emoji { font-size: calc(var(--u) * 6.5); }
+.side-label { font-size: calc(var(--u) * 2.8); font-weight: 900; }
+.badge {
+  position: absolute; top: calc(var(--u) * -1.5); right: calc(var(--u) * -1.5);
+  width: calc(var(--u) * 5.5); height: calc(var(--u) * 5.5); border-radius: 50%;
+  background: #ff4f7b; color: #fff; font-weight: 900; font-size: calc(var(--u) * 3.6);
+  display: flex; align-items: center; justify-content: center; animation: bump 1s ease infinite;
+}
+
+/* ---------- とった もの */
+#itemPop {
+  position: absolute; left: 50%; top: 30%; transform: translate(-50%, -50%) scale(0); opacity: 0;
+  background: #fffdf5; border-radius: calc(var(--u) * 5); padding: calc(var(--u) * 1.5) calc(var(--u) * 6) calc(var(--u) * 2);
+  text-align: center; box-shadow: 0 0 0 calc(var(--u) * .8) #8bd46a, 0 calc(var(--u) * 1.4) 0 rgba(0,0,0,.15);
+  pointer-events: none !important;
+}
+#itemPop.show { animation: itemIn 2.4s ease forwards; }
+@keyframes itemIn {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0) rotate(-8deg); }
+  14% { opacity: 1; transform: translate(-50%, -50%) scale(1.12) rotate(2deg); }
+  22%, 82% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -80%) scale(.9); }
+}
+.item-emoji { font-size: calc(var(--u) * 15); line-height: 1.15; }
+.item-name { font-size: calc(var(--u) * 5.2); font-weight: 900; white-space: nowrap; }
+.item-new { display: none; font-size: calc(var(--u) * 3.6); font-weight: 900; color: #fff; background: #ff4f7b; border-radius: 999px; padding: 0 calc(var(--u) * 2); margin: 0 auto calc(var(--u) * .5); width: fit-content; }
+#itemPop.new .item-new { display: block; }
+#itemPop.new { box-shadow: 0 0 0 calc(var(--u) * .8) #ff8fc8, 0 calc(var(--u) * 1.4) 0 rgba(0,0,0,.15); }
+
+/* ---------- かぐの トレイ（じぶんの おうち） */
+#tray {
+  position: absolute; left: 50%; top: calc(var(--u) * 19); transform: translateX(-50%);
+  display: flex; gap: calc(var(--u) * 1.6); max-width: calc(100vw - var(--u) * 70);
+  overflow-x: auto; padding: calc(var(--u) * 1.4); border-radius: calc(var(--u) * 4);
+  background: rgba(255,253,245,.9); box-shadow: 0 calc(var(--u) * .8) 0 rgba(0,0,0,.12);
+  touch-action: pan-x;
+}
+.tray-btn {
+  position: relative; flex: none; width: calc(var(--u) * 12); height: calc(var(--u) * 12); border-radius: calc(var(--u) * 3);
+  background: #fff; box-shadow: 0 0 0 calc(var(--u) * .4) #e8d8b8 inset;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.tray-btn.selected { background: #fff3a8; box-shadow: 0 0 0 calc(var(--u) * .7) #ffc21a inset; animation: bump .8s ease infinite; }
+.tray-btn.putaway { background: #e8f4ff; }
+.tray-emoji { font-size: calc(var(--u) * 7); line-height: 1; }
+.tray-label { font-size: calc(var(--u) * 2.8); font-weight: 900; }
+.tray-count { position: absolute; right: calc(var(--u) * .6); bottom: calc(var(--u) * .2); font-size: calc(var(--u) * 3.2); font-weight: 900; color: #ff6f91; }
+.tray-empty { font-size: calc(var(--u) * 4); font-weight: 800; padding: calc(var(--u) * 1) calc(var(--u) * 3); }
+
+/* ---------- ずかん・きせかえ の パネル */
+#panel { position: fixed; inset: 0; background: rgba(40,30,20,.25); z-index: 4; display: flex; justify-content: flex-end; }
+#panel .sheet {
+  width: min(47vw, calc(100vw - var(--u) * 40)); height: 100%; background: #fffaf0;
+  border-radius: calc(var(--u) * 6) 0 0 calc(var(--u) * 6); box-shadow: 0 0 calc(var(--u) * 5) rgba(0,0,0,.2);
+  display: flex; flex-direction: column; padding: calc(var(--u) * 3) calc(var(--u) * 3 + var(--safe-r)) calc(var(--u) * 2 + var(--safe-b)) calc(var(--u) * 3);
+  animation: sheetIn .35s cubic-bezier(.2,1.3,.4,1);
+}
+@keyframes sheetIn { from { transform: translateX(60%); } }
+.sheet-head { display: flex; align-items: center; gap: calc(var(--u) * 2); }
+#panelTitle { font-size: calc(var(--u) * 6.5); font-weight: 900; }
+#panelCount { font-size: calc(var(--u) * 4.6); font-weight: 800; color: #ff6f91; flex: 1; }
+#panelClose { width: calc(var(--u) * 10); height: calc(var(--u) * 10); border-radius: 50%; background: #fff; font-size: calc(var(--u) * 5); box-shadow: 0 calc(var(--u) * .6) 0 rgba(0,0,0,.12); }
+#panelTabs { display: flex; gap: calc(var(--u) * 1.2); margin: calc(var(--u) * 2) 0; flex-wrap: wrap; }
+.tab { font-size: calc(var(--u) * 4); font-weight: 900; padding: calc(var(--u) * 1) calc(var(--u) * 2.4); border-radius: 999px; background: #fff; box-shadow: 0 0 0 calc(var(--u) * .4) #e8d8b8 inset; }
+.tab.active { background: #ffd23d; box-shadow: none; }
+#panelGrid {
+  flex: 1; overflow-y: auto; touch-action: pan-y;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(var(--u) * 19), 1fr)); gap: calc(var(--u) * 1.8); align-content: start;
+  padding: calc(var(--u) * .5);
+}
+.card {
+  background: #fff; border-radius: calc(var(--u) * 3.5); padding: calc(var(--u) * 1.4) calc(var(--u) * .6);
+  display: flex; flex-direction: column; align-items: center; gap: calc(var(--u) * .4);
+  box-shadow: 0 calc(var(--u) * .7) 0 rgba(0,0,0,.1);
+}
+.card-emoji { font-size: calc(var(--u) * 10); line-height: 1.1; }
+.card-name { font-size: calc(var(--u) * 3.2); font-weight: 900; text-align: center; line-height: 1.2; }
+.card-note { font-size: calc(var(--u) * 2.8); font-weight: 800; color: #ff6f91; }
+.card.lock .card-emoji { filter: brightness(0) opacity(.18); }
+.card.lock .card-name { color: #b8a890; }
+.card.on { background: #fff3a8; box-shadow: 0 0 0 calc(var(--u) * .7) #ffc21a inset, 0 calc(var(--u) * .7) 0 rgba(0,0,0,.1); }
