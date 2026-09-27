@@ -91,6 +91,8 @@ export const L = {
   closet: () => line('きせかえ しよう！ すきな もの を えらんでね！'),
   wear: (c) => line(`${c.name}！ にあってるね！`),
   roomWelcome: () => line('じぶんの おうち だよ！ かぐ を おいて かざろう！'),
+  roomMoveHint: () => line('ゆび で ひっぱると うごかせるよ！'),
+  roomNoSpace: () => line('おく ばしょ が ないよ。 なにか しまってね！'),
 
   // ---- かずの がっこう
   schoolWelcome: () => line('かずの がっこう へ ようこそ！ すうじ で あそぼう！'),
@@ -192,7 +194,7 @@ export function allLines() {
   for (const f of Object.values(FURNITURE)) { add(L.furnDrop(f)); add(L.bottle(f)); add(L.buy(f)); }
   for (const c of Object.values(CLOTHES)) { add(L.buy(c)); add(L.wear(c)); }
   add(L.buy({ name: L.seedsName }));
-  [L.plant, L.noSeeds, L.water, L.wait, L.shopHello, L.soldOut, L.sellNone, L.closet, L.roomWelcome].forEach((f) => add(f()));
+  [L.plant, L.noSeeds, L.water, L.wait, L.shopHello, L.soldOut, L.sellNone, L.closet, L.roomWelcome, L.roomMoveHint, L.roomNoSpace].forEach((f) => add(f()));
   for (const n of range(1, 30)) add(L.notEnough(n));
   for (const n of range(1, 100)) add(L.sell(n));
   for (const snow of [false, true]) { add(L.rainStart(snow)); add(L.rainEnd(snow)); }
