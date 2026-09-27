@@ -91,7 +91,7 @@ export const L = {
   closet: () => line('きせかえ しよう！ すきな もの を えらんでね！'),
   wear: (c) => line(`${c.name}！ にあってるね！`),
   roomWelcome: () => line('じぶんの おうち だよ！ かぐ を おいて かざろう！'),
-  roomMoveHint: () => line('ゆか を タップ すると うごかせるよ！'),
+  roomMoveHint: () => line('ゆび で ひっぱると うごかせるよ！'),
   roomNoSpace: () => line('おく ばしょ が ないよ。 なにか しまってね！'),
 
   // ---- かずの がっこう

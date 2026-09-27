@@ -57,7 +57,7 @@ const input = new Input({
 const quests = new QuestManager({ scene, world, player, animals, ui, audio, voice, effects, save, persist });
 animals.onMeet = (a) => { if (mode === 'play' && place === 'island') quests.onAnimalMeet(a); };
 const school = new School(scene, { player, audio, voice, ui, effects, quests });
-const room = new Room(scene, { player, audio, voice, ui, save, persist, climate });
+const room = new Room(scene, { player, audio, voice, ui, save, persist, climate, camera });
 const life = new Life({ scene, world, player, ui, audio, voice, effects, save, persist, quests, climate });
 life.onBells = refreshHud;
 life.onWear = (id) => wear(CLOTHES[id].slot, id, false);
@@ -225,7 +225,7 @@ function setRay(x, y) {
 input.onTap = (x, y) => {
   if (mode !== 'play' || place === 'island') return false;
   setRay(x, y);
-  return (place === 'school' ? school : room).tap(raycaster);
+  return place === 'school' ? school.tap(raycaster) : room.tap(raycaster, x, y);
 };
 function screenToGround(x, y) {
   setRay(x, y);
@@ -414,6 +414,15 @@ function frame(now) {
 
   if (mode === 'play') {
     const ptr = input.pointer;
+    // じぶんの おうち：かぐを ゆびで ひっぱる
+    if (place === 'room' && room.drag) {
+      if (ptr) {
+        setRay(ptr.x, ptr.y);
+        room.dragTo(raycaster, ptr.x, ptr.y);
+      } else {
+        room.endDrag();
+      }
+    }
     if (ptr) {
       if (!ptr.tapped) {
         const g = screenToGround(ptr.x, ptr.y);

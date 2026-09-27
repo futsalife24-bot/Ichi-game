@@ -1,7 +1,7 @@
 // じぶんの おうち：かぐを おいて かざる へや
 //   - うえの トレイの かぐを タップ → キャラの ちかくに すぐ おく
-//   - おいた かぐを タップ → くるっと まわって えらばれる（ひかる わ）
-//     えらんでいる あいだに ゆかを タップ → そこへ うごかす／「しまう」で トレイに もどす
+//   - おいた かぐを ゆびで ひっぱる → うごかす（タップ だけ なら くるっと まわる）
+//   - えらんだ かぐの うえに 「まわす・しまう・できた」ボタン
 //   - かべを タップ → かべがみ が かわる
 //   - たんす に さわる → きせかえ
 import * as THREE from 'three';
@@ -50,8 +50,8 @@ function drawWallpaper(x, w, h, wp) {
 }
 
 export class Room {
-  constructor(scene, { player, audio, voice, ui, save, persist, climate }) {
-    Object.assign(this, { scene, player, audio, voice, ui, save, persist, climate });
+  constructor(scene, { player, audio, voice, ui, save, persist, climate, camera }) {
+    Object.assign(this, { scene, player, audio, voice, ui, save, persist, climate, camera });
     this.group = new THREE.Group();
     this.group.position.copy(ROOM_ORIGIN);
     this.group.visible = false;
@@ -60,8 +60,17 @@ export class Room {
     this.colliders = [];
     this.bouncers = [];
     this.pieces = [];
-    this.picked = null; // えらんでいる おいてある かぐ（ゆかタップで うごかせる）
-    this.pickTimer = 0;
+    this.picked = null; // えらんでいる おいてある かぐ
+    this.drag = null; // ゆびで ひっぱっている とき { piece, sx, sy, moved }
+    this.bar = document.getElementById('furnBar');
+    this.bar.addEventListener('click', (e) => {
+      const act = e.target.closest('button')?.dataset.act;
+      const pc = this.picked;
+      if (!act || !pc) return;
+      if (act === 'rotate') this.rotate(pc);
+      else if (act === 'put') this.putAway(pc);
+      else { this.audio.tap(); this.pick(null); }
+    });
     this.onCloset = null;
     this.tray = document.getElementById('tray');
     this.buildRoom();
@@ -223,7 +232,7 @@ export class Room {
     return null;
   }
 
-  /** プレイヤーの まえ あたりで あいている ばしょ */
+  /** プレイヤーの よこ あたりで あいている ばしょ（カメラから かくれない ように） */
   freeSpotNear(id) {
     const p = this.player.pos;
     const px = p.x - ROOM_ORIGIN.x, pz = p.z - ROOM_ORIGIN.z;
@@ -231,7 +240,8 @@ export class Room {
     const snap = (v) => Math.round(v * 2) / 2;
     for (const dist of [1.2, 1.7, 2.2, 2.8, 3.5, 4.5, 6, 8]) {
       for (let k = 0; k < 16; k++) {
-        const a = this.player.yaw + (k % 2 ? 1 : -1) * Math.ceil(k / 2) * (Math.PI / 8);
+        const side = k % 2 ? 1 : -1;
+        const a = side * Math.PI / 2 + side * Math.floor(k / 2) * (Math.PI / 8);
         const x = snap(px + Math.sin(a) * (dist + r)), z = snap(pz + Math.cos(a) * (dist + r));
         if (this.canPlace(id, x, z) && this.clearOfPlayer(id, x, z)) return { x, z };
       }
@@ -241,8 +251,14 @@ export class Room {
 
   pick(piece) {
     this.picked = piece;
-    this.pickTimer = piece ? 10 : 0;
-    this.renderTray();
+    this.bar.classList.toggle('hidden', !piece);
+  }
+
+  rotate(pc) {
+    pc.rot = ((pc.rot ?? 0) + 1) % 4;
+    pc.hop = 1;
+    this.saveRoom();
+    this.audio.tap();
   }
 
   /** トレイの かぐを タップ → プレイヤーの ちかくに すぐ おく */
@@ -261,41 +277,22 @@ export class Room {
     this.saveRoom();
     this.updateColliders();
     this.audio.pop();
+    this.renderTray();
     this.pick(piece);
     this.voice.say(L.roomMoveHint());
   }
 
-  /** タップ（つかったら true） */
-  tap(raycaster) {
-    // おいてある かぐ → えらんで まわす
+  /** タップ（つかったら true）。x, y は がめんの いち */
+  tap(raycaster, x, y) {
+    // おいてある かぐ → えらんで ひっぱれる ように する
     const hits = raycaster.intersectObjects(this.pieces.map((p) => p.mesh), true);
     if (hits.length) {
       let o = hits[0].object;
       while (o && !o.userData.piece) o = o.parent;
       const piece = o?.userData.piece;
       if (piece) {
-        piece.rot = ((piece.rot ?? 0) + 1) % 4;
-        piece.hop = 1;
-        this.saveRoom();
-        this.audio.tap();
+        this.drag = { piece, sx: x, sy: y, moved: false };
         this.pick(piece);
-        return true;
-      }
-    }
-    // えらんでいる かぐ を ゆかの タップした ところへ うごかす
-    if (this.picked) {
-      const hit = raycaster.ray.intersectPlane(new THREE.Plane(new THREE.Vector3(0, 1, 0), -ROOM_ORIGIN.y), new THREE.Vector3());
-      if (hit && Math.abs(hit.x - ROOM_ORIGIN.x) < HALF_W + 0.5 && hit.z - ROOM_ORIGIN.z > BACK && hit.z - ROOM_ORIGIN.z < FRONT + 1) {
-        const pc = this.picked;
-        const spot = this.nearestFree(pc.id, hit.x - ROOM_ORIGIN.x, hit.z - ROOM_ORIGIN.z, pc);
-        if (!spot) { this.audio.wrong(); return true; }
-        const { x, z } = spot;
-        Object.assign(pc, { x, z, hop: 1 });
-        pc.mesh.position.set(x, 0, z);
-        this.saveRoom();
-        this.updateColliders();
-        this.audio.pop();
-        this.pick(null);
         return true;
       }
     }
@@ -307,7 +304,35 @@ export class Room {
       this.audio.pop();
       return true;
     }
+    // ゆか → えらぶのを やめて あるく
+    if (this.picked) this.pick(null);
     return false;
+  }
+
+  /** ゆびを うごかしている あいだ（main から まいフレーム） */
+  dragTo(raycaster, x, y) {
+    const d = this.drag;
+    if (!d.moved && Math.hypot(x - d.sx, y - d.sy) < 12) return;
+    d.moved = true;
+    const hit = raycaster.ray.intersectPlane(new THREE.Plane(new THREE.Vector3(0, 1, 0), -ROOM_ORIGIN.y), new THREE.Vector3());
+    if (!hit) return;
+    const spot = this.nearestFree(d.piece.id, hit.x - ROOM_ORIGIN.x, hit.z - ROOM_ORIGIN.z, d.piece);
+    if (spot && (spot.x !== d.piece.x || spot.z !== d.piece.z)) {
+      Object.assign(d.piece, spot);
+      d.piece.mesh.position.x = spot.x;
+      d.piece.mesh.position.z = spot.z;
+    }
+  }
+
+  /** ゆびを はなした */
+  endDrag() {
+    const d = this.drag;
+    this.drag = null;
+    if (!d.moved) { this.rotate(d.piece); return; }
+    d.piece.hop = 0.6;
+    this.saveRoom();
+    this.updateColliders();
+    this.audio.pop();
   }
 
   putAway(piece) {
@@ -317,31 +342,25 @@ export class Room {
     this.saveRoom();
     this.updateColliders();
     this.audio.pop();
+    this.renderTray();
     this.pick(null);
   }
 
   // ------------------------------------------------ トレイ（HTML）
   renderTray() {
     const tray = this.tray;
-    tray.innerHTML = '';
-    if (this.picked && this.pieces.includes(this.picked)) {
-      const b = document.createElement('button');
-      b.className = 'tray-btn putaway';
-      b.innerHTML = `<span class="tray-emoji">📦</span><span class="tray-label">しまう</span>`;
-      b.addEventListener('click', () => this.putAway(this.picked));
-      tray.appendChild(b);
-    }
+    tray.innerHTML = '<div class="tray-hint">かぐ<br>さわると<br>おけるよ</div>';
     const inv = Object.entries(this.save.inventory).filter(([id, n]) => n > 0 && FURNITURE[id]);
     for (const [id, n] of inv) {
       const f = FURNITURE[id];
       const b = document.createElement('button');
       b.className = 'tray-btn';
-      b.innerHTML = `<span class="tray-emoji">${f.emoji}</span>${n > 1 ? `<span class="tray-count">${n}</span>` : ''}`;
+      b.innerHTML = `<span class="tray-emoji">${f.emoji}</span><span class="tray-label">${f.name}</span>${n > 1 ? `<span class="tray-count">${n}</span>` : ''}`;
       b.setAttribute('aria-label', f.name);
       b.addEventListener('click', () => this.placeFromTray(id));
       tray.appendChild(b);
     }
-    if (!tray.children.length) {
+    if (tray.children.length === 1) {
       const p = document.createElement('div');
       p.className = 'tray-empty';
       p.textContent = 'かぐは おみせで かえるよ';
@@ -353,7 +372,8 @@ export class Room {
   enter() {
     this.group.visible = true;
     this.exitArmed = false;
-    this.picked = null;
+    this.pick(null);
+    this.drag = null;
     this.tray.classList.remove('hidden');
     this.renderTray();
     this.ui.setQuest({ icon: '<span class="emoji">🏠</span>', text: 'じぶんの おうち' });
@@ -364,7 +384,8 @@ export class Room {
   exit() {
     this.group.visible = false;
     this.tray.classList.add('hidden');
-    this.picked = null;
+    this.pick(null);
+    this.drag = null;
   }
 
   // ------------------------------------------------ まいフレーム（'exit' を かえしたら そとへ）
@@ -385,7 +406,7 @@ export class Room {
       pc.touch = touch;
       pc.hop = Math.max(0, pc.hop - dt * 2.5);
       const m = pc.mesh;
-      m.position.y = Math.sin(pc.hop * Math.PI) * 0.35;
+      m.position.y = Math.sin(pc.hop * Math.PI) * 0.35 + (this.drag?.piece === pc && this.drag.moved ? 0.3 : 0);
       const targetRot = (pc.rot ?? 0) * Math.PI / 2;
       m.rotation.y += (targetRot - m.rotation.y) * (1 - Math.exp(-12 * dt));
       const s = 1 + (this.picked === pc ? Math.sin(t * 6) * 0.05 : 0);
@@ -400,17 +421,25 @@ export class Room {
     }
     const gs = 1 + Math.sin(t * 4) * 0.08;
     this.exitGlow.scale.set(gs, gs, 1);
-    // えらんでいる かぐ（しばらく さわらないと えらぶのを やめる）
-    if (this.picked) {
-      this.pickTimer -= dt;
-      if (this.pickTimer <= 0 || !this.pieces.includes(this.picked)) this.pick(null);
-    }
     const pk = this.picked;
     this.pickRing.visible = !!pk;
     if (pk) {
       const rr = (pk.def.r + 0.25) * gs;
       this.pickRing.position.set(pk.mesh.position.x, 0.06, pk.mesh.position.z);
       this.pickRing.scale.set(rr, rr, 1);
+      // ボタンを かぐの うえに
+      const v = pk.mesh.getWorldPosition(new THREE.Vector3()).setY(ROOM_ORIGIN.y + 2.3).project(this.camera);
+      const bx = Math.min(window.innerWidth - 120, Math.max(120, (v.x + 1) / 2 * window.innerWidth));
+      let by = (1 - v.y) / 2 * window.innerHeight;
+      // トレイに かさなる ときは かぐの したに だす
+      const below = by - this.bar.offsetHeight < this.tray.getBoundingClientRect().bottom + 6;
+      if (below) {
+        const f = pk.mesh.getWorldPosition(new THREE.Vector3()).setY(ROOM_ORIGIN.y).project(this.camera);
+        by = (1 - f.y) / 2 * window.innerHeight + 12;
+      }
+      this.bar.classList.toggle('below', below);
+      this.bar.style.left = `${bx}px`;
+      this.bar.style.top = `${by}px`;
     }
     this.climate.skyColor(this.glass.material.color);
     return null;
