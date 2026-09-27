@@ -273,7 +273,6 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
   background: #fff; box-shadow: 0 0 0 calc(var(--u) * .4) #e8d8b8 inset;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
 }
-.tray-btn.selected { background: #fff3a8; box-shadow: 0 0 0 calc(var(--u) * .7) #ffc21a inset; animation: bump .8s ease infinite; }
 .tray-btn.putaway { background: #e8f4ff; }
 .tray-emoji { font-size: calc(var(--u) * 7); line-height: 1; }
 .tray-label { font-size: calc(var(--u) * 2.8); font-weight: 900; }

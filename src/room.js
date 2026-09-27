@@ -1,6 +1,7 @@
 // じぶんの おうち：かぐを おいて かざる へや
-//   - したの トレイ から かぐを えらぶ → ゆかを タップ で おく
-//   - おいた かぐを タップ → くるっと まわる（「しまう」で トレイに もどす）
+//   - うえの トレイの かぐを タップ → キャラの ちかくに すぐ おく
+//   - おいた かぐを タップ → くるっと まわって えらばれる（ひかる わ）
+//     えらんでいる あいだに ゆかを タップ → そこへ うごかす／「しまう」で トレイに もどす
 //   - かべを タップ → かべがみ が かわる
 //   - たんす に さわる → きせかえ
 import * as THREE from 'three';
@@ -59,11 +60,16 @@ export class Room {
     this.colliders = [];
     this.bouncers = [];
     this.pieces = [];
-    this.selected = null; // トレイで えらんだ かぐ（id）
-    this.picked = null; // さいごに タップした おいてある かぐ
+    this.picked = null; // えらんでいる おいてある かぐ（ゆかタップで うごかせる）
+    this.pickTimer = 0;
     this.onCloset = null;
     this.tray = document.getElementById('tray');
     this.buildRoom();
+    // えらんでいる かぐの まわりの ひかる わ
+    this.pickRing = new THREE.Mesh(new THREE.TorusGeometry(1, 0.06, 8, 36), new THREE.MeshBasicMaterial({ color: 0xffd23d }));
+    this.pickRing.rotation.x = Math.PI / 2;
+    this.pickRing.visible = false;
+    this.group.add(this.pickRing);
     for (const p of save.room) this.addPiece(p);
     this.updateColliders();
   }
@@ -187,39 +193,81 @@ export class Room {
     this.persist();
   }
 
-  canPlace(id, x, z) {
+  canPlace(id, x, z, ignore = null) {
     const r = FURNITURE[id].r;
     if (Math.abs(x) > HALF_W - r - 0.1 || z < BACK + r || z > FRONT - r - 0.2) return false;
-    if (Math.hypot(x - EXIT.x, z - EXIT.z) < r + 1.2) return false;
-    for (const c of [...this.fixed, ...this.pieces.map((p) => ({ x: p.x, z: p.z, r: p.def.r }))]) {
+    if (Math.hypot(x - EXIT.x, z - EXIT.z) < r + 0.9) return false;
+    const others = this.pieces.filter((p) => p !== ignore).map((p) => ({ x: p.x, z: p.z, r: p.def.r }));
+    for (const c of [...this.fixed, ...others]) {
       if (Math.hypot(x - c.x, z - c.z) < r + c.r - 0.15) return false;
     }
     return true;
   }
 
+  /** プレイヤーに かさならない か */
+  clearOfPlayer(id, x, z) {
+    const p = this.player.pos;
+    return Math.hypot(x - (p.x - ROOM_ORIGIN.x), z - (p.z - ROOM_ORIGIN.z)) > FURNITURE[id].r + 0.6;
+  }
+
+  /** (x, z) に いちばん ちかい おける ばしょ（おけない ところを タップしても となりに おく） */
+  nearestFree(id, x, z, ignore = null) {
+    for (let d = 0; d <= 4; d += 0.5) {
+      const n = d === 0 ? 1 : Math.round(d * 8);
+      for (let k = 0; k < n; k++) {
+        const a = (k / n) * Math.PI * 2;
+        const cx = Math.round((x + Math.cos(a) * d) * 2) / 2, cz = Math.round((z + Math.sin(a) * d) * 2) / 2;
+        if (this.canPlace(id, cx, cz, ignore) && this.clearOfPlayer(id, cx, cz)) return { x: cx, z: cz };
+      }
+    }
+    return null;
+  }
+
+  /** プレイヤーの まえ あたりで あいている ばしょ */
+  freeSpotNear(id) {
+    const p = this.player.pos;
+    const px = p.x - ROOM_ORIGIN.x, pz = p.z - ROOM_ORIGIN.z;
+    const r = FURNITURE[id].r;
+    const snap = (v) => Math.round(v * 2) / 2;
+    for (const dist of [1.2, 1.7, 2.2, 2.8, 3.5, 4.5, 6, 8]) {
+      for (let k = 0; k < 16; k++) {
+        const a = this.player.yaw + (k % 2 ? 1 : -1) * Math.ceil(k / 2) * (Math.PI / 8);
+        const x = snap(px + Math.sin(a) * (dist + r)), z = snap(pz + Math.cos(a) * (dist + r));
+        if (this.canPlace(id, x, z) && this.clearOfPlayer(id, x, z)) return { x, z };
+      }
+    }
+    return null;
+  }
+
+  pick(piece) {
+    this.picked = piece;
+    this.pickTimer = piece ? 10 : 0;
+    this.renderTray();
+  }
+
+  /** トレイの かぐを タップ → プレイヤーの ちかくに すぐ おく */
+  placeFromTray(id) {
+    const spot = this.freeSpotNear(id);
+    if (!spot) {
+      this.audio.wrong();
+      this.voice.say(L.roomNoSpace());
+      return;
+    }
+    const inv = this.save.inventory;
+    inv[id]--;
+    if (inv[id] <= 0) delete inv[id];
+    const piece = this.addPiece({ id, ...spot, rot: 0 });
+    piece.hop = 1;
+    this.saveRoom();
+    this.updateColliders();
+    this.audio.pop();
+    this.pick(piece);
+    this.voice.say(L.roomMoveHint());
+  }
+
   /** タップ（つかったら true） */
   tap(raycaster) {
-    // おく
-    if (this.selected) {
-      const hit = raycaster.ray.intersectPlane(new THREE.Plane(new THREE.Vector3(0, 1, 0), -ROOM_ORIGIN.y), new THREE.Vector3());
-      if (!hit) return false;
-      const x = Math.round((hit.x - ROOM_ORIGIN.x) * 2) / 2, z = Math.round((hit.z - ROOM_ORIGIN.z) * 2) / 2;
-      const id = this.selected;
-      if (!this.canPlace(id, x, z)) { this.audio.wrong(); return true; }
-      const inv = this.save.inventory;
-      inv[id]--;
-      if (inv[id] <= 0) delete inv[id];
-      const piece = this.addPiece({ id, x, z, rot: 0 });
-      piece.hop = 1;
-      this.selected = null;
-      this.picked = piece;
-      this.saveRoom();
-      this.updateColliders();
-      this.audio.pop();
-      this.renderTray();
-      return true;
-    }
-    // まわす
+    // おいてある かぐ → えらんで まわす
     const hits = raycaster.intersectObjects(this.pieces.map((p) => p.mesh), true);
     if (hits.length) {
       let o = hits[0].object;
@@ -228,10 +276,26 @@ export class Room {
       if (piece) {
         piece.rot = ((piece.rot ?? 0) + 1) % 4;
         piece.hop = 1;
-        this.picked = piece;
         this.saveRoom();
         this.audio.tap();
-        this.renderTray();
+        this.pick(piece);
+        return true;
+      }
+    }
+    // えらんでいる かぐ を ゆかの タップした ところへ うごかす
+    if (this.picked) {
+      const hit = raycaster.ray.intersectPlane(new THREE.Plane(new THREE.Vector3(0, 1, 0), -ROOM_ORIGIN.y), new THREE.Vector3());
+      if (hit && Math.abs(hit.x - ROOM_ORIGIN.x) < HALF_W + 0.5 && hit.z - ROOM_ORIGIN.z > BACK && hit.z - ROOM_ORIGIN.z < FRONT + 1) {
+        const pc = this.picked;
+        const spot = this.nearestFree(pc.id, hit.x - ROOM_ORIGIN.x, hit.z - ROOM_ORIGIN.z, pc);
+        if (!spot) { this.audio.wrong(); return true; }
+        const { x, z } = spot;
+        Object.assign(pc, { x, z, hop: 1 });
+        pc.mesh.position.set(x, 0, z);
+        this.saveRoom();
+        this.updateColliders();
+        this.audio.pop();
+        this.pick(null);
         return true;
       }
     }
@@ -250,11 +314,10 @@ export class Room {
     this.group.remove(piece.mesh);
     this.pieces.splice(this.pieces.indexOf(piece), 1);
     this.save.inventory[piece.id] = (this.save.inventory[piece.id] ?? 0) + 1;
-    this.picked = null;
     this.saveRoom();
     this.updateColliders();
     this.audio.pop();
-    this.renderTray();
+    this.pick(null);
   }
 
   // ------------------------------------------------ トレイ（HTML）
@@ -272,15 +335,10 @@ export class Room {
     for (const [id, n] of inv) {
       const f = FURNITURE[id];
       const b = document.createElement('button');
-      b.className = 'tray-btn' + (this.selected === id ? ' selected' : '');
+      b.className = 'tray-btn';
       b.innerHTML = `<span class="tray-emoji">${f.emoji}</span>${n > 1 ? `<span class="tray-count">${n}</span>` : ''}`;
       b.setAttribute('aria-label', f.name);
-      b.addEventListener('click', () => {
-        this.selected = this.selected === id ? null : id;
-        this.picked = null;
-        this.audio.tap();
-        this.renderTray();
-      });
+      b.addEventListener('click', () => this.placeFromTray(id));
       tray.appendChild(b);
     }
     if (!tray.children.length) {
@@ -289,14 +347,12 @@ export class Room {
       p.textContent = 'かぐは おみせで かえるよ';
       tray.appendChild(p);
     }
-    tray.classList.toggle('placing', !!this.selected);
   }
 
   // ------------------------------------------------ はいる／でる
   enter() {
     this.group.visible = true;
     this.exitArmed = false;
-    this.selected = null;
     this.picked = null;
     this.tray.classList.remove('hidden');
     this.renderTray();
@@ -308,7 +364,7 @@ export class Room {
   exit() {
     this.group.visible = false;
     this.tray.classList.add('hidden');
-    this.selected = null;
+    this.picked = null;
   }
 
   // ------------------------------------------------ まいフレーム（'exit' を かえしたら そとへ）
@@ -332,7 +388,7 @@ export class Room {
       m.position.y = Math.sin(pc.hop * Math.PI) * 0.35;
       const targetRot = (pc.rot ?? 0) * Math.PI / 2;
       m.rotation.y += (targetRot - m.rotation.y) * (1 - Math.exp(-12 * dt));
-      const s = 1 + (this.picked === pc ? Math.sin(t * 6) * 0.03 : 0);
+      const s = 1 + (this.picked === pc ? Math.sin(t * 6) * 0.05 : 0);
       m.scale.set(s, s, s);
       const u = m.userData;
       if (u.fish) {
@@ -344,6 +400,18 @@ export class Room {
     }
     const gs = 1 + Math.sin(t * 4) * 0.08;
     this.exitGlow.scale.set(gs, gs, 1);
+    // えらんでいる かぐ（しばらく さわらないと えらぶのを やめる）
+    if (this.picked) {
+      this.pickTimer -= dt;
+      if (this.pickTimer <= 0 || !this.pieces.includes(this.picked)) this.pick(null);
+    }
+    const pk = this.picked;
+    this.pickRing.visible = !!pk;
+    if (pk) {
+      const rr = (pk.def.r + 0.25) * gs;
+      this.pickRing.position.set(pk.mesh.position.x, 0.06, pk.mesh.position.z);
+      this.pickRing.scale.set(rr, rr, 1);
+    }
     this.climate.skyColor(this.glass.material.color);
     return null;
   }
