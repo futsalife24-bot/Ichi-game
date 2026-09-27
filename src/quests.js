@@ -298,15 +298,16 @@ export class QuestManager {
   onAnimalMeet(a) {
     this.audio.meet();
     const q = this.quest;
+    const who = { name: a.def.san, pitch: a.def.pitch };
     if (this.state === 'active' && q?.type === 'animal') {
       if (a.kind === q.target) {
         this.complete(L.animalRight(a.def));
       } else {
-        this.voice.say(L.animalWrong(a.def, ANIMALS[q.target]));
+        this.voice.say(L.animalWrong(a.def, ANIMALS[q.target]), { who });
       }
       return;
     }
-    this.voice.say(L.animalHello(a.def));
+    this.voice.say(L.animalHello(a.def), { who });
   }
 
   showHint() {
@@ -341,6 +342,8 @@ export class QuestManager {
 
   presentReward(acc) {
     this.player.setAccessory(acc.id);
+    if (this.save.outfit) this.save.outfit.hat = acc.id;
+    this.persist();
     this.player.celebrate();
     this.audio.reward();
     this.effects.confetti(this.player.pos);

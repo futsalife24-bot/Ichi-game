@@ -22,7 +22,11 @@
   <canvas id="game"></canvas>
 
   <div id="hud" class="hidden">
-    <div id="stars" class="pill"><span class="star">⭐</span><span id="starCount">0</span></div>
+    <div id="pills">
+      <div id="stars" class="pill"><span class="star">⭐</span><span id="starCount">0</span></div>
+      <div id="bells" class="pill small"><span>🔔</span><span id="bellCount">0</span><span class="seed">🌱</span><span id="seedCount">0</span></div>
+      <div id="clock" class="pill small"></div>
+    </div>
 
     <button id="questCard" class="hidden" aria-label="もういちど きく">
       <div id="questIcon"></div>
@@ -39,13 +43,28 @@
       <button id="btnHome" class="round-btn" aria-label="タイトルへ">🏠</button>
     </div>
 
+    <div id="sideBtns">
+      <button id="btnZukan" class="side-btn" aria-label="ずかん"><span class="side-emoji">📖</span><span class="side-label">ずかん</span><span class="badge hidden">!</span></button>
+      <button id="btnCloset" class="side-btn" aria-label="きせかえ"><span class="side-emoji">👕</span><span class="side-label">きせかえ</span></button>
+    </div>
+    <div id="tray" class="hidden"></div>
+
     <div id="joyZone"><div id="joyBase"><div id="joyKnob"></div></div></div>
     <button id="btnJump" aria-label="ジャンプ"><span class="jump-icon">⤴</span><span>ジャンプ</span></button>
 
-    <div id="subtitle"></div>
+    <div id="subtitle"><div id="subName"></div><div id="subText"></div></div>
+    <div id="itemPop"><div class="item-new">NEW!</div><div class="item-emoji"></div><div class="item-name"></div></div>
     <div id="bigPop"></div>
     <div id="numPop"></div>
     <div id="reward"><div class="reward-title">ごほうび！</div><div class="reward-emoji"></div><div class="reward-name"></div></div>
+  </div>
+
+  <div id="panel" class="hidden">
+    <div class="sheet">
+      <div class="sheet-head"><span id="panelTitle"></span><span id="panelCount"></span><button id="panelClose" aria-label="とじる">✖</button></div>
+      <div id="panelTabs"></div>
+      <div id="panelGrid"></div>
+    </div>
   </div>
 
   <div id="fade"></div>

@@ -1,7 +1,8 @@
-// しまの せかい：地形・海・空・木・お花・きのこ・にじ・おうち
+// しまの せかい：地形・海・空・木・お花・きのこ・にじ・がっこう・おうち
 import * as THREE from 'three';
 import { toon, ball, cone, cyl, makeOwl } from './characters.js';
-import { signTexture } from './canvas.js';
+import { signTexture, canvasTexture } from './canvas.js';
+import { seasonOf } from './catalog.js';
 
 export const ISLAND_R = 36;
 export const WATER_Y = -0.35;
@@ -36,8 +37,11 @@ export function mulberry32(seed) {
 export const LANDMARKS = {
   spawn: { x: 0, z: 2 },
   owl: { x: 3, z: -2.5 },
-  house: { x: -12, z: -14 },
+  school: { x: -12, z: -14 },
   rainbow: { x: 10, z: 8, radius: 6 },
+  myHouse: { x: 21, z: 5 },
+  shop: { x: -20, z: 13 },
+  garden: { x: 13.5, z: -2 },
 };
 
 export const ANIMAL_HOMES = {
@@ -51,6 +55,9 @@ export const ANIMAL_HOMES = {
 
 const tmpObj = new THREE.Object3D();
 const tmpColor = new THREE.Color();
+const tmpMat = new THREE.Matrix4();
+const snow = new THREE.Color(0xf4f8ff);
+const autumnGrass = new THREE.Color(0xd8c35a);
 
 export class World {
   constructor(scene) {
@@ -58,13 +65,21 @@ export class World {
     this.colliders = []; // {x,z,r}
     this.bouncers = []; // {x,z,r,top,cap,squash}
     this.reserved = []; // 置かない場所
+    this.noSpawn = []; // クエストの ものも 置かない 場所（はたけ・おみせ）
+    this.doorGlows = [];
+    this.windowMats = [];
+    this.trees = [];
     this.rng = mulberry32(20250926);
     this.time = 0;
 
     this.reserve(LANDMARKS.spawn.x, LANDMARKS.spawn.z, 5);
     this.reserve(LANDMARKS.owl.x, LANDMARKS.owl.z, 2);
-    this.reserve(LANDMARKS.house.x, LANDMARKS.house.z, 5);
+    this.reserve(LANDMARKS.school.x, LANDMARKS.school.z, 5);
     this.reserve(LANDMARKS.rainbow.x, LANDMARKS.rainbow.z, 7.5);
+    this.reserve(LANDMARKS.myHouse.x, LANDMARKS.myHouse.z, 5.5);
+    this.reserve(LANDMARKS.shop.x, LANDMARKS.shop.z, 6);
+    this.reserve(LANDMARKS.garden.x, LANDMARKS.garden.z, 4);
+    this.noSpawn.push({ ...LANDMARKS.shop, r: 5 }, { ...LANDMARKS.garden, r: 3.4 });
     for (const h of Object.values(ANIMAL_HOMES)) this.reserve(h.x, h.z, 4);
 
     this.buildSky();
@@ -72,14 +87,16 @@ export class World {
     this.buildTerrain();
     this.buildWater();
     this.buildClouds();
-    this.buildHouse();
+    this.buildSchool();
+    this.buildMyHouse();
     this.buildRainbow();
     this.buildOwl();
     this.buildMushrooms();
     this.buildTrees();
     this.buildRocks();
     this.buildFlowers();
-    this.buildButterflies();
+    this.buildLamps();
+    this.applySeason(seasonOf());
   }
 
   reserve(x, z, r) { this.reserved.push({ x, z, r }); }
@@ -98,6 +115,7 @@ export class World {
   /** 物が置けるか（障害物・予約地・島の外をさける） */
   isFree(x, z, clearance, { ignoreReserved = false } = {}) {
     if (Math.hypot(x, z) > ISLAND_R - 5) return false;
+    for (const c of this.noSpawn) if (Math.hypot(x - c.x, z - c.z) < c.r + clearance) return false;
     for (const c of this.colliders) if (Math.hypot(x - c.x, z - c.z) < c.r + clearance) return false;
     for (const b of this.bouncers) if (Math.hypot(x - b.x, z - b.z) < b.r + clearance) return false;
     if (!ignoreReserved) for (const c of this.reserved) if (Math.hypot(x - c.x, z - c.z) < c.r + clearance) return false;
@@ -131,12 +149,38 @@ export class World {
     this.sky = new THREE.Mesh(geo, mat);
     this.sky.renderOrder = -1;
     this.scene.add(this.sky);
+    this.skyUniforms = mat.uniforms;
     this.scene.fog = new THREE.Fog(0xd8f1ff, 70, 190);
 
     const sun = new THREE.Mesh(new THREE.SphereGeometry(9, 24, 16), new THREE.MeshBasicMaterial({ color: 0xfff3a0, fog: false }));
     sun.position.set(90, 110, -200);
     this.scene.add(sun);
     this.sun = sun;
+
+    // よるの おつきさま と おほしさま
+    const moon = new THREE.Group();
+    moon.add(new THREE.Mesh(new THREE.SphereGeometry(7, 24, 16), new THREE.MeshBasicMaterial({ color: 0xfff8d0, fog: false })));
+    const bite = new THREE.Mesh(new THREE.SphereGeometry(6.4, 24, 16), new THREE.MeshBasicMaterial({ color: 0x1a2250, fog: false }));
+    bite.position.set(3.6, 2.2, 3);
+    moon.add(bite);
+    moon.visible = false;
+    this.scene.add(moon);
+    this.moon = moon;
+    this.moonBite = bite;
+
+    const n = 260, pos = new Float32Array(n * 3);
+    const rnd = mulberry32(99);
+    for (let i = 0; i < n; i++) {
+      const a = rnd() * Math.PI * 2, el = 0.12 + rnd() * 1.3;
+      pos[i * 3] = Math.cos(a) * Math.cos(el) * 300;
+      pos[i * 3 + 1] = Math.sin(el) * 300;
+      pos[i * 3 + 2] = Math.sin(a) * Math.cos(el) * 300;
+    }
+    const sg = new THREE.BufferGeometry();
+    sg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    this.stars = new THREE.Points(sg, new THREE.PointsMaterial({ color: 0xfffbe0, size: 2.2, sizeAttenuation: false, transparent: true, opacity: 0, fog: false, depthWrite: false }));
+    this.stars.visible = false;
+    this.scene.add(this.stars);
   }
 
   buildLights() {
@@ -163,12 +207,17 @@ export class World {
     const grassA = new THREE.Color(0x86dc5c), grassB = new THREE.Color(0x5ec04c), grassC = new THREE.Color(0xa5e36a);
     const sand = new THREE.Color(0xf6e4a6), wetSand = new THREE.Color(0xd9c083), path = new THREE.Color(0xecd29a);
     const paths = [
-      [LANDMARKS.spawn, LANDMARKS.house],
+      [LANDMARKS.spawn, LANDMARKS.school],
       [LANDMARKS.spawn, { x: LANDMARKS.rainbow.x, z: LANDMARKS.rainbow.z }],
       [LANDMARKS.spawn, ANIMAL_HOMES.hiyoko],
       [{ x: LANDMARKS.rainbow.x, z: LANDMARKS.rainbow.z }, ANIMAL_HOMES.hitsuji],
       [LANDMARKS.spawn, ANIMAL_HOMES.inu],
+      [LANDMARKS.spawn, LANDMARKS.garden],
+      [LANDMARKS.garden, LANDMARKS.myHouse],
+      [ANIMAL_HOMES.inu, LANDMARKS.shop],
     ];
+    this.terrainBase = new Float32Array(pos.count * 3);
+    this.grassW = new Float32Array(pos.count);
     const c = new THREE.Color();
     for (let i = 0; i < pos.count; i++) {
       const x = pos.getX(i), z = pos.getZ(i);
@@ -180,12 +229,16 @@ export class World {
       if (h > 1.4) c.lerp(grassC, Math.min(1, (h - 1.4) * 0.4));
       let pd = Infinity;
       for (const [a, b] of paths) pd = Math.min(pd, segDist(x, z, a.x, a.z, b.x, b.z));
-      c.lerp(path, 1 - smoothstep(0.9, 1.7, pd + 0.4 * Math.sin(x * 1.3 + z)));
+      const pw = 1 - smoothstep(0.9, 1.7, pd + 0.4 * Math.sin(x * 1.3 + z));
+      c.lerp(path, pw);
       const shore = ISLAND_R - 4.5 + Math.sin(Math.atan2(z, x) * 5) * 0.8;
-      c.lerp(sand, smoothstep(shore - 1, shore + 1, r));
+      const sw = smoothstep(shore - 1, shore + 1, r);
+      c.lerp(sand, sw);
+      this.grassW[i] = (1 - pw) * (1 - sw);
       if (h < WATER_Y + 0.2) c.lerp(wetSand, smoothstep(WATER_Y + 0.2, WATER_Y - 1.2, h));
       colors[i * 3] = c.r; colors[i * 3 + 1] = c.g; colors[i * 3 + 2] = c.b;
     }
+    this.terrainBase.set(colors);
     geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
     geo.computeVertexNormals();
     const mat = new THREE.MeshLambertMaterial({ vertexColors: true });
@@ -235,70 +288,137 @@ export class World {
     }
   }
 
-  buildHouse() {
-    const { x, z } = LANDMARKS.house;
+  /** たてもの（そとがわ）。はいりぐちの マット の いち を かえす。decorate(g) で かざりを たせる */
+  buildCottage({ x, z, wall, roof, door, sign, signOpts, matColor = 0xffd23d, glowColor = 0xfff6a0, chimney = false, decorate }) {
     const g = new THREE.Group();
     const y = getHeight(x, z);
     g.position.set(x, y - 0.1, z);
     g.rotation.y = Math.atan2(-x, -z);
-    const body = new THREE.Mesh(new THREE.BoxGeometry(3.6, 2.6, 3.2), toon(0xfff0d4));
+    const body = new THREE.Mesh(new THREE.BoxGeometry(3.6, 2.6, 3.2), toon(wall));
     body.position.y = 1.3;
     body.castShadow = body.receiveShadow = true;
     g.add(body);
-    const roof = new THREE.Mesh(new THREE.ConeGeometry(3.3, 2.0, 4), toon(0xff6f61));
-    roof.position.y = 3.6;
-    roof.rotation.y = Math.PI / 4;
-    roof.castShadow = true;
-    g.add(roof);
-    const door = new THREE.Mesh(new THREE.BoxGeometry(0.9, 1.5, 0.1), toon(0xb07245));
-    door.position.set(0, 0.75, 1.62);
-    g.add(door);
+    const roofMesh = new THREE.Mesh(new THREE.ConeGeometry(3.3, 2.0, 4), toon(roof));
+    roofMesh.position.y = 3.6;
+    roofMesh.rotation.y = Math.PI / 4;
+    roofMesh.castShadow = true;
+    g.add(roofMesh);
+    const doorMesh = new THREE.Mesh(new THREE.BoxGeometry(0.9, 1.5, 0.1), toon(door));
+    doorMesh.position.set(0, 0.75, 1.62);
+    g.add(doorMesh);
     g.add(ball(0xffd23d, 0.07, 0.3, 0.8, 1.7));
+    // まど（よるは あかりが つく）
+    const winMat = new THREE.MeshLambertMaterial({ color: 0x9fe3ff, emissive: 0x000000 });
+    this.windowMats.push(winMat);
     for (const s of [-1, 1]) {
-      const win = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.75, 0.1), toon(0x9fe3ff));
+      const win = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.75, 0.1), winMat);
       win.position.set(s * 1.15, 1.6, 1.62);
       g.add(win);
       const frame = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.1, 0.12), toon(0xffffff));
       frame.position.set(s * 1.15, 1.2, 1.64);
       g.add(frame);
     }
-    const chimney = new THREE.Mesh(new THREE.BoxGeometry(0.45, 1.2, 0.45), toon(0xc9694f));
-    chimney.position.set(0.9, 4.0, -0.5);
-    g.add(chimney);
-    this.chimneyPos = new THREE.Vector3(0.9, 4.7, -0.5);
-    g.add(this.chimneyPuff = new THREE.Group());
-    for (let i = 0; i < 3; i++) {
-      const p = ball(0xffffff, 0.25, 0, 0, 0);
-      p.castShadow = false;
-      p.material = p.material.clone();
-      p.material.transparent = true;
-      this.chimneyPuff.add(p);
+    if (chimney) {
+      const ch = new THREE.Mesh(new THREE.BoxGeometry(0.45, 1.2, 0.45), toon(0xc9694f));
+      ch.position.set(0.9, 4.0, -0.5);
+      g.add(ch);
+      this.chimneyPos = new THREE.Vector3(0.9, 4.7, -0.5);
+      g.add(this.chimneyPuff = new THREE.Group());
+      for (let i = 0; i < 3; i++) {
+        const p = ball(0xffffff, 0.25, 0, 0, 0);
+        p.castShadow = false;
+        p.material = p.material.clone();
+        p.material.transparent = true;
+        this.chimneyPuff.add(p);
+      }
+      this.chimneyPuff.position.copy(this.chimneyPos);
     }
-    this.chimneyPuff.position.copy(this.chimneyPos);
 
     // かんばん と はいりぐちの マット
-    const sign = new THREE.Mesh(new THREE.PlaneGeometry(1.9, 0.6), new THREE.MeshBasicMaterial({ map: signTexture('かずの おうち') }));
-    sign.position.set(0, 2.25, 1.66);
-    g.add(sign);
-    const mat = new THREE.Mesh(new THREE.CylinderGeometry(0.95, 0.95, 0.06, 28), toon(0xffd23d));
+    const signMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.9, 0.6), new THREE.MeshBasicMaterial({ map: signTexture(sign, signOpts) }));
+    signMesh.position.set(0, 2.25, 1.66);
+    g.add(signMesh);
+    const mat = new THREE.Mesh(new THREE.CylinderGeometry(0.95, 0.95, 0.06, 28), toon(matColor));
     mat.position.set(0, 0.14, 3.2);
     g.add(mat);
     const glow = new THREE.Mesh(
       new THREE.TorusGeometry(1.05, 0.08, 8, 32),
-      new THREE.MeshBasicMaterial({ color: 0xfff6a0, transparent: true, opacity: 0.8 }),
+      new THREE.MeshBasicMaterial({ color: glowColor, transparent: true, opacity: 0.8 }),
     );
     glow.rotation.x = Math.PI / 2;
     glow.position.set(0, 0.2, 3.2);
     g.add(glow);
-    this.doorGlow = glow;
+    this.doorGlows.push(glow);
     const ry = g.rotation.y;
-    this.houseDoor = { x: x + Math.sin(ry) * 3.2, z: z + Math.cos(ry) * 3.2, yaw: ry };
-    const matY = getHeight(this.houseDoor.x, this.houseDoor.z) - g.position.y;
+    const doorPos = { x: x + Math.sin(ry) * 3.2, z: z + Math.cos(ry) * 3.2, yaw: ry };
+    const matY = getHeight(doorPos.x, doorPos.z) - g.position.y;
     mat.position.y = matY + 0.04;
     glow.position.y = matY + 0.1;
+    decorate?.(g);
 
     this.scene.add(g);
     this.colliders.push({ x, z, r: 2.6 });
+    return doorPos;
+  }
+
+  buildSchool() {
+    this.schoolDoor = this.buildCottage({
+      ...LANDMARKS.school, wall: 0xfff6e0, roof: 0x4caf50, door: 0x3d7bff, sign: 'かずの がっこう',
+      signOpts: { bg: '#f1ffe0', border: '#4caf50', fg: '#2f6b3a' },
+      decorate: (g) => {
+        // とけいだい と かね
+        const tower = new THREE.Group();
+        tower.position.set(0, 3.2, 0.7);
+        const body = new THREE.Mesh(new THREE.BoxGeometry(1.2, 2.0, 1.2), toon(0xfff6e0));
+        body.position.y = 0.9;
+        body.castShadow = true;
+        tower.add(body);
+        const top = new THREE.Mesh(new THREE.ConeGeometry(1.05, 1.0, 4), toon(0xff6f61));
+        top.position.y = 2.4;
+        top.rotation.y = Math.PI / 4;
+        top.castShadow = true;
+        tower.add(top);
+        const face = new THREE.Mesh(new THREE.CircleGeometry(0.42, 24), new THREE.MeshBasicMaterial({ map: canvasTexture(128, 128, (x) => {
+          x.fillStyle = '#fffdf5'; x.beginPath(); x.arc(64, 64, 62, 0, Math.PI * 2); x.fill();
+          x.strokeStyle = '#4a3226'; x.lineWidth = 6; x.stroke();
+          x.lineCap = 'round'; x.lineWidth = 7;
+          x.beginPath(); x.moveTo(64, 64); x.lineTo(64, 24); x.stroke();
+          x.strokeStyle = '#ff6f91'; x.beginPath(); x.moveTo(64, 64); x.lineTo(92, 64); x.stroke();
+        }) }));
+        face.position.set(0, 1.1, 0.61);
+        tower.add(face);
+        tower.add(ball(0xffc93d, 0.22, 0, 1.95, 0));
+        g.add(tower);
+        // はた
+        g.add(cyl(0xdddddd, 0.05, 3.6, 2.5, 1.8, 1.9));
+        const flag = new THREE.Mesh(new THREE.PlaneGeometry(0.9, 0.55), new THREE.MeshLambertMaterial({ color: 0xff6f91, side: THREE.DoubleSide }));
+        flag.position.set(2.95, 3.3, 1.9);
+        g.add(flag);
+        this.flag = flag;
+      },
+    });
+  }
+
+  buildMyHouse() {
+    this.roomDoor = this.buildCottage({
+      ...LANDMARKS.myHouse, wall: 0xe8f4ff, roof: 0x4f9dff, door: 0x7a5238, sign: 'じぶんの おうち',
+      signOpts: { bg: '#eaf6ff', border: '#4f9dff', fg: '#2d4a8a' }, matColor: 0x8fd0ff, glowColor: 0xd8f0ff, chimney: true,
+    });
+    // ポスト と はな
+    const { x, z } = LANDMARKS.myHouse;
+    const ry = Math.atan2(-x, -z);
+    const px = x + Math.sin(ry) * 2.4 + Math.cos(ry) * 2.3, pz = z + Math.cos(ry) * 2.4 - Math.sin(ry) * 2.3;
+    const post = new THREE.Group();
+    post.position.set(px, getHeight(px, pz), pz);
+    post.rotation.y = ry;
+    post.add(cyl(0x9a6b43, 0.07, 1.0, 0, 0.5, 0));
+    const boxM = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.4, 0.6), toon(0xff5a5a));
+    boxM.position.y = 1.15;
+    boxM.castShadow = true;
+    post.add(boxM);
+    post.add(cyl(0xff5a5a, 0.25, 0.6, 0, 1.35, 0).rotateX(Math.PI / 2));
+    this.scene.add(post);
+    this.colliders.push({ x: px, z: pz, r: 0.35 });
   }
 
   buildRainbow() {
@@ -370,12 +490,13 @@ export class World {
       const p = this.randomSpot(7, ISLAND_R - 7, 2.2, rnd);
       if (!p) continue;
       const s = 0.85 + rnd() * 0.5;
-      (rnd() < 0.62 ? round : pine).push({ ...p, s, y: getHeight(p.x, p.z) });
-      this.colliders.push({ x: p.x, z: p.z, r: 0.55 * s + 0.2 });
+      const t = { ...p, s, y: getHeight(p.x, p.z), r: 0.55 * s + 0.2, parts: [], fruitParts: [], shake: 0 };
+      (rnd() < 0.62 ? round : pine).push(t);
+      this.colliders.push({ x: p.x, z: p.z, r: t.r });
     }
     // 丘の上の大きな木
     const hx = 16, hz = -14;
-    round.push({ x: hx, z: hz, s: 1.8, y: getHeight(hx, hz), special: true });
+    round.push({ x: hx, z: hz, s: 1.8, y: getHeight(hx, hz), special: true, r: 1.1, parts: [], fruitParts: [], shake: 0 });
     this.colliders.push({ x: hx, z: hz, r: 1.1 });
 
     const trunkGeo = new THREE.CylinderGeometry(0.2, 0.28, 1.6, 8);
@@ -396,11 +517,14 @@ export class World {
     const leafMat = new THREE.MeshLambertMaterial({ color: 0xffffff, flatShading: true });
     const greens = [0x4caf50, 0x66bb6a, 0x7cc96a, 0x43a047, 0x8bd46a];
     const leaves = new THREE.InstancedMesh(leafGeo, leafMat, round.length * 3);
-    const fruitList = [];
+    const fruitTrees = [];
+    const fruitKinds = ['ringo', 'ringo', 'momo', 'mikan'];
     let li = 0;
     for (const t of round) {
-      const sakura = !t.special && rnd() < 0.18;
-      const baseCol = t.special ? 0x3fa24a : sakura ? 0xffb7d5 : greens[Math.floor(rnd() * greens.length)];
+      t.kind = 'round';
+      t.sakura = !t.special && rnd() < 0.18;
+      t.baseCol = t.special ? 0x3fa24a : greens[Math.floor(rnd() * greens.length)];
+      t.autumn = [0xff9a3c, 0xe8573a, 0xf5c542, 0xd9772b, 0xffb347][Math.floor(rnd() * 5)];
       const blobs = [[0, 2.2, 0, 1.15], [0.55, 1.9, 0.2, 0.8], [-0.5, 2.0, -0.2, 0.85]];
       for (const [bx, by, bz, br] of blobs) {
         tmpObj.position.set(t.x + bx * t.s, t.y + by * t.s, t.z + bz * t.s);
@@ -408,36 +532,47 @@ export class World {
         tmpObj.scale.setScalar(br * t.s);
         tmpObj.updateMatrix();
         leaves.setMatrixAt(li, tmpObj.matrix);
-        tmpColor.setHex(baseCol).offsetHSL(0, 0, (rnd() - 0.5) * 0.06);
-        leaves.setColorAt(li, tmpColor);
+        t.parts.push({ mesh: leaves, i: li, base: tmpObj.matrix.clone(), jit: (rnd() - 0.5) * 0.06 });
         li++;
       }
-      if (!sakura && rnd() < 0.35) fruitList.push(t);
+      if (!t.sakura && (t.special || rnd() < 0.35)) {
+        t.fruit = t.special ? 'momo' : fruitKinds[Math.floor(rnd() * fruitKinds.length)];
+        t.fruitsOn = true;
+        fruitTrees.push(t);
+      }
     }
     leaves.castShadow = true;
     this.scene.add(leaves);
+    this.leaves = leaves;
 
-    // 木になっている りんご（かざり）
-    if (fruitList.length) {
-      const fruits = new THREE.InstancedMesh(new THREE.SphereGeometry(0.16, 10, 8), toon(0xff3b3b), fruitList.length * 4);
+    // 木になっている くだもの（ゆらすと おちる）
+    if (fruitTrees.length) {
+      const fruits = new THREE.InstancedMesh(new THREE.SphereGeometry(0.16, 10, 8), new THREE.MeshToonMaterial({ color: 0xffffff }), fruitTrees.length * 3);
       let fi = 0;
-      for (const t of fruitList) {
-        for (let k = 0; k < 4; k++) {
-          const a = rnd() * Math.PI * 2;
+      for (const t of fruitTrees) {
+        for (let k = 0; k < 3; k++) {
+          const a = (k / 3) * Math.PI * 2 + rnd();
           tmpObj.position.set(t.x + Math.cos(a) * 1.05 * t.s, t.y + (1.9 + rnd() * 0.7) * t.s, t.z + Math.sin(a) * 1.05 * t.s);
           tmpObj.scale.setScalar(t.s);
           tmpObj.rotation.set(0, 0, 0);
           tmpObj.updateMatrix();
-          fruits.setMatrixAt(fi++, tmpObj.matrix);
+          fruits.setMatrixAt(fi, tmpObj.matrix);
+          fruits.setColorAt(fi, tmpColor.setHex({ ringo: 0xff3b3b, momo: 0xffa3b5, mikan: 0xff9a1f }[t.fruit]));
+          const part = { mesh: fruits, i: fi, base: tmpObj.matrix.clone() };
+          t.parts.push(part);
+          t.fruitParts.push(part);
+          fi++;
         }
       }
       this.scene.add(fruits);
+      this.fruitMesh = fruits;
     }
 
     const pineGeo = new THREE.ConeGeometry(1, 1.4, 8);
     const pines = new THREE.InstancedMesh(pineGeo, leafMat, pine.length * 3);
     let pi = 0;
     for (const t of pine) {
+      t.kind = 'pine';
       const col = rnd() < 0.5 ? 0x2e9e5b : 0x3cae66;
       for (let k = 0; k < 3; k++) {
         tmpObj.position.set(t.x, t.y + (1.5 + k * 0.75) * t.s, t.z);
@@ -445,13 +580,61 @@ export class World {
         tmpObj.scale.setScalar((1.25 - k * 0.3) * t.s);
         tmpObj.updateMatrix();
         pines.setMatrixAt(pi, tmpObj.matrix);
-        tmpColor.setHex(col).offsetHSL(0, 0, k * 0.03);
-        pines.setColorAt(pi, tmpColor);
+        t.parts.push({ mesh: pines, i: pi, base: tmpObj.matrix.clone(), col, jit: k * 0.03 });
         pi++;
       }
     }
     pines.castShadow = true;
     this.scene.add(pines);
+    this.pines = pines;
+    this.trees = all;
+  }
+
+  /** きを ゆらす（life.js から） */
+  shakeTree(t) { t.shake = 1; }
+
+  /** 木の くだものを かくす／もどす */
+  setTreeFruit(t, on) {
+    for (const p of t.fruitParts) {
+      if (on) p.mesh.setMatrixAt(p.i, p.base);
+      else p.mesh.setMatrixAt(p.i, tmpMat.makeScale(0, 0, 0));
+      p.mesh.instanceMatrix.needsUpdate = true;
+    }
+    t.fruitsOn = on;
+  }
+
+  /** きせつ で はっぱ と くさ の いろを かえる */
+  applySeason(season) {
+    this.season = season;
+    for (const t of this.trees) {
+      for (const p of t.parts) {
+        if (p.mesh === this.fruitMesh) continue;
+        if (t.kind === 'pine') {
+          tmpColor.setHex(p.col).offsetHSL(0, 0, p.jit);
+          if (season === 'fuyu') tmpColor.lerp(snow, 0.35);
+        } else {
+          let hex = t.baseCol;
+          if (t.sakura) hex = season === 'haru' ? 0xffb7d5 : season === 'aki' ? 0xe8573a : season === 'fuyu' ? 0xeef6f2 : 0x5cb85c;
+          else if (season === 'aki') hex = t.special ? 0xf5a742 : t.autumn;
+          else if (season === 'fuyu') hex = 0xeef6f2;
+          else if (season === 'haru' && t.special) hex = 0xffc2dc;
+          tmpColor.setHex(hex).offsetHSL(0, 0, p.jit);
+        }
+        p.mesh.setColorAt(p.i, tmpColor);
+      }
+    }
+    this.leaves.instanceColor.needsUpdate = true;
+    this.pines.instanceColor.needsUpdate = true;
+    // くさ
+    const col = this.terrain.geometry.attributes.color;
+    const tint = season === 'fuyu' ? snow : season === 'aki' ? autumnGrass : null;
+    const amount = season === 'fuyu' ? 0.8 : 0.3;
+    for (let i = 0; i < col.count; i++) {
+      tmpColor.setRGB(this.terrainBase[i * 3], this.terrainBase[i * 3 + 1], this.terrainBase[i * 3 + 2]);
+      if (tint) tmpColor.lerp(tint, this.grassW[i] * amount);
+      col.setXYZ(i, tmpColor.r, tmpColor.g, tmpColor.b);
+    }
+    col.needsUpdate = true;
   }
 
   buildRocks() {
@@ -530,26 +713,49 @@ export class World {
     this.scene.add(tufts);
   }
 
-  buildButterflies() {
-    this.butterflies = [];
-    const rnd = this.rng;
-    const wingShape = new THREE.Shape();
-    wingShape.moveTo(0, 0);
-    wingShape.bezierCurveTo(0.1, 0.35, 0.45, 0.35, 0.4, 0.05);
-    wingShape.bezierCurveTo(0.45, -0.25, 0.1, -0.3, 0, 0);
-    const wingGeo = new THREE.ShapeGeometry(wingShape);
-    wingGeo.rotateX(-Math.PI / 2);
-    const cols = [0xffd23d, 0xff8fc8, 0x7fd0ff, 0xffffff, 0xb78bff];
-    for (let i = 0; i < 7; i++) {
+  // みちの がいとう（よるに ひかる）
+  buildLamps() {
+    this.lampBulbs = [];
+    this.lampHalos = [];
+    const spots = [{ x: 4.6, z: 5.2 }, { x: -4.8, z: 4.8 }, { x: -4.6, z: -1.2 }, { x: 9.5, z: -1.2 }, { x: -13, z: 11 }, { x: 17, z: 2.5 }];
+    const bulbMat = new THREE.MeshBasicMaterial({ color: 0xfff3c4 });
+    this.lampMat = bulbMat;
+    const glowTex = canvasTexture(128, 128, (x) => {
+      const g = x.createRadialGradient(64, 64, 0, 64, 64, 64);
+      g.addColorStop(0, 'rgba(255,240,170,1)');
+      g.addColorStop(0.35, 'rgba(255,220,120,0.45)');
+      g.addColorStop(1, 'rgba(255,200,100,0)');
+      x.fillStyle = g;
+      x.fillRect(0, 0, 128, 128);
+    });
+    for (const s of spots) {
+      const y = getHeight(s.x, s.z);
       const g = new THREE.Group();
-      const mat = new THREE.MeshLambertMaterial({ color: cols[i % cols.length], side: THREE.DoubleSide });
-      const l = new THREE.Mesh(wingGeo, mat), r = new THREE.Mesh(wingGeo, mat);
-      r.scale.x = -1;
-      g.add(l, r, ball(0x3a2a20, 0.04, 0, 0, 0, 1, 1, 3));
-      g.userData = { l, r, cx: (rnd() - 0.5) * 50, cz: (rnd() - 0.5) * 50, ph: rnd() * 10, rad: 3 + rnd() * 4 };
+      g.position.set(s.x, y, s.z);
+      g.add(cyl(0x4a5a6a, 0.08, 2.4, 0, 1.2, 0));
+      g.add(cyl(0x4a5a6a, 0.2, 0.1, 0, 0.05, 0));
+      const bulb = new THREE.Mesh(new THREE.SphereGeometry(0.26, 14, 10), bulbMat);
+      bulb.position.y = 2.55;
+      g.add(bulb);
+      g.add(cone(0x4a5a6a, 0.34, 0.25, 0, 2.85, 0));
+      const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending }));
+      halo.scale.setScalar(2.4);
+      halo.position.y = 2.55;
+      g.add(halo);
+      this.lampHalos.push(halo);
       this.scene.add(g);
-      this.butterflies.push(g);
+      this.colliders.push({ x: s.x, z: s.z, r: 0.2 });
     }
+  }
+
+  /** よるの あかり（0 = ひる 〜 1 = よる） */
+  setNight(k) {
+    for (const m of this.windowMats) {
+      m.emissive.setRGB(1.0 * k, 0.85 * k, 0.45 * k);
+      m.color.setHex(0x9fe3ff).lerp(tmpColor.setHex(0xffe08a), k);
+    }
+    this.lampMat.color.setHex(0xe8e8e0).lerp(tmpColor.setHex(0xfff0a0), k);
+    for (const h of this.lampHalos) h.material.opacity = 0.9 * k;
   }
 
   bounceMushroom(b) { b.squash = 1; }
@@ -570,30 +776,32 @@ export class World {
       c.position.x += c.userData.speed * dt;
       if (c.position.x > 120) c.position.x = -120;
     }
-    for (const b of this.butterflies) {
-      const u = b.userData;
-      const a = t * 0.5 + u.ph;
-      const x = u.cx + Math.cos(a) * u.rad, z = u.cz + Math.sin(a * 1.3) * u.rad;
-      b.position.set(x, getHeight(x, z) + 1.2 + Math.sin(t * 2 + u.ph) * 0.4, z);
-      b.rotation.y = -a + Math.PI;
-      const f = Math.sin(t * 18 + u.ph) * 0.9;
-      u.l.rotation.z = f;
-      u.r.rotation.z = -f;
-    }
     for (const b of this.bouncers) {
       b.squash = Math.max(0, b.squash - dt * 2.5);
       const s = Math.sin(b.squash * Math.PI * 3) * b.squash;
       b.cap.scale.set(1 + s * 0.25, 1 - s * 0.35, 1 + s * 0.25);
     }
-    // えんとつの けむり
-    this.chimneyPuff.children.forEach((p, i) => {
+    // ゆれる 木
+    for (const tr of this.trees) {
+      if (tr.shake <= 0) continue;
+      tr.shake = Math.max(0, tr.shake - dt * 1.6);
+      const off = Math.sin(t * 38) * 0.14 * tr.shake * tr.s;
+      for (const p of tr.parts) {
+        if (p.mesh === this.fruitMesh && !tr.fruitsOn) continue;
+        p.mesh.setMatrixAt(p.i, tmpMat.makeTranslation(off, 0, off * 0.5).multiply(p.base));
+        p.mesh.instanceMatrix.needsUpdate = true;
+      }
+    }
+    // えんとつの けむり・がっこうの はた
+    if (this.flag) this.flag.rotation.y = Math.sin(t * 3) * 0.25;
+    this.chimneyPuff?.children.forEach((p, i) => {
       const k = (t * 0.35 + i / 3) % 1;
       p.position.set(Math.sin(k * 4 + i) * 0.2, k * 2.2, 0);
       p.scale.setScalar(0.2 + k * 0.5);
       p.material.opacity = 0.8 * (1 - k);
     });
     const gs = 1 + Math.sin(t * 4) * 0.08;
-    this.doorGlow.scale.set(gs, gs, 1);
+    for (const g of this.doorGlows) g.scale.set(gs, gs, 1);
     // ふくろう
     const owl = this.owl;
     owl.pivot.rotation.z = Math.sin(t * 1.5) * 0.05;

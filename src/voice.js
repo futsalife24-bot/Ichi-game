@@ -57,13 +57,27 @@ export class Voice {
     } catch { /* noop */ }
   }
 
-  /** say(line) または say(text, subtitle) */
+  /**
+   * say(line, { who }) または say(text, subtitle)
+   * who = { name, pitch }：どうぶつ など。なまえを ふきだしに だし、さきに どうぶつご（ぽこぽこ）を ならす
+   */
   say(a, b) {
     const text = typeof a === 'string' ? a : a.say;
-    const subtitle = typeof a === 'string' ? (b ?? a) : (a.sub ?? a.say);
-    this.onSubtitle?.(subtitle, 1400 + subtitle.length * 150);
+    const subtitle = typeof a === 'string' && typeof b === 'string' ? b : (a.sub ?? a.say ?? a);
+    const who = typeof b === 'object' ? b?.who : null;
+    this.onSubtitle?.(subtitle, 1400 + subtitle.length * 150, who);
     if (!this.enabled) return;
     this.stopPlayback();
+    if (who?.pitch) {
+      this.audio?.babble(who.pitch);
+      const token = this.token;
+      setTimeout(() => { if (token === this.token) this.speak(text); }, 520);
+      return;
+    }
+    this.speak(text);
+  }
+
+  speak(text) {
     const hashes = segments(text).map((s) => clipHash(clipKey(s)));
     const ctx = this.audio?.ctx;
     if (ctx && this.clipIndex && hashes.length && hashes.every((h) => this.clipIndex.has(h))) {

@@ -4,7 +4,9 @@
 //   ぶん（。！？ まで）ごとに おんせいファイル（voice/*.mp3）を つくる
 // say = よみあげる ぶん（すうじは ひらがな）、sub = じまくに だす ぶん
 import { COLORS, FRUITS, SHAPES, MOJI } from './props.js';
-import { ANIMALS, ACCESSORIES, HEROES } from './characters.js';
+import { ANIMALS, ACCESSORIES, HEROES, CLOTHES } from './characters.js';
+import { ITEMS, PERIODS, SEASONS } from './catalog.js';
+import { FURNITURE } from './furniture.js';
 
 export const NUM_WORDS = ['いち', 'に', 'さん', 'よん', 'ご', 'ろく', 'なな', 'はち', 'きゅう', 'じゅう'];
 export const PRAISE = ['すごい！', 'やったね！', 'じょうず！', 'できたね！', 'ばっちり！', 'さすが！'];
@@ -15,7 +17,7 @@ export const THINGS = [
   { e: '🚗', name: 'くるま' }, { e: '🌸', name: 'おはな' }, { e: '🐥', name: 'ひよこ' }, { e: '🍩', name: 'ドーナツ' },
 ];
 
-/** 1〜29 を ひらがなで */
+/** 1〜99 を ひらがなで */
 export function numWord(n) {
   if (n <= 10) return NUM_WORDS[n - 1];
   const tens = Math.floor(n / 10), ones = n % 10;
@@ -27,7 +29,8 @@ const W = numWord;
 
 export const L = {
   // ---- しま
-  welcome: (heroName) => line(`${heroName}さん、 キラキラ アイランド へ ようこそ！ いっしょに あそぼう！`),
+  welcome: (heroName, period, season) => line(
+    `${period.greet}！ ${heroName}さん、 キラキラ アイランド へ ようこそ！ いま は ${period.name} の じかん。 きせつ は ${season.name} だよ！`),
   voiceOn: () => line('こえ を だすよ！'),
   rainbow: () => line('にじ の いろ！ あか、 オレンジ、 きいろ、 みどり、 みずいろ、 あお、 むらさき！',
     'にじの いろ： あか・ オレンジ・ きいろ・ みどり・ みずいろ・ あお・ むらさき'),
@@ -58,18 +61,49 @@ export const L = {
   reward: (stars, acc) => line(`ほし が ${W(stars)}こ！ ごほうび に ${acc.name} を もらったよ！ にあってるね！`,
     `ほし が ${stars}こ！ ごほうび に ${acc.name} を もらったよ！ にあってるね！`),
 
-  // ---- かずの おうち
-  houseWelcome: () => line('かずの おうち へ ようこそ！ すうじ で あそぼう！'),
-  houseCountAsk: (thing) => line(`${thing.name} は いくつ あるかな？ おなじ すうじ に のってね！`),
-  houseCountRight: (n, thing) => line(`${W(n)}！ ${thing.name} が ${W(n)}こ！`, `${n}！ ${thing.name}が ${n}こ！`),
-  houseCountWrong: (m) => line(`それは ${W(m)}。 いっしょに かぞえて みよう！`, `それは ${m}。 いっしょに かぞえて みよう！`),
-  houseCountAlongEnd: (n) => line(`${W(n)}こ だね！ ${W(n)} の すうじ に のってね！`, `${n}こ だね！ ${n} の すうじに のってね！`),
-  houseOrderAsk: (n) => line(`いち から ${W(n)} まで、 じゅんばん に のってね！`, `1 から ${n} まで じゅんばんに のってね！`),
-  houseOrderWrong: (m, next) => line(`それは ${W(m)}。 つぎ は ${W(next)} だよ！`, `それは ${m}。 つぎは ${next} だよ！`),
-  houseOrderDone: (n) => line(`${W(n)}！ ぜんぶ できたね！`, `${n}！ ぜんぶ できたね！`),
-  houseMatchAsk: (n) => line(`${W(n)} と おなじ かず の おさら は どれかな？`, `${n} と おなじ かずの おさらは どれかな？`),
-  houseMatchRight: (n) => line(`${W(n)}こ の おさら！ せいかい！`, `${n}こ の おさら！ せいかい！`),
-  houseMatchWrong: (m, n) => line(`それは ${W(m)}こ。 ${W(n)}こ の おさら を さがしてね！`, `それは ${m}こ。 ${n}こ の おさらを さがしてね！`),
+  // ---- しまの くらし（つかまえる・ひろう）
+  gotItem: (verb, it, first) => line(`${it.name} を ${verb}！${first ? ' ずかん に のったよ！' : ''}`),
+  starDrop: () => line('おほしさま が おちてきた！'),
+  bellDrop: (n) => line(`ベル ぶくろ だ！ ${W(n)} ベル！`, `ベル ぶくろ だ！ ${n} ベル！`),
+  furnDrop: (f) => line(`プレゼント だ！ ${f.name} が はいってた！`),
+  bottle: (f) => line(`ボトルメール だ！ ${f.name} が はいってた！`),
+  // ---- はたけ
+  plant: () => line('たね を うえたよ！ おおきく なあれ！'),
+  noSeeds: () => line('たね が ないよ。 おみせ で かえるよ！'),
+  water: () => line('おみず を あげたよ！'),
+  wait: () => line('もうすこし で さくよ。 まってね！'),
+  // ---- おみせ
+  shopHello: () => line('いらっしゃいませ！ ほしい もの に さわってね！'),
+  buy: (it) => line(`${it.name} を かったよ！ ありがとう！`),
+  seedsName: 'はなの たね',
+  notEnough: (n) => line(`ベル が たりないよ。 あと ${W(n)} ベル！`, `ベル が たりないよ。 あと ${n} ベル！`),
+  soldOut: () => line('それは うりきれ。 また あした きてね！'),
+  sellNone: () => line('うる もの が ないよ。 むし や さかな を あつめてね！'),
+  sell: (n) => (n < 100
+    ? line(`ぜんぶで ${W(n)} ベル に なったよ！ ありがとう！`, `ぜんぶで ${n} ベル に なったよ！ ありがとう！`)
+    : line('ぜんぶで たくさん ベル に なったよ！ ありがとう！', `ぜんぶで ${n} ベル に なったよ！ ありがとう！`)),
+  // ---- てんき
+  rainStart: (snow) => line(snow ? 'ゆき が ふってきた！' : 'あめ が ふってきた！'),
+  rainEnd: (snow) => line(snow ? 'ゆき が やんだ！ まっしろ だね！' : 'あめ が やんだ！ にじ が きらきら！'),
+  // ---- ずかん・きせかえ・おへや
+  zukan: (n) => line(`ずかん だよ！ ${W(n) ?? 'ぜろ'}しゅるい みつけたね！`, `ずかん だよ！ ${n}しゅるい みつけたね！`),
+  itemName: (it) => line(`${it.name}！`),
+  closet: () => line('きせかえ しよう！ すきな もの を えらんでね！'),
+  wear: (c) => line(`${c.name}！ にあってるね！`),
+  roomWelcome: () => line('じぶんの おうち だよ！ かぐ を おいて かざろう！'),
+
+  // ---- かずの がっこう
+  schoolWelcome: () => line('かずの がっこう へ ようこそ！ すうじ で あそぼう！'),
+  schoolCountAsk: (thing) => line(`${thing.name} は いくつ あるかな？ おなじ すうじ に のってね！`),
+  schoolCountRight: (n, thing) => line(`${W(n)}！ ${thing.name} が ${W(n)}こ！`, `${n}！ ${thing.name}が ${n}こ！`),
+  schoolCountWrong: (m) => line(`それは ${W(m)}。 いっしょに かぞえて みよう！`, `それは ${m}。 いっしょに かぞえて みよう！`),
+  schoolCountAlongEnd: (n) => line(`${W(n)}こ だね！ ${W(n)} の すうじ に のってね！`, `${n}こ だね！ ${n} の すうじに のってね！`),
+  schoolOrderAsk: (n) => line(`いち から ${W(n)} まで、 じゅんばん に のってね！`, `1 から ${n} まで じゅんばんに のってね！`),
+  schoolOrderWrong: (m, next) => line(`それは ${W(m)}。 つぎ は ${W(next)} だよ！`, `それは ${m}。 つぎは ${next} だよ！`),
+  schoolOrderDone: (n) => line(`${W(n)}！ ぜんぶ できたね！`, `${n}！ ぜんぶ できたね！`),
+  schoolMatchAsk: (n) => line(`${W(n)} と おなじ かず の おさら は どれかな？`, `${n} と おなじ かずの おさらは どれかな？`),
+  schoolMatchRight: (n) => line(`${W(n)}こ の おさら！ せいかい！`, `${n}こ の おさら！ せいかい！`),
+  schoolMatchWrong: (m, n) => line(`それは ${W(m)}こ。 ${W(n)}こ の おさら を さがしてね！`, `それは ${m}こ。 ${n}こ の おさらを さがしてね！`),
 };
 
 /** せいかいの ことば ＋ ほめことば */
@@ -101,7 +135,6 @@ export function allLines() {
   const range = (a, b) => Array.from({ length: b - a + 1 }, (_, i) => a + i);
   const animals = Object.values(ANIMALS);
 
-  for (const h of Object.values(HEROES)) add(L.welcome(h.name));
   add(L.voiceOn());
   add(L.rainbow());
   out.push('ほー ほー。', 'やじるし の ほう だよ！');
@@ -128,22 +161,41 @@ export function allLines() {
   for (const m of MOJI) { add(L.mojiAsk(m)); add(L.mojiRight(m)); add(L.mojiWrong(m)); }
   for (const acc of ACCESSORIES) add(L.reward(acc.stars, acc));
 
-  add(L.houseWelcome());
+  add(L.schoolWelcome());
   for (const t of THINGS) {
-    add(L.houseCountAsk(t));
-    for (const n of range(1, 10)) add(L.houseCountRight(n, t));
+    add(L.schoolCountAsk(t));
+    for (const n of range(1, 10)) add(L.schoolCountRight(n, t));
   }
   for (const n of range(1, 10)) {
-    add(L.houseCountWrong(n));
-    add(L.houseCountAlongEnd(n));
-    add(L.houseMatchAsk(n));
-    add(L.houseMatchRight(n));
-    for (const m of range(1, 10)) add(L.houseMatchWrong(m, n));
+    add(L.schoolCountWrong(n));
+    add(L.schoolCountAlongEnd(n));
+    add(L.schoolMatchAsk(n));
+    add(L.schoolMatchRight(n));
+    for (const m of range(1, 10)) add(L.schoolMatchWrong(m, n));
   }
   for (const n of range(1, 6)) {
-    add(L.houseOrderAsk(n));
-    add(L.houseOrderDone(n));
-    for (const m of range(1, 6)) add(L.houseOrderWrong(m, n));
+    add(L.schoolOrderAsk(n));
+    add(L.schoolOrderDone(n));
+    for (const m of range(1, 6)) add(L.schoolOrderWrong(m, n));
   }
+
+  // ---- しまの くらし
+  for (const h of Object.values(HEROES)) for (const p of Object.values(PERIODS)) for (const se of Object.values(SEASONS)) add(L.welcome(h.name, p, se));
+  const VERB = { mushi: 'つかまえた', sakana: 'つりあげた', umibe: 'ひろった', kaseki: 'ほりだした', kinomi: 'ひろった', hana: 'つんだ' };
+  for (const it of Object.values(ITEMS)) {
+    const verb = it.id === 'kani' ? 'つかまえた' : VERB[it.cat];
+    add(L.gotItem(verb, it, true));
+    add(L.itemName(it));
+  }
+  add(L.starDrop());
+  for (const n of [3, 5, 10]) add(L.bellDrop(n));
+  for (const f of Object.values(FURNITURE)) { add(L.furnDrop(f)); add(L.bottle(f)); add(L.buy(f)); }
+  for (const c of Object.values(CLOTHES)) { add(L.buy(c)); add(L.wear(c)); }
+  add(L.buy({ name: L.seedsName }));
+  [L.plant, L.noSeeds, L.water, L.wait, L.shopHello, L.soldOut, L.sellNone, L.closet, L.roomWelcome].forEach((f) => add(f()));
+  for (const n of range(1, 30)) add(L.notEnough(n));
+  for (const n of range(1, 100)) add(L.sell(n));
+  for (const snow of [false, true]) { add(L.rainStart(snow)); add(L.rainEnd(snow)); }
+  for (const n of range(0, Object.keys(ITEMS).length)) add(L.zukan(n));
   return out;
 }

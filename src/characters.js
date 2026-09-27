@@ -90,8 +90,14 @@ export const HEROES = {
   kuma: { name: 'くま', emoji: '🐻', color: 0xc68b59, belly: 0xf3d9b1, inner: 0xe9b88c, foot: 0xa8703f },
 };
 
+// おみせの たぬきさん など（タイトルでは えらべない）
+export const NPCS = {
+  tanuki: { name: 'たぬき', color: 0x9c7a5b, belly: 0xf1dfc4, inner: 0x6b4f3a, foot: 0x5a4030 },
+};
+
 export function makeHero(kind) {
-  const d = HEROES[kind] ?? HEROES.usagi;
+  const d = HEROES[kind] ?? NPCS[kind] ?? HEROES.usagi;
+  const bearish = kind === 'kuma' || kind === 'tanuki';
   const root = new THREE.Group();
   const pivot = new THREE.Group();
   root.add(pivot);
@@ -104,7 +110,11 @@ export function makeHero(kind) {
   pivot.add(head);
   head.add(ball(d.color, 0.52, 0, 0, 0, 1.06, 0.96, 1));
 
-  if (kind === 'kuma') {
+  if (kind === 'tanuki') {
+    for (const sx of [-1, 1]) head.add(ball(0x4a3426, 0.13, sx * 0.185, 0.04, 0.43, 1.25, 1, 0.35));
+    head.add(ball(0x4caf50, 0.13, 0.05, 0.52, 0, 1.6, 0.3, 1));
+  }
+  if (bearish) {
     head.add(ball(d.belly, 0.2, 0, -0.14, 0.42, 1.2, 0.85, 0.7));
     head.add(ball(0x3b2416, 0.07, 0, -0.07, 0.56, 1.3, 0.9, 0.8));
     addFace(head, 0.5, { mouthY: -0.24, mouthZ: 0.06, eyeY: 0.1 });
@@ -152,6 +162,10 @@ export function makeHero(kind) {
 
   if (kind === 'usagi') pivot.add(ball(0xffffff, 0.16, 0, 0.45, -0.46));
   else if (kind === 'kuma') pivot.add(ball(d.color, 0.12, 0, 0.42, -0.44));
+  else if (kind === 'tanuki') {
+    pivot.add(ball(d.color, 0.2, 0, 0.4, -0.5, 0.9, 0.9, 1.4));
+    pivot.add(ball(0x4a3426, 0.12, 0, 0.42, -0.72, 1, 1, 0.8));
+  }
   else {
     const tail = new THREE.Group();
     tail.position.set(0, 0.4, -0.4);
@@ -168,14 +182,35 @@ export function makeHero(kind) {
   return { root, pivot, head, armL, armR, footL, footR, ears, kind };
 }
 
-// ---------------------------------------------------------------- ごほうび（アクセサリー）
+// ---------------------------------------------------------------- きせかえ（ぼうし・めがね・ふく）
+//   stars : ほしが その かずに なると もらえる（ごほうび）   price : おみせで かえる（ベル）
+export const CLOTHES = {
+  ribbon: { slot: 'hat', stars: 5, name: 'リボン', emoji: '🎀' },
+  hat: { slot: 'hat', stars: 10, name: 'むぎわら ぼうし', emoji: '👒' },
+  flower: { slot: 'hat', stars: 15, name: 'おはなの かんむり', emoji: '🌸' },
+  crown: { slot: 'hat', stars: 20, name: 'きんの おうかん', emoji: '👑' },
+  cap: { slot: 'hat', price: 8, name: 'キャップ', emoji: '🧢' },
+  silk: { slot: 'hat', price: 10, name: 'シルクハット', emoji: '🎩' },
+  kinokohat: { slot: 'hat', price: 8, name: 'きのこ ぼうし', emoji: '🍄' },
+  megane: { slot: 'face', price: 6, name: 'めがね', emoji: '👓' },
+  sangurasu: { slot: 'face', price: 8, name: 'サングラス', emoji: '🕶️' },
+  tshirt: { slot: 'body', price: 6, name: 'Tシャツ', emoji: '👕' },
+  border: { slot: 'body', price: 8, name: 'ボーダー シャツ', emoji: '🎽' },
+  dress: { slot: 'body', price: 10, name: 'ワンピース', emoji: '👗' },
+  overall: { slot: 'body', price: 10, name: 'オーバーオール', emoji: '👖' },
+  raincoat: { slot: 'body', price: 10, name: 'レインコート', emoji: '🧥' },
+  yukata: { slot: 'body', price: 12, name: 'ゆかた', emoji: '👘' },
+};
+for (const [id, c] of Object.entries(CLOTHES)) c.id = id;
 
-export const ACCESSORIES = [
-  { id: 'ribbon', stars: 5, name: 'リボン', emoji: '🎀' },
-  { id: 'hat', stars: 10, name: 'むぎわら\u00a0ぼうし', emoji: '👒' },
-  { id: 'flower', stars: 15, name: 'おはなの\u00a0かんむり', emoji: '🌸' },
-  { id: 'crown', stars: 20, name: 'きんの\u00a0おうかん', emoji: '👑' },
+export const SLOTS = [
+  { id: 'hat', name: 'ぼうし', emoji: '👒' },
+  { id: 'face', name: 'めがね', emoji: '👓' },
+  { id: 'body', name: 'ふく', emoji: '👕' },
 ];
+
+// ほしの ごほうび（じゅんばんに もらえる）
+export const ACCESSORIES = Object.values(CLOTHES).filter((c) => c.stars);
 
 export function accessoryForStars(stars) {
   let best = null;
@@ -183,6 +218,9 @@ export function accessoryForStars(stars) {
   return best;
 }
 
+const CAP = new THREE.SphereGeometry(1, 24, 12, 0, Math.PI * 2, 0, Math.PI / 2);
+
+/** ぼうし（あたまに つける） */
 export function makeAccessory(id) {
   const g = new THREE.Group();
   if (id === 'ribbon') {
@@ -221,8 +259,121 @@ export function makeAccessory(id) {
       g.add(ball(i % 2 ? 0xff4b6b : 0x3d9bff, 0.035, Math.cos(a) * 0.3, 0, Math.sin(a) * 0.3));
     }
     g.position.set(0, 0.5, -0.02);
+  } else if (id === 'cap') {
+    const top = new THREE.Mesh(CAP, toon(0x3d7bff));
+    top.scale.set(0.54, 0.4, 0.54);
+    top.castShadow = true;
+    g.add(top);
+    const brim = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.04, 0.4), toon(0x3d7bff));
+    brim.position.set(0, 0.02, 0.5);
+    g.add(brim);
+    g.add(ball(0xffffff, 0.05, 0, 0.4, 0));
+    g.position.set(0, 0.2, 0);
+    g.rotation.x = -0.15;
+  } else if (id === 'silk') {
+    g.add(cyl(0x2b2b35, 0.5, 0.04, 0, 0, 0));
+    g.add(cyl(0x2b2b35, 0.3, 0.55, 0, 0.28, 0));
+    g.add(cyl(0xff4f7b, 0.305, 0.1, 0, 0.08, 0));
+    g.position.set(0, 0.44, -0.02);
+    g.rotation.set(-0.1, 0, 0.12);
+  } else if (id === 'kinokohat') {
+    const top = new THREE.Mesh(CAP, toon(0xff4d4d));
+    top.scale.set(0.66, 0.5, 0.66);
+    top.castShadow = true;
+    g.add(top);
+    for (let i = 0; i < 6; i++) {
+      const a = (i / 6) * Math.PI * 2;
+      g.add(ball(0xffffff, 0.08, Math.cos(a) * 0.42, 0.28, Math.sin(a) * 0.42, 1, 0.5, 1));
+    }
+    g.add(ball(0xffffff, 0.11, 0, 0.5, 0, 1, 0.4, 1));
+    g.position.set(0, 0.22, 0);
   }
   return g;
+}
+
+/** めがね（かおに つける） */
+export function makeFaceWear(id) {
+  const g = new THREE.Group();
+  const frame = id === 'megane' ? 0xc2463a : 0x2b2b35;
+  for (const s of [-1, 1]) {
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.11, 0.022, 8, 20), toon(frame));
+    ring.position.set(s * 0.185, 0, 0);
+    g.add(ring);
+    if (id === 'sangurasu') {
+      const lens = new THREE.Mesh(new THREE.CircleGeometry(0.1, 20), toon(0x1d1d28));
+      lens.position.set(s * 0.185, 0, 0.005);
+      g.add(lens);
+    }
+    const arm = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.02, 0.3), toon(frame));
+    arm.position.set(s * 0.3, 0.02, -0.14);
+    g.add(arm);
+  }
+  const bridge = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.02, 0.02), toon(frame));
+  bridge.position.set(0, 0.02, 0);
+  g.add(bridge);
+  g.position.set(0, 0.06, 0.5);
+  return g;
+}
+
+const shell = (t0, t1) => new THREE.SphereGeometry(1, 24, 10, 0, Math.PI * 2, Math.PI * t0, Math.PI * (t1 - t0));
+const SHIRT = shell(0, 0.62);
+const LONG = shell(0, 0.85);
+const LOWER = shell(0.5, 1);
+const SLEEVE = shell(0, 0.55);
+const STRIPE_T = [0, 0.14, 0.26, 0.38, 0.5, 0.62];
+const STRIPES = STRIPE_T.slice(0, -1).map((t, i) => shell(t, STRIPE_T[i + 1]));
+const SMALL = new THREE.SphereGeometry(1, 8, 6);
+
+/** ふく（からだに かさねる）。つけた メッシュの リストを かえす */
+export function dressBody(model, id) {
+  const added = [];
+  const put = (parent, geo, color, x, y, z, sx, sy = sx, sz = sx, doubleSide = false) => {
+    let mat = toon(color);
+    if (doubleSide) {
+      mat = mat.clone();
+      mat.side = THREE.DoubleSide;
+    }
+    const m = new THREE.Mesh(geo, mat);
+    m.position.set(x, y, z);
+    m.scale.set(sx, sy, sz);
+    m.castShadow = true;
+    parent.add(m);
+    added.push(m);
+    return m;
+  };
+  const torso = (geo, color) => put(model.pivot, geo, color, 0, 0.62, 0, 0.515, 0.475, 0.455);
+  const sleeves = (color) => { for (const arm of [model.armL, model.armR]) put(arm, SLEEVE, color, 0, 0, 0, 1.08); };
+  if (id === 'tshirt') {
+    torso(SHIRT, 0xff5a5a);
+    sleeves(0xff5a5a);
+  } else if (id === 'border') {
+    STRIPES.forEach((g, i) => torso(g, i % 2 ? 0xffffff : 0x2d4a8a));
+    sleeves(0x2d4a8a);
+  } else if (id === 'dress') {
+    torso(SHIRT, 0xff8fc8);
+    sleeves(0xff8fc8);
+    put(model.pivot, new THREE.CylinderGeometry(0.4, 0.62, 0.42, 24, 1, true), 0xff8fc8, 0, 0.34, 0, 1, 1, 0.9, true);
+    put(model.pivot, new THREE.TorusGeometry(0.47, 0.04, 6, 24), 0xffffff, 0, 0.55, 0, 1, 1, 0.92).rotation.x = Math.PI / 2;
+  } else if (id === 'overall') {
+    torso(SHIRT, 0xfff2c4);
+    sleeves(0xfff2c4);
+    torso(LOWER, 0x4a7bd0);
+    put(model.pivot, new THREE.BoxGeometry(0.34, 0.26, 0.05), 0x4a7bd0, 0, 0.74, 0.4, 1);
+    for (const s of [-1, 1]) {
+      put(model.pivot, new THREE.BoxGeometry(0.07, 0.4, 0.05), 0x4a7bd0, s * 0.14, 0.95, 0.28, 1).rotation.x = -0.6;
+      put(model.pivot, SMALL, 0xffd23d, s * 0.12, 0.85, 0.43, 0.035);
+    }
+  } else if (id === 'raincoat') {
+    torso(LONG, 0xffd23d);
+    sleeves(0xffd23d);
+    for (let i = 0; i < 3; i++) put(model.pivot, SMALL, 0xff6f61, 0, 0.92 - i * 0.18, 0.44 - Math.abs(i - 1) * 0.02, 0.035);
+  } else if (id === 'yukata') {
+    torso(LONG, 0x6fa8e8);
+    sleeves(0x6fa8e8);
+    put(model.pivot, new THREE.CylinderGeometry(1, 1, 1, 24), 0xff4f7b, 0, 0.56, 0, 0.535, 0.13, 0.49);
+    put(model.pivot, SMALL, 0xff4f7b, 0, 0.6, -0.48, 0.16, 0.11, 0.08);
+  }
+  return added;
 }
 
 // ---------------------------------------------------------------- どうぶつ
@@ -380,12 +531,12 @@ function buildFrog() {
 }
 
 export const ANIMALS = {
-  inu: { name: 'いぬ', san: 'いぬさん', sound: 'わんわん', emoji: '🐶', build: buildDog },
-  buta: { name: 'ぶた', san: 'ぶたさん', sound: 'ぶーぶー', emoji: '🐷', build: buildPig },
-  ushi: { name: 'うし', san: 'うしさん', sound: 'もーもー', emoji: '🐮', build: buildCow },
-  hitsuji: { name: 'ひつじ', san: 'ひつじさん', sound: 'めぇめぇ', emoji: '🐑', build: buildSheep },
-  hiyoko: { name: 'ひよこ', san: 'ひよこさん', sound: 'ぴよぴよ', emoji: '🐤', build: buildChick },
-  kaeru: { name: 'かえる', san: 'かえるさん', sound: 'けろけろ', emoji: '🐸', build: buildFrog },
+  inu: { name: 'いぬ', san: 'いぬさん', sound: 'わんわん', emoji: '🐶', pitch: 420, build: buildDog },
+  buta: { name: 'ぶた', san: 'ぶたさん', sound: 'ぶーぶー', emoji: '🐷', pitch: 300, build: buildPig },
+  ushi: { name: 'うし', san: 'うしさん', sound: 'もーもー', emoji: '🐮', pitch: 230, build: buildCow },
+  hitsuji: { name: 'ひつじ', san: 'ひつじさん', sound: 'めぇめぇ', emoji: '🐑', pitch: 380, build: buildSheep },
+  hiyoko: { name: 'ひよこ', san: 'ひよこさん', sound: 'ぴよぴよ', emoji: '🐤', pitch: 620, build: buildChick },
+  kaeru: { name: 'かえる', san: 'かえるさん', sound: 'けろけろ', emoji: '🐸', pitch: 340, build: buildFrog },
 };
 
 export function makeAnimal(kind) {
