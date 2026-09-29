@@ -1,0 +1,62 @@
+{
+  "6": {
+    "parts": [
+      {
+        "filename": "parts/batch-06-part-0.wav",
+        "sha256": "d48cd2e82304e74966e8010b8eddf3f140809dcf4e256cbbfc4d30aa8164c0e4",
+        "duration": 25.6,
+        "prompt": "それは「せ」。 <long pause>\nせっけんの「せ」だよ。 <long pause>\nそふとくりーむの「そ」はどれかな？ <long pause>\n「そ」！ <long pause>\nそふとくりーむの「そ」だね！ <long pause>\nそれは「そ」。 <long pause>\nそふとくりーむの「そ」だよ。 <long pause>\nほしが <long pause>\nごほうびにリボンをもらったよ！ <long pause>\nにあってるね！",
+        "style": null
+      },
+      {
+        "filename": "parts/batch-06-part-1.wav",
+        "sha256": "82ec10beb0691795a7d8722374ec66b990241466573293f06f7ad02a10fcd51e",
+        "duration": 28.24,
+        "prompt": "ごほうびにむぎわらぼうしをもらったよ！ <long pause>\nじゅうごこ！ <long pause>\nごほうびにおはなのかんむりをもらったよ！ <long pause>\nにじゅっこ！ <long pause>\nごほうびにきんのおうかんをもらったよ！ <long pause>\nかずのがっこうへようこそ！ <long pause>\nすうじであそぼう！ <long pause>\nクッキーはいくつあるかな？ <long pause>\nおなじすうじにのってね！ <long pause>\nクッキーが",
+        "style": null
+      },
+      {
+        "filename": "parts/batch-06-part-2.wav",
+        "sha256": "965d40f3b6f70da8b0bf314f6c8f89bf0b634a56472039c9ca78b8d6224bc959",
+        "duration": 73.48,
+        "prompt": "りんごはいくつあるかな？ <long pause>\nおほしさまはいくつあるかな？ <long pause>\nおほしさまが <long pause>\nふうせんはいくつあるかな？ <long pause>\nふうせんが <long pause>\nおさかなはいくつあるかな？ <long pause>\nおさかなが <long pause>\nいちごはいくつあるかな？ <long pause>\nくるまはいくつあるかな？ <long pause>\nくるまが",
+        "style": null
+      },
+      {
+        "filename": "parts/batch-06-part-3.wav",
+        "sha256": "3de43db281d32985d6b095f5d1466d137a41f36175930275cf855738df7b8ea6",
+        "duration": 32.24,
+        "prompt": "おはなはいくつあるかな？ <long pause>\nおはなが <long pause>\nひよこはいくつあるかな？ <long pause>\nひよこが <long pause>\nドーナツはいくつあるかな？ <long pause>\nドーナツが <long pause>\nそれはいち。 <long pause>\nいっしょにかぞえてみよう！ <long pause>\nいっこだね！ <long pause>\nいちのすうじにのってね！",
+        "style": null
+      }
+    ],
+    "betweenPartsSilenceSeconds": 1,
+    "sha256": "a1812647412f5a1a073bff32990fb1e45961cbb7868dfcfcd8fcaaa4fbd56dc8"
+  },
+  "16": {
+    "parts": [
+      {
+        "filename": "parts/batch-16-part-0.wav",
+        "sha256": "7c219a124fd930f8ac4d5b5d63b907b887f76283332f239ce82a9373ac1d460a",
+        "duration": 58.72
+      },
+      {
+        "filename": "parts/batch-16-part-1.wav",
+        "sha256": "21432beb811e7347ef3b2f5ebbffa2058942eeb06bb209bb7eb1e6806bc02ee0",
+        "duration": 40.24
+      },
+      {
+        "filename": "parts/batch-16-part-2.wav",
+        "sha256": "14b858741282fc755ef8abe2005e985091dbaa4fdd7507a5d51cb866d5d51bfb",
+        "duration": 53.96
+      },
+      {
+        "filename": "parts/batch-16-part-3.wav",
+        "sha256": "1fc7e937f09c415539fb33ee8bd1641395547307503bebdf14e6fd7f93abeea1",
+        "duration": 29.04
+      }
+    ],
+    "betweenPartsSilenceSeconds": 1,
+    "sha256": "b943d966dcd773ed518cbf042076967621f1323f73e05fdfb09bece90a036259"
+  }
+}

@@ -1,0 +1,31 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>キラキラアイランド 音声試聴</title>
+<script type="importmap">{"imports":{"three":"../vendor/three.module.js"}}</script>
+<style>body{font-family:system-ui,sans-serif;background:#fff9ed;color:#233d39;max-width:850px;margin:30px auto;padding:20px}h1{font-size:28px}button,select{font:inherit;border:1px solid #aac5b7;border-radius:12px;padding:12px;margin:6px;background:#fff}button{cursor:pointer;background:#d9f5e7}#subtitle{padding:24px;background:#fff;border-radius:18px;font-size:22px;min-height:60px}pre{white-space:pre-wrap;font-size:14px}small{color:#52665e}</style>
+<h1>🏝️ キラキラアイランドの新しい声</h1><p>Gemini 3.8 Flash TTS · Cleo · 日本語</p><p id="mode"></p>
+<label>試聴するセリフ <select id="sample"></select></label><button id="play">再生</button><button id="stop">停止</button>
+<p id="subtitle">セリフを選んで再生できます。</p><p id="status" role="status">音声一覧を読み込み中</p>
+<button id="check">全音声を検査</button><pre id="result"></pre>
+<p><small>これは開発用の試聴ページです。ゲームのセーブデータは変更しません。</small></p>
+<script type="module">
+import { Voice } from '../src/voice.js';
+import { L, withPraise, THINGS } from '../src/lines.js';
+import { HEROES } from '../src/characters.js';
+import { PERIODS, SEASONS } from '../src/catalog.js';
+import { FRUITS } from '../src/props.js';
+const samples=[['ごあいさつ',L.welcome(Object.values(HEROES)[0].name,PERIODS.asa,SEASONS.aki)],['ほめ言葉',withPraise({say:'せいかい！',sub:'せいかい！'},'じょうず！')],['色',L.rainbow()],['集める数',L.countAsk(Object.values(FRUITS)[0],3)],['学校',L.schoolCountRight(8,THINGS[0])],['学校の案内',L.schoolWelcome()],['お買い物',L.buy({name:'くまの ぬいぐるみ'})],['売る',L.sell(99)],['図鑑',L.zukan(0)],['図鑑が増えた',L.zukan(30)]];
+const select=document.querySelector('#sample');for(const [i,[name]]of samples.entries())select.add(new Option(name,i));
+const audio={ctx:null,voiceOut:null};let started=0;
+// Base URL matches the game's fetch paths even though this page is in tools/.
+const base=document.createElement('base');base.href='../';document.head.append(base);
+const voice=new Voice({audio,onSubtitle:text=>document.querySelector('#subtitle').textContent=text,onSpeaking:on=>{if(on){started=performance.now();document.querySelector('#status').textContent='再生中（'+voice.lastMode+'）';}else if(started){document.querySelector('#status').textContent='再生終了（'+voice.lastMode+'、'+((performance.now()-started)/1000).toFixed(2)+'秒）';started=0;}}});
+async function unlock(){if(!audio.ctx){audio.ctx=new AudioContext();audio.voiceOut=audio.ctx.createGain();audio.voiceOut.gain.value=.75;audio.voiceOut.connect(audio.ctx.destination);}await audio.ctx.resume();}
+await voice.indexReady;
+const preview=new URL(location.href).searchParams.has('preview');
+if(preview){const index=await(await fetch('voice/preview.json')).json();voice.clipIndex=new Map(Object.entries(index.clips).map(([h,c])=>[h,c.file]));}
+document.querySelector('#mode').textContent=preview?'未完成の試聴版：準備済みの音声のみ。公開版には未反映。':'';
+document.querySelector('#status').textContent=voice.clipIndex ? `${preview?'未完成の試聴版：':''}${voice.clipIndex.size}本の音声を読み込みました`:'音声一覧が未完成です';
+document.querySelector('#play').onclick=async()=>{await unlock();voice.say(samples[Number(select.value)][1]);};
+document.querySelector('#stop').onclick=()=>voice.stop();
+document.querySelector('#check').onclick=async()=>{await unlock();voice.stop();const errors=[];let checked=0,seconds=0;for(const hash of voice.clipIndex?.keys()??[]){try{const b=await voice.decode(hash);if(b.numberOfChannels!==1||b.duration<=.1)throw Error('invalid audio');seconds+=b.duration;checked++;}catch(e){errors.push({hash,error:String(e)});}if(checked%25===0)document.querySelector('#result').textContent=JSON.stringify({checked,errors});}document.querySelector('#result').textContent=JSON.stringify({checked,expected:voice.clipIndex?.size,errors,totalSeconds:Math.round(seconds)},null,2);};
+</script></html>

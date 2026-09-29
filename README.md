@@ -77,9 +77,10 @@ Three.js 製で、ビルド不要の静的サイト。PWA としてホーム画�
 
 - **BGM**：Web Audio API でその場で演奏するオリジナル曲（音源ファイルなし）。朝・昼・夕方・夜で 曲が かわる
 - **効果音**：ジャンプ・きのこ・正解・かぞえる音（ドレミ）・ファンファーレなど、すべて合成
-- **声**：事前に作った音声ファイル（`voice/*.mp3`、Open JTalk ＋ HTS Voice “Mei”）を再生。字幕も表示
+- **声**：Gemini 3.8 Flash TTS（`gemini-3.8-flash-tts`）の Cleo で事前に作った日本語音声（`voice/gemini/*.mp3`）を再生。字幕も表示
   - 端末の読み上げ機能に頼らないので、日本語の読み上げがない端末（Fire タブレットなど）やオフラインでも喋ります
-  - 音声ファイルがないセリフのときだけ、端末の読み上げ（Web Speech API）を使います
+  - 遊ぶときの生成API接続・APIキー・生成料金は不要。共通の案内や名詞を組み合わせて再利用します
+  - ファイルの取得に失敗した場合や未収録のセリフだけ、端末の読み上げ（Web Speech API）を使います
 - 右上 🎵 で BGM、🗣️ で声を ON/OFF、🏠 でキャラ選択へ
 
 > 声が出ないときは、まず端末の音量・マナーモードを確認してください。
@@ -124,7 +125,7 @@ voice/             セリフの音声ファイル（tools/gen-voice.mjs で生�
 tools/             音声ファイルの生成スクリプト
 src/props.js       ふうせん・くだもの・かたち・もじブロック
 src/audio.js       BGM と効果音（Web Audio）
-src/voice.js       音声読み上げ（Web Speech）
+src/voice.js       Gemini生成済み音声の再生・再利用（取得失敗時はWeb Speech）
 src/input.js       スティック・タップ移動・キーボード
 vendor/            three.js r186（MIT）
 ```
@@ -134,17 +135,28 @@ vendor/            three.js r186（MIT）
 
 ### セリフ（声）を変える・増やす
 
-セリフはすべて `src/lines.js` にあります。変更したら音声ファイルを作り直してください（文ごとの mp3 を作り、使わなくなったファイルは消します）。
+Gemini音声への置き換えは作業ブランチで準備中・未公開です。進捗と残作業は [音声作業の現在地](assets-src/gemini-tts/STATE.md) を参照してください。
+
+セリフはすべて `src/lines.js` にあります。文末に加え、数え方の「りんごを／さんこあつめてね」、買い物の「いすを／かったよ」など意味の切れ目で音声を再利用します。数字と助数詞、ひらがなの例文は一息で収録します。
 
 ```sh
-sudo apt-get install open-jtalk open-jtalk-mecab-naist-jdic lame
-# MMDAgent_Example（https://sourceforge.net/projects/mmdagent/）の Voice/mei/mei_happy.htsvoice を用意
-MEI_VOICE=/path/to/mei_happy.htsvoice node --import ./tools/register.mjs tools/gen-voice.mjs
+node --import ./tools/register.mjs tools/gen-voice.mjs --plan
+# AI Studioで生成→WAV保存→確認済みの区切りでMP3化（詳細は下記）
+node --import ./tools/register.mjs tools/gen-voice.mjs --import
+node --import ./tools/register.mjs tools/gen-voice.mjs --finalize
+node --import ./tools/register.mjs --test tools/voice.test.mjs tools/sw.test.mjs
 ```
+
+生成条件・音声の対応表・再生成手順は [assets-src/gemini-tts/README.md](assets-src/gemini-tts/README.md)。全音声が揃うまで一覧を更新しない仕組みです。旧Mei音声は履歴参照用に残し、配信対象から外しています。
+
+GitHub: https://github.com/futsalife24-bot/Ichi-game
+
+ローカル作業場所: `C:\Users\futsa\Documents\Codex\2026-09-29\ichi-game`
 
 ### クレジット
 
-- 声：HTS Voice “Mei” © 2009-2018 Nagoya Institute of Technology, Department of Computer Science（[CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)）／ 音声合成：[Open JTalk](https://open-jtalk.sourceforge.net/)
+- 現行の声：Google Gemini 3.8 Flash TTS / Cleo。架空のゲームガイドとして生成
+- 旧音声（配信対象外）：HTS Voice “Mei” © 2009-2018 Nagoya Institute of Technology, Department of Computer Science（[CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)）／ 音声合成：[Open JTalk](https://open-jtalk.sourceforge.net/)
 - 3D：[three.js](https://threejs.org/)（MIT）
 
 ### カスタマイズのヒント
