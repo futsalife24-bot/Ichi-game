@@ -76,11 +76,26 @@
 
   <div id="title" class="screen">
     <h1 class="logo"><span>キ</span><span>ラ</span><span>キ</span><span>ラ</span><br><span>ア</span><span>イ</span><span>ラ</span><span>ン</span><span>ド</span></h1>
-    <p class="choose">だれで あそぶ？ えらんでね</p>
-    <div id="heroes"></div>
     <p id="titleStars"></p>
+    <div class="title-actions">
+      <button id="btnPlay" class="play-btn"></button>
+      <button id="btnRemake" class="remake-btn">✏️ つくりなおす</button>
+    </div>
     <p class="parents">おうちの かたへ：よこむき で あそびます。おとが でます。</p>
     <p class="credit">こえ：Google Gemini 3.8 Flash TTS / Cleo</p>
+  </div>
+
+  <div id="maker" class="hidden">
+    <div class="maker-panel">
+      <div id="makerDots"></div>
+      <h2 id="makerTitle"></h2>
+      <div id="makerBody"></div>
+      <div class="maker-nav">
+        <button id="makerBack">◀ もどる</button>
+        <button id="makerRandom">🎲 おまかせ</button>
+        <button id="makerNext">つぎへ ▶</button>
+      </div>
+    </div>
   </div>
 
   <div id="rotate" class="screen">

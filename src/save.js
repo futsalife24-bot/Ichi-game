@@ -2,6 +2,7 @@
 const KEY = 'kirakira-island-save-v1';
 const DEFAULTS = {
   stars: 0, hero: 'usagi', questIdx: 0, bgm: true, voice: true,
+  avatar: null, // キャラメイク { color, ears, eyes, pattern, tail, name }
   // ---- しまの くらし
   bells: 0, // おかね（ベル）
   zukan: {}, // id → つかまえた かず（ずかん）

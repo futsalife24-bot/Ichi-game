@@ -7,6 +7,7 @@ import { toon, ball, cyl, makeOwl } from './characters.js';
 import { canvasTexture, roundRect, signTexture, FONT, EMOJI_FONT } from './canvas.js';
 import { pick, shuffle } from './quests.js';
 import { L, PRAISE, THINGS, withPraise, numWord } from './lines.js';
+import { callName } from './catalog.js';
 
 export const SCHOOL_ORIGIN = new THREE.Vector3(1000, 0, 0);
 const HALF_W = 11, BACK = -9, FRONT = 6;
@@ -410,7 +411,7 @@ export class School {
     this.clearPads();
     this.setBoard({ mode: 'welcome' });
     this.ui.setQuest({ icon: '<span class="emoji">🏫</span>', text: 'かずの がっこう' });
-    this.voice.say(L.schoolWelcome(), { who: { name: 'ふくろう せんせい', pitch: 300 } });
+    this.voice.say(L.schoolWelcome(callName(this.quests.save.avatar)), { who: { name: 'ふくろう せんせい', pitch: 300 } });
     this.audio.melody([76, 72, 74, 67, 67, 74, 76, 72], 0.32); // キーンコーンカーンコーン
   }
 

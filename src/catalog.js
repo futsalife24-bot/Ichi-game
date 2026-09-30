@@ -136,3 +136,20 @@ export function dayKey() {
   const d = new Date();
   return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
 }
+
+// ------------------------------------------------ キャラの なまえ（こえ を よういできる リスト）
+export const NAMES = [
+  ['momo', 'もも', '🍑'], ['ichigo', 'いちご', '🍓'], ['purin', 'ぷりん', '🍮'], ['mochi', 'もち', '🍡'],
+  ['kurumi', 'くるみ', '🌰'], ['popo', 'ぽぽ', '🌼'], ['ruru', 'るる', '🌙'], ['mimi', 'みみ', '🐰'],
+  ['choko', 'ちょこ', '🍫'], ['maru', 'まる', '⚪'], ['piko', 'ぴこ', '🐤'], ['komugi', 'こむぎ', '🌾'],
+  ['sora', 'そら', '☁️'], ['himari', 'ひまり', '🌻'], ['yuzu', 'ゆず', '🍋'], ['ame', 'あめ', '🍬'],
+  ['puu', 'ぷう', '🎈'], ['sakura', 'さくら', '🌸'], ['rara', 'らら', '🎵'], ['pon', 'ぽん', '🥁'],
+  ['hana', 'はな', '🌷'], ['niko', 'にこ', '😊'], ['kiki', 'きき', '⭐'], ['nana', 'なな', '🌈'],
+].map(([id, name, emoji]) => ({ id, name, emoji }));
+
+/** よびかけ（「もも」→「ももちゃん」。さいごが ちゃん・くん・さん なら そのまま） */
+export function callName(avatar) {
+  const n = avatar?.name?.trim();
+  if (!n) return '';
+  return /(ちゃん|くん|さん)$/.test(n) ? n : `${n}ちゃん`;
+}

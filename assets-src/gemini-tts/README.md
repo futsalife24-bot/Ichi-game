@@ -9,6 +9,11 @@
 - APIキー作成・契約変更なし。実請求額は未確認。ゲーム内で生成APIを呼ばない。
 - Codex実行モデルID / reasoning effort: 取得できず未確認。切替なし、サブエージェントなし。
 
+## まだ音声がない新しいセリフ
+
+キャラメイクと名前の呼びかけ（39クリップ）は `src/lines.js` の `pendingLines()` に分けてあり、`allLines()` には入れていない（入れると公開前の音声チェックが止まるため）。
+生成するときは `pendingLines()` の中身を `allLines()` へ移してから、下の「再生成」の手順で作る。それまでは、音声がある部分だけ再生するか、端末の読み上げで話す。
+
 ## 再生成
 
 1. `node --import ./tools/register.mjs tools/gen-voice.mjs --plan` で現在のセリフから重複を除いた `plan.json` と `batch-NN.txt` を出す。字幕やゲームルールは変えない。

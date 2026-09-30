@@ -55,3 +55,7 @@ test('unavailable clip falls back safely and stale synth events cannot mute new 
   const f=fixture();await f.voice.indexReady;f.voice.say('みとうろく');await tick();const old=f.synth[0];assert.ok(old);
   f.voice.say('すごい！');await tick();old.onend();assert.equal(f.voice.speaking,true);f.voice.stop();
 });
+test('without a Japanese synth voice, lines with a new name still play the recorded parts',async()=>{
+  const f=fixture();await f.voice.indexReady;f.voice.say('ももちゃん！ すごい！');await tick();await tick();
+  assert.equal(f.voice.lastMode,'partial');assert.equal(f.starts.length,1);assert.equal(f.synth.length,0);f.voice.stop();
+});

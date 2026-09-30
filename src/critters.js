@@ -314,3 +314,19 @@ export function emojiSprite(emoji, size = 0.9) {
   sp.renderOrder = 12;
   return sp;
 }
+
+// ------------------------------------------------ たまご（はじめて あそぶ とき）
+export function makeEgg() {
+  const g = new THREE.Group();
+  const shell = new THREE.Group();
+  shell.add(ball(0xfffaf0, 0.62, 0, 0.8, 0, 1, 1.3, 1));
+  const cols = [0xff8fc8, 0x7fd0ff, 0xffd23d, 0x8bd46a];
+  for (let i = 0; i < 9; i++) {
+    const a = i * 2.1, y = 0.45 + (i % 3) * 0.3;
+    const r = Math.sqrt(Math.max(0.02, 1 - ((y - 0.8) / 0.8) ** 2)) * 0.6;
+    shell.add(ball(cols[i % 4], 0.1, Math.cos(a) * r, y, Math.sin(a) * r, 1, 1, 1));
+  }
+  g.add(shell);
+  g.userData.shell = shell;
+  return g;
+}

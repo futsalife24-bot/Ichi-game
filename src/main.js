@@ -13,8 +13,10 @@ import { School, SCHOOL_ORIGIN, SCHOOL_SPAWN, SCHOOL_CAM } from './school.js';
 import { Room, ROOM_ORIGIN, ROOM_SPAWN, ROOM_CAM } from './room.js';
 import { Climate } from './climate.js';
 import { Life } from './life.js';
-import { HEROES, CLOTHES, SLOTS, accessoryForStars } from './characters.js';
-import { ITEMS, CATEGORIES, PERIODS, SEASONS, itemsOf } from './catalog.js';
+import { CLOTHES, SLOTS, PRESETS, randomAvatar, accessoryForStars } from './characters.js';
+import { ITEMS, CATEGORIES, PERIODS, SEASONS, itemsOf, callName } from './catalog.js';
+import { Maker } from './maker.js';
+import { makeEgg } from './critters.js';
 import { loadSave, writeSave } from './save.js';
 import { L } from './lines.js';
 
@@ -48,7 +50,12 @@ const world = new World(scene);
 const climate = new Climate(scene, world, audio);
 const effects = new Effects(scene);
 const animals = new Animals(scene, world);
-const player = new Player(scene, save.hero);
+// キャラメイクが できる まえから あそんでいる ひとは、いままでの どうぶつ から はじめる
+if (!save.avatar && (save.stars > 0 || save.questIdx > 0 || Object.keys(save.zukan).length > 0)) {
+  save.avatar = { ...(PRESETS[save.hero] ?? PRESETS.usagi), name: '' };
+  persist();
+}
+const player = new Player(scene, save.avatar ?? PRESETS.usagi);
 save.outfit ??= { hat: accessoryForStars(save.stars)?.id ?? null, face: null, body: null };
 player.setOutfit(save.outfit);
 const input = new Input({
@@ -75,17 +82,40 @@ function refreshHud() {
   ui.setClock(PERIODS[climate.period], SEASONS[climate.season], climate.isRaining);
 }
 
-// ------------------------------------------------ タイトル → スタート
+// ------------------------------------------------ タイトル → （たまご → キャラメイク） → スタート
+const egg = makeEgg();
+egg.visible = false;
+scene.add(egg);
+let hatchT = 0;
+
+const maker = new Maker({
+  audio, voice,
+  onChange: (d) => { player.setAvatar(d); player.tickle(); },
+  onDone: (d) => {
+    save.avatar = d;
+    persist();
+    player.setAvatar(d);
+    player.celebrate();
+    effects.confetti(player.pos);
+    audio.fanfare();
+    voice.say(L.born(callName(d)));
+    mode = 'born';
+    setTimeout(startGame, 2800);
+  },
+});
+
 function buildTitle() {
-  const box = $('heroes');
-  box.innerHTML = '';
-  for (const [kind, h] of Object.entries(HEROES)) {
-    const b = document.createElement('button');
-    b.className = 'hero-btn' + (kind === save.hero ? ' last' : '');
-    b.innerHTML = `<span class="hero-emoji">${h.emoji}</span><span class="hero-name">${h.name}</span>`;
-    b.addEventListener('click', () => startGame(kind));
-    box.appendChild(b);
-  }
+  const av = save.avatar;
+  const call = callName(av);
+  player.reset();
+  player.model.root.visible = !!av;
+  egg.visible = !av;
+  egg.position.copy(player.pos);
+  $('btnPlay').textContent = !av ? '🥚 たまご を タップ！' : call ? `▶ ${call} と あそぶ` : '▶ あそぶ';
+  const remake = $('btnRemake');
+  remake.classList.toggle('hidden', !av);
+  remake.classList.toggle('pulse', !!av && !call);
+  remake.textContent = av && !call ? '✏️ なまえ を つけよう' : '✏️ つくりなおす';
   const bits = [];
   if (save.stars > 0) bits.push(`⭐ × ${save.stars}`);
   if (save.bells > 0) bits.push(`🔔 × ${save.bells}`);
@@ -94,24 +124,68 @@ function buildTitle() {
 }
 buildTitle();
 
-function startGame(kind) {
+function unlockSound() {
   audio.unlock();
   voice.unlock();
   climate.refresh();
   audio.setSong(climate.period);
   audio.setBgm(save.bgm);
+}
+
+$('btnPlay').addEventListener('click', () => {
+  if (mode !== 'title') return;
+  unlockSound();
+  if (save.avatar) startGame();
+  else hatch();
+});
+$('btnRemake').addEventListener('click', () => {
+  if (mode !== 'title') return;
+  unlockSound();
+  openMaker(save.avatar);
+});
+
+/** はじめての とき：たまごが ゆれて われて、なかまが うまれる */
+function hatch() {
+  mode = 'hatch';
+  hatchT = 0;
+  $('title').classList.add('hidden');
+  audio.sparkle();
+  setTimeout(() => {
+    egg.visible = false;
+    audio.pop();
+    audio.reward();
+    effects.confetti(player.pos);
+    const d = randomAvatar();
+    player.setAvatar(d);
+    player.model.root.visible = true;
+    player.celebrate();
+    voice.say(L.hatch());
+    setTimeout(() => openMaker(d), 2200);
+  }, 2000);
+}
+
+function openMaker(draft) {
+  mode = 'maker';
+  $('title').classList.add('hidden');
+  maker.show(draft);
+}
+
+function startGame() {
+  climate.refresh();
+  audio.setSong(climate.period);
+  audio.setBgm(save.bgm);
   if (climate.raining) audio.setRain(!climate.snowy);
-  save.hero = kind;
-  persist();
-  player.setKind(kind);
+  player.setAvatar(save.avatar);
+  player.model.root.visible = true;
+  egg.visible = false;
   player.reset();
   $('title').classList.add('hidden');
+  maker.hide();
   ui.showHUD(true);
   input.enabled = true;
   mode = 'play';
   requestLandscape();
-  const name = HEROES[kind].name;
-  setTimeout(() => voice.say(L.welcome(name, PERIODS[climate.period], SEASONS[climate.season])), 150);
+  setTimeout(() => voice.say(L.welcome(callName(save.avatar), PERIODS[climate.period], SEASONS[climate.season])), 150);
   quests.start(9);
   updateToggles();
 }
@@ -223,10 +297,24 @@ function setRay(x, y) {
 }
 // おうちでは マットを タップして えらべる
 input.onTap = (x, y) => {
-  if (mode !== 'play' || place === 'island') return false;
+  if (mode !== 'play') return false;
+  if (place !== 'school' && tapPlayer(x, y)) return true;
+  if (place === 'island') return false;
   setRay(x, y);
   return place === 'school' ? school.tap(raycaster) : room.tap(raycaster, x, y);
 };
+
+/** じぶんの キャラを タップ → くすぐったい！ */
+const tapV = new THREE.Vector3();
+function tapPlayer(x, y) {
+  tapV.copy(player.pos).setY(player.pos.y + 0.9).project(camera);
+  const sx = (tapV.x + 1) / 2 * window.innerWidth, sy = (1 - tapV.y) / 2 * window.innerHeight;
+  if (Math.hypot(x - sx, y - sy) > Math.max(40, window.innerHeight * 0.09)) return false;
+  player.tickle();
+  audio.babble(720, 5);
+  voice.say(L.tickle());
+  return true;
+}
 function screenToGround(x, y) {
   setRay(x, y);
   let h = player.pos.y;
@@ -368,6 +456,7 @@ function doorCheck() {
 // ------------------------------------------------ てんき
 climate.onRainStart = (snow) => {
   if (mode !== 'play') return;
+  player.emote(snow ? '⛄' : '☔', 3);
   voice.say(L.rainStart(snow));
   refreshHud();
 };
@@ -444,13 +533,34 @@ function frame(now) {
     lookAt.lerp(lookTarget, k * 1.5);
     camera.lookAt(lookAt);
   } else {
+    // タイトル・たまご・キャラメイク：じぶんの キャラを おおきく うつす
     animals.update(dt, time, null);
     player.animate(dt, 0);
-    const a = time * 0.08;
-    camera.position.set(Math.sin(a) * 34, 17, Math.cos(a) * 34);
-    lookAt.set(0, 1, 0);
+    const P = player.pos;
+    if (mode === 'maker') {
+      // キャラを がめんの ひだりに（みぎは ボタン）
+      player.yaw = Math.sin(time * 0.7) * 0.6;
+      camTarget.set(P.x + 2.3, P.y + 1.5, P.z + 5.2);
+      lookTarget.set(P.x + 2.3, P.y + 0.95, P.z);
+    } else {
+      const a = Math.sin(time * 0.25) * 0.6;
+      camTarget.set(P.x + Math.sin(a) * 6.5, P.y + 2.4, P.z + Math.cos(a) * 6.5);
+      lookTarget.set(P.x, P.y + 1.1, P.z);
+    }
+    player.sync();
+    if (mode === 'hatch' || egg.visible) {
+      hatchT += dt;
+      const k = mode === 'hatch' ? Math.min(1, hatchT / 2) : 0.15;
+      egg.userData.shell.rotation.z = Math.sin(time * (8 + k * 20)) * 0.25 * k;
+      egg.userData.shell.position.y = Math.abs(Math.sin(time * 3)) * 0.1 * (1 - k);
+    }
+    const k = 1 - Math.exp(-3 * dt);
+    camera.position.lerp(camTarget, k);
+    lookAt.lerp(lookTarget, k * 1.5);
     camera.lookAt(lookAt);
   }
+  player.marker.visible = mode === 'play';
+  player.sleepy = climate.night > 0.6 && place === 'island';
   const outside = place === 'island';
   if (outside) life.update(dt, time, mode === 'play' && !transitioning && !ui.panelOpen);
   climate.update(dt, { indoor: !outside, focus: mode === 'play' ? player.pos : lookAt, active: mode === 'play' });
@@ -474,7 +584,7 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
 
 // デバッグ用
 window.__game = {
-  voice, camera, scene, player, quests, animals, world, school, room, life, climate, save, startGame, enterPlace, openZukan, openCloset,
+  voice, camera, scene, player, quests, animals, world, school, room, life, climate, save, startGame, enterPlace, openZukan, openCloset, maker, openMaker,
   warp(x, z) { player.teleport(x, env().groundAt(x, z), z, 0); snapCamera(); },
   get place() { return place; },
 };
