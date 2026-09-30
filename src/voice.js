@@ -89,9 +89,14 @@ export class Voice {
     if (token !== this.token || !this.enabled) return;
     const hashes = segments(text).map((s) => clipHash(clipKey(s)));
     const ctx = this.audio?.ctx;
-    if (ctx && this.clipIndex && hashes.length && hashes.every((h) => this.clipIndex.has(h))) {
+    const have = this.clipIndex ? hashes.filter((h) => this.clipIndex.has(h)) : [];
+    if (ctx && hashes.length && have.length === hashes.length) {
       this.lastMode = 'clip';
       this.playClips(hashes, text);
+    } else if (ctx && have.length && !this.voice) {
+      // にほんごの よみあげが ない たんまつ：おんせいが ある ぶぶん だけ ならす（なまえ など まだ ない ところは とばす）
+      this.lastMode = 'partial';
+      this.playClips(have, text);
     } else {
       this.lastMode = 'synth';
       this.speakSynth(text);

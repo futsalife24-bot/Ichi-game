@@ -82,48 +82,157 @@ function addFace(head, r, o = {}) {
   }
 }
 
-// ---------------------------------------------------------------- 主人公
+// ---------------------------------------------------------------- 主人公（キャラメイク）
 
-export const HEROES = {
-  usagi: { name: 'うさぎ', emoji: '🐰', color: 0xfff7f7, belly: 0xffffff, inner: 0xffaec9, foot: 0xffe1ea },
-  neko: { name: 'ねこ', emoji: '🐱', color: 0xffc26b, belly: 0xfff1d6, inner: 0xffaec9, foot: 0xfff1d6 },
-  kuma: { name: 'くま', emoji: '🐻', color: 0xc68b59, belly: 0xf3d9b1, inner: 0xe9b88c, foot: 0xa8703f },
+/** キャラメイクで えらべる ぶひん */
+export const AVATAR = {
+  colors: [
+    { id: 'shiro', name: 'しろ', hex: 0xfff7f7 },
+    { id: 'pink', name: 'ピンク', hex: 0xffc2d6 },
+    { id: 'kiiro', name: 'きいろ', hex: 0xffe27a },
+    { id: 'orenji', name: 'オレンジ', hex: 0xffc26b },
+    { id: 'chairo', name: 'ちゃいろ', hex: 0xc68b59 },
+    { id: 'mizuiro', name: 'みずいろ', hex: 0xa8dcff },
+    { id: 'mint', name: 'ミント', hex: 0xa8ecc8 },
+    { id: 'murasaki', name: 'むらさき', hex: 0xd2c2ff },
+    { id: 'haiiro', name: 'はいいろ', hex: 0xbfc3cc },
+  ],
+  ears: [
+    { id: 'usagi', name: 'うさぎ', emoji: '🐰' },
+    { id: 'neko', name: 'ねこ', emoji: '🐱' },
+    { id: 'kuma', name: 'くま', emoji: '🐻' },
+    { id: 'inu', name: 'いぬ', emoji: '🐶' },
+    { id: 'hitsuji', name: 'ひつじ', emoji: '🐑' },
+  ],
+  eyes: [
+    { id: 'maru', name: 'まる' },
+    { id: 'niko', name: 'にこにこ' },
+    { id: 'kira', name: 'キラキラ' },
+    { id: 'nemu', name: 'ねむねむ' },
+  ],
+  patterns: [
+    { id: 'nashi', name: 'なし' },
+    { id: 'onaka', name: 'おなか' },
+    { id: 'buchi', name: 'ぶち' },
+    { id: 'shima', name: 'しましま' },
+  ],
+  tails: [
+    { id: 'maru', name: 'まる' },
+    { id: 'naga', name: 'ながい' },
+    { id: 'fusa', name: 'ふさふさ' },
+    { id: 'chibi', name: 'ちょこん' },
+  ],
 };
 
-// おみせの たぬきさん など（タイトルでは えらべない）
-export const NPCS = {
-  tanuki: { name: 'たぬき', color: 0x9c7a5b, belly: 0xf1dfc4, inner: 0x6b4f3a, foot: 0x5a4030 },
+/** いままでの「うさぎ・ねこ・くま」と おみせの たぬきさん */
+export const PRESETS = {
+  usagi: { color: 'shiro', ears: 'usagi', eyes: 'maru', pattern: 'nashi', tail: 'maru' },
+  neko: { color: 'orenji', ears: 'neko', eyes: 'maru', pattern: 'nashi', tail: 'naga' },
+  kuma: { color: 'chairo', ears: 'kuma', eyes: 'maru', pattern: 'nashi', tail: 'chibi' },
+  tanuki: { color: 0x9c7a5b, ears: 'kuma', eyes: 'maru', pattern: 'tanuki', tail: 'fusa' },
 };
 
-export function makeHero(kind) {
-  const d = HEROES[kind] ?? NPCS[kind] ?? HEROES.usagi;
-  const bearish = kind === 'kuma' || kind === 'tanuki';
+const pickOne = (list) => list[Math.floor(Math.random() * list.length)].id;
+export function randomAvatar() {
+  return {
+    color: pickOne(AVATAR.colors), ears: pickOne(AVATAR.ears), eyes: pickOne(AVATAR.eyes),
+    pattern: pickOne(AVATAR.patterns), tail: pickOne(AVATAR.tails),
+  };
+}
+
+const tc = new THREE.Color(), tw = new THREE.Color(0xffffff);
+const colorHex = (c) => (typeof c === 'number' ? c : (AVATAR.colors.find((x) => x.id === c) ?? AVATAR.colors[0]).hex);
+
+/** からだの いろ から おなか・みみの なか・あし・もようの いろを きめる */
+function paletteOf(color) {
+  const base = colorHex(color);
+  tc.setHex(base);
+  const dark = tc.getHSL({}).l < 0.6;
+  return {
+    color: base,
+    belly: tc.clone().lerp(tw, 0.62).getHex(),
+    inner: dark ? tc.clone().lerp(new THREE.Color(0xffd9b0), 0.5).getHex() : 0xffaec9,
+    foot: dark ? tc.clone().offsetHSL(0, 0, -0.1).getHex() : tc.clone().lerp(tw, 0.35).getHex(),
+    mark: tc.clone().lerp(new THREE.Color(0x6b4a3a), 0.45).getHex(), // ぶち・しま（おちついた いろ）
+  };
+}
+
+/** ぶち や しましま（からだの ひょうめんに ちょこっと） */
+function addPattern(pivot, head, def, p) {
+  if (def.pattern === 'buchi') {
+    // からだに はりつく ひらたい もよう
+    for (const [dx, dy, dz, r] of [[0.6, 0.45, 0.62, 0.13], [-0.72, -0.15, 0.62, 0.11], [0.25, 0.35, -0.93, 0.14], [-0.55, 0.6, -0.55, 0.12]]) {
+      const len = Math.hypot(dx, dy, dz);
+      const x = (dx / len) * 0.5, y = 0.62 + (dy / len) * 0.46, z = (dz / len) * 0.44;
+      const spot = ball(p.mark, r, x, y, z, 1, 1, 0.3);
+      spot.lookAt(x * 2, 0.62 + (y - 0.62) * 2, z * 2);
+      pivot.add(spot);
+    }
+    head.add(ball(p.mark, 0.14, 0.185, 0.06, 0.43, 1.2, 1.1, 0.35));
+  } else if (def.pattern === 'shima') {
+    for (const [a, b] of [[0.2, 0.27], [0.36, 0.43], [0.52, 0.59]]) {
+      const band = new THREE.Mesh(new THREE.SphereGeometry(1, 24, 4, 0, Math.PI * 2, Math.PI * a, Math.PI * (b - a)), toon(p.mark));
+      band.scale.set(0.505, 0.465, 0.445);
+      band.position.y = 0.62;
+      pivot.add(band);
+    }
+    for (const x of [-0.12, 0, 0.12]) head.add(ball(p.mark, 0.05, x, 0.4, 0.28, 0.6, 1.8, 0.6));
+  } else if (def.pattern === 'tanuki') {
+    for (const sx of [-1, 1]) head.add(ball(0x4a3426, 0.13, sx * 0.185, 0.04, 0.43, 1.25, 1, 0.35));
+    head.add(ball(0x4caf50, 0.13, 0.05, 0.52, 0, 1.6, 0.3, 1));
+  }
+}
+
+/** めの かたち */
+function addEyes(head, style) {
+  const r = 0.5, eyeX = r * 0.37, eyeY = r * 0.1, size = r * 0.15, dark = 0x2b1d1a;
+  const ez = surfZ(r, eyeX, eyeY) - 0.01;
+  for (const s of [-1, 1]) {
+    if (style === 'niko') {
+      const arc = smile(dark, size * 0.75, s * eyeX, eyeY - size * 0.2, ez + 0.02);
+      arc.rotation.z = 0; // ∩ の かたち
+      head.add(arc);
+    } else if (style === 'nemu') {
+      head.add(ball(dark, size, s * eyeX, eyeY - size * 0.2, ez, 1.25, 0.32, 0.6));
+    } else {
+      const k = style === 'kira' ? 1.3 : 1;
+      head.add(ball(dark, size * k, s * eyeX, eyeY, ez, 1, 1.3, 0.6));
+      head.add(ball(0xffffff, size * 0.36 * k, s * eyeX + size * 0.3 * k, eyeY + size * 0.45 * k, ez + size * 0.4 * k));
+      if (style === 'kira') head.add(ball(0xffffff, size * 0.18, s * eyeX - size * 0.35, eyeY - size * 0.4, ez + size * 0.5));
+    }
+  }
+}
+
+/** キャラを つくる。def = { color, ears, eyes, pattern, tail } */
+export function makeAvatar(def) {
+  const p = paletteOf(def.color);
   const root = new THREE.Group();
   const pivot = new THREE.Group();
   root.add(pivot);
 
-  pivot.add(ball(d.color, 0.5, 0, 0.62, 0, 1, 0.92, 0.88));
-  pivot.add(ball(d.belly, 0.34, 0, 0.56, 0.18, 1, 1.05, 0.65));
+  pivot.add(ball(p.color, 0.5, 0, 0.62, 0, 1, 0.92, 0.88));
+  const tummy = def.pattern === 'onaka';
+  pivot.add(ball(tummy ? 0xffffff : p.belly, 0.34, 0, 0.56, 0.18, tummy ? 1.15 : 1, tummy ? 1.15 : 1.05, 0.65));
 
   const head = new THREE.Group();
   head.position.set(0, 1.28, 0.02);
   pivot.add(head);
-  head.add(ball(d.color, 0.52, 0, 0, 0, 1.06, 0.96, 1));
+  head.add(ball(p.color, 0.52, 0, 0, 0, 1.06, 0.96, 1));
+  addPattern(pivot, head, def, p);
 
-  if (kind === 'tanuki') {
-    for (const sx of [-1, 1]) head.add(ball(0x4a3426, 0.13, sx * 0.185, 0.04, 0.43, 1.25, 1, 0.35));
-    head.add(ball(0x4caf50, 0.13, 0.05, 0.52, 0, 1.6, 0.3, 1));
-  }
-  if (bearish) {
-    head.add(ball(d.belly, 0.2, 0, -0.14, 0.42, 1.2, 0.85, 0.7));
+  // はな と くち（くま・いぬ は マズルつき）
+  const muzzle = def.ears === 'kuma' || def.ears === 'inu';
+  if (muzzle) {
+    head.add(ball(tummy ? 0xffffff : p.belly, 0.2, 0, -0.14, 0.42, 1.2, 0.85, 0.7));
     head.add(ball(0x3b2416, 0.07, 0, -0.07, 0.56, 1.3, 0.9, 0.8));
-    addFace(head, 0.5, { mouthY: -0.24, mouthZ: 0.06, eyeY: 0.1 });
   } else {
-    addFace(head, 0.5, {});
-    head.add(ball(kind === 'neko' ? 0xff7f9f : 0xff8fae, 0.045, 0, -0.08, 0.5, 1.3, 0.9, 0.8));
+    head.add(ball(def.ears === 'neko' ? 0xff7f9f : 0xff8fae, 0.045, 0, -0.08, 0.5, 1.3, 0.9, 0.8));
   }
-  if (kind === 'neko') {
-    // ひげ
+  addEyes(head, def.eyes);
+  for (const s of [-1, 1]) head.add(ball(0xff9fb5, 0.08, s * 0.3, -0.11, surfZ(0.5, 0.3, -0.11) - 0.02, 1, 0.7, 0.45));
+  const my = muzzle ? -0.24 : -0.15;
+  head.add(smile(0x6b3a2a, 0.05, 0, my, surfZ(0.5, 0, my) + (muzzle ? 0.06 : 0)));
+  if (def.ears === 'neko') {
     for (const s of [-1, 1]) {
       for (const k of [-1, 1]) {
         const w = cyl(0x8a5a3a, 0.008, 0.28, s * 0.36, -0.08 + k * 0.035, 0.36);
@@ -137,49 +246,65 @@ export function makeHero(kind) {
   const ears = [];
   for (const s of [-1, 1]) {
     const ear = new THREE.Group();
-    if (kind === 'usagi') {
+    if (def.ears === 'usagi') {
       ear.position.set(s * 0.2, 0.38, -0.02);
       ear.rotation.z = -s * 0.18;
-      ear.add(ball(d.color, 0.13, 0, 0.36, 0, 1, 3.0, 0.75));
-      ear.add(ball(d.inner, 0.075, 0, 0.36, 0.06, 1, 2.6, 0.5));
-    } else if (kind === 'neko') {
+      ear.add(ball(p.color, 0.13, 0, 0.36, 0, 1, 3.0, 0.75));
+      ear.add(ball(p.inner, 0.075, 0, 0.36, 0.06, 1, 2.6, 0.5));
+    } else if (def.ears === 'neko') {
       ear.position.set(s * 0.3, 0.36, 0);
       ear.rotation.z = -s * 0.35;
-      ear.add(cone(d.color, 0.16, 0.34, 0, 0.12, 0));
-      ear.add(cone(d.inner, 0.09, 0.22, 0, 0.09, 0.07));
+      ear.add(cone(p.color, 0.16, 0.34, 0, 0.12, 0));
+      ear.add(cone(p.inner, 0.09, 0.22, 0, 0.09, 0.07));
+    } else if (def.ears === 'inu') {
+      ear.position.set(s * 0.42, 0.22, 0);
+      ear.rotation.z = s * 0.35;
+      ear.add(ball(p.mark, 0.14, 0, -0.14, 0, 0.8, 1.9, 0.6));
+    } else if (def.ears === 'hitsuji') {
+      ear.position.set(s * 0.44, 0.16, 0);
+      const curl = new THREE.Mesh(new THREE.TorusGeometry(0.1, 0.05, 8, 16), toon(0xf3e2cf));
+      curl.rotation.y = Math.PI / 2;
+      curl.castShadow = true;
+      ear.add(curl);
     } else {
       ear.position.set(s * 0.36, 0.36, 0);
-      ear.add(ball(d.color, 0.17, 0, 0, 0, 1, 1, 0.7));
-      ear.add(ball(d.inner, 0.1, 0, 0, 0.07, 1, 1, 0.5));
+      ear.add(ball(p.color, 0.17, 0, 0, 0, 1, 1, 0.7));
+      ear.add(ball(p.inner, 0.1, 0, 0, 0.07, 1, 1, 0.5));
     }
     head.add(ear);
     ears.push(ear);
   }
+  if (def.ears === 'hitsuji') for (const [x, z] of [[0, 0], [0.14, 0.06], [-0.14, 0.06]]) head.add(ball(0xffffff, 0.15, x, 0.46, z));
 
-  const armL = ball(d.color, 0.15, -0.5, 0.66, 0.05, 1, 1.25, 1);
-  const armR = ball(d.color, 0.15, 0.5, 0.66, 0.05, 1, 1.25, 1);
+  const armL = ball(p.color, 0.15, -0.5, 0.66, 0.05, 1, 1.25, 1);
+  const armR = ball(p.color, 0.15, 0.5, 0.66, 0.05, 1, 1.25, 1);
   pivot.add(armL, armR);
 
-  if (kind === 'usagi') pivot.add(ball(0xffffff, 0.16, 0, 0.45, -0.46));
-  else if (kind === 'kuma') pivot.add(ball(d.color, 0.12, 0, 0.42, -0.44));
-  else if (kind === 'tanuki') {
-    pivot.add(ball(d.color, 0.2, 0, 0.4, -0.5, 0.9, 0.9, 1.4));
-    pivot.add(ball(0x4a3426, 0.12, 0, 0.42, -0.72, 1, 1, 0.8));
-  }
-  else {
+  // しっぽ
+  if (def.tail === 'maru') pivot.add(ball(p.belly, 0.16, 0, 0.45, -0.46));
+  else if (def.tail === 'chibi') pivot.add(ball(p.color, 0.12, 0, 0.42, -0.44));
+  else if (def.tail === 'fusa') {
+    pivot.add(ball(p.color, 0.2, 0, 0.4, -0.5, 0.9, 0.9, 1.4));
+    pivot.add(ball(def.pattern === 'tanuki' ? 0x4a3426 : p.mark, 0.12, 0, 0.42, -0.72, 1, 1, 0.8));
+  } else {
     const tail = new THREE.Group();
     tail.position.set(0, 0.4, -0.4);
     tail.rotation.x = -0.9;
-    tail.add(cyl(d.color, 0.07, 0.6, 0, 0.3, 0));
-    tail.add(ball(d.color, 0.075, 0, 0.6, 0));
+    tail.add(cyl(p.color, 0.07, 0.6, 0, 0.3, 0));
+    tail.add(ball(p.color, 0.075, 0, 0.6, 0));
     pivot.add(tail);
   }
 
-  const footL = ball(d.foot, 0.17, -0.2, 0.12, 0.06, 1, 0.7, 1.35);
-  const footR = ball(d.foot, 0.17, 0.2, 0.12, 0.06, 1, 0.7, 1.35);
+  const footL = ball(p.foot, 0.17, -0.2, 0.12, 0.06, 1, 0.7, 1.35);
+  const footR = ball(p.foot, 0.17, 0.2, 0.12, 0.06, 1, 0.7, 1.35);
   root.add(footL, footR);
 
-  return { root, pivot, head, armL, armR, footL, footR, ears, kind };
+  return { root, pivot, head, armL, armR, footL, footR, ears };
+}
+
+/** いままでの よびかた（'usagi' など） */
+export function makeHero(kind) {
+  return makeAvatar(PRESETS[kind] ?? PRESETS.usagi);
 }
 
 // ---------------------------------------------------------------- きせかえ（ぼうし・めがね・ふく）

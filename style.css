@@ -186,29 +186,19 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 
 /* ---------- タイトル */
 .screen { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-#title { background: linear-gradient(180deg, rgba(110,198,255,.35), rgba(255,255,255,.15) 60%, rgba(255,240,200,.4)); gap: calc(var(--u) * 1.5); }
+#title { justify-content: space-between; padding: calc(var(--u) * 4) 0 calc(var(--u) * 7); background: linear-gradient(180deg, rgba(110,198,255,.3), rgba(255,255,255,0) 35%, rgba(255,255,255,0) 70%, rgba(255,240,200,.35)); gap: calc(var(--u) * 1.5); }
 .logo { margin: 0; font-size: calc(var(--u) * 12); line-height: 1.1; font-weight: 900; letter-spacing: .04em; }
 .logo span { display: inline-block; color: #fff; -webkit-text-stroke: calc(var(--u) * 1.2) #ff6f91; paint-order: stroke fill; text-shadow: 0 calc(var(--u) * 1.2) 0 rgba(0,0,0,.15); animation: wave 2.4s ease-in-out infinite; }
 .logo span:nth-child(2n) { -webkit-text-stroke-color: #3d9bff; animation-delay: .15s; }
 .logo span:nth-child(3n) { -webkit-text-stroke-color: #2fbf4f; animation-delay: .3s; }
 .logo span:nth-child(5n) { -webkit-text-stroke-color: #ff9a1f; animation-delay: .45s; }
 @keyframes wave { 50% { transform: translateY(calc(var(--u) * -1.5)); } }
-.choose { text-wrap: balance; margin: calc(var(--u) * 1) 0 0; font-size: calc(var(--u) * 5.5); font-weight: 800; background: rgba(255,255,255,.85); padding: calc(var(--u) * .8) calc(var(--u) * 4); border-radius: 999px; }
-#heroes { display: flex; gap: calc(var(--u) * 4); }
-.hero-btn {
-  width: calc(var(--u) * 24); height: calc(var(--u) * 28); border-radius: calc(var(--u) * 5);
-  background: #fffdf5; box-shadow: 0 calc(var(--u) * 1.4) 0 rgba(0,0,0,.15);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: calc(var(--u) * .5);
-  animation: heroBob 2s ease-in-out infinite;
+#titleStars {
+  position: absolute; top: calc(var(--u) * 3); left: calc(var(--u) * 3 + var(--safe-l)); margin: 0;
+  font-size: calc(var(--u) * 4.2); font-weight: 800; background: rgba(255,255,255,.85);
+  padding: calc(var(--u) * .8) calc(var(--u) * 2.4); border-radius: 999px;
 }
-.hero-btn:nth-child(2) { animation-delay: .3s; }
-.hero-btn:nth-child(3) { animation-delay: .6s; }
-.hero-btn.last { box-shadow: 0 calc(var(--u) * 1.4) 0 rgba(0,0,0,.15), 0 0 0 calc(var(--u) * .8) #ffd23d; }
-.hero-btn:active { transform: scale(.94); }
-@keyframes heroBob { 50% { transform: translateY(calc(var(--u) * -1.2)); } }
-.hero-emoji { font-size: calc(var(--u) * 14); line-height: 1; }
-.hero-name { font-size: calc(var(--u) * 5.5); font-weight: 900; }
-#titleStars { margin: 0; font-size: calc(var(--u) * 5); font-weight: 800; min-height: 1em; }
+#titleStars:empty { display: none; }
 .parents { margin: 0; font-size: calc(var(--u) * 2.8); opacity: .75; }
 .credit { position: absolute; bottom: calc(var(--u) * 1.5); right: calc(var(--u) * 3 + var(--safe-r)); margin: 0; font-size: calc(var(--u) * 2.2); opacity: .6; }
 
@@ -328,3 +318,65 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 .card.lock .card-emoji { filter: brightness(0) opacity(.18); }
 .card.lock .card-name { color: #b8a890; }
 .card.on { background: #fff3a8; box-shadow: 0 0 0 calc(var(--u) * .7) #ffc21a inset, 0 calc(var(--u) * .7) 0 rgba(0,0,0,.1); }
+
+/* ---------- タイトルの ボタン（まんなかに じぶんの キャラ） */
+.title-actions { display: flex; align-items: center; gap: calc(var(--u) * 3); }
+.play-btn {
+  font-size: calc(var(--u) * 6.5); font-weight: 900; color: #fff; padding: calc(var(--u) * 2.2) calc(var(--u) * 7);
+  border-radius: 999px; background: radial-gradient(circle at 35% 30%, #ffb3c6, #ff6f91 60%, #ff4d79);
+  box-shadow: 0 calc(var(--u) * 1.3) 0 #d93b62; text-shadow: 0 2px 0 rgba(0,0,0,.15);
+  animation: heroBob 2s ease-in-out infinite;
+}
+.play-btn:active { transform: translateY(calc(var(--u) * 1)); box-shadow: 0 calc(var(--u) * .3) 0 #d93b62; }
+.remake-btn {
+  font-size: calc(var(--u) * 4); font-weight: 900; padding: calc(var(--u) * 1.6) calc(var(--u) * 3.4);
+  border-radius: 999px; background: #fffdf5; box-shadow: 0 calc(var(--u) * .8) 0 rgba(0,0,0,.14);
+}
+.remake-btn.pulse { background: #fff3a8; animation: bump 1.2s ease infinite; }
+
+/* ---------- キャラメイク（ひだり 3D、みぎ ボタン） */
+#maker { position: fixed; inset: 0; display: flex; justify-content: flex-end; pointer-events: none; z-index: 3; }
+.maker-panel {
+  pointer-events: auto; width: min(54vw, calc(100vw - var(--u) * 40)); height: 100%; background: rgba(255,250,240,.96);
+  border-radius: calc(var(--u) * 6) 0 0 calc(var(--u) * 6); box-shadow: 0 0 calc(var(--u) * 5) rgba(0,0,0,.18);
+  display: flex; flex-direction: column; padding: calc(var(--u) * 3) calc(var(--u) * 3 + var(--safe-r)) calc(var(--u) * 2.5 + var(--safe-b)) calc(var(--u) * 3.5);
+  animation: sheetIn .4s cubic-bezier(.2,1.3,.4,1);
+}
+#makerDots { display: flex; gap: calc(var(--u) * 1.2); justify-content: center; }
+#makerDots span { width: calc(var(--u) * 2.4); height: calc(var(--u) * 2.4); border-radius: 50%; background: #e8d8b8; }
+#makerDots span.done { background: #ffc21a; }
+#makerDots span.on { background: #ff6f91; transform: scale(1.3); }
+#makerTitle { margin: calc(var(--u) * 1.2) 0 calc(var(--u) * 1.5); text-align: center; font-size: calc(var(--u) * 6.5); font-weight: 900; }
+#makerBody { flex: 1; overflow-y: auto; touch-action: pan-y; padding: calc(var(--u) * .5); }
+.maker-label { font-size: calc(var(--u) * 4); font-weight: 900; margin: calc(var(--u) * .5) 0 calc(var(--u) * 1); color: #b07245; }
+.maker-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(var(--u) * 17), 1fr)); gap: calc(var(--u) * 1.6); margin-bottom: calc(var(--u) * 1.5); }
+.maker-grid.names { grid-template-columns: repeat(auto-fill, minmax(calc(var(--u) * 11.5), 1fr)); gap: calc(var(--u) * 1.2); }
+.maker-opt.name { padding: calc(var(--u) * .8) calc(var(--u) * .3); }
+.maker-opt {
+  background: #fff; border-radius: calc(var(--u) * 3.5); padding: calc(var(--u) * 1.2) calc(var(--u) * .5);
+  display: flex; flex-direction: column; align-items: center; gap: calc(var(--u) * .4);
+  box-shadow: 0 calc(var(--u) * .7) 0 rgba(0,0,0,.1);
+}
+.maker-opt:active { transform: scale(.95); }
+.maker-opt.on { background: #fff3a8; box-shadow: 0 0 0 calc(var(--u) * .8) #ffc21a inset, 0 calc(var(--u) * .7) 0 rgba(0,0,0,.1); }
+.maker-opt svg { width: calc(var(--u) * 11); height: calc(var(--u) * 11); }
+.swatch { width: calc(var(--u) * 10); height: calc(var(--u) * 10); border-radius: 50%; box-shadow: 0 0 0 calc(var(--u) * .5) rgba(0,0,0,.1) inset; }
+.opt-emoji { font-size: calc(var(--u) * 9); line-height: 1.1; }
+.maker-opt.name .opt-emoji { font-size: calc(var(--u) * 6.5); }
+.opt-name { font-size: calc(var(--u) * 3.4); font-weight: 900; }
+.maker-name-now { text-align: center; font-size: calc(var(--u) * 6); font-weight: 900; color: #ff6f91; margin-bottom: calc(var(--u) * 1.5); }
+.maker-own { display: flex; flex-wrap: wrap; align-items: center; gap: calc(var(--u) * 1.2); font-size: calc(var(--u) * 3); font-weight: 800; color: #8a7a6a; margin: calc(var(--u) * 1) 0; }
+.maker-own input {
+  font: inherit; font-size: calc(var(--u) * 4); width: calc(var(--u) * 26); padding: calc(var(--u) * 1) calc(var(--u) * 1.6);
+  border-radius: calc(var(--u) * 2); border: calc(var(--u) * .4) solid #e8d8b8; user-select: text; -webkit-user-select: text;
+}
+.maker-own button { font-size: calc(var(--u) * 4); font-weight: 900; padding: calc(var(--u) * 1) calc(var(--u) * 3); border-radius: 999px; background: #ffd23d; }
+.maker-nav { display: flex; justify-content: space-between; gap: calc(var(--u) * 1.5); margin-top: calc(var(--u) * 1.5); }
+.maker-nav button {
+  font-size: calc(var(--u) * 4.6); font-weight: 900; padding: calc(var(--u) * 1.8) calc(var(--u) * 3.2); border-radius: 999px;
+  background: #fff; box-shadow: 0 calc(var(--u) * .8) 0 rgba(0,0,0,.14);
+}
+#makerNext { background: #8bd46a; color: #fff; text-shadow: 0 2px 0 rgba(0,0,0,.15); }
+#makerNext.finish { background: #ff6f91; animation: bump 1.4s ease infinite; }
+.invisible { visibility: hidden; }
+@keyframes heroBob { 50% { transform: translateY(calc(var(--u) * -1.2)); } }

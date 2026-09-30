@@ -8,6 +8,7 @@ import {
 
 const TYPES = ['color', 'count', 'shape', 'animal', 'moji'];
 import { L, PRAISE, withPraise } from './lines.js';
+import { callName } from './catalog.js';
 const HINT_AFTER = 18;
 
 export const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
@@ -307,7 +308,7 @@ export class QuestManager {
       }
       return;
     }
-    this.voice.say(L.animalHello(a.def), { who });
+    this.voice.say(L.animalHello(a.def, callName(this.save.avatar)), { who });
   }
 
   showHint() {

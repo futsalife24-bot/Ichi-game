@@ -2,7 +2,7 @@
 //   さわる だけで あそべる（どうぐは かってに もちかえる）。とった ものは ずかん と バッグ に はいる。
 import * as THREE from 'three';
 import { getHeight, ISLAND_R, WATER_Y, LANDMARKS, mulberry32 } from './world.js';
-import { ITEMS, available, pickWeighted, dayKey } from './catalog.js';
+import { ITEMS, available, pickWeighted, dayKey, callName } from './catalog.js';
 import { FURNITURE, makeFurniture } from './furniture.js';
 import { CLOTHES, makeHero, toon, ball, cyl } from './characters.js';
 import { makeBug, makeFishShadow, makeBeachItem, makeDigMark, makeDrop, makePlant, emojiSprite } from './critters.js';
@@ -717,7 +717,7 @@ export class Life {
     this.shopHelloCool -= dt;
     if (this.shopHelloCool <= 0 && Math.hypot(p.x - x, p.z - z) < 7) {
       this.shopHelloCool = 90;
-      this.say(L.shopHello(), TANUKI);
+      this.say(L.shopHello(callName(this.save.avatar)), TANUKI);
     }
     for (const sl of this.slots) {
       const touch = Math.hypot(p.x - sl.x, p.z - sl.z) < 1.2;

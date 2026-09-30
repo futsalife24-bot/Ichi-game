@@ -4,8 +4,8 @@
 //   ぶん（。！？ まで）ごとに おんせいファイル（voice/*.mp3）を つくる
 // say = よみあげる ぶん（すうじは ひらがな）、sub = じまくに だす ぶん
 import { COLORS, FRUITS, SHAPES, MOJI } from './props.js';
-import { ANIMALS, ACCESSORIES, HEROES, CLOTHES } from './characters.js';
-import { ITEMS, PERIODS, SEASONS } from './catalog.js';
+import { ANIMALS, ACCESSORIES, CLOTHES } from './characters.js';
+import { ITEMS, PERIODS, SEASONS, NAMES } from './catalog.js';
 import { FURNITURE } from './furniture.js';
 
 export const NUM_WORDS = ['いち', 'に', 'さん', 'よん', 'ご', 'ろく', 'なな', 'はち', 'きゅう', 'じゅう'];
@@ -26,11 +26,13 @@ export function numWord(n) {
 
 const line = (say, sub = say) => ({ say, sub });
 const W = numWord;
+/** よびかけを ぶんの あたまに（なまえ だけで ひとつの おんせいに なる） */
+const hey = (call) => (call ? `${call}！ ` : '');
 
 export const L = {
   // ---- しま
-  welcome: (heroName, period, season) => line(
-    `${period.greet}！ ${heroName}さん、 キラキラ アイランド へ ようこそ！ いま は ${period.name} の じかん。 きせつ は ${season.name} だよ！`),
+  welcome: (call, period, season) => line(
+    `${period.greet}！ ${hey(call)}キラキラ アイランド へ ようこそ！ いま は ${period.name} の じかん。 きせつ は ${season.name} だよ！`),
   voiceOn: () => line('こえ を だすよ！'),
   rainbow: () => line('にじ の いろ！ あか、 オレンジ、 きいろ、 みどり、 みずいろ、 あお、 むらさき！',
     'にじの いろ： あか・ オレンジ・ きいろ・ みどり・ みずいろ・ あお・ むらさき'),
@@ -52,7 +54,7 @@ export const L = {
   animalAsk: (a) => line(`${a.sound} って なく どうぶつ は だあれ？ あいに いこう！`, `「${a.sound}」 って なくのは だあれ？`),
   animalRight: (a) => line(`ぴんぽーん！ ${a.san} でした！ ${a.sound}！`),
   animalWrong: (a, target) => line(`ぼくは ${a.name}。 ${a.sound}！ ${target.sound} は ぼくじゃないよ。`),
-  animalHello: (a) => line(`${a.san} だよ。 ${a.sound}！`),
+  animalHello: (a, call = '') => line(`${hey(call)}${a.san} だよ。 ${a.sound}！`),
 
   mojiAsk: (m) => line(`${m.word} の 「${m.ch}」 は どれかな？ さがしてね！`),
   mojiRight: (m) => line(`「${m.ch}」！ ${m.word} の 「${m.ch}」 だね！`),
@@ -73,7 +75,7 @@ export const L = {
   water: () => line('おみず を あげたよ！'),
   wait: () => line('もうすこし で さくよ。 まってね！'),
   // ---- おみせ
-  shopHello: () => line('いらっしゃいませ！ ほしい もの に さわってね！'),
+  shopHello: (call = '') => line(`${hey(call)}いらっしゃいませ！ ほしい もの に さわってね！`),
   buy: (it) => line(`${it.name} を かったよ！ ありがとう！`),
   seedsName: 'はなの たね',
   notEnough: (n) => line(`ベル が たりないよ。 あと ${W(n)} ベル！`, `ベル が たりないよ。 あと ${n} ベル！`),
@@ -95,7 +97,16 @@ export const L = {
   roomNoSpace: () => line('おく ばしょ が ないよ。 なにか しまってね！'),
 
   // ---- かずの がっこう
-  schoolWelcome: () => line('かずの がっこう へ ようこそ！ すうじ で あそぼう！'),
+  schoolWelcome: (call = '') => line(`${hey(call)}かずの がっこう へ ようこそ！ すうじ で あそぼう！`),
+
+  // ---- キャラメイク（おんせいは pendingLines で これから つくる）
+  makerStep: (i) => line(['からだ の いろ を えらんでね！', 'みみ の かたち を えらんでね！', 'おめめ を えらんでね！',
+    'もよう と しっぽ を えらんでね！', 'おなまえ を えらんでね！'][i]),
+  makerReact: () => line(['かわいい！', 'すてき！', 'いいね！', 'にあってるね！'][Math.floor(Math.random() * 4)]),
+  call: (call) => line(`${call}！`),
+  hatch: () => line('うまれたよ！ すがた を きめて あげよう！'),
+  born: (call) => line(`${hey(call)}よろしくね！`),
+  tickle: () => line(['くすぐったい！', 'えへへ！', 'だいすき！'][Math.floor(Math.random() * 3)]),
   schoolCountAsk: (thing) => line(`${thing.name} は いくつ あるかな？ おなじ すうじ に のってね！`),
   schoolCountRight: (n, thing) => line(`${W(n)}！ ${thing.name} が ${W(n)}こ！`, `${n}！ ${thing.name}が ${n}こ！`),
   schoolCountWrong: (m) => line(`それは ${W(m)}。 いっしょに かぞえて みよう！`, `それは ${m}。 いっしょに かぞえて みよう！`),
@@ -195,7 +206,6 @@ export function allLines() {
   }
 
   // ---- しまの くらし
-  for (const h of Object.values(HEROES)) for (const p of Object.values(PERIODS)) for (const se of Object.values(SEASONS)) add(L.welcome(h.name, p, se));
   const VERB = { mushi: 'つかまえた', sakana: 'つりあげた', umibe: 'ひろった', kaseki: 'ほりだした', kinomi: 'ひろった', hana: 'つんだ' };
   for (const it of Object.values(ITEMS)) {
     const verb = it.id === 'kani' ? 'つかまえた' : VERB[it.cat];
@@ -212,5 +222,20 @@ export function allLines() {
   for (const n of range(1, 100)) add(L.sell(n));
   for (const snow of [false, true]) { add(L.rainStart(snow)); add(L.rainEnd(snow)); }
   for (const n of range(0, Object.keys(ITEMS).length)) add(L.zukan(n));
+  return out;
+}
+
+/**
+ * まだ Gemini おんせいが ない あたらしい せりふ（キャラメイク・なまえの よびかけ）。
+ * allLines() に いれると 公開まえの おんせいチェックが とまるので、ここに わけておく。
+ * 音声を つくったら allLines() へ うつす（assets-src/gemini-tts/README.md の てじゅん）。
+ * それまでは、音声が ある ぶぶん だけ ならすか、たんまつの よみあげ で しゃべる。
+ */
+export function pendingLines() {
+  const out = [];
+  const calls = NAMES.map((n) => `${n.name}ちゃん`);
+  for (let i = 0; i < 5; i++) out.push(L.makerStep(i).say);
+  out.push('かわいい！', 'すてき！', 'いいね！', 'くすぐったい！', 'えへへ！', 'だいすき！', L.hatch().say, 'キラキラ アイランド へ ようこそ！', 'よろしくね！');
+  for (const c of calls) out.push(L.call(c).say);
   return out;
 }
