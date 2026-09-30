@@ -112,9 +112,22 @@ export const L = {
 export const withPraise = (l, praise) => line(`${l.say} ${praise}`, `${l.sub} ${praise}`);
 
 // ------------------------------------------------ おんせいファイルの しくみ
-/** よみあげる ぶんを 。！？ で くぎる */
+/** 文末と、組み合わせが増える案内の意味の切れ目だけで分ける。
+ * 数字＋助数詞、ひらがなの例、短いほめ言葉は一息で収録する。 */
 export function segments(text) {
-  return text.split(/(?<=[。！？])\s*/).map((s) => s.trim()).filter(Boolean);
+  return text.split(/(?<=[。！？])\s*/).flatMap((sentence) => {
+    const s = sentence.trim();
+    // くだもの・学校の数え方：名詞＋助詞と、個数を含む述語を再利用。
+    let m = s.match(/^(.+? [をが]) (.+こ(?: あつめてね)?！)$/);
+    if (m) return [m[1], m[2]];
+    // 金額は買い物・売却・拾い物で共通。助数詞を数字から切り離さない。
+    m = s.match(/^(ぜんぶで |あと )?(.+ ベル)( に なったよ！|！)$/);
+    if (m) return [m[1], m[2], m[3] === '！' ? '' : m[3]].filter(Boolean);
+    // 家具と服の名前は長い複合語も丸ごと残す。
+    m = s.match(/^(.+ [をが]) (かったよ！|はいってた！)$/);
+    if (m) return [m[1], m[2]];
+    return [s];
+  }).map((s) => s.trim()).filter(Boolean);
 }
 
 /** おんせいファイルの キー（スペースを のぞいた ぶん） */

@@ -1,0 +1,2723 @@
+[
+  {
+    "batchId": 0,
+    "ratio": 0.842,
+    "phrases": [
+      {
+        "index": 0,
+        "text": "こえをだすよ！",
+        "coverage": 0.833,
+        "start": 0.13,
+        "end": 1.04,
+        "recognized": "こえおしゅつすよ",
+        "boundary": 1.565,
+        "silence": 0.63
+      },
+      {
+        "index": 1,
+        "text": "すごい！",
+        "coverage": 1.0,
+        "start": 1.91,
+        "end": 2.37,
+        "recognized": "すごい",
+        "boundary": 2.925,
+        "silence": 0.77
+      },
+      {
+        "index": 2,
+        "text": "やったね！",
+        "coverage": 1.0,
+        "start": 3.33,
+        "end": 3.88,
+        "recognized": "やったね",
+        "boundary": 4.425,
+        "silence": 0.77
+      },
+      {
+        "index": 3,
+        "text": "じょうず！",
+        "coverage": 0.25,
+        "start": 4.77,
+        "end": 4.77,
+        "recognized": "う",
+        "boundary": 5.73,
+        "silence": 0.64
+      },
+      {
+        "index": 4,
+        "text": "できたね！",
+        "coverage": 1.0,
+        "start": 6.04,
+        "end": 6.64,
+        "recognized": "できたね",
+        "boundary": 7.055,
+        "silence": 0.65
+      },
+      {
+        "index": 5,
+        "text": "ばっちり！",
+        "coverage": 1.0,
+        "start": 7.43,
+        "end": 8.17,
+        "recognized": "ばっちり",
+        "boundary": 8.585,
+        "silence": 0.67
+      },
+      {
+        "index": 6,
+        "text": "さすが！",
+        "coverage": 1.0,
+        "start": 9.04,
+        "end": 9.61,
+        "recognized": "さすが"
+      }
+    ]
+  },
+  {
+    "batchId": 1,
+    "ratio": 0.803,
+    "phrases": [
+      {
+        "index": 0,
+        "text": "にじのいろ！",
+        "coverage": 0.8,
+        "start": 0.08,
+        "end": 0.96,
+        "recognized": "にしのいろ"
+      },
+      {
+        "index": 1,
+        "text": "あか、オレンジ、きいろ、みどり、みずいろ、あお、むらさき！",
+        "coverage": 1.0,
+        "start": 1.62,
+        "end": 8.04,
+        "recognized": "あかおれんじきいろみどりみずいろあおむらさき",
+        "boundary": 8.9,
+        "silence": 1.14
+      },
+      {
+        "index": 2,
+        "text": "ほーほー。",
+        "coverage": 1.0,
+        "start": 9.48,
+        "end": 10.16,
+        "recognized": "ほうほ",
+        "boundary": 10.835,
+        "silence": 1.07
+      },
+      {
+        "index": 3,
+        "text": "やじるしのほうだよ！",
+        "coverage": 0.667,
+        "start": 11.3,
+        "end": 12.58,
+        "recognized": "やいんのほうだよ"
+      },
+      {
+        "index": 4,
+        "text": "あかいふうせんをみつけてね！",
+        "coverage": 0.692,
+        "start": 13.56,
+        "end": 15.42,
+        "recognized": "あかいかぜふねおけんつけてね",
+        "boundary": 16.12,
+        "silence": 1.02
+      },
+      {
+        "index": 5,
+        "text": "あか！",
+        "coverage": 1.0,
+        "start": 16.52,
+        "end": 16.84,
+        "recognized": "あか",
+        "boundary": 17.495,
+        "silence": 1.05
+      },
+      {
+        "index": 6,
+        "text": "せいかい！",
+        "coverage": 1.0,
+        "start": 17.9,
+        "end": 18.57,
+        "recognized": "せいかい"
+      },
+      {
+        "index": 7,
+        "text": "それはあお。",
+        "coverage": 1.0,
+        "start": 19.57,
+        "end": 20.55,
+        "recognized": "それわあお"
+      },
+      {
+        "index": 8,
+        "text": "あかいふうせんはどこかな？",
+        "coverage": 0.75,
+        "start": 21.5,
+        "end": 23.18,
+        "recognized": "あかいかぜふねわどこかな",
+        "boundary": 23.92,
+        "silence": 1.02
+      },
+      {
+        "index": 9,
+        "text": "それはきいろ。",
+        "coverage": 1.0,
+        "start": 24.39,
+        "end": 25.49,
+        "recognized": "それわきいろ"
+      },
+      {
+        "index": 10,
+        "text": "それはみどり。",
+        "coverage": 1.0,
+        "start": 26.33,
+        "end": 27.33,
+        "recognized": "それわみどり"
+      },
+      {
+        "index": 11,
+        "text": "それはピンク。",
+        "coverage": 1.0,
+        "start": 28.35,
+        "end": 29.52,
+        "recognized": "それわぴんく",
+        "boundary": 29.445,
+        "silence": 0.09
+      },
+      {
+        "index": 12,
+        "text": "それはオレンジ。",
+        "coverage": 1.0,
+        "start": 30.26,
+        "end": 31.67,
+        "recognized": "それわおれんじ",
+        "boundary": 32.275,
+        "silence": 1.01
+      },
+      {
+        "index": 13,
+        "text": "それはむらさき。",
+        "coverage": 1.0,
+        "start": 32.78,
+        "end": 33.72,
+        "recognized": "それわむらさき",
+        "boundary": 34.495,
+        "silence": 0.97
+      },
+      {
+        "index": 14,
+        "text": "それはしろ。",
+        "coverage": 1.0,
+        "start": 34.96,
+        "end": 35.74,
+        "recognized": "それわしろ"
+      },
+      {
+        "index": 15,
+        "text": "あおいふうせんをみつけてね！",
+        "coverage": 0.692,
+        "start": 36.77,
+        "end": 38.55,
+        "recognized": "あおいかぜふねおけんつけてね",
+        "boundary": 39.24,
+        "silence": 1.08
+      },
+      {
+        "index": 16,
+        "text": "あお！",
+        "coverage": 1.0,
+        "start": 39.69,
+        "end": 39.95,
+        "recognized": "あお"
+      },
+      {
+        "index": 17,
+        "text": "それはあか。",
+        "coverage": 1.0,
+        "start": 40.91,
+        "end": 42.02,
+        "recognized": "それわあか",
+        "boundary": 42.665,
+        "silence": 1.01
+      },
+      {
+        "index": 18,
+        "text": "あおいふうせんはどこかな？",
+        "coverage": 0.75,
+        "start": 43.11,
+        "end": 44.51,
+        "recognized": "あおいかぜふねわどこかな",
+        "boundary": 45.265,
+        "silence": 0.95
+      },
+      {
+        "index": 19,
+        "text": "きいろいふうせんをみつけてね！",
+        "coverage": 0.714,
+        "start": 45.73,
+        "end": 47.4,
+        "recognized": "きいろいかぜふねおけんつけてね",
+        "boundary": 48.055,
+        "silence": 0.95
+      },
+      {
+        "index": 20,
+        "text": "きいろ！",
+        "coverage": 1.0,
+        "start": 48.54,
+        "end": 49.0,
+        "recognized": "きいろ"
+      },
+      {
+        "index": 21,
+        "text": "きいろいふうせんはどこかな？",
+        "coverage": 0.769,
+        "start": 49.79,
+        "end": 51.56,
+        "recognized": "きいろいかぜふねわどこかな",
+        "boundary": 52.33,
+        "silence": 0.98
+      },
+      {
+        "index": 22,
+        "text": "みどりのふうせんをみつけてね！",
+        "coverage": 0.714,
+        "start": 52.81,
+        "end": 54.53,
+        "recognized": "みどりのかぜふねおけんつけてね",
+        "boundary": 55.205,
+        "silence": 1.03
+      },
+      {
+        "index": 23,
+        "text": "みどり！",
+        "coverage": 1.0,
+        "start": 55.81,
+        "end": 56.07,
+        "recognized": "みどり",
+        "boundary": 56.66,
+        "silence": 0.98
+      },
+      {
+        "index": 24,
+        "text": "みどりのふうせんはどこかな？",
+        "coverage": 0.769,
+        "start": 57.15,
+        "end": 58.66,
+        "recognized": "みどりのかぜふねわどこかな",
+        "boundary": 59.42,
+        "silence": 1.0
+      },
+      {
+        "index": 25,
+        "text": "ピンクのふうせんをみつけてね！",
+        "coverage": 0.714,
+        "start": 59.82,
+        "end": 61.53,
+        "recognized": "ぴんくのかぜふねおけんつけてね",
+        "boundary": 62.21,
+        "silence": 0.98
+      },
+      {
+        "index": 26,
+        "text": "ピンク！",
+        "coverage": 1.0,
+        "start": 62.6,
+        "end": 63.02,
+        "recognized": "ぴんく",
+        "boundary": 62.97,
+        "silence": 0.08
+      },
+      {
+        "index": 27,
+        "text": "ピンクのふうせんはどこかな？",
+        "coverage": 0.769,
+        "start": 63.7,
+        "end": 65.59,
+        "recognized": "ぴんくのかぜふねわどこかな",
+        "boundary": 66.255,
+        "silence": 0.83
+      },
+      {
+        "index": 28,
+        "text": "オレンジのふうせんをみつけてね！",
+        "coverage": 0.733,
+        "start": 66.7,
+        "end": 68.36,
+        "recognized": "おれんじのかぜふねおけんつけてね",
+        "boundary": 69.025,
+        "silence": 0.99
+      },
+      {
+        "index": 29,
+        "text": "オレンジ！",
+        "coverage": 1.0,
+        "start": 69.42,
+        "end": 70.01,
+        "recognized": "おれんじ"
+      },
+      {
+        "index": 30,
+        "text": "オレンジのふうせんはどこかな？",
+        "coverage": 0.786,
+        "start": 70.47,
+        "end": 72.62,
+        "recognized": "おれんじのかぜふねわどこかな",
+        "boundary": 73.365,
+        "silence": 0.93
+      },
+      {
+        "index": 31,
+        "text": "むらさきのふうせんをみつけてね！",
+        "coverage": 0.733,
+        "start": 73.83,
+        "end": 75.57,
+        "recognized": "むらさきのかぜふねおけんつけてね",
+        "boundary": 76.22,
+        "silence": 0.96
+      },
+      {
+        "index": 32,
+        "text": "むらさき！",
+        "coverage": 1.0,
+        "start": 76.89,
+        "end": 77.19,
+        "recognized": "むらさき",
+        "boundary": 77.8,
+        "silence": 0.94
+      },
+      {
+        "index": 33,
+        "text": "むらさきのふうせんはどこかな？",
+        "coverage": 0.786,
+        "start": 78.51,
+        "end": 80.02,
+        "recognized": "むらさきのかぜふねわどこかな",
+        "boundary": 80.8,
+        "silence": 0.98
+      },
+      {
+        "index": 34,
+        "text": "しろいふうせんをみつけてね！",
+        "coverage": 0.692,
+        "start": 81.22,
+        "end": 82.93,
+        "recognized": "しろいかぜふねおけんつけてね",
+        "boundary": 83.27,
+        "silence": 0.4
+      },
+      {
+        "index": 35,
+        "text": "しろ！",
+        "coverage": 1.0,
+        "start": 84.08,
+        "end": 84.27,
+        "recognized": "しろ",
+        "boundary": 84.885,
+        "silence": 0.93
+      },
+      {
+        "index": 36,
+        "text": "しろいふうせんはどこかな？",
+        "coverage": 0.75,
+        "start": 85.24,
+        "end": 86.86,
+        "recognized": "しろいかぜふねわどこかな",
+        "boundary": 87.55,
+        "silence": 0.9
+      },
+      {
+        "index": 37,
+        "text": "りんごを",
+        "coverage": 1.0,
+        "start": 88.07,
+        "end": 88.72,
+        "recognized": "りんごお",
+        "boundary": 89.205,
+        "silence": 0.97
+      },
+      {
+        "index": 38,
+        "text": "いちこあつめてね！",
+        "coverage": 0.625,
+        "start": 89.59,
+        "end": 90.86,
+        "recognized": "いちこしゅうめてね"
+      },
+      {
+        "index": 39,
+        "text": "いち！",
+        "coverage": 1.0,
+        "start": 91.28,
+        "end": 91.86,
+        "recognized": "いち"
+      }
+    ]
+  },
+  {
+    "batchId": 2,
+    "ratio": 0.844,
+    "phrases": [
+      {
+        "index": 0,
+        "text": "りんごが",
+        "coverage": 1.0,
+        "start": 0.22,
+        "end": 0.81,
+        "recognized": "りんごが",
+        "boundary": 1.31,
+        "silence": 0.62
+      },
+      {
+        "index": 1,
+        "text": "いちこ！",
+        "coverage": 0.667,
+        "start": 1.51,
+        "end": 1.93,
+        "recognized": "いちこ"
+      },
+      {
+        "index": 2,
+        "text": "にこあつめてね！",
+        "coverage": 0.714,
+        "start": 2.97,
+        "end": 4.17,
+        "recognized": "にこしゅうめてね"
+      },
+      {
+        "index": 3,
+        "text": "に！",
+        "coverage": 1.0,
+        "start": 5.11,
+        "end": 5.11,
+        "recognized": "に"
+      },
+      {
+        "index": 4,
+        "text": "にこ！",
+        "coverage": 1.0,
+        "start": 6.41,
+        "end": 7.06,
+        "recognized": "にこ",
+        "boundary": 7.58,
+        "silence": 1.3
+      },
+      {
+        "index": 5,
+        "text": "さんこあつめてね！",
+        "coverage": 0.75,
+        "start": 8.32,
+        "end": 9.28,
+        "recognized": "さんこしゅうめてね",
+        "boundary": 9.88,
+        "silence": 1.06
+      },
+      {
+        "index": 6,
+        "text": "さん！",
+        "coverage": 1.0,
+        "start": 10.27,
+        "end": 10.59,
+        "recognized": "さん"
+      },
+      {
+        "index": 7,
+        "text": "さんこ！",
+        "coverage": 1.0,
+        "start": 11.49,
+        "end": 12.26,
+        "recognized": "さんこ",
+        "boundary": 12.96,
+        "silence": 1.18
+      },
+      {
+        "index": 8,
+        "text": "よんこあつめてね！",
+        "coverage": 0.75,
+        "start": 13.61,
+        "end": 14.49,
+        "recognized": "よんこしゅうめてね"
+      },
+      {
+        "index": 9,
+        "text": "よん！",
+        "coverage": 1.0,
+        "start": 15.2,
+        "end": 15.6,
+        "recognized": "よん"
+      },
+      {
+        "index": 10,
+        "text": "よんこ！",
+        "coverage": 1.0,
+        "start": 16.56,
+        "end": 17.24,
+        "recognized": "よんこ",
+        "boundary": 17.935,
+        "silence": 1.27
+      },
+      {
+        "index": 11,
+        "text": "ごこあつめてね！",
+        "coverage": 0.714,
+        "start": 18.67,
+        "end": 19.53,
+        "recognized": "ごこしゅうめてね",
+        "boundary": 20.135,
+        "silence": 1.03
+      },
+      {
+        "index": 12,
+        "text": "ご！",
+        "coverage": 1.0,
+        "start": 20.56,
+        "end": 20.56,
+        "recognized": "ご"
+      },
+      {
+        "index": 13,
+        "text": "ごこ！",
+        "coverage": 1.0,
+        "start": 21.61,
+        "end": 22.34,
+        "recognized": "ごこ"
+      },
+      {
+        "index": 14,
+        "text": "ろくこあつめてね！",
+        "coverage": 0.625,
+        "start": 22.81,
+        "end": 24.41,
+        "recognized": "ろくこしゅうめてね"
+      },
+      {
+        "index": 15,
+        "text": "ろく！",
+        "coverage": 1.0,
+        "start": 24.95,
+        "end": 25.45,
+        "recognized": "ろく"
+      },
+      {
+        "index": 16,
+        "text": "ろくこ！",
+        "coverage": 0.667,
+        "start": 26.39,
+        "end": 27.32,
+        "recognized": "ろくこ"
+      },
+      {
+        "index": 17,
+        "text": "ななこあつめてね！",
+        "coverage": 0.75,
+        "start": 27.87,
+        "end": 29.39,
+        "recognized": "ななこしゅうめてね"
+      },
+      {
+        "index": 18,
+        "text": "なな！",
+        "coverage": 1.0,
+        "start": 30.07,
+        "end": 30.5,
+        "recognized": "なな"
+      },
+      {
+        "index": 19,
+        "text": "ななこ！",
+        "coverage": 1.0,
+        "start": 31.41,
+        "end": 32.19,
+        "recognized": "ななこ",
+        "boundary": 32.845,
+        "silence": 1.17
+      },
+      {
+        "index": 20,
+        "text": "はちこあつめてね！",
+        "coverage": 0.625,
+        "start": 33.44,
+        "end": 34.39,
+        "recognized": "わちこしゅうめてね",
+        "boundary": 35.02,
+        "silence": 1.02
+      },
+      {
+        "index": 21,
+        "text": "はち！",
+        "coverage": 1.0,
+        "start": 35.47,
+        "end": 35.65,
+        "recognized": "わち",
+        "boundary": 35.69,
+        "silence": 0.08
+      },
+      {
+        "index": 22,
+        "text": "はちこ！",
+        "coverage": 0.667,
+        "start": 36.48,
+        "end": 37.24,
+        "recognized": "わちこ",
+        "boundary": 37.82,
+        "silence": 1.08
+      },
+      {
+        "index": 23,
+        "text": "きゅうこあつめてね！",
+        "coverage": 0.778,
+        "start": 38.28,
+        "end": 39.3,
+        "recognized": "きゅうこしゅうめてね"
+      },
+      {
+        "index": 24,
+        "text": "きゅう！",
+        "coverage": 1.0,
+        "start": 40.2,
+        "end": 40.52,
+        "recognized": "きゅう"
+      },
+      {
+        "index": 25,
+        "text": "きゅうこ！",
+        "coverage": 1.0,
+        "start": 41.29,
+        "end": 42.06,
+        "recognized": "きゅうこ",
+        "boundary": 42.585,
+        "silence": 1.11
+      },
+      {
+        "index": 26,
+        "text": "じゅうこあつめてね！",
+        "coverage": 0.667,
+        "start": 43.18,
+        "end": 44.05,
+        "recognized": "じゅうこしゅうめてね",
+        "boundary": 44.695,
+        "silence": 0.97
+      },
+      {
+        "index": 27,
+        "text": "じゅう！",
+        "coverage": 1.0,
+        "start": 45.11,
+        "end": 45.37,
+        "recognized": "じゅう"
+      },
+      {
+        "index": 28,
+        "text": "じゅうこ！",
+        "coverage": 0.75,
+        "start": 46.24,
+        "end": 46.9,
+        "recognized": "じゅうこ",
+        "boundary": 47.545,
+        "silence": 1.15
+      },
+      {
+        "index": 29,
+        "text": "みかんを",
+        "coverage": 1.0,
+        "start": 48.02,
+        "end": 48.71,
+        "recognized": "みかんお",
+        "boundary": 49.37,
+        "silence": 1.08
+      },
+      {
+        "index": 30,
+        "text": "みかんが",
+        "coverage": 1.0,
+        "start": 49.79,
+        "end": 50.48,
+        "recognized": "みかんが",
+        "boundary": 51.195,
+        "silence": 1.17
+      },
+      {
+        "index": 31,
+        "text": "いちごを",
+        "coverage": 1.0,
+        "start": 51.7,
+        "end": 52.41,
+        "recognized": "いちごお",
+        "boundary": 52.9,
+        "silence": 1.02
+      },
+      {
+        "index": 32,
+        "text": "いちごが",
+        "coverage": 1.0,
+        "start": 53.32,
+        "end": 53.96,
+        "recognized": "いちごが",
+        "boundary": 54.605,
+        "silence": 1.13
+      },
+      {
+        "index": 33,
+        "text": "まるのかたちをさがしてね！",
+        "coverage": 1.0,
+        "start": 55.22,
+        "end": 56.61,
+        "recognized": "まるのかたちおさがしてね",
+        "boundary": 57.345,
+        "silence": 1.21
+      },
+      {
+        "index": 34,
+        "text": "まる！",
+        "coverage": 1.0,
+        "start": 57.96,
+        "end": 58.16,
+        "recognized": "まる",
+        "boundary": 58.805,
+        "silence": 1.11
+      },
+      {
+        "index": 35,
+        "text": "それはさんかく。",
+        "coverage": 1.0,
+        "start": 59.26,
+        "end": 60.27,
+        "recognized": "それわさんかく",
+        "boundary": 60.91,
+        "silence": 1.04
+      },
+      {
+        "index": 36,
+        "text": "まるはどこかな？",
+        "coverage": 1.0,
+        "start": 61.36,
+        "end": 62.17,
+        "recognized": "まるわどこかな",
+        "boundary": 62.955,
+        "silence": 1.09
+      },
+      {
+        "index": 37,
+        "text": "それはしかく。",
+        "coverage": 1.0,
+        "start": 63.47,
+        "end": 64.37,
+        "recognized": "それわしかく",
+        "boundary": 64.99,
+        "silence": 1.04
+      },
+      {
+        "index": 38,
+        "text": "それはほし。",
+        "coverage": 1.0,
+        "start": 65.42,
+        "end": 66.09,
+        "recognized": "それわほし",
+        "boundary": 66.83,
+        "silence": 1.08
+      },
+      {
+        "index": 39,
+        "text": "それはハート。",
+        "coverage": 1.0,
+        "start": 67.3,
+        "end": 68.17,
+        "recognized": "それわわと"
+      }
+    ]
+  },
+  {
+    "batchId": 3,
+    "ratio": 0.888,
+    "phrases": [
+      {
+        "index": 0,
+        "text": "さんかくのかたちをさがしてね！",
+        "coverage": 0.857,
+        "start": 0.15,
+        "end": 2.27,
+        "recognized": "さんかくのかたちおたんしてね"
+      },
+      {
+        "index": 1,
+        "text": "さんかく！",
+        "coverage": 1.0,
+        "start": 3.01,
+        "end": 3.93,
+        "recognized": "さんかく",
+        "boundary": 4.54,
+        "silence": 0.96
+      },
+      {
+        "index": 2,
+        "text": "それはまる。",
+        "coverage": 1.0,
+        "start": 5.05,
+        "end": 5.94,
+        "recognized": "それわまる"
+      },
+      {
+        "index": 3,
+        "text": "さんかくはどこかな？",
+        "coverage": 1.0,
+        "start": 6.99,
+        "end": 8.43,
+        "recognized": "さんかくわどこかな",
+        "boundary": 9.005,
+        "silence": 0.79
+      },
+      {
+        "index": 4,
+        "text": "しかくのかたちをさがしてね！",
+        "coverage": 0.846,
+        "start": 9.38,
+        "end": 11.25,
+        "recognized": "しかくのかたちおたんしてね",
+        "boundary": 11.79,
+        "silence": 0.8
+      },
+      {
+        "index": 5,
+        "text": "しかく！",
+        "coverage": 1.0,
+        "start": 12.22,
+        "end": 12.55,
+        "recognized": "しかく",
+        "boundary": 13.14,
+        "silence": 0.94
+      },
+      {
+        "index": 6,
+        "text": "しかくはどこかな？",
+        "coverage": 1.0,
+        "start": 13.56,
+        "end": 14.77,
+        "recognized": "しかくわどこかな",
+        "boundary": 15.315,
+        "silence": 0.83
+      },
+      {
+        "index": 7,
+        "text": "ほしのかたちをさがしてね！",
+        "coverage": 0.833,
+        "start": 15.61,
+        "end": 17.43,
+        "recognized": "ほしのかたちおたんしてね",
+        "boundary": 18.015,
+        "silence": 0.75
+      },
+      {
+        "index": 8,
+        "text": "ほし！",
+        "coverage": 1.0,
+        "start": 18.27,
+        "end": 18.49,
+        "recognized": "ほし"
+      },
+      {
+        "index": 9,
+        "text": "ほしはどこかな？",
+        "coverage": 1.0,
+        "start": 19.39,
+        "end": 20.47,
+        "recognized": "ほしわどこかな"
+      },
+      {
+        "index": 10,
+        "text": "ハートのかたちをさがしてね！",
+        "coverage": 0.833,
+        "start": 21.06,
+        "end": 23.22,
+        "recognized": "わとのかたちおたんしてね"
+      },
+      {
+        "index": 11,
+        "text": "ハート！",
+        "coverage": 1.0,
+        "start": 23.86,
+        "end": 24.44,
+        "recognized": "わと",
+        "boundary": 24.475,
+        "silence": 0.09
+      },
+      {
+        "index": 12,
+        "text": "ハートはどこかな？",
+        "coverage": 1.0,
+        "start": 25.07,
+        "end": 26.49,
+        "recognized": "わとわどこかな"
+      },
+      {
+        "index": 13,
+        "text": "わんわんってなくどうぶつはだあれ？",
+        "coverage": 0.688,
+        "start": 27.09,
+        "end": 30.05,
+        "recognized": "わんわんってめいくどうものわたれ",
+        "boundary": 30.69,
+        "silence": 0.78
+      },
+      {
+        "index": 14,
+        "text": "あいにいこう！",
+        "coverage": 0.5,
+        "start": 31.14,
+        "end": 31.39,
+        "recognized": "あいに",
+        "boundary": 32.255,
+        "silence": 0.83
+      },
+      {
+        "index": 15,
+        "text": "ぴんぽーん！",
+        "coverage": 1.0,
+        "start": 32.67,
+        "end": 33.8,
+        "recognized": "ぴんぽん",
+        "boundary": 34.625,
+        "silence": 0.79
+      },
+      {
+        "index": 16,
+        "text": "いぬさんでした！",
+        "coverage": 1.0,
+        "start": 35.11,
+        "end": 35.83,
+        "recognized": "いぬさんでした",
+        "boundary": 36.465,
+        "silence": 0.51
+      },
+      {
+        "index": 17,
+        "text": "わんわん！",
+        "coverage": 1.0,
+        "start": 36.69,
+        "end": 37.3,
+        "recognized": "わんわん",
+        "boundary": 37.65,
+        "silence": 0.78
+      },
+      {
+        "index": 18,
+        "text": "いぬさんだよ。",
+        "coverage": 1.0,
+        "start": 38.07,
+        "end": 38.69,
+        "recognized": "いぬさんだよ",
+        "boundary": 39.185,
+        "silence": 0.81
+      },
+      {
+        "index": 19,
+        "text": "ぼくはいぬ。",
+        "coverage": 1.0,
+        "start": 39.6,
+        "end": 40.46,
+        "recognized": "ぼくわいぬ"
+      },
+      {
+        "index": 20,
+        "text": "ぶーぶーはぼくじゃないよ。",
+        "coverage": 1.0,
+        "start": 41.03,
+        "end": 42.8,
+        "recognized": "ぶぶわぼくじゃないよ",
+        "boundary": 43.405,
+        "silence": 0.77
+      },
+      {
+        "index": 21,
+        "text": "もーもーはぼくじゃないよ。",
+        "coverage": 1.0,
+        "start": 43.79,
+        "end": 45.43,
+        "recognized": "ももわぼくじゃないよ"
+      },
+      {
+        "index": 22,
+        "text": "めぇめぇはぼくじゃないよ。",
+        "coverage": 0.833,
+        "start": 46.11,
+        "end": 48.03,
+        "recognized": "めめわぼくじゃないよ"
+      },
+      {
+        "index": 23,
+        "text": "ぴよぴよはぼくじゃないよ。",
+        "coverage": 0.833,
+        "start": 48.72,
+        "end": 50.59,
+        "recognized": "ぴおぴおわぼくじゃないよ",
+        "boundary": 51.135,
+        "silence": 0.79
+      },
+      {
+        "index": 24,
+        "text": "けろけろはぼくじゃないよ。",
+        "coverage": 1.0,
+        "start": 51.6,
+        "end": 53.1,
+        "recognized": "けろけろわぼくじゃないよ"
+      },
+      {
+        "index": 25,
+        "text": "ぶーぶーってなくどうぶつはだあれ？",
+        "coverage": 0.643,
+        "start": 53.76,
+        "end": 56.33,
+        "recognized": "ぶぶってめいくどうものわたれ",
+        "boundary": 56.985,
+        "silence": 0.75
+      },
+      {
+        "index": 26,
+        "text": "ぶたさんでした！",
+        "coverage": 1.0,
+        "start": 57.23,
+        "end": 58.13,
+        "recognized": "ぶたさんでした"
+      },
+      {
+        "index": 27,
+        "text": "ぶーぶー！",
+        "coverage": 1.0,
+        "start": 58.66,
+        "end": 59.35,
+        "recognized": "ぶぶ"
+      },
+      {
+        "index": 28,
+        "text": "ぶたさんだよ。",
+        "coverage": 1.0,
+        "start": 60.29,
+        "end": 61.18,
+        "recognized": "ぶたさんだよ"
+      },
+      {
+        "index": 29,
+        "text": "ぼくはぶた。",
+        "coverage": 1.0,
+        "start": 61.8,
+        "end": 62.73,
+        "recognized": "ぼくわぶた",
+        "boundary": 62.65,
+        "silence": 0.08
+      },
+      {
+        "index": 30,
+        "text": "わんわんはぼくじゃないよ。",
+        "coverage": 1.0,
+        "start": 63.26,
+        "end": 64.83,
+        "recognized": "わんわんわぼくじゃないよ"
+      },
+      {
+        "index": 31,
+        "text": "もーもーってなくどうぶつはだあれ？",
+        "coverage": 0.643,
+        "start": 65.48,
+        "end": 67.95,
+        "recognized": "ももってめいくどうものわたれ",
+        "boundary": 68.62,
+        "silence": 0.8
+      },
+      {
+        "index": 32,
+        "text": "うしさんでした！",
+        "coverage": 1.0,
+        "start": 69.05,
+        "end": 69.83,
+        "recognized": "うしさんでした"
+      },
+      {
+        "index": 33,
+        "text": "もーもー！",
+        "coverage": 1.0,
+        "start": 70.37,
+        "end": 71.05,
+        "recognized": "もも"
+      },
+      {
+        "index": 34,
+        "text": "うしさんだよ。",
+        "coverage": 1.0,
+        "start": 72.12,
+        "end": 73.13,
+        "recognized": "うしさんだよ",
+        "boundary": 73.575,
+        "silence": 0.81
+      },
+      {
+        "index": 35,
+        "text": "ぼくはうし。",
+        "coverage": 1.0,
+        "start": 73.83,
+        "end": 74.56,
+        "recognized": "ぼくわうし",
+        "boundary": 75.07,
+        "silence": 0.78
+      },
+      {
+        "index": 36,
+        "text": "めぇめぇってなくどうぶつはだあれ？",
+        "coverage": 0.562,
+        "start": 75.45,
+        "end": 77.74,
+        "recognized": "めめってめいくどうものわたれ",
+        "boundary": 78.41,
+        "silence": 0.74
+      },
+      {
+        "index": 37,
+        "text": "ひつじさんでした！",
+        "coverage": 1.0,
+        "start": 78.84,
+        "end": 79.73,
+        "recognized": "ひつじさんでした"
+      },
+      {
+        "index": 38,
+        "text": "めぇめぇ！",
+        "coverage": 0.5,
+        "start": 80.31,
+        "end": 81.02,
+        "recognized": "めめ",
+        "boundary": 81.91,
+        "silence": 0.76
+      },
+      {
+        "index": 39,
+        "text": "ひつじさんだよ。",
+        "coverage": 1.0,
+        "start": 82.26,
+        "end": 83.02,
+        "recognized": "ひつじさんだよ"
+      }
+    ]
+  },
+  {
+    "batchId": 4,
+    "ratio": 0.901,
+    "phrases": [
+      {
+        "index": 0,
+        "text": "ぼくはひつじ。",
+        "coverage": 1.0,
+        "start": 0.22,
+        "end": 1.2,
+        "recognized": "ぼくわひつじ",
+        "boundary": 1.945,
+        "silence": 0.97
+      },
+      {
+        "index": 1,
+        "text": "ぴよぴよってなくどうぶつはだあれ？",
+        "coverage": 0.688,
+        "start": 2.41,
+        "end": 4.33,
+        "recognized": "ぴおぴおってなくどうものわだれ",
+        "boundary": 4.895,
+        "silence": 0.91
+      },
+      {
+        "index": 2,
+        "text": "ひよこさんでした！",
+        "coverage": 1.0,
+        "start": 5.24,
+        "end": 6.14,
+        "recognized": "ひよこさんでした",
+        "boundary": 7.205,
+        "silence": 0.87
+      },
+      {
+        "index": 3,
+        "text": "ぴよぴよ！",
+        "coverage": 0.5,
+        "start": 7.57,
+        "end": 7.88,
+        "recognized": "ぴおぴ",
+        "boundary": 8.445,
+        "silence": 0.79
+      },
+      {
+        "index": 4,
+        "text": "ひよこさんだよ。",
+        "coverage": 1.0,
+        "start": 8.87,
+        "end": 9.71,
+        "recognized": "ひよこさんだよ",
+        "boundary": 10.2,
+        "silence": 0.84
+      },
+      {
+        "index": 5,
+        "text": "ぼくはひよこ。",
+        "coverage": 1.0,
+        "start": 10.65,
+        "end": 11.53,
+        "recognized": "ぼくわひよこ",
+        "boundary": 12.035,
+        "silence": 0.81
+      },
+      {
+        "index": 6,
+        "text": "けろけろってなくどうぶつはだあれ？",
+        "coverage": 0.812,
+        "start": 12.51,
+        "end": 14.42,
+        "recognized": "けろけろってなくどうものわだれ",
+        "boundary": 15.02,
+        "silence": 0.86
+      },
+      {
+        "index": 7,
+        "text": "かえるさんでした！",
+        "coverage": 1.0,
+        "start": 15.5,
+        "end": 16.31,
+        "recognized": "かえるさんでした",
+        "boundary": 17.255,
+        "silence": 0.79
+      },
+      {
+        "index": 8,
+        "text": "けろけろ！",
+        "coverage": 1.0,
+        "start": 17.63,
+        "end": 18.09,
+        "recognized": "けろけろ",
+        "boundary": 18.565,
+        "silence": 0.89
+      },
+      {
+        "index": 9,
+        "text": "かえるさんだよ。",
+        "coverage": 1.0,
+        "start": 19.06,
+        "end": 19.83,
+        "recognized": "かえるさんだよ",
+        "boundary": 20.325,
+        "silence": 0.81
+      },
+      {
+        "index": 10,
+        "text": "ぼくはかえる。",
+        "coverage": 1.0,
+        "start": 20.73,
+        "end": 21.56,
+        "recognized": "ぼくわかえる",
+        "boundary": 22.08,
+        "silence": 0.82
+      },
+      {
+        "index": 11,
+        "text": "あひるの「あ」はどれかな？",
+        "coverage": 1.0,
+        "start": 22.55,
+        "end": 24.11,
+        "recognized": "あひるのあわどれかな",
+        "boundary": 24.805,
+        "silence": 0.73
+      },
+      {
+        "index": 12,
+        "text": "さがしてね！",
+        "coverage": 0.6,
+        "start": 25.4,
+        "end": 25.72,
+        "recognized": "してね",
+        "boundary": 26.255,
+        "silence": 0.83
+      },
+      {
+        "index": 13,
+        "text": "「あ」！",
+        "coverage": 1.0,
+        "start": 26.59,
+        "end": 26.59,
+        "recognized": "あ",
+        "boundary": 27.235,
+        "silence": 0.79
+      },
+      {
+        "index": 14,
+        "text": "あひるの「あ」だね！",
+        "coverage": 1.0,
+        "start": 27.73,
+        "end": 28.75,
+        "recognized": "あひるのあだね",
+        "boundary": 29.3,
+        "silence": 0.76
+      },
+      {
+        "index": 15,
+        "text": "それは「あ」。",
+        "coverage": 1.0,
+        "start": 29.73,
+        "end": 30.76,
+        "recognized": "それわあ",
+        "boundary": 31.24,
+        "silence": 0.8
+      },
+      {
+        "index": 16,
+        "text": "あひるの「あ」だよ。",
+        "coverage": 1.0,
+        "start": 31.65,
+        "end": 32.65,
+        "recognized": "あひるのあだよ",
+        "boundary": 33.205,
+        "silence": 0.81
+      },
+      {
+        "index": 17,
+        "text": "いぬの「い」はどれかな？",
+        "coverage": 1.0,
+        "start": 33.69,
+        "end": 35.16,
+        "recognized": "いぬのいわどれかな",
+        "boundary": 35.9,
+        "silence": 0.84
+      },
+      {
+        "index": 18,
+        "text": "「い」！",
+        "coverage": 1.0,
+        "start": 36.21,
+        "end": 36.21,
+        "recognized": "い",
+        "boundary": 36.88,
+        "silence": 0.82
+      },
+      {
+        "index": 19,
+        "text": "いぬの「い」だね！",
+        "coverage": 1.0,
+        "start": 37.33,
+        "end": 38.29,
+        "recognized": "いぬのいだね",
+        "boundary": 38.85,
+        "silence": 0.82
+      },
+      {
+        "index": 20,
+        "text": "それは「い」。",
+        "coverage": 1.0,
+        "start": 39.33,
+        "end": 39.98,
+        "recognized": "それわい",
+        "boundary": 40.835,
+        "silence": 0.87
+      },
+      {
+        "index": 21,
+        "text": "いぬの「い」だよ。",
+        "coverage": 1.0,
+        "start": 41.26,
+        "end": 42.2,
+        "recognized": "いぬのいだよ",
+        "boundary": 42.765,
+        "silence": 0.87
+      },
+      {
+        "index": 22,
+        "text": "うさぎの「う」はどれかな？",
+        "coverage": 1.0,
+        "start": 43.28,
+        "end": 44.77,
+        "recognized": "うさぎのうわどれかな",
+        "boundary": 45.46,
+        "silence": 0.82
+      },
+      {
+        "index": 23,
+        "text": "「う」！",
+        "coverage": 1.0,
+        "start": 45.76,
+        "end": 45.76,
+        "recognized": "う"
+      },
+      {
+        "index": 24,
+        "text": "うさぎの「う」だね！",
+        "coverage": 1.0,
+        "start": 46.28,
+        "end": 47.99,
+        "recognized": "うさぎのうだね"
+      },
+      {
+        "index": 25,
+        "text": "それは「う」。",
+        "coverage": 1.0,
+        "start": 48.38,
+        "end": 49.74,
+        "recognized": "それわう"
+      },
+      {
+        "index": 26,
+        "text": "うさぎの「う」だよ。",
+        "coverage": 1.0,
+        "start": 50.51,
+        "end": 52.0,
+        "recognized": "うさぎのうだよ",
+        "boundary": 52.55,
+        "silence": 0.96
+      },
+      {
+        "index": 27,
+        "text": "えんぴつの「え」はどれかな？",
+        "coverage": 0.636,
+        "start": 53.71,
+        "end": 54.8,
+        "recognized": "のえわどれかな",
+        "boundary": 55.435,
+        "silence": 0.81
+      },
+      {
+        "index": 28,
+        "text": "「え」！",
+        "coverage": 1.0,
+        "start": 55.89,
+        "end": 55.89,
+        "recognized": "え",
+        "boundary": 56.43,
+        "silence": 0.8
+      },
+      {
+        "index": 29,
+        "text": "えんぴつの「え」だね！",
+        "coverage": 0.5,
+        "start": 57.43,
+        "end": 58.06,
+        "recognized": "のえだね"
+      },
+      {
+        "index": 30,
+        "text": "それは「え」。",
+        "coverage": 1.0,
+        "start": 58.48,
+        "end": 59.92,
+        "recognized": "それわえ",
+        "boundary": 60.63,
+        "silence": 0.86
+      },
+      {
+        "index": 31,
+        "text": "えんぴつの「え」だよ。",
+        "coverage": 0.5,
+        "start": 61.6,
+        "end": 62.18,
+        "recognized": "のえだよ",
+        "boundary": 62.655,
+        "silence": 0.87
+      },
+      {
+        "index": 32,
+        "text": "おにぎりの「お」はどれかな？",
+        "coverage": 1.0,
+        "start": 63.04,
+        "end": 64.89,
+        "recognized": "おにぎりのおわどれかな",
+        "boundary": 65.495,
+        "silence": 0.81
+      },
+      {
+        "index": 33,
+        "text": "「お」！",
+        "coverage": 1.0,
+        "start": 65.97,
+        "end": 65.97,
+        "recognized": "お",
+        "boundary": 66.525,
+        "silence": 0.83
+      },
+      {
+        "index": 34,
+        "text": "おにぎりの「お」だね！",
+        "coverage": 1.0,
+        "start": 67.0,
+        "end": 68.16,
+        "recognized": "おにぎりのおだね",
+        "boundary": 68.695,
+        "silence": 0.77
+      },
+      {
+        "index": 35,
+        "text": "それは「お」。",
+        "coverage": 1.0,
+        "start": 69.15,
+        "end": 70.18,
+        "recognized": "それわお",
+        "boundary": 70.71,
+        "silence": 0.86
+      },
+      {
+        "index": 36,
+        "text": "おにぎりの「お」だよ。",
+        "coverage": 1.0,
+        "start": 71.1,
+        "end": 72.24,
+        "recognized": "おにぎりのおだよ",
+        "boundary": 72.8,
+        "silence": 0.86
+      },
+      {
+        "index": 37,
+        "text": "かさの「か」はどれかな？",
+        "coverage": 1.0,
+        "start": 73.31,
+        "end": 74.84,
+        "recognized": "かさのかわどれかな",
+        "boundary": 75.535,
+        "silence": 0.83
+      },
+      {
+        "index": 38,
+        "text": "「か」！",
+        "coverage": 1.0,
+        "start": 75.97,
+        "end": 75.97,
+        "recognized": "か",
+        "boundary": 76.555,
+        "silence": 0.83
+      },
+      {
+        "index": 39,
+        "text": "かさの「か」だね！",
+        "coverage": 1.0,
+        "start": 76.96,
+        "end": 77.86,
+        "recognized": "かさのかだね"
+      }
+    ]
+  },
+  {
+    "batchId": 5,
+    "ratio": 0.938,
+    "phrases": [
+      {
+        "index": 0,
+        "text": "それは「か」。",
+        "coverage": 1.0,
+        "start": 0.12,
+        "end": 1.15,
+        "recognized": "それわか",
+        "boundary": 2.05,
+        "silence": 0.84
+      },
+      {
+        "index": 1,
+        "text": "かさの「か」だよ。",
+        "coverage": 1.0,
+        "start": 2.49,
+        "end": 3.58,
+        "recognized": "かさのかだよ",
+        "boundary": 4.84,
+        "silence": 0.98
+      },
+      {
+        "index": 2,
+        "text": "きりんの「き」はどれかな？",
+        "coverage": 1.0,
+        "start": 5.37,
+        "end": 7.04,
+        "recognized": "きりんのきわどれかな",
+        "boundary": 8.185,
+        "silence": 1.97
+      },
+      {
+        "index": 3,
+        "text": "「き」！",
+        "coverage": 1.0,
+        "start": 9.08,
+        "end": 9.08,
+        "recognized": "き",
+        "boundary": 9.705,
+        "silence": 0.73
+      },
+      {
+        "index": 4,
+        "text": "きりんの「き」だね！",
+        "coverage": 1.0,
+        "start": 10.08,
+        "end": 11.07,
+        "recognized": "きりんのきだね",
+        "boundary": 12.155,
+        "silence": 1.85
+      },
+      {
+        "index": 5,
+        "text": "それは「き」。",
+        "coverage": 1.0,
+        "start": 13.13,
+        "end": 13.72,
+        "recognized": "それわき",
+        "boundary": 14.32,
+        "silence": 0.66
+      },
+      {
+        "index": 6,
+        "text": "きりんの「き」だよ。",
+        "coverage": 1.0,
+        "start": 14.66,
+        "end": 15.9,
+        "recognized": "きりんのきだよ"
+      },
+      {
+        "index": 7,
+        "text": "くまの「く」はどれかな？",
+        "coverage": 1.0,
+        "start": 17.22,
+        "end": 18.57,
+        "recognized": "くまのくわどれかな",
+        "boundary": 19.73,
+        "silence": 1.88
+      },
+      {
+        "index": 8,
+        "text": "「く」！",
+        "coverage": 1.0,
+        "start": 20.6,
+        "end": 20.6,
+        "recognized": "く",
+        "boundary": 21.22,
+        "silence": 0.72
+      },
+      {
+        "index": 9,
+        "text": "くまの「く」だね！",
+        "coverage": 1.0,
+        "start": 21.59,
+        "end": 22.64,
+        "recognized": "くまのくだね"
+      },
+      {
+        "index": 10,
+        "text": "それは「く」。",
+        "coverage": 1.0,
+        "start": 23.23,
+        "end": 24.9,
+        "recognized": "それわく",
+        "boundary": 25.475,
+        "silence": 0.73
+      },
+      {
+        "index": 11,
+        "text": "くまの「く」だよ。",
+        "coverage": 1.0,
+        "start": 25.78,
+        "end": 27.04,
+        "recognized": "くまのくだよ"
+      },
+      {
+        "index": 12,
+        "text": "けーきの「け」はどれかな？",
+        "coverage": 1.0,
+        "start": 28.12,
+        "end": 29.52,
+        "recognized": "けきのけわどれかな",
+        "boundary": 30.58,
+        "silence": 1.7
+      },
+      {
+        "index": 13,
+        "text": "「け」！",
+        "coverage": 1.0,
+        "start": 31.96,
+        "end": 31.96,
+        "recognized": "け"
+      },
+      {
+        "index": 14,
+        "text": "けーきの「け」だね！",
+        "coverage": 1.0,
+        "start": 32.36,
+        "end": 33.29,
+        "recognized": "けきのけだね",
+        "boundary": 34.155,
+        "silence": 1.51
+      },
+      {
+        "index": 15,
+        "text": "それは「け」。",
+        "coverage": 1.0,
+        "start": 34.97,
+        "end": 35.5,
+        "recognized": "それわけ",
+        "boundary": 36.085,
+        "silence": 0.73
+      },
+      {
+        "index": 16,
+        "text": "けーきの「け」だよ。",
+        "coverage": 1.0,
+        "start": 36.45,
+        "end": 37.34,
+        "recognized": "けきのけだよ",
+        "boundary": 38.155,
+        "silence": 1.43
+      },
+      {
+        "index": 17,
+        "text": "こあらの「こ」はどれかな？",
+        "coverage": 1.0,
+        "start": 38.95,
+        "end": 40.61,
+        "recognized": "こあらのこあわどれかな",
+        "boundary": 41.71,
+        "silence": 1.72
+      },
+      {
+        "index": 18,
+        "text": "「こ」！",
+        "coverage": 1.0,
+        "start": 42.54,
+        "end": 42.54,
+        "recognized": "こ",
+        "boundary": 43.155,
+        "silence": 0.77
+      },
+      {
+        "index": 19,
+        "text": "こあらの「こ」だね！",
+        "coverage": 1.0,
+        "start": 43.55,
+        "end": 44.55,
+        "recognized": "こあらのこだね",
+        "boundary": 45.355,
+        "silence": 1.33
+      },
+      {
+        "index": 20,
+        "text": "それは「こ」。",
+        "coverage": 1.0,
+        "start": 46.05,
+        "end": 46.58,
+        "recognized": "それわこ",
+        "boundary": 47.125,
+        "silence": 0.65
+      },
+      {
+        "index": 21,
+        "text": "こあらの「こ」だよ。",
+        "coverage": 1.0,
+        "start": 47.46,
+        "end": 48.36,
+        "recognized": "こあらのこだよ",
+        "boundary": 49.175,
+        "silence": 1.43
+      },
+      {
+        "index": 22,
+        "text": "さかなの「さ」はどれかな？",
+        "coverage": 1.0,
+        "start": 49.99,
+        "end": 51.45,
+        "recognized": "さかなのさわどれかな",
+        "boundary": 52.475,
+        "silence": 1.59
+      },
+      {
+        "index": 23,
+        "text": "「さ」！",
+        "coverage": 1.0,
+        "start": 54.08,
+        "end": 54.08,
+        "recognized": "さ"
+      },
+      {
+        "index": 24,
+        "text": "さかなの「さ」だね！",
+        "coverage": 1.0,
+        "start": 54.35,
+        "end": 55.38,
+        "recognized": "さかなのさだね",
+        "boundary": 56.15,
+        "silence": 1.24
+      },
+      {
+        "index": 25,
+        "text": "それは「さ」。",
+        "coverage": 1.0,
+        "start": 56.76,
+        "end": 57.35,
+        "recognized": "それわさ",
+        "boundary": 57.875,
+        "silence": 0.59
+      },
+      {
+        "index": 26,
+        "text": "さかなの「さ」だよ。",
+        "coverage": 1.0,
+        "start": 58.54,
+        "end": 59.27,
+        "recognized": "さかなのさだよ",
+        "boundary": 59.96,
+        "silence": 1.32
+      },
+      {
+        "index": 27,
+        "text": "しまうまの「し」はどれかな？",
+        "coverage": 1.0,
+        "start": 60.73,
+        "end": 62.43,
+        "recognized": "しまうまのしわどれかな",
+        "boundary": 63.28,
+        "silence": 1.36
+      },
+      {
+        "index": 28,
+        "text": "「し」！",
+        "coverage": 1.0,
+        "start": 64.03,
+        "end": 64.03,
+        "recognized": "し",
+        "boundary": 64.67,
+        "silence": 0.78
+      },
+      {
+        "index": 29,
+        "text": "しまうまの「し」だね！",
+        "coverage": 1.0,
+        "start": 65.06,
+        "end": 66.24,
+        "recognized": "しまうまのしだね",
+        "boundary": 66.94,
+        "silence": 1.16
+      },
+      {
+        "index": 30,
+        "text": "それは「し」。",
+        "coverage": 1.0,
+        "start": 67.59,
+        "end": 68.16,
+        "recognized": "それわし",
+        "boundary": 68.615,
+        "silence": 0.61
+      },
+      {
+        "index": 31,
+        "text": "しまうまの「し」だよ。",
+        "coverage": 1.0,
+        "start": 69.06,
+        "end": 70.05,
+        "recognized": "しまうまのしだよ",
+        "boundary": 70.685,
+        "silence": 1.17
+      },
+      {
+        "index": 32,
+        "text": "すいかの「す」はどれかな？",
+        "coverage": 0.7,
+        "start": 72.05,
+        "end": 72.94,
+        "recognized": "のすわどれかな",
+        "boundary": 73.805,
+        "silence": 1.37
+      },
+      {
+        "index": 33,
+        "text": "「す」！",
+        "coverage": 1.0,
+        "start": 74.7,
+        "end": 74.7,
+        "recognized": "す",
+        "boundary": 75.23,
+        "silence": 0.76
+      },
+      {
+        "index": 34,
+        "text": "すいかの「す」だね！",
+        "coverage": 0.571,
+        "start": 76.23,
+        "end": 76.69,
+        "recognized": "のすだね",
+        "boundary": 77.455,
+        "silence": 1.31
+      },
+      {
+        "index": 35,
+        "text": "それは「す」。",
+        "coverage": 1.0,
+        "start": 78.14,
+        "end": 78.67,
+        "recognized": "それわす",
+        "boundary": 79.31,
+        "silence": 0.78
+      },
+      {
+        "index": 36,
+        "text": "すいかの「す」だよ。",
+        "coverage": 0.571,
+        "start": 80.25,
+        "end": 80.74,
+        "recognized": "のすだよ",
+        "boundary": 81.44,
+        "silence": 1.3
+      },
+      {
+        "index": 37,
+        "text": "せっけんの「せ」はどれかな？",
+        "coverage": 0.727,
+        "start": 82.48,
+        "end": 83.75,
+        "recognized": "けんのすわどれかな"
+      },
+      {
+        "index": 38,
+        "text": "「せ」！",
+        "coverage": 1.0,
+        "start": 84.77,
+        "end": 84.77,
+        "recognized": "せ"
+      },
+      {
+        "index": 39,
+        "text": "せっけんの「せ」だね！",
+        "coverage": 1.0,
+        "start": 86.04,
+        "end": 87.45,
+        "recognized": "せっけんのせだね"
+      }
+    ]
+  },
+  {
+    "batchId": 6,
+    "ratio": 0.873,
+    "phrases": [
+      {
+        "index": 0,
+        "text": "それは「せ」。",
+        "coverage": 1.0,
+        "start": 0.12,
+        "end": 0.94,
+        "recognized": "それわせ",
+        "boundary": 1.625,
+        "silence": 0.89
+      },
+      {
+        "index": 1,
+        "text": "せっけんの「せ」だよ。",
+        "coverage": 0.625,
+        "start": 1.93,
+        "end": 3.5,
+        "recognized": "せつるぎのせだよ"
+      },
+      {
+        "index": 2,
+        "text": "そふとくりーむの「そ」はどれかな？",
+        "coverage": 0.769,
+        "start": 4.03,
+        "end": 6.12,
+        "recognized": "そふとくりむのせわどれ",
+        "boundary": 7.88,
+        "silence": 0.78
+      },
+      {
+        "index": 3,
+        "text": "「そ」！",
+        "coverage": 0.0,
+        "boundary": 7.88,
+        "silence": 0.78
+      },
+      {
+        "index": 4,
+        "text": "そふとくりーむの「そ」だね！",
+        "coverage": 0.9,
+        "start": 8.22,
+        "end": 9.84,
+        "recognized": "そふとくりむのせだね"
+      },
+      {
+        "index": 5,
+        "text": "それは「そ」。",
+        "coverage": 0.75,
+        "start": 10.18,
+        "end": 10.97,
+        "recognized": "それわ",
+        "boundary": 11.9,
+        "silence": 0.7
+      },
+      {
+        "index": 6,
+        "text": "そふとくりーむの「そ」だよ。",
+        "coverage": 0.9,
+        "start": 12.2,
+        "end": 13.83,
+        "recognized": "そふとくりむのせだよ",
+        "boundary": 14.1,
+        "silence": 0.6
+      },
+      {
+        "index": 7,
+        "text": "ほしが",
+        "coverage": 1.0,
+        "start": 14.43,
+        "end": 14.89,
+        "recognized": "ほしが"
+      },
+      {
+        "index": 8,
+        "text": "ごほうびにリボンをもらったよ！",
+        "coverage": 1.0,
+        "start": 15.54,
+        "end": 17.74,
+        "recognized": "ごほうびにりぼんおもらったよ",
+        "boundary": 18.215,
+        "silence": 0.55
+      },
+      {
+        "index": 9,
+        "text": "にあってるね！",
+        "coverage": 0.667,
+        "start": 18.79,
+        "end": 19.1,
+        "recognized": "ってるね"
+      },
+      {
+        "index": 10,
+        "text": "ごほうびにむぎわらぼうしをもらったよ！",
+        "coverage": 0.944,
+        "start": 19.63,
+        "end": 22.71,
+        "recognized": "ごほうびにむぎわらぼうこおもらったよ",
+        "boundary": 23.155,
+        "silence": 0.65
+      },
+      {
+        "index": 11,
+        "text": "じゅうごこ！",
+        "coverage": 1.0,
+        "start": 23.67,
+        "end": 24.2,
+        "recognized": "じゅうごこ",
+        "boundary": 24.155,
+        "silence": 0.09
+      },
+      {
+        "index": 12,
+        "text": "ごほうびにおはなのかんむりをもらったよ！",
+        "coverage": 0.895,
+        "start": 24.71,
+        "end": 27.78,
+        "recognized": "ごほうびにおわなのごうむりおもらったよ",
+        "boundary": 28.24,
+        "silence": 0.58
+      },
+      {
+        "index": 13,
+        "text": "にじゅうこ！",
+        "coverage": 0.8,
+        "start": 28.57,
+        "end": 29.17,
+        "recognized": "にじゅうこ"
+      },
+      {
+        "index": 14,
+        "text": "ごほうびにきんのおうかんをもらったよ！",
+        "coverage": 1.0,
+        "start": 29.75,
+        "end": 32.84,
+        "recognized": "ごほうびにきんのおうかんおもらったよ",
+        "boundary": 33.355,
+        "silence": 0.83
+      },
+      {
+        "index": 15,
+        "text": "かずのがっこうへようこそ！",
+        "coverage": 0.917,
+        "start": 33.73,
+        "end": 35.47,
+        "recognized": "かずのがくこうへようこそ",
+        "boundary": 35.87,
+        "silence": 0.56
+      },
+      {
+        "index": 16,
+        "text": "すうじであそぼう！",
+        "coverage": 0.5,
+        "start": 36.51,
+        "end": 37.44,
+        "recognized": "じでゆうぼう",
+        "boundary": 37.64,
+        "silence": 0.58
+      },
+      {
+        "index": 17,
+        "text": "クッキーはいくつあるかな？",
+        "coverage": 1.0,
+        "start": 37.84,
+        "end": 39.48,
+        "recognized": "くっきわいくつあるかな",
+        "boundary": 40.065,
+        "silence": 0.69
+      },
+      {
+        "index": 18,
+        "text": "おなじすうじにのってね！",
+        "coverage": 0.545,
+        "start": 40.44,
+        "end": 41.69,
+        "recognized": "うじかずじにじょうってね",
+        "boundary": 42.19,
+        "silence": 0.62
+      },
+      {
+        "index": 19,
+        "text": "クッキーが",
+        "coverage": 1.0,
+        "start": 42.55,
+        "end": 43.27,
+        "recognized": "くっきが"
+      },
+      {
+        "index": 20,
+        "text": "りんごはいくつあるかな？",
+        "coverage": 1.0,
+        "start": 43.83,
+        "end": 45.45,
+        "recognized": "りんごわいくつあるかな",
+        "boundary": 46.005,
+        "silence": 0.09
+      },
+      {
+        "index": 21,
+        "text": "おほしさまはいくつあるかな？",
+        "coverage": 1.0,
+        "start": 46.0,
+        "end": 47.96,
+        "recognized": "おほしさまわいくつあるかな"
+      },
+      {
+        "index": 22,
+        "text": "おほしさまが",
+        "coverage": 1.0,
+        "start": 48.81,
+        "end": 49.81,
+        "recognized": "おほしさまが",
+        "boundary": 50.405,
+        "silence": 0.09
+      },
+      {
+        "index": 23,
+        "text": "ふうせんはいくつあるかな？",
+        "coverage": 0.75,
+        "start": 50.96,
+        "end": 52.14,
+        "recognized": "ふねわいくつあるかな",
+        "boundary": 52.58,
+        "silence": 0.12
+      },
+      {
+        "index": 24,
+        "text": "ふうせんが",
+        "coverage": 0.4,
+        "start": 53.25,
+        "end": 53.7,
+        "recognized": "ふねが",
+        "boundary": 54.07,
+        "silence": 0.26
+      },
+      {
+        "index": 25,
+        "text": "おさかなはいくつあるかな？",
+        "coverage": 1.0,
+        "start": 54.3,
+        "end": 56.07,
+        "recognized": "おさかなわいくつあるかな",
+        "boundary": 56.355,
+        "silence": 0.15
+      },
+      {
+        "index": 26,
+        "text": "おさかなが",
+        "coverage": 1.0,
+        "start": 56.8,
+        "end": 57.6,
+        "recognized": "おさかなが",
+        "boundary": 58.095,
+        "silence": 0.33
+      },
+      {
+        "index": 27,
+        "text": "いちごはいくつあるかな？",
+        "coverage": 0.909,
+        "start": 58.23,
+        "end": 59.68,
+        "recognized": "いちごわいくつあるか"
+      },
+      {
+        "index": 28,
+        "text": "くるまはいくつあるかな？",
+        "coverage": 0.909,
+        "start": 60.44,
+        "end": 61.84,
+        "recognized": "くるまわいくつあるか"
+      },
+      {
+        "index": 29,
+        "text": "くるまが",
+        "coverage": 1.0,
+        "start": 62.32,
+        "end": 63.5,
+        "recognized": "くるまが"
+      },
+      {
+        "index": 30,
+        "text": "おはなはいくつあるかな？",
+        "coverage": 0.909,
+        "start": 64.21,
+        "end": 65.82,
+        "recognized": "おわなわいくつあるか"
+      },
+      {
+        "index": 31,
+        "text": "おはなが",
+        "coverage": 1.0,
+        "start": 66.58,
+        "end": 67.43,
+        "recognized": "おわなが",
+        "boundary": 67.86,
+        "silence": 0.5
+      },
+      {
+        "index": 32,
+        "text": "ひよこはいくつあるかな？",
+        "coverage": 0.909,
+        "start": 68.01,
+        "end": 69.41,
+        "recognized": "ひよこわいくつあるか",
+        "boundary": 69.965,
+        "silence": 0.57
+      },
+      {
+        "index": 33,
+        "text": "ひよこが",
+        "coverage": 1.0,
+        "start": 70.1,
+        "end": 71.0,
+        "recognized": "ひよこが",
+        "boundary": 71.425,
+        "silence": 0.53
+      },
+      {
+        "index": 34,
+        "text": "ドーナツはいくつあるかな？",
+        "coverage": 0.909,
+        "start": 71.85,
+        "end": 73.03,
+        "recognized": "どなつわいくつあるか",
+        "boundary": 73.51,
+        "silence": 0.24
+      },
+      {
+        "index": 35,
+        "text": "ドーナツが",
+        "coverage": 1.0,
+        "start": 73.77,
+        "end": 74.85,
+        "recognized": "どなつが",
+        "boundary": 75.145,
+        "silence": 0.21
+      },
+      {
+        "index": 36,
+        "text": "それはいち。",
+        "coverage": 1.0,
+        "start": 76.11,
+        "end": 76.74,
+        "recognized": "それわいち",
+        "boundary": 77.025,
+        "silence": 0.17
+      },
+      {
+        "index": 37,
+        "text": "いっしょにかぞえてみよう！",
+        "coverage": 0.667,
+        "start": 77.09,
+        "end": 78.88,
+        "recognized": "いちおにこぞえてみよう"
+      },
+      {
+        "index": 38,
+        "text": "いちこだね！",
+        "coverage": 0.8,
+        "start": 79.13,
+        "end": 80.23,
+        "recognized": "いちこだね",
+        "boundary": 80.365,
+        "silence": 0.17
+      },
+      {
+        "index": 39,
+        "text": "いちのすうじにのってね！",
+        "coverage": 0.818,
+        "start": 80.56,
+        "end": 82.33,
+        "recognized": "いちのかずじにのってね"
+      }
+    ]
+  },
+  {
+    "batchId": 7,
+    "ratio": 0.86,
+    "phrases": [
+      {
+        "index": 0,
+        "text": "いちとおなじかずのおさらはどれかな？",
+        "coverage": 0.882,
+        "start": 0.16,
+        "end": 2.69,
+        "recognized": "いちとどうじかずのおさらわどれかな"
+      },
+      {
+        "index": 1,
+        "text": "いちこのおさら！",
+        "coverage": 0.857,
+        "start": 3.91,
+        "end": 5.51,
+        "recognized": "いちこのおさら"
+      },
+      {
+        "index": 2,
+        "text": "それはいちこ。",
+        "coverage": 0.833,
+        "start": 6.58,
+        "end": 7.68,
+        "recognized": "それわいちこ"
+      },
+      {
+        "index": 3,
+        "text": "いちこのおさらをさがしてね！",
+        "coverage": 0.769,
+        "start": 8.23,
+        "end": 10.75,
+        "recognized": "いちこのおさらおたんしてね"
+      },
+      {
+        "index": 4,
+        "text": "それはにこ。",
+        "coverage": 1.0,
+        "start": 12.32,
+        "end": 13.44,
+        "recognized": "それわにこ"
+      },
+      {
+        "index": 5,
+        "text": "それはさんこ。",
+        "coverage": 1.0,
+        "start": 14.04,
+        "end": 16.1,
+        "recognized": "それわさんこ"
+      },
+      {
+        "index": 6,
+        "text": "それはよんこ。",
+        "coverage": 1.0,
+        "start": 17.4,
+        "end": 18.78,
+        "recognized": "それわよんこ"
+      },
+      {
+        "index": 7,
+        "text": "それはごこ。",
+        "coverage": 1.0,
+        "start": 19.51,
+        "end": 21.4,
+        "recognized": "それわごこ"
+      },
+      {
+        "index": 8,
+        "text": "それはろくこ。",
+        "coverage": 0.833,
+        "start": 22.5,
+        "end": 23.81,
+        "recognized": "それわろくこ"
+      },
+      {
+        "index": 9,
+        "text": "それはななこ。",
+        "coverage": 1.0,
+        "start": 24.54,
+        "end": 26.26,
+        "recognized": "それわななこ",
+        "boundary": 27.06,
+        "silence": 1.54
+      },
+      {
+        "index": 10,
+        "text": "それははちこ。",
+        "coverage": 0.833,
+        "start": 27.78,
+        "end": 28.9,
+        "recognized": "それわわちこ"
+      },
+      {
+        "index": 11,
+        "text": "それはきゅうこ。",
+        "coverage": 1.0,
+        "start": 29.47,
+        "end": 31.34,
+        "recognized": "それわきゅうこ",
+        "boundary": 31.295,
+        "silence": 0.09
+      },
+      {
+        "index": 12,
+        "text": "それはじゅうこ。",
+        "coverage": 0.857,
+        "start": 32.1,
+        "end": 33.92,
+        "recognized": "それわじゅうこ"
+      },
+      {
+        "index": 13,
+        "text": "それはに。",
+        "coverage": 1.0,
+        "start": 34.95,
+        "end": 36.16,
+        "recognized": "それわに"
+      },
+      {
+        "index": 14,
+        "text": "にこだね！",
+        "coverage": 1.0,
+        "start": 37.72,
+        "end": 38.59,
+        "recognized": "にこだね",
+        "boundary": 39.47,
+        "silence": 1.66
+      },
+      {
+        "index": 15,
+        "text": "にのすうじにのってね！",
+        "coverage": 0.7,
+        "start": 40.16,
+        "end": 41.66,
+        "recognized": "にのかずじにじょうってね",
+        "boundary": 42.505,
+        "silence": 1.77
+      },
+      {
+        "index": 16,
+        "text": "にとおなじかずのおさらはどれかな？",
+        "coverage": 0.875,
+        "start": 43.38,
+        "end": 45.23,
+        "recognized": "にとどうじかずのおさらわどれかな",
+        "boundary": 46.2,
+        "silence": 1.5
+      },
+      {
+        "index": 17,
+        "text": "にこのおさら！",
+        "coverage": 1.0,
+        "start": 46.95,
+        "end": 47.76,
+        "recognized": "にこのおさら"
+      },
+      {
+        "index": 18,
+        "text": "にこのおさらをさがしてね！",
+        "coverage": 0.833,
+        "start": 49.15,
+        "end": 50.79,
+        "recognized": "にこのおさらおたんしてね",
+        "boundary": 51.705,
+        "silence": 1.57
+      },
+      {
+        "index": 19,
+        "text": "それはさん。",
+        "coverage": 1.0,
+        "start": 52.42,
+        "end": 53.22,
+        "recognized": "それわさん"
+      },
+      {
+        "index": 20,
+        "text": "さんこだね！",
+        "coverage": 1.0,
+        "start": 54.36,
+        "end": 55.47,
+        "recognized": "さんこだね",
+        "boundary": 56.355,
+        "silence": 1.53
+      },
+      {
+        "index": 21,
+        "text": "さんのすうじにのってね！",
+        "coverage": 0.727,
+        "start": 57.08,
+        "end": 58.53,
+        "recognized": "さんのかずじにじょうってね"
+      },
+      {
+        "index": 22,
+        "text": "さんとおなじかずのおさらはどれかな？",
+        "coverage": 0.882,
+        "start": 59.09,
+        "end": 62.27,
+        "recognized": "さんとどうじかずのおさらわどれかな",
+        "boundary": 63.235,
+        "silence": 1.49
+      },
+      {
+        "index": 23,
+        "text": "さんこのおさら！",
+        "coverage": 1.0,
+        "start": 63.94,
+        "end": 65.15,
+        "recognized": "さんこのおさら"
+      },
+      {
+        "index": 24,
+        "text": "さんこのおさらをさがしてね！",
+        "coverage": 0.846,
+        "start": 65.62,
+        "end": 68.02,
+        "recognized": "さんこのおさらおたんしてね",
+        "boundary": 68.83,
+        "silence": 1.5
+      },
+      {
+        "index": 25,
+        "text": "それはよん。",
+        "coverage": 1.0,
+        "start": 69.63,
+        "end": 70.26,
+        "recognized": "それわよん"
+      },
+      {
+        "index": 26,
+        "text": "よんこだね！",
+        "coverage": 1.0,
+        "start": 70.79,
+        "end": 72.59,
+        "recognized": "よんこだね",
+        "boundary": 73.385,
+        "silence": 1.57
+      },
+      {
+        "index": 27,
+        "text": "よんのすうじにのってね！",
+        "coverage": 0.727,
+        "start": 74.04,
+        "end": 75.55,
+        "recognized": "よんのかずじにじょうってね"
+      },
+      {
+        "index": 28,
+        "text": "よんとおなじかずのおさらはどれかな？",
+        "coverage": 0.882,
+        "start": 76.09,
+        "end": 79.12,
+        "recognized": "よんとどうじかずのおさらわどれかな",
+        "boundary": 80.05,
+        "silence": 1.48
+      },
+      {
+        "index": 29,
+        "text": "よんこのおさら！",
+        "coverage": 1.0,
+        "start": 80.68,
+        "end": 81.7,
+        "recognized": "よんこのおさら"
+      },
+      {
+        "index": 30,
+        "text": "よんこのおさらをさがしてね！",
+        "coverage": 0.846,
+        "start": 82.16,
+        "end": 84.65,
+        "recognized": "よんこのおさらおたんしてね",
+        "boundary": 85.53,
+        "silence": 1.54
+      },
+      {
+        "index": 31,
+        "text": "それはご。",
+        "coverage": 1.0,
+        "start": 86.34,
+        "end": 86.82,
+        "recognized": "それわご"
+      },
+      {
+        "index": 32,
+        "text": "ごこだね！",
+        "coverage": 1.0,
+        "start": 87.84,
+        "end": 89.09,
+        "recognized": "ごこだね",
+        "boundary": 89.945,
+        "silence": 1.57
+      },
+      {
+        "index": 33,
+        "text": "ごのすうじにのってね！",
+        "coverage": 0.6,
+        "start": 90.79,
+        "end": 91.98,
+        "recognized": "のかずじにじょうってね"
+      },
+      {
+        "index": 34,
+        "text": "ごとおなじかずのおさらはどれかな？",
+        "coverage": 0.875,
+        "start": 92.91,
+        "end": 95.5,
+        "recognized": "ごとどうじかずのおさらわどれかな",
+        "boundary": 96.385,
+        "silence": 1.47
+      },
+      {
+        "index": 35,
+        "text": "ごこのおさら！",
+        "coverage": 1.0,
+        "start": 97.06,
+        "end": 98.41,
+        "recognized": "ごこのおさら"
+      },
+      {
+        "index": 36,
+        "text": "ごこのおさらをさがしてね！",
+        "coverage": 0.833,
+        "start": 99.09,
+        "end": 100.85,
+        "recognized": "ごこのおさらおたんしてね",
+        "boundary": 101.63,
+        "silence": 1.54
+      },
+      {
+        "index": 37,
+        "text": "それはろく。",
+        "coverage": 1.0,
+        "start": 102.48,
+        "end": 103.05,
+        "recognized": "それわろく",
+        "boundary": 103.07,
+        "silence": 0.1
+      },
+      {
+        "index": 38,
+        "text": "ろくこだね！",
+        "coverage": 0.8,
+        "start": 103.57,
+        "end": 105.38,
+        "recognized": "ろくこだね",
+        "boundary": 106.19,
+        "silence": 1.58
+      },
+      {
+        "index": 39,
+        "text": "ろくのすうじにのってね！",
+        "coverage": 0.727,
+        "start": 106.89,
+        "end": 108.28,
+        "recognized": "ろくのかずじにじょうってね"
+      }
+    ]
+  }
+]

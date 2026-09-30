@@ -1,0 +1,6220 @@
+[
+  {
+    "batchId": 0,
+    "status": "imported",
+    "filename": "praise-source.wav",
+    "sourceSha256": "5128e02c0739b134258b56eccdd3181909f5138c2e254f1ae264eb21a6f12f32",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 10.08,
+    "peak": 30140,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "ab15260c",
+        "text": "こえをだすよ！",
+        "reading": "こえをだすよ！",
+        "from": 0.17,
+        "to": 1.37,
+        "duration": 1.2,
+        "sha256": "e58b46225d9a581cdbf0db5c9a9ddd1f8bdf34c0b4977691dc80bcd6218b37c0"
+      },
+      {
+        "hash": "3bb3d237",
+        "text": "すごい！",
+        "reading": "すごい！",
+        "from": 1.8,
+        "to": 2.66,
+        "duration": 0.86,
+        "sha256": "6f7017da72d1d391ea79f06ac9babc1d1b8ecdc3f73d056312ef80571c9f0ce3"
+      },
+      {
+        "hash": "6d2a75c3",
+        "text": "やったね！",
+        "reading": "やったね！",
+        "from": 3.23,
+        "to": 4.16,
+        "duration": 0.93,
+        "sha256": "37f6688d8935b5785db1ccb903f3e862dd19c79b60a2419d52741d8521701e06"
+      },
+      {
+        "hash": "520a25db",
+        "text": "じょうず！",
+        "reading": "じょうず！",
+        "from": 4.73,
+        "to": 5.53,
+        "duration": 0.8,
+        "sha256": "8b1601a34ca6c10ca542f3415f6810d990a85ee4095f85c667096025719e9d30"
+      },
+      {
+        "hash": "20027fec",
+        "text": "できたね！",
+        "reading": "できたね！",
+        "from": 5.97,
+        "to": 6.85,
+        "duration": 0.88,
+        "sha256": "098580c8eddca833fd1ef19974a1380ed5b0372f49ed64a3e8917ab656a81c61"
+      },
+      {
+        "hash": "db472c4a",
+        "text": "ばっちり！",
+        "reading": "ばっちり！",
+        "from": 7.3,
+        "to": 8.37,
+        "duration": 1.07,
+        "sha256": "ff4f014b66bfe1ea1dccd76872138f2e6671e12e434f25ecb1aab8a549fb4115"
+      },
+      {
+        "hash": "42ef2fcc",
+        "text": "さすが！",
+        "reading": "さすが！",
+        "from": 8.84,
+        "to": 9.85,
+        "duration": 1.01,
+        "sha256": "78df0267aee8126bf587faa9df346cb251a39f986decb33aaffe43fa77a57cd2"
+      }
+    ]
+  },
+  {
+    "batchId": 1,
+    "status": "imported",
+    "filename": "batch-01-source.wav",
+    "sourceSha256": "dd212f803fe80845e6c77e7179eca53cc7c7878f6ee66fcb18fb06d0073a4eda",
+    "recipe": "7f5fee6c9701096bfd76e00fa8b42b77cd7ce19eaea5612e20f34dc423a23eec",
+    "duration": 92.72,
+    "peak": 26175,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "e5d2d7be",
+        "text": "にじのいろ！",
+        "reading": "にじのいろ！",
+        "from": 0.01,
+        "to": 1.19,
+        "duration": 1.18,
+        "sha256": "c23d5f67171e45475781b4e9f4a93f4f5482dede9bc4ea4f08dab1229d122bd6"
+      },
+      {
+        "hash": "0deba987",
+        "text": "あか、オレンジ、きいろ、みどり、みずいろ、あお、むらさき！",
+        "reading": "あか、オレンジ、きいろ、みどり、みずいろ、あお、むらさき！",
+        "from": 2.14,
+        "to": 8.45,
+        "duration": 6.31,
+        "sha256": "ed977b07b47dd78fd817846c7e75de8ed621a9ed3c342a8fb9b6b6dcaca70757"
+      },
+      {
+        "hash": "ef0d2135",
+        "text": "ほーほー。",
+        "reading": "ほーほー。",
+        "from": 9.39,
+        "to": 10.42,
+        "duration": 1.03,
+        "sha256": "ca7a2c65af971366d440029baf21e21faac3904219e9c70605be419ad503633f"
+      },
+      {
+        "hash": "cf3f80a5",
+        "text": "やじるしのほうだよ！",
+        "reading": "やじるしのほうだよ！",
+        "from": 11.29,
+        "to": 12.88,
+        "duration": 1.59,
+        "sha256": "1780c1f1a5391cd0ade21d24c2da0f561138fbc989ab7ff7e1b42a88d15f1701"
+      },
+      {
+        "hash": "00aa8361",
+        "text": "あかいふうせんをみつけてね！",
+        "reading": "あかいふうせんをみつけてね！",
+        "from": 13.74,
+        "to": 15.73,
+        "duration": 1.99,
+        "sha256": "5d159842cf17f49ba74a330ff013ef8dcdd3fd76cb8c617e8fef86814d5830ef"
+      },
+      {
+        "hash": "2939c411",
+        "text": "あか！",
+        "reading": "あか！",
+        "from": 16.55,
+        "to": 17.09,
+        "duration": 0.54,
+        "sha256": "abf9195ceeb77ba13619f17744aa5868a75fdee8c090722fbc6b7a746df215a5"
+      },
+      {
+        "hash": "b5faaa4c",
+        "text": "せいかい！",
+        "reading": "せいかい！",
+        "from": 17.94,
+        "to": 18.81,
+        "duration": 0.87,
+        "sha256": "518e8de143fba54f0c2d92a2033999e48dc278cee56094fcbf21de08acab07d5"
+      },
+      {
+        "hash": "b2733b69",
+        "text": "それはあお。",
+        "reading": "それはあお。",
+        "from": 19.64,
+        "to": 20.85,
+        "duration": 1.21,
+        "sha256": "80efea38d541afc005018231de76dec4e17dfb3c9c05724751271d8c928542fe"
+      },
+      {
+        "hash": "15f780ba",
+        "text": "あかいふうせんはどこかな？",
+        "reading": "あかいふうせんはどこかな？",
+        "from": 21.71,
+        "to": 23.53,
+        "duration": 1.82,
+        "sha256": "fea3e7d8d0ac0f50e08d3979124343dc8748be00fbd9e6906b0b56d38ebe9ea6"
+      },
+      {
+        "hash": "31689687",
+        "text": "それはきいろ。",
+        "reading": "それはきいろ。",
+        "from": 24.35,
+        "to": 25.74,
+        "duration": 1.39,
+        "sha256": "2300b8af330c968cf63a3dd315b43ac05792e3fea38a03108eaa2580d20fc1fa"
+      },
+      {
+        "hash": "c6fa4789",
+        "text": "それはみどり。",
+        "reading": "それはみどり。",
+        "from": 26.55,
+        "to": 27.65,
+        "duration": 1.1,
+        "sha256": "7bb1007417e12aacc4fcdc77b44068f1aa214906b4605f3ccab293f0d08c1500"
+      },
+      {
+        "hash": "f6de4a41",
+        "text": "それはピンク。",
+        "reading": "それはピンク。",
+        "from": 28.47,
+        "to": 29.74,
+        "duration": 1.27,
+        "sha256": "06472bcb2cdedc7567a4e7c7f665a6921043c6825548a0c15f58be6975360ce9"
+      },
+      {
+        "hash": "661fbfe2",
+        "text": "それはオレンジ。",
+        "reading": "それはオレンジ。",
+        "from": 30.55,
+        "to": 31.89,
+        "duration": 1.34,
+        "sha256": "2e43e39e54accfee33f4cdfda15260b2b2b5d20e478eae3d22551b791180f50e"
+      },
+      {
+        "hash": "7d43013a",
+        "text": "それはむらさき。",
+        "reading": "それはむらさき。",
+        "from": 32.7,
+        "to": 34.13,
+        "duration": 1.43,
+        "sha256": "3eaec9d18554b9e3ffd3c582a66bbaf67d75d69d21e50f9a225f861848cb4550"
+      },
+      {
+        "hash": "25532385",
+        "text": "それはしろ。",
+        "reading": "それはしろ。",
+        "from": 34.9,
+        "to": 36.09,
+        "duration": 1.19,
+        "sha256": "9d12b8371add7461b3abed4389e56236be9a19638efdd6899805d50846f0035b"
+      },
+      {
+        "hash": "b9238d82",
+        "text": "あおいふうせんをみつけてね！",
+        "reading": "あおいふうせんをみつけてね！",
+        "from": 36.91,
+        "to": 38.82,
+        "duration": 1.91,
+        "sha256": "e34fdd03c5c4d1a5ec860caf677f6dc62b1192a478e1010405dcc57db9148ccd"
+      },
+      {
+        "hash": "4d391554",
+        "text": "あお！",
+        "reading": "あお！",
+        "from": 39.7,
+        "to": 40.26,
+        "duration": 0.56,
+        "sha256": "87e90382be457e21f15449931087fa076435cb889985f0df6e91e891813a6de5"
+      },
+      {
+        "hash": "8870bab4",
+        "text": "それはあか。",
+        "reading": "それはあか。",
+        "from": 41.09,
+        "to": 42.28,
+        "duration": 1.19,
+        "sha256": "6e2cfea4ddcf2cd52018a935352eafce438cbce8c2959adad75770b0a9e71490"
+      },
+      {
+        "hash": "f61ae9db",
+        "text": "あおいふうせんはどこかな？",
+        "reading": "あおいふうせんはどこかな？",
+        "from": 43.09,
+        "to": 44.91,
+        "duration": 1.82,
+        "sha256": "ac645eb21151e71a22ae8919cd19af3070c5e17e7a9f9b1800246d4b87c1cf52"
+      },
+      {
+        "hash": "4095fda0",
+        "text": "きいろいふうせんをみつけてね！",
+        "reading": "きいろいふうせんをみつけてね！",
+        "from": 45.66,
+        "to": 47.7,
+        "duration": 2.04,
+        "sha256": "fd28274640795ff0454778042e4c6ce94ac81552a4ed90154a779f7018c9518a"
+      },
+      {
+        "hash": "83b352ee",
+        "text": "きいろ！",
+        "reading": "きいろ！",
+        "from": 48.45,
+        "to": 49.17,
+        "duration": 0.72,
+        "sha256": "d8c6493a1f7dd7c382bade83b034281dd57adae74978cf52dedf2cc35ad99c3d"
+      },
+      {
+        "hash": "4fa4bf75",
+        "text": "きいろいふうせんはどこかな？",
+        "reading": "きいろいふうせんはどこかな？",
+        "from": 50,
+        "to": 51.96,
+        "duration": 1.96,
+        "sha256": "4357d11a598bb05a6668cccd7b16d541be9ea1d18aba66606005b1e7b14a7899"
+      },
+      {
+        "hash": "b4bf1614",
+        "text": "みどりのふうせんをみつけてね！",
+        "reading": "みどりのふうせんをみつけてね！",
+        "from": 52.74,
+        "to": 54.81,
+        "duration": 2.07,
+        "sha256": "eda95af353152569bd394fa5947ea97a9e6ced8a54e386dc7c9372aa1fa7da94"
+      },
+      {
+        "hash": "69b4abf4",
+        "text": "みどり！",
+        "reading": "みどり！",
+        "from": 55.64,
+        "to": 56.29,
+        "duration": 0.65,
+        "sha256": "8f6e2284eca2a5c5d9c22bbdc86615440a15fbd448283aa5c276fa1e1142028f"
+      },
+      {
+        "hash": "98b498b1",
+        "text": "みどりのふうせんはどこかな？",
+        "reading": "みどりのふうせんはどこかな？",
+        "from": 57.07,
+        "to": 59.04,
+        "duration": 1.97,
+        "sha256": "ceb14ff65f3d0be6da457c994ad13a7ebda767450018615d0899730f68f3d8a7"
+      },
+      {
+        "hash": "7d6f80c4",
+        "text": "ピンクのふうせんをみつけてね！",
+        "reading": "ピンクのふうせんをみつけてね！",
+        "from": 59.84,
+        "to": 61.84,
+        "duration": 2,
+        "sha256": "20ee4e7ebe3c8cfab5b912e1e5969fa0d2f165f05c838d6a0a489515d391b8c4"
+      },
+      {
+        "hash": "70d07b44",
+        "text": "ピンク！",
+        "reading": "ピンク！",
+        "from": 62.62,
+        "to": 63.23,
+        "duration": 0.61,
+        "sha256": "350e61378d4b3a02203ad1e4b27f7e173a0dc60c45746f4cf1cf6906c97f7f9f"
+      },
+      {
+        "hash": "a86993a1",
+        "text": "ピンクのふうせんはどこかな？",
+        "reading": "ピンクのふうせんはどこかな？",
+        "from": 64.03,
+        "to": 65.96,
+        "duration": 1.93,
+        "sha256": "260e3c89ce07d1e18d1cda6fef47d66ca3a2b82fc204de725526fc0dec5485ee"
+      },
+      {
+        "hash": "8eb88179",
+        "text": "オレンジのふうせんをみつけてね！",
+        "reading": "オレンジのふうせんをみつけてね！",
+        "from": 66.59,
+        "to": 68.65,
+        "duration": 2.06,
+        "sha256": "b94520257ac0ab23f949012846e81782a665f00b4856eec2be0534915cefc119"
+      },
+      {
+        "hash": "987485bb",
+        "text": "オレンジ！",
+        "reading": "オレンジ！",
+        "from": 69.44,
+        "to": 70.16,
+        "duration": 0.72,
+        "sha256": "542bed720d436272041153b00c8309d24de72955f68e06ab1278c26f67dfae1f"
+      },
+      {
+        "hash": "fbb9f472",
+        "text": "オレンジのふうせんはどこかな？",
+        "reading": "オレンジのふうせんはどこかな？",
+        "from": 70.99,
+        "to": 73.02,
+        "duration": 2.03,
+        "sha256": "164cbd5d33461897961a39d013ea342ba396af0fc875f78e4dc94a766669c114"
+      },
+      {
+        "hash": "0cafdb49",
+        "text": "むらさきのふうせんをみつけてね！",
+        "reading": "むらさきのふうせんをみつけてね！",
+        "from": 73.75,
+        "to": 75.86,
+        "duration": 2.11,
+        "sha256": "0f1c58b9c0b5f93e7a59e53952d2eae18be7988115af14ed11daf7c900e90874"
+      },
+      {
+        "hash": "76a665eb",
+        "text": "むらさき！",
+        "reading": "むらさき！",
+        "from": 76.62,
+        "to": 77.45,
+        "duration": 0.83,
+        "sha256": "57aa2bc234a4a8598936f23355576343ff315d348fe765657d82b0c25111fd20"
+      },
+      {
+        "hash": "66c7bf42",
+        "text": "むらさきのふうせんはどこかな？",
+        "reading": "むらさきのふうせんはどこかな？",
+        "from": 78.19,
+        "to": 80.43,
+        "duration": 2.24,
+        "sha256": "3093bf625c38d230a23784a0fde2ff87e816c7288a3f5a79c7b39909315c3bbb"
+      },
+      {
+        "hash": "c4458e4e",
+        "text": "しろいふうせんをみつけてね！",
+        "reading": "しろいふうせんをみつけてね！",
+        "from": 81.21,
+        "to": 83.19,
+        "duration": 1.98,
+        "sha256": "a3293c3637095ea4a6b9ba667845bb928bdcb31b0146fcb79a2d2e2360ef3c5f"
+      },
+      {
+        "hash": "72f2c8c0",
+        "text": "しろ！",
+        "reading": "しろ！",
+        "from": 83.39,
+        "to": 84.54,
+        "duration": 1.15,
+        "sha256": "af10fa87a7676e6664abe9c494d807a0b8050529d6ad6554c7b62a0e0ab52c99"
+      },
+      {
+        "hash": "18dc5ecf",
+        "text": "しろいふうせんはどこかな？",
+        "reading": "しろいふうせんはどこかな？",
+        "from": 85.27,
+        "to": 87.22,
+        "duration": 1.95,
+        "sha256": "00c4043c420dc74cf403804194444145165b3a1e0c0a35447e24f3ca796ac854"
+      },
+      {
+        "hash": "57b18a78",
+        "text": "りんごを",
+        "reading": "りんごを",
+        "from": 87.92,
+        "to": 88.84,
+        "duration": 0.92,
+        "sha256": "eb4899cc25be1465dd684e9586e069f1df7e677cd798a2ec8370ef3fcbc9e44a"
+      },
+      {
+        "hash": "f39c87cc",
+        "text": "いちこあつめてね！",
+        "reading": "いっこあつめてね！",
+        "from": 89.61,
+        "to": 91.1,
+        "duration": 1.49,
+        "sha256": "ca2ddc5a0e401afbb5f5106e92d90a8340e6b64767c5e85f64d9d3cfb995c6ac"
+      },
+      {
+        "hash": "f657fd55",
+        "text": "いち！",
+        "reading": "いち！",
+        "from": 91.86,
+        "to": 92.44,
+        "duration": 0.58,
+        "sha256": "42e3ab262c49e94a2f7f6340f0ddd86ecbce4e7809012ec8aced9de19749c140"
+      }
+    ]
+  },
+  {
+    "batchId": 2,
+    "status": "imported",
+    "filename": "batch-02-source.wav",
+    "sourceSha256": "a339c372676c4d70fcc6bc6e11d8916b6dffafa51c44e3d76be99c89adc598f1",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 68.64,
+    "peak": 29232,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "25b13bc2",
+        "text": "りんごが",
+        "reading": "りんごが",
+        "from": 0.19,
+        "to": 1.12,
+        "duration": 0.93,
+        "sha256": "e303d9556d67365155706a6b2080d4213d83bdde745fbf0ca318cb5562a77318"
+      },
+      {
+        "hash": "1de71f9a",
+        "text": "いちこ！",
+        "reading": "いっこ！",
+        "from": 1.54,
+        "to": 2.15,
+        "duration": 0.61,
+        "sha256": "4c6beeada8494e6862e354e1bd52b848f0189df334ddaea5bc6403a3ebf05369"
+      },
+      {
+        "hash": "f827a4f0",
+        "text": "にこあつめてね！",
+        "reading": "にこあつめてね！",
+        "from": 3.14,
+        "to": 4.37,
+        "duration": 1.23,
+        "sha256": "bc2fa38dc41085b82d7843813250a074745bd018d333a1b519cdc81b5747cfef"
+      },
+      {
+        "hash": "d02e26f1",
+        "text": "に！",
+        "reading": "に！",
+        "from": 5.28,
+        "to": 5.65,
+        "duration": 0.37,
+        "sha256": "1e8948a7f1854a86f980262c93b5ccb23bfd106a90b4bff2e4cc0fff7c6ec185"
+      },
+      {
+        "hash": "9f82974e",
+        "text": "にこ！",
+        "reading": "にこ！",
+        "from": 6.53,
+        "to": 7.05,
+        "duration": 0.52,
+        "sha256": "37f1f6b3ffd87876dcef74b6cd0e0dea2e0a7c0ab030cf7c3f94d73ab8e734d5"
+      },
+      {
+        "hash": "59727a55",
+        "text": "さんこあつめてね！",
+        "reading": "さんこあつめてね！",
+        "from": 8.15,
+        "to": 9.47,
+        "duration": 1.32,
+        "sha256": "9c79f311bb8d6d74b4a524db19212a4799ab68b3940d1900a64d71eee136f145"
+      },
+      {
+        "hash": "492e4cc8",
+        "text": "さん！",
+        "reading": "さん！",
+        "from": 10.33,
+        "to": 10.92,
+        "duration": 0.59,
+        "sha256": "5ab07524ade4fcacb0aebed9418ea11ba764592d04758ae246ba46f080dcf33d"
+      },
+      {
+        "hash": "af60f6ed",
+        "text": "さんこ！",
+        "reading": "さんこ！",
+        "from": 11.79,
+        "to": 12.49,
+        "duration": 0.7,
+        "sha256": "fcd5ffacc8c22a9636a99cda90fa8357eefd5d738739f69a426b4e18c9ec9b4c"
+      },
+      {
+        "hash": "0756062a",
+        "text": "よんこあつめてね！",
+        "reading": "よんこあつめてね！",
+        "from": 13.47,
+        "to": 14.73,
+        "duration": 1.26,
+        "sha256": "db6b9bcdd46a7d982439772800104dc74449f0346e8792d52954e074bcb080f1"
+      },
+      {
+        "hash": "9109add7",
+        "text": "よん！",
+        "reading": "よん！",
+        "from": 15.54,
+        "to": 15.96,
+        "duration": 0.42,
+        "sha256": "bac7c667f4e1853e743a83ab5b8cf6532f082668fab845e1f7cb6aadfdc476af"
+      },
+      {
+        "hash": "d802b984",
+        "text": "よんこ！",
+        "reading": "よんこ！",
+        "from": 16.82,
+        "to": 17.42,
+        "duration": 0.6,
+        "sha256": "9eb38f24a546e4eedfb11f1639d2876c0fccdaf529eebf3d3666373e5e784f01"
+      },
+      {
+        "hash": "bc9888b7",
+        "text": "ごこあつめてね！",
+        "reading": "ごこあつめてね！",
+        "from": 18.49,
+        "to": 19.74,
+        "duration": 1.25,
+        "sha256": "cf8faedf171fe4ff38506f7caa5b5b9dbf571513125cd7ac35a528aaa2824263"
+      },
+      {
+        "hash": "8073f3e6",
+        "text": "ご！",
+        "reading": "ご！",
+        "from": 20.57,
+        "to": 20.98,
+        "duration": 0.41,
+        "sha256": "0441ea0606f09d2a2e6f25dabe4c50e084bcba119cc7da53065c5cf90d9a7fbe"
+      },
+      {
+        "hash": "e6dadc23",
+        "text": "ごこ！",
+        "reading": "ごこ！",
+        "from": 21.82,
+        "to": 22.34,
+        "duration": 0.52,
+        "sha256": "c26e2c34d122f0494e6e3cc091f97dea3cf9dddb5f9e9d99d69dfe8217b2c8f3"
+      },
+      {
+        "hash": "60d31e61",
+        "text": "ろくこあつめてね！",
+        "reading": "ろっこあつめてね！",
+        "from": 23.33,
+        "to": 24.58,
+        "duration": 1.25,
+        "sha256": "56384d0b8b444942b8c4137096d91c229d6071988891c16c88082e52daf5ff7f"
+      },
+      {
+        "hash": "ce6b5adc",
+        "text": "ろく！",
+        "reading": "ろく！",
+        "from": 25.39,
+        "to": 25.92,
+        "duration": 0.53,
+        "sha256": "2e654f396c57f6fc062bf6d27837cdd94cd9830bf481d82e42fa3257a74d4b81"
+      },
+      {
+        "hash": "f1235869",
+        "text": "ろくこ！",
+        "reading": "ろっこ！",
+        "from": 26.74,
+        "to": 27.37,
+        "duration": 0.63,
+        "sha256": "780daabfa80276b8ed6397b712264fdc27219daa2630b11a1dc4950b815def6b"
+      },
+      {
+        "hash": "ae37bc61",
+        "text": "ななこあつめてね！",
+        "reading": "ななこあつめてね！",
+        "from": 28.33,
+        "to": 29.63,
+        "duration": 1.3,
+        "sha256": "88d85762a4e395b9b375f735acdefc8ada09fc72e3b8ab0a3e705f5ce0b4acb8"
+      },
+      {
+        "hash": "ff6b28dc",
+        "text": "なな！",
+        "reading": "なな！",
+        "from": 30.42,
+        "to": 30.92,
+        "duration": 0.5,
+        "sha256": "9d6ed2797cccb8e3b76f68281f8838bbf3c59662e2bd44cab4ffa54d3e9224ba"
+      },
+      {
+        "hash": "2009c269",
+        "text": "ななこ！",
+        "reading": "ななこ！",
+        "from": 31.74,
+        "to": 32.38,
+        "duration": 0.64,
+        "sha256": "93795eca09e56afbbf06c0b0ae9ca96f54fbeb4f02e0c8b8136e165d848452fd"
+      },
+      {
+        "hash": "e4f02a59",
+        "text": "はちこあつめてね！",
+        "reading": "はっこあつめてね！",
+        "from": 33.35,
+        "to": 34.63,
+        "duration": 1.28,
+        "sha256": "7075ad21d3bfecaa25a2426ba3a2cb2d90b910e907c5e5792626cbce39dfa23f"
+      },
+      {
+        "hash": "515e3204",
+        "text": "はち！",
+        "reading": "はち！",
+        "from": 35.45,
+        "to": 35.99,
+        "duration": 0.54,
+        "sha256": "edf6da1cef689bdc20b6039d07077ab92dcd997e5c6280fcf899a631c5b0a36b"
+      },
+      {
+        "hash": "e542bf01",
+        "text": "はちこ！",
+        "reading": "はっこ！",
+        "from": 36.78,
+        "to": 37.4,
+        "duration": 0.62,
+        "sha256": "009a7abcc72bea18cd07c9efeaeaa64942eb57e0392093e31790aa230fb2f071"
+      },
+      {
+        "hash": "51ac0ee7",
+        "text": "きゅうこあつめてね！",
+        "reading": "きゅうこあつめてね！",
+        "from": 38.28,
+        "to": 39.52,
+        "duration": 1.24,
+        "sha256": "5ac18b4ac4fda29ef1e0f3f70a9f175c17e6390ea54f91f722520877da65a6d6"
+      },
+      {
+        "hash": "fad0df36",
+        "text": "きゅう！",
+        "reading": "きゅう！",
+        "from": 40.32,
+        "to": 40.79,
+        "duration": 0.47,
+        "sha256": "f6bfffcc6f9e2bc26028a4f2253f476db6555cbcb431df50cb621af0be728236"
+      },
+      {
+        "hash": "65524873",
+        "text": "きゅうこ！",
+        "reading": "きゅうこ！",
+        "from": 41.56,
+        "to": 42.15,
+        "duration": 0.59,
+        "sha256": "36fcf24317baed36b738bfaa7f25188f052f46c0aea70cb97917f8419bb1df25"
+      },
+      {
+        "hash": "7376c13e",
+        "text": "じゅうこあつめてね！",
+        "reading": "じゅっこあつめてね！",
+        "from": 43.06,
+        "to": 44.33,
+        "duration": 1.27,
+        "sha256": "0bc8239e475d5e82d668101c6ef1d3449401f880d54d5dec7e6ad6462300a330"
+      },
+      {
+        "hash": "c7b41fd3",
+        "text": "じゅう！",
+        "reading": "じゅう！",
+        "from": 45.1,
+        "to": 45.63,
+        "duration": 0.53,
+        "sha256": "7ff05ccda66994e8a76366b64493206a27ee215153f6b0fe3928d08c34f6c542"
+      },
+      {
+        "hash": "22d034b8",
+        "text": "じゅうこ！",
+        "reading": "じゅっこ！",
+        "from": 46.44,
+        "to": 47.09,
+        "duration": 0.65,
+        "sha256": "f6e03c5057e89bd2a4758056eb37494b07a7a9048243bcfd730c2499d3140086"
+      },
+      {
+        "hash": "05bac382",
+        "text": "みかんを",
+        "reading": "みかんを",
+        "from": 48.04,
+        "to": 48.95,
+        "duration": 0.91,
+        "sha256": "a98efab6fa9667cca7cc73f184dada397a283f037640ab8bbb451239f35ede57"
+      },
+      {
+        "hash": "b7ba48b8",
+        "text": "みかんが",
+        "reading": "みかんが",
+        "from": 49.83,
+        "to": 50.73,
+        "duration": 0.9,
+        "sha256": "c6e1dca7b81a45f7fad59cf6e77db145e8a7c96f17b274a6e32d19808bf10729"
+      },
+      {
+        "hash": "3c055f7c",
+        "text": "いちごを",
+        "reading": "いちごを",
+        "from": 51.7,
+        "to": 52.51,
+        "duration": 0.81,
+        "sha256": "fbbdf924ac13ea0f530891e67d820dc2e8cea26d1e151f845b56b8077e1be3ea"
+      },
+      {
+        "hash": "f2067dfe",
+        "text": "いちごが",
+        "reading": "いちごが",
+        "from": 53.33,
+        "to": 54.16,
+        "duration": 0.83,
+        "sha256": "02a6ef5b6f1359e836a2591b7760201dbca7f058e7173167d3c360533934d295"
+      },
+      {
+        "hash": "e185cc6f",
+        "text": "まるのかたちをさがしてね！",
+        "reading": "まるのかたちをさがしてね！",
+        "from": 55.09,
+        "to": 56.86,
+        "duration": 1.77,
+        "sha256": "883d93e295e41cf7d0796bb043f8501f380ef8f8378651d22cdbee145d7a86fc"
+      },
+      {
+        "hash": "21c61d8d",
+        "text": "まる！",
+        "reading": "まる！",
+        "from": 57.87,
+        "to": 58.37,
+        "duration": 0.5,
+        "sha256": "4f2f949356c480d83201e6ad1dad30e54371dd371e2cd5f52ad45b3a20421998"
+      },
+      {
+        "hash": "127d45d7",
+        "text": "それはさんかく。",
+        "reading": "それはさんかく。",
+        "from": 59.28,
+        "to": 60.51,
+        "duration": 1.23,
+        "sha256": "a1257d19e74b2656f85a751877464d8f4cb72d641446c159e497b9472ede72e6"
+      },
+      {
+        "hash": "af042d1f",
+        "text": "まるはどこかな？",
+        "reading": "まるはどこかな？",
+        "from": 61.35,
+        "to": 62.53,
+        "duration": 1.18,
+        "sha256": "0d26b40e140d65b2f425609ce494437b801983e9c4c57da60de7b57efacba668"
+      },
+      {
+        "hash": "4fa5f5a2",
+        "text": "それはしかく。",
+        "reading": "それはしかく。",
+        "from": 63.42,
+        "to": 64.59,
+        "duration": 1.17,
+        "sha256": "92413fed420e0730450d7289c31d9aa894779b0587e9186870e177695d125e28"
+      },
+      {
+        "hash": "3d777693",
+        "text": "それはほし。",
+        "reading": "それはほし。",
+        "from": 65.43,
+        "to": 66.41,
+        "duration": 0.98,
+        "sha256": "c974c2973ab75e4e6a79446c1c0c00a3ac7d30c4825ee5c78b28bec1056699bd"
+      },
+      {
+        "hash": "5782a9dc",
+        "text": "それはハート。",
+        "reading": "それはハート。",
+        "from": 67.29,
+        "to": 68.4,
+        "duration": 1.11,
+        "sha256": "fa7e535de527ed4ffb0ee27599a3d2bbb4a8d7c54bd5aaa57bb979a7d8b0b837"
+      }
+    ]
+  },
+  {
+    "batchId": 3,
+    "status": "imported",
+    "filename": "batch-03-source.wav",
+    "sourceSha256": "5bdb4a0355d41dbe4a7691bb2c4f69f6db8a78ab132cf807ba928637083a8297",
+    "recipe": "68050c4da917379905b76878aba1d34d34d5aeacbdebc4c4076fcc0649e206b0",
+    "duration": 83.44,
+    "peak": 26141,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "0d55bef4",
+        "text": "さんかくのかたちをさがしてね！",
+        "reading": "さんかくのかたちをさがしてね！",
+        "from": 0.15,
+        "to": 2.63,
+        "duration": 2.48,
+        "sha256": "6973000c10eb8d402c266dc02ed19658867af16f1e3498a92864ac65dcb6082f"
+      },
+      {
+        "hash": "215cb2ee",
+        "text": "さんかく！",
+        "reading": "さんかく！",
+        "from": 3.23,
+        "to": 4.18,
+        "duration": 0.95,
+        "sha256": "bac7669bfc763c87dc5f5261d92390dd597774cc394a09987489596398c4bf46"
+      },
+      {
+        "hash": "5daa3c78",
+        "text": "それはまる。",
+        "reading": "それはまる。",
+        "from": 4.94,
+        "to": 6.37,
+        "duration": 1.43,
+        "sha256": "5e7d309b51f1a2f5cbd125d0bd05e2dd5eb51b3c4714dc6b7448f9e5a96a7e30"
+      },
+      {
+        "hash": "c9177bee",
+        "text": "さんかくはどこかな？",
+        "reading": "さんかくはどこかな？",
+        "from": 7.11,
+        "to": 8.73,
+        "duration": 1.62,
+        "sha256": "80d350dc901e501fb83fad52341e775e4a877f016f82b5e293fc65c840705938"
+      },
+      {
+        "hash": "800f39d5",
+        "text": "しかくのかたちをさがしてね！",
+        "reading": "しかくのかたちをさがしてね！",
+        "from": 9.32,
+        "to": 11.51,
+        "duration": 2.19,
+        "sha256": "ce566eec71c680967c74fffd3106e21a93f2449e05d7269a3b6fc3fa280bb49c"
+      },
+      {
+        "hash": "a2c1943b",
+        "text": "しかく！",
+        "reading": "しかく！",
+        "from": 12.11,
+        "to": 12.79,
+        "duration": 0.68,
+        "sha256": "bf86e79a341a889ba5ccb19436f4541b460b0797ce34792d492646b9d89aaaca"
+      },
+      {
+        "hash": "c20897ad",
+        "text": "しかくはどこかな？",
+        "reading": "しかくはどこかな？",
+        "from": 13.53,
+        "to": 15.02,
+        "duration": 1.49,
+        "sha256": "9f4697c3fbc9aa1917f326e38f48cbc65fd4baecc9e5effb0fa6bdd761c3936c"
+      },
+      {
+        "hash": "fcf93fc0",
+        "text": "ほしのかたちをさがしてね！",
+        "reading": "ほしのかたちをさがしてね！",
+        "from": 15.65,
+        "to": 17.76,
+        "duration": 2.11,
+        "sha256": "74fb7a72eb0cb4d62afdc862c143ccc3eaa5329c42fcf8f50c40989d99ade5b7"
+      },
+      {
+        "hash": "05734502",
+        "text": "ほし！",
+        "reading": "ほし！",
+        "from": 18.31,
+        "to": 18.83,
+        "duration": 0.52,
+        "sha256": "9962c19ccfdfb9dd98988c6675a2a1c564a650bb76d58041b7b5c5bda295aa70"
+      },
+      {
+        "hash": "05d9dbba",
+        "text": "ほしはどこかな？",
+        "reading": "ほしはどこかな？",
+        "from": 19.49,
+        "to": 20.74,
+        "duration": 1.25,
+        "sha256": "b7250e5f824d0201acaa28a576dd3dca9ad62169355043332b24112aecfc1df6"
+      },
+      {
+        "hash": "7610962b",
+        "text": "ハートのかたちをさがしてね！",
+        "reading": "ハートのかたちをさがしてね！",
+        "from": 21.3,
+        "to": 23.45,
+        "duration": 2.15,
+        "sha256": "546c4b713c608067fb9a746cdc9bbee202643ccc011c6d385c36ae7c69b890d2"
+      },
+      {
+        "hash": "c32b9c71",
+        "text": "ハート！",
+        "reading": "ハート！",
+        "from": 24.01,
+        "to": 24.73,
+        "duration": 0.72,
+        "sha256": "f121095c709e3863ac2a7559a1e76e8672a0eeb43afd2ea171e4f5320e3ac5fe"
+      },
+      {
+        "hash": "6413630b",
+        "text": "ハートはどこかな？",
+        "reading": "ハートはどこかな？",
+        "from": 25.31,
+        "to": 26.8,
+        "duration": 1.49,
+        "sha256": "253779a11135f267d8ea29307c4cd000f1bfb2f49df5120966f00524eb77981c"
+      },
+      {
+        "hash": "5bafe284",
+        "text": "わんわんってなくどうぶつはだあれ？",
+        "reading": "わんわんってなくどうぶつはだあれ？",
+        "from": 27.37,
+        "to": 30.42,
+        "duration": 3.05,
+        "sha256": "745f551182ffd198f3aea7a614057717321d527a6c2312b09de7c96fdab9262e"
+      },
+      {
+        "hash": "35d35a58",
+        "text": "あいにいこう！",
+        "reading": "あいにいこう！",
+        "from": 31,
+        "to": 31.96,
+        "duration": 0.96,
+        "sha256": "a4c851c3b8ee4e99e4e71a1800af54385dc2080c79621c3b062cc12eaba17466"
+      },
+      {
+        "hash": "e9b40cc5",
+        "text": "ぴんぽーん！",
+        "reading": "ぴんぽーん！",
+        "from": 32.59,
+        "to": 34.35,
+        "duration": 1.76,
+        "sha256": "a30759472c42dde0dfd85d61eed89f89e49d5d7d000b0a81375bfce201ceefa6"
+      },
+      {
+        "hash": "c43c2573",
+        "text": "いぬさんでした！",
+        "reading": "いぬさんでした！",
+        "from": 34.94,
+        "to": 36.33,
+        "duration": 1.39,
+        "sha256": "6fcf88a0348e82f5538163509a95d6ddecace1336f70180457e408ca19930388"
+      },
+      {
+        "hash": "0adcba40",
+        "text": "わんわん！",
+        "reading": "わんわん！",
+        "from": 36.64,
+        "to": 37.38,
+        "duration": 0.74,
+        "sha256": "6042bd92178815054c4a60f22a99b1761c7300783aef6d303d3babc9a800865f"
+      },
+      {
+        "hash": "b2324fb9",
+        "text": "いぬさんだよ。",
+        "reading": "いぬさんだよ。",
+        "from": 37.96,
+        "to": 38.9,
+        "duration": 0.94,
+        "sha256": "a4e0f4cccb3c6f67505735b6cfe7e64feae16c6a7248681821e6ef7eff8d1795"
+      },
+      {
+        "hash": "d48a0af9",
+        "text": "ぼくはいぬ。",
+        "reading": "ぼくはいぬ。",
+        "from": 39.51,
+        "to": 40.71,
+        "duration": 1.2,
+        "sha256": "b8c58ed467852ff92537459f0e7df742abb29d9c8831c2c84590d84b7bedb300"
+      },
+      {
+        "hash": "5728e7a6",
+        "text": "ぶーぶーはぼくじゃないよ。",
+        "reading": "ぶーぶーはぼくじゃないよ。",
+        "from": 41.34,
+        "to": 43.14,
+        "duration": 1.8,
+        "sha256": "22649226420fa8db5eaf627c35e03fa18ebd02833770c1d4e296fd1c2933e6e4"
+      },
+      {
+        "hash": "cf4caf06",
+        "text": "もーもーはぼくじゃないよ。",
+        "reading": "もーもーはぼくじゃないよ。",
+        "from": 43.71,
+        "to": 45.74,
+        "duration": 2.03,
+        "sha256": "f586fedb715e1ca6222290ad4b8ddcc1e29a5bda6c7ec168250b5875ad952fa8"
+      },
+      {
+        "hash": "c2a4bab6",
+        "text": "めぇめぇはぼくじゃないよ。",
+        "reading": "めぇめぇはぼくじゃないよ。",
+        "from": 46.36,
+        "to": 48.36,
+        "duration": 2,
+        "sha256": "0a30b947a6b81b3f5cabe7cc69fe09ac2a1fa3a9b65df843d6a2828f934c3086"
+      },
+      {
+        "hash": "36debc96",
+        "text": "ぴよぴよはぼくじゃないよ。",
+        "reading": "ぴよぴよはぼくじゃないよ。",
+        "from": 49.01,
+        "to": 50.86,
+        "duration": 1.85,
+        "sha256": "77bea8c5a3342644dd18c8b939cb4e8931b225d6cb1387812e65e545a2057c59"
+      },
+      {
+        "hash": "713cf9fa",
+        "text": "けろけろはぼくじゃないよ。",
+        "reading": "けろけろはぼくじゃないよ。",
+        "from": 51.45,
+        "to": 53.4,
+        "duration": 1.95,
+        "sha256": "8ed0e243b06772553940ca31e4badff2cff8d81b44d342ba57eac2e2125ac385"
+      },
+      {
+        "hash": "6673fb40",
+        "text": "ぶーぶーってなくどうぶつはだあれ？",
+        "reading": "ぶーぶーってなくどうぶつはだあれ？",
+        "from": 53.99,
+        "to": 56.73,
+        "duration": 2.74,
+        "sha256": "aa0e22b22350def12fb6ca76b3fef4230b9ec8327a4c8620cffdcee6e2082c2b"
+      },
+      {
+        "hash": "c7ef0b5c",
+        "text": "ぶたさんでした！",
+        "reading": "ぶたさんでした！",
+        "from": 57.28,
+        "to": 58.78,
+        "duration": 1.5,
+        "sha256": "5cae42864d1fd80b8198a749449e6f43cab16d91fb5fc6ba15e2625c97cbab41"
+      },
+      {
+        "hash": "f24971ec",
+        "text": "ぶーぶー！",
+        "reading": "ぶーぶー！",
+        "from": 58.96,
+        "to": 59.93,
+        "duration": 0.97,
+        "sha256": "cd2334ee7155a816d7af43d1864101b0a1a44ce2c9403a4b1973e2162d30c8a4"
+      },
+      {
+        "hash": "4fe4ab28",
+        "text": "ぶたさんだよ。",
+        "reading": "ぶたさんだよ。",
+        "from": 60.46,
+        "to": 61.41,
+        "duration": 0.95,
+        "sha256": "012b60ed420681ccc69764f2f400b0e006e26aed41a49b86534abd6c9f8b72e8"
+      },
+      {
+        "hash": "ff44bc5c",
+        "text": "ぼくはぶた。",
+        "reading": "ぼくはぶた。",
+        "from": 61.94,
+        "to": 62.91,
+        "duration": 0.97,
+        "sha256": "a9f90c20839049060d5b7f1ab6c4f97000a8c954e4e68dfd6027cd8df1b66e6d"
+      },
+      {
+        "hash": "496a68da",
+        "text": "わんわんはぼくじゃないよ。",
+        "reading": "わんわんはぼくじゃないよ。",
+        "from": 63.5,
+        "to": 65.11,
+        "duration": 1.61,
+        "sha256": "45670d14ee7f5e6a294f98f9df86dc49d2797a0d05695143ee2639ae25a6c9d8"
+      },
+      {
+        "hash": "47f905e0",
+        "text": "もーもーってなくどうぶつはだあれ？",
+        "reading": "もーもーってなくどうぶつはだあれ？",
+        "from": 65.68,
+        "to": 68.34,
+        "duration": 2.66,
+        "sha256": "28fc49b6b5084a74e572ce633dcc29bcee85cbb19a6dfb8a091e3fc3c794d675"
+      },
+      {
+        "hash": "16547b34",
+        "text": "うしさんでした！",
+        "reading": "うしさんでした！",
+        "from": 68.94,
+        "to": 70.05,
+        "duration": 1.11,
+        "sha256": "ca1abbdba143ebfa5e62e282af23a490355844bc0c2a0cd236d5f5e5a71e2395"
+      },
+      {
+        "hash": "eb8b9a8c",
+        "text": "もーもー！",
+        "reading": "もーもー！",
+        "from": 70.62,
+        "to": 71.8,
+        "duration": 1.18,
+        "sha256": "878f4dddee67b61285492bfcc513182d9cd1b7a15bb0a308c18cd8a6e91c6aef"
+      },
+      {
+        "hash": "49ec9a10",
+        "text": "うしさんだよ。",
+        "reading": "うしさんだよ。",
+        "from": 72.42,
+        "to": 73.29,
+        "duration": 0.87,
+        "sha256": "bcf50d31f5e6ab5e354ba8ab8bba633e7fd5d07fdc5ddb5a0dd19e9680b976e2"
+      },
+      {
+        "hash": "a3308474",
+        "text": "ぼくはうし。",
+        "reading": "ぼくはうし。",
+        "from": 73.9,
+        "to": 74.8,
+        "duration": 0.9,
+        "sha256": "424b0c4356751bfc1ee90cade6cb2c4e1367db77cf97ce13b0587859988b9f2d"
+      },
+      {
+        "hash": "ce2f0750",
+        "text": "めぇめぇってなくどうぶつはだあれ？",
+        "reading": "めぇめぇってなくどうぶつはだあれ？",
+        "from": 75.38,
+        "to": 78.16,
+        "duration": 2.78,
+        "sha256": "f68dcf0ae5a6ba2255046cc75dc8888b6503bd76b9693ed5dbecda948eef8e25"
+      },
+      {
+        "hash": "a4497537",
+        "text": "ひつじさんでした！",
+        "reading": "ひつじさんでした！",
+        "from": 78.7,
+        "to": 80.36,
+        "duration": 1.66,
+        "sha256": "6fc5bbcad2b69dbb5c67df0dbf08dcf608c23d307d2e0e593311cd3ff2d90198"
+      },
+      {
+        "hash": "cf10f8bc",
+        "text": "めぇめぇ！",
+        "reading": "めぇめぇ！",
+        "from": 80.62,
+        "to": 81.65,
+        "duration": 1.03,
+        "sha256": "71b8aa1b36a6dda9d0b246c6335be4c6309bf5addac09afc43b899ecc5d3b6ac"
+      },
+      {
+        "hash": "f144b0cd",
+        "text": "ひつじさんだよ。",
+        "reading": "ひつじさんだよ。",
+        "from": 82.21,
+        "to": 83.25,
+        "duration": 1.04,
+        "sha256": "dfa92b8f34bf1a5e7d0e77e85a3402342da27d36a7b338b450f845e34fdf64f7"
+      }
+    ]
+  },
+  {
+    "batchId": 4,
+    "status": "imported",
+    "filename": "batch-04-source.wav",
+    "sourceSha256": "7decc9876f49b3b3f1ac9e686ade64490608ff3ca0d95e6bc5241329af45f640",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 78.32,
+    "peak": 28494,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "9c5539c5",
+        "text": "ぼくはひつじ。",
+        "reading": "ぼくはひつじ。",
+        "from": 0.25,
+        "to": 1.58,
+        "duration": 1.33,
+        "sha256": "808ea869118ef2d9e9629b38718d777993f409dd35b56f1f881f05f32a99e027"
+      },
+      {
+        "hash": "7a9486f0",
+        "text": "ぴよぴよってなくどうぶつはだあれ？",
+        "reading": "ぴよぴよってなくどうぶつはだあれ？",
+        "from": 2.35,
+        "to": 4.56,
+        "duration": 2.21,
+        "sha256": "b9533604d2ea06a28e2ad2784337e366841784a8c9d07156ae65fab5e6bfae20"
+      },
+      {
+        "hash": "df8c4376",
+        "text": "ひよこさんでした！",
+        "reading": "ひよこさんでした！",
+        "from": 5.27,
+        "to": 6.89,
+        "duration": 1.62,
+        "sha256": "df9ba1686365af09e83337a4ffa3cdc369de142711b15ee6f23f6f4932f70c4e"
+      },
+      {
+        "hash": "ced4bd5c",
+        "text": "ぴよぴよ！",
+        "reading": "ぴよぴよ！",
+        "from": 7.56,
+        "to": 8.17,
+        "duration": 0.61,
+        "sha256": "928d69442c432b087c7f7536f96dc2a05935b87ca3c187c25f8059615f9ad3c9"
+      },
+      {
+        "hash": "3c3171b6",
+        "text": "ひよこさんだよ。",
+        "reading": "ひよこさんだよ。",
+        "from": 8.76,
+        "to": 9.9,
+        "duration": 1.14,
+        "sha256": "474c5da83be83157533ef6ad166471d956eb9b92297d45539b5df85319f47da8"
+      },
+      {
+        "hash": "4c00543e",
+        "text": "ぼくはひよこ。",
+        "reading": "ぼくはひよこ。",
+        "from": 10.54,
+        "to": 11.75,
+        "duration": 1.21,
+        "sha256": "f48dd89088be27db945143de2dbf88cd8327eef28454d599806513ffc2e0c0cd"
+      },
+      {
+        "hash": "15276064",
+        "text": "けろけろってなくどうぶつはだあれ？",
+        "reading": "けろけろってなくどうぶつはだあれ？",
+        "from": 12.36,
+        "to": 14.71,
+        "duration": 2.35,
+        "sha256": "2e042c90f8896ecd30bf599db002d393ab6cacd62696dfbc0ae778d175750fea"
+      },
+      {
+        "hash": "89acd725",
+        "text": "かえるさんでした！",
+        "reading": "かえるさんでした！",
+        "from": 15.37,
+        "to": 16.98,
+        "duration": 1.61,
+        "sha256": "d9733839adca35122eaf2099e43793a3588a4e68cc8c4ae85a6230181eea0fdf"
+      },
+      {
+        "hash": "ace62020",
+        "text": "けろけろ！",
+        "reading": "けろけろ！",
+        "from": 17.57,
+        "to": 18.24,
+        "duration": 0.67,
+        "sha256": "c4bed7adb7bcb892dd5dd1e3d8706f863b6a5740eca5b77c4dc39f20f0f2d1d4"
+      },
+      {
+        "hash": "421cfb37",
+        "text": "かえるさんだよ。",
+        "reading": "かえるさんだよ。",
+        "from": 18.93,
+        "to": 20.04,
+        "duration": 1.11,
+        "sha256": "a0358f305b959e5a2bbe8c525a64f2b04ae91119111d471f8aec7f4c2bf37e07"
+      },
+      {
+        "hash": "80d0e023",
+        "text": "ぼくはかえる。",
+        "reading": "ぼくはかえる。",
+        "from": 20.65,
+        "to": 21.79,
+        "duration": 1.14,
+        "sha256": "5e224cb8f4d885d6258e502e2d49239d8dbec2f6710bd29513f3a083a4ec74be"
+      },
+      {
+        "hash": "9fa6d0d7",
+        "text": "あひるの「あ」はどれかな？",
+        "reading": "あひるの「あ」はどれかな？",
+        "from": 22.41,
+        "to": 24.56,
+        "duration": 2.15,
+        "sha256": "1ba41cc7819d334ee551b79e0d264e7b964040481c7dc8e95fecc77269e0d63c"
+      },
+      {
+        "hash": "d4cb27d3",
+        "text": "さがしてね！",
+        "reading": "さがしてね！",
+        "from": 25.09,
+        "to": 25.96,
+        "duration": 0.87,
+        "sha256": "4e817adf127f403df08dc111e0ba89d759173731adec592a60242149fdee001e"
+      },
+      {
+        "hash": "ee2fc489",
+        "text": "「あ」！",
+        "reading": "「あ」！",
+        "from": 26.59,
+        "to": 26.96,
+        "duration": 0.37,
+        "sha256": "024fe8ca4b896a507f49f3c9370b50ce8afe1a7519cdb3d2b47d24751b4870e2"
+      },
+      {
+        "hash": "866141e1",
+        "text": "あひるの「あ」だね！",
+        "reading": "あひるの「あ」だね！",
+        "from": 27.55,
+        "to": 29.04,
+        "duration": 1.49,
+        "sha256": "4308245534db870309b3cd86639e0f8f2d136ca14678b014dff7b3a9c0eba236"
+      },
+      {
+        "hash": "2df38a64",
+        "text": "それは「あ」。",
+        "reading": "それは「あ」。",
+        "from": 29.6,
+        "to": 30.96,
+        "duration": 1.36,
+        "sha256": "a3ff717838ed4e18297a8892ba62af7f2cd3debe5ab078b5c763b6b0d4163223"
+      },
+      {
+        "hash": "56bd0319",
+        "text": "あひるの「あ」だよ。",
+        "reading": "あひるの「あ」だよ。",
+        "from": 31.56,
+        "to": 32.92,
+        "duration": 1.36,
+        "sha256": "a7b3ed0d81d1a6f021415e31df0544bb758133fa3c153579f7fb542adbfb6977"
+      },
+      {
+        "hash": "c3650b56",
+        "text": "いぬの「い」はどれかな？",
+        "reading": "いぬの「い」はどれかな？",
+        "from": 33.53,
+        "to": 35.6,
+        "duration": 2.07,
+        "sha256": "9222289b60bb508617a95eb1be1e77032c9c5988eb70fb924acf066de5343988"
+      },
+      {
+        "hash": "e9f61903",
+        "text": "「い」！",
+        "reading": "「い」！",
+        "from": 36.24,
+        "to": 36.59,
+        "duration": 0.35,
+        "sha256": "10c47867a4ddf2db61941ce22d96ce5a916b26c7c63d3e33f58ed1a5f49a7af4"
+      },
+      {
+        "hash": "dee73ae6",
+        "text": "いぬの「い」だね！",
+        "reading": "いぬの「い」だね！",
+        "from": 37.21,
+        "to": 38.56,
+        "duration": 1.35,
+        "sha256": "0184d9d920a8ac4352d2ced78717e37cda1a821972cedb17b0cb9ab9173cac57"
+      },
+      {
+        "hash": "e49ebd62",
+        "text": "それは「い」。",
+        "reading": "それは「い」。",
+        "from": 39.18,
+        "to": 40.52,
+        "duration": 1.34,
+        "sha256": "144f2bbd324c5095fa2874f074aac4f33f6796f4cce0e3332814a966c13529a0"
+      },
+      {
+        "hash": "92ea58ba",
+        "text": "いぬの「い」だよ。",
+        "reading": "いぬの「い」だよ。",
+        "from": 41.19,
+        "to": 42.45,
+        "duration": 1.26,
+        "sha256": "b160f36fe2f949257c777561ca62d0c696dffd92202ed71e992b7f9500dbcf02"
+      },
+      {
+        "hash": "6b630c37",
+        "text": "うさぎの「う」はどれかな？",
+        "reading": "うさぎの「う」はどれかな？",
+        "from": 43.12,
+        "to": 45.17,
+        "duration": 2.05,
+        "sha256": "9069a6ee566cde38eff54c29e6efc3f735c71c1869ff9822cd1d93dfab80e290"
+      },
+      {
+        "hash": "19fabafd",
+        "text": "「う」！",
+        "reading": "「う」！",
+        "from": 45.79,
+        "to": 46.18,
+        "duration": 0.39,
+        "sha256": "d8694e794f91e0259d617f33c28877c6e1cfb74b68c3c21d49797ba2f5ed2e9c"
+      },
+      {
+        "hash": "50f51fc1",
+        "text": "うさぎの「う」だね！",
+        "reading": "うさぎの「う」だね！",
+        "from": 46.83,
+        "to": 48.22,
+        "duration": 1.39,
+        "sha256": "f6cf7c0424bdff15c4b9d30de412c08d0d2a0af4153bad03354dc57956df05fc"
+      },
+      {
+        "hash": "021289f0",
+        "text": "それは「う」。",
+        "reading": "それは「う」。",
+        "from": 48.81,
+        "to": 50.17,
+        "duration": 1.36,
+        "sha256": "0912f4c5a58c6a8a9ead1a4a219a240518b0cebd5de2418e70034322269a4d91"
+      },
+      {
+        "hash": "9de3a539",
+        "text": "うさぎの「う」だよ。",
+        "reading": "うさぎの「う」だよ。",
+        "from": 50.82,
+        "to": 52.19,
+        "duration": 1.37,
+        "sha256": "f174e1ee73c842dc0a5b79bba743ac1937894d9e65bc27c288ae01617ee63524"
+      },
+      {
+        "hash": "fb143713",
+        "text": "えんぴつの「え」はどれかな？",
+        "reading": "えんぴつの「え」はどれかな？",
+        "from": 52.95,
+        "to": 55.15,
+        "duration": 2.2,
+        "sha256": "cb8874832bd1dce9652accaf3409ca95f408f55a6cd1431b287f536bde12f49a"
+      },
+      {
+        "hash": "745c84c7",
+        "text": "「え」！",
+        "reading": "「え」！",
+        "from": 55.76,
+        "to": 56.15,
+        "duration": 0.39,
+        "sha256": "4b9aea5dec848a0e0d6f4ef5236b1313a9e4a53514fc40e7658afeb08d38a852"
+      },
+      {
+        "hash": "d7e477a5",
+        "text": "えんぴつの「え」だね！",
+        "reading": "えんぴつの「え」だね！",
+        "from": 56.75,
+        "to": 58.29,
+        "duration": 1.54,
+        "sha256": "e9512b480f8f9809b52f51a8def8b1d8d2f455690186c3bac001525973ec55fa"
+      },
+      {
+        "hash": "b8f01cee",
+        "text": "それは「え」。",
+        "reading": "それは「え」。",
+        "from": 58.92,
+        "to": 60.32,
+        "duration": 1.4,
+        "sha256": "718504e6d8f964e0d691a43a3ff9df7310ba7e010dead228cc9ad72d3c11f783"
+      },
+      {
+        "hash": "d8b349a5",
+        "text": "えんぴつの「え」だよ。",
+        "reading": "えんぴつの「え」だよ。",
+        "from": 60.98,
+        "to": 62.34,
+        "duration": 1.36,
+        "sha256": "1fbb7264bd14cbc2f6ae550b0689a42e1736a7eb19711b034abbad705e55d955"
+      },
+      {
+        "hash": "1a7dab1f",
+        "text": "おにぎりの「お」はどれかな？",
+        "reading": "おにぎりの「お」はどれかな？",
+        "from": 63.01,
+        "to": 65.21,
+        "duration": 2.2,
+        "sha256": "486bacf4042dbc537c8706bc49832deda7559b64f1fdb41ba44376bc985fb82b"
+      },
+      {
+        "hash": "a78a4cc1",
+        "text": "「お」！",
+        "reading": "「お」！",
+        "from": 65.82,
+        "to": 66.23,
+        "duration": 0.41,
+        "sha256": "cac530be18019b91e34f78b217a88f658829908cc41e86b074c09a42088c8fad"
+      },
+      {
+        "hash": "fbc1bba9",
+        "text": "おにぎりの「お」だね！",
+        "reading": "おにぎりの「お」だね！",
+        "from": 66.86,
+        "to": 68.43,
+        "duration": 1.57,
+        "sha256": "7e505f86d16c908ba9b772262d120b1d197a7b7e5ddc427a6f97b55ad8ffca7c"
+      },
+      {
+        "hash": "e8e1497c",
+        "text": "それは「お」。",
+        "reading": "それは「お」。",
+        "from": 69,
+        "to": 70.4,
+        "duration": 1.4,
+        "sha256": "361184419b48f51db46870a7ab8d4ea9bf6769dca8ad7431544ca7a495268e36"
+      },
+      {
+        "hash": "49a831a1",
+        "text": "おにぎりの「お」だよ。",
+        "reading": "おにぎりの「お」だよ。",
+        "from": 71.06,
+        "to": 72.49,
+        "duration": 1.43,
+        "sha256": "b35e024ef1536f1eca6a7f05fffd74167241e190a6189e2fe02920d72b7d305a"
+      },
+      {
+        "hash": "187adf89",
+        "text": "かさの「か」はどれかな？",
+        "reading": "かさの「か」はどれかな？",
+        "from": 73.15,
+        "to": 75.24,
+        "duration": 2.09,
+        "sha256": "1b2617f0b66d19dac7772c2ad50df9349748891a9cfd4f76d847ee5d194cfd15"
+      },
+      {
+        "hash": "b0f93522",
+        "text": "「か」！",
+        "reading": "「か」！",
+        "from": 75.87,
+        "to": 76.26,
+        "duration": 0.39,
+        "sha256": "bc8dc9446465c489f6c14800ea86d81c2a94cbd5422d83308425f96145bacf14"
+      },
+      {
+        "hash": "b9938257",
+        "text": "かさの「か」だね！",
+        "reading": "かさの「か」だね！",
+        "from": 76.89,
+        "to": 78.12,
+        "duration": 1.23,
+        "sha256": "8c193ca8b9d545345d4be8bb50635661c0a3c6df919508618518016e96d08402"
+      }
+    ]
+  },
+  {
+    "batchId": 5,
+    "status": "imported",
+    "filename": "batch-05-source.wav",
+    "sourceSha256": "c3913793334edbf2b0d90414a10e654e99c7a5a13d2bc136b14875e2ebc35b68",
+    "recipe": "3725decf12699dbe8167e6e3f2f877e157dbdb8133108bd917e1f27e8eecee46",
+    "duration": 87.88,
+    "peak": 26267,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "f5cd2b03",
+        "text": "それは「か」。",
+        "reading": "それは「か」。",
+        "from": 0.16,
+        "to": 1.75,
+        "duration": 1.59,
+        "sha256": "e7013238666b89f7dffa5dcb264b8a496271db300d88b5636ce50cc83462471c"
+      },
+      {
+        "hash": "074b8903",
+        "text": "かさの「か」だよ。",
+        "reading": "かさの「か」だよ。",
+        "from": 2.39,
+        "to": 3.65,
+        "duration": 1.26,
+        "sha256": "61519922a3e91dfefd83ed1ed9606c6b8d427223197be29b95557b7b7e3b7a32"
+      },
+      {
+        "hash": "6b28a1a5",
+        "text": "きりんの「き」はどれかな？",
+        "reading": "きりんの「き」はどれかな？",
+        "from": 4.24,
+        "to": 7.32,
+        "duration": 3.08,
+        "sha256": "83908108a2b80bf19d2816c1fecf024facb0b9bd606a81cef22a2d86203cfc9b"
+      },
+      {
+        "hash": "dcaa6ee4",
+        "text": "「き」！",
+        "reading": "「き」！",
+        "from": 9.09,
+        "to": 9.46,
+        "duration": 0.37,
+        "sha256": "19f855235cfa2f079da4d0e689e4b54470c843ee8fa761b7fbc34d1707d36a0c"
+      },
+      {
+        "hash": "93225cbb",
+        "text": "きりんの「き」だね！",
+        "reading": "きりんの「き」だね！",
+        "from": 9.99,
+        "to": 11.35,
+        "duration": 1.36,
+        "sha256": "57b8d1ec32d574a9f712e1c68cfad4ca32e92dbee884088dbe218a53dff8fc3f"
+      },
+      {
+        "hash": "dc8c3149",
+        "text": "それは「き」。",
+        "reading": "それは「き」。",
+        "from": 13,
+        "to": 14.11,
+        "duration": 1.11,
+        "sha256": "1f92355e5587b2d7779a6852eae7724332879b8a942258c632bf16b69a672290"
+      },
+      {
+        "hash": "0b1c372f",
+        "text": "きりんの「き」だよ。",
+        "reading": "きりんの「き」だよ。",
+        "from": 14.57,
+        "to": 15.74,
+        "duration": 1.17,
+        "sha256": "28d149bd60a155636a65faaa2f1329d06f9a495a6d7d5e6899897a31548a5337"
+      },
+      {
+        "hash": "d6013518",
+        "text": "くまの「く」はどれかな？",
+        "reading": "くまの「く」はどれかな？",
+        "from": 17.15,
+        "to": 18.91,
+        "duration": 1.76,
+        "sha256": "fc836578685093a2a8950a83f7aa9ebe5b106939218adf03d1e34b6b75f6a881"
+      },
+      {
+        "hash": "cef69076",
+        "text": "「く」！",
+        "reading": "「く」！",
+        "from": 20.59,
+        "to": 20.98,
+        "duration": 0.39,
+        "sha256": "96e9e5f4ff836c9720c5a0260dc2f7dfe91684839d6d0ca66f1e3717e607dc6e"
+      },
+      {
+        "hash": "f3dc463c",
+        "text": "くまの「く」だね！",
+        "reading": "くまの「く」だね！",
+        "from": 21.5,
+        "to": 22.87,
+        "duration": 1.37,
+        "sha256": "df2926169cfef42c59aa2ae1fb712082e6922d31dcb5129ae3ba4f99f07dd322"
+      },
+      {
+        "hash": "8a6dd7af",
+        "text": "それは「く」。",
+        "reading": "それは「く」。",
+        "from": 24.09,
+        "to": 25.23,
+        "duration": 1.14,
+        "sha256": "7c87a7adc8f9e22aff2c0303b7863f164ebeb53b4b1826681f67c8c4d5ac0a6d"
+      },
+      {
+        "hash": "f4f186bc",
+        "text": "くまの「く」だよ。",
+        "reading": "くまの「く」だよ。",
+        "from": 25.76,
+        "to": 26.95,
+        "duration": 1.19,
+        "sha256": "83c4ce8ad2b14df8e22d498d5eb577c9aa76fccf50dc18416d1b168203bf72b6"
+      },
+      {
+        "hash": "c4ce80a9",
+        "text": "けーきの「け」はどれかな？",
+        "reading": "けーきの「け」はどれかな？",
+        "from": 28.06,
+        "to": 29.85,
+        "duration": 1.79,
+        "sha256": "6ab065bc87583154c8018231d368400f041150cef0ded348357345eccc1926c0"
+      },
+      {
+        "hash": "95c37ae8",
+        "text": "「け」！",
+        "reading": "「け」！",
+        "from": 31.35,
+        "to": 31.72,
+        "duration": 0.37,
+        "sha256": "08c0be689eb6bbb3644208a47daea2710f71d0ae9691a5b65984705f24d522a9"
+      },
+      {
+        "hash": "2b0a8777",
+        "text": "けーきの「け」だね！",
+        "reading": "けーきの「け」だね！",
+        "from": 32.31,
+        "to": 33.52,
+        "duration": 1.21,
+        "sha256": "2456654948cb2884ac8d4561110b0ad23e7031b855bf107a0cee2fd54756b9ae"
+      },
+      {
+        "hash": "dd011a35",
+        "text": "それは「け」。",
+        "reading": "それは「け」。",
+        "from": 34.83,
+        "to": 35.84,
+        "duration": 1.01,
+        "sha256": "8d57812da8d486b1a2108dc8cf348d942192d779bdac59c7527efdec7964ee11"
+      },
+      {
+        "hash": "f63bf1e3",
+        "text": "けーきの「け」だよ。",
+        "reading": "けーきの「け」だよ。",
+        "from": 36.37,
+        "to": 37.56,
+        "duration": 1.19,
+        "sha256": "70d17f098e656d084bec0946d4e7f215805c82203fb2ae7760094f8ff603121f"
+      },
+      {
+        "hash": "83eb7c4f",
+        "text": "こあらの「こ」はどれかな？",
+        "reading": "こあらの「こ」はどれかな？",
+        "from": 38.79,
+        "to": 40.97,
+        "duration": 2.18,
+        "sha256": "ecf92eb365945913001e6478a3e0261474c19e07b5c1e96c72944c342f927bbe"
+      },
+      {
+        "hash": "4ae4579a",
+        "text": "「こ」！",
+        "reading": "「こ」！",
+        "from": 42.49,
+        "to": 42.89,
+        "duration": 0.4,
+        "sha256": "5016f1fe626c31ae4763140b57c3a6e5c9b230812e2936ea1a8447f546560785"
+      },
+      {
+        "hash": "62562f99",
+        "text": "こあらの「こ」だね！",
+        "reading": "こあらの「こ」だね！",
+        "from": 43.46,
+        "to": 44.81,
+        "duration": 1.35,
+        "sha256": "941f79ed94c91468d2eb41c7cd5e8faabe4f3c9c8799e129845b8fd127429776"
+      },
+      {
+        "hash": "8b15209b",
+        "text": "それは「こ」。",
+        "reading": "それは「こ」。",
+        "from": 45.94,
+        "to": 46.92,
+        "duration": 0.98,
+        "sha256": "2d93fe45b0509c49a07d1d38e821954e4d01b800ec56a5f876714c7b930a8554"
+      },
+      {
+        "hash": "3381bcd1",
+        "text": "こあらの「こ」だよ。",
+        "reading": "こあらの「こ」だよ。",
+        "from": 47.37,
+        "to": 48.58,
+        "duration": 1.21,
+        "sha256": "6f2a103ae5bdbe853f9f52b1e63f56de8ebc22b179372e9bdf8ffe7b2815d7e1"
+      },
+      {
+        "hash": "2150c12b",
+        "text": "さかなの「さ」はどれかな？",
+        "reading": "さかなの「さ」はどれかな？",
+        "from": 49.81,
+        "to": 51.8,
+        "duration": 1.99,
+        "sha256": "a9d6924db4652e84953b12df3dc8895676bc27a2286caab0f92a34a30be5ff98"
+      },
+      {
+        "hash": "c191975c",
+        "text": "「さ」！",
+        "reading": "「さ」！",
+        "from": 53.19,
+        "to": 53.73,
+        "duration": 0.54,
+        "sha256": "3ebff81f14ba8b90a87022955dd38563cd56f2d840d892f48e2a9bad22d1202c"
+      },
+      {
+        "hash": "c3a105dd",
+        "text": "さかなの「さ」だね！",
+        "reading": "さかなの「さ」だね！",
+        "from": 54.21,
+        "to": 55.65,
+        "duration": 1.44,
+        "sha256": "4e505207c7198262f7c65bd1560603a359505eef7c87f43a683e2187446201e5"
+      },
+      {
+        "hash": "b15279c1",
+        "text": "それは「さ」。",
+        "reading": "それは「さ」。",
+        "from": 56.69,
+        "to": 57.7,
+        "duration": 1.01,
+        "sha256": "eaa62002cec674dc2eb33cddbf9440d9a8e2cf355db63519f408ebdc6d2c1955"
+      },
+      {
+        "hash": "423be11d",
+        "text": "さかなの「さ」だよ。",
+        "reading": "さかなの「さ」だよ。",
+        "from": 58.09,
+        "to": 59.42,
+        "duration": 1.33,
+        "sha256": "7a15bd43d4366f46f9f61e66e179c067cd627dfde84d034932cecf5cc7a87a28"
+      },
+      {
+        "hash": "5d304ab4",
+        "text": "しまうまの「し」はどれかな？",
+        "reading": "しまうまの「し」はどれかな？",
+        "from": 60.54,
+        "to": 62.72,
+        "duration": 2.18,
+        "sha256": "900146dadd6600d008f5fc04ab9af0dd2204b718768ce238a6f60a2b758fe1e8"
+      },
+      {
+        "hash": "76b2740e",
+        "text": "「し」！",
+        "reading": "「し」！",
+        "from": 63.88,
+        "to": 64.4,
+        "duration": 0.52,
+        "sha256": "54ac23770076a6b6e3f1a70343be3bc5426eed507b2ad9c5907a94028ab1a104"
+      },
+      {
+        "hash": "9965a500",
+        "text": "しまうまの「し」だね！",
+        "reading": "しまうまの「し」だね！",
+        "from": 64.98,
+        "to": 66.48,
+        "duration": 1.5,
+        "sha256": "2d425f52997a9f4620900c6ba210aa3937375aae8e112f922789cb4e9521e123"
+      },
+      {
+        "hash": "aee60027",
+        "text": "それは「し」。",
+        "reading": "それは「し」。",
+        "from": 67.44,
+        "to": 68.43,
+        "duration": 0.99,
+        "sha256": "867f7d795f28492e38a77f471878890eba0963f89c8ce940cec63ed4ac34f66d"
+      },
+      {
+        "hash": "48beb888",
+        "text": "しまうまの「し」だよ。",
+        "reading": "しまうまの「し」だよ。",
+        "from": 68.84,
+        "to": 70.22,
+        "duration": 1.38,
+        "sha256": "36710b8afa24dc9b7049ccfe48949e42b1011ce589dd9d83803fd9dca448a1d5"
+      },
+      {
+        "hash": "e0ca4e0f",
+        "text": "すいかの「す」はどれかな？",
+        "reading": "すいかの「す」はどれかな？",
+        "from": 71.19,
+        "to": 73.24,
+        "duration": 2.05,
+        "sha256": "bc2f0296234c49daebc9a2d6cac6750340307ee0bf2c23443814bc085315d9f4"
+      },
+      {
+        "hash": "4f1e0320",
+        "text": "「す」！",
+        "reading": "「す」！",
+        "from": 74.41,
+        "to": 74.97,
+        "duration": 0.56,
+        "sha256": "60339f1cb582877a92c7e40212577281ab26e281e5bcab832c5d16415e342377"
+      },
+      {
+        "hash": "a244a7d9",
+        "text": "すいかの「す」だね！",
+        "reading": "すいかの「す」だね！",
+        "from": 75.53,
+        "to": 76.92,
+        "duration": 1.39,
+        "sha256": "ac2a96feaf0a69d24ebc4a37791832f0aa690d15022372c07cda3dc6778d1e51"
+      },
+      {
+        "hash": "94db866d",
+        "text": "それは「す」。",
+        "reading": "それは「す」。",
+        "from": 78.03,
+        "to": 79.04,
+        "duration": 1.01,
+        "sha256": "41dc03c6bf3f3c287e0d5f37799d971197449be97859a743828ad0efd7066093"
+      },
+      {
+        "hash": "73320691",
+        "text": "すいかの「す」だよ。",
+        "reading": "すいかの「す」だよ。",
+        "from": 79.62,
+        "to": 80.91,
+        "duration": 1.29,
+        "sha256": "b9a420381af1a9c9e42fcf4f25091b1eef9e525de11d39ead6f0424f723ae091"
+      },
+      {
+        "hash": "4592e2a3",
+        "text": "せっけんの「せ」はどれかな？",
+        "reading": "せっけんの「せ」はどれかな？",
+        "from": 82.01,
+        "to": 84.07,
+        "duration": 2.06,
+        "sha256": "0c2c18320e81f1ad3bfde4031d1c117730ad0c8f7df9bb694d35183346c28b1c"
+      },
+      {
+        "hash": "0118dfd2",
+        "text": "「せ」！",
+        "reading": "「せ」！",
+        "from": 85.22,
+        "to": 85.75,
+        "duration": 0.53,
+        "sha256": "47cfb93411b97e2dd1335b40dda5b55ee4b4a37261286f582c63edab6f710bc9"
+      },
+      {
+        "hash": "941ce7f5",
+        "text": "せっけんの「せ」だね！",
+        "reading": "せっけんの「せ」だね！",
+        "from": 86.21,
+        "to": 87.7,
+        "duration": 1.49,
+        "sha256": "680cf445bd8fcf4626b644aa53244ada77ba642b50fac7f72f11e92c06c151ba"
+      }
+    ]
+  },
+  {
+    "batchId": 6,
+    "status": "imported",
+    "filename": "batch-06-source.wav",
+    "sourceSha256": "a1812647412f5a1a073bff32990fb1e45961cbb7868dfcfcd8fcaaa4fbd56dc8",
+    "recipe": "ebd1421e8be70e90ee63697e89c66131415307742784bf3b57f5b66d4f79b2d5",
+    "duration": 162.56,
+    "peak": 28409,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "83375fb3",
+        "text": "それは「せ」。",
+        "reading": "それは「せ」。",
+        "from": 0.2,
+        "to": 1.26,
+        "duration": 1.06,
+        "sha256": "d646b48d1fcc58dbdf4bb82b3aaa9677b7cd14e62e4c4925aa6e402e9306c62d"
+      },
+      {
+        "hash": "9529e875",
+        "text": "せっけんの「せ」だよ。",
+        "reading": "せっけんの「せ」だよ。",
+        "from": 2.89,
+        "to": 4.4,
+        "duration": 1.51,
+        "sha256": "85a0f714b9531e20d70570a28ab8a1fc57454754d3bf0639397ffeb5d3ee5a5d"
+      },
+      {
+        "hash": "23385742",
+        "text": "そふとくりーむの「そ」はどれかな？",
+        "reading": "そふとくりーむの「そ」はどれかな？",
+        "from": 5.52,
+        "to": 7.99,
+        "duration": 2.47,
+        "sha256": "379e49343b69702403ac731ad9a69a92d6a85c114dc66cdd354a01d2918e8d1e"
+      },
+      {
+        "hash": "7aec1f94",
+        "text": "「そ」！",
+        "reading": "「そ」！",
+        "from": 9.03,
+        "to": 9.56,
+        "duration": 0.53,
+        "sha256": "5c32d8d9f5317b118617179b71dd10f6d80bd9445e749dd41250d365bde9e0ca"
+      },
+      {
+        "hash": "c9461d9a",
+        "text": "そふとくりーむの「そ」だね！",
+        "reading": "そふとくりーむの「そ」だね！",
+        "from": 10.71,
+        "to": 12.81,
+        "duration": 2.1,
+        "sha256": "c92293c3a0ffbeeff328bf40f058854c5cc977721ba2dd996ee90e53a414360b"
+      },
+      {
+        "hash": "68fa85f9",
+        "text": "それは「そ」。",
+        "reading": "それは「そ」。",
+        "from": 13.81,
+        "to": 14.84,
+        "duration": 1.03,
+        "sha256": "15244eff3946b6ba3dc3b1f58c7b6ef5b3a50dc80808efb9fc82a5f80052dfe8"
+      },
+      {
+        "hash": "ced564e6",
+        "text": "そふとくりーむの「そ」だよ。",
+        "reading": "そふとくりーむの「そ」だよ。",
+        "from": 16.15,
+        "to": 18.08,
+        "duration": 1.93,
+        "sha256": "dc9fc1738723b3bb15f85e574ef216de2ec5bf7fd5761791fbce587a3d559e3d"
+      },
+      {
+        "hash": "4af00ea1",
+        "text": "ほしが",
+        "reading": "ほしが",
+        "from": 19.16,
+        "to": 20.16,
+        "duration": 1,
+        "sha256": "5aa16fc3336885c680994df88414ab941033443bd1cb92543dcd2881f920c475"
+      },
+      {
+        "hash": "4a8dadcf",
+        "text": "ごほうびにリボンをもらったよ！",
+        "reading": "ごほうびにリボンをもらったよ！",
+        "from": 21.17,
+        "to": 23.25,
+        "duration": 2.08,
+        "sha256": "a6570c4e3eedd83c459f6a91b99f3eeb9d24bef62ca2b205b3ae2dd80d981d0b"
+      },
+      {
+        "hash": "d991274c",
+        "text": "にあってるね！",
+        "reading": "にあってるね！",
+        "from": 24.28,
+        "to": 25.43,
+        "duration": 1.15,
+        "sha256": "70a7df8ef60ea7b7e66ed7dc39d4deffbd04bfa4d1f1f35d595263fac1dcd257"
+      },
+      {
+        "hash": "7312658d",
+        "text": "ごほうびにむぎわらぼうしをもらったよ！",
+        "reading": "ごほうびにむぎわらぼうしをもらったよ！",
+        "from": 26.82,
+        "to": 29.21,
+        "duration": 2.39,
+        "sha256": "68048c7b0da80de67a8e9532fb4ac559b33c2c39aaeb534d400dc976439a6192"
+      },
+      {
+        "hash": "8c5d3a34",
+        "text": "じゅうごこ！",
+        "reading": "じゅうごこ！",
+        "from": 29.85,
+        "to": 32.15,
+        "duration": 2.3,
+        "sha256": "97c70e27a2a746793f8fdd8e60ae55c6ee703f44b7d3d4416f73829f26e2d4de"
+      },
+      {
+        "hash": "2848fc17",
+        "text": "ごほうびにおはなのかんむりをもらったよ！",
+        "reading": "ごほうびにおはなのかんむりをもらったよ！",
+        "from": 32.7,
+        "to": 35.5,
+        "duration": 2.8,
+        "sha256": "43ba2aa32456912091a40864ce3e0644473d1fe12e4a2d276353fefe6bf9a2a1"
+      },
+      {
+        "hash": "1abed291",
+        "text": "にじゅうこ！",
+        "reading": "にじゅっこ！",
+        "from": 36.09,
+        "to": 37.49,
+        "duration": 1.4,
+        "sha256": "1b75f309ac09139da5fbe5fbb7e1af610793b37e40896ba495d123dabe841a1a"
+      },
+      {
+        "hash": "2304487a",
+        "text": "ごほうびにきんのおうかんをもらったよ！",
+        "reading": "ごほうびにきんのおうかんをもらったよ！",
+        "from": 38.85,
+        "to": 41.28,
+        "duration": 2.43,
+        "sha256": "c57bd9d6dd334081d8292c77cab10b3aa5fb5541513f0b2ae9981fcfb5961dd6"
+      },
+      {
+        "hash": "dc97ef03",
+        "text": "かずのがっこうへようこそ！",
+        "reading": "かずのがっこうへようこそ！",
+        "from": 42.15,
+        "to": 44.27,
+        "duration": 2.12,
+        "sha256": "5d65d7d6f7ab66444e9ee1fd0f391859c44d0aa91344b58c66f07310595afa10"
+      },
+      {
+        "hash": "4abc226b",
+        "text": "すうじであそぼう！",
+        "reading": "すうじであそぼう！",
+        "from": 45.51,
+        "to": 46.69,
+        "duration": 1.18,
+        "sha256": "206d1d019e1f4a57b5499c59949635a1d350e0fc69fdcfa394af6e5444cb3c13"
+      },
+      {
+        "hash": "42303dbd",
+        "text": "クッキーはいくつあるかな？",
+        "reading": "クッキーはいくつあるかな？",
+        "from": 47.21,
+        "to": 49.22,
+        "duration": 2.01,
+        "sha256": "f575c76e4b3d6d6035188f5758bb54a4647b9141065051bec2a482d1363d511a"
+      },
+      {
+        "hash": "e01f61aa",
+        "text": "おなじすうじにのってね！",
+        "reading": "おなじすうじにのってね！",
+        "from": 49.95,
+        "to": 51.89,
+        "duration": 1.94,
+        "sha256": "8a817b60de9be1632e015d8850ae103f0c12272da478fd0588f86878cb169724"
+      },
+      {
+        "hash": "7f42b39e",
+        "text": "クッキーが",
+        "reading": "クッキーが",
+        "from": 52.75,
+        "to": 54.27,
+        "duration": 1.52,
+        "sha256": "a3eb66709292dd96b3de9efb19b4332329093e998e3d226658bd548e8be5aaa3"
+      },
+      {
+        "hash": "bb50c031",
+        "text": "りんごはいくつあるかな？",
+        "reading": "りんごはいくつあるかな？",
+        "from": 56.08,
+        "to": 57.78,
+        "duration": 1.7,
+        "sha256": "7f5dc3f8f8bef2026b15b77875444bd1c3cc6bcf27291853919bc903d9cde796"
+      },
+      {
+        "hash": "d68b9f37",
+        "text": "おほしさまはいくつあるかな？",
+        "reading": "おほしさまはいくつあるかな？",
+        "from": 64.83,
+        "to": 66.85,
+        "duration": 2.02,
+        "sha256": "4c939038ad383e369ebdcdcad9bec7645bd29a2832ef25d8b645d2f1bf262e65"
+      },
+      {
+        "hash": "fa4455a4",
+        "text": "おほしさまが",
+        "reading": "おほしさまが",
+        "from": 74.54,
+        "to": 75.67,
+        "duration": 1.13,
+        "sha256": "bf47061a9c941d79cb9c81f4af824e9fc73ee9fa281878ef80b4eef5eb453ad9"
+      },
+      {
+        "hash": "55161e3f",
+        "text": "ふうせんはいくつあるかな？",
+        "reading": "ふうせんはいくつあるかな？",
+        "from": 82.69,
+        "to": 84.57,
+        "duration": 1.88,
+        "sha256": "c83a326fa47ca50d259a816182468c07756815a97fa5d13db3064825060d9027"
+      },
+      {
+        "hash": "9b10cf5c",
+        "text": "ふうせんが",
+        "reading": "ふうせんが",
+        "from": 91.6,
+        "to": 92.6,
+        "duration": 1,
+        "sha256": "e61f6a80e36d8140d1786d3c8b5af99e6c8436da3f22649697778de1c7cf805d"
+      },
+      {
+        "hash": "c724a820",
+        "text": "おさかなはいくつあるかな？",
+        "reading": "おさかなはいくつあるかな？",
+        "from": 99.36,
+        "to": 101.23,
+        "duration": 1.87,
+        "sha256": "2d23a2155ff78a78cfaec7c03850b1b55757fe5cfa0a4bd8f751d9f3cd9f3ed6"
+      },
+      {
+        "hash": "5744ba2f",
+        "text": "おさかなが",
+        "reading": "おさかなが",
+        "from": 107.9,
+        "to": 108.92,
+        "duration": 1.02,
+        "sha256": "cc18f7442df00a6670eab3213f25bff4c3c902f71a8585e135f7dc4e4740d86c"
+      },
+      {
+        "hash": "6dd6525d",
+        "text": "いちごはいくつあるかな？",
+        "reading": "いちごはいくつあるかな？",
+        "from": 114.39,
+        "to": 116.09,
+        "duration": 1.7,
+        "sha256": "690cd9f0af195610ace71276932aebacf79924620d66bf6500631d15f5b64e27"
+      },
+      {
+        "hash": "f8b43baa",
+        "text": "くるまはいくつあるかな？",
+        "reading": "くるまはいくつあるかな？",
+        "from": 121.51,
+        "to": 123.28,
+        "duration": 1.77,
+        "sha256": "c48b054dbe91698d6bedaae5f7305ad48ec7149e9b8febf582f33990f16563b4"
+      },
+      {
+        "hash": "8f97df9d",
+        "text": "くるまが",
+        "reading": "くるまが",
+        "from": 128.05,
+        "to": 128.96,
+        "duration": 0.91,
+        "sha256": "49b99fe71f1367b404c419a591647bd6ab15a5e1cca6dab0e88ebe17fb8a2fa4"
+      },
+      {
+        "hash": "10bc22eb",
+        "text": "おはなはいくつあるかな？",
+        "reading": "おはなはいくつあるかな？",
+        "from": 130.52,
+        "to": 132.14,
+        "duration": 1.62,
+        "sha256": "70734979a4134408f6c192ecda8bda1cb17034f740c971a46631abae80b98ed0"
+      },
+      {
+        "hash": "258dd188",
+        "text": "おはなが",
+        "reading": "おはなが",
+        "from": 133.65,
+        "to": 134.58,
+        "duration": 0.93,
+        "sha256": "6e381024078a068380de488f07712f9b5088c5e439207ed72d08d095ecfefc4f"
+      },
+      {
+        "hash": "71174763",
+        "text": "ひよこはいくつあるかな？",
+        "reading": "ひよこはいくつあるかな？",
+        "from": 136.72,
+        "to": 138.52,
+        "duration": 1.8,
+        "sha256": "334a221dbb8458ef2528a79f52138e5a15c27686768519c0df8090e6d19da15f"
+      },
+      {
+        "hash": "01f16570",
+        "text": "ひよこが",
+        "reading": "ひよこが",
+        "from": 140.45,
+        "to": 141.4,
+        "duration": 0.95,
+        "sha256": "f521b528aba9cff215d37ca7c3df53f1240bee6e97a5d4025ebed5a3de6da738"
+      },
+      {
+        "hash": "e2a4079d",
+        "text": "ドーナツはいくつあるかな？",
+        "reading": "ドーナツはいくつあるかな？",
+        "from": 143.76,
+        "to": 145.77,
+        "duration": 2.01,
+        "sha256": "bc95e7ea11719fc24bd36ef8fd912c5e6b5626a1d27c4dcf1fef9f3420a44bfd"
+      },
+      {
+        "hash": "40d2bd3e",
+        "text": "ドーナツが",
+        "reading": "ドーナツが",
+        "from": 147.23,
+        "to": 148.3,
+        "duration": 1.07,
+        "sha256": "1cf2885a4d7401d3a00ea6c1302bf59cec9eca211c5b4218528116b02149b15b"
+      },
+      {
+        "hash": "7a568c10",
+        "text": "それはいち。",
+        "reading": "それはいち。",
+        "from": 150.53,
+        "to": 152.19,
+        "duration": 1.66,
+        "sha256": "8d82ed585c55d2bea57850a62a70c361a0ea3a7a741d8b269cd733aa581c243c"
+      },
+      {
+        "hash": "41a29eca",
+        "text": "いっしょにかぞえてみよう！",
+        "reading": "いっしょにかぞえてみよう！",
+        "from": 153.49,
+        "to": 155.81,
+        "duration": 2.32,
+        "sha256": "60f9bbf0865e8a8680da27f2af6a57d0e73ba9c1725ce53f7ea7794bb51a7374"
+      },
+      {
+        "hash": "02a52673",
+        "text": "いちこだね！",
+        "reading": "いっこだね！",
+        "from": 157.88,
+        "to": 158.85,
+        "duration": 0.97,
+        "sha256": "0e9b27726f13e114605aca5827b8d0747591e50b477c880f4f8bbcab4794ad6a"
+      },
+      {
+        "hash": "f02be09f",
+        "text": "いちのすうじにのってね！",
+        "reading": "いちのすうじにのってね！",
+        "from": 160.7,
+        "to": 162.36,
+        "duration": 1.66,
+        "sha256": "b726188e8f415758774a0b01d0be574323c360b09553798930407dd7eaa6134d"
+      }
+    ]
+  },
+  {
+    "batchId": 7,
+    "status": "imported",
+    "filename": "batch-07-source.wav",
+    "sourceSha256": "314c83d98259687c3b73a2db939f9cf81103f5c965d18fb261d82768645a03b6",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 108.68,
+    "peak": 27057,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "f41aea0b",
+        "text": "いちとおなじかずのおさらはどれかな？",
+        "reading": "いちとおなじかずのおさらはどれかな？",
+        "from": 0.33,
+        "to": 2.99,
+        "duration": 2.66,
+        "sha256": "927a52fbc05d54e56568cd0e1369f1cf0d7b6d0ae54e6181682057753b8673ee"
+      },
+      {
+        "hash": "7cab4838",
+        "text": "いちこのおさら！",
+        "reading": "いっこのおさら！",
+        "from": 4.1,
+        "to": 5.21,
+        "duration": 1.11,
+        "sha256": "5c30f02d966709865fbe06cb651cef753d32e334b167d5adcb7b18c0ac439b70"
+      },
+      {
+        "hash": "ead11823",
+        "text": "それはいちこ。",
+        "reading": "それはいっこ。",
+        "from": 6.71,
+        "to": 7.87,
+        "duration": 1.16,
+        "sha256": "e90ad23c6636e1a3c139240ef596b1c839e26bd789d1ee1d8416092a952f3b29"
+      },
+      {
+        "hash": "10d51907",
+        "text": "いちこのおさらをさがしてね！",
+        "reading": "いっこのおさらをさがしてね！",
+        "from": 9.21,
+        "to": 10.89,
+        "duration": 1.68,
+        "sha256": "5b576ee427dfb160c669085dab5f97218aa51f4c20f9958992dd39918206acbb"
+      },
+      {
+        "hash": "650307c7",
+        "text": "それはにこ。",
+        "reading": "それはにこ。",
+        "from": 12.4,
+        "to": 13.54,
+        "duration": 1.14,
+        "sha256": "0bf95277d9c744c8fabb26e95dad5ddd95a6a1dfd9ab7b36b4974af2a8f0a5b9"
+      },
+      {
+        "hash": "bd933b50",
+        "text": "それはさんこ。",
+        "reading": "それはさんこ。",
+        "from": 14.92,
+        "to": 16.17,
+        "duration": 1.25,
+        "sha256": "02873fdeca1760f46ccf68d60064db890dfe3dd8ae4f7436b3de82cf214a1458"
+      },
+      {
+        "hash": "b516ea41",
+        "text": "それはよんこ。",
+        "reading": "それはよんこ。",
+        "from": 17.54,
+        "to": 18.76,
+        "duration": 1.22,
+        "sha256": "491ba2bc7277e42392d5d50c07c9323e6ccc1ee19eead7bd0897d86811613acb"
+      },
+      {
+        "hash": "0468faea",
+        "text": "それはごこ。",
+        "reading": "それはごこ。",
+        "from": 20.11,
+        "to": 21.21,
+        "duration": 1.1,
+        "sha256": "fc57552dfb77af8c2bcaac6bab4cd595ea828eeb91ae29fff8611b5803a41a83"
+      },
+      {
+        "hash": "cee19e44",
+        "text": "それはろくこ。",
+        "reading": "それはろっこ。",
+        "from": 22.58,
+        "to": 23.74,
+        "duration": 1.16,
+        "sha256": "b656fc609dd02161d6d04e507ee827495c8424eeb8f5807111c3134eb30e1749"
+      },
+      {
+        "hash": "186f0534",
+        "text": "それはななこ。",
+        "reading": "それはななこ。",
+        "from": 25.13,
+        "to": 26.41,
+        "duration": 1.28,
+        "sha256": "1edb827284a43fe0b2b47da0b9ab6adedeefb0a4b994f6cb0e75083da65ad069"
+      },
+      {
+        "hash": "32fa5a74",
+        "text": "それははちこ。",
+        "reading": "それははっこ。",
+        "from": 27.75,
+        "to": 29.01,
+        "duration": 1.26,
+        "sha256": "050d25e023d626ea68fad0c5ae66f5253d215b7481dddedb583fdbc118ce0231"
+      },
+      {
+        "hash": "1174c41a",
+        "text": "それはきゅうこ。",
+        "reading": "それはきゅうこ。",
+        "from": 30.3,
+        "to": 31.55,
+        "duration": 1.25,
+        "sha256": "ad13f90eda85802a8e00a6cf8878a3c0eafed70f62c225f6e2871d6cbb30679f"
+      },
+      {
+        "hash": "ca29697d",
+        "text": "それはじゅうこ。",
+        "reading": "それはじゅっこ。",
+        "from": 32.91,
+        "to": 34.16,
+        "duration": 1.25,
+        "sha256": "88dd1134d81be56bdfeeb4b764b61c71fc31ac44a1be15e1140d22919cf93312"
+      },
+      {
+        "hash": "b62a545c",
+        "text": "それはに。",
+        "reading": "それはに。",
+        "from": 35.45,
+        "to": 36.56,
+        "duration": 1.11,
+        "sha256": "037d456e9fc36a513287fd5e81ce13cb3ca60ecece188fe6ac8766d31517839a"
+      },
+      {
+        "hash": "8e4d9a9f",
+        "text": "にこだね！",
+        "reading": "にこだね！",
+        "from": 37.97,
+        "to": 38.76,
+        "duration": 0.79,
+        "sha256": "6a2252c376e2bd7f4ab685a247726a29de53c6748713dacd8577f0d6ef5c665e"
+      },
+      {
+        "hash": "70a190db",
+        "text": "にのすうじにのってね！",
+        "reading": "にのすうじにのってね！",
+        "from": 40.22,
+        "to": 41.74,
+        "duration": 1.52,
+        "sha256": "54d079ce0e2650521309e83c06a9434f69e1c8183937c6de78cfee33a99bc969"
+      },
+      {
+        "hash": "23875097",
+        "text": "にとおなじかずのおさらはどれかな？",
+        "reading": "にとおなじかずのおさらはどれかな？",
+        "from": 43.31,
+        "to": 45.57,
+        "duration": 2.26,
+        "sha256": "89029d2ff285ebbe90ebd56013df3761c14b7c047f37cdf9f58750f981263091"
+      },
+      {
+        "hash": "68f45bfc",
+        "text": "にこのおさら！",
+        "reading": "にこのおさら！",
+        "from": 46.87,
+        "to": 47.95,
+        "duration": 1.08,
+        "sha256": "56eb3d8ca96fed806cab15b92cdd2234baa995edc40e6b574759e939667d11a2"
+      },
+      {
+        "hash": "14faca93",
+        "text": "にこのおさらをさがしてね！",
+        "reading": "にこのおさらをさがしてね！",
+        "from": 49.37,
+        "to": 51.04,
+        "duration": 1.67,
+        "sha256": "01984cc604d5aac071019bd35f1ad55eeb6404a37ccd077065d286a0a2c44106"
+      },
+      {
+        "hash": "e9a698f5",
+        "text": "それはさん。",
+        "reading": "それはさん。",
+        "from": 52.41,
+        "to": 53.49,
+        "duration": 1.08,
+        "sha256": "ac03f5bb162073b8b4f871856ae07321591b999b89a63e9fecf6b742b2956dd8"
+      },
+      {
+        "hash": "7054c01c",
+        "text": "さんこだね！",
+        "reading": "さんこだね！",
+        "from": 54.77,
+        "to": 55.71,
+        "duration": 0.94,
+        "sha256": "9e26fb9b3ae4f5b2faca8e0961330bd125875c3b9b002c72b0d10f438ae5509a"
+      },
+      {
+        "hash": "2154dac8",
+        "text": "さんのすうじにのってね！",
+        "reading": "さんのすうじにのってね！",
+        "from": 57.04,
+        "to": 58.74,
+        "duration": 1.7,
+        "sha256": "cbb93cef88305c9d31ec1ae5fb51c5bb7a8da28896afade387a1029476c14947"
+      },
+      {
+        "hash": "e40f62c8",
+        "text": "さんとおなじかずのおさらはどれかな？",
+        "reading": "さんとおなじかずのおさらはどれかな？",
+        "from": 60.11,
+        "to": 62.61,
+        "duration": 2.5,
+        "sha256": "258f2deadf227f7743dfa9294fd1426d427340550b0e0c704e4d2c28924a519c"
+      },
+      {
+        "hash": "6ef4e69b",
+        "text": "さんこのおさら！",
+        "reading": "さんこのおさら！",
+        "from": 63.9,
+        "to": 65.1,
+        "duration": 1.2,
+        "sha256": "462782b617f618cd29ba3172ea2b7afc4fa7a4c422267e6790f81dc2ea7d2d8f"
+      },
+      {
+        "hash": "a09bf494",
+        "text": "さんこのおさらをさがしてね！",
+        "reading": "さんこのおさらをさがしてね！",
+        "from": 66.4,
+        "to": 68.2,
+        "duration": 1.8,
+        "sha256": "587daa14e152e276106def625c910038b820021cbbe19f9c56e382043c173ca0"
+      },
+      {
+        "hash": "beb4dc36",
+        "text": "それはよん。",
+        "reading": "それはよん。",
+        "from": 69.5,
+        "to": 70.54,
+        "duration": 1.04,
+        "sha256": "b690679e2b5d4738e5008e9feed80ee376ee881aec7797c9b97e9c4e6abb1caa"
+      },
+      {
+        "hash": "eb6d81bd",
+        "text": "よんこだね！",
+        "reading": "よんこだね！",
+        "from": 71.89,
+        "to": 72.72,
+        "duration": 0.83,
+        "sha256": "d3280b1b4426adc7d05790fc16299f36943c87f73996c0ad6024cce2768f3121"
+      },
+      {
+        "hash": "76613b1d",
+        "text": "よんのすうじにのってね！",
+        "reading": "よんのすうじにのってね！",
+        "from": 74.09,
+        "to": 75.7,
+        "duration": 1.61,
+        "sha256": "2e634c7748bc1e8211f8ef92c74b3dd82c79ec3ea3c6eea7bb37492d1024af8f"
+      },
+      {
+        "hash": "08708e81",
+        "text": "よんとおなじかずのおさらはどれかな？",
+        "reading": "よんとおなじかずのおさらはどれかな？",
+        "from": 77.01,
+        "to": 79.43,
+        "duration": 2.42,
+        "sha256": "f1e562fc2343bcfa23ac0dc11c0f7b9b2e8231c34b350c8764470b7d3a4d3974"
+      },
+      {
+        "hash": "67bb3b92",
+        "text": "よんこのおさら！",
+        "reading": "よんこのおさら！",
+        "from": 80.71,
+        "to": 81.84,
+        "duration": 1.13,
+        "sha256": "eac331b3ca7a6337bb298bd8c497989b76393f0fe9fa2b878ce7c4ac5b65fcab"
+      },
+      {
+        "hash": "8befcbd5",
+        "text": "よんこのおさらをさがしてね！",
+        "reading": "よんこのおさらをさがしてね！",
+        "from": 83.16,
+        "to": 84.88,
+        "duration": 1.72,
+        "sha256": "df6bfd1f094230fd02052dc4512c2e435a023e87977ca94007693777b1dd5bbd"
+      },
+      {
+        "hash": "37cea32f",
+        "text": "それはご。",
+        "reading": "それはご。",
+        "from": 86.22,
+        "to": 87.14,
+        "duration": 0.92,
+        "sha256": "d2a1d5cc071d0cf5d1ec947eaa383e704d0ca3b2cd7d6f8c48b7496917ab2b8e"
+      },
+      {
+        "hash": "de33c0d2",
+        "text": "ごこだね！",
+        "reading": "ごこだね！",
+        "from": 88.5,
+        "to": 89.28,
+        "duration": 0.78,
+        "sha256": "dc14f3e6a7ff788442cf8a79a7b963c2628aac94269f9095f5296038aa41c423"
+      },
+      {
+        "hash": "bea4898a",
+        "text": "ごのすうじにのってね！",
+        "reading": "ごのすうじにのってね！",
+        "from": 90.65,
+        "to": 92.13,
+        "duration": 1.48,
+        "sha256": "9d2aee019076440d998684b0c06f6466eb48ad34cec33fdf3f5147046afdcf04"
+      },
+      {
+        "hash": "429fcbb2",
+        "text": "ごとおなじかずのおさらはどれかな？",
+        "reading": "ごとおなじかずのおさらはどれかな？",
+        "from": 93.48,
+        "to": 95.77,
+        "duration": 2.29,
+        "sha256": "5b7d304ac3f8ca87f82a4918873c447167764ed13cf247813d1df5c62ced257a"
+      },
+      {
+        "hash": "d7a05399",
+        "text": "ごこのおさら！",
+        "reading": "ごこのおさら！",
+        "from": 97.04,
+        "to": 98.01,
+        "duration": 0.97,
+        "sha256": "740653500a74a5b6d7b9af3049da43e20d6ae791f0a484ceb6ca98a0423986ac"
+      },
+      {
+        "hash": "c8f10f2e",
+        "text": "ごこのおさらをさがしてね！",
+        "reading": "ごこのおさらをさがしてね！",
+        "from": 99.35,
+        "to": 100.98,
+        "duration": 1.63,
+        "sha256": "4c22fc8233003b52574133286be8d5db02b94792109fcde8e8febd7bb123a6c1"
+      },
+      {
+        "hash": "671456d1",
+        "text": "それはろく。",
+        "reading": "それはろく。",
+        "from": 102.32,
+        "to": 103.34,
+        "duration": 1.02,
+        "sha256": "dc8644d8f11dabd8c9d09061a84ce50877b39ef4d7eb4926df5764421e4ab81b"
+      },
+      {
+        "hash": "1147f900",
+        "text": "ろくこだね！",
+        "reading": "ろっこだね！",
+        "from": 104.68,
+        "to": 105.52,
+        "duration": 0.84,
+        "sha256": "c321ab131b69b980a33c8b76ec5587e77945970fca25eda1ec55381e1cb3d10c"
+      },
+      {
+        "hash": "7241d05c",
+        "text": "ろくのすうじにのってね！",
+        "reading": "ろくのすうじにのってね！",
+        "from": 106.9,
+        "to": 108.52,
+        "duration": 1.62,
+        "sha256": "76f72419d2b1f9e550eaf53b73307d92c221b4e5acd1812082b735606885daf9"
+      }
+    ]
+  },
+  {
+    "batchId": 8,
+    "status": "imported",
+    "filename": "batch-08-source.wav",
+    "sourceSha256": "6b23262024a7e9835aaa1b454fd5fc4d9eed335e70236d1827af78273153563c",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 105.6,
+    "peak": 30522,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "233f25dc",
+        "text": "ろくとおなじかずのおさらはどれかな？",
+        "reading": "ろくとおなじかずのおさらはどれかな？",
+        "from": 0.17,
+        "to": 2.73,
+        "duration": 2.56,
+        "sha256": "a419a87eb315492c5bb7fad6a960dfaa1eb88cb71e4d00ceb963fb3bd2cacda2"
+      },
+      {
+        "hash": "ce91ad47",
+        "text": "ろくこのおさら！",
+        "reading": "ろっこのおさら！",
+        "from": 4.35,
+        "to": 5.4,
+        "duration": 1.05,
+        "sha256": "a0470663302f6efe96ee5763a68cbedf6101174720e5f1a3dbe9d34d3e5dc799"
+      },
+      {
+        "hash": "7e03f9b8",
+        "text": "ろくこのおさらをさがしてね！",
+        "reading": "ろっこのおさらをさがしてね！",
+        "from": 6.17,
+        "to": 7.88,
+        "duration": 1.71,
+        "sha256": "4cfafa8b704131b774a06d3781700042773be9e213e6f402e9605096b3ca70c9"
+      },
+      {
+        "hash": "09497c81",
+        "text": "それはなな。",
+        "reading": "それはなな。",
+        "from": 9.76,
+        "to": 10.77,
+        "duration": 1.01,
+        "sha256": "301cec2b1cd457b0e457d84f41b51a3f8ef7153d213e222d2b2b1aa82018af0a"
+      },
+      {
+        "hash": "7f8db300",
+        "text": "ななこだね！",
+        "reading": "ななこだね！",
+        "from": 11.48,
+        "to": 12.38,
+        "duration": 0.9,
+        "sha256": "a36182c927d03113402136608e048c656f26f65c140f8a5b4cb86df1fd9a48d8"
+      },
+      {
+        "hash": "415b9a5c",
+        "text": "ななのすうじにのってね！",
+        "reading": "ななのすうじにのってね！",
+        "from": 13.55,
+        "to": 15.12,
+        "duration": 1.57,
+        "sha256": "0822638b7b8a959db96f340f9e250bc0318572ad6b290235a78cd21a415e7a7a"
+      },
+      {
+        "hash": "0eefbfdc",
+        "text": "ななとおなじかずのおさらはどれかな？",
+        "reading": "ななとおなじかずのおさらはどれかな？",
+        "from": 16.75,
+        "to": 19.17,
+        "duration": 2.42,
+        "sha256": "588882ce414c9461fd139f030d2b8b4f34d15eb4eae15537b86b4486dd2f2ba9"
+      },
+      {
+        "hash": "04803747",
+        "text": "ななこのおさら！",
+        "reading": "ななこのおさら！",
+        "from": 20.75,
+        "to": 21.98,
+        "duration": 1.23,
+        "sha256": "2dd8117ff032d2af9b6c6257511cf7e9731a5a44828b859ff82baf3e800c5bcc"
+      },
+      {
+        "hash": "78e493b8",
+        "text": "ななこのおさらをさがしてね！",
+        "reading": "ななこのおさらをさがしてね！",
+        "from": 22.67,
+        "to": 24.49,
+        "duration": 1.82,
+        "sha256": "99abff43200fd3392f3247b9c819ac6c60086add84782f3b5423d58cf61b36a1"
+      },
+      {
+        "hash": "d14c23c1",
+        "text": "それははち。",
+        "reading": "それははち。",
+        "from": 26.3,
+        "to": 27.36,
+        "duration": 1.06,
+        "sha256": "b3eaff0bbf3417d14de4a96bc5ec5e2aa7aa5eeb7939bff0d88549838ffd8077"
+      },
+      {
+        "hash": "dcdc1588",
+        "text": "はちこだね！",
+        "reading": "はっこだね！",
+        "from": 28.09,
+        "to": 28.95,
+        "duration": 0.86,
+        "sha256": "b6cbd4690ad1db5603baad7101219fb217e43ff88b275abcea74510a41893021"
+      },
+      {
+        "hash": "a8ba7154",
+        "text": "はちのすうじにのってね！",
+        "reading": "はちのすうじにのってね！",
+        "from": 30.09,
+        "to": 31.75,
+        "duration": 1.66,
+        "sha256": "31274815be8f16c2d83a22fc099a9358daab53634158a8719a08b8918a13e23a"
+      },
+      {
+        "hash": "4f3f0984",
+        "text": "はちとおなじかずのおさらはどれかな？",
+        "reading": "はちとおなじかずのおさらはどれかな？",
+        "from": 33.2,
+        "to": 35.76,
+        "duration": 2.56,
+        "sha256": "6e1ed8a878c18cd3d9aaf65315601df850da3ccbf5dd71b869517e0d8229fca3"
+      },
+      {
+        "hash": "bf5f550f",
+        "text": "はちこのおさら！",
+        "reading": "はっこのおさら！",
+        "from": 37.07,
+        "to": 38.25,
+        "duration": 1.18,
+        "sha256": "5006df797223629618b173496a69bf6368df4f5ae74713879ccf59419c33eac7"
+      },
+      {
+        "hash": "1836ddc0",
+        "text": "はちこのおさらをさがしてね！",
+        "reading": "はっこのおさらをさがしてね！",
+        "from": 38.95,
+        "to": 40.71,
+        "duration": 1.76,
+        "sha256": "0d5ff5790fcdd2da8892f8a7bf25d60a00de6e1af59a2443d6084479f4965743"
+      },
+      {
+        "hash": "28a1175f",
+        "text": "それはきゅう。",
+        "reading": "それはきゅう。",
+        "from": 42.23,
+        "to": 43.46,
+        "duration": 1.23,
+        "sha256": "28748e40b02102190dbf757832fea3e823a368c04e96adbc6f8acc6e7ff4b4ff"
+      },
+      {
+        "hash": "a31c5be2",
+        "text": "きゅうこだね！",
+        "reading": "きゅうこだね！",
+        "from": 44.13,
+        "to": 45.05,
+        "duration": 0.92,
+        "sha256": "c164d313a6212a0c489b57a6945632ec6c9b6808f33b641eeac218b4ce58a34c"
+      },
+      {
+        "hash": "45dc7cba",
+        "text": "きゅうのすうじにのってね！",
+        "reading": "きゅうのすうじにのってね！",
+        "from": 46.08,
+        "to": 47.68,
+        "duration": 1.6,
+        "sha256": "3d1bea9cc8dd342ed27b94a3c797472a2c51716f5e32e616ea9bcc666393e096"
+      },
+      {
+        "hash": "f739e0a2",
+        "text": "きゅうとおなじかずのおさらはどれかな？",
+        "reading": "きゅうとおなじかずのおさらはどれかな？",
+        "from": 48.91,
+        "to": 51.47,
+        "duration": 2.56,
+        "sha256": "5bf312e1a865b75166eae938e217acc23d60523d0bbbb96d10b053f8c36bfbf0"
+      },
+      {
+        "hash": "aaf4a049",
+        "text": "きゅうこのおさら！",
+        "reading": "きゅうこのおさら！",
+        "from": 52.85,
+        "to": 54.02,
+        "duration": 1.17,
+        "sha256": "3a7528ea15688c1caf6e6aacfd6e829298ebf2ebc917eba39c1244fb49be76a6"
+      },
+      {
+        "hash": "ca42813e",
+        "text": "きゅうこのおさらをさがしてね！",
+        "reading": "きゅうこのおさらをさがしてね！",
+        "from": 54.73,
+        "to": 56.41,
+        "duration": 1.68,
+        "sha256": "7e940388f996cfbae23865f67646f6553e90c22f1aff1ba03b98f00e4fc6685d"
+      },
+      {
+        "hash": "bf446caa",
+        "text": "それはじゅう。",
+        "reading": "それはじゅう。",
+        "from": 57.5,
+        "to": 58.58,
+        "duration": 1.08,
+        "sha256": "a14208cba6d463106a7bc64b137e6356c0f220e6f564a64348d4b071232dbb3b"
+      },
+      {
+        "hash": "b8851949",
+        "text": "じゅうこだね！",
+        "reading": "じゅっこだね！",
+        "from": 59.19,
+        "to": 60.06,
+        "duration": 0.87,
+        "sha256": "030404d2d87307b1b1f9ca03a17f9ddcb2e84766010fd88344e44bb1bfcf516b"
+      },
+      {
+        "hash": "19e34329",
+        "text": "じゅうのすうじにのってね！",
+        "reading": "じゅうのすうじにのってね！",
+        "from": 61.01,
+        "to": 62.64,
+        "duration": 1.63,
+        "sha256": "60985e2437f9c6e3d01c2aea188bd19a9ea31ec4d0805a254fa55a149b8519ad"
+      },
+      {
+        "hash": "f7971b2d",
+        "text": "じゅうとおなじかずのおさらはどれかな？",
+        "reading": "じゅうとおなじかずのおさらはどれかな？",
+        "from": 64,
+        "to": 66.65,
+        "duration": 2.65,
+        "sha256": "49bf38e3cebb344c10626e63cfad68a06695beffea7f63802ec74ce5a3ba9f51"
+      },
+      {
+        "hash": "5d4f9966",
+        "text": "じゅうこのおさら！",
+        "reading": "じゅっこのおさら！",
+        "from": 67.93,
+        "to": 69.16,
+        "duration": 1.23,
+        "sha256": "f9723499346b6d43f094697291d04b1400f4b33008e8288e923f41f04e2ed558"
+      },
+      {
+        "hash": "bf514521",
+        "text": "じゅうこのおさらをさがしてね！",
+        "reading": "じゅっこのおさらをさがしてね！",
+        "from": 69.92,
+        "to": 71.64,
+        "duration": 1.72,
+        "sha256": "c633cb59887c3ca849d0e8a1beef80749be4bf0faa30c5a69f332afddcf23377"
+      },
+      {
+        "hash": "f3f3d3f0",
+        "text": "いちからいちまで、じゅんばんにのってね！",
+        "reading": "いちからいちまで、じゅんばんにのってね！",
+        "from": 72.54,
+        "to": 75.03,
+        "duration": 2.49,
+        "sha256": "53e78de6fb9a8b5069e849c1f16debfb3ed86840f165c0b85ef636b38119ef1f"
+      },
+      {
+        "hash": "a12c76f1",
+        "text": "ぜんぶできたね！",
+        "reading": "ぜんぶできたね！",
+        "from": 75.93,
+        "to": 77.09,
+        "duration": 1.16,
+        "sha256": "44a9d92b96288b8dd71519b35b2b0b2e40f4f6b6fe37bb5b9ae73bf91f476ac7"
+      },
+      {
+        "hash": "8739866a",
+        "text": "つぎはいちだよ！",
+        "reading": "つぎはいちだよ！",
+        "from": 77.88,
+        "to": 78.98,
+        "duration": 1.1,
+        "sha256": "dda503b5cb3bf804ef16421199d75dc419fbc5d26b811ce27aad641eb9475378"
+      },
+      {
+        "hash": "cd847d22",
+        "text": "いちからにまで、じゅんばんにのってね！",
+        "reading": "いちからにまで、じゅんばんにのってね！",
+        "from": 79.73,
+        "to": 82.34,
+        "duration": 2.61,
+        "sha256": "a07069e4ab6ec42f5216ba267d3d7dee68126bfe59d7ab92275c0f0c656dfdff"
+      },
+      {
+        "hash": "a14c4308",
+        "text": "つぎはにだよ！",
+        "reading": "つぎはにだよ！",
+        "from": 83.1,
+        "to": 84.27,
+        "duration": 1.17,
+        "sha256": "8aa4382c110ab3c889066adbe244fe43fd4a01154fc6d33ab9cc3bb3348e8ccf"
+      },
+      {
+        "hash": "6499ab8f",
+        "text": "いちからさんまで、じゅんばんにのってね！",
+        "reading": "いちからさんまで、じゅんばんにのってね！",
+        "from": 85.1,
+        "to": 87.72,
+        "duration": 2.62,
+        "sha256": "170736e8e67edb35ab4d11bc9ec1bcc68774229afddfd07b2c475574b3ba4acd"
+      },
+      {
+        "hash": "050bcebf",
+        "text": "つぎはさんだよ！",
+        "reading": "つぎはさんだよ！",
+        "from": 88.45,
+        "to": 89.65,
+        "duration": 1.2,
+        "sha256": "7f0037146ba67e95d2ebfaa5036e24db5465308d95c7575358334e55b2d52c7c"
+      },
+      {
+        "hash": "cc70bbee",
+        "text": "いちからよんまで、じゅんばんにのってね！",
+        "reading": "いちからよんまで、じゅんばんにのってね！",
+        "from": 90.52,
+        "to": 93.11,
+        "duration": 2.59,
+        "sha256": "d9f42ce76a7ce88a79cfe466f4466e7234c7ac80e725b5d9329a050ef7ae2069"
+      },
+      {
+        "hash": "83ce8a38",
+        "text": "つぎはよんだよ！",
+        "reading": "つぎはよんだよ！",
+        "from": 93.82,
+        "to": 95.02,
+        "duration": 1.2,
+        "sha256": "413416786d0d284d550ef775f312fa67f4f9c4c2289dcbfae7322f646a9511a4"
+      },
+      {
+        "hash": "da20a4cf",
+        "text": "いちからごまで、じゅんばんにのってね！",
+        "reading": "いちからごまで、じゅんばんにのってね！",
+        "from": 95.82,
+        "to": 98.36,
+        "duration": 2.54,
+        "sha256": "41594e240af432aea5847c17f15095b569d6e1a4bf6f2920231c0c945564427a"
+      },
+      {
+        "hash": "8eda5397",
+        "text": "つぎはごだよ！",
+        "reading": "つぎはごだよ！",
+        "from": 99.04,
+        "to": 100.13,
+        "duration": 1.09,
+        "sha256": "a68a6af2c61c334f8f4a6c1111e7fa89249c6cdae03fcdfc76d24637336b500c"
+      },
+      {
+        "hash": "586fd3d3",
+        "text": "いちからろくまで、じゅんばんにのってね！",
+        "reading": "いちからろくまで、じゅんばんにのってね！",
+        "from": 100.94,
+        "to": 103.57,
+        "duration": 2.63,
+        "sha256": "db2737d2b3b6c95c855bdeb48d76f6870801ae0a5bd57416718b0bdb3ef89c9c"
+      },
+      {
+        "hash": "2e30845b",
+        "text": "つぎはろくだよ！",
+        "reading": "つぎはろくだよ！",
+        "from": 104.29,
+        "to": 105.45,
+        "duration": 1.16,
+        "sha256": "785554478a1aecff1b4068461395d76a566c55829cb51f756b352fdedab23097"
+      }
+    ]
+  },
+  {
+    "batchId": 9,
+    "status": "imported",
+    "filename": "batch-09-source.wav",
+    "sourceSha256": "61cfa5331944aea2b306a5fd58c9a93930a0799f5748d89725a528eb131f7e25",
+    "recipe": "8ed238808d185ac73a093c65d442be76a048639a80ad54e356b88b03b186c027",
+    "duration": 72.8,
+    "peak": 26952,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "f24fa88f",
+        "text": "おはよう！",
+        "reading": "おはよう！",
+        "from": 0.12,
+        "to": 1.07,
+        "duration": 0.95,
+        "sha256": "adb4a43ecf83dbe1bb18d0b85ac5d2516c0585bfbce4a436bd44f204113add76"
+      },
+      {
+        "hash": "5fc3527f",
+        "text": "うさぎさん、キラキラアイランドへようこそ！",
+        "reading": "うさぎさん、キラキラアイランドへようこそ！",
+        "from": 1.38,
+        "to": 4.41,
+        "duration": 3.03,
+        "sha256": "c2e3ddc7c00f5bedacec49826de841ee88b4b13bb00b64721205cf6743bdb4e5"
+      },
+      {
+        "hash": "e5f8ab7d",
+        "text": "いまはあさのじかん。",
+        "reading": "いまはあさのじかん。",
+        "from": 5.09,
+        "to": 6.74,
+        "duration": 1.65,
+        "sha256": "519090e66a5876b6c86a6630273452294c9f43115600b151c858309b9aef960c"
+      },
+      {
+        "hash": "1c8b76a9",
+        "text": "きせつははるだよ！",
+        "reading": "きせつははるだよ！",
+        "from": 7.35,
+        "to": 8.92,
+        "duration": 1.57,
+        "sha256": "cdb532f0f52db9e4b4f90b70c323060d4faa653994499e27c183b795d4ce944e"
+      },
+      {
+        "hash": "40c4f1ed",
+        "text": "きせつはなつだよ！",
+        "reading": "きせつはなつだよ！",
+        "from": 9.41,
+        "to": 10.98,
+        "duration": 1.57,
+        "sha256": "26939e65a5f45124cde6bc5f6f6546f5df9938edbec40f4d1f3a422f64e20ab3"
+      },
+      {
+        "hash": "62c8e918",
+        "text": "きせつはあきだよ！",
+        "reading": "きせつはあきだよ！",
+        "from": 11.45,
+        "to": 12.96,
+        "duration": 1.51,
+        "sha256": "3f15adb3915db6363b776762b8ba1c0b282ab8de92570177416783c8ef3dc0d5"
+      },
+      {
+        "hash": "616a43a6",
+        "text": "きせつはふゆだよ！",
+        "reading": "きせつはふゆだよ！",
+        "from": 13.46,
+        "to": 15,
+        "duration": 1.54,
+        "sha256": "7342b28ac4bca4d5689e521817a4d20b052cc6a0bd938d4c48b6d76156527833"
+      },
+      {
+        "hash": "6b162907",
+        "text": "こんにちは！",
+        "reading": "こんにちは！",
+        "from": 15.44,
+        "to": 16.31,
+        "duration": 0.87,
+        "sha256": "9de099ff8fb30afe317b71c24a9b017eb42c808768f883df91399699d16d6579"
+      },
+      {
+        "hash": "890bb78f",
+        "text": "いまはひるのじかん。",
+        "reading": "いまはひるのじかん。",
+        "from": 16.77,
+        "to": 18.16,
+        "duration": 1.39,
+        "sha256": "3be20bab2aabd0e7dfbd2f85278258316c357613476e26e032bc82c707f9e9f8"
+      },
+      {
+        "hash": "e5715e31",
+        "text": "いまはゆうがたのじかん。",
+        "reading": "いまはゆうがたのじかん。",
+        "from": 18.58,
+        "to": 20.24,
+        "duration": 1.66,
+        "sha256": "0e96bebb49e6ff7b09497a5011df9a437493f77afb9a77ac855066e0e5fe459b"
+      },
+      {
+        "hash": "86e31276",
+        "text": "こんばんは！",
+        "reading": "こんばんは！",
+        "from": 20.76,
+        "to": 21.57,
+        "duration": 0.81,
+        "sha256": "dbcb0ef3456093b63c5f79785c4bb8dabc14ae19c4205c79bb29d3b9cb888124"
+      },
+      {
+        "hash": "45ba291d",
+        "text": "いまはよるのじかん。",
+        "reading": "いまはよるのじかん。",
+        "from": 21.92,
+        "to": 23.33,
+        "duration": 1.41,
+        "sha256": "34978f42231b53c482c8bb4e55b4f50067e222a7a922fe8745799c0b23af3caf"
+      },
+      {
+        "hash": "67e466ac",
+        "text": "ねこさん、キラキラアイランドへようこそ！",
+        "reading": "ねこさん、キラキラアイランドへようこそ！",
+        "from": 23.88,
+        "to": 26.76,
+        "duration": 2.88,
+        "sha256": "c8929d72e09efb090f942b5e10ebfa480851567aa42b38821a6f858f72dc0ba6"
+      },
+      {
+        "hash": "568a0f9d",
+        "text": "くまさん、キラキラアイランドへようこそ！",
+        "reading": "くまさん、キラキラアイランドへようこそ！",
+        "from": 27.17,
+        "to": 29.91,
+        "duration": 2.74,
+        "sha256": "a5c4de61349fde3b1cdf25cc77aa8c0abc8d6eb451916f30787faac369c515bc"
+      },
+      {
+        "hash": "7ba5a592",
+        "text": "ちょうちょをつかまえた！",
+        "reading": "ちょうちょをつかまえた！",
+        "from": 30.27,
+        "to": 31.85,
+        "duration": 1.58,
+        "sha256": "93da7e3222da7fb00ed6eb1c3e2dc18c579152880d2953c3870a771ca04eba3f"
+      },
+      {
+        "hash": "d9dd9f6f",
+        "text": "ずかんにのったよ！",
+        "reading": "ずかんにのったよ！",
+        "from": 32.39,
+        "to": 33.83,
+        "duration": 1.44,
+        "sha256": "736f79c76c9b8136988436a945a70fd0ae914d9f8091bafc12140424f52adce3"
+      },
+      {
+        "hash": "7bf42ac0",
+        "text": "ちょうちょ！",
+        "reading": "ちょうちょ！",
+        "from": 34.28,
+        "to": 35.06,
+        "duration": 0.78,
+        "sha256": "b2af921bdfdb3fe564e09336787ade2f30305339b209ad0192a8134472525ef5"
+      },
+      {
+        "hash": "4442e462",
+        "text": "みつばちをつかまえた！",
+        "reading": "みつばちをつかまえた！",
+        "from": 35.6,
+        "to": 37.13,
+        "duration": 1.53,
+        "sha256": "9eed12882c95d74f6130fabacd9989082c2cd295abf0895ab74ed57ea7c42092"
+      },
+      {
+        "hash": "6d0388b0",
+        "text": "みつばち！",
+        "reading": "みつばち！",
+        "from": 37.63,
+        "to": 38.58,
+        "duration": 0.95,
+        "sha256": "70d44e731b90f49bdb77d4d4c50c3cb03742daac56f1fd7d308be8ba415fc101"
+      },
+      {
+        "hash": "86a75d2a",
+        "text": "てんとうむしをつかまえた！",
+        "reading": "てんとうむしをつかまえた！",
+        "from": 39.15,
+        "to": 40.84,
+        "duration": 1.69,
+        "sha256": "e7536446bdf96d484cb5e6a41a51f25d69bd273949587dcd9ca13306bb842cad"
+      },
+      {
+        "hash": "46320bb8",
+        "text": "てんとうむし！",
+        "reading": "てんとうむし！",
+        "from": 41.27,
+        "to": 42.37,
+        "duration": 1.1,
+        "sha256": "adc77ad675f961622160157b4abdfc6ffecaa5e9afa22f46471a7be4c5b4aac1"
+      },
+      {
+        "hash": "56a6cd52",
+        "text": "バッタをつかまえた！",
+        "reading": "バッタをつかまえた！",
+        "from": 42.91,
+        "to": 44.19,
+        "duration": 1.28,
+        "sha256": "e6a0a4df927aed2bc4f91ed9427df8f6e922a2dabd079cfa705e82f073255563"
+      },
+      {
+        "hash": "f00c0000",
+        "text": "バッタ！",
+        "reading": "バッタ！",
+        "from": 44.74,
+        "to": 45.47,
+        "duration": 0.73,
+        "sha256": "b8391fec6bf0cdcdd9e4ec21f633dc8bb82b421d813be0b690ab3eff368f177c"
+      },
+      {
+        "hash": "1dc1b022",
+        "text": "カブトムシをつかまえた！",
+        "reading": "カブトムシをつかまえた！",
+        "from": 45.96,
+        "to": 47.52,
+        "duration": 1.56,
+        "sha256": "51df19761de3217cb9c804ed7f83f136386d1201c677ced7cf01c7e7228e3750"
+      },
+      {
+        "hash": "441b19f0",
+        "text": "カブトムシ！",
+        "reading": "カブトムシ！",
+        "from": 47.93,
+        "to": 48.95,
+        "duration": 1.02,
+        "sha256": "3357da06bfdc3250d28afdbbedc7e1bf19163d0b2bad2b145ea969f2e3bee100"
+      },
+      {
+        "hash": "d468dbae",
+        "text": "ありをつかまえた！",
+        "reading": "ありをつかまえた！",
+        "from": 49.43,
+        "to": 50.69,
+        "duration": 1.26,
+        "sha256": "801dd17c201335897a35bd9374fa40c25c48fffc1bfb2d5fa44d5795e5671b9e"
+      },
+      {
+        "hash": "cbee1a94",
+        "text": "あり！",
+        "reading": "あり！",
+        "from": 51.12,
+        "to": 51.65,
+        "duration": 0.53,
+        "sha256": "b751684fba342ff39b56090c355a921398fa0fa3f95ee0df2bb57a9afa96af7f"
+      },
+      {
+        "hash": "c9298660",
+        "text": "かたつむりをつかまえた！",
+        "reading": "かたつむりをつかまえた！",
+        "from": 52.16,
+        "to": 53.75,
+        "duration": 1.59,
+        "sha256": "5fc34f2ef57bf71e0caa126410522af30c142ce9393c1a1fd819d2cbe0b71c23"
+      },
+      {
+        "hash": "e173c7be",
+        "text": "かたつむり！",
+        "reading": "かたつむり！",
+        "from": 54.28,
+        "to": 55.29,
+        "duration": 1.01,
+        "sha256": "dcf07e43ced4bc87d8d525a2b8bdb9b31d3a92b55e3227dad66d791014f15d89"
+      },
+      {
+        "hash": "f756beb5",
+        "text": "ほたるをつかまえた！",
+        "reading": "ほたるをつかまえた！",
+        "from": 55.78,
+        "to": 57.24,
+        "duration": 1.46,
+        "sha256": "370f15e589afb13940f9c5bd3727d54fe500e942d77786af01c05919ad936c47"
+      },
+      {
+        "hash": "e53e82c7",
+        "text": "ほたる！",
+        "reading": "ほたる！",
+        "from": 57.69,
+        "to": 58.43,
+        "duration": 0.74,
+        "sha256": "f6ff23137525c3892882b8e503ae2434b6f1621c17814a730791fb1b68be21b1"
+      },
+      {
+        "hash": "66419831",
+        "text": "あじをつりあげた！",
+        "reading": "あじをつりあげた！",
+        "from": 58.96,
+        "to": 60.36,
+        "duration": 1.4,
+        "sha256": "3652f99f073b3b56c84339e5fa641f6a686da20a2b1cc8f96cea6ede7acf58e9"
+      },
+      {
+        "hash": "61168312",
+        "text": "あじ！",
+        "reading": "あじ！",
+        "from": 60.75,
+        "to": 61.29,
+        "duration": 0.54,
+        "sha256": "5377eb5d72b4a0ad1747e28e0c0c87f9b085916559ef7923011cdf072483cd62"
+      },
+      {
+        "hash": "cf37cef8",
+        "text": "えびをつりあげた！",
+        "reading": "えびをつりあげた！",
+        "from": 61.92,
+        "to": 63.28,
+        "duration": 1.36,
+        "sha256": "60047212ca3f324b076f737bd4659aa26517304f8207dccc9ef5c55417954254"
+      },
+      {
+        "hash": "6b9a2eb7",
+        "text": "えび！",
+        "reading": "えび！",
+        "from": 63.68,
+        "to": 64.17,
+        "duration": 0.49,
+        "sha256": "39e08b180e4b3689c17a417d54da0cc9dea2169ceb4d94010573ce44b52762eb"
+      },
+      {
+        "hash": "31850e29",
+        "text": "クマノミをつりあげた！",
+        "reading": "クマノミをつりあげた！",
+        "from": 64.73,
+        "to": 66.25,
+        "duration": 1.52,
+        "sha256": "6b589446db4ada521185218862b19c061ab7d1d3d632ec66b260ec35ea045340"
+      },
+      {
+        "hash": "8a58cd8a",
+        "text": "クマノミ！",
+        "reading": "クマノミ！",
+        "from": 66.66,
+        "to": 67.51,
+        "duration": 0.85,
+        "sha256": "49f4f7ebfd6567f4bca9a8f93f9b597a01f1ffd4f1497cd2e999c6617de24ad1"
+      },
+      {
+        "hash": "488ac2f4",
+        "text": "ふぐをつりあげた！",
+        "reading": "ふぐをつりあげた！",
+        "from": 68.1,
+        "to": 69.54,
+        "duration": 1.44,
+        "sha256": "40ccb3b35a3924c9e5682d9b0fd8ff9ec88ed58b14bd9c4c2bbb880d5c7c1359"
+      },
+      {
+        "hash": "87aa74d3",
+        "text": "ふぐ！",
+        "reading": "ふぐ！",
+        "from": 69.98,
+        "to": 70.51,
+        "duration": 0.53,
+        "sha256": "fe0c199b8751ad73782093d6b65d003b8800c77e6b20657c37524ece75867fa6"
+      },
+      {
+        "hash": "418c5551",
+        "text": "たこをつりあげた！",
+        "reading": "たこをつりあげた！",
+        "from": 71.18,
+        "to": 72.65,
+        "duration": 1.47,
+        "sha256": "3f2f3125604b14d9637efa4a1b3da1bf05de3992718a5037a2109c0f725ee3a5"
+      }
+    ]
+  },
+  {
+    "batchId": 10,
+    "status": "imported",
+    "filename": "batch-10-source.wav",
+    "sourceSha256": "b94d340b7112deb542bd5b6419bb9929b5afdddd45700fc701372388ff361018",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 82.64,
+    "peak": 20250,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "537fb572",
+        "text": "たこ！",
+        "reading": "たこ！",
+        "from": 0.19,
+        "to": 0.88,
+        "duration": 0.69,
+        "sha256": "6f3748c49325a96a334de9f6aa0c6ee2d203f09a7543ff253e2d28f59b3b1de7"
+      },
+      {
+        "hash": "24f7e02c",
+        "text": "いかをつりあげた！",
+        "reading": "いかをつりあげた！",
+        "from": 2.41,
+        "to": 3.81,
+        "duration": 1.4,
+        "sha256": "5ac0c0cbc4c4432980d34c74c4efeaa25a64af5a7512a53c6743c526230210e9"
+      },
+      {
+        "hash": "1772a4ab",
+        "text": "いか！",
+        "reading": "いか！",
+        "from": 5.04,
+        "to": 5.64,
+        "duration": 0.6,
+        "sha256": "8adfcacbc8d031f871cf6eddf45e41a1fd6b78153dfb332f30499219ad078cea"
+      },
+      {
+        "hash": "ce9f10f5",
+        "text": "サメをつりあげた！",
+        "reading": "サメをつりあげた！",
+        "from": 7.08,
+        "to": 8.51,
+        "duration": 1.43,
+        "sha256": "1891da4209ea8705b0a72f046e782da909a51b67f961ae716880b80bef2458c0"
+      },
+      {
+        "hash": "afa73b06",
+        "text": "サメ！",
+        "reading": "サメ！",
+        "from": 9.65,
+        "to": 10.4,
+        "duration": 0.75,
+        "sha256": "829efa69524f74135767adcd40fc069c0c5a3f39ecaa860f26afc13d48e49460"
+      },
+      {
+        "hash": "492ea088",
+        "text": "まきがいをひろった！",
+        "reading": "まきがいをひろった！",
+        "from": 11.55,
+        "to": 13.15,
+        "duration": 1.6,
+        "sha256": "8d8be290ed83a8301e98d3a2c3af44ead5bfecf5c06ef07904f8a279b2592cb8"
+      },
+      {
+        "hash": "80efc4cf",
+        "text": "まきがい！",
+        "reading": "まきがい！",
+        "from": 14.17,
+        "to": 15.05,
+        "duration": 0.88,
+        "sha256": "06628693ead0564e9686b0d94f27eae9011c1e485fa10c7476e5cc580880096f"
+      },
+      {
+        "hash": "230b595f",
+        "text": "ほたてをひろった！",
+        "reading": "ほたてをひろった！",
+        "from": 16.07,
+        "to": 17.32,
+        "duration": 1.25,
+        "sha256": "1cf406b3b13035760feadacca7f24a3ea0ff4b8d616a11ec086c893fb9766eb6"
+      },
+      {
+        "hash": "e5548f8e",
+        "text": "ほたて！",
+        "reading": "ほたて！",
+        "from": 18.45,
+        "to": 19.15,
+        "duration": 0.7,
+        "sha256": "09c664fddf4e6681c10694b46ace17f3193624b8151b52bac6d404365a7fcb99"
+      },
+      {
+        "hash": "5cd2415b",
+        "text": "さんごをひろった！",
+        "reading": "さんごをひろった！",
+        "from": 20.16,
+        "to": 21.35,
+        "duration": 1.19,
+        "sha256": "26b5fb89a97d0dd73fe2664ae926ddca1e6a98bc1a3821af066f459b33d4fb5f"
+      },
+      {
+        "hash": "1f58a502",
+        "text": "さんご！",
+        "reading": "さんご！",
+        "from": 22.31,
+        "to": 23.13,
+        "duration": 0.82,
+        "sha256": "25e7418a03a4549dd6ea18aab561ed5bf53e6620bc7cd883c92f11b93abd1023"
+      },
+      {
+        "hash": "3f0f4bd8",
+        "text": "かにをつかまえた！",
+        "reading": "かにをつかまえた！",
+        "from": 24.05,
+        "to": 25.45,
+        "duration": 1.4,
+        "sha256": "8befcec2026f2b08f5045dc387838e64bfd7cec086219928df2003b8b57f8c63"
+      },
+      {
+        "hash": "a42effb6",
+        "text": "かに！",
+        "reading": "かに！",
+        "from": 26.46,
+        "to": 27.15,
+        "duration": 0.69,
+        "sha256": "e35ae408fa6bff0a1edd746faa6459b6cb8c3d97d60d82142a563d7f68c98977"
+      },
+      {
+        "hash": "121bfc04",
+        "text": "ボトルメールをひろった！",
+        "reading": "ボトルメールをひろった！",
+        "from": 28.11,
+        "to": 29.65,
+        "duration": 1.54,
+        "sha256": "27975c77e4cddebe65180518c4da0342eb46f01fbbefb87bca9a0b015e491183"
+      },
+      {
+        "hash": "389e7c63",
+        "text": "ボトルメール！",
+        "reading": "ボトルメール！",
+        "from": 30.65,
+        "to": 31.74,
+        "duration": 1.09,
+        "sha256": "2e6bb8f6cbf199dff58dcd8221afef8ecd1e360cbc56d4a699d57a06036e934f"
+      },
+      {
+        "hash": "c6500d98",
+        "text": "ティラノサウルスをほりだした！",
+        "reading": "ティラノサウルスをほりだした！",
+        "from": 32.73,
+        "to": 34.56,
+        "duration": 1.83,
+        "sha256": "5c29ce0f9a72406ae494bb8e226c7a0a78ef89c63fe1e90e54ab79341fbc9ac7"
+      },
+      {
+        "hash": "f95987f9",
+        "text": "ティラノサウルス！",
+        "reading": "ティラノサウルス！",
+        "from": 35.5,
+        "to": 36.79,
+        "duration": 1.29,
+        "sha256": "736ae6b5e44e4a659fa5fc24aa81f60b5ee44ded5fabd2c8e7db4c860d8e59c5"
+      },
+      {
+        "hash": "03f5ddac",
+        "text": "くびながりゅうをほりだした！",
+        "reading": "くびながりゅうをほりだした！",
+        "from": 37.76,
+        "to": 39.55,
+        "duration": 1.79,
+        "sha256": "e6c7703161bdb978b500ff624c2e154b557256234a5b082fafd0205fa6c36e0e"
+      },
+      {
+        "hash": "d64774cd",
+        "text": "くびながりゅう！",
+        "reading": "くびながりゅう！",
+        "from": 40.53,
+        "to": 41.74,
+        "duration": 1.21,
+        "sha256": "50a948f488931118415f001ee8ec7d97e1d50ca290bd2c7871635dc395591d41"
+      },
+      {
+        "hash": "7e8a2e87",
+        "text": "マンモスをほりだした！",
+        "reading": "マンモスをほりだした！",
+        "from": 42.7,
+        "to": 44.13,
+        "duration": 1.43,
+        "sha256": "50647d6eb1afecb3d11313a8d6af22ccc87b61fbec6c2e475209f2ea2a881fc6"
+      },
+      {
+        "hash": "59e807ba",
+        "text": "マンモス！",
+        "reading": "マンモス！",
+        "from": 45.12,
+        "to": 46.13,
+        "duration": 1.01,
+        "sha256": "d4c3cdd640a405fa04fd777b7f8664aefab16ffd38b28063bee29631f7fb035e"
+      },
+      {
+        "hash": "8d2769dd",
+        "text": "ほねをほりだした！",
+        "reading": "ほねをほりだした！",
+        "from": 47.05,
+        "to": 48.28,
+        "duration": 1.23,
+        "sha256": "a4494e46424bc69ad57cae21f1e0dc734b034227e0c233595e3a578fd22a51a3"
+      },
+      {
+        "hash": "410b8e3c",
+        "text": "ほね！",
+        "reading": "ほね！",
+        "from": 49.13,
+        "to": 49.74,
+        "duration": 0.61,
+        "sha256": "c1f06369e1755df02a934fc4293616613654161c3bb9917f17a89adab24d38c3"
+      },
+      {
+        "hash": "1ce97d16",
+        "text": "りんごをひろった！",
+        "reading": "りんごをひろった！",
+        "from": 50.66,
+        "to": 51.85,
+        "duration": 1.19,
+        "sha256": "7935b4e1020c1801d420159f4f46fbc04f22ff7bbf5a8d568a29d82b4be5931c"
+      },
+      {
+        "hash": "ea50d7e1",
+        "text": "りんご！",
+        "reading": "りんご！",
+        "from": 52.87,
+        "to": 53.53,
+        "duration": 0.66,
+        "sha256": "f42314976ebc5a0ff220d57e56e32667773e3fe8907621d44aa45c492ee26005"
+      },
+      {
+        "hash": "b7bbbe41",
+        "text": "ももをひろった！",
+        "reading": "ももをひろった！",
+        "from": 54.45,
+        "to": 55.61,
+        "duration": 1.16,
+        "sha256": "eb561d82d3c6b7958c4968fae0ac9c796f8d18c4e6b813503850e0ba48a4562e"
+      },
+      {
+        "hash": "8078fe8c",
+        "text": "もも！",
+        "reading": "もも！",
+        "from": 56.6,
+        "to": 57.17,
+        "duration": 0.57,
+        "sha256": "ffbcd2a62c9f606eb88025622451b30f5fc737c588272ff55f8620a3d6ee0247"
+      },
+      {
+        "hash": "8f7b2538",
+        "text": "みかんをひろった！",
+        "reading": "みかんをひろった！",
+        "from": 58.09,
+        "to": 59.35,
+        "duration": 1.26,
+        "sha256": "e63bfcea39d4a30a9e1139988a2d6f8537099d070df2e458fa5e2fb97e649180"
+      },
+      {
+        "hash": "738d323f",
+        "text": "みかん！",
+        "reading": "みかん！",
+        "from": 60.31,
+        "to": 60.99,
+        "duration": 0.68,
+        "sha256": "245f31cd054e3f5330c36497840cd5bde20ced25d03d8d0c127711012b316870"
+      },
+      {
+        "hash": "ae458e73",
+        "text": "どんぐりをひろった！",
+        "reading": "どんぐりをひろった！",
+        "from": 61.93,
+        "to": 63.23,
+        "duration": 1.3,
+        "sha256": "c7fc018c24eacc55616e9e32ef51fbc9e389b807b83fcd0a60bad70a9ac90839"
+      },
+      {
+        "hash": "d7cb992a",
+        "text": "どんぐり！",
+        "reading": "どんぐり！",
+        "from": 64.22,
+        "to": 64.97,
+        "duration": 0.75,
+        "sha256": "c3146b4f90ccb17772ce7df9405f76c7524dbac2497e4983024ad1b6e0012cd0"
+      },
+      {
+        "hash": "dcde3f69",
+        "text": "チューリップをつんだ！",
+        "reading": "チューリップをつんだ！",
+        "from": 65.93,
+        "to": 67.2,
+        "duration": 1.27,
+        "sha256": "7d24dbe174d0bb58171c02f674afe37d068f624de61bc99f58618499aa6a61fe"
+      },
+      {
+        "hash": "2436aab2",
+        "text": "チューリップ！",
+        "reading": "チューリップ！",
+        "from": 68.14,
+        "to": 68.96,
+        "duration": 0.82,
+        "sha256": "6e75a1764b81defc2fc403980b36dec39868fc4c157e8447833dcdeab9ebe5bb"
+      },
+      {
+        "hash": "cf7fd3f4",
+        "text": "ひまわりをつんだ！",
+        "reading": "ひまわりをつんだ！",
+        "from": 69.85,
+        "to": 71.11,
+        "duration": 1.26,
+        "sha256": "8aa2af082c95702e7e6fecd658d15f7a234ffdf82b0568aeabe4a8ba3408d789"
+      },
+      {
+        "hash": "9400eb63",
+        "text": "ひまわり！",
+        "reading": "ひまわり！",
+        "from": 72.01,
+        "to": 72.73,
+        "duration": 0.72,
+        "sha256": "52496d817ef481e09be43c1c63474490e7a3f363ed0ceb1a68052c8103750196"
+      },
+      {
+        "hash": "8c246942",
+        "text": "バラをつんだ！",
+        "reading": "バラをつんだ！",
+        "from": 73.68,
+        "to": 74.7,
+        "duration": 1.02,
+        "sha256": "2668d895e1724591f190fb3bca905037b3b8decdacb6af1e151dd974d10ede65"
+      },
+      {
+        "hash": "ec9a24e9",
+        "text": "バラ！",
+        "reading": "バラ！",
+        "from": 75.64,
+        "to": 76.12,
+        "duration": 0.48,
+        "sha256": "de67e63fce3ee356b8694b6aa21ac57252b5a2c10c822b052cdc9c26b1698136"
+      },
+      {
+        "hash": "04456251",
+        "text": "さくらそうをつんだ！",
+        "reading": "さくらそうをつんだ！",
+        "from": 76.99,
+        "to": 78.42,
+        "duration": 1.43,
+        "sha256": "78211dee31d152ad5d9b88b73ae8a186cf7165ab027097bceea8ed7a402c650b"
+      },
+      {
+        "hash": "70d9c75a",
+        "text": "さくらそう！",
+        "reading": "さくらそう！",
+        "from": 79.34,
+        "to": 80.29,
+        "duration": 0.95,
+        "sha256": "48baeae011b3aabe8432b48fb7d3aa018f885e48d64a292348c5841da5a9cb0c"
+      },
+      {
+        "hash": "ad35b322",
+        "text": "デイジーをつんだ！",
+        "reading": "デイジーをつんだ！",
+        "from": 81.2,
+        "to": 82.46,
+        "duration": 1.26,
+        "sha256": "2c65b3e260252db33555a3553cc279321dc7bd7b12737f2766dd8ddd83fae096"
+      }
+    ]
+  },
+  {
+    "batchId": 11,
+    "status": "imported",
+    "filename": "batch-11-source.wav",
+    "sourceSha256": "6726872f72aeea6a364e826c7686da84b367b7a26d31c4f107c84c7ce44899e3",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 97.8,
+    "peak": 26335,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "6508fcc9",
+        "text": "デイジー！",
+        "reading": "デイジー！",
+        "from": 0.13,
+        "to": 0.99,
+        "duration": 0.86,
+        "sha256": "6a4a799fe6741df86e5b4d45c212b5ca6dcf3d771c79dd146c0e98fec76191cb"
+      },
+      {
+        "hash": "aae6854e",
+        "text": "ハイビスカスをつんだ！",
+        "reading": "ハイビスカスをつんだ！",
+        "from": 3.56,
+        "to": 5.15,
+        "duration": 1.59,
+        "sha256": "e52ef5be25d542ccddaf77fe5d140affd0a3f4b17c9001ea8827e1d594849b45"
+      },
+      {
+        "hash": "9b88903d",
+        "text": "ハイビスカス！",
+        "reading": "ハイビスカス！",
+        "from": 6.98,
+        "to": 8.27,
+        "duration": 1.29,
+        "sha256": "3d8492381c24c9fb8614b587bb7eeb8cf189e33493b750f356813578e2b7574f"
+      },
+      {
+        "hash": "2747d1dc",
+        "text": "おほしさまがおちてきた！",
+        "reading": "おほしさまがおちてきた！",
+        "from": 10.14,
+        "to": 11.69,
+        "duration": 1.55,
+        "sha256": "9aea748599a965cde8fe58a5a20c0efb6063dcb8dab7ac7bdff1bc8c4684e68f"
+      },
+      {
+        "hash": "0eec7b9a",
+        "text": "ベルぶくろだ！",
+        "reading": "ベルぶくろだ！",
+        "from": 13.32,
+        "to": 14.46,
+        "duration": 1.14,
+        "sha256": "fd2a09265974564ce38509c372b42c79b3cc0e8a8d279fbc47b02eced0345490"
+      },
+      {
+        "hash": "9ef2a931",
+        "text": "さんベル",
+        "reading": "さんベル",
+        "from": 16.11,
+        "to": 16.98,
+        "duration": 0.87,
+        "sha256": "1830f48dad6b1833ed744eff15e76f81ca29beeecfbdb6991cc4c63c6542cb6a"
+      },
+      {
+        "hash": "7a38da5f",
+        "text": "ごベル",
+        "reading": "ごベル",
+        "from": 18.74,
+        "to": 19.4,
+        "duration": 0.66,
+        "sha256": "96b23abd4c409e58ab78b92d47054702ec749134e22fa8390d1287efbd017f0e"
+      },
+      {
+        "hash": "5a692110",
+        "text": "じゅうベル",
+        "reading": "じゅうベル",
+        "from": 21.08,
+        "to": 21.79,
+        "duration": 0.71,
+        "sha256": "975591173b1017abee002bfe2b522a4e9db5daff20a19cff83bb6cad1f23b598"
+      },
+      {
+        "hash": "4b8620ca",
+        "text": "プレゼントだ！",
+        "reading": "プレゼントだ！",
+        "from": 23.18,
+        "to": 24.26,
+        "duration": 1.08,
+        "sha256": "ca8cb528b256f3b20861b992d7086523b926ce5fcee0906cb61af5031e5e9957"
+      },
+      {
+        "hash": "b7cadcb6",
+        "text": "いすが",
+        "reading": "いすが",
+        "from": 25.85,
+        "to": 26.65,
+        "duration": 0.8,
+        "sha256": "363cd89ae6bcd753b672bba77c775aa83991318b12b8305786f10d0455bdd36a"
+      },
+      {
+        "hash": "56c5cdcf",
+        "text": "はいってた！",
+        "reading": "はいってた！",
+        "from": 28.17,
+        "to": 29.14,
+        "duration": 0.97,
+        "sha256": "a53eb791a2a35b7667c83c29469f24b96aad29c0f7b05709437ec4382d37786f"
+      },
+      {
+        "hash": "6fcd49a3",
+        "text": "ボトルメールだ！",
+        "reading": "ボトルメールだ！",
+        "from": 30.71,
+        "to": 31.92,
+        "duration": 1.21,
+        "sha256": "37c621f60fa664d49c833a373dc744c0fed2c9f210da4340e659121b435ec1af"
+      },
+      {
+        "hash": "71cc0184",
+        "text": "いすを",
+        "reading": "いすを",
+        "from": 33.65,
+        "to": 34.34,
+        "duration": 0.69,
+        "sha256": "453a99614d01b4343aadbcfdbf315a9eeeb17e586d96e293846cb8756312ef76"
+      },
+      {
+        "hash": "d5fc3a27",
+        "text": "かったよ！",
+        "reading": "かったよ！",
+        "from": 35.8,
+        "to": 36.54,
+        "duration": 0.74,
+        "sha256": "bf10c55c722cc5355d66d17fb42b50a525c6db5f415ac4cc8810480999cee685"
+      },
+      {
+        "hash": "731ac0fc",
+        "text": "ありがとう！",
+        "reading": "ありがとう！",
+        "from": 37.96,
+        "to": 39.08,
+        "duration": 1.12,
+        "sha256": "d78cd4fee9b8c4b165ff18601c5ba9947e714407d748f5a79dce76537e8287ac"
+      },
+      {
+        "hash": "93c3c8a4",
+        "text": "テーブルが",
+        "reading": "テーブルが",
+        "from": 40.64,
+        "to": 41.65,
+        "duration": 1.01,
+        "sha256": "abf122d934068a9eb4bbd341deb3bdf09556da0d2517c11c3a0a42046ddfcfd6"
+      },
+      {
+        "hash": "d9c436d6",
+        "text": "テーブルを",
+        "reading": "テーブルを",
+        "from": 43.29,
+        "to": 44.27,
+        "duration": 0.98,
+        "sha256": "786cdef7e756cf8096423fe89f29ece5c7c961633a0969ca2fbb1dee2d582ede"
+      },
+      {
+        "hash": "c41959a8",
+        "text": "ベッドが",
+        "reading": "ベッドが",
+        "from": 45.72,
+        "to": 46.6,
+        "duration": 0.88,
+        "sha256": "23361d21d538d54a58e317b8a5f4d393d705e063427449f0992e95cbeabe974e"
+      },
+      {
+        "hash": "7218d892",
+        "text": "ベッドを",
+        "reading": "ベッドを",
+        "from": 48.09,
+        "to": 48.87,
+        "duration": 0.78,
+        "sha256": "e913206a85498ba8547ce2ad4067d4c6c19540adbdf53a30c921d0ae858d0d9b"
+      },
+      {
+        "hash": "1dd9291e",
+        "text": "ランプが",
+        "reading": "ランプが",
+        "from": 50.27,
+        "to": 51.2,
+        "duration": 0.93,
+        "sha256": "d81d812e483de13ba7b204204128921855b16dbd3c378e6e488ae4e6ed1a997a"
+      },
+      {
+        "hash": "e7da671c",
+        "text": "ランプを",
+        "reading": "ランプを",
+        "from": 52.63,
+        "to": 53.51,
+        "duration": 0.88,
+        "sha256": "24187be652717285c2569391e6f54b6389bec52bd3a746ef013d9a0ed7680637"
+      },
+      {
+        "hash": "121bbb03",
+        "text": "うえきばちが",
+        "reading": "うえきばちが",
+        "from": 54.75,
+        "to": 55.77,
+        "duration": 1.02,
+        "sha256": "7513f18bbf3971ceb37c89293a84154b027f199734baf140ef57d0f69cfdad44"
+      },
+      {
+        "hash": "501a899d",
+        "text": "うえきばちを",
+        "reading": "うえきばちを",
+        "from": 57.11,
+        "to": 58.13,
+        "duration": 1.02,
+        "sha256": "58a466cffefcdfcd053442775ed6ba4617094910c30de8ea7994c208da4044ca"
+      },
+      {
+        "hash": "60803488",
+        "text": "テレビが",
+        "reading": "テレビが",
+        "from": 59.56,
+        "to": 60.32,
+        "duration": 0.76,
+        "sha256": "6000f2ac14dde9b08d5a45621a28e145f2f8163dd36c3834e3cf43057a2bf08c"
+      },
+      {
+        "hash": "8e807cf2",
+        "text": "テレビを",
+        "reading": "テレビを",
+        "from": 61.77,
+        "to": 62.49,
+        "duration": 0.72,
+        "sha256": "55f9f53da5e34d12faaff2d233428b84f739ee961e7ff646ba39a7cd93c267bd"
+      },
+      {
+        "hash": "499d6f3a",
+        "text": "ソファが",
+        "reading": "ソファが",
+        "from": 63.98,
+        "to": 64.9,
+        "duration": 0.92,
+        "sha256": "10fdd7974fb0badbd037f62e5dffd7e34aa07c35eaa46f588aaa41200abc00e7"
+      },
+      {
+        "hash": "eb9e6e40",
+        "text": "ソファを",
+        "reading": "ソファを",
+        "from": 66.39,
+        "to": 67.24,
+        "duration": 0.85,
+        "sha256": "0817991ac46c828fbd2c6a831effd381d3a127fa6b7f92e9ce52107cc4685135"
+      },
+      {
+        "hash": "45b77297",
+        "text": "ほんだなが",
+        "reading": "ほんだなが",
+        "from": 68.84,
+        "to": 69.77,
+        "duration": 0.93,
+        "sha256": "e811985e3ba86909e10635392f1ced4ff9e99e4eb46ba6c5e8431a42b85fd627"
+      },
+      {
+        "hash": "8bb7e0c9",
+        "text": "ほんだなを",
+        "reading": "ほんだなを",
+        "from": 71.31,
+        "to": 72.21,
+        "duration": 0.9,
+        "sha256": "447aca37807967d23208d83d919c05ea14a0d640051dbc80bffc3a96ac8dbdba"
+      },
+      {
+        "hash": "f29ac9d1",
+        "text": "ピアノが",
+        "reading": "ピアノが",
+        "from": 73.5,
+        "to": 74.37,
+        "duration": 0.87,
+        "sha256": "60237ff31486b95d1e6f768cb64cdf539e22bffe4316a7bec84c8c9562b0d477"
+      },
+      {
+        "hash": "bc9a74cf",
+        "text": "ピアノを",
+        "reading": "ピアノを",
+        "from": 75.8,
+        "to": 76.58,
+        "duration": 0.78,
+        "sha256": "9bc8d156db7d6bb46858b696c58687ee2a4b54d14fe8ea595de30d3914c11c2c"
+      },
+      {
+        "hash": "bf5b830c",
+        "text": "くまのぬいぐるみが",
+        "reading": "くまのぬいぐるみが",
+        "from": 77.79,
+        "to": 79.05,
+        "duration": 1.26,
+        "sha256": "c74d1e5766060fb677f35c7ecae9da409153f34cf4511c6efa2275c0c60c4573"
+      },
+      {
+        "hash": "155c0a6e",
+        "text": "くまのぬいぐるみを",
+        "reading": "くまのぬいぐるみを",
+        "from": 80.38,
+        "to": 81.69,
+        "duration": 1.31,
+        "sha256": "7c82835db75c58b3bfc02b9041fae2ee28c92cec072a979756783ec9757e7c76"
+      },
+      {
+        "hash": "d8884ea4",
+        "text": "はしらどけいが",
+        "reading": "はしらどけいが",
+        "from": 82.98,
+        "to": 84.06,
+        "duration": 1.08,
+        "sha256": "a2332185b278b26deb6db7c78ca557afe0c03eb2c9d3717a0f1dbfab42dbd695"
+      },
+      {
+        "hash": "1e88bcd6",
+        "text": "はしらどけいを",
+        "reading": "はしらどけいを",
+        "from": 85.31,
+        "to": 86.4,
+        "duration": 1.09,
+        "sha256": "014f2b33eb08d008a33c1cd96df81314cfed766c626acb1895eb80086e968a51"
+      },
+      {
+        "hash": "a6f1a054",
+        "text": "きのこのいすが",
+        "reading": "きのこのいすが",
+        "from": 87.71,
+        "to": 88.84,
+        "duration": 1.13,
+        "sha256": "fb04207f8ac0c66cd92d09b8e4b5d9f6bd45258782f626035245cec77edff523"
+      },
+      {
+        "hash": "ccf04926",
+        "text": "きのこのいすを",
+        "reading": "きのこのいすを",
+        "from": 90.07,
+        "to": 91.17,
+        "duration": 1.1,
+        "sha256": "cffe479ee045dbec75847a0f22d66e733c4ed8e785443454dd850d5a2bfd7629"
+      },
+      {
+        "hash": "bdbb2454",
+        "text": "ロケットが",
+        "reading": "ロケットが",
+        "from": 92.45,
+        "to": 93.35,
+        "duration": 0.9,
+        "sha256": "971e997fae8abfcd9df8b48f0726444c165dc5b2b6c688b6a5adb1bb2cf79f0a"
+      },
+      {
+        "hash": "e3b9cd26",
+        "text": "ロケットを",
+        "reading": "ロケットを",
+        "from": 94.71,
+        "to": 95.59,
+        "duration": 0.88,
+        "sha256": "9bda712439e84e1de78e607e5afb635f56f67a8af7a1f148183ced9e9262429b"
+      },
+      {
+        "hash": "4c03b5fb",
+        "text": "プレゼントが",
+        "reading": "プレゼントが",
+        "from": 96.72,
+        "to": 97.68,
+        "duration": 0.96,
+        "sha256": "76c72464ccb118b32a7f8a15f7f011791b70fbad031800350dd1c1073ff8f5e6"
+      }
+    ]
+  },
+  {
+    "batchId": 12,
+    "status": "imported",
+    "filename": "batch-12-source.wav",
+    "sourceSha256": "02a44beac5c46ef97b649a521c58d820af82aedfa6181ec3b2f2d6191ccbf5cc",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 67.32,
+    "peak": 26295,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "7a026b65",
+        "text": "プレゼントを",
+        "reading": "プレゼントを",
+        "from": 0.16,
+        "to": 1.53,
+        "duration": 1.37,
+        "sha256": "72c25aec6ff879cd40be75dd1001db0a4317f658144f07ab5adfea09a4089cef"
+      },
+      {
+        "hash": "2339d29d",
+        "text": "すいそうが",
+        "reading": "すいそうが",
+        "from": 2.08,
+        "to": 3.36,
+        "duration": 1.28,
+        "sha256": "832e33674020d12edc33fbcfe9387572d0c857d0c1d83a2807a92bb3e1dadef3"
+      },
+      {
+        "hash": "e53b0403",
+        "text": "すいそうを",
+        "reading": "すいそうを",
+        "from": 3.94,
+        "to": 5.07,
+        "duration": 1.13,
+        "sha256": "d7d21c79105a6d0228465b4a0b7ab1e57d7adb2d2266fcf4b763719223f5af2d"
+      },
+      {
+        "hash": "aa444c65",
+        "text": "だんろが",
+        "reading": "だんろが",
+        "from": 5.69,
+        "to": 6.56,
+        "duration": 0.87,
+        "sha256": "b352af95283421087500da662393fc889cdb5ac5afe090cc428bce63bc216fbb"
+      },
+      {
+        "hash": "7c4596fb",
+        "text": "だんろを",
+        "reading": "だんろを",
+        "from": 7.27,
+        "to": 8.09,
+        "duration": 0.82,
+        "sha256": "a40508cbd7e3ad42be3714fd5834250b5b356cae20d62ee4e98ea4dcecd68e10"
+      },
+      {
+        "hash": "02083c3f",
+        "text": "ゆきだるまが",
+        "reading": "ゆきだるまが",
+        "from": 8.69,
+        "to": 9.78,
+        "duration": 1.09,
+        "sha256": "b658cbc330d70a5ee0b0ed3f07f3bcfbe2a50929f72d7bf48d66b379066c3cec"
+      },
+      {
+        "hash": "d8098d21",
+        "text": "ゆきだるまを",
+        "reading": "ゆきだるまを",
+        "from": 10.44,
+        "to": 11.53,
+        "duration": 1.09,
+        "sha256": "b619d642db8feada5f31fe33fa65746994ec2d7c68851133f096028a5381b619"
+      },
+      {
+        "hash": "b6a7b5f4",
+        "text": "クリスマスツリーが",
+        "reading": "クリスマスツリーが",
+        "from": 12.09,
+        "to": 13.62,
+        "duration": 1.53,
+        "sha256": "2c6f5d5296d693bd1e49d980906756f1be866d193f1c1f59cd5148123f8123b1"
+      },
+      {
+        "hash": "5ca72846",
+        "text": "クリスマスツリーを",
+        "reading": "クリスマスツリーを",
+        "from": 14.21,
+        "to": 15.64,
+        "duration": 1.43,
+        "sha256": "00ebc5a956f9545d5e9a137935b2a93486e92bbb9fe8a896fa3dad451833e5bc"
+      },
+      {
+        "hash": "03179186",
+        "text": "かぼちゃが",
+        "reading": "かぼちゃが",
+        "from": 16.22,
+        "to": 17.15,
+        "duration": 0.93,
+        "sha256": "1a9f64f9765e1c04886b762710695371027d265f3eb508623adbae886f69c4de"
+      },
+      {
+        "hash": "dd18e8b4",
+        "text": "かぼちゃを",
+        "reading": "かぼちゃを",
+        "from": 17.77,
+        "to": 18.65,
+        "duration": 0.88,
+        "sha256": "2d41a9a0decfa8376b1c2439a485f8ae4c6534ec6e6646ccde87c72dcf80f4bb"
+      },
+      {
+        "hash": "f20a40d6",
+        "text": "リボンを",
+        "reading": "リボンを",
+        "from": 19.26,
+        "to": 20.23,
+        "duration": 0.97,
+        "sha256": "71dcb67dd7758b89625ee554cb6f0f35a6ef95e568ae66c639eb135aaeee7efe"
+      },
+      {
+        "hash": "6232e393",
+        "text": "リボン！",
+        "reading": "リボン！",
+        "from": 20.81,
+        "to": 21.48,
+        "duration": 0.67,
+        "sha256": "49fa073c6f380768da32dafdf36d007c641cae7ca9679339efb579453a99f8de"
+      },
+      {
+        "hash": "ff78bc1c",
+        "text": "むぎわらぼうしを",
+        "reading": "むぎわらぼうしを",
+        "from": 22.11,
+        "to": 23.44,
+        "duration": 1.33,
+        "sha256": "cc87fa32fc1c78eb005017839c0c6713e83e2ec7e49c6685500013cbdb51c3c7"
+      },
+      {
+        "hash": "72e7a325",
+        "text": "むぎわらぼうし！",
+        "reading": "むぎわらぼうし！",
+        "from": 23.99,
+        "to": 25.21,
+        "duration": 1.22,
+        "sha256": "5b7ea08f9a8a6895efba4fa193277d550a513bcc84ec27ef4357f1c6d28ff546"
+      },
+      {
+        "hash": "80a56380",
+        "text": "おはなのかんむりを",
+        "reading": "おはなのかんむりを",
+        "from": 25.8,
+        "to": 27.26,
+        "duration": 1.46,
+        "sha256": "4c0f6bc5fa0fc1fcd26936301ccee65a1ba361ff0dba94486d27e18924c365c2"
+      },
+      {
+        "hash": "14be80e9",
+        "text": "おはなのかんむり！",
+        "reading": "おはなのかんむり！",
+        "from": 27.87,
+        "to": 29.14,
+        "duration": 1.27,
+        "sha256": "648feefd52ae70a5996ddae075996496dff1d27a6f20dbb06af23d4966298d8f"
+      },
+      {
+        "hash": "f7df2af7",
+        "text": "きんのおうかんを",
+        "reading": "きんのおうかんを",
+        "from": 29.75,
+        "to": 31.21,
+        "duration": 1.46,
+        "sha256": "01cfd555e529afd45a5633313b01e285dcb922a0f26a3ff38ae2afdd25ed56b4"
+      },
+      {
+        "hash": "88621f3a",
+        "text": "きんのおうかん！",
+        "reading": "きんのおうかん！",
+        "from": 31.82,
+        "to": 32.9,
+        "duration": 1.08,
+        "sha256": "1bcf266b38ac00b14c24d56b10ef764e17df306fcdc15b2416e9a203492a0c1b"
+      },
+      {
+        "hash": "81817fe3",
+        "text": "キャップを",
+        "reading": "キャップを",
+        "from": 33.5,
+        "to": 34.48,
+        "duration": 0.98,
+        "sha256": "a66f1dc423b7fd7642dc08c09bb4c4ada055e61fe87b9e72da9343169316ab1a"
+      },
+      {
+        "hash": "f21592c6",
+        "text": "キャップ！",
+        "reading": "キャップ！",
+        "from": 35.04,
+        "to": 35.7,
+        "duration": 0.66,
+        "sha256": "33fa2ca33c005c61d38467e389d55b249ea3128dbf2e354f7a8fa2636fead98c"
+      },
+      {
+        "hash": "4245d884",
+        "text": "シルクハットを",
+        "reading": "シルクハットを",
+        "from": 36.25,
+        "to": 37.71,
+        "duration": 1.46,
+        "sha256": "6affde867a4da79653e159aa11b6978cac5179f2830f712c52a6d1d378cea8cc"
+      },
+      {
+        "hash": "d674ffed",
+        "text": "シルクハット！",
+        "reading": "シルクハット！",
+        "from": 38.23,
+        "to": 39.33,
+        "duration": 1.1,
+        "sha256": "3961f915e6ae8a5a073aa26b7de882f67060c5a0cccd0eb3ccff0d11f1f9bdd9"
+      },
+      {
+        "hash": "e49162c0",
+        "text": "きのこぼうしを",
+        "reading": "きのこぼうしを",
+        "from": 39.86,
+        "to": 41.14,
+        "duration": 1.28,
+        "sha256": "4b30ff30a352ad29a42cb3568f893117c739c51159a73659fa3a5d0c6565568f"
+      },
+      {
+        "hash": "765c2b29",
+        "text": "きのこぼうし！",
+        "reading": "きのこぼうし！",
+        "from": 41.72,
+        "to": 42.77,
+        "duration": 1.05,
+        "sha256": "fe5f4c7858b9521660bc76806ddb0ac23ad4ba724560ab66711a2c6e8afe68bd"
+      },
+      {
+        "hash": "7514b01f",
+        "text": "めがねを",
+        "reading": "めがねを",
+        "from": 43.29,
+        "to": 44.25,
+        "duration": 0.96,
+        "sha256": "a3247f730397ba50815371027dd1f267b363c9bdcfc396f2a2d9e34f9f2db8ac"
+      },
+      {
+        "hash": "04d14a62",
+        "text": "めがね！",
+        "reading": "めがね！",
+        "from": 44.83,
+        "to": 45.58,
+        "duration": 0.75,
+        "sha256": "eea41c73cd494a2f499395ee7bc65414788d5c200ff6ce92bae9ea20755a88da"
+      },
+      {
+        "hash": "4b12236d",
+        "text": "サングラスを",
+        "reading": "サングラスを",
+        "from": 46.12,
+        "to": 47.39,
+        "duration": 1.27,
+        "sha256": "092b0c5763c4db1ea6b83d248b48b271b9c6f7ace65a4138e4a719a3b28917b7"
+      },
+      {
+        "hash": "b87ab504",
+        "text": "サングラス！",
+        "reading": "サングラス！",
+        "from": 47.96,
+        "to": 49,
+        "duration": 1.04,
+        "sha256": "adf00c8e361ab1cfcd0d6664f96fcddbec297c4bd1c1786b14978aaea007f471"
+      },
+      {
+        "hash": "6bcde2db",
+        "text": "Tシャツを",
+        "reading": "Tシャツを",
+        "from": 49.57,
+        "to": 50.61,
+        "duration": 1.04,
+        "sha256": "456896585cbfbb43d3c4fca592878bd4ec4d1c3aeaf2ba8f3cf8ea9f1bb21563"
+      },
+      {
+        "hash": "dc6cfabe",
+        "text": "Tシャツ！",
+        "reading": "Tシャツ！",
+        "from": 51.19,
+        "to": 52.01,
+        "duration": 0.82,
+        "sha256": "ed8121961f1afb81530fcb5495ed6ba802156d9043418368bfb961622451ae92"
+      },
+      {
+        "hash": "418d27dd",
+        "text": "ボーダーシャツを",
+        "reading": "ボーダーシャツを",
+        "from": 52.56,
+        "to": 53.74,
+        "duration": 1.18,
+        "sha256": "43f166e42a1fd84bea6650b2b199dc443b47c9943ea13aaa828ca4b472d70a51"
+      },
+      {
+        "hash": "cd62ebd4",
+        "text": "ボーダーシャツ！",
+        "reading": "ボーダーシャツ！",
+        "from": 54.31,
+        "to": 55.27,
+        "duration": 0.96,
+        "sha256": "95f41629170193ef167071fd863b95fffc5cf347bc98e80dd30728ab9a5ea23e"
+      },
+      {
+        "hash": "23eaa500",
+        "text": "ワンピースを",
+        "reading": "ワンピースを",
+        "from": 55.92,
+        "to": 57.08,
+        "duration": 1.16,
+        "sha256": "239a4f1093ac963719acc49e84ad091b2b3743b6ac7a595f0915e66284fc5d04"
+      },
+      {
+        "hash": "b5bedf69",
+        "text": "ワンピース！",
+        "reading": "ワンピース！",
+        "from": 57.67,
+        "to": 58.61,
+        "duration": 0.94,
+        "sha256": "7519781cbc4aa06a91a9d542b3274a406df87c2c7c8fb2c53023a2877774ee1f"
+      },
+      {
+        "hash": "8152fa5c",
+        "text": "オーバーオールを",
+        "reading": "オーバーオールを",
+        "from": 59.21,
+        "to": 60.42,
+        "duration": 1.21,
+        "sha256": "84c91e8118b822b1314c06f37f5c13ea1f11e68347e47e2a43bf05b6fb46dc14"
+      },
+      {
+        "hash": "f5883b65",
+        "text": "オーバーオール！",
+        "reading": "オーバーオール！",
+        "from": 61,
+        "to": 62.03,
+        "duration": 1.03,
+        "sha256": "8f85445261cd8e4f7eb59d42d3492069d91c1223567e5c6759d822579f1839f0"
+      },
+      {
+        "hash": "cd9e77ff",
+        "text": "レインコートを",
+        "reading": "レインコートを",
+        "from": 62.6,
+        "to": 63.86,
+        "duration": 1.26,
+        "sha256": "32aa7efbc8c5a976a820c35afc1d942a9bdd4543c5e9f76fa04415c88bdb6364"
+      },
+      {
+        "hash": "5f124742",
+        "text": "レインコート！",
+        "reading": "レインコート！",
+        "from": 64.48,
+        "to": 65.5,
+        "duration": 1.02,
+        "sha256": "0b5b3f277f16a05d1d9bc54709bc5f77a589d44712672c5ec73a784bd5bc9e9c"
+      },
+      {
+        "hash": "70eec41b",
+        "text": "ゆかたを",
+        "reading": "ゆかたを",
+        "from": 66.18,
+        "to": 67.13,
+        "duration": 0.95,
+        "sha256": "f655af8296175826c678500962ba05cbebcec543835070dc154b8ebe8a25aeaa"
+      }
+    ]
+  },
+  {
+    "batchId": 13,
+    "status": "imported",
+    "filename": "batch-13-source.wav",
+    "sourceSha256": "91f2ebb262f861a6a0bd7fb217e1434337e3a726fac569b748287a19d70c0c14",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 74.24,
+    "peak": 26468,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "e0bfa2fe",
+        "text": "ゆかた！",
+        "reading": "ゆかた！",
+        "from": 0.21,
+        "to": 1.32,
+        "duration": 1.11,
+        "sha256": "9a190eea10769c920a30d89706af881de9907c0f6e02a6bc9d1997899dedb5f5"
+      },
+      {
+        "hash": "5b944e80",
+        "text": "はなのたねを",
+        "reading": "はなのたねを",
+        "from": 2.11,
+        "to": 3.72,
+        "duration": 1.61,
+        "sha256": "e6716b56e0b472b8abf76a3fe764ee852a98e9e4a3569e69b508fe47dac20e6d"
+      },
+      {
+        "hash": "85c06ef3",
+        "text": "たねをうえたよ！",
+        "reading": "たねをうえたよ！",
+        "from": 4.35,
+        "to": 5.49,
+        "duration": 1.14,
+        "sha256": "253226720e5d7a34fb719e0680ca5a53e9e4bc9050bf563aaa0d4b18d9dbcf85"
+      },
+      {
+        "hash": "2400eb96",
+        "text": "おおきくなあれ！",
+        "reading": "おおきくなあれ！",
+        "from": 6.24,
+        "to": 7.68,
+        "duration": 1.44,
+        "sha256": "13bdf2281fad5b3eee8ef3774dfe82b08b689ac344a9dcf7bf9e0231ade1be4e"
+      },
+      {
+        "hash": "5d06304b",
+        "text": "たねがないよ。",
+        "reading": "たねがないよ。",
+        "from": 8.33,
+        "to": 10.03,
+        "duration": 1.7,
+        "sha256": "6eb798c46b6b24503135187c0c404235921d445ebebe1e37914e483519a09c51"
+      },
+      {
+        "hash": "f35fde4b",
+        "text": "おみせでかえるよ！",
+        "reading": "おみせでかえるよ！",
+        "from": 10.65,
+        "to": 11.79,
+        "duration": 1.14,
+        "sha256": "7633b3da1b3929da9230e9e2d94b2f6c76135db7bb744a429e0b52e74fddd644"
+      },
+      {
+        "hash": "0ddad7d8",
+        "text": "おみずをあげたよ！",
+        "reading": "おみずをあげたよ！",
+        "from": 12.46,
+        "to": 13.81,
+        "duration": 1.35,
+        "sha256": "6f56e97739c5da59d8c058a853e4c8c394c16f5fde33aec447bdb8e477b6a74b"
+      },
+      {
+        "hash": "3be06211",
+        "text": "もうすこしでさくよ。",
+        "reading": "もうすこしでさくよ。",
+        "from": 14.48,
+        "to": 16.02,
+        "duration": 1.54,
+        "sha256": "9247f2b4fae237632a06d47f5ba12f73f5642be7f5c6ecbdaf7fd14b462b0758"
+      },
+      {
+        "hash": "df106262",
+        "text": "まってね！",
+        "reading": "まってね！",
+        "from": 16.72,
+        "to": 17.51,
+        "duration": 0.79,
+        "sha256": "7b3f6d38ea8096dd36cd953874079c5af6d9bff097f545681599cf084377b909"
+      },
+      {
+        "hash": "8927e653",
+        "text": "いらっしゃいませ！",
+        "reading": "いらっしゃいませ！",
+        "from": 18.19,
+        "to": 19.56,
+        "duration": 1.37,
+        "sha256": "23c2ba99054ec3849df3d08efba25cb412acbe7e0865db84507949307d454be9"
+      },
+      {
+        "hash": "5ffcb5e1",
+        "text": "ほしいものにさわってね！",
+        "reading": "ほしいものにさわってね！",
+        "from": 20.22,
+        "to": 21.97,
+        "duration": 1.75,
+        "sha256": "4b4e56f71e23ace4c9449a710f39ed0ab936c0be51830926b33734da63beda66"
+      },
+      {
+        "hash": "af8c77da",
+        "text": "それはうりきれ。",
+        "reading": "それはうりきれ。",
+        "from": 22.59,
+        "to": 24.14,
+        "duration": 1.55,
+        "sha256": "a74189a0fddfc4388fa0d8aa9d061d69e05de0e495b3cf4fe9e27e5a681865cf"
+      },
+      {
+        "hash": "6ddf8f5b",
+        "text": "またあしたきてね！",
+        "reading": "またあしたきてね！",
+        "from": 24.78,
+        "to": 26.18,
+        "duration": 1.4,
+        "sha256": "b26171a07c0a32033d88a4cd58efc274112d1902b78edbb7375227a2dde721d1"
+      },
+      {
+        "hash": "978b2296",
+        "text": "うるものがないよ。",
+        "reading": "うるものがないよ。",
+        "from": 26.83,
+        "to": 28.55,
+        "duration": 1.72,
+        "sha256": "46fa91290b4cd233d1e731a9505b7eb0c5d094ed3c8714a10076273bae0eddad"
+      },
+      {
+        "hash": "c1d87f9b",
+        "text": "むしやさかなをあつめてね！",
+        "reading": "むしやさかなをあつめてね！",
+        "from": 29.21,
+        "to": 31.05,
+        "duration": 1.84,
+        "sha256": "f2d1fa54c0c1bc90d47d3592b23ecaaf790ac326303ad1b49a7d5b91019aedcf"
+      },
+      {
+        "hash": "8d9fda90",
+        "text": "きせかえしよう！",
+        "reading": "きせかえしよう！",
+        "from": 31.65,
+        "to": 32.82,
+        "duration": 1.17,
+        "sha256": "7ae7149489bbcddffd5329b4d81fe16eccc09ff27da3cde421d7d18dd908b89c"
+      },
+      {
+        "hash": "174c5ea0",
+        "text": "すきなものをえらんでね！",
+        "reading": "すきなものをえらんでね！",
+        "from": 33.48,
+        "to": 35.04,
+        "duration": 1.56,
+        "sha256": "01215bf98bac2643e21d3140294ac0c26a0f529cd280adb3903ad9db90dce541"
+      },
+      {
+        "hash": "47b1ed38",
+        "text": "じぶんのおうちだよ！",
+        "reading": "じぶんのおうちだよ！",
+        "from": 35.71,
+        "to": 37.17,
+        "duration": 1.46,
+        "sha256": "5f3c4ddba89fe5d48d27c10c58ed07a498d670db2a096a4f0144ce445e9dd011"
+      },
+      {
+        "hash": "812fbcc5",
+        "text": "かぐをおいてかざろう！",
+        "reading": "かぐをおいてかざろう！",
+        "from": 37.83,
+        "to": 39.5,
+        "duration": 1.67,
+        "sha256": "acebb81c96df0516d1b45bf48307be34e2aad2a84d0f8b487bb9e97fbd05a0ef"
+      },
+      {
+        "hash": "b916fb56",
+        "text": "ゆびでひっぱるとうごかせるよ！",
+        "reading": "ゆびでひっぱるとうごかせるよ！",
+        "from": 40.16,
+        "to": 42.18,
+        "duration": 2.02,
+        "sha256": "e708dacaff9edcb620646d59be29a0d60ce9c43950c89e53d4c9c71426007afe"
+      },
+      {
+        "hash": "b62acd94",
+        "text": "おくばしょがないよ。",
+        "reading": "おくばしょがないよ。",
+        "from": 42.79,
+        "to": 44.62,
+        "duration": 1.83,
+        "sha256": "d2b64a5367634b8fb863d2e8eb88ed77f0b0bf5281e8cf8ebed1880c0514ecf3"
+      },
+      {
+        "hash": "6293d2a1",
+        "text": "なにかしまってね！",
+        "reading": "なにかしまってね！",
+        "from": 45.23,
+        "to": 46.55,
+        "duration": 1.32,
+        "sha256": "a738d477af775cf9e69a219a5dd55b0b5021a8534140890b6d41a61118b27f61"
+      },
+      {
+        "hash": "e674766a",
+        "text": "ベルがたりないよ。",
+        "reading": "ベルがたりないよ。",
+        "from": 47.27,
+        "to": 49.05,
+        "duration": 1.78,
+        "sha256": "252303361e7866f78527c6a64656b946d2b0c6c177183d9de91b34fc97b934bb"
+      },
+      {
+        "hash": "6c6af617",
+        "text": "あと",
+        "reading": "あと",
+        "from": 49.7,
+        "to": 50.48,
+        "duration": 0.78,
+        "sha256": "4fd8e6f0d9906effcac8e318e382ce1221b61b817b90b8a662e9afb735ce1573"
+      },
+      {
+        "hash": "b6fac622",
+        "text": "いちベル",
+        "reading": "いちベル",
+        "from": 51.11,
+        "to": 51.81,
+        "duration": 0.7,
+        "sha256": "bf6a063f226ffd3f7332398e76e6371b4cd7d81653f514587395fe4c81ea8f1b"
+      },
+      {
+        "hash": "14d93706",
+        "text": "にベル",
+        "reading": "にベル",
+        "from": 52.46,
+        "to": 53.01,
+        "duration": 0.55,
+        "sha256": "a6960afe7f7d523a6fea5eeb6da4d75203fb722d9b7696e98bb5c33a62db0de8"
+      },
+      {
+        "hash": "f39c900c",
+        "text": "よんベル",
+        "reading": "よんベル",
+        "from": 53.62,
+        "to": 54.36,
+        "duration": 0.74,
+        "sha256": "682657d43e18b6c1951fe2da10fc15d9e945434f6ff0530b275320d6a6729355"
+      },
+      {
+        "hash": "c096a3bd",
+        "text": "ろくベル",
+        "reading": "ろくベル",
+        "from": 55.01,
+        "to": 55.77,
+        "duration": 0.76,
+        "sha256": "cc19d75e94ce247f31c9491a5bd949754fa040473c7178ced96857fa0429b18c"
+      },
+      {
+        "hash": "eeb9d9bd",
+        "text": "ななベル",
+        "reading": "ななベル",
+        "from": 56.42,
+        "to": 57.14,
+        "duration": 0.72,
+        "sha256": "a4fd32de5f774421224c90ff59ac2fca9b0ed3bdc9dce0f72698d38f7ac3a5c7"
+      },
+      {
+        "hash": "c334c015",
+        "text": "はちベル",
+        "reading": "はちベル",
+        "from": 57.73,
+        "to": 58.47,
+        "duration": 0.74,
+        "sha256": "6fc5444a5ba311abde133e5c17de8ca2fe1779872f99d3087c1371b98e6758df"
+      },
+      {
+        "hash": "368cd76f",
+        "text": "きゅうベル",
+        "reading": "きゅうベル",
+        "from": 59.05,
+        "to": 59.78,
+        "duration": 0.73,
+        "sha256": "b6607eb8b7ab93db77187d7997e7662761d909191af250f216d455749f73d470"
+      },
+      {
+        "hash": "a94239b3",
+        "text": "じゅういちベル",
+        "reading": "じゅういちベル",
+        "from": 60.41,
+        "to": 61.41,
+        "duration": 1,
+        "sha256": "c7b5f54dd75246c172f94716fdce409d655298151a94849f9b28a51cbc1d78a9"
+      },
+      {
+        "hash": "09eaed29",
+        "text": "じゅうにベル",
+        "reading": "じゅうにベル",
+        "from": 62.05,
+        "to": 62.99,
+        "duration": 0.94,
+        "sha256": "117c418963985650211628a9e19bed7e6b88ba62b6c6e756ab65d080807b1e64"
+      },
+      {
+        "hash": "28220fd4",
+        "text": "じゅうさんベル",
+        "reading": "じゅうさんベル",
+        "from": 63.64,
+        "to": 64.63,
+        "duration": 0.99,
+        "sha256": "6e8e4703487f0511b5e15fedb82d8c363b3257513bd58bbeacf4820cd7cbfe4d"
+      },
+      {
+        "hash": "e34eedc9",
+        "text": "じゅうよんベル",
+        "reading": "じゅうよんベル",
+        "from": 65.27,
+        "to": 66.28,
+        "duration": 1.01,
+        "sha256": "b2624e09a318b917e0bc8699be9f0ca299c1d2e3c494869159c3a6db25e9eb99"
+      },
+      {
+        "hash": "a689d8bc",
+        "text": "じゅうごベル",
+        "reading": "じゅうごベル",
+        "from": 66.81,
+        "to": 67.81,
+        "duration": 1,
+        "sha256": "d29d81ca4a869ac35832de482d90ebc21853d272a4c9054e5024226721751b98"
+      },
+      {
+        "hash": "b5941fd8",
+        "text": "じゅうろくベル",
+        "reading": "じゅうろくベル",
+        "from": 68.45,
+        "to": 69.4,
+        "duration": 0.95,
+        "sha256": "ba2bcfa881d74e59cf77b99701548d1357087465a175334d6de82ac4680b03f4"
+      },
+      {
+        "hash": "9bc55a1c",
+        "text": "じゅうななベル",
+        "reading": "じゅうななベル",
+        "from": 69.96,
+        "to": 71.05,
+        "duration": 1.09,
+        "sha256": "79743df044defa93d1dbc0c0007f8592b1ab923d8fce017d9e5cfc944bff1c71"
+      },
+      {
+        "hash": "2e0f12d4",
+        "text": "じゅうはちベル",
+        "reading": "じゅうはちベル",
+        "from": 71.48,
+        "to": 72.68,
+        "duration": 1.2,
+        "sha256": "47a308ea9c018e802d4498bb9b5d8cf12c86a857221e946a9f0b15b497485934"
+      },
+      {
+        "hash": "3c8ff400",
+        "text": "じゅうきゅうベル",
+        "reading": "じゅうきゅうベル",
+        "from": 73.31,
+        "to": 74.24,
+        "duration": 0.93,
+        "sha256": "277be916d1efe17a288b3fc56ff2fe0f59a8ea2cc76f8a9dea19ddc867206380"
+      }
+    ]
+  },
+  {
+    "batchId": 14,
+    "status": "imported",
+    "filename": "batch-14-source.wav",
+    "sourceSha256": "e3d658f0ca51499605f8871981e44f92d7df9ff95cb6bad819c2fe8b6264a38b",
+    "recipe": "725e7fa4e9ad537a49cba410f7965553e3be4a398d3a95536faf0a899c1ce0cf",
+    "duration": 159.56,
+    "peak": 27276,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "7b25ba25",
+        "text": "にじゅうベル",
+        "reading": "にじゅうベル",
+        "from": 0.24,
+        "to": 1.36,
+        "duration": 1.12,
+        "sha256": "0bc5ebe6074011b0571f026d136bf9e5334677bba3653a87b2cad10552801796"
+      },
+      {
+        "hash": "e2592eba",
+        "text": "にじゅういちベル",
+        "reading": "にじゅういちベル",
+        "from": 5.09,
+        "to": 6.54,
+        "duration": 1.45,
+        "sha256": "373a7381912565db16f2c8510c03cd522efba864136335b22370ee0d65d9f8de"
+      },
+      {
+        "hash": "72bde9de",
+        "text": "にじゅうにベル",
+        "reading": "にじゅうにベル",
+        "from": 10.16,
+        "to": 11.4,
+        "duration": 1.24,
+        "sha256": "ddde931448619da3f6225e9a42b92cd64959ebd87f1f24be47d3a66797b3a793"
+      },
+      {
+        "hash": "9f104ac9",
+        "text": "にじゅうさんベル",
+        "reading": "にじゅうさんベル",
+        "from": 15.15,
+        "to": 17.31,
+        "duration": 2.16,
+        "sha256": "85f8e432d479841926aa870ddef17ae3d31897147a1ab548e992774932bd94a4"
+      },
+      {
+        "hash": "58824cd4",
+        "text": "にじゅうよんベル",
+        "reading": "にじゅうよんベル",
+        "from": 20.09,
+        "to": 22.22,
+        "duration": 2.13,
+        "sha256": "ce1df372f268bea570900a2d978b831efa23227e41084cc8d0a3e4b8fce2c5b9"
+      },
+      {
+        "hash": "76682267",
+        "text": "にじゅうごベル",
+        "reading": "にじゅうごベル",
+        "from": 24.99,
+        "to": 26.97,
+        "duration": 1.98,
+        "sha256": "7dfd8390fcb30bccc1711a63d5bd97f4086748496c1a7771b7a16eaa0b03d5bc"
+      },
+      {
+        "hash": "ec44cc15",
+        "text": "にじゅうろくベル",
+        "reading": "にじゅうろくベル",
+        "from": 29.83,
+        "to": 31.2,
+        "duration": 1.37,
+        "sha256": "3eb55ad9067500e31418ed510e8a743b5bfee5d769885937e4325530069d4402"
+      },
+      {
+        "hash": "dfa9e4d5",
+        "text": "にじゅうななベル",
+        "reading": "にじゅうななベル",
+        "from": 34.66,
+        "to": 36,
+        "duration": 1.34,
+        "sha256": "9577b8fc9f96e147e2ae02b9c34b4659c3f8a43988058170593337dbbca3ab74"
+      },
+      {
+        "hash": "707288bd",
+        "text": "にじゅうはちベル",
+        "reading": "にじゅうはちベル",
+        "from": 39.25,
+        "to": 40.62,
+        "duration": 1.37,
+        "sha256": "3b228f41b1193f4499242bfd160ed650ff21d33cb7c68d703bf0486b7a9bbc2f"
+      },
+      {
+        "hash": "11f36507",
+        "text": "にじゅうきゅうベル",
+        "reading": "にじゅうきゅうベル",
+        "from": 44.05,
+        "to": 45.42,
+        "duration": 1.37,
+        "sha256": "a2931e484fab70fa39f0fc9591a84b700cfff95c8a9f750ae5c00462b2da9bdc"
+      },
+      {
+        "hash": "636e9c0c",
+        "text": "さんじゅうベル",
+        "reading": "さんじゅうベル",
+        "from": 46.73,
+        "to": 47.98,
+        "duration": 1.25,
+        "sha256": "1f65a5e4bd19599c50e15a47c38c590b272d85c97085877e7d4243eb28c99560"
+      },
+      {
+        "hash": "48e7e277",
+        "text": "ぜんぶで",
+        "reading": "ぜんぶで",
+        "from": 51.01,
+        "to": 52.03,
+        "duration": 1.02,
+        "sha256": "1285104e42ba9b01df66f12348b5b7b46d635b5908caea36eedd8f47e2e990d0"
+      },
+      {
+        "hash": "f1ac8a1d",
+        "text": "になったよ！",
+        "reading": "になったよ！",
+        "from": 55.47,
+        "to": 56.35,
+        "duration": 0.88,
+        "sha256": "a0927a59838e38e2a9af0d22ca62940389ff3f754dd9c25ab16594ec7c5594dd"
+      },
+      {
+        "hash": "76fb4577",
+        "text": "さんじゅういちベル",
+        "reading": "さんじゅういちベル",
+        "from": 59.21,
+        "to": 60.69,
+        "duration": 1.48,
+        "sha256": "42855e411b6a7883b990709a33641189f38372d46866dfb32d4d3628ccf1591b"
+      },
+      {
+        "hash": "d7ed866d",
+        "text": "さんじゅうにベル",
+        "reading": "さんじゅうにベル",
+        "from": 63.12,
+        "to": 64.46,
+        "duration": 1.34,
+        "sha256": "51f964fb99cb9af1ed5200c17a6bc4ea273b841c11e6d9b50af5a1e7f6007b95"
+      },
+      {
+        "hash": "50be2708",
+        "text": "さんじゅうさんベル",
+        "reading": "さんじゅうさんベル",
+        "from": 66.99,
+        "to": 68.42,
+        "duration": 1.43,
+        "sha256": "65846fd564afe9a977f89c8f1688e291c5bb34d7e4410b9c867a5c1ee4f61bbc"
+      },
+      {
+        "hash": "76eced55",
+        "text": "さんじゅうよんベル",
+        "reading": "さんじゅうよんベル",
+        "from": 70.91,
+        "to": 72.75,
+        "duration": 1.84,
+        "sha256": "2f0e1d026a3f7cc057e16e099541a7bdcbf951bc27081358177da1aacdd41df0"
+      },
+      {
+        "hash": "38d7f7d8",
+        "text": "さんじゅうごベル",
+        "reading": "さんじゅうごベル",
+        "from": 74.8,
+        "to": 76.1,
+        "duration": 1.3,
+        "sha256": "fb0ef4e2a23ef0f30e478213b2096767d4931e3a3d8ceceecc1c088e28397660"
+      },
+      {
+        "hash": "49c632f4",
+        "text": "さんじゅうろくベル",
+        "reading": "さんじゅうろくベル",
+        "from": 78.54,
+        "to": 80.27,
+        "duration": 1.73,
+        "sha256": "2e0687e37d6d97d0b4eb0ee2e91a816b96d1e6b4f045d161944fce43b4466e93"
+      },
+      {
+        "hash": "6b1432b8",
+        "text": "さんじゅうななベル",
+        "reading": "さんじゅうななベル",
+        "from": 82.1,
+        "to": 83.58,
+        "duration": 1.48,
+        "sha256": "15c512881eb9526767dd3f89ac89b7b5c26c76adc31ce384635bf575c9b0390d"
+      },
+      {
+        "hash": "1d286af8",
+        "text": "さんじゅうはちベル",
+        "reading": "さんじゅうはちベル",
+        "from": 85.02,
+        "to": 86.85,
+        "duration": 1.83,
+        "sha256": "33a2865ef69e2e37dea42f63c4c6abc21c1c16c48f9496008b8ff8abd52454a1"
+      },
+      {
+        "hash": "b3457b2c",
+        "text": "さんじゅうきゅうベル",
+        "reading": "さんじゅうきゅうベル",
+        "from": 89.75,
+        "to": 91.45,
+        "duration": 1.7,
+        "sha256": "9343b2908ee2882636615878b97472ef31d91d04c6ac2f422add07b588411001"
+      },
+      {
+        "hash": "2b1ad6a3",
+        "text": "よんじゅうベル",
+        "reading": "よんじゅうベル",
+        "from": 94.25,
+        "to": 95.36,
+        "duration": 1.11,
+        "sha256": "98781fa5f402077ba4db1aa4974da4e63f10adc065e912af864c6d9f2709cdfa"
+      },
+      {
+        "hash": "73eb8418",
+        "text": "よんじゅういちベル",
+        "reading": "よんじゅういちベル",
+        "from": 98.06,
+        "to": 99.55,
+        "duration": 1.49,
+        "sha256": "1089636128682a8d79b1a3840d289c8fbc7d08a2eb31985dc2008d8339320911"
+      },
+      {
+        "hash": "aa65fbc4",
+        "text": "よんじゅうにベル",
+        "reading": "よんじゅうにベル",
+        "from": 101.93,
+        "to": 103.38,
+        "duration": 1.45,
+        "sha256": "c6edc56711ba023385a2ad19958e1a52f44df4fc0375a92edd605abf8aaf4cb5"
+      },
+      {
+        "hash": "2719babb",
+        "text": "よんじゅうさんベル",
+        "reading": "よんじゅうさんベル",
+        "from": 105.95,
+        "to": 107.47,
+        "duration": 1.52,
+        "sha256": "7d0e5a8fff3adb7d8c6b2563cf426f09f674e249edb894a33665eb84476f33cc"
+      },
+      {
+        "hash": "9fd74a46",
+        "text": "よんじゅうよんベル",
+        "reading": "よんじゅうよんベル",
+        "from": 109.8,
+        "to": 112.87,
+        "duration": 3.07,
+        "sha256": "5337a3763e624dc88692d92ea7c860b76443945d02ebb4cfffd0d63f566df450"
+      },
+      {
+        "hash": "56e25981",
+        "text": "よんじゅうごベル",
+        "reading": "よんじゅうごベル",
+        "from": 113.54,
+        "to": 116.82,
+        "duration": 3.28,
+        "sha256": "a03e51de9c35597217348230161e4648d215aa263a6026d1dffe083c7140deb2"
+      },
+      {
+        "hash": "af2c4e9f",
+        "text": "よんじゅうろくベル",
+        "reading": "よんじゅうろくベル",
+        "from": 117.37,
+        "to": 118.8,
+        "duration": 1.43,
+        "sha256": "446f99157fe8f03ba3ad4dcdba50b14a6fedf4400f70fdf8d4546410d90d5fed"
+      },
+      {
+        "hash": "79176be3",
+        "text": "よんじゅうななベル",
+        "reading": "よんじゅうななベル",
+        "from": 120.87,
+        "to": 122.34,
+        "duration": 1.47,
+        "sha256": "a1394d26758c4024df6c0c42d2eadffbccf2a5b08be637fdda780008ab42a38c"
+      },
+      {
+        "hash": "b698f6d7",
+        "text": "よんじゅうはちベル",
+        "reading": "よんじゅうはちベル",
+        "from": 123.84,
+        "to": 125.37,
+        "duration": 1.53,
+        "sha256": "2d1f1a710ebb34e0715e351ebc7b45bbac8b6593066c20d2a9cd6c22ab106782"
+      },
+      {
+        "hash": "c40e692d",
+        "text": "よんじゅうきゅうベル",
+        "reading": "よんじゅうきゅうベル",
+        "from": 128.26,
+        "to": 129.73,
+        "duration": 1.47,
+        "sha256": "bf44951037da0e42329d2313eb7d28bd8d699d4984f3aeaa3d28275d49d5e1e2"
+      },
+      {
+        "hash": "3f51fe4a",
+        "text": "ごじゅうベル",
+        "reading": "ごじゅうベル",
+        "from": 132.59,
+        "to": 133.61,
+        "duration": 1.02,
+        "sha256": "f9c28d65e5846cb288622b08ce029a16d51931e7b1ba29b49fb1dfd48f719ffb"
+      },
+      {
+        "hash": "a2e34c05",
+        "text": "ごじゅういちベル",
+        "reading": "ごじゅういちベル",
+        "from": 136.27,
+        "to": 137.61,
+        "duration": 1.34,
+        "sha256": "cd03a5ee3507b72e14f3ef02bb2b84ab4927d674636ad86e4670310a4aa24625"
+      },
+      {
+        "hash": "68a8d36b",
+        "text": "ごじゅうにベル",
+        "reading": "ごじゅうにベル",
+        "from": 140.24,
+        "to": 141.46,
+        "duration": 1.22,
+        "sha256": "8b823ae89059b70f27247cfd548896e4b8b1978a05b08a23cb951117e500c15a"
+      },
+      {
+        "hash": "930bac52",
+        "text": "ごじゅうさんベル",
+        "reading": "ごじゅうさんベル",
+        "from": 143.8,
+        "to": 145.1,
+        "duration": 1.3,
+        "sha256": "1a55f63689d30ebd3596d9adbe351bafdf41952722b204ae187e4db13132d486"
+      },
+      {
+        "hash": "2296465f",
+        "text": "ごじゅうよんベル",
+        "reading": "ごじゅうよんベル",
+        "from": 147.4,
+        "to": 148.7,
+        "duration": 1.3,
+        "sha256": "65e5fcb76e71107db8b8502a5d173b03057583fd1a8ae07e3f3a7216ddda6d60"
+      },
+      {
+        "hash": "c04b052a",
+        "text": "ごじゅうごベル",
+        "reading": "ごじゅうごベル",
+        "from": 151.01,
+        "to": 152.18,
+        "duration": 1.17,
+        "sha256": "8ded71dacab46c2ffb170e9c7cd6511410405526aa74c30a51283d6c16da2905"
+      },
+      {
+        "hash": "2bbf032e",
+        "text": "ごじゅうろくベル",
+        "reading": "ごじゅうろくベル",
+        "from": 154.48,
+        "to": 155.66,
+        "duration": 1.18,
+        "sha256": "56f82d422f6590663f0b687e250c10e7d2ae8411f4144985e7ce91aaf9b46786"
+      },
+      {
+        "hash": "601996be",
+        "text": "ごじゅうななベル",
+        "reading": "ごじゅうななベル",
+        "from": 158.04,
+        "to": 159.26,
+        "duration": 1.22,
+        "sha256": "fd5df34fcddd1922af87d37095d24d10b50e0c5f0a95667246d487a8e242fa5e"
+      }
+    ]
+  },
+  {
+    "batchId": 15,
+    "status": "imported",
+    "filename": "batch-15-source.wav",
+    "sourceSha256": "4e7763624ae1a20b25d8d7b498d4e8c33da1f48dc719d719e8029fe871c56287",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 113.92,
+    "peak": 25808,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "963f7452",
+        "text": "ごじゅうはちベル",
+        "reading": "ごじゅうはちベル",
+        "from": 0.21,
+        "to": 1.61,
+        "duration": 1.4,
+        "sha256": "ea7e98f27a3b359c129d6aa8f24b76e328dd90af59b9bba86d713042bca64564"
+      },
+      {
+        "hash": "2b6abe12",
+        "text": "ごじゅうきゅうベル",
+        "reading": "ごじゅうきゅうベル",
+        "from": 3.22,
+        "to": 4.56,
+        "duration": 1.34,
+        "sha256": "3a8e14b7648b17726ce0c0a80cdcc80d8980f73df784ec0f86297e16728ce87f"
+      },
+      {
+        "hash": "e7206060",
+        "text": "ろくじゅうベル",
+        "reading": "ろくじゅうベル",
+        "from": 6.17,
+        "to": 7.26,
+        "duration": 1.09,
+        "sha256": "3314eea55c618f99adf11e8b7455060947f2f5f2ffcebac68f73303e15ea0fa7"
+      },
+      {
+        "hash": "a5059b83",
+        "text": "ろくじゅういちベル",
+        "reading": "ろくじゅういちベル",
+        "from": 8.71,
+        "to": 10.21,
+        "duration": 1.5,
+        "sha256": "48428bba2caed52323ccde5a338572e227fa781a0dda925b40e3cd4c6829e7b0"
+      },
+      {
+        "hash": "9c33a099",
+        "text": "ろくじゅうにベル",
+        "reading": "ろくじゅうにベル",
+        "from": 11.68,
+        "to": 13.06,
+        "duration": 1.38,
+        "sha256": "2790061a107dc8e000201a7bb8c6a45a8f660e01b2b42406566f499d9c6dde12"
+      },
+      {
+        "hash": "74869be4",
+        "text": "ろくじゅうさんベル",
+        "reading": "ろくじゅうさんベル",
+        "from": 14.55,
+        "to": 16.02,
+        "duration": 1.47,
+        "sha256": "4481829c080472d32fd37b1da7bb2b555c9fde7e4655097ab49c973c6a8051d3"
+      },
+      {
+        "hash": "0149a5f9",
+        "text": "ろくじゅうよんベル",
+        "reading": "ろくじゅうよんベル",
+        "from": 17.49,
+        "to": 18.88,
+        "duration": 1.39,
+        "sha256": "c85f2fcc91f6ce464afa8d5ec3d7b795bf0f182706977ebac2b7ccc41dec4fac"
+      },
+      {
+        "hash": "28abbb4c",
+        "text": "ろくじゅうごベル",
+        "reading": "ろくじゅうごベル",
+        "from": 20.42,
+        "to": 21.79,
+        "duration": 1.37,
+        "sha256": "e6501c8cd23ea093cddd46e40816ecc51c2079fdb86886b44266e97f12060584"
+      },
+      {
+        "hash": "df9ae0e8",
+        "text": "ろくじゅうろくベル",
+        "reading": "ろくじゅうろくベル",
+        "from": 23.31,
+        "to": 24.79,
+        "duration": 1.48,
+        "sha256": "0f954aecd1a73cf1dca3c8633cc52dae414bc47750d7181f55cc2ec4c56d5264"
+      },
+      {
+        "hash": "8de73eac",
+        "text": "ろくじゅうななベル",
+        "reading": "ろくじゅうななベル",
+        "from": 26.28,
+        "to": 27.76,
+        "duration": 1.48,
+        "sha256": "6c9dc71deb44c9d748553b671c4e95f624611058e23dc364bbae93e1e4b1d0bf"
+      },
+      {
+        "hash": "67e86864",
+        "text": "ろくじゅうはちベル",
+        "reading": "ろくじゅうはちベル",
+        "from": 29.26,
+        "to": 30.65,
+        "duration": 1.39,
+        "sha256": "e6ad566524220c1104469aa02f4442f09391857088f7757f3cc6d33e5dfc5466"
+      },
+      {
+        "hash": "236b98f0",
+        "text": "ろくじゅうきゅうベル",
+        "reading": "ろくじゅうきゅうベル",
+        "from": 32.15,
+        "to": 33.8,
+        "duration": 1.65,
+        "sha256": "0d23f29efc71648e61bae0c343b2075c3bb9954397a26246480e855e87c2a1f7"
+      },
+      {
+        "hash": "301a1260",
+        "text": "ななじゅうベル",
+        "reading": "ななじゅうベル",
+        "from": 35.16,
+        "to": 36.29,
+        "duration": 1.13,
+        "sha256": "1c2dbe88df0362bf481b3968e75507ecb05b307b07c0c265f3a3f466a6ce0c0f"
+      },
+      {
+        "hash": "b9fd3d83",
+        "text": "ななじゅういちベル",
+        "reading": "ななじゅういちベル",
+        "from": 37.82,
+        "to": 39.29,
+        "duration": 1.47,
+        "sha256": "152c3b8d8195d3daf85dacb255144bb8de072f077cfa05f4732f296cd6ae6f0e"
+      },
+      {
+        "hash": "4044b699",
+        "text": "ななじゅうにベル",
+        "reading": "ななじゅうにベル",
+        "from": 40.81,
+        "to": 42.17,
+        "duration": 1.36,
+        "sha256": "bd8a431aadb1c15b892c9cd4857e2461d79d86e55ba567ee728a63dc95d59242"
+      },
+      {
+        "hash": "d7aadde4",
+        "text": "ななじゅうさんベル",
+        "reading": "ななじゅうさんベル",
+        "from": 43.73,
+        "to": 45.19,
+        "duration": 1.46,
+        "sha256": "5973de0ad22143d2af5eec30eaa8ec9d913d7df7d1a939dc7abc3827eda5a518"
+      },
+      {
+        "hash": "a1a267f9",
+        "text": "ななじゅうよんベル",
+        "reading": "ななじゅうよんベル",
+        "from": 46.72,
+        "to": 48.16,
+        "duration": 1.44,
+        "sha256": "5771347bbf6967dda95c77f3313b4c67cb8950b72c4e0bc0055ed4f1859e2db5"
+      },
+      {
+        "hash": "1ba5314c",
+        "text": "ななじゅうごベル",
+        "reading": "ななじゅうごベル",
+        "from": 49.69,
+        "to": 51.04,
+        "duration": 1.35,
+        "sha256": "402a9428e65f44aae419e29020d3172a0a8c71c0c5997249bfed1b173b9631f3"
+      },
+      {
+        "hash": "b7f522e8",
+        "text": "ななじゅうろくベル",
+        "reading": "ななじゅうろくベル",
+        "from": 52.61,
+        "to": 54.05,
+        "duration": 1.44,
+        "sha256": "a80d9cdea758f0d71ab3f0e6ad099d10eefcf749845060bd1062dd466feb6cfb"
+      },
+      {
+        "hash": "fa5100ac",
+        "text": "ななじゅうななベル",
+        "reading": "ななじゅうななベル",
+        "from": 55.58,
+        "to": 57.08,
+        "duration": 1.5,
+        "sha256": "f9d3cb4262dc513d9aabd3383c01dd483fd439d19d58d633a4574b7f12df2e65"
+      },
+      {
+        "hash": "e6cf8a64",
+        "text": "ななじゅうはちベル",
+        "reading": "ななじゅうはちベル",
+        "from": 58.6,
+        "to": 59.96,
+        "duration": 1.36,
+        "sha256": "1a761a28dcb6caae2d487ea90d89865aaaea8d8b53037e19ad6a3f503dc8e741"
+      },
+      {
+        "hash": "061bdef0",
+        "text": "ななじゅうきゅうベル",
+        "reading": "ななじゅうきゅうベル",
+        "from": 61.53,
+        "to": 62.95,
+        "duration": 1.42,
+        "sha256": "f7628d901dd00a451906beadda5c6c63d5d50aff48559d100e6120f2cffc3064"
+      },
+      {
+        "hash": "d4c291f8",
+        "text": "はちじゅうベル",
+        "reading": "はちじゅうベル",
+        "from": 64.49,
+        "to": 65.52,
+        "duration": 1.03,
+        "sha256": "3b64165d793b2be7a06db77b3a02cd5f9213b151c1785ec77857daeb7cc1be82"
+      },
+      {
+        "hash": "9a95bbdb",
+        "text": "はちじゅういちベル",
+        "reading": "はちじゅういちベル",
+        "from": 67.03,
+        "to": 68.4,
+        "duration": 1.37,
+        "sha256": "192b866832f156388f2a507f7163f00e16fe7517f735b2c2abe4e99f19f54bae"
+      },
+      {
+        "hash": "9c667eb1",
+        "text": "はちじゅうにベル",
+        "reading": "はちじゅうにベル",
+        "from": 69.89,
+        "to": 71.15,
+        "duration": 1.26,
+        "sha256": "2167d3a67b5bc37a0d488bb7292ab31cdd70018b9618bbe130df0b71594d2a0b"
+      },
+      {
+        "hash": "fba2db5c",
+        "text": "はちじゅうさんベル",
+        "reading": "はちじゅうさんベル",
+        "from": 72.68,
+        "to": 74.08,
+        "duration": 1.4,
+        "sha256": "c78e80c5cb9bb837efe451fcc88855078cbf8427110175e832f5d5720f50923b"
+      },
+      {
+        "hash": "13476161",
+        "text": "はちじゅうよんベル",
+        "reading": "はちじゅうよんベル",
+        "from": 75.57,
+        "to": 76.96,
+        "duration": 1.39,
+        "sha256": "093db03731b480751fef272eb32274379f9d20c6c71b5498ca7ba062b75a2b4c"
+      },
+      {
+        "hash": "192e8154",
+        "text": "はちじゅうごベル",
+        "reading": "はちじゅうごベル",
+        "from": 78.52,
+        "to": 79.79,
+        "duration": 1.27,
+        "sha256": "29b2ad6f61db7190db68257e99e21efeaf0eb3da3711dc7723813b2f84842dfd"
+      },
+      {
+        "hash": "5079cea0",
+        "text": "はちじゅうろくベル",
+        "reading": "はちじゅうろくベル",
+        "from": 81.32,
+        "to": 82.67,
+        "duration": 1.35,
+        "sha256": "a7c35e83c393d7f0fc4e0d396985f97cdfaa198ab26302a04b255e974312e2c4"
+      },
+      {
+        "hash": "12a3afe4",
+        "text": "はちじゅうななベル",
+        "reading": "はちじゅうななベル",
+        "from": 84.18,
+        "to": 85.53,
+        "duration": 1.35,
+        "sha256": "3ee3d88aa24f6023ee5ebbefcdef474cf61cfa301086292eb373d602ad4a900e"
+      },
+      {
+        "hash": "5a332fec",
+        "text": "はちじゅうはちベル",
+        "reading": "はちじゅうはちベル",
+        "from": 87.03,
+        "to": 88.34,
+        "duration": 1.31,
+        "sha256": "54190fa3af034f42f9d502b8f5049f31ebca281c1035b3073eec074959397381"
+      },
+      {
+        "hash": "6fe27288",
+        "text": "はちじゅうきゅうベル",
+        "reading": "はちじゅうきゅうベル",
+        "from": 89.79,
+        "to": 91.16,
+        "duration": 1.37,
+        "sha256": "e3b0617109f3fbe4e531764aef5a80f7dc304347f82241794b626e372512e11e"
+      },
+      {
+        "hash": "f89a859a",
+        "text": "きゅうじゅうベル",
+        "reading": "きゅうじゅうベル",
+        "from": 92.72,
+        "to": 93.79,
+        "duration": 1.07,
+        "sha256": "532e2b79f7e462ceac278f8a26bbd7911e4e2277f735775374faa4712e875503"
+      },
+      {
+        "hash": "0f3ce355",
+        "text": "きゅうじゅういちベル",
+        "reading": "きゅうじゅういちベル",
+        "from": 95.33,
+        "to": 96.67,
+        "duration": 1.34,
+        "sha256": "e350aa31f252451e01732b1cefc893d503e789973ce1d51a2d57ba3b068e6311"
+      },
+      {
+        "hash": "63a6439b",
+        "text": "きゅうじゅうにベル",
+        "reading": "きゅうじゅうにベル",
+        "from": 98.21,
+        "to": 99.49,
+        "duration": 1.28,
+        "sha256": "2ae2a37e786a62e4da449e176bd3d7969352ea6fe1127d6d4e81df94e48e9a5f"
+      },
+      {
+        "hash": "18529262",
+        "text": "きゅうじゅうさんベル",
+        "reading": "きゅうじゅうさんベル",
+        "from": 101.01,
+        "to": 102.33,
+        "duration": 1.32,
+        "sha256": "8c689e459ae5212afbef738c002589e90a0776e5f1083d19e838171f5561c9b9"
+      },
+      {
+        "hash": "1b76d8cf",
+        "text": "きゅうじゅうよんベル",
+        "reading": "きゅうじゅうよんベル",
+        "from": 103.87,
+        "to": 105.19,
+        "duration": 1.32,
+        "sha256": "0457a159b23950b39eb94b29636490f47a0d169906587e27b17c47ff7e98806c"
+      },
+      {
+        "hash": "aaea26ba",
+        "text": "きゅうじゅうごベル",
+        "reading": "きゅうじゅうごベル",
+        "from": 106.66,
+        "to": 107.91,
+        "duration": 1.25,
+        "sha256": "35f6e64bdf5b1504d3a8c6b5ab0c2a5215324a558f4e3c675bcc07325b9fb200"
+      },
+      {
+        "hash": "80690bbe",
+        "text": "きゅうじゅうろくベル",
+        "reading": "きゅうじゅうろくベル",
+        "from": 109.44,
+        "to": 110.73,
+        "duration": 1.29,
+        "sha256": "9ee45e51ee89f0c415eeac634e59ce962ca24b71dbb5bbe510b72ac2ccccd18e"
+      },
+      {
+        "hash": "55e1dc8e",
+        "text": "きゅうじゅうななベル",
+        "reading": "きゅうじゅうななベル",
+        "from": 112.28,
+        "to": 113.59,
+        "duration": 1.31,
+        "sha256": "85a10d574b8817c8cba282db2d4f20699285abc734cb95d0b63ce13054192fa7"
+      }
+    ]
+  },
+  {
+    "batchId": 16,
+    "status": "imported",
+    "filename": "batch-16-source.wav",
+    "sourceSha256": "8bdb0e42ac06be8aa2445dc58a677ed99feafe27fdd85f9d57dfe5a81eec6a47",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 201.12,
+    "peak": 27011,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "c59c0962",
+        "text": "きゅうじゅうはちベル",
+        "reading": "きゅうじゅうはちベル",
+        "from": 0.25,
+        "to": 1.6,
+        "duration": 1.35,
+        "sha256": "098e2afbafd672c81f67add722f3f5ffec909ef984b48d807b096438cce92c42"
+      },
+      {
+        "hash": "b1d72ec2",
+        "text": "きゅうじゅうきゅうベル",
+        "reading": "きゅうじゅうきゅうベル",
+        "from": 7.57,
+        "to": 8.93,
+        "duration": 1.36,
+        "sha256": "ea75619dfe25b25528ff47a5f7992f36e9f1d94d69fe59272d5426f4ed6c65e7"
+      },
+      {
+        "hash": "f3208ecf",
+        "text": "たくさんベル",
+        "reading": "たくさんベル",
+        "from": 17.08,
+        "to": 18.42,
+        "duration": 1.34,
+        "sha256": "77ff79dde1e3e2932c7545d5cb2d4f88ad5af6b584efa7ac84c33a570c9856ed"
+      },
+      {
+        "hash": "7caa3631",
+        "text": "あめがふってきた！",
+        "reading": "あめがふってきた！",
+        "from": 24.42,
+        "to": 25.5,
+        "duration": 1.08,
+        "sha256": "20af526c0da8153c8db1990e55f2c45cf204c61602381cf75eea2f33187690b5"
+      },
+      {
+        "hash": "7975a9a2",
+        "text": "あめがやんだ！",
+        "reading": "あめがやんだ！",
+        "from": 30.03,
+        "to": 30.93,
+        "duration": 0.9,
+        "sha256": "d33cc04efb844843649d8e4c1a32f05b9e93e5f486b19fe7cae83e02bf771dcb"
+      },
+      {
+        "hash": "b97d90f1",
+        "text": "にじがきらきら！",
+        "reading": "にじがきらきら！",
+        "from": 34.91,
+        "to": 36.41,
+        "duration": 1.5,
+        "sha256": "39640f5d5f5fea7807267f39b1b31c7321c5c5e15cbe43b2e5aa35115a5e52e1"
+      },
+      {
+        "hash": "e908f8e1",
+        "text": "ゆきがふってきた！",
+        "reading": "ゆきがふってきた！",
+        "from": 40.95,
+        "to": 42.07,
+        "duration": 1.12,
+        "sha256": "f255cd469a534e2fcf479ac9833d31c52b238a379273009fa13de6c05fcbb0de"
+      },
+      {
+        "hash": "228e1a72",
+        "text": "ゆきがやんだ！",
+        "reading": "ゆきがやんだ！",
+        "from": 46.86,
+        "to": 47.85,
+        "duration": 0.99,
+        "sha256": "dc0ab830d98dd169ab238fcce47cb0f8c804ead7be1db40bcd4c6ba64581da1e"
+      },
+      {
+        "hash": "fc9c6138",
+        "text": "まっしろだね！",
+        "reading": "まっしろだね！",
+        "from": 51.96,
+        "to": 53.26,
+        "duration": 1.3,
+        "sha256": "cf2b945e19067bd99a1a128ee313a7ff505f00162edbd3b65ecefb06a1d1c213"
+      },
+      {
+        "hash": "21578cf6",
+        "text": "ずかんだよ！",
+        "reading": "ずかんだよ！",
+        "from": 57.65,
+        "to": 58.57,
+        "duration": 0.92,
+        "sha256": "dc4fe208ee1d410a785518acd5ef7009779b6e2bc5feba44626a0d278c6be25b"
+      },
+      {
+        "hash": "b9c1f81c",
+        "text": "ぜろしゅるいみつけたね！",
+        "reading": "ぜろしゅるいみつけたね！",
+        "from": 59.97,
+        "to": 61.64,
+        "duration": 1.67,
+        "sha256": "d2bb64e6781c68e0962ece7ccbb294b377d8a15aa11bb5ab81ea3af6eda2943f"
+      },
+      {
+        "hash": "daedfb38",
+        "text": "いちしゅるいみつけたね！",
+        "reading": "いちしゅるいみつけたね！",
+        "from": 64.34,
+        "to": 66.08,
+        "duration": 1.74,
+        "sha256": "9dc3c7e3151839f82d670c17eaad1198427091b5849c2aa243d96d3c1ab5233c"
+      },
+      {
+        "hash": "8a156ea4",
+        "text": "にしゅるいみつけたね！",
+        "reading": "にしゅるいみつけたね！",
+        "from": 68.78,
+        "to": 70.34,
+        "duration": 1.56,
+        "sha256": "f98b6bd49432235a4879f097d9dbd09a2e4e0a8cbe9758306c0eae731fc942de"
+      },
+      {
+        "hash": "b9e729ab",
+        "text": "さんしゅるいみつけたね！",
+        "reading": "さんしゅるいみつけたね！",
+        "from": 73.08,
+        "to": 74.8,
+        "duration": 1.72,
+        "sha256": "e120c2fd19a212ffc9777ce9a521b51af65e0bd49e5dac6975c02750e04c5499"
+      },
+      {
+        "hash": "2e29ecce",
+        "text": "よんしゅるいみつけたね！",
+        "reading": "よんしゅるいみつけたね！",
+        "from": 77.36,
+        "to": 78.98,
+        "duration": 1.62,
+        "sha256": "6992ef8fae524a139e0b764e54ca47d5a3b17351aef73aa203232d33c0b1d221"
+      },
+      {
+        "hash": "e30c532d",
+        "text": "ごしゅるいみつけたね！",
+        "reading": "ごしゅるいみつけたね！",
+        "from": 81.73,
+        "to": 83.3,
+        "duration": 1.57,
+        "sha256": "c9bd75c5cee9dd990ddc5a7e8e8e2b4e61fa2bf8510e6fed9afadc2ae9bfddd8"
+      },
+      {
+        "hash": "fb490a3f",
+        "text": "ろくしゅるいみつけたね！",
+        "reading": "ろくしゅるいみつけたね！",
+        "from": 85.92,
+        "to": 87.57,
+        "duration": 1.65,
+        "sha256": "7867e4cadd8543dbbbffa717abf85b14320d1da847b4a9a2d6f3424ba9f9d275"
+      },
+      {
+        "hash": "2a1b943f",
+        "text": "ななしゅるいみつけたね！",
+        "reading": "ななしゅるいみつけたね！",
+        "from": 89.72,
+        "to": 91.4,
+        "duration": 1.68,
+        "sha256": "5a7a7819047be6508cc02990d1910d00ccb627dfd6d6d5bab5a144cc9fccb337"
+      },
+      {
+        "hash": "2b5b3697",
+        "text": "はちしゅるいみつけたね！",
+        "reading": "はちしゅるいみつけたね！",
+        "from": 93.92,
+        "to": 95.61,
+        "duration": 1.69,
+        "sha256": "4159739492491943b85a791dfd93ad3f3239ea7f9063774fad5d5281599a3031"
+      },
+      {
+        "hash": "e984b35d",
+        "text": "きゅうしゅるいみつけたね！",
+        "reading": "きゅうしゅるいみつけたね！",
+        "from": 98.14,
+        "to": 99.77,
+        "duration": 1.63,
+        "sha256": "5a43638e8b610f6f0d09ea46aa21fe6113d50fae9cddd3a008ff46e6dd08faba"
+      },
+      {
+        "hash": "6fb036ba",
+        "text": "じゅうしゅるいみつけたね！",
+        "reading": "じゅうしゅるいみつけたね！",
+        "from": 101.12,
+        "to": 102.72,
+        "duration": 1.6,
+        "sha256": "d8900af2e2bb46a4fbfa05255920f76a9511dfc86783bb9d882ae0b132c00528"
+      },
+      {
+        "hash": "d6e3a809",
+        "text": "じゅういちしゅるいみつけたね！",
+        "reading": "じゅういちしゅるいみつけたね！",
+        "from": 106.83,
+        "to": 108.66,
+        "duration": 1.83,
+        "sha256": "899c65896fecc74d2dffac81075318d416b277620bdf5878ba94bc9e3ad03862"
+      },
+      {
+        "hash": "83a90c43",
+        "text": "じゅうにしゅるいみつけたね！",
+        "reading": "じゅうにしゅるいみつけたね！",
+        "from": 112.71,
+        "to": 114.39,
+        "duration": 1.68,
+        "sha256": "9fb5d60ba1b9b91029412ca162a3bfe162334919be05fa0a9fcabd423a8630aa"
+      },
+      {
+        "hash": "bec90b16",
+        "text": "じゅうさんしゅるいみつけたね！",
+        "reading": "じゅうさんしゅるいみつけたね！",
+        "from": 118.95,
+        "to": 120.74,
+        "duration": 1.79,
+        "sha256": "e48b20ee1f7a8bd02f0f578f90c40d2f533fc26f608e6f78560769fb21ece09e"
+      },
+      {
+        "hash": "917d24e3",
+        "text": "じゅうよんしゅるいみつけたね！",
+        "reading": "じゅうよんしゅるいみつけたね！",
+        "from": 124.88,
+        "to": 126.63,
+        "duration": 1.75,
+        "sha256": "79d45622effacfa17e987dcb921517acfd14fc25d39350a1969fe4ebc140d408"
+      },
+      {
+        "hash": "7c8e209e",
+        "text": "じゅうごしゅるいみつけたね！",
+        "reading": "じゅうごしゅるいみつけたね！",
+        "from": 130.71,
+        "to": 132.35,
+        "duration": 1.64,
+        "sha256": "6120d9a098ab20e973439049eafca0bed9aae783c4bbde64404182befe8ed5bf"
+      },
+      {
+        "hash": "53ddc102",
+        "text": "じゅうろくしゅるいみつけたね！",
+        "reading": "じゅうろくしゅるいみつけたね！",
+        "from": 136.59,
+        "to": 138.24,
+        "duration": 1.65,
+        "sha256": "a8d0319984760fce4f8bf1644a8c87e80d65c1a3cd3b10ca1777e8de3bb87ce1"
+      },
+      {
+        "hash": "42b8267e",
+        "text": "じゅうななしゅるいみつけたね！",
+        "reading": "じゅうななしゅるいみつけたね！",
+        "from": 142.16,
+        "to": 143.94,
+        "duration": 1.78,
+        "sha256": "3a56acbabf58a6c074bee7fa95ab18e22e9741ae5016e949fcbb7282a828b0d9"
+      },
+      {
+        "hash": "18182816",
+        "text": "じゅうはちしゅるいみつけたね！",
+        "reading": "じゅうはちしゅるいみつけたね！",
+        "from": 147.71,
+        "to": 149.46,
+        "duration": 1.75,
+        "sha256": "c30e7fb70d94a4f53090ee68c515ab78e38156bb0cabe4f7d2aa7ea8775c2c77"
+      },
+      {
+        "hash": "85b168ca",
+        "text": "じゅうきゅうしゅるいみつけたね！",
+        "reading": "じゅうきゅうしゅるいみつけたね！",
+        "from": 153.03,
+        "to": 154.76,
+        "duration": 1.73,
+        "sha256": "5d09694ab977f2def9e37242f73cab16a551ccb0165f95d4ecea3734ac878bd4"
+      },
+      {
+        "hash": "120c60c7",
+        "text": "にじゅうしゅるいみつけたね！",
+        "reading": "にじゅうしゅるいみつけたね！",
+        "from": 156.11,
+        "to": 157.97,
+        "duration": 1.86,
+        "sha256": "ea7bad61b6c9caba6839d06716907b26fe2875f12316bcf87e9de59d3162d7f4"
+      },
+      {
+        "hash": "c7c0c4d0",
+        "text": "にじゅういちしゅるいみつけたね！",
+        "reading": "にじゅういちしゅるいみつけたね！",
+        "from": 160.76,
+        "to": 162.82,
+        "duration": 2.06,
+        "sha256": "7c0f2ee4663526558f51f2093ed21065405de840211039465bdec48b0962d6e8"
+      },
+      {
+        "hash": "ae08173c",
+        "text": "にじゅうにしゅるいみつけたね！",
+        "reading": "にじゅうにしゅるいみつけたね！",
+        "from": 165.74,
+        "to": 167.77,
+        "duration": 2.03,
+        "sha256": "9032e6f0e4b2e192d0881d434745f1f60c06245846460693f9b150606a6f40d6"
+      },
+      {
+        "hash": "585187e3",
+        "text": "にじゅうさんしゅるいみつけたね！",
+        "reading": "にじゅうさんしゅるいみつけたね！",
+        "from": 170.56,
+        "to": 172.69,
+        "duration": 2.13,
+        "sha256": "2a5e35963b789244571a295a3394648266413724eca71c036a9f5da2be3a57ea"
+      },
+      {
+        "hash": "f9158e16",
+        "text": "にじゅうよんしゅるいみつけたね！",
+        "reading": "にじゅうよんしゅるいみつけたね！",
+        "from": 175.46,
+        "to": 177.4,
+        "duration": 1.94,
+        "sha256": "b73ba7b6f7e6078e9352af86b0de797b3dd373eac40e7fac79cda59337e9ab54"
+      },
+      {
+        "hash": "699dee15",
+        "text": "にじゅうごしゅるいみつけたね！",
+        "reading": "にじゅうごしゅるいみつけたね！",
+        "from": 180.1,
+        "to": 182.09,
+        "duration": 1.99,
+        "sha256": "c9e1b11f0cdd74b420ea9508209b8614fd5e23ecb99ac8ec7a9e858d95131b6c"
+      },
+      {
+        "hash": "853d0a97",
+        "text": "にじゅうろくしゅるいみつけたね！",
+        "reading": "にじゅうろくしゅるいみつけたね！",
+        "from": 184.8,
+        "to": 186.79,
+        "duration": 1.99,
+        "sha256": "8781bbd098d246046aa35054c0f548f37e4ac7bed254a1137485410cbab7855d"
+      },
+      {
+        "hash": "08a3fbd7",
+        "text": "にじゅうななしゅるいみつけたね！",
+        "reading": "にじゅうななしゅるいみつけたね！",
+        "from": 189.51,
+        "to": 191.56,
+        "duration": 2.05,
+        "sha256": "e774f0d33615f9fabbee90b2df94c1903b61fda7244759ade8268045ca5761b7"
+      },
+      {
+        "hash": "f8b7c53f",
+        "text": "にじゅうはちしゅるいみつけたね！",
+        "reading": "にじゅうはちしゅるいみつけたね！",
+        "from": 194.33,
+        "to": 196.4,
+        "duration": 2.07,
+        "sha256": "4354a41df2c328d987eabfc952b1104bafbaadb2a9bdd7ee700d747abd51fe55"
+      },
+      {
+        "hash": "61e26f35",
+        "text": "にじゅうきゅうしゅるいみつけたね！",
+        "reading": "にじゅうきゅうしゅるいみつけたね！",
+        "from": 199.03,
+        "to": 200.97,
+        "duration": 1.94,
+        "sha256": "0a9806c23e1ba6ee3281bf539b4a70dadbc7c5a8e8c9434f0aa5bb23ae91c9ac"
+      }
+    ]
+  },
+  {
+    "batchId": 17,
+    "status": "imported",
+    "filename": "batch-17-source.wav",
+    "sourceSha256": "796e8eb7d5099b9ac8e5aeaacdcd6b0fbac03787d23fe54b6f72fafbafa34ed6",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 20.52,
+    "peak": 20920,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "56eee0ce",
+        "text": "さんじゅうしゅるいみつけたね！",
+        "reading": "さんじゅうしゅるいみつけたね！",
+        "from": 0.15,
+        "to": 2.48,
+        "duration": 2.33,
+        "sha256": "d3ee292cebaf174c31412f8dce057009349873d3e4839fe28e34c1bac711b45c"
+      },
+      {
+        "hash": "e0fd4c05",
+        "text": "さんじゅういちしゅるいみつけたね！",
+        "reading": "さんじゅういちしゅるいみつけたね！",
+        "from": 4.46,
+        "to": 6.98,
+        "duration": 2.52,
+        "sha256": "5829fa0ab227476bad64a7c571df52cf6db745df0e6f8443d7d4d7f456891d85"
+      },
+      {
+        "hash": "4bce370f",
+        "text": "さんじゅうにしゅるいみつけたね！",
+        "reading": "さんじゅうにしゅるいみつけたね！",
+        "from": 8.83,
+        "to": 11.17,
+        "duration": 2.34,
+        "sha256": "f3cc23ffb1200b6b2abc3164b339ac1ca703e7c03d73ad23fbc35f8fed3df3e8"
+      },
+      {
+        "hash": "aa7a3fd2",
+        "text": "さんじゅうさんしゅるいみつけたね！",
+        "reading": "さんじゅうさんしゅるいみつけたね！",
+        "from": 13.22,
+        "to": 15.71,
+        "duration": 2.49,
+        "sha256": "389faba9051095e7a65cd47b703511a4937c42c2009dbea4a77196f7e69cfd90"
+      },
+      {
+        "hash": "45d62c57",
+        "text": "さんじゅうよんしゅるいみつけたね！",
+        "reading": "さんじゅうよんしゅるいみつけたね！",
+        "from": 17.71,
+        "to": 20.23,
+        "duration": 2.52,
+        "sha256": "cb5c6f10ca0e515c002918bef751bd818636a2bd463b6aaf430168637f5e429c"
+      }
+    ]
+  },
+  {
+    "batchId": 18,
+    "status": "imported",
+    "filename": "batch-18-source.wav",
+    "sourceSha256": "d1ccf2d529e62b635caf4c889cb63585d904faeb81fa3b1efb455d862da6e9a8",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 38,
+    "peak": 22366,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "e5d2d7be",
+        "text": "にじのいろ！",
+        "reading": "虹の色！",
+        "reason": "短音の認識で西の色になったため漢字を指定して再生成",
+        "from": 0.26,
+        "to": 1.39,
+        "duration": 1.13,
+        "sha256": "cac6fe083f0d7fe0537b2bd2c442a36354121a383484cae4b1c7fa1d01737930"
+      },
+      {
+        "hash": "e0bfa2fe",
+        "text": "ゆかた！",
+        "reading": "浴衣！",
+        "reason": "単独音声でもよかったと認識されたため読みを明確化",
+        "from": 3.62,
+        "to": 4.42,
+        "duration": 0.8,
+        "sha256": "8c07627a73d287a841a3204a3d0732e9b28d969353bd6ec35ae31d35b33b0690"
+      },
+      {
+        "hash": "5bafe284",
+        "text": "わんわんってなくどうぶつはだあれ？",
+        "reading": "わんわんって鳴く動物は、だあれ？",
+        "reason": "疑問の語頭と区切りを明確化",
+        "from": 6.57,
+        "to": 8.73,
+        "duration": 2.16,
+        "sha256": "acec48c9d9737e830047d82fb3e86ac92a3c0db913f432f48f7dd3a24098da4b"
+      },
+      {
+        "hash": "6673fb40",
+        "text": "ぶーぶーってなくどうぶつはだあれ？",
+        "reading": "ぶーぶーって鳴く動物は、だあれ？",
+        "reason": "疑問の語頭と区切りを明確化",
+        "from": 10.7,
+        "to": 12.87,
+        "duration": 2.17,
+        "sha256": "dd2a86c0a19bd8b490e98512e2afb18d0325bc1de5055c13bb8c9689a59f5af8"
+      },
+      {
+        "hash": "47f905e0",
+        "text": "もーもーってなくどうぶつはだあれ？",
+        "reading": "もーもーって鳴く動物は、だあれ？",
+        "reason": "疑問の語頭と区切りを明確化",
+        "from": 14.86,
+        "to": 17.17,
+        "duration": 2.31,
+        "sha256": "3af44b6377eafd080872b87ee9b5f9c9cec533fff1adcdf4d46a34fa29633ff4"
+      },
+      {
+        "hash": "ce2f0750",
+        "text": "めぇめぇってなくどうぶつはだあれ？",
+        "reading": "めぇめぇって鳴く動物は、だあれ？",
+        "reason": "疑問の語頭と区切りを明確化",
+        "from": 19.11,
+        "to": 21.49,
+        "duration": 2.38,
+        "sha256": "8dd6e2987943b83239b495322208648b5a5454abab6ca10cff596285f817cf71"
+      },
+      {
+        "hash": "7a9486f0",
+        "text": "ぴよぴよってなくどうぶつはだあれ？",
+        "reading": "ぴよぴよって鳴く動物は、だあれ？",
+        "reason": "疑問の語頭と区切りを明確化",
+        "from": 23.35,
+        "to": 25.53,
+        "duration": 2.18,
+        "sha256": "d7b1d2fbf1360feb7fa605154ff5289712378bf4787c1b0232ab64e20e09efae"
+      },
+      {
+        "hash": "15276064",
+        "text": "けろけろってなくどうぶつはだあれ？",
+        "reading": "けろけろって鳴く動物は、だあれ？",
+        "reason": "疑問の語頭と区切りを明確化",
+        "from": 27.28,
+        "to": 29.48,
+        "duration": 2.2,
+        "sha256": "6b5dbcc28c3a229c4fd9633cd1479633b7c75c91fe09e032ac7df6c35ec51eca"
+      },
+      {
+        "hash": "7312658d",
+        "text": "ごほうびにむぎわらぼうしをもらったよ！",
+        "reading": "ご褒美に麦わら帽子をもらったよ！",
+        "reason": "個別認識でも語尾の読みが不明瞭なため再生成",
+        "from": 31.16,
+        "to": 33.52,
+        "duration": 2.36,
+        "sha256": "ee519248fd8ef6a4169ac075aa74db7e705b1acc48996def63cbd368640ef910"
+      },
+      {
+        "hash": "2848fc17",
+        "text": "ごほうびにおはなのかんむりをもらったよ！",
+        "reading": "ご褒美にお花の冠をもらったよ！",
+        "reason": "長文と個別の認識で冠がかんぶりになるため再生成",
+        "from": 35.18,
+        "to": 37.68,
+        "duration": 2.5,
+        "sha256": "b4a20b7dca7878b1a3fc1fdb5cc6fd1df30efd5424624052d9e908f120b46618"
+      }
+    ]
+  },
+  {
+    "batchId": 19,
+    "status": "imported",
+    "filename": "batch-19-source.wav",
+    "sourceSha256": "6f68e83dbdeaf692d1d6bb05d8ee1f20af8628538ac6e11a1ac39614eef89caf",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 4.08,
+    "peak": 17171,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "ce2f0750",
+        "text": "めぇめぇってなくどうぶつはだあれ？",
+        "reading": "メーメーって鳴く動物は、だあれ？",
+        "reason": "バッチ18の羊の鳴き声が長文と個別認識でメンメーとなるため、カタカナ表記で1文を再生成",
+        "from": 0.2,
+        "to": 3.79,
+        "duration": 3.59,
+        "sha256": "188561136d8f8b4c5247b94177a115d9d3a94496c6227dd68add0d5a2e2a62ea"
+      }
+    ]
+  }
+]

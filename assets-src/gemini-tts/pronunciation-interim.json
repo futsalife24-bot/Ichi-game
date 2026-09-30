@@ -1,0 +1,117 @@
+[
+  {
+    "hash": "7312658d",
+    "expected": "ごほうびにむぎわらぼうしをもらったよ！",
+    "recognized": "ご褒美に麦わら帽子をもらってよ"
+  },
+  {
+    "hash": "8c5d3a34",
+    "expected": "じゅうごこ！",
+    "recognized": "15個"
+  },
+  {
+    "hash": "2848fc17",
+    "expected": "ごほうびにおはなのかんむりをもらったよ！",
+    "recognized": "ご褒美にお花のかんぶりをもらったよ。"
+  },
+  {
+    "hash": "1abed291",
+    "expected": "にじゅっこ！",
+    "recognized": "二十個"
+  },
+  {
+    "hash": "2304487a",
+    "expected": "ごほうびにきんのおうかんをもらったよ！",
+    "recognized": "ご褒美に金の王冠をもらったよ"
+  },
+  {
+    "hash": "dc97ef03",
+    "expected": "かずのがっこうへようこそ！",
+    "recognized": "かずの学校へようこそ"
+  },
+  {
+    "hash": "4abc226b",
+    "expected": "すうじであそぼう！",
+    "recognized": "数字で遊ぼう"
+  },
+  {
+    "hash": "6dd6525d",
+    "expected": "いちごはいくつあるかな？",
+    "recognized": "いちごはいくつあるかな"
+  },
+  {
+    "hash": "21578cf6",
+    "expected": "ずかんだよ！",
+    "status": "not-yet-imported"
+  },
+  {
+    "hash": "b9c1f81c",
+    "expected": "ぜろしゅるいみつけたね！",
+    "status": "not-yet-imported"
+  },
+  {
+    "hash": "daedfb38",
+    "expected": "いちしゅるいみつけたね！",
+    "status": "not-yet-imported"
+  },
+  {
+    "hash": "8a156ea4",
+    "expected": "にしゅるいみつけたね！",
+    "status": "not-yet-imported"
+  },
+  {
+    "hash": "b9e729ab",
+    "expected": "さんしゅるいみつけたね！",
+    "status": "not-yet-imported"
+  },
+  {
+    "hash": "2e29ecce",
+    "expected": "よんしゅるいみつけたね！",
+    "status": "not-yet-imported"
+  },
+  {
+    "hash": "e30c532d",
+    "expected": "ごしゅるいみつけたね！",
+    "status": "not-yet-imported"
+  },
+  {
+    "hash": "e5d2d7be",
+    "expected": "虹の色！",
+    "recognized": "西の色"
+  },
+  {
+    "hash": "e0bfa2fe",
+    "expected": "浴衣！",
+    "recognized": "よかった"
+  },
+  {
+    "hash": "5bafe284",
+    "expected": "わんわんって鳴く動物は、だあれ？",
+    "recognized": "ワンワンって鳴く動物はターレ?"
+  },
+  {
+    "hash": "6673fb40",
+    "expected": "ぶーぶーって鳴く動物は、だあれ？",
+    "recognized": "ブーブーって鳴く動物はターレ?"
+  },
+  {
+    "hash": "47f905e0",
+    "expected": "もーもーって鳴く動物は、だあれ？",
+    "recognized": "モーモーって亡く動物は誰?"
+  },
+  {
+    "hash": "ce2f0750",
+    "expected": "めぇめぇって鳴く動物は、だあれ？",
+    "recognized": "メーメーって無く動物は誰?"
+  },
+  {
+    "hash": "7a9486f0",
+    "expected": "ぴよぴよって鳴く動物は、だあれ？",
+    "recognized": "ピヨピヨってなく動物は誰?"
+  },
+  {
+    "hash": "15276064",
+    "expected": "けろけろって鳴く動物は、だあれ？",
+    "recognized": "ケロケロってなく動物はだーれ?"
+  }
+]

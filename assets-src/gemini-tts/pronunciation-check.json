@@ -1,0 +1,37 @@
+[
+  {
+    "hash": "520a25db",
+    "expected": "じょうず！",
+    "recognized": "上手!"
+  },
+  {
+    "hash": "e5d2d7be",
+    "expected": "にじのいろ！",
+    "recognized": "西の色"
+  },
+  {
+    "hash": "5bafe284",
+    "expected": "わんわんってなくどうぶつはだあれ？",
+    "recognized": "ワンワンって鳴く動物はターレ?"
+  },
+  {
+    "hash": "fb143713",
+    "expected": "えんぴつの「え」はどれかな？",
+    "recognized": "鉛筆の絵はどれかな"
+  },
+  {
+    "hash": "d7e477a5",
+    "expected": "えんぴつの「え」だね！",
+    "recognized": "鉛筆の絵だね"
+  },
+  {
+    "hash": "d8b349a5",
+    "expected": "えんぴつの「え」だよ。",
+    "recognized": "鉛筆の絵だよ"
+  },
+  {
+    "hash": "e0bfa2fe",
+    "expected": "ゆかた！",
+    "recognized": "よかった"
+  }
+]

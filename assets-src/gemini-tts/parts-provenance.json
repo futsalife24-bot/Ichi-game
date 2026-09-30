@@ -1,0 +1,104 @@
+{
+  "6": {
+    "parts": [
+      {
+        "filename": "parts/batch-06-part-0.wav",
+        "sha256": "d48cd2e82304e74966e8010b8eddf3f140809dcf4e256cbbfc4d30aa8164c0e4",
+        "duration": 25.6,
+        "prompt": "それは「せ」。 <long pause>\nせっけんの「せ」だよ。 <long pause>\nそふとくりーむの「そ」はどれかな？ <long pause>\n「そ」！ <long pause>\nそふとくりーむの「そ」だね！ <long pause>\nそれは「そ」。 <long pause>\nそふとくりーむの「そ」だよ。 <long pause>\nほしが <long pause>\nごほうびにリボンをもらったよ！ <long pause>\nにあってるね！",
+        "style": null
+      },
+      {
+        "filename": "parts/batch-06-part-1.wav",
+        "sha256": "82ec10beb0691795a7d8722374ec66b990241466573293f06f7ad02a10fcd51e",
+        "duration": 28.24,
+        "prompt": "ごほうびにむぎわらぼうしをもらったよ！ <long pause>\nじゅうごこ！ <long pause>\nごほうびにおはなのかんむりをもらったよ！ <long pause>\nにじゅっこ！ <long pause>\nごほうびにきんのおうかんをもらったよ！ <long pause>\nかずのがっこうへようこそ！ <long pause>\nすうじであそぼう！ <long pause>\nクッキーはいくつあるかな？ <long pause>\nおなじすうじにのってね！ <long pause>\nクッキーが",
+        "style": null
+      },
+      {
+        "filename": "parts/batch-06-part-2.wav",
+        "sha256": "965d40f3b6f70da8b0bf314f6c8f89bf0b634a56472039c9ca78b8d6224bc959",
+        "duration": 73.48,
+        "prompt": "りんごはいくつあるかな？ <long pause>\nおほしさまはいくつあるかな？ <long pause>\nおほしさまが <long pause>\nふうせんはいくつあるかな？ <long pause>\nふうせんが <long pause>\nおさかなはいくつあるかな？ <long pause>\nおさかなが <long pause>\nいちごはいくつあるかな？ <long pause>\nくるまはいくつあるかな？ <long pause>\nくるまが",
+        "style": null
+      },
+      {
+        "filename": "parts/batch-06-part-3.wav",
+        "sha256": "3de43db281d32985d6b095f5d1466d137a41f36175930275cf855738df7b8ea6",
+        "duration": 32.24,
+        "prompt": "おはなはいくつあるかな？ <long pause>\nおはなが <long pause>\nひよこはいくつあるかな？ <long pause>\nひよこが <long pause>\nドーナツはいくつあるかな？ <long pause>\nドーナツが <long pause>\nそれはいち。 <long pause>\nいっしょにかぞえてみよう！ <long pause>\nいっこだね！ <long pause>\nいちのすうじにのってね！",
+        "style": null
+      }
+    ],
+    "betweenPartsSilenceSeconds": 1,
+    "sha256": "a1812647412f5a1a073bff32990fb1e45961cbb7868dfcfcd8fcaaa4fbd56dc8"
+  },
+  "14": {
+    "parts": [
+      {
+        "filename": "parts/batch-14-part-0.wav",
+        "sha256": "2603c63b5e2a686014bad9ebc5d62033b0d6092502c08dfbe6c28d6d559584d5",
+        "duration": 45.56,
+        "prompt": "20ベル <long pause>\n21ベル <long pause>\n22ベル <long pause>\n23ベル <long pause>\n24ベル <long pause>\n25ベル <long pause>\n26ベル <long pause>\n27ベル <long pause>\n28ベル <long pause>\n29ベル",
+        "style": "日本語の標準語。明るくやさしい大人の女性ガイド。はっきり、少しゆっくり、自然な声。台本のみを正確に読み、各行の間を1秒あける。相づちや説明は加えない。"
+      },
+      {
+        "filename": "parts/batch-14-part-1.wav",
+        "sha256": "560ea5ce48598c7d9f34fef058eae688e4d41967cfe688952e85a09428028909",
+        "duration": 37.28,
+        "prompt": "30ベル <long pause>\nぜんぶで <long pause>\nになったよ！ <long pause>\n31ベル <long pause>\n32ベル <long pause>\n33ベル <long pause>\n34ベル <long pause>\n35ベル <long pause>\n36ベル <long pause>\n37ベル",
+        "style": "日本語の標準語。明るくやさしい大人の女性ガイド。はっきり、少しゆっくり、自然な声。台本のみを正確に読み、各行の間を1秒あける。相づちや説明は加えない。"
+      },
+      {
+        "filename": "parts/batch-14-part-2.wav",
+        "sha256": "f81940e4eb41d80e66270cee926e5180b77640864b15c19afdcebe54e1f50fb3",
+        "duration": 37.84,
+        "prompt": "38ベル <long pause>\n39ベル <long pause>\n40ベル <long pause>\n41ベル <long pause>\n42ベル <long pause>\n43ベル <long pause>\n44ベル <long pause>\n45ベル <long pause>\n46ベル <long pause>\n47ベル",
+        "style": "日本語の標準語。明るくやさしい大人の女性ガイド。はっきり、少しゆっくり、自然な声。台本のみを正確に読み、各行の間を1秒あける。相づちや説明は加えない。"
+      },
+      {
+        "filename": "parts/batch-14-part-3.wav",
+        "sha256": "6047c4b6915fd36fadedecc2eb5f9c0d47f2721b9af9ddf72ce21e7e13b48b5b",
+        "duration": 35.88,
+        "prompt": "48ベル <long pause>\n49ベル <long pause>\n50ベル <long pause>\n51ベル <long pause>\n52ベル <long pause>\n53ベル <long pause>\n54ベル <long pause>\n55ベル <long pause>\n56ベル <long pause>\n57ベル",
+        "style": "日本語の標準語。明るくやさしい大人の女性ガイド。はっきり、少しゆっくり、自然な声。台本のみを正確に読み、各行の間を1秒あける。相づちや説明は加えない。"
+      }
+    ],
+    "betweenPartsSilenceSeconds": 1,
+    "sha256": "e3d658f0ca51499605f8871981e44f92d7df9ff95cb6bad819c2fe8b6264a38b"
+  },
+  "16": {
+    "parts": [
+      {
+        "filename": "parts/batch-16-part-0.wav",
+        "sha256": "7c219a124fd930f8ac4d5b5d63b907b887f76283332f239ce82a9373ac1d460a",
+        "duration": 58.72,
+        "prompt": "きゅうじゅうはちベル <long pause>\nきゅうじゅうきゅうベル <long pause>\nたくさんベル <long pause>\nあめがふってきた！ <long pause>\nあめがやんだ！ <long pause>\nにじがきらきら！ <long pause>\nゆきがふってきた！ <long pause>\nゆきがやんだ！ <long pause>\nまっしろだね！ <long pause>\nずかんだよ！",
+        "style": null
+      },
+      {
+        "filename": "parts/batch-16-part-1.wav",
+        "sha256": "21432beb811e7347ef3b2f5ebbffa2058942eeb06bb209bb7eb1e6806bc02ee0",
+        "duration": 40.24,
+        "prompt": "ぜろしゅるいみつけたね！ <long pause>\nいちしゅるいみつけたね！ <long pause>\nにしゅるいみつけたね！ <long pause>\nさんしゅるいみつけたね！ <long pause>\nよんしゅるいみつけたね！ <long pause>\nごしゅるいみつけたね！ <long pause>\nろくしゅるいみつけたね！ <long pause>\nななしゅるいみつけたね！ <long pause>\nはちしゅるいみつけたね！ <long pause>\nきゅうしゅるいみつけたね！",
+        "style": null
+      },
+      {
+        "filename": "parts/batch-16-part-2.wav",
+        "sha256": "14b858741282fc755ef8abe2005e985091dbaa4fdd7507a5d51cb866d5d51bfb",
+        "duration": 53.96,
+        "prompt": "じゅうしゅるいみつけたね！ <long pause>\nじゅういちしゅるいみつけたね！ <long pause>\nじゅうにしゅるいみつけたね！ <long pause>\nじゅうさんしゅるいみつけたね！ <long pause>\nじゅうよんしゅるいみつけたね！ <long pause>\nじゅうごしゅるいみつけたね！ <long pause>\nじゅうろくしゅるいみつけたね！ <long pause>\nじゅうななしゅるいみつけたね！ <long pause>\nじゅうはちしゅるいみつけたね！ <long pause>\nじゅうきゅうしゅるいみつけたね！",
+        "style": null
+      },
+      {
+        "filename": "parts/batch-16-part-3.wav",
+        "sha256": "e151222eb961d11b33f1d9e840d08d78163db480e5293bbd8f8bf82a94563523",
+        "duration": 45.2,
+        "prompt": "20種類見つけたね！ <long pause>\n21種類見つけたね！ <long pause>\n22種類見つけたね！ <long pause>\n23種類見つけたね！ <long pause>\n24種類見つけたね！ <long pause>\n25種類見つけたね！ <long pause>\n26種類見つけたね！ <long pause>\n27種類見つけたね！ <long pause>\n28種類見つけたね！ <long pause>\n29種類見つけたね！",
+        "style": "日本語の標準語。明るくやさしい大人の女性ガイド。はっきり、少しゆっくり、自然な声。台本のみを正確に読み、各行の間を1秒あける。相づちや説明は加えない。"
+      }
+    ],
+    "betweenPartsSilenceSeconds": 1,
+    "sha256": "8bdb0e42ac06be8aa2445dc58a677ed99feafe27fdd85f9d57dfe5a81eec6a47"
+  }
+}

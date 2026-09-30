@@ -22,10 +22,20 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Validate voice release
+        run: |
+          node --import ./tools/register.mjs --test tools/voice.test.mjs tools/sw.test.mjs
+          node --import ./tools/register.mjs tools/finalize-voice.mjs --check
       - name: Prepare site
         run: |
           mkdir _site
-          cp -r index.html style.css manifest.webmanifest sw.js src vendor icons voice _site/
+          cp -r index.html style.css manifest.webmanifest sw.js src vendor icons _site/
+          mkdir -p _site/voice/gemini
+          cp voice/index.json _site/voice/
+          cp voice/gemini/*.mp3 _site/voice/gemini/
       - uses: actions/configure-pages@v5
         with:
           enablement: true

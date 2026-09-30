@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v9';
+const VERSION = 'kirakira-v10-gemini';
 const ASSETS = [
   './',
   './index.html',
@@ -42,10 +42,14 @@ self.addEventListener('install', (e) => {
       .then(async (c) => {
         await c.addAll(ASSETS);
         // こえの ファイルも ぜんぶ（オフラインでも しゃべれるように）
-        try {
-          const idx = await (await fetch('./voice/index.json')).json();
-          await c.addAll(Object.keys(idx).map((h) => `./voice/${h}.mp3`));
-        } catch { /* つぎの きどうで また ためす */ }
+        const idx = await (await c.match('./voice/index.json')).json();
+        if (idx.schemaVersion !== 2 || !idx.clips) throw new Error('Voice manifest missing');
+        const files = Object.entries(idx.clips).map(([hash, clip]) => {
+          if (!/^[0-9a-f]{8}$/.test(hash) || clip.file !== `gemini/${hash}.mp3`) throw new Error('Invalid voice path');
+          return `./voice/${clip.file}`;
+        });
+        // 小さなまとまりで取得。失敗時は旧版を維持し、不完全なオフライン版に切り替えない。
+        for (let i = 0; i < files.length; i += 16) await c.addAll(files.slice(i, i + 16));
       })
       .then(() => self.skipWaiting()),
   );
@@ -54,7 +58,7 @@ self.addEventListener('install', (e) => {
 self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== VERSION).map((k) => caches.delete(k))))
+      .then((keys) => Promise.all(keys.filter((k) => k.startsWith('kirakira-') && k !== VERSION).map((k) => caches.delete(k))))
       .then(() => self.clients.claim()),
   );
 });

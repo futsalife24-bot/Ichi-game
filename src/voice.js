@@ -1,4 +1,4 @@
-// こえ：よういした おんせいファイル（voice/*.mp3）を ならす。
+// こえ：事前にGemini TTSで作った音声を再利用。ゲームから生成APIは呼ばない。
 // ファイルが ない せりふの ときだけ、たんまつの よみあげ（Web Speech API）を つかう。
 // ※ Fire タブレットなど、にほんごの よみあげが ない たんまつでも しゃべれるように。
 import { segments, clipKey, clipHash } from './lines.js';
@@ -6,6 +6,7 @@ import { segments, clipKey, clipHash } from './lines.js';
 const PREFERRED = ['Kyoko', 'O-ren', 'Nanami', 'Haruka', 'Ayumi', 'Google 日本語', 'Sayaka', 'Mizuki'];
 const CLIP_GAP = 0.05;
 const DECODED_MAX = 40;
+const BYTES_MAX = 80;
 
 export class Voice {
   constructor({ onSubtitle, onSpeaking, audio } = {}) {
@@ -16,7 +17,7 @@ export class Voice {
     this.synth = window.speechSynthesis || null;
     this.voice = null;
     this.speaking = false;
-    this.clipIndex = null; // Set<hash>
+    this.clipIndex = null; // Map<hash, relative MP3 path>
     this.bytes = new Map(); // hash -> Promise<ArrayBuffer>
     this.decoded = new Map(); // hash -> AudioBuffer（さいきん つかった ぶんだけ）
     this.sources = [];
@@ -25,13 +26,18 @@ export class Voice {
       this.pick();
       this.synth.addEventListener?.('voiceschanged', () => this.pick());
     }
-    this.loadIndex();
+    this.indexReady = this.loadIndex();
   }
 
   async loadIndex() {
     try {
       const res = await fetch('voice/index.json');
-      if (res.ok) this.clipIndex = new Set(Object.keys(await res.json()));
+      if (!res.ok) return;
+      const index = await res.json();
+      if (index.schemaVersion !== 2 || !index.clips) return;
+      const clips = Object.entries(index.clips);
+      if (!clips.every(([hash, clip]) => /^[0-9a-f]{8}$/.test(hash) && clip.file === `gemini/${hash}.mp3`)) return;
+      this.clipIndex = new Map(clips.map(([hash, clip]) => [hash, clip.file]));
     } catch { /* オフラインで まだ キャッシュが ない とき など */ }
   }
 
@@ -77,7 +83,10 @@ export class Voice {
     this.speak(text);
   }
 
-  speak(text) {
+  async speak(text) {
+    const token = this.token;
+    await this.indexReady;
+    if (token !== this.token || !this.enabled) return;
     const hashes = segments(text).map((s) => clipHash(clipKey(s)));
     const ctx = this.audio?.ctx;
     if (ctx && this.clipIndex && hashes.length && hashes.every((h) => this.clipIndex.has(h))) {
@@ -91,12 +100,13 @@ export class Voice {
 
   fetchBytes(hash) {
     if (!this.bytes.has(hash)) {
-      const p = fetch(`voice/${hash}.mp3`).then((r) => {
+      const p = fetch(`voice/${this.clipIndex.get(hash)}`).then((r) => {
         if (!r.ok) throw new Error(r.status);
         return r.arrayBuffer();
       });
-      p.catch(() => this.bytes.delete(hash));
+      p.catch(() => { if (this.bytes.get(hash) === p) this.bytes.delete(hash); });
       this.bytes.set(hash, p);
+      while (this.bytes.size > BYTES_MAX) this.bytes.delete(this.bytes.keys().next().value);
     }
     return this.bytes.get(hash);
   }
@@ -122,10 +132,10 @@ export class Voice {
     try {
       buffers = await Promise.all(hashes.map((h) => this.decode(h)));
     } catch {
-      if (token === this.token) this.speakSynth(text);
+      if (token === this.token && this.enabled) { this.lastMode = 'synth'; this.speakSynth(text); }
       return;
     }
-    if (token !== this.token) return;
+    if (token !== this.token || !this.enabled) return;
     const ctx = this.audio.ctx;
     let t = ctx.currentTime + 0.03;
     this.setSpeaking(true);
@@ -135,7 +145,10 @@ export class Voice {
       src.connect(this.audio.voiceOut);
       src.start(t);
       t += buf.duration + CLIP_GAP;
-      if (i === buffers.length - 1) src.onended = () => { if (token === this.token) this.setSpeaking(false); };
+      src.onended = () => {
+        this.sources = this.sources.filter((s) => s !== src);
+        if (i === buffers.length - 1 && token === this.token) this.setSpeaking(false);
+      };
       this.sources.push(src);
     });
   }
@@ -149,8 +162,9 @@ export class Voice {
       u.rate = 1.0;
       u.pitch = 1.3;
       u.volume = 1;
-      const done = () => { this.setSpeaking(false); clearTimeout(this.safety); };
-      u.onstart = () => this.setSpeaking(true);
+      const token = this.token;
+      const done = () => { if (token === this.token) { this.setSpeaking(false); clearTimeout(this.safety); } };
+      u.onstart = () => { if (token === this.token) this.setSpeaking(true); };
       u.onend = done;
       u.onerror = done;
       clearTimeout(this.safety);
@@ -161,11 +175,13 @@ export class Voice {
 
   stopPlayback() {
     this.token++;
+    clearTimeout(this.safety);
     for (const s of this.sources) {
       try { s.onended = null; s.stop(); } catch { /* まだ はじまっていない など */ }
     }
     this.sources = [];
     try { this.synth?.cancel(); } catch { /* noop */ }
+    this.setSpeaking(false);
   }
 
   setSpeaking(on) {
