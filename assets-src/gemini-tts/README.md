@@ -12,7 +12,19 @@
 ## まだ音声がない新しいセリフ
 
 キャラメイクと名前の呼びかけ（39クリップ）は `src/lines.js` の `pendingLines()` に分けてあり、`allLines()` には入れていない（入れると公開前の音声チェックが止まるため）。
-生成するときは `pendingLines()` の中身を `allLines()` へ移してから、下の「再生成」の手順で作る。それまでは、音声がある部分だけ再生するか、端末の読み上げで話す。
+それまでは、音声がある部分だけ再生するか、端末の読み上げで話す。
+
+### Gemini API で追加生成する手順（キャラメイク追加分）
+
+ユーザーの判断で、この追加分は AI Studio の手作業ではなく Gemini API で1行ずつ生成する。モデルと声は既存と同じ（`plan.json` の `gemini-3.8-flash-tts` / Cleo）。ゲーム本体は API を呼ばない。
+
+1. 環境変数 `GEMINI_API_KEY` を用意する（キーはチャットやリポジトリに書かない）。
+2. `node --import ./tools/register.mjs tools/api-voice.mjs --dry-run` で、作る行（39個）を確認する。
+3. `node --import ./tools/register.mjs tools/api-voice.mjs` で生成する。前後の無音の削り方・音量・MP3の形式は `import-voice.mjs` と同じ。原本PCMは `api/`（Git対象外）に残し、SHA256 を `import-report.json` に記録する。`plan.json` と `import-report.json` には新しいバッチとして末尾に足す（既存のバッチは変えない）。
+4. `node --import ./tools/register.mjs tools/gen-voice.mjs --finalize` で `voice/index.json` を更新する。
+5. `src/lines.js` の `allLines()` の最後に `out.push(...pendingLines());` を足す（公開前チェックの対象に入れる）。
+6. `node --import ./tools/register.mjs --test tools/voice.test.mjs tools/sw.test.mjs` と `tools/finalize-voice.mjs --check` を通す。
+7. `tools/voice-review.html` と実ゲームのキャラメイクで、読み間違い・余計な発声がないか聞いて確かめる。だめな行は MP3 と記録を消して、その行だけ作り直す。
 
 ## 再生成
 
