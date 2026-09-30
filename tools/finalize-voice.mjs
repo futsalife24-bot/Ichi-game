@@ -18,6 +18,7 @@ if(Object.keys(clips).length!==plan.clips)throw Error('Clip count mismatch');
 for(const text of allLines())for(const part of segments(text))if(!clips[clipHash(clipKey(part))])throw Error('Missing line '+part);
 const manifest=JSON.stringify({schemaVersion:2,model:plan.model,voice:plan.voice,clips},null,2)+'\n';
 if(process.argv.includes('--check')) {
-  if(readFileSync(new URL('voice/index.json',root),'utf8')!==manifest)throw Error('Manifest is stale');
+  // Git may use CRLF on Windows; compare content rather than platform line endings.
+  if(JSON.stringify(JSON.parse(readFileSync(new URL('voice/index.json',root),'utf8')))!==JSON.stringify(JSON.parse(manifest)))throw Error('Manifest is stale');
 } else writeFileSync(new URL('voice/index.json',root),manifest);
 console.log(`${plan.clips} Gemini clips complete`);

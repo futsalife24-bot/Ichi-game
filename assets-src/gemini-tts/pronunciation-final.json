@@ -1,0 +1,152 @@
+[
+  {
+    "hash": "7312658d",
+    "sha256": "ee519248fd8ef6a4169ac075aa74db7e705b1acc48996def63cbd368640ef910",
+    "expected": "ごほうびにむぎわらぼうしをもらったよ！",
+    "recognized": "ご褒美に麦わら帽子をもらったよ"
+  },
+  {
+    "hash": "8c5d3a34",
+    "sha256": "97c70e27a2a746793f8fdd8e60ae55c6ee703f44b7d3d4416f73829f26e2d4de",
+    "expected": "じゅうごこ！",
+    "recognized": "15個"
+  },
+  {
+    "hash": "2848fc17",
+    "sha256": "b4a20b7dca7878b1a3fc1fdb5cc6fd1df30efd5424624052d9e908f120b46618",
+    "expected": "ごほうびにおはなのかんむりをもらったよ！",
+    "recognized": "ご褒美にお花の噛むりをもらったよ"
+  },
+  {
+    "hash": "1abed291",
+    "sha256": "1b75f309ac09139da5fbe5fbb7e1af610793b37e40896ba495d123dabe841a1a",
+    "expected": "にじゅっこ！",
+    "recognized": "二十個"
+  },
+  {
+    "hash": "2304487a",
+    "sha256": "c57bd9d6dd334081d8292c77cab10b3aa5fb5541513f0b2ae9981fcfb5961dd6",
+    "expected": "ごほうびにきんのおうかんをもらったよ！",
+    "recognized": "ご褒美に金の王冠をもらったよ"
+  },
+  {
+    "hash": "dc97ef03",
+    "sha256": "5d65d7d6f7ab66444e9ee1fd0f391859c44d0aa91344b58c66f07310595afa10",
+    "expected": "かずのがっこうへようこそ！",
+    "recognized": "かずの学校へようこそ"
+  },
+  {
+    "hash": "4abc226b",
+    "sha256": "206d1d019e1f4a57b5499c59949635a1d350e0fc69fdcfa394af6e5444cb3c13",
+    "expected": "すうじであそぼう！",
+    "recognized": "数字で遊ぼう"
+  },
+  {
+    "hash": "6dd6525d",
+    "sha256": "690cd9f0af195610ace71276932aebacf79924620d66bf6500631d15f5b64e27",
+    "expected": "いちごはいくつあるかな？",
+    "recognized": "いちごはいくつあるかな"
+  },
+  {
+    "hash": "21578cf6",
+    "sha256": "dc4fe208ee1d410a785518acd5ef7009779b6e2bc5feba44626a0d278c6be25b",
+    "expected": "ずかんだよ！",
+    "recognized": "ズカンだよ"
+  },
+  {
+    "hash": "b9c1f81c",
+    "sha256": "d2bb64e6781c68e0962ece7ccbb294b377d8a15aa11bb5ab81ea3af6eda2943f",
+    "expected": "ぜろしゅるいみつけたね！",
+    "recognized": "0種類見つけたね"
+  },
+  {
+    "hash": "daedfb38",
+    "sha256": "9dc3c7e3151839f82d670c17eaad1198427091b5849c2aa243d96d3c1ab5233c",
+    "expected": "いちしゅるいみつけたね！",
+    "recognized": "1種類見つけたね"
+  },
+  {
+    "hash": "8a156ea4",
+    "sha256": "f98b6bd49432235a4879f097d9dbd09a2e4e0a8cbe9758306c0eae731fc942de",
+    "expected": "にしゅるいみつけたね！",
+    "recognized": "2種類見つけたね"
+  },
+  {
+    "hash": "b9e729ab",
+    "sha256": "e120c2fd19a212ffc9777ce9a521b51af65e0bd49e5dac6975c02750e04c5499",
+    "expected": "さんしゅるいみつけたね！",
+    "recognized": "3種類見つけたね"
+  },
+  {
+    "hash": "2e29ecce",
+    "sha256": "6992ef8fae524a139e0b764e54ca47d5a3b17351aef73aa203232d33c0b1d221",
+    "expected": "よんしゅるいみつけたね！",
+    "recognized": "4種類見つけたね"
+  },
+  {
+    "hash": "e30c532d",
+    "sha256": "c9bd75c5cee9dd990ddc5a7e8e8e2b4e61fa2bf8510e6fed9afadc2ae9bfddd8",
+    "expected": "ごしゅるいみつけたね！",
+    "recognized": "5種類見つけたね"
+  },
+  {
+    "hash": "e5d2d7be",
+    "sha256": "cac6fe083f0d7fe0537b2bd2c442a36354121a383484cae4b1c7fa1d01737930",
+    "expected": "虹の色！",
+    "recognized": "にじのいろ"
+  },
+  {
+    "hash": "e0bfa2fe",
+    "sha256": "8c07627a73d287a841a3204a3d0732e9b28d969353bd6ec35ae31d35b33b0690",
+    "expected": "浴衣！",
+    "recognized": "浴衣"
+  },
+  {
+    "hash": "5bafe284",
+    "sha256": "acec48c9d9737e830047d82fb3e86ac92a3c0db913f432f48f7dd3a24098da4b",
+    "expected": "わんわんって鳴く動物は、だあれ？",
+    "recognized": "ワンワンってなく動物は誰?"
+  },
+  {
+    "hash": "6673fb40",
+    "sha256": "dd2a86c0a19bd8b490e98512e2afb18d0325bc1de5055c13bb8c9689a59f5af8",
+    "expected": "ぶーぶーって鳴く動物は、だあれ？",
+    "recognized": "ブーブーってなく動物は誰?"
+  },
+  {
+    "hash": "47f905e0",
+    "sha256": "3af44b6377eafd080872b87ee9b5f9c9cec533fff1adcdf4d46a34fa29633ff4",
+    "expected": "もーもーって鳴く動物は、だあれ？",
+    "recognized": "もう思ってなく動物は誰?"
+  },
+  {
+    "hash": "7a9486f0",
+    "sha256": "d7b1d2fbf1360feb7fa605154ff5289712378bf4787c1b0232ab64e20e09efae",
+    "expected": "ぴよぴよって鳴く動物は、だあれ？",
+    "recognized": "ピヨピヨってなく動物は誰?"
+  },
+  {
+    "hash": "15276064",
+    "sha256": "6b5dbcc28c3a229c4fd9633cd1479633b7c75c91fe09e032ac7df6c35ec51eca",
+    "expected": "けろけろって鳴く動物は、だあれ？",
+    "recognized": "ケロケロってなく動物は誰?"
+  },
+  {
+    "hash": "7312658d",
+    "sha256": "ee519248fd8ef6a4169ac075aa74db7e705b1acc48996def63cbd368640ef910",
+    "expected": "ご褒美に麦わら帽子をもらったよ！",
+    "recognized": "ご褒美に麦わら帽子をもらったよ"
+  },
+  {
+    "hash": "2848fc17",
+    "sha256": "b4a20b7dca7878b1a3fc1fdb5cc6fd1df30efd5424624052d9e908f120b46618",
+    "expected": "ご褒美にお花の冠をもらったよ！",
+    "recognized": "ご褒美にお花の噛むりをもらったよ"
+  },
+  {
+    "hash": "ce2f0750",
+    "sha256": "188561136d8f8b4c5247b94177a115d9d3a94496c6227dd68add0d5a2e2a62ea",
+    "expected": "めぇめぇって鳴く動物は、だあれ？",
+    "recognized": "メーメーって無く動物は誰?"
+  }
+]

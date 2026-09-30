@@ -15,14 +15,16 @@ const clips = [...keys].map(([hash, text]) => ({hash, text,
 }));
 const batches = [clips.slice(0, 7)];
 for (let i = 7; i < clips.length; i += 40) batches.push(clips.slice(i, i + 40));
-const repairsPath = new URL('repair-lines.json',dir);
-if(existsSync(repairsPath)) {
-  const repairs=JSON.parse(readFileSync(repairsPath));
-  batches.push(repairs.map(r=>{
-    const hash=clipHash(clipKey(r.text));
-    if(keys.get(hash)!==clipKey(r.text))throw Error('Repair does not match an existing clip');
-    return {hash,text:clipKey(r.text),reading:r.reading,reason:r.reason};
-  }));
+for(const filename of ['repair-lines.json','repair-lines-2.json']) {
+  const repairsPath = new URL(filename,dir);
+  if(existsSync(repairsPath)) {
+    const repairs=JSON.parse(readFileSync(repairsPath));
+    batches.push(repairs.map(r=>{
+      const hash=clipHash(clipKey(r.text));
+      if(keys.get(hash)!==clipKey(r.text))throw Error('Repair does not match an existing clip');
+      return {hash,text:clipKey(r.text),reading:r.reading,reason:r.reason};
+    }));
+  }
 }
 const plan = { model: 'gemini-3.8-flash-tts', voice: 'Cleo', lines: allLines().length, clips: clips.length, batches };
 writeFileSync(new URL('plan.json', dir), JSON.stringify(plan, null, 2) + '\n');

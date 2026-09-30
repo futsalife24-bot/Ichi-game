@@ -6,6 +6,7 @@
 <label>試聴するセリフ <select id="sample"></select></label><button id="play">再生</button><button id="stop">停止</button>
 <p id="subtitle">セリフを選んで再生できます。</p><p id="status" role="status">音声一覧を読み込み中</p>
 <button id="check">全音声を検査</button><pre id="result"></pre>
+<button id="offline">オフライン用保存を検査</button><pre id="offline-result"></pre>
 <p><small>これは開発用の試聴ページです。ゲームのセーブデータは変更しません。</small></p>
 <script type="module">
 import { Voice } from '../src/voice.js';
@@ -28,4 +29,15 @@ document.querySelector('#status').textContent=voice.clipIndex ? `${preview?'未�
 document.querySelector('#play').onclick=async()=>{await unlock();voice.say(samples[Number(select.value)][1]);};
 document.querySelector('#stop').onclick=()=>voice.stop();
 document.querySelector('#check').onclick=async()=>{await unlock();voice.stop();const errors=[];let checked=0,seconds=0;for(const hash of voice.clipIndex?.keys()??[]){try{const b=await voice.decode(hash);if(b.numberOfChannels!==1||b.duration<=.1)throw Error('invalid audio');seconds+=b.duration;checked++;}catch(e){errors.push({hash,error:String(e)});}if(checked%25===0)document.querySelector('#result').textContent=JSON.stringify({checked,errors});}document.querySelector('#result').textContent=JSON.stringify({checked,expected:voice.clipIndex?.size,errors,totalSeconds:Math.round(seconds)},null,2);};
+document.querySelector('#offline').onclick=async()=>{
+ const output=document.querySelector('#offline-result');output.textContent='保存完了を確認中…';
+ try{
+  if(preview||!voice.clipIndex?.size)throw Error('完成した音声一覧で検査してください');
+  await navigator.serviceWorker.register('sw.js');
+  let timer;try{await Promise.race([navigator.serviceWorker.ready,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('保存完了を確認できませんでした')),45000);})]);}finally{clearTimeout(timer);}
+  const cache=await caches.open('kirakira-v10-gemini'),missing=[];let cached=0;
+  for(const [hash,file]of voice.clipIndex){const res=await cache.match(new URL('voice/'+file,document.baseURI));if(res?.ok&&(await res.arrayBuffer()).byteLength>100)cached++;else missing.push(hash);}
+  output.textContent=JSON.stringify({cached,expected:voice.clipIndex.size,missing},null,2);
+ }catch(error){output.textContent=String(error);}
+};
 </script></html>

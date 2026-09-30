@@ -1,6 +1,6 @@
 # キラキラアイランド Gemini音声
 
-作業中・未公開。生成済み567/652個。課金先の選択は承認済みだが、支払い設定が未完了。設定内容の確認について回答待ち。現在地と再開手順は [STATE.md](STATE.md)。
+全652個の生成・実装・ローカル検証完了。公開は未実施。検証結果と公開前の現在地は [STATE.md](STATE.md)。9月30日の通常生成で再開でき、新規契約・支払い設定の変更は行っていない。
 
 - モデル: `gemini-3.8-flash-tts`（2026-09-29、Google AI Studio画面で確認）。スワフロの既存採用モデルと同じ。
 - 声: Cleo（Warm and engaging / Medium-high pitch）。架空の大人の女性ガイド。声真似なし。
@@ -42,6 +42,8 @@ Style:
 - `import-report.json`: 原本SHA256、切り出し区間、出荷MP3のSHA256・長さ。
 - `boundaries.json`: 確認した個別の区切り補正、余分な生成発声の除外。
 - `repair-lines.json`: 読みを明確にするための再生成台本。元のゲーム文面と音声キーは変更しない。
+- `repair-lines-2.json`: 羊の鳴き声をカタカナ表記で再生成した追加1文。後のバッチを優先して採用する。
+- `pronunciation-final.json`: 最終採用MP3のSHA256付き個別認識。`pronunciation-interim.json`は修正前の参考記録。
 - `parts-provenance.json`: 小分けにした原本と結合ファイルのSHA256。
 - `*-source.asr.json`: ローカルWhisper smallの補助認識結果。誤認識を含むため、聴感の合格判定ではない。
 - `alignment.json`: かな照合による確認補助。単独の漢字読み・短音の誤認識があり、値だけで採否を決めない。
