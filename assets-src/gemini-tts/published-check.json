@@ -1,0 +1,46 @@
+{
+  "verifiedAt": "2026-09-30T07:42:03.460Z",
+  "url": "https://futsalife24-bot.github.io/Ichi-game/",
+  "releaseCommit": "5f18eec846d5b777dfa1cafbba74cd8b7651c60e",
+  "model": "gemini-3.8-flash-tts",
+  "voice": "Cleo",
+  "clips": 652,
+  "manifestMatches": true,
+  "checks": [
+    {
+      "path": "index.html",
+      "bytes": 4473,
+      "sha256": "8a30eed72ee9ee97a0ccc89b86890c0be29ce2145179d51e15d282f009353a37"
+    },
+    {
+      "path": "sw.js",
+      "bytes": 2619,
+      "sha256": "38689877fb51be0ab38acf93278f4803f4d6fe070f7ef8090ccae552e2c3b264"
+    },
+    {
+      "path": "src/voice.js",
+      "bytes": 6841,
+      "sha256": "463f22112bc0d0b722cb0c04788273b92489f3e1a3f6db5e13e73c506558f226"
+    },
+    {
+      "path": "src/lines.js",
+      "bytes": 13022,
+      "sha256": "40732c0acc4d4ce7de1addb0a74109d2eb653bf52d5ccf9914618bb216e7890f"
+    },
+    {
+      "path": "voice/gemini/13476161.mp3",
+      "bytes": 11756,
+      "sha256": "093db03731b480751fef272eb32274379f9d20c6c71b5498ca7ba062b75a2b4c"
+    },
+    {
+      "path": "voice/gemini/18182816.mp3",
+      "bytes": 14636,
+      "sha256": "c30e7fb70d94a4f53090ee68c515ab78e38156bb0cabe4f7d2aa7ea8775c2c77"
+    },
+    {
+      "path": "voice/gemini/ce2f0750.mp3",
+      "bytes": 29420,
+      "sha256": "188561136d8f8b4c5247b94177a115d9d3a94496c6227dd68add0d5a2e2a62ea"
+    }
+  ]
+}

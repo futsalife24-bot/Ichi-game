@@ -1,14 +1,14 @@
 # Gemini音声置き換えの現在地（2026-09-30）
 
-**生成・実装・ローカル検証完了。公開は未実施。**
+**生成・実装・検証・GitHub Pages公開完了。**
 
 GitHub: https://github.com/futsalife24-bot/Ichi-game
 
 作業場所: `C:\Users\futsa\Documents\Codex\2026-09-29\ichi-game`
 
-ブランチ: `codex/gemini-tts`
+ブランチ: `main`（実装は `codex/gemini-tts`、PR #8でmerge済み）
 
-開始SHA: `cad5a9f9bafb6273be7a49e8b5b121ded2f0d5f8`。最終HEADはこのブランチとPRを参照。
+開始SHA: `cad5a9f9bafb6273be7a49e8b5b121ded2f0d5f8`。実装HEAD: `383b0154884a467b1a61301b438eca06b6b35536`。公開merge: `5f18eec846d5b777dfa1cafbba74cd8b7651c60e`。この後の変更は公開記録のみ。
 
 ## 完成した変更
 
@@ -31,7 +31,7 @@ GitHub: https://github.com/futsalife24-bot/Ichi-game
 - りんごの個数と99ベルの組み合わせ再生、実ゲームの起動・声OFF/ON・図鑑0種類の案内を確認。実ゲームのコンソールエラー0。
 - 新規の金額20～57ベル、図鑑0～34種類、発音修正について原本と個別クリップのASRを照合。羊の鳴き声は最後に1文を再生成し「メーメー」で認識。表記ゆれや短い擬音の認識揺れはあり、ASRを人の聴感評価と同一視しない。
 - `git diff --check` 成功。WindowsのCRLFでもmanifestの内容比較ができるようにした。
-- 全件の人による聴感評価、Fire/iOS実機、通信を実際に遮断した再生、公開後の確認は未実施。
+- 全件の人による聴感評価、Fire/iOS実機、通信を実際に遮断した再生は未実施。
 
 ローカル画面証拠: `artifacts/gemini-game-final.png`、`artifacts/gemini-voice-final.png`。
 
@@ -41,9 +41,17 @@ GitHub: https://github.com/futsalife24-bot/Ichi-game
 
 9月30日にユーザーの再試行指示で、支払い案内を閉じて通常の生成を再実行したところ成功。残り45キーと発音修正11文を生成し終えた。新規契約・APIキー作成・支払い設定変更・有料キーのリンクは実行していない。実請求額は未確認。
 
-## 残る操作
+## 公開結果
 
-merge・GitHub Pages公開は明示承認後。公開後は配信されたmanifestのモデル・キー数、新MP3の取得、更新を確認する。
+2026-09-30、ユーザーの明示承認後に [PR #8](https://github.com/futsalife24-bot/Ichi-game/pull/8) をmerge。 [Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/36685099778) 成功（16:41 JST）。公開時の必須テスト9件と音声完全性チェックも成功。
+
+公開先: https://futsalife24-bot.github.io/Ichi-game/
+
+- 配信manifestがローカル完成版と一致。モデル `gemini-3.8-flash-tts`、声Cleo、652個。
+- 公開のindex.html / sw.js / src/voice.js / src/lines.js が完成版と一致（テキストの改行コードは正規化）。金額・図鑑・修正した羊の3音声もMP3 SHA一致。
+- 公開ブラウザで更新後のGeminiクレジット、ゲーム起動を確認。コンソールエラー0。
+- 配信確認の機械記録: `published-check.json`。画面証拠: ローカル `artifacts/gemini-published.png`。
+- 依頼範囲の残作業なし。
 
 ## 環境
 
