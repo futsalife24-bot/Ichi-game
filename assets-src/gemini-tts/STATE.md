@@ -1,10 +1,10 @@
 # Gemini音声作業の現在地（2026-10-01）
 
-## 追加音声39個の生成・実装・ローカル検証完了
+## 追加音声39個の生成・実装・検証・公開完了
 
-キャラメイク案内・リアクション・24候補の名前の呼びかけを追加。合計691個。公開サイトへの反映は未実施です。作業の入口は [PROJECT.md](../../PROJECT.md)。
+キャラメイク案内・リアクション・24候補の名前の呼びかけを追加。合計691個。2026-10-01に公開サイトへの反映も完了しました。作業の入口は [PROJECT.md](../../PROJECT.md)。
 
-- ブランチ: `codex/remaining-character-voices`、開始SHA: `1a3dde1a7c5a3b7de20b763c3f1a2dbb103deca0`、準備完了SHA: `78ebdd5e2d05dde9599be13e41b04caaf7b8930b`。
+- 現在のブランチ: `main`、実装ブランチ: `codex/remaining-character-voices`。開始SHA: `1a3dde1a7c5a3b7de20b763c3f1a2dbb103deca0`、実装HEAD: `f9f511197b45ecd25b58fd9868a257ea39420414`、公開マージSHA: `45efc32d3a7f549c408caf0f4a54febd20e17d4e`。
 - Gemini 3.8 Flash TTS / Cleoで追加39個を生成。バッチ20～23、発音補修24～25。既存652個のMP3を保持。
 - `characterLines()` を通常収録対象へ統合。全956通りと、24候補名を使った挨拶を網羅。`pendingLines()` は空。
 - 追加39個は369,012 bytes、切り出し長42.72秒。mono / 24kHz / 64kbps。全原本とMP3のSHAは `import-report.json`、最終個別認識は `character-clips.asr.json`。
@@ -14,7 +14,11 @@
 - 名前つきの挨拶が収録音声で再生。実ゲームで卵・キャラメイク全5段階・「こむぎちゃん」での開始を確認。コンソールエラー0。
 - 試聴画面の旧 `HEROES` 参照による読み込み停止を修正。Service Workerを `kirakira-v11-character-voices` へ更新。
 - 人による全件聴感評価・Fire/iOS実機・通信遮断下での再生は未実施。
-- Codexのローカルプロジェクトは `ichi-game` として登録・一覧表示を確認済み。公開にはユーザーの明示承認が必要。
+- Codexのローカルプロジェクトは `ichi-game` として登録・一覧表示を確認済み。
+- ユーザーの公開指示を受けて [PR #10](https://github.com/futsalife24-bot/Ichi-game/pull/10) をマージ。[GitHub Pagesの公開処理](https://github.com/futsalife24-bot/Ichi-game/actions/runs/36853640247) と、その中の必須テスト12件・音声完全性チェックが成功。
+- 公開先の音声一覧691個、`index.html`・`src/lines.js`・`src/voice.js`・`sw.js` が完成版と一致。追加39個すべてのMP3ハッシュも一致。機械記録は `character-release-check.json`。
+- 公開ブラウザでキャラメイクから「こむぎちゃん」でのゲーム開始を確認。コンソールエラー0。画面証拠はローカルの `artifacts/character-public-game.png`。
+- 依頼範囲の残作業なし。この後の変更は公開記録のみ。
 
 ## 以下は9月30日の完了記録
 

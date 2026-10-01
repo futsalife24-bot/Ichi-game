@@ -12,13 +12,13 @@
 
 ## 現在の作業（2026-10-01）
 
-キャラメイク・名前の呼びかけ39クリップの生成・実装・ローカル検証が完了しました。開始SHAは `1a3dde1a7c5a3b7de20b763c3f1a2dbb103deca0`、準備完了SHAは `78ebdd5e2d05dde9599be13e41b04caaf7b8930b`。作業ブランチは `codex/remaining-character-voices` です。
+キャラメイク・名前の呼びかけ39クリップの生成・実装・検証・公開が完了しました。開始SHAは `1a3dde1a7c5a3b7de20b763c3f1a2dbb103deca0`、実装HEADは `f9f511197b45ecd25b58fd9868a257ea39420414`、公開マージSHAは `45efc32d3a7f549c408caf0f4a54febd20e17d4e`。現在のブランチは `main`、実装ブランチは `codex/remaining-character-voices` です。
 
 - 出荷用音声は合計691個。既存652個のMP3は変更せず、追加39個を収録しました。
 - `characterLines()` を `allLines()` に統合し、`pendingLines()` は空です。収録対象956通りに加え、24候補名と時刻・季節を組み合わせた挨拶も音声で構成できます。
 - 試聴画面にキャラメイクと名前の選択を追加。旧キャラクター定義 `HEROES` が削除済みなのに参照していた既存不具合を修正しました。
 - Service Workerは `kirakira-v11-character-voices`。更新後は追加音声もオフライン用に保存します。
-- 公開サイトは未更新。`main` への反映・公開にはユーザーの明示承認が必要です。
+- 2026-10-01、ユーザーの公開指示を受けて [PR #10](https://github.com/futsalife24-bot/Ichi-game/pull/10) をマージ。[GitHub Pagesの公開処理](https://github.com/futsalife24-bot/Ichi-game/actions/runs/36853640247) が成功しました。
 
 ## 起動と検証
 
@@ -40,13 +40,15 @@ git diff --check
 - Chromeで全691個の取得・デコードが成功。エラー0、音声長は約915秒。
 - オフライン用キャッシュは691個を保存済み、欠落0。名前つきの挨拶を収録音声で再生。
 - 実ゲームで卵→キャラメイク5段階→「こむぎちゃん」でゲーム開始を確認。コンソールエラー0。
+- 公開処理でも必須テスト12件と音声完全性チェックが成功。公開先の音声一覧691個、ゲーム用ファイル4個、追加音声39個のハッシュが完成版と一致。
+- 公開ブラウザでキャラメイクから「こむぎちゃん」のゲーム開始まで確認。コンソールエラー0。
 - 人による全件聴感評価、Fire/iOS実機、通信を実際に遮断した再生は未実施。
 
 ## 証拠と次の作業
 
-生成条件・原本ハッシュ・切り出し・認識結果・ブラウザ結果は `assets-src/gemini-tts/character-*.json` と `import-report.json`。ローカル画面証拠は `artifacts/character-voice-review.png` と `artifacts/character-game.png` です。
+生成条件・原本ハッシュ・切り出し・認識結果・ブラウザ結果は `assets-src/gemini-tts/character-*.json` と `import-report.json`。公開先との照合結果は `assets-src/gemini-tts/character-release-check.json`。ローカル画面証拠は `artifacts/character-voice-review.png` と `artifacts/character-game.png`、公開版の画面証拠は `artifacts/character-public-game.png` です。
 
-追加音声の生成とCodexへのローカルプロジェクト登録は完了しています。差分は [下書きPR #10](https://github.com/futsalife24-bot/Ichi-game/pull/10) に保存しています。公開を希望する場合は、作業ブランチの差分を確認して承認後に公開します。再生成や今後の追加は [音声手順](assets-src/gemini-tts/README.md) に従ってください。
+追加音声の生成・公開とCodexへのローカルプロジェクト登録は完了しています。差分は [PR #10](https://github.com/futsalife24-bot/Ichi-game/pull/10) で `main` に反映済みです。依頼範囲の残作業はありません。再生成や今後の追加は [音声手順](assets-src/gemini-tts/README.md) に従ってください。
 
 ## Codexへのプロジェクト登録
 
