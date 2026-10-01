@@ -1,6 +1,6 @@
 # キラキラアイランド Gemini音声
 
-全652個の生成・実装・検証・公開完了。検証結果と公開記録は [STATE.md](STATE.md)。9月30日の通常生成で再開でき、新規契約・支払い設定の変更は行っていない。
+全691個の生成・実装・ローカル検証完了。追加39個の公開反映は未実施。検証結果と公開記録は [STATE.md](STATE.md)。新規契約・支払い設定の変更は行っていない。
 
 - モデル: `gemini-3.8-flash-tts`（2026-09-29、Google AI Studio画面で確認）。スワフロの既存採用モデルと同じ。
 - 声: Cleo（Warm and engaging / Medium-high pitch）。架空の大人の女性ガイド。声真似なし。
@@ -9,19 +9,22 @@
 - APIキー作成・契約変更なし。実請求額は未確認。ゲーム内で生成APIを呼ばない。
 - Codex実行モデルID / reasoning effort: 取得できず未確認。切替なし、サブエージェントなし。
 
-## まだ音声がない新しいセリフ
+## キャラメイクと名前の追加音声
 
-キャラメイクと名前の呼びかけ（39クリップ）は `src/lines.js` の `pendingLines()` に分けてあり、`allLines()` には入れていない（入れると公開前の音声チェックが止まるため）。
-生成するときは `pendingLines()` の中身を `allLines()` へ移してから、下の「再生成」の手順で作る。それまでは、音声がある部分だけ再生するか、端末の読み上げで話す。
+キャラメイクと名前の呼びかけ39個を `characterLines()` として `allLines()` に統合済み。`pendingLines()` は空。生成前の台本を `pending-plan.json` に履歴として保持する。
+
+バッチ20～23で39個を生成し、24・25で「えへへ」「こむぎちゃん」「ぷうちゃん」を補修した。`character-generation.json` にスタイル・原本ハッシュ・生成回数、`character-clips.asr.json` に最終39個のMP3ハッシュと認識結果、`character-browser-check.json` にブラウザ検証結果を保持する。追加39個は合計369,012 bytes、切り出し長42.72秒。
+
+今後の追加は `node --import ./tools/register.mjs tools/gen-voice.mjs --plan --append --pending`。既存のバッチ番号・発音修正を保持して未生成分を10個ずつ末尾へ追加する。番号ごとに `node tools/import-voice.mjs --batch=番号` で取り込む。既存の原本が手元になくても未選択バッチの記録を維持できる。全原本が揃う前には番号なしの `--import` を実行しない。完成後に通常の収録対象へ統合して `--plan --append` と `--finalize` で確定する。
 
 ## 再生成
 
-1. `node --import ./tools/register.mjs tools/gen-voice.mjs --plan` で現在のセリフから重複を除いた `plan.json` と `batch-NN.txt` を出す。字幕やゲームルールは変えない。
+1. `node --import ./tools/register.mjs tools/gen-voice.mjs --plan --append` で既存原本のバッチ番号を維持して `plan.json` と `batch-NN.txt` を出す。字幕やゲームルールは変えない。`--append` なしは全バッチを作り直す場合だけ使う。
 2. AI StudioのSpeech blockへ各バッチの文面を入力し、上記モデル・声と下記のStyleを設定する。各行は別の再利用音声。`<long pause>` を行間に挿入する（UIのExpressionで提供されているタグ）。文面の読み足し・読み落としを確認する。
 3. 生成WAVをこのディレクトリに `batch-NN-source.wav` として保存する。最初の7フレーズだけは `praise-source.wav`。原本を上書きする前に旧版を `rejected/` へ保管する。
 4. `FFMPEG_PATH` を既存のFFmpeg実行ファイルに設定し `node tools/import-voice.mjs`。PCM16 mono 24kHzを検査し、音声波形と期待フレーズ数が一致したバッチだけ取り込む。曖昧なら書き出さず `ambiguous` とする。必要な補正は内容を照合してから `boundaries.json` に理由つきで記録する。
 5. `node --import ./tools/register.mjs tools/gen-voice.mjs --finalize`。全バッチ・全セリフ・出荷MP3のSHA256が一致したときだけ `voice/index.json` を更新する。
-6. `node --import ./tools/register.mjs --test tools/voice.test.mjs tools/sw.test.mjs` と `node --import ./tools/register.mjs tools/finalize-voice.mjs --check`。`node tools/serve.mjs` で起動し、`http://127.0.0.1:5187/tools/voice-review.html` と実ゲームで確認する。
+6. `node --import ./tools/register.mjs --test tools/plan-voice.test.mjs tools/voice.test.mjs tools/sw.test.mjs` と `node --import ./tools/register.mjs tools/finalize-voice.mjs --check`。`node tools/serve.mjs` で起動し、`http://127.0.0.1:5187/tools/voice-review.html` と実ゲームで確認する。
 
 Style:
 

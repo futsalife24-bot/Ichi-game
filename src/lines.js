@@ -99,7 +99,7 @@ export const L = {
   // ---- かずの がっこう
   schoolWelcome: (call = '') => line(`${hey(call)}かずの がっこう へ ようこそ！ すうじ で あそぼう！`),
 
-  // ---- キャラメイク（おんせいは pendingLines で これから つくる）
+  // ---- キャラメイク（Gemini おんせいを しゅうろくずみ）
   makerStep: (i) => line(['からだ の いろ を えらんでね！', 'みみ の かたち を えらんでね！', 'おめめ を えらんでね！',
     'もよう と しっぽ を えらんでね！', 'おなまえ を えらんでね！'][i]),
   makerReact: () => line(['かわいい！', 'すてき！', 'いいね！', 'にあってるね！'][Math.floor(Math.random() * 4)]),
@@ -222,16 +222,12 @@ export function allLines() {
   for (const n of range(1, 100)) add(L.sell(n));
   for (const snow of [false, true]) { add(L.rainStart(snow)); add(L.rainEnd(snow)); }
   for (const n of range(0, Object.keys(ITEMS).length)) add(L.zukan(n));
+  out.push(...characterLines());
   return out;
 }
 
-/**
- * まだ Gemini おんせいが ない あたらしい せりふ（キャラメイク・なまえの よびかけ）。
- * allLines() に いれると 公開まえの おんせいチェックが とまるので、ここに わけておく。
- * 音声を つくったら allLines() へ うつす（assets-src/gemini-tts/README.md の てじゅん）。
- * それまでは、音声が ある ぶぶん だけ ならすか、たんまつの よみあげ で しゃべる。
- */
-export function pendingLines() {
+/** キャラメイク・なまえの よびかけの せりふ */
+export function characterLines() {
   const out = [];
   const calls = NAMES.map((n) => `${n.name}ちゃん`);
   for (let i = 0; i < 5; i++) out.push(L.makerStep(i).say);
@@ -239,3 +235,6 @@ export function pendingLines() {
   for (const c of calls) out.push(L.call(c).say);
   return out;
 }
+
+/** つぎに しゅうろくする せりふ。いまは ぜんぶ そろっている。 */
+export function pendingLines() { return []; }

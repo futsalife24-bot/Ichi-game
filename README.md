@@ -2,6 +2,8 @@
 
 ▶ **あそぶ： https://futsalife24-bot.github.io/Ichi-game/**
 
+開発を続けるときは [プロジェクトの作業入口](PROJECT.md) から、現在地・残作業・検証手順を確認してください。
+
 Ichi-game（娘用ゲーム）。もうすぐ4歳の子ども向けの **3D知育ゲーム** です。
 島の上でキャラクターを動かし、どうぶつたちと遊びながら **いろ・かず・かたち・どうぶつ・ひらがな** にふれられます。
 Three.js 製で、ビルド不要の静的サイト。PWA としてホーム画面に追加すると、オフラインでもフルスクリーン（横向き）で遊べます。
@@ -137,23 +139,23 @@ vendor/            three.js r186（MIT）
 
 ### セリフ（声）を変える・増やす
 
-Gemini音声652個の生成・実装・ローカル検証が完了しています。966通りのセリフに再利用します。公開状況と検証結果は [音声作業の現在地](assets-src/gemini-tts/STATE.md) を参照してください。
+Gemini音声691個の生成・実装・ローカル検証が完了しています。キャラメイクの案内と24候補の名前の呼びかけも収録済みです。収録対象956通りのセリフと名前つきの挨拶に再利用します。追加39個はまだ公開サイトへ反映していません。公開状況と検証結果は [音声作業の現在地](assets-src/gemini-tts/STATE.md) を参照してください。
 
 セリフはすべて `src/lines.js` にあります。文末に加え、数え方の「りんごを／さんこあつめてね」、買い物の「いすを／かったよ」など意味の切れ目で音声を再利用します。数字と助数詞、ひらがなの例文は一息で収録します。
 
 ```sh
-node --import ./tools/register.mjs tools/gen-voice.mjs --plan
+node --import ./tools/register.mjs tools/gen-voice.mjs --plan --append
 # AI Studioで生成→WAV保存→確認済みの区切りでMP3化（詳細は下記）
 node --import ./tools/register.mjs tools/gen-voice.mjs --import
 node --import ./tools/register.mjs tools/gen-voice.mjs --finalize
-node --import ./tools/register.mjs --test tools/voice.test.mjs tools/sw.test.mjs
+node --import ./tools/register.mjs --test tools/plan-voice.test.mjs tools/voice.test.mjs tools/sw.test.mjs
 ```
 
 生成条件・音声の対応表・再生成手順は [assets-src/gemini-tts/README.md](assets-src/gemini-tts/README.md)。全音声が揃うまで一覧を更新しない仕組みです。旧Mei音声は履歴参照用に残し、配信対象から外しています。
 
 GitHub: https://github.com/futsalife24-bot/Ichi-game
 
-ローカル作業場所: `C:\Users\futsa\Documents\Codex\2026-09-29\ichi-game`
+ローカル作業場所: このリポジトリのルート。端末固有の所在と以前の音声原本の場所はGit対象外の `PROJECT.local.md` に記録しています。
 
 ### クレジット
 

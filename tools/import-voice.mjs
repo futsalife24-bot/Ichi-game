@@ -8,16 +8,24 @@ const out = new URL('../voice/gemini/', import.meta.url);
 const plan = JSON.parse(readFileSync(new URL('plan.json', root)));
 const overrides = JSON.parse(readFileSync(new URL('boundaries.json', root)));
 const previous = existsSync(new URL('import-report.json',root)) ? JSON.parse(readFileSync(new URL('import-report.json',root))) : [];
+const batchArg = process.argv.find(arg => arg.startsWith('--batch='));
+const selected = batchArg ? Number(batchArg.slice('--batch='.length)) : null;
+if (selected !== null && (!Number.isInteger(selected) || selected < 0 || selected >= plan.batches.length)) throw Error('取り込むバッチ番号が不正です');
 const ffmpeg = process.env.FFMPEG_PATH;
 if (!ffmpeg) throw Error('Set FFMPEG_PATH to an installed FFmpeg executable');
 const work = new URL('clips/',root);
 mkdirSync(work,{recursive:true});
 mkdirSync(out, { recursive: true });
-const report = [];
+// ひとつだけ とりこむときは、ほかの げんぽんや きろくを さわらない。
+const report = selected === null ? [] : previous.filter(item => item.batchId !== selected);
 for (const [batchId, clips] of plan.batches.entries()) {
+  if (selected !== null && batchId !== selected) continue;
   const filename = batchId === 0 ? 'praise-source.wav' : `batch-${String(batchId).padStart(2,'0')}-source.wav`;
   const path = new URL(filename, root);
-  if (!existsSync(path)) continue;
+  if (!existsSync(path)) {
+    if (selected !== null) throw Error('指定した音声原本がありません: ' + filename);
+    continue;
+  }
   const b = readFileSync(path);
   const sourceSha256=createHash('sha256').update(b).digest('hex');
   const recipe=createHash('sha256').update(JSON.stringify({version:2,override:overrides[batchId]})).digest('hex');
@@ -92,6 +100,7 @@ for (const [batchId, clips] of plan.batches.entries()) {
   }
   report.push({batchId,status:'imported',filename,sourceSha256,recipe,duration,peak,saturated,clips:ranges});
 }
+report.sort((a,b) => a.batchId - b.batchId);
 writeFileSync(new URL('import-report.json',root),JSON.stringify(report,null,2)+'\n');
 console.log(JSON.stringify(report.map(({batchId,status,expected,found,clips})=>({batchId,status,expected,found,clips:clips?.length}))));
 if(report.some(x=>x.status!=='imported'))process.exitCode=1;

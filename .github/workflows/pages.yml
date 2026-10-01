@@ -27,7 +27,7 @@ jobs:
           node-version: 24
       - name: Validate voice release
         run: |
-          node --import ./tools/register.mjs --test tools/voice.test.mjs tools/sw.test.mjs
+          node --import ./tools/register.mjs --test tools/plan-voice.test.mjs tools/voice.test.mjs tools/sw.test.mjs
           node --import ./tools/register.mjs tools/finalize-voice.mjs --check
       - name: Prepare site
         run: |

@@ -11,10 +11,12 @@
 <script type="module">
 import { Voice } from '../src/voice.js';
 import { L, withPraise, THINGS } from '../src/lines.js';
-import { HEROES } from '../src/characters.js';
-import { PERIODS, SEASONS } from '../src/catalog.js';
+import { PERIODS, SEASONS, NAMES } from '../src/catalog.js';
 import { FRUITS } from '../src/props.js';
-const samples=[['ごあいさつ',L.welcome(Object.values(HEROES)[0].name,PERIODS.asa,SEASONS.aki)],['ほめ言葉',withPraise({say:'せいかい！',sub:'せいかい！'},'じょうず！')],['色',L.rainbow()],['集める数',L.countAsk(Object.values(FRUITS)[0],3)],['学校',L.schoolCountRight(8,THINGS[0])],['学校の案内',L.schoolWelcome()],['お買い物',L.buy({name:'くまの ぬいぐるみ'})],['売る',L.sell(99)],['図鑑',L.zukan(0)],['図鑑が増えた',L.zukan(30)]];
+const samples=[['ごあいさつ',L.welcome('ももちゃん',PERIODS.asa,SEASONS.aki)],['ほめ言葉',withPraise({say:'せいかい！',sub:'せいかい！'},'じょうず！')],['色',L.rainbow()],['集める数',L.countAsk(Object.values(FRUITS)[0],3)],['学校',L.schoolCountRight(8,THINGS[0])],['学校の案内',L.schoolWelcome()],['お買い物',L.buy({name:'くまの ぬいぐるみ'})],['売る',L.sell(99)],['図鑑',L.zukan(0)],['図鑑が増えた',L.zukan(30)]];
+for(let i=0;i<5;i++)samples.push(['キャラメイク '+(i+1),L.makerStep(i)]);
+samples.push(['たまごから誕生',L.hatch()],['名前つきのあいさつ',L.born('ももちゃん')]);
+for(const n of NAMES)samples.push(['呼びかけ '+n.name,L.call(n.name+'ちゃん')]);
 const select=document.querySelector('#sample');for(const [i,[name]]of samples.entries())select.add(new Option(name,i));
 const audio={ctx:null,voiceOut:null};let started=0;
 // Base URL matches the game's fetch paths even though this page is in tools/.
@@ -35,7 +37,7 @@ document.querySelector('#offline').onclick=async()=>{
   if(preview||!voice.clipIndex?.size)throw Error('完成した音声一覧で検査してください');
   await navigator.serviceWorker.register('sw.js');
   let timer;try{await Promise.race([navigator.serviceWorker.ready,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('保存完了を確認できませんでした')),45000);})]);}finally{clearTimeout(timer);}
-  const cache=await caches.open('kirakira-v10-gemini'),missing=[];let cached=0;
+  const cache=await caches.open('kirakira-v11-character-voices'),missing=[];let cached=0;
   for(const [hash,file]of voice.clipIndex){const res=await cache.match(new URL('voice/'+file,document.baseURI));if(res?.ok&&(await res.arrayBuffer()).byteLength>100)cached++;else missing.push(hash);}
   output.textContent=JSON.stringify({cached,expected:voice.clipIndex.size,missing},null,2);
  }catch(error){output.textContent=String(error);}

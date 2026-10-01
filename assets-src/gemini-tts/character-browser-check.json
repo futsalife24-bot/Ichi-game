@@ -1,0 +1,27 @@
+{
+  "decode": {
+    "checked": 691,
+    "expected": 691,
+    "errors": [],
+    "totalSeconds": 915
+  },
+  "cache": {
+    "cached": 691,
+    "expected": 691,
+    "missing": []
+  },
+  "sampleStatus": "再生終了（clip、1.65秒）",
+  "sampleSubtitle": "ももちゃん！ よろしくね！",
+  "game": {
+    "steps": [
+      "たまご",
+      "からだ",
+      "みみ",
+      "おめめ",
+      "もようとしっぽ",
+      "名前こむぎ",
+      "できた"
+    ],
+    "consoleErrors": []
+  }
+}

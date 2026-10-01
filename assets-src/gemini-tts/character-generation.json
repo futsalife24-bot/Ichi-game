@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-01",
+  "model": "gemini-3.8-flash-tts",
+  "voice": "Cleo",
+  "style": "日本語の標準語。明るくやさしい大人の女性ガイド。はっきり、少しゆっくり、自然な声。台本のみを正確に読み、各行の間を1秒あける。相づちや説明は加えない。",
+  "separator": "<long pause>",
+  "generationRunsThisTurn": 7,
+  "addedClips": 39,
+  "addedBytes": 369012,
+  "addedSeconds": 42.72,
+  "batches": [
+    {
+      "batchId": 20,
+      "filename": "batch-20-source.wav",
+      "sourceSha256": "9aac37e9f219d7c0522aa5650d21354d1024245408d54b3c32952b04c7a45204",
+      "duration": 33.2,
+      "peak": 27757,
+      "saturated": 0
+    },
+    {
+      "batchId": 21,
+      "filename": "batch-21-source.wav",
+      "sourceSha256": "a92955e3895dd95201790e99c2786e0f21082c36e34d5c977fc72935c75e5e8a",
+      "duration": 22.48,
+      "peak": 26372,
+      "saturated": 0
+    },
+    {
+      "batchId": 22,
+      "filename": "batch-22-source.wav",
+      "sourceSha256": "a9d8bed31f84884b2354eda17f6b4374ca28b77b80c6629a38d313ca69b9e479",
+      "duration": 26.16,
+      "peak": 25955,
+      "saturated": 0
+    },
+    {
+      "batchId": 23,
+      "filename": "batch-23-source.wav",
+      "sourceSha256": "704671b4b752cf3af58c9c3678ee5dc79cb94b05ccb06a070c3fa40e75e60a45",
+      "duration": 26.84,
+      "peak": 24208,
+      "saturated": 0
+    },
+    {
+      "batchId": 24,
+      "filename": "batch-24-source.wav",
+      "sourceSha256": "48222eb1ec6c860d06b929df2ca53faba30ddc05852361bfb709626294f523a4",
+      "duration": 5.4,
+      "peak": 11938,
+      "saturated": 0
+    },
+    {
+      "batchId": 25,
+      "filename": "batch-25-source.wav",
+      "sourceSha256": "b4d910bf56b24fbb3f6bdb1ee1c5ba8ee478a23cbf77ea12fca630a9e38486a7",
+      "duration": 3.36,
+      "peak": 19393,
+      "saturated": 0
+    }
+  ],
+  "rejected": {
+    "file": "rejected/batch-22-truncated.wav",
+    "reason": "転送後のWAVデータ長不足。取り込み検査が拒否し、再生成した完全な原本に置換。"
+  },
+  "verification": "全39個の最終MP3 SHAと個別認識結果を照合。表記ゆれ・語尾の促音・長音はあり。人による聴感評価ではない。",
+  "cost": "実請求額未確認。新規契約・支払い設定変更・APIキー作成なし。"
+}

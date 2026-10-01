@@ -27,3 +27,11 @@
 ## 3. 確認
 
 - 返答・コミット・PR を出す前に、英語の文章が混ざっていないかを必ず見直す。
+
+## 4. 継続作業の入口
+
+- 最初に `PROJECT.md` を読み、現在の作業場所・残作業・必要な検証を確認する。
+- 音声の詳細は `assets-src/gemini-tts/STATE.md` と同じ場所の `README.md` を参照する。
+- 追加音声は既存バッチを保持して生成する。音声が揃うまでは `pendingLines()` と出荷済みの `voice/index.json` を維持する。
+- 音声変更時は `tools/plan-voice.test.mjs`、`tools/voice.test.mjs`、`tools/sw.test.mjs` と `tools/finalize-voice.mjs --check` を実行する。
+- `main` への反映でGitHub Pagesが公開されるため、作業ブランチの保存と公開を区別し、公開にはユーザーの明示承認を得る。

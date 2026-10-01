@@ -1,0 +1,275 @@
+[
+  {
+    "batchId": 20,
+    "hash": "2331d4f5",
+    "expected": "からだのいろをえらんでね！",
+    "sha256": "903024a98bdda08f05fe15aa6e6ceb403ef7c7c35dd0a5e7ec859cb464e552da",
+    "recognized": "体の色を選んでね。"
+  },
+  {
+    "batchId": 20,
+    "hash": "565931d9",
+    "expected": "みみのかたちをえらんでね！",
+    "sha256": "942053e38d98033d44572945e1dcd06753fb9382ac9d0ec3847b4661e472f101",
+    "recognized": "耳の形を選んでね。"
+  },
+  {
+    "batchId": 20,
+    "hash": "a44ed4c8",
+    "expected": "おめめをえらんでね！",
+    "sha256": "75bb25422e893ee1423e2e21ad0a3c16fdec36abd2171109d447e803ffcb0fec",
+    "recognized": "おめめを選んでね"
+  },
+  {
+    "batchId": 20,
+    "hash": "010fa6f3",
+    "expected": "もようとしっぽをえらんでね！",
+    "sha256": "d74b4e373d1f29892116212da288232a898f956d6688c72e278ca7c0c4517663",
+    "recognized": "模様と尻尾を選んでね"
+  },
+  {
+    "batchId": 20,
+    "hash": "54d154dc",
+    "expected": "おなまえをえらんでね！",
+    "sha256": "35fd2881869d560dc40e58398928a8f2556f18ed00dec18dd6f86b2f31f98af7",
+    "recognized": "お名前を選んでね"
+  },
+  {
+    "batchId": 20,
+    "hash": "adb35aba",
+    "expected": "かわいい！",
+    "sha256": "b726082727ea9f2bdf75890140b1d3189c1ea971b25349eadf9b7fc480d7ab4b",
+    "recognized": "かわいい"
+  },
+  {
+    "batchId": 20,
+    "hash": "57c5b220",
+    "expected": "すてき！",
+    "sha256": "93a0efd5cae4db741b77d8e0c07d6ed7b1055a8515d4739b9b2f7fb3a981004b",
+    "recognized": "素敵!"
+  },
+  {
+    "batchId": 20,
+    "hash": "674904eb",
+    "expected": "いいね！",
+    "sha256": "75fb82a3da12859bf6f4be17b5211dec01ea7b5b6d94b7d91d606a5043f4d83a",
+    "recognized": "いいねー"
+  },
+  {
+    "batchId": 20,
+    "hash": "433bc4da",
+    "expected": "くすぐったい！",
+    "sha256": "97ef231841caa12970bddb73c225521aa3f21326cb79789b363de6e27fdf798e",
+    "recognized": "くすぐったい"
+  },
+  {
+    "batchId": 25,
+    "hash": "3f465dda",
+    "expected": "えへへ。",
+    "sha256": "54a1745ed6213a08cd08031a9061bf9787242b229b2335db16a26a2de8174cca",
+    "recognized": "えへへっ"
+  },
+  {
+    "batchId": 21,
+    "hash": "68a7201a",
+    "expected": "だいすき！",
+    "sha256": "842fbb318e1faf92208e09ef009be6581bb0a4088dfe6729ca26839e6dafa146",
+    "recognized": "大好き!"
+  },
+  {
+    "batchId": 21,
+    "hash": "af497887",
+    "expected": "うまれたよ！",
+    "sha256": "d84235f5abf7c9d8650672ee59c1cb52192f3817d8b01d3d54952afbcf8b8020",
+    "recognized": "生まれたよ"
+  },
+  {
+    "batchId": 21,
+    "hash": "3abc1ef0",
+    "expected": "すがたをきめてあげよう！",
+    "sha256": "f557aab471ad9efe9a5a64449fdb7b0b439dbdb25ac57ff911aa88f0985c0181",
+    "recognized": "姿を決めてあげよう"
+  },
+  {
+    "batchId": 21,
+    "hash": "c1c58bbf",
+    "expected": "キラキラアイランドへようこそ！",
+    "sha256": "bc82f3d90e694a8c1ce6ff670a6053c9cef8412a5aafaa0497e4e8394c636fd7",
+    "recognized": "キラキラアイランドへようこそ"
+  },
+  {
+    "batchId": 21,
+    "hash": "f7619ce6",
+    "expected": "よろしくね！",
+    "sha256": "7f2f68466945f2eb42d98b4f26a1366215513d96ae88097eb60bf81a63b19855",
+    "recognized": "よろしくね"
+  },
+  {
+    "batchId": 21,
+    "hash": "2c818631",
+    "expected": "ももちゃん！",
+    "sha256": "3554cee4a679ad80b09af04a301e5a6158eb4f7fcda5c0a64560433cfb9c3af0",
+    "recognized": "ももちゃん"
+  },
+  {
+    "batchId": 21,
+    "hash": "9edc7016",
+    "expected": "いちごちゃん！",
+    "sha256": "6d9fdcdedcfeb6ebfee956202f88abb540bc628818ff05ce993d59cf3a4f577c",
+    "recognized": "いちごちゃん"
+  },
+  {
+    "batchId": 21,
+    "hash": "2f5bbad1",
+    "expected": "ぷりんちゃん！",
+    "sha256": "a82a47b2786ecf900d3906d8201b8dde261db483248bf1395330a33f9bd1c4a7",
+    "recognized": "プリンちゃん"
+  },
+  {
+    "batchId": 21,
+    "hash": "ecd3ae54",
+    "expected": "もちちゃん！",
+    "sha256": "5ba582223556fdb37103b8a60d21e26b656c48643c00daa4f3b74788e52fb4d4",
+    "recognized": "もちちゃん"
+  },
+  {
+    "batchId": 21,
+    "hash": "18f4e938",
+    "expected": "くるみちゃん！",
+    "sha256": "0f157dc53daaf340540f506a62eb79a2b268e5e8834c392d52aae816eab8a1c9",
+    "recognized": "くるみちゃん"
+  },
+  {
+    "batchId": 22,
+    "hash": "bba869ab",
+    "expected": "ぽぽちゃん！",
+    "sha256": "c521dd06cccfce041943b86a6a99a5695d3015d9e5fa8bd41919b191ede1edcd",
+    "recognized": "ぽぽちゃん"
+  },
+  {
+    "batchId": 22,
+    "hash": "774ac7ef",
+    "expected": "るるちゃん！",
+    "sha256": "f4accd4d324efa3851ef64da04f601f8e6c1056209ad5ec28c10230e74897e28",
+    "recognized": "ルルちゃん"
+  },
+  {
+    "batchId": 22,
+    "hash": "0c16ab5f",
+    "expected": "みみちゃん！",
+    "sha256": "a7b1bb5a5f1004ec4b213e7eadeb4ba18c8e3287d4c266eb0f0ed152397f3ebf",
+    "recognized": "ミミちゃん"
+  },
+  {
+    "batchId": 22,
+    "hash": "6b24bd56",
+    "expected": "ちょこちゃん！",
+    "sha256": "117f78fb4f00fb9485aa1b797ef5a9ccb18ee32b675da576fb00e5393cf6a97b",
+    "recognized": "チョコちゃん"
+  },
+  {
+    "batchId": 22,
+    "hash": "c8c4b20e",
+    "expected": "まるちゃん！",
+    "sha256": "8b2823329a04f3a9bafdb282753703967d012b4745acf570b7f7a5ab1010869d",
+    "recognized": "まるちゃん"
+  },
+  {
+    "batchId": 22,
+    "hash": "e878c518",
+    "expected": "ぴこちゃん！",
+    "sha256": "31cbe0f0bfc1e10362d0ab641d7cdd72806dbcdbec353f8a32b499bba9e1907b",
+    "recognized": "ピコちゃん"
+  },
+  {
+    "batchId": 25,
+    "hash": "4c52ee20",
+    "expected": "小麦ちゃん！",
+    "sha256": "cf150e557894368a0eab94419769ab25fc698de8d6c4a2f5bb25fdfd7c01ec26",
+    "recognized": "小麦ちゃん"
+  },
+  {
+    "batchId": 22,
+    "hash": "8283926f",
+    "expected": "そらちゃん！",
+    "sha256": "d4e7346aa2b8c889fdb22dae939d2650c4ff9bd0134b0359165e50c232521ffa",
+    "recognized": "ソラちゃん"
+  },
+  {
+    "batchId": 22,
+    "hash": "4c5f138d",
+    "expected": "ひまりちゃん！",
+    "sha256": "8effad847095a03b10df04484ac9654464c50dd27fc110e642fbed5688fc05a5",
+    "recognized": "ひまりちゃん"
+  },
+  {
+    "batchId": 22,
+    "hash": "0c13ea45",
+    "expected": "ゆずちゃん！",
+    "sha256": "decf14887a3e1c9098c22a5d1be1da2ca583cb516a6c87e2f8e76a13d2a6ed6c",
+    "recognized": "ゆずちゃん"
+  },
+  {
+    "batchId": 23,
+    "hash": "21197a34",
+    "expected": "あめちゃん！",
+    "sha256": "249f9488aadcb12b856bce217fc651708f95df055b82059f65980997c5beeb94",
+    "recognized": "あめちゃん"
+  },
+  {
+    "batchId": 24,
+    "hash": "a1ec8b98",
+    "expected": "プーちゃん！",
+    "sha256": "7469aca037b4b12e745bb193827ca7341ba00635380033e12923056631a9a439",
+    "recognized": "ぷーちゃん"
+  },
+  {
+    "batchId": 23,
+    "hash": "89e88e94",
+    "expected": "さくらちゃん！",
+    "sha256": "c931441d874d6e1ac650bbfdf18c8a6b59c35139b4746ca0297267b299afe284",
+    "recognized": "さくらちゃん"
+  },
+  {
+    "batchId": 23,
+    "hash": "eb278b93",
+    "expected": "ららちゃん！",
+    "sha256": "bfd4063333345d0af556e393123dd2c5db8d9189765a7ee8a3542309df9e4645",
+    "recognized": "ララちゃん"
+  },
+  {
+    "batchId": 23,
+    "hash": "df870ccd",
+    "expected": "ぽんちゃん！",
+    "sha256": "e3db62fb6e03cc4bb3e07f4cced8dae5303ae32d8b71a781a218683a25cfe399",
+    "recognized": "ぽんちゃん"
+  },
+  {
+    "batchId": 23,
+    "hash": "451e01a4",
+    "expected": "はなちゃん！",
+    "sha256": "6cae3f2ed8f1b04bb07fb0ad86b66558a555a7fb38d6fa46d0183734d0209d9b",
+    "recognized": "花ちゃん"
+  },
+  {
+    "batchId": 23,
+    "hash": "bfe54077",
+    "expected": "にこちゃん！",
+    "sha256": "5a2d3c2c5a74c620c0af6f463f5ee5dc2a3151d4949a961769ed0ecbebda1ee1",
+    "recognized": "ニコちゃん"
+  },
+  {
+    "batchId": 23,
+    "hash": "63571b2b",
+    "expected": "ききちゃん！",
+    "sha256": "b6aecce74481fbdef461fbaa7f88c3f93a7f1b1aad15eaadefdf636d7c051820",
+    "recognized": "キキちゃん"
+  },
+  {
+    "batchId": 23,
+    "hash": "8f929401",
+    "expected": "ななちゃん！",
+    "sha256": "2b5bfb65d7995b88e279a6ce84765804427bae138874669416d953ceb3d69c1d",
+    "recognized": "ななちゃん"
+  }
+]
