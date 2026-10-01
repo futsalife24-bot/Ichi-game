@@ -14,11 +14,16 @@ test('追加計画は既存のバッチと発音修正を保持し、再実行�
     }
     const path = join(work, 'assets-src/gemini-tts/plan.json');
     const before = JSON.parse(readFileSync(path));
+    // ついかまえの 652この きろくから、39この ついかを ためす。
+    before.batches = before.batches.slice(0, 20);
+    before.clips = new Set(before.batches.flat().map(clip => clip.hash)).size;
+    writeFileSync(path, JSON.stringify(before));
     const run = () => execFileSync(process.execPath, ['--import', './tools/register.mjs', 'tools/gen-voice.mjs', '--plan', '--append', '--pending'], { cwd: work });
     run();
     const first = JSON.parse(readFileSync(path));
     assert.deepEqual(first.batches.slice(0, before.batches.length), before.batches);
-    assert.ok(first.clips >= before.clips);
+    assert.equal(first.clips, before.clips + 39);
+    assert.deepEqual(first.batches.slice(before.batches.length).map(batch => batch.length), [10,10,10,9]);
     assert.ok(first.batches.slice(before.batches.length).every(batch => batch.length <= 10));
     run();
     assert.deepEqual(JSON.parse(readFileSync(path)), first);

@@ -34,7 +34,7 @@ if (append) {
   batches = [clips.slice(0, 7)];
   for (let i = 7; i < clips.length; i += 40) batches.push(clips.slice(i, i + 40));
 }
-for(const filename of append ? [] : ['repair-lines.json','repair-lines-2.json']) {
+for(const filename of append ? [] : ['repair-lines.json','repair-lines-2.json','repair-character-lines.json','repair-character-lines-2.json']) {
   const repairsPath = new URL(filename,dir);
   if(existsSync(repairsPath)) {
     const repairs=JSON.parse(readFileSync(repairsPath));

@@ -1,7 +1,7 @@
 {
   "model": "gemini-3.8-flash-tts",
   "voice": "Cleo",
-  "status": "未生成分の台本。出荷計画には未反映",
+  "status": "生成前の台本を履歴として保持。全39個を生成し、通常の収録対象へ統合済み。",
   "clips": 39,
   "batches": [
     {

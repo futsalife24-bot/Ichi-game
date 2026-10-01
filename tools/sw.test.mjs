@@ -19,5 +19,5 @@ test('failed voice download does not activate an incomplete offline version',asy
  const f=fixture(true);await assert.rejects(f.fire('install'),/offline/);assert.equal(f.skipped,false);
 });
 test('activation preserves caches belonging to other applications',async()=>{
- const f=fixture();await f.fire('activate');assert.deepEqual(f.deleted,['kirakira-v9']);assert.equal(f.claimed,true);
+ const f=fixture();await f.fire('activate');assert.deepEqual(f.deleted,['kirakira-v9','kirakira-v10-gemini']);assert.equal(f.claimed,true);
 });

@@ -1,7 +1,19 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { allLines, segments, clipKey, clipHash } from '../src/lines.js';
+import { allLines, characterLines, pendingLines, L, segments, clipKey, clipHash } from '../src/lines.js';
+import { NAMES, PERIODS, SEASONS } from '../src/catalog.js';
+import { readFileSync } from 'node:fs';
 import { Voice } from '../src/voice.js';
+
+test('キャラメイクと全候補名の呼びかけを収録済み音声で再生できる',()=>{
+  const clips=JSON.parse(readFileSync(new URL('../voice/index.json',import.meta.url))).clips;
+  const all=new Set(allLines());
+  assert.deepEqual(pendingLines(),[]);
+  for(const text of characterLines())assert.ok(all.has(text));
+  const examples=[...characterLines(),...NAMES.flatMap(n=>[L.born(n.name+'ちゃん').say,L.schoolWelcome(n.name+'ちゃん').say])];
+  for(const n of NAMES)for(const period of Object.values(PERIODS))for(const season of Object.values(SEASONS))examples.push(L.welcome(n.name+'ちゃん',period,season).say);
+  for(const text of examples)for(const part of segments(text))assert.ok(clips[clipHash(clipKey(part))],part);
+});
 
 test('every game line keeps its spoken content and produces no punctuation-only clips',()=>{
   const spoken=s=>s.replace(/[\s。！？]/g,'');

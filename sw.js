@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v10-gemini';
+const VERSION = 'kirakira-v11-character-voices';
 const ASSETS = [
   './',
   './index.html',
