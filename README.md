@@ -2,6 +2,8 @@
 
 ▶ **あそぶ： https://futsalife24-bot.github.io/Ichi-game/**
 
+開発を続けるときは [プロジェクトの作業入口](PROJECT.md) から、現在地・残作業・検証手順を確認してください。
+
 Ichi-game（娘用ゲーム）。もうすぐ4歳の子ども向けの **3D知育ゲーム** です。
 島の上でキャラクターを動かし、どうぶつたちと遊びながら **いろ・かず・かたち・どうぶつ・ひらがな** にふれられます。
 Three.js 製で、ビルド不要の静的サイト。PWA としてホーム画面に追加すると、オフラインでもフルスクリーン（横向き）で遊べます。
@@ -153,7 +155,7 @@ node --import ./tools/register.mjs --test tools/voice.test.mjs tools/sw.test.mjs
 
 GitHub: https://github.com/futsalife24-bot/Ichi-game
 
-ローカル作業場所: `C:\Users\futsa\Documents\Codex\2026-09-29\ichi-game`
+ローカル作業場所: このリポジトリのルート。端末固有の所在と以前の音声原本の場所はGit対象外の `PROJECT.local.md` に記録しています。
 
 ### クレジット
 

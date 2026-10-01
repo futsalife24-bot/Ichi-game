@@ -12,7 +12,9 @@
 ## まだ音声がない新しいセリフ
 
 キャラメイクと名前の呼びかけ（39クリップ）は `src/lines.js` の `pendingLines()` に分けてあり、`allLines()` には入れていない（入れると公開前の音声チェックが止まるため）。
-生成するときは `pendingLines()` の中身を `allLines()` へ移してから、下の「再生成」の手順で作る。それまでは、音声がある部分だけ再生するか、端末の読み上げで話す。
+追加分の台本は `pending-plan.json`。生成時は `node --import ./tools/register.mjs tools/gen-voice.mjs --plan --append --pending` を実行すると、既存のバッチ番号・発音修正を保持して未生成分を10個ずつ末尾へ追加する。追加した番号ごとに `node tools/import-voice.mjs --batch=20` のように取り込むと、既存の原本が手元になくても未選択バッチの記録を維持できる。番号は計画で確認する。
+
+全音声を検証してから `pendingLines()` の中身を `allLines()` へ統合し、`--plan --append` と `--finalize` で一覧を確定する。それまでは、音声がある部分だけ再生するか、端末の読み上げで話す。追加計画を出した後、全原本が揃う前には番号なしの `--import` を実行しない。
 
 ## 再生成
 
