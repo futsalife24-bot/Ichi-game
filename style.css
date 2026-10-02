@@ -380,3 +380,27 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 #makerNext.finish { background: #ff6f91; animation: bump 1.4s ease infinite; }
 .invisible { visibility: hidden; }
 @keyframes heroBob { 50% { transform: translateY(calc(var(--u) * -1.2)); } }
+
+/* さいしょの おてつだい：えと おおきな ボタン */
+.help-panel { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 12px; background: rgba(20,48,40,.32); }
+.help-sheet { width: min(620px, 94vw); max-height: 94dvh; overflow: auto; padding: clamp(12px, 3vh, 28px); border-radius: 24px; background: #fff9e9; color: #294e48; text-align: center; box-shadow: 0 8px 30px #183b4433; }
+.help-sheet h2 { margin: 0 0 8px; font-size: clamp(22px, 4vh, 32px); }
+.help-sheet p { margin: 10px 0 16px; font-size: clamp(16px, 2.8vh, 22px); }
+.help-picture { font-size: clamp(38px, 9vh, 64px); }
+.help-choices { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.help-choices button, #helpActions button, #helpReturn, #helpQuiz { min-height: 52px; padding: 12px 18px; border-radius: 18px; background: #d7f0df; color: #234d45; font: inherit; font-weight: 800; font-size: clamp(16px, 2.8vh, 22px); box-shadow: 0 3px 0 #accdbb; touch-action: manipulation; pointer-events: auto; }
+#helpFree, #helpWalk, #helpQuiz { background: #fff3cb; }
+#helpActions { position: absolute; right: max(14px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 12px; align-items: end; pointer-events: auto; }
+#helpReturn, #helpQuiz { position: absolute; left: 14px; top: 30%; max-width: 42vw; }
+#helpQuiz { top: calc(30% + 64px); }
+.help-focus #pills, .help-focus #sideBtns, .help-focus #btnJump, .help-focus #btnBgm, .help-focus #btnVoice { display: none; }
+.help-focus #questCard { left: 14px; transform: none; max-width: calc(100vw - 105px); min-height: 66px; padding: 8px 14px; }
+.help-focus #questCard.enter, .help-focus #questCard.done { animation: none; }
+.help-focus #questText { font-size: clamp(16px, 3.2vh, 24px); }
+.help-focus #questIcon { min-width: 46px; min-height: 46px; }
+.help-focus #questIcon .emoji { font-size: 38px; }
+.help-focus #btnHome { min-width: 52px; min-height: 52px; }
+.help-focus #subtitle { max-width: 48vw; bottom: 10px; pointer-events: none; }
+#savePanel { z-index: 120; }
+#btnQuickPlay, #btnSave { min-height: 48px; }
+@media (max-height: 440px) { .help-sheet p { margin: 6px 0 12px; } .help-picture { font-size: 38px; } .help-sheet { padding: 12px; } .help-choices button { padding: 8px 14px; } #helpActions { gap: 8px; } }

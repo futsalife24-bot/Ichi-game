@@ -10,7 +10,11 @@
 - 音声の進捗: [STATE.md](assets-src/gemini-tts/STATE.md)
 - 音声の作り方: [音声手順](assets-src/gemini-tts/README.md)
 
-## 現在の作業（2026-10-01）
+## 現在の作業（2026-10-03）
+
+`codex/first-help-loop` で最初のお手伝い一周を試作中。基点は `69f936e1654872dae5912fd13a051280dcc910d3`。ひよこのお願い→りんごを集める→届ける→お礼→繰り返し／自由遊びを選ぶ流れです。個数2は調整用の試作値で、発達の基準ではありません。詳細・復旧手順・検証範囲は [初回改修記録](docs/first-help-loop.md)。本番公開・mainへの統合は未承認です。
+
+## 前回完了した作業（2026-10-01）
 
 キャラメイク・名前の呼びかけ39クリップの生成・実装・検証・公開が完了しました。開始SHAは `1a3dde1a7c5a3b7de20b763c3f1a2dbb103deca0`、実装HEADは `f9f511197b45ecd25b58fd9868a257ea39420414`、公開マージSHAは `45efc32d3a7f549c408caf0f4a54febd20e17d4e`。現在のブランチは `main`、実装ブランチは `codex/remaining-character-voices` です。
 

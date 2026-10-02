@@ -17,11 +17,29 @@ import { CLOTHES, SLOTS, PRESETS, randomAvatar, accessoryForStars } from './char
 import { ITEMS, CATEGORIES, PERIODS, SEASONS, itemsOf, callName } from './catalog.js';
 import { Maker } from './maker.js';
 import { makeEgg } from './critters.js';
-import { loadSave, writeSave } from './save.js';
+import { loadSave, writeSave, claimSaveSession } from './save.js';
 import { L } from './lines.js';
+import { Help } from './help.js';
+import { setupSaveUI } from './save-ui.js';
 
 const $ = (id) => document.getElementById(id);
 const canvas = $('game');
+let saveBlocked = false;
+const showSaveProblem = setupSaveUI(() => {
+  saveBlocked = true;
+  // はじめの よみこみちゅうは まだ プレイヤーが いない。
+  if (window.__game) { window.__game.player.setTarget(null); window.__game.voice.stop(); }
+});
+let save;
+try {
+  if (!await claimSaveSession()) throw new Error('ほかのゲーム画面を閉じて読み直してください。対応ブラウザーでもう一度お試しください。');
+  save = loadSave();
+}
+catch (error) {
+  showSaveProblem('記録を読めませんでした。元のデータは消していません。' + error.message, true);
+  throw error;
+}
+$('saveClose').addEventListener('click', () => { saveBlocked = false; });
 
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -35,7 +53,6 @@ const camTarget = new THREE.Vector3();
 const lookAt = new THREE.Vector3(0, 1, 0);
 const lookTarget = new THREE.Vector3();
 
-const save = loadSave();
 const persist = () => writeSave(save);
 const ui = new UI();
 const audio = new AudioEngine();
@@ -62,10 +79,16 @@ const input = new Input({
   canvas, joyZone: $('joyZone'), joyBase: $('joyBase'), joyKnob: $('joyKnob'), jumpBtn: $('btnJump'),
 });
 const quests = new QuestManager({ scene, world, player, animals, ui, audio, voice, effects, save, persist });
-animals.onMeet = (a) => { if (mode === 'play' && place === 'island') quests.onAnimalMeet(a); };
+animals.onMeet = (a) => { if (mode === 'play' && place === 'island' && !help.focused) quests.onAnimalMeet(a); };
 const school = new School(scene, { player, audio, voice, ui, effects, quests });
 const room = new Room(scene, { player, audio, voice, ui, save, persist, climate, camera });
 const life = new Life({ scene, world, player, ui, audio, voice, effects, save, persist, quests, climate });
+const help = new Help({ scene, world, player, animals, ui, audio, voice, effects, save, persist, quests,
+  onChange: () => {
+    input.reset();
+    input.enabled = !help.modal;
+  },
+});
 life.onBells = refreshHud;
 life.onWear = (id) => wear(CLOTHES[id].slot, id, false);
 room.onCloset = () => openCloset();
@@ -112,6 +135,7 @@ function buildTitle() {
   egg.visible = !av;
   egg.position.copy(player.pos);
   $('btnPlay').textContent = !av ? '🥚 たまご を タップ！' : call ? `▶ ${call} と あそぶ` : '▶ あそぶ';
+  $('btnQuickPlay').classList.toggle('hidden', !!av);
   const remake = $('btnRemake');
   remake.classList.toggle('hidden', !av);
   remake.classList.toggle('pulse', !!av && !call);
@@ -143,6 +167,13 @@ $('btnRemake').addEventListener('click', () => {
   unlockSound();
   openMaker(save.avatar);
 });
+$('btnQuickPlay').addEventListener('click', () => {
+  if (mode !== 'title' || saveBlocked) return;
+  unlockSound();
+  save.avatar = { ...PRESETS.usagi, name: '' };
+  if (!persist()) return;
+  startGame();
+});
 
 /** はじめての とき：たまごが ゆれて われて、なかまが うまれる */
 function hatch() {
@@ -171,6 +202,7 @@ function openMaker(draft) {
 }
 
 function startGame() {
+  if (saveBlocked) return;
   climate.refresh();
   audio.setSong(climate.period);
   audio.setBgm(save.bgm);
@@ -185,8 +217,7 @@ function startGame() {
   input.enabled = true;
   mode = 'play';
   requestLandscape();
-  setTimeout(() => voice.say(L.welcome(callName(save.avatar), PERIODS[climate.period], SEASONS[climate.season])), 150);
-  quests.start(9);
+  help.start();
   updateToggles();
 }
 
@@ -195,6 +226,7 @@ function backToTitle() {
   ui.closePanel();
   if (place !== 'island') leavePlace(true);
   quests.stop();
+  help.stop();
   input.enabled = false;
   input.reset();
   voice.stop();
@@ -235,7 +267,7 @@ $('btnVoice').addEventListener('click', () => {
   updateToggles();
 });
 $('btnHome').addEventListener('click', backToTitle);
-$('questCard').addEventListener('click', () => (place === 'school' ? school.repeat() : place === 'island' ? quests.repeat() : null));
+$('questCard').addEventListener('click', () => (place === 'school' ? school.repeat() : place === 'island' ? (help.focused ? help.repeat() : quests.repeat()) : null));
 $('btnZukan').addEventListener('click', () => openZukan());
 $('btnCloset').addEventListener('click', () => openCloset());
 
@@ -409,6 +441,7 @@ const PLACES = {
 };
 
 function enterPlace(to) {
+  if (help.focused) return;
   audio.meet();
   transition(() => {
     const pl = PLACES[to];
@@ -416,6 +449,9 @@ function enterPlace(to) {
     life.endFishing();
     setOutdoorVisible(false);
     place = to;
+    $('helpReturn').classList.add('hidden');
+    $('helpQuiz').classList.add('hidden');
+    help.group.visible = false;
     player.teleport(pl.origin.x + pl.spawn.x, pl.origin.y, pl.origin.z + pl.spawn.z, Math.PI);
     pl.inside.enter();
     snapCamera();
@@ -434,6 +470,9 @@ function leavePlace(instant = false) {
     player.teleport(x, getHeight(x, z), z, d.yaw);
     for (const k in doorArmed) doorArmed[k] = false;
     quests.resume();
+    help.group.visible = true;
+    $('helpReturn').classList.toggle('hidden', save.help?.stage !== 'free');
+    $('helpQuiz').classList.toggle('hidden', save.help?.stage !== 'free');
     snapCamera();
   };
   if (instant) go();
@@ -442,6 +481,7 @@ function leavePlace(instant = false) {
 
 const doorArmed = { school: true, room: true };
 function doorCheck() {
+  if (help.focused) return;
   for (const [key, pl] of Object.entries(PLACES)) {
     const d = pl.door();
     const dist = Math.hypot(player.pos.x - d.x, player.pos.z - d.z);
@@ -455,14 +495,14 @@ function doorCheck() {
 
 // ------------------------------------------------ てんき
 climate.onRainStart = (snow) => {
-  if (mode !== 'play') return;
+  if (mode !== 'play' || help.focused) return;
   player.emote(snow ? '⛄' : '☔', 3);
   voice.say(L.rainStart(snow));
   refreshHud();
 };
 climate.onRainEnd = (snow) => {
   refreshHud();
-  if (mode !== 'play') return;
+  if (mode !== 'play' || help.focused) return;
   voice.say(L.rainEnd(snow));
   if (!snow) {
     audio.sparkle();
@@ -484,7 +524,7 @@ window.addEventListener('orientationchange', () => setTimeout(resize, 200));
 resize();
 
 document.addEventListener('visibilitychange', () => {
-  if (document.hidden) { audio.suspend(); voice.stop(); }
+  if (document.hidden) { audio.suspend(); voice.stop(); input.reset(); player.setTarget(null); }
   else if (mode === 'play') audio.resume();
 });
 document.addEventListener('gesturestart', (e) => e.preventDefault());
@@ -500,6 +540,7 @@ function frame(now) {
   const dt = Math.min(0.05, (now - last) / 1000);
   last = now;
   time += dt;
+  if (saveBlocked || document.hidden) { last = now; requestAnimationFrame(frame); return; }
 
   if (mode === 'play') {
     const ptr = input.pointer;
@@ -518,11 +559,11 @@ function frame(now) {
         if (g) player.setTarget(g);
       }
     }
-    player.update(dt, input, env(), audio);
+    if (!help.modal && !ui.panelOpen && !transitioning) player.update(dt, input, env(), audio);
     if (place === 'island') {
       animals.update(dt, time, player);
-      quests.update(dt, time);
-      worldEvents(dt);
+      if (!ui.panelOpen && !transitioning) help.update(dt, time);
+      if (!help.focused) { quests.update(dt, time); worldEvents(dt); }
       doorCheck();
     } else if (env().update(dt, time) === 'exit' && !transitioning) {
       leavePlace();
@@ -562,7 +603,7 @@ function frame(now) {
   player.marker.visible = mode === 'play';
   player.sleepy = climate.night > 0.6 && place === 'island';
   const outside = place === 'island';
-  if (outside) life.update(dt, time, mode === 'play' && !transitioning && !ui.panelOpen);
+  if (outside && !help.focused) life.update(dt, time, mode === 'play' && !transitioning && !ui.panelOpen);
   climate.update(dt, { indoor: !outside, focus: mode === 'play' ? player.pos : lookAt, active: mode === 'play' });
   hudClock -= dt;
   if (hudClock <= 0) {
@@ -584,7 +625,7 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
 
 // デバッグ用
 window.__game = {
-  voice, camera, scene, player, quests, animals, world, school, room, life, climate, save, startGame, enterPlace, openZukan, openCloset, maker, openMaker,
+  voice, camera, scene, player, quests, animals, world, school, room, life, climate, save, help, startGame, enterPlace, openZukan, openCloset, maker, openMaker,
   warp(x, z) { player.teleport(x, env().groundAt(x, z), z, 0); snapCamera(); },
   get place() { return place; },
 };

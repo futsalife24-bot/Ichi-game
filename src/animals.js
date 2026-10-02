@@ -34,7 +34,11 @@ export class Animals {
       let moving = 0;
       const dp = player ? Math.hypot(player.pos.x - a.pos.x, player.pos.z - a.pos.z) : 99;
 
-      if (dp < 4.5) {
+      if (a.anchor) {
+        a.pos.x = a.anchor.x; a.pos.z = a.anchor.z;
+        a.target = null;
+        if (player) a.yaw = lerpAngle(a.yaw, Math.atan2(player.pos.x - a.pos.x, player.pos.z - a.pos.z), 1 - Math.exp(-5 * dt));
+      } else if (dp < 4.5) {
         // プレイヤーの ほうを みる
         a.target = null;
         a.yaw = lerpAngle(a.yaw, Math.atan2(player.pos.x - a.pos.x, player.pos.z - a.pos.z), 1 - Math.exp(-5 * dt));

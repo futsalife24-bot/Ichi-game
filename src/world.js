@@ -81,6 +81,18 @@ export class World {
     this.reserve(LANDMARKS.garden.x, LANDMARKS.garden.z, 4);
     this.noSpawn.push({ ...LANDMARKS.shop, r: 5 }, { ...LANDMARKS.garden, r: 3.4 });
     for (const h of Object.values(ANIMAL_HOMES)) this.reserve(h.x, h.z, 4);
+    // さいしょの おてつだいの みち。てまえの おおきな ものを よける。
+    for (const p of [{ x: -4, z: -3 }, { x: -1, z: -6 }, { x: -3, z: 1 }]) {
+      this.reserve(p.x, p.z, 3.2);
+      this.noSpawn.push({ ...p, r: 2 });
+    }
+    // はいりぐちまで あるける みちを あける。
+    for (const end of [LANDMARKS.school, { x: LANDMARKS.myHouse.x, z: LANDMARKS.myHouse.z + 3.2 }]) {
+      for (let i = 0; i <= 12; i++) {
+        const k = i / 12;
+        this.reserve(LANDMARKS.spawn.x + (end.x - LANDMARKS.spawn.x) * k, LANDMARKS.spawn.z + (end.z - LANDMARKS.spawn.z) * k, 1.8);
+      }
+    }
 
     this.buildSky();
     this.buildLights();
@@ -207,6 +219,9 @@ export class World {
     const grassA = new THREE.Color(0x86dc5c), grassB = new THREE.Color(0x5ec04c), grassC = new THREE.Color(0xa5e36a);
     const sand = new THREE.Color(0xf6e4a6), wetSand = new THREE.Color(0xd9c083), path = new THREE.Color(0xecd29a);
     const paths = [
+      [LANDMARKS.spawn, { x: -4, z: -3 }],
+      [{ x: -4, z: -3 }, { x: -1, z: -6 }],
+      [LANDMARKS.spawn, { x: LANDMARKS.myHouse.x, z: LANDMARKS.myHouse.z + 3.2 }],
       [LANDMARKS.spawn, LANDMARKS.school],
       [LANDMARKS.spawn, { x: LANDMARKS.rainbow.x, z: LANDMARKS.rainbow.z }],
       [LANDMARKS.spawn, ANIMAL_HOMES.hiyoko],
@@ -289,11 +304,11 @@ export class World {
   }
 
   /** たてもの（そとがわ）。はいりぐちの マット の いち を かえす。decorate(g) で かざりを たせる */
-  buildCottage({ x, z, wall, roof, door, sign, signOpts, matColor = 0xffd23d, glowColor = 0xfff6a0, chimney = false, decorate }) {
+  buildCottage({ x, z, wall, roof, door, sign, signOpts, matColor = 0xffd23d, glowColor = 0xfff6a0, chimney = false, decorate, yaw }) {
     const g = new THREE.Group();
     const y = getHeight(x, z);
     g.position.set(x, y - 0.1, z);
-    g.rotation.y = Math.atan2(-x, -z);
+    g.rotation.y = yaw ?? Math.atan2(-x, -z);
     const body = new THREE.Mesh(new THREE.BoxGeometry(3.6, 2.6, 3.2), toon(wall));
     body.position.y = 1.3;
     body.castShadow = body.receiveShadow = true;
@@ -402,6 +417,7 @@ export class World {
   buildMyHouse() {
     this.roomDoor = this.buildCottage({
       ...LANDMARKS.myHouse, wall: 0xe8f4ff, roof: 0x4f9dff, door: 0x7a5238, sign: 'じぶんの おうち',
+      yaw: 0,
       signOpts: { bg: '#eaf6ff', border: '#4f9dff', fg: '#2d4a8a' }, matColor: 0x8fd0ff, glowColor: 0xd8f0ff, chimney: true,
     });
     // ポスト と はな

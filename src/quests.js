@@ -197,7 +197,7 @@ export class QuestManager {
       if (this.timer <= 0) this.afterDone();
     } else if (this.state === 'reward') {
       this.timer -= dt;
-      if (this.timer <= 0) this.start(0.5);
+      if (this.timer <= 0) this.stop();
     }
     this.animateItems(dt, t);
   }
@@ -377,7 +377,8 @@ export class QuestManager {
       this.timer = 5;
       this.presentReward(acc);
     } else {
-      this.start(1.2);
+      // おしまい。つぎの あそびは じぶんで えらぶ。
+      this.stop();
     }
   }
 
