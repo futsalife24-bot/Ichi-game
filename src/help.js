@@ -111,7 +111,7 @@ export class Help {
       this.ui.setProgress(h.collected.length);
       const done = h.stage === 'done';
       document.getElementById('helpHeading').textContent = done ? 'ありがとう！' : 'ひよこの おやつ';
-      document.getElementById('helpPicture').textContent = done ? '🐥 💛 🍎🍎' : '🐥　🍽️ ← 🍎🍎';
+      document.getElementById('helpPicture').textContent = done ? '🐥 💛 🍎🍎' : '🍎🍎 → 🍽️ 🐥';
       document.getElementById('helpMessage').textContent = done ? 'おやつを とどけたね。おてつだい おしまい！' : 'りんごを あつめて、ひよこに とどけよう';
       document.getElementById('helpAccept').classList.toggle('hidden', done);
       document.getElementById('helpAgain').classList.toggle('hidden', !done);
