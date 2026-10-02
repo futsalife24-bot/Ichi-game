@@ -393,7 +393,9 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 #helpActions { position: absolute; right: max(14px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 12px; align-items: end; pointer-events: auto; }
 #helpReturn, #helpQuiz { position: absolute; left: 14px; top: 30%; max-width: 42vw; }
 #helpQuiz { top: calc(30% + 64px); }
-.help-focus #pills, .help-focus #sideBtns, .help-focus #btnJump, .help-focus #btnBgm, .help-focus #btnVoice { display: none; }
+.help-focus #pills, .help-focus #sideBtns, .help-focus #btnBgm, .help-focus #btnVoice { display: none; }
+/* ジャンプの うえに あんないを おいて、かさならないようにする。 */
+.help-focus #helpActions { bottom: calc(var(--u) * 32 + var(--safe-b) + 12px); }
 .help-focus #questCard { left: 14px; transform: none; max-width: calc(100vw - 105px); min-height: 66px; padding: 8px 14px; }
 .help-focus #questCard.enter, .help-focus #questCard.done { animation: none; }
 .help-focus #questText { font-size: clamp(16px, 3.2vh, 24px); }
