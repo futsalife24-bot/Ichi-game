@@ -85,6 +85,7 @@ const room = new Room(scene, { player, audio, voice, ui, save, persist, climate,
 const life = new Life({ scene, world, player, ui, audio, voice, effects, save, persist, quests, climate });
 const help = new Help({ scene, world, player, animals, ui, audio, voice, effects, save, persist, quests,
   onChange: () => {
+    if (help.focused) life.endFishing();
     input.reset();
     input.enabled = !help.modal;
   },
@@ -551,6 +552,7 @@ function frame(now) {
         room.dragTo(raycaster, ptr.x, ptr.y);
       } else {
         room.endDrag();
+        if (saveBlocked) { requestAnimationFrame(frame); return; }
       }
     }
     if (ptr) {
@@ -563,7 +565,13 @@ function frame(now) {
     if (place === 'island') {
       animals.update(dt, time, player);
       if (!ui.panelOpen && !transitioning) help.update(dt, time);
-      if (!help.focused) { quests.update(dt, time); worldEvents(dt); }
+      if (saveBlocked) { requestAnimationFrame(frame); return; }
+      if (!help.focused) {
+        quests.update(dt, time);
+        if (saveBlocked) { requestAnimationFrame(frame); return; }
+        worldEvents(dt);
+        if (saveBlocked) { requestAnimationFrame(frame); return; }
+      }
       doorCheck();
     } else if (env().update(dt, time) === 'exit' && !transitioning) {
       leavePlace();
@@ -604,6 +612,7 @@ function frame(now) {
   player.sleepy = climate.night > 0.6 && place === 'island';
   const outside = place === 'island';
   if (outside && !help.focused) life.update(dt, time, mode === 'play' && !transitioning && !ui.panelOpen);
+  if (saveBlocked) { requestAnimationFrame(frame); return; }
   climate.update(dt, { indoor: !outside, focus: mode === 'play' ? player.pos : lookAt, active: mode === 'play' });
   hudClock -= dt;
   if (hudClock <= 0) {

@@ -4,6 +4,7 @@ export const OLD_KEY = 'kirakira-island-save-v1';
 export const KEY = 'kirakira-island-save-v2';
 export const BACKUP_KEY = KEY + '-previous';
 export const ORIGINAL_KEY = KEY + '-original';
+export const RETAINED_KEY = KEY + '-retained-previous';
 const DEFAULTS = {
   stars: 0, hero: 'usagi', questIdx: 0, bgm: true, voice: true,
   avatar: null, // キャラメイク { color, ears, eyes, pattern, tail, name }
@@ -47,7 +48,7 @@ const encode = s => JSON.stringify({ schemaVersion: 2, data: validate(s) });
 
 // ふたつの タブで ふるい きろくを うわがきしない。
 export function createSaveStore(storage) {
-  let loaded = false, lastRaw = null;
+  let loaded = false, lastRaw = null, failed = false;
   return {
     load() {
       const raw = storage.getItem(KEY);
@@ -66,18 +67,32 @@ export function createSaveStore(storage) {
       return s;
     },
     write(s) {
+      if (failed) throw new Error('保存を停止しています。記録を取り出してから読み直してください');
+      try {
       if (!loaded) throw new Error('読み込み前には保存できません');
       if (storage.getItem(KEY) !== lastRaw) throw new Error('別の画面で記録が更新されました。読み直してください');
       const raw = encode(s);
       if (raw === lastRaw) return;
+      const previous = storage.getItem(BACKUP_KEY);
+      // ほぞんに しっぱいしても、ひとつまえの ふっきゅうてんを のこす。
+      if (previous !== null) storage.setItem(RETAINED_KEY, previous);
       storage.setItem(BACKUP_KEY, lastRaw);
-      storage.setItem(KEY, raw);
+      try { storage.setItem(KEY, raw); }
+      catch (error) {
+        try {
+          if (previous === null) storage.removeItem(BACKUP_KEY);
+          else storage.setItem(BACKUP_KEY, previous);
+        } catch { /* もどせなくても RETAINED_KEY から とりだせる */ }
+        throw error;
+      }
       lastRaw = raw;
+      } catch (error) { failed = true; throw error; }
     },
     export() {
       return JSON.stringify({ format: 'kirakira-backup', version: 1,
         current: storage.getItem(KEY), previous: storage.getItem(BACKUP_KEY),
         original: storage.getItem(ORIGINAL_KEY), legacy: storage.getItem(OLD_KEY),
+        retainedPrevious: storage.getItem(RETAINED_KEY),
         beforeRestore: storage.getItem(KEY + '-before-restore') }, null, 2);
     },
     restorePrevious() {

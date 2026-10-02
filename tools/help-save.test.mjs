@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createSaveStore, claimSaveSession, KEY, OLD_KEY, BACKUP_KEY, ORIGINAL_KEY } from '../src/save.js';
+import { createSaveStore, claimSaveSession, KEY, OLD_KEY, BACKUP_KEY, ORIGINAL_KEY, RETAINED_KEY } from '../src/save.js';
 import { helpAction, newHelp, validHelp } from '../src/help-state.js';
 
 function storage(initial = {}) {
@@ -8,6 +8,7 @@ function storage(initial = {}) {
   return { data, fail: null,
     getItem(k) { return data.get(k) ?? null; },
     setItem(k, v) { if (k === this.fail) throw Error('容量不足'); data.set(k, v); },
+    removeItem(k) { data.delete(k); },
   };
 }
 const delivered = s => ['accept', 'collect', 'collect', 'deliver'].reduce((s, a, i) => helpAction(s, a, i - 1), s);
@@ -59,7 +60,28 @@ test('容量不足と他タブの更新を検出し保存済み記録を壊さ�
   const mem = storage(); const a = createSaveStore(mem); const old = a.load(); const b = createSaveStore(mem); b.load();
   const next = delivered(old); const before = mem.getItem(KEY);
   mem.fail = KEY; assert.throws(() => a.write(next)); assert.equal(mem.getItem(KEY), before);
-  mem.fail = null; a.write(next); assert.throws(() => b.write(old), /別の画面/); assert.equal(createSaveStore(mem).load().stars, 1);
+  mem.fail = null; assert.throws(() => a.write(next), /保存を停止/);
+  const reloaded = createSaveStore(mem); reloaded.load(); reloaded.write(next);
+  assert.throws(() => b.write(old), /別の画面/); assert.equal(createSaveStore(mem).load().stars, 1);
+});
+
+test('保存失敗で以前の復旧点を失わず、巻戻しにも失敗した控えを取り出せる', () => {
+  for (const rollbackFails of [false, true]) {
+    const mem = storage(); const store = createSaveStore(mem); const a = store.load();
+    const aRaw = mem.getItem(KEY); store.write({ ...a, stars: 1 }); const bRaw = mem.getItem(KEY);
+    const set = mem.setItem.bind(mem); let keyFailed = false;
+    mem.setItem = (k,v) => {
+      if (k === KEY) { keyFailed = true; throw Error('容量不足'); }
+      if (rollbackFails && keyFailed && k === BACKUP_KEY) throw Error('控えを戻せない');
+      set(k,v);
+    };
+    assert.throws(() => store.write({ ...a, stars: 2 }));
+    assert.equal(mem.getItem(KEY), bRaw);
+    assert.equal(mem.getItem(RETAINED_KEY), aRaw);
+    assert.equal(JSON.parse(store.export()).retainedPrevious, aRaw);
+    if (!rollbackFails) assert.equal(mem.getItem(BACKUP_KEY), aRaw);
+    assert.throws(() => store.write(a), /保存を停止/);
+  }
 });
 
 test('復旧前の控えを残して直前へ戻せる。書き出しには旧版も含む', () => {

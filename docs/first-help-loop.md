@@ -18,7 +18,7 @@
 - 旧キー `kirakira-island-save-v1` を読み、元の文字列を `kirakira-island-save-v2-original` に控えてから、新キー `kirakira-island-save-v2` に包み形式で保存する。旧キーは上書きしない。
 - v2の内容は `{schemaVersion:2,data:...}`。既存の未知フィールドも保持する。お手伝いは `help:{version,round,stage,collected,rewardedRound}`。
 - りんごの取得、進行段階、完了と星の付与を同じ保存にまとめる。保存失敗時はお手伝いの変更を戻し、遊びを止める。
-- 書き込み前のv2を `kirakira-island-save-v2-previous` に控える。不正形式・将来版は初期化せず停止する。
+- 書き込み前のv2を `kirakira-island-save-v2-previous` に控える。更新前のpreviousも `kirakira-island-save-v2-retained-previous` に保持し、保存失敗時はpreviousを戻す。戻す処理も失敗した場合はファイル書き出しの `retainedPrevious` から控えを取り出せる。不正形式・将来版は初期化せず停止し、一度書き込みに失敗した保存セッションは再読み込みまで書き込まない。
 - Web Locksで同じブラウザーの同一オリジンの複数タブからの更新を防ぐ。非対応環境でも無防備に書き込まず停止する。HTTPSかlocalhostでの利用を前提とする。旧版の別タブは旧キーへ書くため、新旧版の同時利用は避ける。
 - これは子ども別保存ではない。きょうだいの分離は後続改修が必要。
 
@@ -35,18 +35,19 @@
 実行コマンド:
 
 ```powershell
-node --import ./tools/register.mjs --test tools/help-save.test.mjs tools/plan-voice.test.mjs tools/voice.test.mjs tools/sw.test.mjs
+node --import ./tools/register.mjs --test tools/help-save.test.mjs tools/help-integration.test.mjs tools/plan-voice.test.mjs tools/voice.test.mjs tools/sw.test.mjs
 node --import ./tools/register.mjs tools/finalize-voice.mjs --check
 git diff --check
 ```
 
-- Nodeテスト21件成功。旧保存・未知項目保持、破損・将来版の保護、保存容量エラー、古いタブの拒否、直前復旧、段階別再開、重複取得・重複報酬、排他制御を確認。
+- Nodeテスト24件成功。旧保存・未知項目保持、破損・将来版の保護、保存容量エラー、古いタブの拒否、直前復旧、段階別再開、重複取得・重複報酬、排他制御を確認。監査後に復旧点の保持・フレーム中断・釣り解除の回帰検証を追加。フレームと釣りの接続検証は模擬環境で実コードを実行し、実ブラウザーとは区別する。
 - 691音声の完全性チェック成功。音声素材・一覧は変更なし。
 - アプリ内ブラウザーで一周完了、1個取得後の再読み込み、完了後の再読み込みで星1の維持、自由遊びへの切替、二重起動の停止、名前不要の初回開始を確認。通常プレイのコンソール警告・エラーは0。
 - 667×375の横画面で主要操作ボタンの高さ52pxと重なりのない表示を確認。音声オフでも目的・りんごの絵・光・行き先ボタンが残る。
 - 実スマホ／Fire／iOS、子どもの理解、実際の過去セーブ、通信遮断、ファイルからの手作業復旧は未検証。プロフィール間、誕生日、島の鍵は機能未実装のため未検証。
 - Windowsの既定TEMPでは一時フォルダー作成が拒否されたため、テスト時だけ作業内フォルダーをTEMP/TMPに指定した。
-- 独立監査はユーザー承認済み。並列エージェントは使用しない。監査結果は別途追記する。実装担当の実モデルID・推論設定は未確認。監査画面は通常ChatのPro表示、正式IDは未確認。
+- [独立監査](https://chatgpt.com/c/6ac02bc3-f42c-83e8-82f0-f0c3b64bd53c)は通常ChatのProで実施。初回対象 `d4705d67d1240a3515811a0ccc9da0daabff0f57` はP2の3件で要修正。保存失敗後の書込み封鎖・以前の復旧点保持・お手伝い切替時の釣り解除を修正し、再監査へ提出する。監査側でも保存テスト9件と追加5ケースを模擬実行。並列エージェントは使用していない。実装担当の実モデルID・推論設定、および監査の正式モデルIDは未確認。
+- 案内の絵はユーザー指示で `🍎🍎 → 🐥` に変更。修正後の再描画確認はブラウザーの管理ポリシーによりlocalhost操作を拒否され未実施。別経路で回避しない。
 
 ## 次の判断
 
