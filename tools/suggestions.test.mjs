@@ -9,12 +9,12 @@ import {QuestManager} from '../src/quests.js';
 import {createProfileStore} from '../src/profiles.js';
 
 function game(){const s=freshSave();s.playSettings=newPlaySettings();s.playSettings.domains.color.level=0;return s;}
-function finish(s,{kind='color',level=0,hints=0,selections=1,repeats=0,target,mode='auto',outcome='completed'}={}){
+function finish(s,{kind='color',level=0,hints=0,selections=1,repeats=0,target,choices=kind==='color'?4+level:4,mode='auto',outcome='completed'}={}){
   s.observations=beginObservation(s.observations,kind,level);const id=s.observations.active.id;
   for(const [field,n] of Object.entries({hints,selections,repeats}))for(let i=0;i<n;i++)s.observations=noteObservation(s.observations,id,field);
   s.observations=finishObservation(s.observations,id,outcome);
   const domain=kind==='moji'||kind==='animal'?'language':kind;
-  const next=addEvidence(s.suggestions,s.observations.domains[domain].last,{target:target??['aka','ao','kiiro'][id%3],choices:4},{hints:mode});
+  const next=addEvidence(s.suggestions,s.observations.domains[domain].last,{target:target??['aka','ao','kiiro'][id%3],choices},{hints:mode});
   if(next!==undefined)s.suggestions=next;
 }
 const ready=()=>{const s=game();for(let i=0;i<8;i++)finish(s);return s;};
@@ -27,7 +27,7 @@ test('旧データから推定せず、固定した課題に必要な新規観�
   assert.doesNotThrow(()=>validateGameSave(s));
 });
 test('同じ目標だけ・支援あり・複数接触は難化の提案にせず、聞き直しは妨げない',()=>{
-  for(const option of [{target:'aka'},{hints:1},{selections:2}]){const s=game();for(let i=0;i<8;i++)finish(s,option);assert.equal(suggest(s,'color').status,'keep');}
+  for(const option of [{target:'aka'},{hints:1},{selections:2},{choices:2}]){const s=game();for(let i=0;i<8;i++)finish(s,option);assert.equal(suggest(s,'color').status,'keep');}
   const s=game();for(let i=0;i<8;i++)finish(s,{repeats:5});assert.equal(suggest(s,'color').status,'ready');
 });
 test('数と鳴き声・中断を混ぜず、種類と設定が違う完了をまたいで提案しない',()=>{

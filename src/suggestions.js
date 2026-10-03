@@ -1,6 +1,6 @@
 // はったつの きじゅんではなく、つぎの あそびを ためすための ていあん。
 export const WINDOW = 8;
-export const TYPES = {color:{domain:'color',max:3},shape:{domain:'shape',max:1},moji:{domain:'language',max:2}};
+export const TYPES = {color:{domain:'color',max:3,choices:[4,5,6,7]},shape:{domain:'shape',max:1,choices:[4,5]},moji:{domain:'language',max:2,choices:[4,4,4]}};
 const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
 const count=x=>Number.isSafeInteger(x)&&x>=0;
 export const newSuggestions=()=>({version:1,recent:{color:[],shape:[],moji:[]},after:{color:0,shape:0,moji:0}});
@@ -43,7 +43,7 @@ export function suggest(save,kind) {
   const detail={observed:recent.length,needed:WINDOW};
   if(recent.length<WINDOW)return {status:'observing',...detail};
   const targets=new Set(recent.map(e=>e.target)).size;
-  if(targets<3||recent.some(e=>e.hints>0||e.selections!==1))return {status:'keep',...detail};
+  if(targets<3||recent.some(e=>e.hints>0||e.selections!==1||e.choices!==def.choices[setting.level]))return {status:'keep',...detail};
   return {status:'ready',...detail,level:setting.level+1,targets,lastId:recent.at(-1).id};
 }
 // せっていを かえたら、まえの きろくで すぐに つぎを すすめない。
