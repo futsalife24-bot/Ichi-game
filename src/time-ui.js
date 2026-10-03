@@ -39,8 +39,10 @@ export function setupTimeUI(save,persist,label,{onContinue,onFinish}={}) {
         add(`🐥 おてつだい：${s.help}かい`);
         for(const [k,name] of Object.entries(DOMAINS)){const d=s.domains[k];if(d.completed)add(`${name}の あそび：${d.completed}かい できた（ヒントといっしょに ${d.withHint}かい）`);}
       }
-      $('timeContinue').classList.toggle('hidden',!canContinue);$('timeFinish').classList.toggle('hidden',!canContinue);
-      $('timeSummaryClose').classList.toggle('hidden',canContinue);$('timeSummaryPanel').classList.remove('hidden');
+      $('timeContinue').textContent=canContinue?'つづけて あそぶ':'ゲームに もどる';
+      $('timeFinish').textContent='タイトルへ';
+      $('timeContinue').classList.remove('hidden');$('timeFinish').classList.remove('hidden');
+      $('timeSummaryClose').classList.add('hidden');$('timeSummaryPanel').classList.remove('hidden');
     },
   };
 }

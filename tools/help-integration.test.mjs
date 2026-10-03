@@ -10,7 +10,7 @@ const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8')
 test('報酬の保存失敗を検知したフレームでは後続の島イベントへ進まない', () => {
   const frame = main.match(/function frame\(now\) \{[\s\S]*?\n\}\r?\nrequestAnimationFrame\(frame\);/)[0];
   let events = 0, scheduled = 0;
-  const context = { last: 0, time: 0, saveBlocked: false, document: { hidden: false }, mode: 'play',
+  const context = {homePaused:false, last: 0, time: 0, saveBlocked: false, document: { hidden: false }, mode: 'play',
     $: () => ({classList:{toggle(){}}}),
     playTimer: {tick:()=>true,paused:false},
     input: { pointer: null }, place: 'island', help: { modal: false, focused: false, update() {} },

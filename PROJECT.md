@@ -1,5 +1,9 @@
 # キラキラアイランドの作業入口
 
+## ホームからの復帰修正（2026-10-03）
+
+公開main `7e3ac41` から `codex/home-resume` で修正。ホームでは一時停止し、振り返りからゲームへ戻れるようにした。詳細は [修正記録](docs/home-resume.md)。誕生日の設計は別ブランチ `codex/birthday-plan` に保持している。
+
 幼児向けの3D知育ゲーム。Three.jsによる静的サイトで、ビルドは不要です。
 
 - GitHub: https://github.com/futsalife24-bot/Ichi-game
