@@ -57,6 +57,7 @@
     <div id="joyZone"><div id="joyBase"><div id="joyKnob"></div></div></div>
     <button id="btnJump" aria-label="ジャンプ"><span class="jump-icon">⤴</span><span>ジャンプ</span></button>
     <div id="helpActions" class="hidden"><button id="helpGo">🍎 いっしょに さがす</button><button id="helpWalk">🌳 あとで つづける</button></div>
+    <div id="timeNotice" class="hidden" role="status"></div>
     <button id="btnQuestHint" class="hidden" aria-label="ヒントをもらう">💡 ヒント</button>
     <button id="helpReturn" class="hidden">🐥 おてつだい</button>
     <button id="helpQuiz" class="hidden">🎈 みつける あそび</button>
@@ -147,11 +148,31 @@
       <div class="help-choices"><button id="settingsApply">保存する</button></div>
     </section>
   </div>
+  <div id="timeSettingsPanel" class="hidden help-panel" role="dialog" aria-modal="true" aria-labelledby="timeSettingsHeading">
+    <section class="help-sheet">
+      <div class="records-head"><h2 id="timeSettingsHeading">遊ぶ時間</h2><button id="timeSettingsClose">もどる</button></div>
+      <p>1回ごとの時間です。再読み込みは続き、🏠でタイトルへ戻ると一回を終了します。裏に隠れている間は数えません。</p>
+      <form id="timeSettingsForm">
+        <label>遊ぶ時間（分・空欄は時間設定なし）<input id="timeMinutes" type="number" min="1" max="1440" step="1" inputmode="numeric"></label>
+        <label>終了前のお知らせ<select id="timeWarning"><option value="30">30秒前</option><option value="60">1分前</option><option value="120">2分前</option><option value="0">予告なし</option></select></label>
+        <p>時間はご家庭で決めてください。推奨時間は設定していません。時間になったら振り返りを表示し、そのまま継続することも選べます。継続後、その回では再び終了案内を出しません。</p>
+        <p id="timeSettingsMessage" role="status"></p><button type="submit">保存する</button>
+      </form>
+    </section>
+  </div>
+  <div id="timeSummaryPanel" class="hidden help-panel" role="dialog" aria-modal="true" aria-labelledby="timeSummaryHeading">
+    <section class="help-sheet">
+      <h2 id="timeSummaryHeading">今回できたこと</h2><ul id="timeSummaryList"></ul>
+      <p>今回の「お手伝い」と「みつける あそび」を表示しています。学校・収集は集計対象外です。途中の活動は不正解にしません。</p>
+      <div class="help-choices"><button id="timeFinish">🏠 おしまいに する</button><button id="timeContinue">▶ つづける</button><button id="timeSummaryClose">タイトルへ</button></div>
+    </section>
+  </div>
   <div id="savePanel" class="hidden help-panel" role="dialog" aria-modal="true" aria-labelledby="saveHeading">
     <section class="help-sheet">
       <h2 id="saveHeading">おうちの方へ：記録</h2>
       <p id="saveMessage"></p>
       <div class="help-choices">
+        <button id="btnTimeSettings" class="hidden">いまの子の遊ぶ時間</button>
         <button id="btnPlaySettings" class="hidden">いまの子の遊びの設定</button>
         <button id="btnRecords" class="hidden">いまの子の活動記録を見る</button>
         <button id="saveExport">記録をファイルに保存</button>

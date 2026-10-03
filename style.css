@@ -447,3 +447,15 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 .settings-table th:first-child { width: 26%; }
 .settings-table select { width: 100%; min-height: 52px; font: inherit; font-size: 16px; border-radius: 8px; background: white; color: #234d45; }
 #btnQuestHint { position: absolute; right: max(14px,env(safe-area-inset-right)); bottom: calc(var(--u) * 32 + var(--safe-b) + 12px); min-height: 52px; padding: 12px 20px; border-radius: 16px; background: #fff3cb; color: #234d45; font: inherit; font-weight: 800; }
+
+#timeSettingsPanel { z-index: 130; }
+#timeSummaryPanel { z-index: 110; }
+#timeSettingsPanel p, #timeSummaryPanel p { font-size: 16px; text-align: left; }
+#timeSettingsForm { display: grid; gap: 12px; text-align: left; }
+#timeSettingsForm label { display: grid; gap: 8px; }
+#timeSettingsForm input, #timeSettingsForm select, #timeSettingsForm button, #timeSettingsClose { min-height: 52px; padding: 10px; font: inherit; border-radius: 12px; }
+#timeSettingsForm button, #timeSettingsClose { background: #d7f0df; }
+#timeSettingsClose { flex-shrink: 0; }
+#timeSummaryList { padding: 0; list-style: none; text-align: left; }
+#timeSummaryList li { padding: 8px; border-bottom: 1px solid #d7e5dd; font-size: clamp(18px,3vh,24px); }
+#timeNotice { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); max-width: 55vw; padding: 12px; border-radius: 16px; background: #fff3cb; color: #234d45; font-size: 18px; font-weight: 800; pointer-events: none; }

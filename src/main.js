@@ -23,6 +23,8 @@ import { setupProfileUI } from './profile-ui.js';
 import { finishObservation } from './observations.js';
 import { setupRecordsUI } from './records-ui.js';
 import { setupSettingsUI } from './settings-ui.js';
+import { PlayTimer } from './play-time.js';
+import { setupTimeUI } from './time-ui.js';
 import { L } from './lines.js';
 import { Help } from './help.js';
 import { setupSaveUI } from './save-ui.js';
@@ -177,6 +179,17 @@ profileUI.connect(() => {
 const selectedProfileLabel=profiles.summary().profiles.find(p=>p.id===profiles.summary().activeProfileId).label;
 setupRecordsUI(save,selectedProfileLabel);
 setupSettingsUI(save,persist,selectedProfileLabel);
+const timeUI=setupTimeUI(save,persist,selectedProfileLabel,{
+  onContinue:()=>{
+    if(saveBlocked||!playTimer.continue())return;
+    timeUI.hide();input.reset();input.enabled=!help.modal;
+  },
+  onFinish:()=>{if(!saveBlocked){timeUI.hide();backToTitle(true);}},
+});
+const playTimer=new PlayTimer(save,persist,{
+  onWarn:seconds=>timeUI.warn(seconds),
+  onDue:()=>{input.reset();input.enabled=false;player.setTarget(null);voice.stop();timeUI.show(true);},
+});
 $('btnQuestHint').onclick=()=>{
   if (!saveBlocked && mode==='play' && place==='island' && !help.focused && quests.state==='active') quests.showHint();
 };
@@ -236,6 +249,7 @@ function openMaker(draft) {
 
 function startGame() {
   if (saveBlocked) return;
+  if (!playTimer.start()) return;
   climate.refresh();
   audio.setSong(climate.period);
   audio.setBgm(save.bgm);
@@ -252,13 +266,16 @@ function startGame() {
   requestLandscape();
   help.start();
   updateToggles();
+  if(playTimer.paused)input.enabled=false;
 }
 
-function backToTitle() {
+function backToTitle(skipSummary=false) {
+  if(saveBlocked || !playTimer.pause())return;
   audio.tap();
   ui.closePanel();
   if (place !== 'island') leavePlace(true);
   quests.stop();
+  if(saveBlocked || !playTimer.end())return;
   help.stop();
   input.enabled = false;
   input.reset();
@@ -267,6 +284,7 @@ function backToTitle() {
   ui.showHUD(false);
   buildTitle();
   $('title').classList.remove('hidden');
+  if(!skipSummary)timeUI.show(false);
 }
 
 function requestLandscape() {
@@ -299,7 +317,7 @@ $('btnVoice').addEventListener('click', () => {
   else voice.say(L.voiceOn());
   updateToggles();
 });
-$('btnHome').addEventListener('click', backToTitle);
+$('btnHome').addEventListener('click', () => backToTitle());
 $('questCard').addEventListener('click', () => (place === 'school' ? school.repeat() : place === 'island' ? (help.focused ? help.repeat() : quests.repeat()) : null));
 $('btnZukan').addEventListener('click', () => openZukan());
 $('btnCloset').addEventListener('click', () => openCloset());
@@ -557,9 +575,12 @@ window.addEventListener('orientationchange', () => setTimeout(resize, 200));
 resize();
 
 document.addEventListener('visibilitychange', () => {
+  if(document.hidden)playTimer.pause();
+  else playTimer.tick(mode==='play'&&!saveBlocked);
   if (document.hidden) { audio.suspend(); voice.stop(); input.reset(); player.setTarget(null); }
   else if (mode === 'play') audio.resume();
 });
+window.addEventListener('pagehide',()=>playTimer.pause());
 document.addEventListener('gesturestart', (e) => e.preventDefault());
 document.addEventListener('contextmenu', (e) => e.preventDefault());
 
@@ -570,11 +591,12 @@ let time = 0;
 let hudClock = 0;
 
 function frame(now) {
-  $('btnQuestHint').classList.toggle('hidden', !(mode==='play' && place==='island' && !help.focused && !ui.panelOpen && !transitioning && quests.state==='active' && !saveBlocked));
+  if(!playTimer.tick(mode==='play'&&!saveBlocked&&!document.hidden)) { requestAnimationFrame(frame); return; }
+  $('btnQuestHint').classList.toggle('hidden', !(mode==='play' && place==='island' && !help.focused && !ui.panelOpen && !transitioning && quests.state==='active' && !saveBlocked && !playTimer.paused));
   const dt = Math.min(0.05, (now - last) / 1000);
   last = now;
   time += dt;
-  if (saveBlocked || document.hidden) { last = now; requestAnimationFrame(frame); return; }
+  if (saveBlocked || document.hidden || playTimer.paused) { last = now; requestAnimationFrame(frame); return; }
 
   if (mode === 'play') {
     const ptr = input.pointer;

@@ -2,6 +2,7 @@
 import { validHelp } from './help-state.js';
 import { validObservations } from './observations.js';
 import { validPlaySettings } from './play-settings.js';
+import { validPlayTime } from './play-time.js';
 export const OLD_KEY = 'kirakira-island-save-v1';
 export const KEY = 'kirakira-island-save-v2';
 export const BACKUP_KEY = KEY + '-previous';
@@ -42,6 +43,7 @@ export function validateGameSave(data) {
   if (s.help !== undefined && !validHelp(s.help)) throw new Error('おてつだいの記録を確認してください');
   if (s.observations !== undefined && !validObservations(s.observations)) throw new Error('活動記録の形式を確認してください');
   if (s.playSettings !== undefined && !validPlaySettings(s.playSettings)) throw new Error('遊びの設定を確認してください');
+  if (s.playTime !== undefined && !validPlayTime(s.playTime)) throw new Error('遊ぶ時間の記録を確認してください');
   return s;
 }
 const validate = validateGameSave;
