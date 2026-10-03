@@ -89,7 +89,7 @@
     <p class="credit">こえ：Google Gemini 3.8 Flash TTS / Cleo</p>
     <div class="parent-actions">
       <button id="btnProfiles" class="remake-btn">あそぶこを えらぶ</button>
-      <button id="btnSave" class="remake-btn">おうちの かたへ：きろくの ほぞん</button>
+      <button id="btnSave" class="remake-btn">おうちの方へ：記録を見る・保存</button>
     </div>
   </div>
 
@@ -123,11 +123,21 @@
       <button id="profileClose" type="button">もどる</button>
     </section>
   </div>
+  <div id="recordsPanel" class="hidden help-panel" role="dialog" aria-modal="true" aria-labelledby="recordsHeading">
+    <section class="help-sheet">
+      <h2 id="recordsHeading">活動記録</h2>
+      <p>自由遊びの「みつける あそび」の記録です。お手伝い・学校は含みません。追加前の成績は推測して埋めません。</p>
+      <p>ゲーム外での手助けは分かりません。記録が十分か、得意・苦手かはまだ判定しません。出題設定は問題の設定で、能力のランクではありません。この記録を使って難しさを変える機能はまだありません。</p>
+      <div id="recordsList"></div>
+      <button id="recordsClose" type="button">もどる</button>
+    </section>
+  </div>
   <div id="savePanel" class="hidden help-panel" role="dialog" aria-modal="true" aria-labelledby="saveHeading">
     <section class="help-sheet">
-      <h2 id="saveHeading">おうちの かたへ：記録の保護</h2>
+      <h2 id="saveHeading">おうちの方へ：記録</h2>
       <p id="saveMessage"></p>
       <div class="help-choices">
+        <button id="btnRecords" class="hidden">いまの子の活動記録を見る</button>
         <button id="saveExport">記録をファイルに保存</button>
         <button id="saveRestore">直前の記録に戻す</button>
         <button id="saveReload">画面を読み直す</button>

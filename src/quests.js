@@ -9,6 +9,7 @@ import {
 const TYPES = ['color', 'count', 'shape', 'animal', 'moji'];
 import { L, PRAISE, withPraise } from './lines.js';
 import { callName } from './catalog.js';
+import { beginObservation, noteObservation, finishObservation } from './observations.js';
 const HINT_AFTER = 18;
 
 export const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
@@ -31,6 +32,8 @@ export class QuestManager {
     this.elapsed = 0;
     this.hinted = false;
     this.lastType = null;
+    this.observationId = null;
+    this.saveFailed = false;
   }
 
   get level() { return Math.min(3, Math.floor(this.save.stars / 5)); }
@@ -41,11 +44,31 @@ export class QuestManager {
   }
 
   stop() {
+    if (this.observationId !== null && !this.saveFailed) {
+      if (!this.record(finishObservation(this.save.observations,this.observationId,'interrupted'))) return;
+    }
+    this.observationId = null;
     this.clearItems();
     this.quest = null;
     this.state = 'idle';
     this.effects.hideGuide();
     this.ui.setQuest(null);
+  }
+
+  record(next) {
+    if (this.saveFailed) return false;
+    const previous = this.save.observations;
+    this.save.observations = next;
+    if (this.persist() !== false) return true;
+    if (previous === undefined) delete this.save.observations;
+    else this.save.observations = previous;
+    this.saveFailed = true;
+    return false;
+  }
+
+  note(field) {
+    if (this.observationId === null) return !this.saveFailed;
+    return this.record(noteObservation(this.save.observations,this.observationId,field));
   }
 
   // ------------------------------------------------ 置く場所
@@ -86,9 +109,15 @@ export class QuestManager {
 
   // ------------------------------------------------ クエスト じゅんび
   begin() {
+    if (this.saveFailed) return;
+    if (this.observationId !== null) this.stop();
+    if (this.saveFailed) return;
     let type = TYPES[this.save.questIdx % TYPES.length];
+    const previousIdx = this.save.questIdx;
     this.save.questIdx++;
-    this.persist();
+    const next = beginObservation(this.save.observations,type,this.level);
+    if (!this.record(next)) { this.save.questIdx = previousIdx; return; }
+    this.observationId = next.active.id;
     this.clearItems();
     this.quest = { type, got: 0, need: 1 };
     this['setup_' + type]();
@@ -179,18 +208,21 @@ export class QuestManager {
 
   repeat() {
     if (this.state !== 'active' || !this.quest) return;
+    if (!this.note('repeats')) return;
     this.audio.tap();
     this.voice.say(this.quest.line);
   }
 
   // ------------------------------------------------ まいフレーム
   update(dt, t) {
+    if (this.saveFailed) return;
     if (this.state === 'wait') {
       this.timer -= dt;
       if (this.timer <= 0) this.begin();
     } else if (this.state === 'active') {
       this.elapsed += dt;
       if (this.elapsed > HINT_AFTER && !this.hinted) this.showHint();
+      if (this.saveFailed) return;
       this.checkTouch();
     } else if (this.state === 'done') {
       this.timer -= dt;
@@ -235,13 +267,14 @@ export class QuestManager {
   checkTouch() {
     const p = this.player.pos;
     for (const it of this.items) {
+      if (this.saveFailed || this.state !== 'active') return;
       if (!it.alive) continue;
       const d = Math.hypot(p.x - it.obj.position.x, p.z - it.obj.position.z);
       const dy = it.obj.position.y - (p.y + 0.8);
       if (d < it.radius + 0.45 && dy > -2.2 && dy < 2.4) {
         if (it.correct) this.onCorrect(it);
         else this.onWrong(it);
-      }
+      } else it.observedContact = false;
     }
   }
 
@@ -251,6 +284,7 @@ export class QuestManager {
   }
 
   onCorrect(it) {
+    if (this.state !== 'active' || !it.alive || !this.note('selections')) return;
     const q = this.quest;
     it.alive = false;
     this.effects.hideGuide();
@@ -286,6 +320,8 @@ export class QuestManager {
 
   onWrong(it) {
     if (it.cool > 0) return;
+    if (!it.observedContact && !this.note('selections')) return;
+    it.observedContact = true;
     it.cool = 3.5;
     it.jiggle = 1;
     this.audio.wrong();
@@ -301,6 +337,7 @@ export class QuestManager {
     const q = this.quest;
     const who = { name: a.def.san, pitch: a.def.pitch };
     if (this.state === 'active' && q?.type === 'animal') {
+      if (!this.note('selections')) return;
       if (a.kind === q.target) {
         this.complete(L.animalRight(a.def));
       } else {
@@ -312,6 +349,7 @@ export class QuestManager {
   }
 
   showHint() {
+    if (this.state !== 'active' || !this.note('hints')) return;
     this.hinted = true;
     const getTarget = () => {
       const q = this.quest;
@@ -335,8 +373,9 @@ export class QuestManager {
 
   /** ほしを 1こ ふやす。ごほうびの だんかいに なったら その アクセサリーを かえす */
   awardStar() {
+    if (this.saveFailed) return null;
     this.save.stars++;
-    this.persist();
+    if (this.persist() === false) { this.save.stars--; this.saveFailed = true; return null; }
     this.ui.setStars(this.save.stars, true);
     return ACCESSORIES.find((a) => a.stars === this.save.stars) ?? null;
   }
@@ -353,10 +392,15 @@ export class QuestManager {
   }
 
   complete(line) {
+    if (this.saveFailed || this.state !== 'active') return;
+    const previous = this.save.observations;
+    if (this.observationId !== null) this.save.observations = finishObservation(previous,this.observationId,'completed');
+    this.pendingReward = this.awardStar();
+    if (this.saveFailed) { this.save.observations = previous; return; }
+    this.observationId = null;
     this.state = 'done';
     this.timer = 3.4;
     this.effects.hideGuide();
-    this.pendingReward = this.awardStar();
     const praise = pick(PRAISE);
     this.voice.say(withPraise(line, praise));
     this.audio.fanfare();

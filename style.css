@@ -405,6 +405,11 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 .help-focus #subtitle { max-width: 48vw; bottom: 10px; pointer-events: none; }
 #savePanel { z-index: 120; }
 #profilePanel { z-index: 100; }
+#recordsPanel { z-index: 130; }
+#recordsClose { min-height: 52px; padding: 12px 24px; font: inherit; border-radius: 12px; background: #d7f0df; }
+.record-card { text-align: left; background: white; padding: 12px; margin: 12px 0; border-radius: 14px; }
+.record-card h3 { margin: 0; }
+.record-card p { font-size: 16px; overflow-wrap: anywhere; }
 .parent-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 94vw; }
 .parent-actions button { min-height: 48px; white-space: normal; }
 #profileList button, #profileCreate, #profileClose, #profileExport, #profileForm input, #profileForm select, #profileAdd summary { min-height: 52px; padding: 12px; font: inherit; border-radius: 12px; }

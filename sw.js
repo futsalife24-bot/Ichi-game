@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v13-child-profiles';
+const VERSION = 'kirakira-v14-domain-records';
 const ASSETS = [
   './',
   './index.html',
@@ -22,6 +22,8 @@ const ASSETS = [
   './src/save.js',
   './src/profiles.js',
   './src/profile-ui.js',
+  './src/observations.js',
+  './src/records-ui.js',
   './src/save-ui.js',
   './src/help.js',
   './src/help-state.js',

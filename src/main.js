@@ -20,6 +20,8 @@ import { makeEgg } from './critters.js';
 import { loadSave, writeSave, claimSaveSession, useSaveStore } from './save.js';
 import { createProfileStore } from './profiles.js';
 import { setupProfileUI } from './profile-ui.js';
+import { finishObservation } from './observations.js';
+import { setupRecordsUI } from './records-ui.js';
 import { L } from './lines.js';
 import { Help } from './help.js';
 import { setupSaveUI } from './save-ui.js';
@@ -34,14 +36,20 @@ const showSaveProblem = setupSaveUI(() => {
 });
 let save;
 let profileUI;
+let profiles;
 try {
   if (!await claimSaveSession()) throw new Error('ほかのゲーム画面を閉じて読み直してください。対応ブラウザーでもう一度お試しください。');
-  const profiles = createProfileStore(localStorage);
+  profiles = createProfileStore(localStorage);
   useSaveStore(profiles);
   profiles.open();
   profileUI = setupProfileUI(profiles, error => showSaveProblem(error.message, true));
   await profileUI.ensure();
   save = loadSave();
+  // みつける あそびは さいよみこみで おしまい。ふせいかいには しない。
+  if (save.observations?.active) {
+    save.observations = finishObservation(save.observations,save.observations.active.id,'interrupted');
+    if (!writeSave(save)) throw new Error('途中の活動記録を保護して停止しました');
+  }
 }
 catch (error) {
   showSaveProblem('記録を読めませんでした。元のデータは消していません。' + error.message, true);
@@ -165,6 +173,7 @@ profileUI.connect(() => {
   life.endFishing();
   return true;
 });
+setupRecordsUI(save,profiles.summary().profiles.find(p=>p.id===profiles.summary().activeProfileId).label);
 
 function unlockSound() {
   audio.unlock();
@@ -581,6 +590,7 @@ function frame(now) {
     if (!help.modal && !ui.panelOpen && !transitioning) player.update(dt, input, env(), audio);
     if (place === 'island') {
       animals.update(dt, time, player);
+      if (saveBlocked) { requestAnimationFrame(frame); return; }
       if (!ui.panelOpen && !transitioning) help.update(dt, time);
       if (saveBlocked) { requestAnimationFrame(frame); return; }
       if (!help.focused) {
