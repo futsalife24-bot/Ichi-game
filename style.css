@@ -380,3 +380,87 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 #makerNext.finish { background: #ff6f91; animation: bump 1.4s ease infinite; }
 .invisible { visibility: hidden; }
 @keyframes heroBob { 50% { transform: translateY(calc(var(--u) * -1.2)); } }
+
+/* さいしょの おてつだい：えと おおきな ボタン */
+.help-panel { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 12px; background: rgba(20,48,40,.32); }
+.help-sheet { width: min(620px, 94vw); max-height: 94dvh; overflow: auto; padding: clamp(12px, 3vh, 28px); border-radius: 24px; background: #fff9e9; color: #294e48; text-align: center; box-shadow: 0 8px 30px #183b4433; }
+.help-sheet h2 { margin: 0 0 8px; font-size: clamp(22px, 4vh, 32px); }
+.help-sheet p { margin: 10px 0 16px; font-size: clamp(16px, 2.8vh, 22px); }
+.help-picture { font-size: clamp(38px, 9vh, 64px); }
+.help-choices { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.help-choices button, #helpActions button, #helpReturn, #helpQuiz { min-height: 52px; padding: 12px 18px; border-radius: 18px; background: #d7f0df; color: #234d45; font: inherit; font-weight: 800; font-size: clamp(16px, 2.8vh, 22px); box-shadow: 0 3px 0 #accdbb; touch-action: manipulation; pointer-events: auto; }
+#helpFree, #helpWalk, #helpQuiz { background: #fff3cb; }
+#helpActions { position: absolute; right: max(14px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 12px; align-items: end; pointer-events: auto; }
+#helpReturn, #helpQuiz { position: absolute; left: 14px; top: 30%; max-width: 42vw; }
+#helpQuiz { top: calc(30% + 64px); }
+.help-focus #pills, .help-focus #sideBtns, .help-focus #btnBgm, .help-focus #btnVoice { display: none; }
+/* ジャンプの うえに あんないを おいて、かさならないようにする。 */
+.help-focus #helpActions { bottom: calc(var(--u) * 32 + var(--safe-b) + 12px); }
+.help-focus #questCard { left: 14px; transform: none; max-width: calc(100vw - 105px); min-height: 66px; padding: 8px 14px; }
+.help-focus #questCard.enter, .help-focus #questCard.done { animation: none; }
+.help-focus #questText { font-size: clamp(16px, 3.2vh, 24px); }
+.help-focus #questIcon { min-width: 46px; min-height: 46px; }
+.help-focus #questIcon .emoji { font-size: 38px; }
+.help-focus #btnHome { min-width: 52px; min-height: 52px; }
+.help-focus #subtitle { max-width: 48vw; bottom: 10px; pointer-events: none; }
+#savePanel { z-index: 120; }
+#profilePanel { z-index: 100; }
+#recordsPanel { z-index: 130; }
+#recordsPanel .help-sheet { width: min(760px, 96vw); padding: 12px 16px; }
+.records-head { position: sticky; top: -12px; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0; background: #fff9e9; border-bottom: 2px solid #d2e4da; }
+.records-head h2 { margin: 0; font-size: clamp(20px, 3vh, 26px); text-align: left; }
+#recordsClose, #settingsClose { flex-shrink: 0; min-height: 52px; padding: 12px 20px; font: inherit; border-radius: 12px; background: #d7f0df; }
+#recordsPanel .records-note { margin: 10px 0; font-size: 15px; text-align: left; }
+.records-guide { text-align: left; font-size: 15px; }
+.records-guide summary { min-height: 44px; padding: 10px 0; cursor: pointer; }
+#recordsPanel .records-guide p { font-size: 15px; }
+.record-card { text-align: left; background: white; padding: 12px; margin: 12px 0; border-radius: 14px; }
+.record-card h3 { margin: 0 0 8px; padding: 8px 12px; border-left: 5px solid #548f76; background: #e9f4ed; font-size: 22px; }
+.record-card p { font-size: 16px; }
+.record-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 16px; line-height: 1.45; }
+.record-table caption { text-align: left; font-weight: 700; padding: 8px 0; }
+.record-table th, .record-table td { border-bottom: 1px solid #d7e5dd; padding: 8px 12px; overflow-wrap: anywhere; }
+.record-table th { width: 70%; text-align: left; font-weight: 500; }
+.record-table td { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+.record-table tbody tr:nth-child(even) { background: #f4f8f5; }
+.record-history { margin-top: 12px; }
+.record-history th, .record-history td { width: 33.33%; text-align: left; font-weight: 400; }
+.record-history thead th { background: #e9f4ed; font-weight: 700; }
+.parent-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 94vw; }
+.parent-actions button { min-height: 48px; white-space: normal; }
+#profileList button, #profileCreate, #profileClose, #profileExport, #profileForm input, #profileForm select, #profileAdd summary { min-height: 52px; padding: 12px; font: inherit; border-radius: 12px; }
+#profileList button, #profileCreate, #profileClose, #profileExport { background: #d7f0df; color: #234d45; font-weight: 800; }
+#profileAdd { margin: 16px 0; text-align: left; }
+#profileAdd summary { cursor: pointer; }
+#profileForm { display: grid; gap: 12px; }
+#profileForm label { display: grid; gap: 6px; }
+#profileForm input { width: 100%; min-width: 0; }
+#btnQuickPlay, #btnSave { min-height: 48px; }
+@media (max-height: 440px) { .help-sheet p { margin: 6px 0 12px; } .help-picture { font-size: 38px; } .help-sheet { padding: 12px; } .help-choices button { padding: 8px 14px; } #helpActions { gap: 8px; } }
+
+#playSettingsPanel { z-index: 130; }
+#playSettingsPanel .help-sheet { width: min(800px,96vw); }
+#playSettingsPanel p, #playSettingsPanel summary { font-size: 16px; text-align: left; }
+#playSettingsPanel summary { padding: 12px 0; }
+.settings-table { width: 100%; table-layout: fixed; border-collapse: collapse; text-align: left; margin-top: 12px; }
+.settings-table th, .settings-table td { border-bottom: 1px solid #c4d8cb; padding: 8px 4px; }
+.settings-table th:first-child { width: 26%; }
+.settings-table select { width: 100%; min-height: 52px; font: inherit; font-size: 16px; border-radius: 8px; background: white; color: #234d45; }
+#btnQuestHint { position: absolute; right: max(14px,env(safe-area-inset-right)); bottom: calc(var(--u) * 32 + var(--safe-b) + 12px); min-height: 52px; padding: 12px 20px; border-radius: 16px; background: #fff3cb; color: #234d45; font: inherit; font-weight: 800; }
+
+#timeSettingsPanel { z-index: 130; }
+#timeSummaryPanel { z-index: 110; }
+#timeSettingsPanel p, #timeSummaryPanel p { font-size: 16px; text-align: left; }
+#timeSettingsForm { display: grid; gap: 12px; text-align: left; }
+#timeSettingsForm label { display: grid; gap: 8px; }
+#timeSettingsForm input, #timeSettingsForm select, #timeSettingsForm button, #timeSettingsClose { min-height: 52px; padding: 10px; font: inherit; border-radius: 12px; }
+#timeSettingsForm button, #timeSettingsClose { background: #d7f0df; }
+#timeSettingsClose { flex-shrink: 0; }
+#timeSummaryList { padding: 0; list-style: none; text-align: left; }
+#timeSummaryList li { padding: 8px; border-bottom: 1px solid #d7e5dd; font-size: clamp(18px,3vh,24px); }
+#timeNotice { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); max-width: 55vw; padding: 12px; border-radius: 16px; background: #fff3cb; color: #234d45; font-size: 18px; font-weight: 800; pointer-events: none; }
+.suggestion-table button { min-height:52px; min-width:0; width:100%; padding:8px; font-size:16px; white-space:normal; }
+.record-table.suggestion-table th, .record-table.suggestion-table td { width:auto; text-align:left; padding:8px 4px; font-weight:400; }
+.record-table.suggestion-table th:first-child { width:18%; }
+.record-table.suggestion-table th:nth-child(2) { width:52%; }
+.record-table.suggestion-table th:last-child { width:30%; }

@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v11-character-voices';
+const VERSION = 'kirakira-v17-parent-suggestions';
 const ASSETS = [
   './',
   './index.html',
@@ -20,6 +20,18 @@ const ASSETS = [
   './src/props.js',
   './src/characters.js',
   './src/save.js',
+  './src/profiles.js',
+  './src/profile-ui.js',
+  './src/observations.js',
+  './src/records-ui.js',
+  './src/play-settings.js',
+  './src/settings-ui.js',
+  './src/suggestions.js',
+  './src/play-time.js',
+  './src/time-ui.js',
+  './src/save-ui.js',
+  './src/help.js',
+  './src/help-state.js',
   './src/school.js',
   './src/canvas.js',
   './src/lines.js',
