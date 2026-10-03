@@ -11,7 +11,7 @@ export function setupSaveUI(onPause = () => {}) {
     document.getElementById('saveClose').classList.toggle('hidden', blocked);
     onPause();
   };
-  document.getElementById('btnSave').onclick = () => show('この端末の記録をファイルに保存できます。名前などが含まれる場合があるため、手元で保管してください。');
+  document.getElementById('btnSave').onclick = () => show('この端末の全員分の記録をファイルに保存できます。呼び名などが含まれるため、手元で保管してください。直前への復旧も全員分が対象です。');
   document.getElementById('saveClose').onclick = () => panel.classList.add('hidden');
   document.getElementById('saveReload').onclick = () => location.reload();
   document.getElementById('saveExport').onclick = () => {
@@ -22,7 +22,7 @@ export function setupSaveUI(onPause = () => {}) {
     } catch { message.textContent = '記録を取り出せませんでした。サイトのデータは消さずに、端末の保存設定を確認してください。'; }
   };
   document.getElementById('saveRestore').onclick = () => {
-    if (!confirm('直前の保存に戻します。今の記録も復旧前の控えとして端末内に残します。戻しますか？')) return;
+    if (!confirm('全員分の記録と選択中の子を、直前の保存に戻します。直前に追加した子も戻る場合があります。今の記録は復旧前の控えとして残します。戻しますか？')) return;
     try { restorePreviousSave(); location.reload(); }
     catch (e) { message.textContent = e.message; }
   };

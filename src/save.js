@@ -22,11 +22,12 @@ const DEFAULTS = {
   shop: { day: '', sold: [] },
 };
 
-const fresh = () => JSON.parse(JSON.stringify(DEFAULTS));
+export const freshSave = () => JSON.parse(JSON.stringify(DEFAULTS));
+const fresh = freshSave;
 
 const object = v => v !== null && typeof v === 'object' && !Array.isArray(v);
 const count = v => Number.isSafeInteger(v) && v >= 0;
-function validate(data) {
+export function validateGameSave(data) {
   if (!object(data)) throw new Error('セーブの形式が違います');
   const s = { ...fresh(), ...data };
   for (const k of ['stars', 'questIdx', 'bells', 'seeds', 'wallpaper']) if (!count(s[k])) throw new Error('セーブの数値を確認してください');
@@ -39,6 +40,7 @@ function validate(data) {
   if (s.help !== undefined && !validHelp(s.help)) throw new Error('おてつだいの記録を確認してください');
   return s;
 }
+const validate = validateGameSave;
 const decode = raw => {
   const v = JSON.parse(raw);
   if (v?.schemaVersion !== 2) throw new Error('このセーブは別の版です');
@@ -107,6 +109,8 @@ export function createSaveStore(storage) {
   };
 }
 let store;
+// プロフィールを えらんでから、そのこの ほぞんさきに つなぐ。
+export function useSaveStore(next) { store = next; }
 const currentStore = () => store ??= createSaveStore(localStorage);
 export const loadSave = () => currentStore().load();
 export function writeSave(s) {

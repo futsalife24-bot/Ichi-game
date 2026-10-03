@@ -404,5 +404,15 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 .help-focus #btnHome { min-width: 52px; min-height: 52px; }
 .help-focus #subtitle { max-width: 48vw; bottom: 10px; pointer-events: none; }
 #savePanel { z-index: 120; }
+#profilePanel { z-index: 100; }
+.parent-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 94vw; }
+.parent-actions button { min-height: 48px; white-space: normal; }
+#profileList button, #profileCreate, #profileClose, #profileExport, #profileForm input, #profileForm select, #profileAdd summary { min-height: 52px; padding: 12px; font: inherit; border-radius: 12px; }
+#profileList button, #profileCreate, #profileClose, #profileExport { background: #d7f0df; color: #234d45; font-weight: 800; }
+#profileAdd { margin: 16px 0; text-align: left; }
+#profileAdd summary { cursor: pointer; }
+#profileForm { display: grid; gap: 12px; }
+#profileForm label { display: grid; gap: 6px; }
+#profileForm input { width: 100%; min-width: 0; }
 #btnQuickPlay, #btnSave { min-height: 48px; }
 @media (max-height: 440px) { .help-sheet p { margin: 6px 0 12px; } .help-picture { font-size: 38px; } .help-sheet { padding: 12px; } .help-choices button { padding: 8px 14px; } #helpActions { gap: 8px; } }

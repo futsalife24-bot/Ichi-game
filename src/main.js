@@ -17,7 +17,9 @@ import { CLOTHES, SLOTS, PRESETS, randomAvatar, accessoryForStars } from './char
 import { ITEMS, CATEGORIES, PERIODS, SEASONS, itemsOf, callName } from './catalog.js';
 import { Maker } from './maker.js';
 import { makeEgg } from './critters.js';
-import { loadSave, writeSave, claimSaveSession } from './save.js';
+import { loadSave, writeSave, claimSaveSession, useSaveStore } from './save.js';
+import { createProfileStore } from './profiles.js';
+import { setupProfileUI } from './profile-ui.js';
 import { L } from './lines.js';
 import { Help } from './help.js';
 import { setupSaveUI } from './save-ui.js';
@@ -31,8 +33,14 @@ const showSaveProblem = setupSaveUI(() => {
   if (window.__game) { window.__game.player.setTarget(null); window.__game.voice.stop(); }
 });
 let save;
+let profileUI;
 try {
   if (!await claimSaveSession()) throw new Error('ほかのゲーム画面を閉じて読み直してください。対応ブラウザーでもう一度お試しください。');
+  const profiles = createProfileStore(localStorage);
+  useSaveStore(profiles);
+  profiles.open();
+  profileUI = setupProfileUI(profiles, error => showSaveProblem(error.message, true));
+  await profileUI.ensure();
   save = loadSave();
 }
 catch (error) {
@@ -148,6 +156,15 @@ function buildTitle() {
   $('titleStars').textContent = bits.join('　');
 }
 buildTitle();
+profileUI.connect(() => {
+  if (mode !== 'title' || saveBlocked || !persist()) return false;
+  saveBlocked = true;
+  input.enabled = false;
+  input.reset();
+  voice.stop();
+  life.endFishing();
+  return true;
+});
 
 function unlockSound() {
   audio.unlock();

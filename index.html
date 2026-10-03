@@ -87,7 +87,10 @@
     </div>
     <p class="parents">おうちの かたへ：よこむき で あそびます。おとが でます。</p>
     <p class="credit">こえ：Google Gemini 3.8 Flash TTS / Cleo</p>
-    <button id="btnSave" class="remake-btn">おうちの かたへ：きろくの ほぞん</button>
+    <div class="parent-actions">
+      <button id="btnProfiles" class="remake-btn">あそぶこを えらぶ</button>
+      <button id="btnSave" class="remake-btn">おうちの かたへ：きろくの ほぞん</button>
+    </div>
   </div>
 
   <div id="helpPanel" class="hidden help-panel" role="dialog" aria-modal="true" aria-labelledby="helpHeading">
@@ -100,6 +103,24 @@
         <button id="helpAgain" class="hidden">🐥 もういちど おてつだい</button>
         <button id="helpFree">🌳 じゆうに あそぶ</button>
       </div>
+    </section>
+  </div>
+  <div id="profilePanel" class="hidden help-panel" role="dialog" aria-modal="true" aria-labelledby="profileHeading">
+    <section class="help-sheet">
+      <h2 id="profileHeading">あそぶこを えらぼう</h2>
+      <p id="profileMessage"></p>
+      <button id="profileExport" type="button">引き継ぎ前の記録をファイルに保存</button>
+      <div id="profileList" class="help-choices"></div>
+      <details id="profileAdd">
+        <summary>おうちの方へ：子どもの記録を追加</summary>
+        <form id="profileForm">
+          <label>絵 <select id="profileIcon" aria-label="プロフィールの絵"></select></label>
+          <label>呼び名（本名は不要）<input id="profileLabel" maxlength="20" required autocomplete="off"></label>
+          <p>別の子は新しい記録から始まります。この入口は本人確認機能ではありません。</p>
+          <button id="profileCreate" type="submit">この子の記録を作る</button>
+        </form>
+      </details>
+      <button id="profileClose" type="button">もどる</button>
     </section>
   </div>
   <div id="savePanel" class="hidden help-panel" role="dialog" aria-modal="true" aria-labelledby="saveHeading">

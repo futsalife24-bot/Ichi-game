@@ -10,5 +10,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-      - run: node --import ./tools/register.mjs --test tools/help-save.test.mjs tools/help-integration.test.mjs tools/plan-voice.test.mjs tools/voice.test.mjs tools/sw.test.mjs
+      - run: node --import ./tools/register.mjs --test tools/profiles.test.mjs tools/profile-ui.test.mjs tools/help-save.test.mjs tools/help-integration.test.mjs tools/plan-voice.test.mjs tools/voice.test.mjs tools/sw.test.mjs
       - run: node --import ./tools/register.mjs tools/finalize-voice.mjs --check
