@@ -57,6 +57,7 @@
     <div id="joyZone"><div id="joyBase"><div id="joyKnob"></div></div></div>
     <button id="btnJump" aria-label="ジャンプ"><span class="jump-icon">⤴</span><span>ジャンプ</span></button>
     <div id="helpActions" class="hidden"><button id="helpGo">🍎 いっしょに さがす</button><button id="helpWalk">🌳 あとで つづける</button></div>
+    <button id="btnQuestHint" class="hidden" aria-label="ヒントをもらう">💡 ヒント</button>
     <button id="helpReturn" class="hidden">🐥 おてつだい</button>
     <button id="helpQuiz" class="hidden">🎈 みつける あそび</button>
 
@@ -135,11 +136,23 @@
       <div id="recordsList"></div>
     </section>
   </div>
+  <div id="playSettingsPanel" class="hidden help-panel" role="dialog" aria-modal="true" aria-labelledby="playSettingsHeading">
+    <section class="help-sheet">
+      <div class="records-head"><h2 id="playSettingsHeading">いまの子の遊びの設定</h2><button id="settingsClose">もどる</button></div>
+      <p>「みつける あそび」の設定です。学校・お手伝いには適用しません。固定した分野は星が増えても難しくなりません。</p>
+      <details><summary>出題設定の内容</summary><p>色：扱う色が4／6／7／8種類。形：4／5種類。数：集める数が2〜3／3〜4／4〜5／5〜6個。ひらがな：扱う文字が5／10／15種類。鳴き声の内容は変わりません。年齢や能力のランクではありません。</p></details>
+      <table class="settings-table"><thead><tr><th scope="col">分野</th><th scope="col">難しさ</th><th scope="col">ヒント</th></tr></thead><tbody id="settingsRows"></tbody></table>
+      <p>ヒントはどちらの設定でも💡ボタンで出せます。自動は従来どおりのタイミングです。変更は次の活動から使います。</p>
+      <p id="settingsMessage" role="status"></p>
+      <div class="help-choices"><button id="settingsApply">保存する</button></div>
+    </section>
+  </div>
   <div id="savePanel" class="hidden help-panel" role="dialog" aria-modal="true" aria-labelledby="saveHeading">
     <section class="help-sheet">
       <h2 id="saveHeading">おうちの方へ：記録</h2>
       <p id="saveMessage"></p>
       <div class="help-choices">
+        <button id="btnPlaySettings" class="hidden">いまの子の遊びの設定</button>
         <button id="btnRecords" class="hidden">いまの子の活動記録を見る</button>
         <button id="saveExport">記録をファイルに保存</button>
         <button id="saveRestore">直前の記録に戻す</button>

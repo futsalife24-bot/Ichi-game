@@ -22,6 +22,7 @@ import { createProfileStore } from './profiles.js';
 import { setupProfileUI } from './profile-ui.js';
 import { finishObservation } from './observations.js';
 import { setupRecordsUI } from './records-ui.js';
+import { setupSettingsUI } from './settings-ui.js';
 import { L } from './lines.js';
 import { Help } from './help.js';
 import { setupSaveUI } from './save-ui.js';
@@ -173,7 +174,12 @@ profileUI.connect(() => {
   life.endFishing();
   return true;
 });
-setupRecordsUI(save,profiles.summary().profiles.find(p=>p.id===profiles.summary().activeProfileId).label);
+const selectedProfileLabel=profiles.summary().profiles.find(p=>p.id===profiles.summary().activeProfileId).label;
+setupRecordsUI(save,selectedProfileLabel);
+setupSettingsUI(save,persist,selectedProfileLabel);
+$('btnQuestHint').onclick=()=>{
+  if (!saveBlocked && mode==='play' && place==='island' && !help.focused && quests.state==='active') quests.showHint();
+};
 
 function unlockSound() {
   audio.unlock();
@@ -564,6 +570,7 @@ let time = 0;
 let hudClock = 0;
 
 function frame(now) {
+  $('btnQuestHint').classList.toggle('hidden', !(mode==='play' && place==='island' && !help.focused && !ui.panelOpen && !transitioning && quests.state==='active' && !saveBlocked));
   const dt = Math.min(0.05, (now - last) / 1000);
   last = now;
   time += dt;

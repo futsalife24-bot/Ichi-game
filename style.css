@@ -409,7 +409,7 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 #recordsPanel .help-sheet { width: min(760px, 96vw); padding: 12px 16px; }
 .records-head { position: sticky; top: -12px; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0; background: #fff9e9; border-bottom: 2px solid #d2e4da; }
 .records-head h2 { margin: 0; font-size: clamp(20px, 3vh, 26px); text-align: left; }
-#recordsClose { flex-shrink: 0; min-height: 52px; padding: 12px 20px; font: inherit; border-radius: 12px; background: #d7f0df; }
+#recordsClose, #settingsClose { flex-shrink: 0; min-height: 52px; padding: 12px 20px; font: inherit; border-radius: 12px; background: #d7f0df; }
 #recordsPanel .records-note { margin: 10px 0; font-size: 15px; text-align: left; }
 .records-guide { text-align: left; font-size: 15px; }
 .records-guide summary { min-height: 44px; padding: 10px 0; cursor: pointer; }
@@ -437,3 +437,13 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 #profileForm input { width: 100%; min-width: 0; }
 #btnQuickPlay, #btnSave { min-height: 48px; }
 @media (max-height: 440px) { .help-sheet p { margin: 6px 0 12px; } .help-picture { font-size: 38px; } .help-sheet { padding: 12px; } .help-choices button { padding: 8px 14px; } #helpActions { gap: 8px; } }
+
+#playSettingsPanel { z-index: 130; }
+#playSettingsPanel .help-sheet { width: min(800px,96vw); }
+#playSettingsPanel p, #playSettingsPanel summary { font-size: 16px; text-align: left; }
+#playSettingsPanel summary { padding: 12px 0; }
+.settings-table { width: 100%; table-layout: fixed; border-collapse: collapse; text-align: left; margin-top: 12px; }
+.settings-table th, .settings-table td { border-bottom: 1px solid #c4d8cb; padding: 8px 4px; }
+.settings-table th:first-child { width: 26%; }
+.settings-table select { width: 100%; min-height: 52px; font: inherit; font-size: 16px; border-radius: 8px; background: white; color: #234d45; }
+#btnQuestHint { position: absolute; right: max(14px,env(safe-area-inset-right)); bottom: calc(var(--u) * 32 + var(--safe-b) + 12px); min-height: 52px; padding: 12px 20px; border-radius: 16px; background: #fff3cb; color: #234d45; font: inherit; font-weight: 800; }

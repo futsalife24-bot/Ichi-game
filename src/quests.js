@@ -10,6 +10,7 @@ const TYPES = ['color', 'count', 'shape', 'animal', 'moji'];
 import { L, PRAISE, withPraise } from './lines.js';
 import { callName } from './catalog.js';
 import { beginObservation, noteObservation, finishObservation } from './observations.js';
+import { resolvePlaySettings } from './play-settings.js';
 const HINT_AFTER = 18;
 
 export const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
@@ -37,6 +38,7 @@ export class QuestManager {
   }
 
   get level() { return Math.min(3, Math.floor(this.save.stars / 5)); }
+  get activityLevel() { return this.activitySettings?.level ?? this.level; }
 
   start(delay = 2) {
     this.state = 'wait';
@@ -113,9 +115,10 @@ export class QuestManager {
     if (this.observationId !== null) this.stop();
     if (this.saveFailed) return;
     let type = TYPES[this.save.questIdx % TYPES.length];
+    this.activitySettings = resolvePlaySettings(this.save.playSettings,type,this.save.stars);
     const previousIdx = this.save.questIdx;
     this.save.questIdx++;
-    const next = beginObservation(this.save.observations,type,this.level);
+    const next = beginObservation(this.save.observations,type,this.activityLevel);
     if (!this.record(next)) { this.save.questIdx = previousIdx; return; }
     this.observationId = next.active.id;
     this.clearItems();
@@ -130,9 +133,9 @@ export class QuestManager {
   }
 
   setup_color() {
-    const pool = COLORS.slice(0, [4, 6, 7, 8][this.level]);
+    const pool = COLORS.slice(0, [4, 6, 7, 8][this.activityLevel]);
     const target = pick(pool);
-    const others = shuffle(pool.filter((c) => c !== target)).slice(0, Math.min(pool.length - 1, 3 + this.level));
+    const others = shuffle(pool.filter((c) => c !== target)).slice(0, Math.min(pool.length - 1, 3 + this.activityLevel));
     const spots = this.spawnSpots(1 + others.length);
     const list = shuffle([target, ...others]);
     list.forEach((c, i) => {
@@ -149,7 +152,7 @@ export class QuestManager {
   setup_count() {
     const kind = pick(Object.keys(FRUITS));
     const f = FRUITS[kind];
-    const need = Math.min(10, 2 + this.level + Math.floor(Math.random() * 2));
+    const need = Math.min(10, 2 + this.activityLevel + Math.floor(Math.random() * 2));
     const spots = this.spawnSpots(need + 1);
     spots.forEach((s) => this.addItem(makeFruit(kind), s, { yOff: 0.55, radius: 1.0, correct: true, data: kind }));
     Object.assign(this.quest, {
@@ -161,7 +164,7 @@ export class QuestManager {
   }
 
   setup_shape() {
-    const pool = SHAPES.slice(0, [4, 5, 5, 5][this.level]);
+    const pool = SHAPES.slice(0, [4, 5, 5, 5][this.activityLevel]);
     const target = pick(pool);
     const palette = shuffle(COLORS.slice(0, 7));
     const spots = this.spawnSpots(pool.length);
@@ -189,7 +192,7 @@ export class QuestManager {
   }
 
   setup_moji() {
-    const poolSize = [5, 10, 15, 15][this.level];
+    const poolSize = [5, 10, 15, 15][this.activityLevel];
     const pool = MOJI.slice(0, poolSize);
     const target = pick(pool);
     const others = shuffle(pool.filter((m) => m !== target)).slice(0, 3);
@@ -221,7 +224,7 @@ export class QuestManager {
       if (this.timer <= 0) this.begin();
     } else if (this.state === 'active') {
       this.elapsed += dt;
-      if (this.elapsed > HINT_AFTER && !this.hinted) this.showHint();
+      if (this.activitySettings?.hints !== 'manual' && this.elapsed > HINT_AFTER && !this.hinted) this.showHint();
       if (this.saveFailed) return;
       this.checkTouch();
     } else if (this.state === 'done') {

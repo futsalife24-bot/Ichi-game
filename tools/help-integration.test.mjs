@@ -11,6 +11,7 @@ test('報酬の保存失敗を検知したフレームでは後続の島イベ�
   const frame = main.match(/function frame\(now\) \{[\s\S]*?\n\}\r?\nrequestAnimationFrame\(frame\);/)[0];
   let events = 0, scheduled = 0;
   const context = { last: 0, time: 0, saveBlocked: false, document: { hidden: false }, mode: 'play',
+    $: () => ({classList:{toggle(){}}}),
     input: { pointer: null }, place: 'island', help: { modal: false, focused: false, update() {} },
     ui: { panelOpen: false }, transitioning: false, player: { update() {} }, env() {}, audio: {},
     animals: { update() {} }, quests: { update() { context.saveBlocked = true; } },
