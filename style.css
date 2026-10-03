@@ -428,6 +428,10 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 .record-history thead th { background: #e9f4ed; font-weight: 700; }
 .parent-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 94vw; }
 .parent-actions button { min-height: 48px; white-space: normal; }
+/* おとなの いりぐちは、あそぶこの ボタンから はなす。 */
+#title { padding-bottom: calc(64px + var(--safe-b)); }
+#title .parent-entry { position: absolute; right: calc(8px + var(--safe-r)); bottom: calc(8px + var(--safe-b)); min-height: 48px; padding: 10px 14px; border-radius: 12px; border: 1px solid #8b9d95; background: rgba(255,255,255,.9); color: #345048; font: inherit; font-size: 15px; font-weight: 600; box-shadow: none; }
+#title .credit { left: calc(8px + var(--safe-l)); right: auto; bottom: calc(8px + var(--safe-b)); max-width: calc(100% - 180px - var(--safe-l) - var(--safe-r)); text-align: left; }
 #profileList button, #profileCreate, #profileClose, #profileExport, #profileForm input, #profileForm select, #profileAdd summary { min-height: 52px; padding: 12px; font: inherit; border-radius: 12px; }
 #profileList button, #profileCreate, #profileClose, #profileExport { background: #d7f0df; color: #234d45; font-weight: 800; }
 #profileAdd { margin: 16px 0; text-align: left; }
