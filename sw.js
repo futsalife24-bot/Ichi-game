@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v18-home-resume';
+const VERSION = 'kirakira-v19-parent-entry';
 const ASSETS = [
   './',
   './index.html',
