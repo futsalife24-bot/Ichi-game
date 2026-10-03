@@ -459,3 +459,8 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 #timeSummaryList { padding: 0; list-style: none; text-align: left; }
 #timeSummaryList li { padding: 8px; border-bottom: 1px solid #d7e5dd; font-size: clamp(18px,3vh,24px); }
 #timeNotice { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); max-width: 55vw; padding: 12px; border-radius: 16px; background: #fff3cb; color: #234d45; font-size: 18px; font-weight: 800; pointer-events: none; }
+.suggestion-table button { min-height:52px; min-width:0; width:100%; padding:8px; font-size:16px; white-space:normal; }
+.record-table.suggestion-table th, .record-table.suggestion-table td { width:auto; text-align:left; padding:8px 4px; font-weight:400; }
+.record-table.suggestion-table th:first-child { width:18%; }
+.record-table.suggestion-table th:nth-child(2) { width:52%; }
+.record-table.suggestion-table th:last-child { width:30%; }

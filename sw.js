@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v16-play-time';
+const VERSION = 'kirakira-v17-parent-suggestions';
 const ASSETS = [
   './',
   './index.html',
@@ -26,6 +26,7 @@ const ASSETS = [
   './src/records-ui.js',
   './src/play-settings.js',
   './src/settings-ui.js',
+  './src/suggestions.js',
   './src/play-time.js',
   './src/time-ui.js',
   './src/save-ui.js',

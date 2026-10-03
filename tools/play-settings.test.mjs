@@ -55,7 +55,7 @@ test('プロフィール間で設定が混ざらない',()=>{
 });
 
 test('設定画面は保存失敗時に設定を戻し、保存ボタン前には変更しない',()=>{
-  const nodes=new Map();const element=()=>({children:[],value:'',classList:{remove(){},add(){}},append(x){this.children.push(x);},setAttribute(){}});
+  const nodes=new Map();const element=()=>({children:[],value:'',classList:{remove(){},add(){}},append(x){this.children.push(x);},replaceChildren(){this.children=[];},setAttribute(){}});
   const get=id=>{if(!nodes.has(id))nodes.set(id,element());return nodes.get(id);};
   globalThis.document={getElementById:get,createElement:element};
   const save=freshSave();let succeeds=false;setupSettingsUI(save,()=>succeeds);get('btnPlaySettings').onclick();
