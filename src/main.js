@@ -179,12 +179,15 @@ profileUI.connect(() => {
 const selectedProfileLabel=profiles.summary().profiles.find(p=>p.id===profiles.summary().activeProfileId).label;
 setupRecordsUI(save,selectedProfileLabel);
 setupSettingsUI(save,persist,selectedProfileLabel);
+let homePaused=false;
 const timeUI=setupTimeUI(save,persist,selectedProfileLabel,{
   onContinue:()=>{
-    if(saveBlocked||!playTimer.continue())return;
+    if(saveBlocked)return;
+    if(playTimer.paused ? !playTimer.continue() : !playTimer.tick(true))return;
+    homePaused=false;
     timeUI.hide();input.reset();input.enabled=!help.modal;
   },
-  onFinish:()=>{if(!saveBlocked){timeUI.hide();backToTitle(true);}},
+  onFinish:()=>{if(!saveBlocked && backToTitle())timeUI.hide();},
 });
 const playTimer=new PlayTimer(save,persist,{
   onWarn:seconds=>timeUI.warn(seconds),
@@ -269,7 +272,14 @@ function startGame() {
   if(playTimer.paused)input.enabled=false;
 }
 
-function backToTitle(skipSummary=false) {
+function openHomeSummary() {
+  if(saveBlocked || mode!=='play' || transitioning || homePaused || !playTimer.pause())return;
+  homePaused=true;
+  input.reset();input.enabled=false;player.setTarget(null);voice.stop();
+  timeUI.show(playTimer.paused);
+}
+
+function backToTitle() {
   if(saveBlocked || !playTimer.pause())return;
   audio.tap();
   ui.closePanel();
@@ -284,7 +294,8 @@ function backToTitle(skipSummary=false) {
   ui.showHUD(false);
   buildTitle();
   $('title').classList.remove('hidden');
-  if(!skipSummary)timeUI.show(false);
+  homePaused=false;
+  return true;
 }
 
 function requestLandscape() {
@@ -317,7 +328,7 @@ $('btnVoice').addEventListener('click', () => {
   else voice.say(L.voiceOn());
   updateToggles();
 });
-$('btnHome').addEventListener('click', () => backToTitle());
+$('btnHome').addEventListener('click', openHomeSummary);
 $('questCard').addEventListener('click', () => (place === 'school' ? school.repeat() : place === 'island' ? (help.focused ? help.repeat() : quests.repeat()) : null));
 $('btnZukan').addEventListener('click', () => openZukan());
 $('btnCloset').addEventListener('click', () => openCloset());
@@ -576,7 +587,7 @@ resize();
 
 document.addEventListener('visibilitychange', () => {
   if(document.hidden)playTimer.pause();
-  else playTimer.tick(mode==='play'&&!saveBlocked);
+  else playTimer.tick(mode==='play'&&!saveBlocked&&!homePaused);
   if (document.hidden) { audio.suspend(); voice.stop(); input.reset(); player.setTarget(null); }
   else if (mode === 'play') audio.resume();
 });
@@ -591,12 +602,12 @@ let time = 0;
 let hudClock = 0;
 
 function frame(now) {
-  if(!playTimer.tick(mode==='play'&&!saveBlocked&&!document.hidden)) { requestAnimationFrame(frame); return; }
-  $('btnQuestHint').classList.toggle('hidden', !(mode==='play' && place==='island' && !help.focused && !ui.panelOpen && !transitioning && quests.state==='active' && !saveBlocked && !playTimer.paused));
+  if(!playTimer.tick(mode==='play'&&!saveBlocked&&!document.hidden&&!homePaused)) { requestAnimationFrame(frame); return; }
+  $('btnQuestHint').classList.toggle('hidden', !(mode==='play' && place==='island' && !help.focused && !ui.panelOpen && !transitioning && quests.state==='active' && !saveBlocked && !playTimer.paused && !homePaused));
   const dt = Math.min(0.05, (now - last) / 1000);
   last = now;
   time += dt;
-  if (saveBlocked || document.hidden || playTimer.paused) { last = now; requestAnimationFrame(frame); return; }
+  if (saveBlocked || document.hidden || playTimer.paused || homePaused) { last = now; requestAnimationFrame(frame); return; }
 
   if (mode === 'play') {
     const ptr = input.pointer;

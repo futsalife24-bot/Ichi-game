@@ -8,6 +8,32 @@ import {setupTimeUI} from '../src/time-ui.js';
 import fs from 'node:fs';
 import vm from 'node:vm';
 
+test('ホームの振り返りは活動を終了せず、戻ると同じ回の計測を再開する',()=>{
+  const main=fs.readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
+  const open=main.match(/function openHomeSummary\(\) \{[\s\S]*?\n\}/)[0];
+  const callbacks=main.match(/const timeUI=setupTimeUI\(save,persist,selectedProfileLabel,\{([\s\S]*?)\n\}\);/)[1];
+  let now=0,shown=0,ended=0;
+  const save=freshSave(),timer=new PlayTimer(save,()=>true,{now:()=>now,id:()=> 'same'});timer.start();now=3000;
+  const context={saveBlocked:false,mode:'play',transitioning:false,homePaused:false,playTimer:timer,
+    input:{enabled:true,reset(){}},player:{setTarget(){}},voice:{stop(){}},help:{modal:false},
+    timeUI:{show(){shown++;},hide(){}},backToTitle(){ended++;return true;}};
+  vm.runInNewContext(open+'\nopenHomeSummary();',context);
+  assert.equal(context.homePaused,true);assert.equal(ended,0);assert.equal(shown,1);assert.equal(save.playTime.session.state,'active');
+  now=9000;timer.tick(false);assert.equal(save.playTime.session.elapsedMs,3000);
+  const handlers=vm.runInNewContext('({'+callbacks+'})',context);handlers.onContinue();
+  assert.equal(context.homePaused,false);assert.equal(context.input.enabled,true);assert.equal(save.playTime.session.continued,false);
+  now=10000;timer.tick(true);assert.equal(save.playTime.session.elapsedMs,4000);assert.equal(save.playTime.session.id,'same');
+  handlers.onFinish();assert.equal(ended,1);
+});
+
+test('ホーム画面中のフレームは島も活動も進めず、計測を再開しない',()=>{
+  const main=fs.readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
+  const frame=main.match(/function frame\(now\) \{[\s\S]*?\n\}\r?\nrequestAnimationFrame\(frame\);/)[0];
+  let active;
+  const context={homePaused:true,playTimer:{tick:x=>{active=x;return true;},paused:false},mode:'play',place:'island',saveBlocked:false,document:{hidden:false},help:{focused:false},ui:{panelOpen:false},transitioning:false,quests:{state:'active'},$:()=>({classList:{toggle(){}}}),last:0,time:0,requestAnimationFrame(){}};
+  vm.runInNewContext(frame+'\nframe(10);',context);assert.equal(active,false);
+});
+
 function fixture(save={...freshSave(),playTime:{...newPlayTime(),settings:{limitMinutes:1,warnSeconds:30}}}) {
   let time=0,fail=false,stored=null,writes=0,warnings=0,dues=0;
   const timer=new PlayTimer(save,()=>{writes++;if(fail)return false;stored=structuredClone(save);return true;},{now:()=>time,id:()=>`s${time}`,onWarn:()=>warnings++,onDue:()=>dues++});
@@ -86,6 +112,6 @@ test('時間設定の保存失敗では元の値を保持する',()=>{
 test('期限画面を出しているフレームでは島の処理へ進まない',()=>{
   const main=fs.readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
   const frame=main.match(/function frame\(now\) \{[\s\S]*?\n\}\r?\nrequestAnimationFrame\(frame\);/)[0];
-  let scheduled=0;const context={playTimer:{tick:()=>true,paused:true},mode:'play',place:'island',saveBlocked:false,document:{hidden:false},help:{focused:false},ui:{panelOpen:false},transitioning:false,quests:{state:'active'},$:()=>({classList:{toggle(){}}}),last:0,time:0,requestAnimationFrame(){scheduled++;}};
+  let scheduled=0;const context={homePaused:false,playTimer:{tick:()=>true,paused:true},mode:'play',place:'island',saveBlocked:false,document:{hidden:false},help:{focused:false},ui:{panelOpen:false},transitioning:false,quests:{state:'active'},$:()=>({classList:{toggle(){}}}),last:0,time:0,requestAnimationFrame(){scheduled++;}};
   vm.runInNewContext(frame+'\nframe(10);',context);assert.equal(scheduled,2);
 });
