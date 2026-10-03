@@ -125,11 +125,14 @@
   </div>
   <div id="recordsPanel" class="hidden help-panel" role="dialog" aria-modal="true" aria-labelledby="recordsHeading">
     <section class="help-sheet">
-      <h2 id="recordsHeading">活動記録</h2>
+      <div class="records-head"><h2 id="recordsHeading">活動記録</h2><button id="recordsClose" type="button">もどる</button></div>
+      <p class="records-note">途中終了は不正解に数えません。ヒントはゲーム内の支援です。</p>
+      <details class="records-guide"><summary>記録の見方・対象</summary>
       <p>自由遊びの「みつける あそび」の記録です。お手伝い・学校は含みません。追加前の成績は推測して埋めません。</p>
       <p>ゲーム外での手助けは分かりません。記録が十分か、得意・苦手かはまだ判定しません。出題設定は問題の設定で、能力のランクではありません。この記録を使って難しさを変える機能はまだありません。</p>
+      <p>記録がないことは、苦手という意味ではありません。</p>
+      </details>
       <div id="recordsList"></div>
-      <button id="recordsClose" type="button">もどる</button>
     </section>
   </div>
   <div id="savePanel" class="hidden help-panel" role="dialog" aria-modal="true" aria-labelledby="saveHeading">

@@ -13,16 +13,32 @@ export function setupRecordsUI(save, profileLabel) {
     for(const [domain,label] of Object.entries(DOMAINS)) {
       const d=observations.domains[domain],card=add(list,'section','');
       card.className='record-card';add(card,'h3',label);
-      if (!d.started) {add(card,'p','まだ記録がありません。遊んでいないことは、苦手という意味ではありません。');continue;}
-      add(card,'p',`始めた活動 ${d.started}回 ／ 完了 ${d.completed}回`);
-      add(card,'p',`ゲーム内ヒントなしで完了 ${d.withoutHint}回`);
-      add(card,'p',`ゲーム内ヒントありで完了 ${d.withHint}回`);
-      add(card,'p',`途中で終了 ${d.interrupted}回（不正解には数えません）`);
-      add(card,'p',`対象に触れた回数 ${d.selections}回 ／ ヒント提示 ${d.hints}回 ／ お願いの聞き直し ${d.repeats}回`);
-      for (const [name,e] of [['前の活動',d.previous],['最新の活動',d.last]]) {
-        if (!e) continue;
-        const end=e.outcome==='interrupted'?'途中で終了':e.hints?'ヒントありで完了':'ヒントなしで完了';
-        add(card,'p',`${name}：${activity[e.kind]}・出題設定 ${e.level+1} ／ ${end} ／ 対象に触れた回数 ${e.selections}回`);
+      if (!d.started) {add(card,'p','まだ記録がありません');continue;}
+      const table=add(card,'table','');table.className='record-table';
+      add(table,'caption','これまでの合計');
+      const body=add(table,'tbody','');
+      for (const [name,value] of [
+        ['始めた活動',d.started],['完了した活動',d.completed],
+        ['ヒントなしで完了',d.withoutHint],['ヒントありで完了',d.withHint],
+        ['途中で終了',d.interrupted],['対象に触れた回数',d.selections],
+        ['ヒントが出た回数',d.hints],['お願いの聞き直し',d.repeats],
+      ]) {
+        const row=add(body,'tr','');add(row,'th',name).scope='row';add(row,'td',`${value}回`);
+      }
+      if (d.last) {
+        const history=add(card,'table','');history.className='record-table record-history';
+        add(history,'caption','最近の活動');
+        const head=add(add(history,'thead',''),'tr','');
+        for (const name of ['項目','前回','最新']) add(head,'th',name).scope='col';
+        const rows=add(history,'tbody','');
+        const result=e=>e.outcome==='interrupted'?'途中で終了':e.hints?'ヒントありで完了':'ヒントなしで完了';
+        for (const [label,value] of [
+          ['遊び',e=>activity[e.kind]],['出題設定',e=>String(e.level+1)],
+          ['結果',result],['対象への接触',e=>`${e.selections}回`],
+        ]) {
+          const row=add(rows,'tr','');add(row,'th',label).scope='row';
+          for (const e of [d.previous,d.last]) add(row,'td',e?value(e):'—');
+        }
       }
     }
     $('recordsPanel').classList.remove('hidden');

@@ -406,10 +406,26 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 #savePanel { z-index: 120; }
 #profilePanel { z-index: 100; }
 #recordsPanel { z-index: 130; }
-#recordsClose { min-height: 52px; padding: 12px 24px; font: inherit; border-radius: 12px; background: #d7f0df; }
+#recordsPanel .help-sheet { width: min(760px, 96vw); padding: 12px 16px; }
+.records-head { position: sticky; top: -12px; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0; background: #fff9e9; border-bottom: 2px solid #d2e4da; }
+.records-head h2 { margin: 0; font-size: clamp(20px, 3vh, 26px); text-align: left; }
+#recordsClose { flex-shrink: 0; min-height: 52px; padding: 12px 20px; font: inherit; border-radius: 12px; background: #d7f0df; }
+#recordsPanel .records-note { margin: 10px 0; font-size: 15px; text-align: left; }
+.records-guide { text-align: left; font-size: 15px; }
+.records-guide summary { min-height: 44px; padding: 10px 0; cursor: pointer; }
+#recordsPanel .records-guide p { font-size: 15px; }
 .record-card { text-align: left; background: white; padding: 12px; margin: 12px 0; border-radius: 14px; }
-.record-card h3 { margin: 0; }
-.record-card p { font-size: 16px; overflow-wrap: anywhere; }
+.record-card h3 { margin: 0 0 8px; padding: 8px 12px; border-left: 5px solid #548f76; background: #e9f4ed; font-size: 22px; }
+.record-card p { font-size: 16px; }
+.record-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 16px; line-height: 1.45; }
+.record-table caption { text-align: left; font-weight: 700; padding: 8px 0; }
+.record-table th, .record-table td { border-bottom: 1px solid #d7e5dd; padding: 8px 12px; overflow-wrap: anywhere; }
+.record-table th { width: 70%; text-align: left; font-weight: 500; }
+.record-table td { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+.record-table tbody tr:nth-child(even) { background: #f4f8f5; }
+.record-history { margin-top: 12px; }
+.record-history th, .record-history td { width: 33.33%; text-align: left; font-weight: 400; }
+.record-history thead th { background: #e9f4ed; font-weight: 700; }
 .parent-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 94vw; }
 .parent-actions button { min-height: 48px; white-space: normal; }
 #profileList button, #profileCreate, #profileClose, #profileExport, #profileForm input, #profileForm select, #profileAdd summary { min-height: 52px; padding: 12px; font: inherit; border-radius: 12px; }
