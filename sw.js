@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v21-island-visibility';
+const VERSION = 'kirakira-v22-help-guidance-voices';
 const ASSETS = [
   './',
   './index.html',

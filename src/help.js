@@ -1,7 +1,7 @@
 // ひよこの おやつ。あつめる → とどける → おれい → じぶんで つぎを えらぶ。
 import * as THREE from 'three';
 import { HELP_SPOTS, HELP_HOST, HELP_NEED, newHelp, helpAction } from './help-state.js';
-import { makeFruit, FRUITS } from './props.js';
+import { makeFruit } from './props.js';
 import { getHeight } from './world.js';
 import { L } from './lines.js';
 import { ACCESSORIES } from './characters.js';
@@ -77,11 +77,11 @@ export class Help {
       const acc = ACCESSORIES.find(a => a.stars === this.save.stars);
       // ふくの しょゆうは ほしから はんてい。じどうで きがえず きろくを まもる。
       if (acc) this.ui.reward(acc);
-      this.voice.say({ say: 'できたね！', sub: 'ありがとう！ おやつが そろったよ！' });
+      this.voice.say(L.helpDone());
     } else if (action === 'collect') {
       this.audio.collect();
       this.player.holdUp('🍎');
-      this.voice.say(L.countTick(this.state.collected.length));
+      this.voice.say(this.state.stage === 'deliver' ? L.helpDeliver() : L.countTick(this.state.collected.length));
     } else this.repeat();
     return true;
   }
@@ -107,12 +107,14 @@ export class Help {
     for (const it of this.items) it.obj.visible = it.plate ? h.rewardedRound > 0 : this.focused && h.stage === 'collect' && !h.collected.includes(it.index);
     if (this.focused) {
       const delivering = h.stage === 'deliver';
-      this.ui.setQuest({ icon: '<span class="emoji">🐥</span>', text: h.stage === 'done' ? '🐥 おてつだい できた！' : delivering ? '🐥に 🍎を とどけよう' : '🐥の おやつ 🍎を あつめよう', progress: { need: HELP_NEED, emoji: '🍎' } });
+      this.ui.setQuest({ icon: `<span class="emoji">${delivering || h.stage === 'done' ? '🐥' : '🍎'}</span>`, text: h.stage === 'done' ? 'おやつを とどけた！' : delivering ? 'ひよこに とどけよう' : 'りんごに さわろう', progress: { need: HELP_NEED, emoji: '🍎' } });
       this.ui.setProgress(h.collected.length);
       const done = h.stage === 'done';
-      document.getElementById('helpHeading').textContent = done ? 'ありがとう！' : 'ひよこの おやつ';
-      document.getElementById('helpPicture').textContent = done ? '🐥 💛 🍎🍎' : '🍎🍎 → 🐥';
-      document.getElementById('helpMessage').textContent = done ? 'おやつを とどけたね。おてつだい おしまい！' : 'りんごを あつめて、ひよこに とどけよう';
+      document.getElementById('helpHeading').textContent = done ? 'ありがとう！' : 'ひよこから おねがい';
+      document.getElementById('helpPicture').textContent = done ? '🐥 💛 🍎🍎' : '🐥 🍎🍎';
+      document.getElementById('helpMessage').textContent = done ? 'おやつを とどけたね！' : 'おやつの りんごを 2こ とどけてね';
+      document.getElementById('helpReward').classList.toggle('hidden', !done);
+      document.getElementById('helpSteps').classList.toggle('hidden', done);
       document.getElementById('helpAccept').classList.toggle('hidden', done);
       document.getElementById('helpAgain').classList.toggle('hidden', !done);
       document.getElementById('helpGo').textContent = delivering ? '🐥 とどけに いく' : '🍎 いっしょに さがす';
@@ -131,10 +133,10 @@ export class Help {
   go() { if (this.focused && !this.modal) this.player.setTarget(this.target()); }
   repeat() {
     if (!this.focused) return;
-    // しゅうろくずみの こえだけを つかう。あたらしい ぶんは えと もじで おぎなう。
-    if (this.state.stage === 'deliver') this.voice.say(L.animalAsk(this.host.def));
-    else if (this.state.stage === 'done') this.voice.say({ say: 'できたね！', sub: 'ありがとう！' });
-    else this.voice.say(L.countAsk(FRUITS.ringo, HELP_NEED));
+    if (this.state.stage === 'deliver') this.voice.say(L.helpDeliver());
+    else if (this.state.stage === 'done') this.voice.say(L.helpDone());
+    else if (this.state.stage === 'intro') this.voice.say(L.helpIntro());
+    else this.voice.say(L.helpCollect());
   }
   update(dt, t) {
     if (!this.focused || this.modal) return;

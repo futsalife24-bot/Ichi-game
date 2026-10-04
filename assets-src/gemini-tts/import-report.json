@@ -6689,5 +6689,80 @@
         "sha256": "cf150e557894368a0eab94419769ab25fc698de8d6c4a2f5bb25fdfd7c01ec26"
       }
     ]
+  },
+  {
+    "batchId": 26,
+    "status": "imported",
+    "filename": "batch-26-source.wav",
+    "sourceSha256": "86a6af440222ae3339680a384c564653852bdb340512316848a75d2db613a80b",
+    "recipe": "b67ddb65b2c435081b6d44b2eb6636929e795125823da5ed4b457681acb40a8a",
+    "duration": 37.36,
+    "peak": 27603,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "87fe2a75",
+        "text": "ひよこがおやつをまっているよ！",
+        "reading": "ひよこがおやつをまっているよ！",
+        "from": 0,
+        "to": 2.34,
+        "duration": 2.34,
+        "sha256": "361f6054b38bcaaba4269227d9b38977dd006fb9bce41de08929b2ce3d83a90c"
+      },
+      {
+        "hash": "6ba29739",
+        "text": "りんごをにこあつめて、ひよこにとどけよう！",
+        "reading": "りんごをにこあつめて、ひよこにとどけよう！",
+        "from": 5.78,
+        "to": 9.23,
+        "duration": 3.45,
+        "sha256": "90e299651bda51c9154a720b345251b2e6c072c019381e22baf7b2c6b5c342d1"
+      },
+      {
+        "hash": "9a606f4c",
+        "text": "りんごにさわってあつめよう！",
+        "reading": "りんごにさわってあつめよう！",
+        "from": 13.61,
+        "to": 15.65,
+        "duration": 2.04,
+        "sha256": "b3d274723d7cb603dd220df568c85cb62f75c295b624f7baaab7b51ca5657ee6"
+      },
+      {
+        "hash": "d99f1cdd",
+        "text": "りんごがそろったよ！",
+        "reading": "りんごがそろったよ！",
+        "from": 19.03,
+        "to": 20.67,
+        "duration": 1.64,
+        "sha256": "c1aa99e298170223c8212bf781355604f4205211d24f715052729785f9a6ca78"
+      },
+      {
+        "hash": "20e0e102",
+        "text": "ひよこにとどけよう！",
+        "reading": "ひよこにとどけよう！",
+        "from": 24.62,
+        "to": 26.15,
+        "duration": 1.53,
+        "sha256": "61cc4882653432e200bc5857833e9159a43e932540181bf1ffd0ae98849b885f"
+      },
+      {
+        "hash": "7e87d874",
+        "text": "おやつをとどけたね！",
+        "reading": "おやつをとどけたね！",
+        "from": 29.74,
+        "to": 31.49,
+        "duration": 1.75,
+        "sha256": "dc5f276146ea4dbae55e6570e83b8af80e24200466a5c8485b46ed2542feb8f3"
+      },
+      {
+        "hash": "668c37b7",
+        "text": "ほしをいっこもらったよ！",
+        "reading": "ほしをいっこもらったよ！",
+        "from": 35.19,
+        "to": 37.15,
+        "duration": 1.96,
+        "sha256": "d2e0da5a7d90b45251299f1f6e074daf787a0e2254b435dc2d1da2fa7d5e45c9"
+      }
+    ]
   }
 ]

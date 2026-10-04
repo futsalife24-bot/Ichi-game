@@ -47,6 +47,14 @@ export const L = {
   countTick: (n) => line(`${W(n)}！`, `${n}`),
   countDone: (fruit, n) => line(`${W(n)}！ ${fruit.name} が ${W(n)}こ！`, `${n}！ ${fruit.name} が ${n}こ！`),
 
+  // ---- ひよこの おてつだい
+  helpIntro: () => line('ひよこが おやつを まっているよ！ りんごを にこ あつめて、ひよこに とどけよう！',
+    'ひよこが おやつを まっているよ！ りんごを 2こ あつめて、とどけよう！'),
+  helpCollect: () => line('りんごに さわって あつめよう！'),
+  helpDeliver: () => line('りんごが そろったよ！ ひよこに とどけよう！'),
+  helpDone: () => line('ありがとう！ おやつを とどけたね！ ほしを いっこ もらったよ！',
+    'ありがとう！ おやつを とどけたね！ ⭐を 1こ もらったよ！'),
+
   shapeAsk: (s) => line(`${s.name} の かたち を さがしてね！`),
   shapeRight: (s) => line(`${s.name}！ せいかい！`),
   shapeWrong: (got, s) => line(`それは ${got.name}。 ${s.name} は どこかな？`),
@@ -223,6 +231,7 @@ export function allLines() {
   for (const snow of [false, true]) { add(L.rainStart(snow)); add(L.rainEnd(snow)); }
   for (const n of range(0, Object.keys(ITEMS).length)) add(L.zukan(n));
   out.push(...characterLines());
+  out.push(...helpLines());
   return out;
 }
 
@@ -236,5 +245,10 @@ export function characterLines() {
   return out;
 }
 
-/** つぎに しゅうろくする せりふ。いまは ぜんぶ そろっている。 */
+/** ひよこの おてつだいの せりふ */
+export function helpLines() {
+  return [L.helpIntro(), L.helpCollect(), L.helpDeliver(), L.helpDone()].map(l => l.say);
+}
+
+/** そろったら ふつうの しゅうろくたいしょうへ うつす。 */
 export function pendingLines() { return []; }

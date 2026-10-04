@@ -10,6 +10,7 @@ parser.add_argument('--tools', required=True)
 parser.add_argument('--model', required=True)
 parser.add_argument('--batches', nargs='+', type=int, required=True)
 parser.add_argument('--clips', action='store_true')
+parser.add_argument('--output', default='character-clips.asr.json')
 args = parser.parse_args()
 sys.path.insert(0, args.tools)
 from faster_whisper import WhisperModel
@@ -17,9 +18,9 @@ from faster_whisper import WhisperModel
 root = Path(__file__).resolve().parent.parent
 source = root / 'assets-src/gemini-tts'
 plan = json.loads((source / 'plan.json').read_text(encoding='utf-8'))
-model = WhisperModel(args.model, device='cpu', compute_type='int8', cpu_threads=6)
+model = WhisperModel(args.model, device='cpu', compute_type='int8', cpu_threads=6, download_root=str(root / '.models'))
 if args.clips:
-    output = source / 'character-clips.asr.json'
+    output = source / args.output
     results = {item['hash']: item for item in json.loads(output.read_text(encoding='utf-8'))} if output.exists() else {}
     for batch in args.batches:
         for clip in plan['batches'][batch]:
