@@ -4,6 +4,8 @@
 
 作業ブランチは `codex/first-island-visibility`。開始HEADは `5a52bd64d2322e9d6ee716f2ec28f38cb175f810`、ゲーム本体の基点は公開main `9996bb2d541dcfd3b9942438b87df825bca5ea2a`。GitHubの最新mainも同じSHAと確認した。引継ぎ文書を保持して専用ブランチへ分けた。mainへの統合・公開は未実施。
 
+実装HEADは `21bee395e8dc770436d27babde95a16e4c903bbc`。同名のGitHub作業ブランチへ同期済みで、[同じHEADの必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37201178790) は成功。文書だけの追記はこの実装HEADの後に保存する。
+
 ## 確認した問題と変更
 
 固定視点のカメラは主人公の後方・上方（相対位置 `0, 9, 11`）を追う。改善前の学校では、看板が屋根の下で小さく、看板テクスチャの文字が左右で切れていた。
