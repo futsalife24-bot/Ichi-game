@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v20-birthday';
+const VERSION = 'kirakira-v22-help-guidance-voices';
 const ASSETS = [
   './',
   './index.html',

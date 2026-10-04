@@ -1,0 +1,51 @@
+[
+  {
+    "batchId": 26,
+    "hash": "87fe2a75",
+    "expected": "ひよこがおやつをまっているよ！",
+    "sha256": "361f6054b38bcaaba4269227d9b38977dd006fb9bce41de08929b2ce3d83a90c",
+    "recognized": "ひよこがおやつを待っているよ"
+  },
+  {
+    "batchId": 26,
+    "hash": "6ba29739",
+    "expected": "りんごをにこあつめて、ひよこにとどけよう！",
+    "sha256": "90e299651bda51c9154a720b345251b2e6c072c019381e22baf7b2c6b5c342d1",
+    "recognized": "リンゴを2個集めて、日横に届けよう。"
+  },
+  {
+    "batchId": 26,
+    "hash": "9a606f4c",
+    "expected": "りんごにさわってあつめよう！",
+    "sha256": "b3d274723d7cb603dd220df568c85cb62f75c295b624f7baaab7b51ca5657ee6",
+    "recognized": "リンゴに触って集めよう"
+  },
+  {
+    "batchId": 26,
+    "hash": "d99f1cdd",
+    "expected": "りんごがそろったよ！",
+    "sha256": "c1aa99e298170223c8212bf781355604f4205211d24f715052729785f9a6ca78",
+    "recognized": "リンゴが揃ったよ"
+  },
+  {
+    "batchId": 26,
+    "hash": "20e0e102",
+    "expected": "ひよこにとどけよう！",
+    "sha256": "61cc4882653432e200bc5857833e9159a43e932540181bf1ffd0ae98849b885f",
+    "recognized": "横に届けよう"
+  },
+  {
+    "batchId": 26,
+    "hash": "7e87d874",
+    "expected": "おやつをとどけたね！",
+    "sha256": "dc5f276146ea4dbae55e6570e83b8af80e24200466a5c8485b46ed2542feb8f3",
+    "recognized": "おやつを届けたね"
+  },
+  {
+    "batchId": 26,
+    "hash": "668c37b7",
+    "expected": "ほしをいっこもらったよ！",
+    "sha256": "d2e0da5a7d90b45251299f1f6e074daf787a0e2254b435dc2d1da2fa7d5e45c9",
+    "recognized": "星を1個もらったよ"
+  }
+]

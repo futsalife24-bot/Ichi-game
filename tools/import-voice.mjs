@@ -44,6 +44,9 @@ for (const [batchId, clips] of plan.batches.entries()) {
   }
   if (channels !== 1 || bits !== 16 || !data || rate !== 24000) throw Error('Expected mono PCM16 24kHz');
   const correction=overrides[batchId] ?? {};
+  // よわい ごとうを まもるときだけ、その バッチの よはくを ひろげる。
+  const leadingPad=correction.leadingPad ?? 0.08;
+  if(!Number.isFinite(leadingPad) || leadingPad<0.08 || leadingPad>0.5)throw Error('語頭の余白が不正です');
   if(correction.trimEnd) {
     if(!Number.isFinite(correction.trimEnd)||correction.trimEnd<=0||correction.trimEnd>data.length/2/rate)throw Error('Invalid trimEnd');
     data=data.subarray(0,Math.round(correction.trimEnd*rate)*2);
@@ -80,7 +83,7 @@ for (const [batchId, clips] of plan.batches.entries()) {
     while(a<z && energy[a]<180)a++;
     while(z>a && energy[z-1]<180)z--;
     // Keep quiet consonants and natural release; never cut at detected voice onset.
-    const from=Math.max(Math.round(edges[i]*rate),Math.round((a/100-0.08)*rate));
+    const from=Math.max(Math.round(edges[i]*rate),Math.round((a/100-leadingPad)*rate));
     const to=Math.min(Math.round(edges[i+1]*rate),Math.round((z/100+0.12)*rate),samples);
     if(to<=from || (to-from)/rate<0.12) throw Error(`Empty clip: ${clip.hash}`);
     const pcm=Buffer.from(data.subarray(from*2,to*2));

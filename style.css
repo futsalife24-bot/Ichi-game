@@ -388,6 +388,10 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 .help-sheet p { margin: 10px 0 16px; font-size: clamp(16px, 2.8vh, 22px); }
 .help-picture { font-size: clamp(38px, 9vh, 64px); }
 .help-choices { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.help-steps { display: flex; gap: 8px; padding: 0; margin: 12px 0 20px; list-style: none; }
+.help-steps li { flex: 1; padding: 10px 4px; border-radius: 14px; background: #edf6e9; color: #234d45; font-size: clamp(14px, 2.4vh, 19px); font-weight: 800; }
+.help-steps span { display: block; margin-bottom: 5px; font-size: clamp(26px, 4vh, 36px); }
+#helpPanel .help-reward { padding: 12px; border-radius: 14px; background: #fff0bb; color: #674912; font-weight: 800; }
 .help-choices button, #helpActions button, #helpReturn, #helpQuiz { min-height: 52px; padding: 12px 18px; border-radius: 18px; background: #d7f0df; color: #234d45; font: inherit; font-weight: 800; font-size: clamp(16px, 2.8vh, 22px); box-shadow: 0 3px 0 #accdbb; touch-action: manipulation; pointer-events: auto; }
 #helpFree, #helpWalk, #helpQuiz { background: #fff3cb; }
 #helpActions { position: absolute; right: max(14px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 12px; align-items: end; pointer-events: auto; }

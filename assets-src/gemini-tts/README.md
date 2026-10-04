@@ -1,6 +1,6 @@
 # キラキラアイランド Gemini音声
 
-全691個の生成・実装・検証・公開完了。追加39個は2026-10-01に公開反映済み。検証結果と公開記録は [STATE.md](STATE.md)。新規契約・支払い設定の変更は行っていない。
+公開済み691個に加え、お手伝い案内7個を2026-10-04に生成・実装し、作業ブランチは合計698個。追加7個は未公開。検証結果と公開記録は [STATE.md](STATE.md)。新規契約・支払い設定の変更は行っていない。
 
 - モデル: `gemini-3.8-flash-tts`（2026-09-29、Google AI Studio画面で確認）。スワフロの既存採用モデルと同じ。
 - 声: Cleo（Warm and engaging / Medium-high pitch）。架空の大人の女性ガイド。声真似なし。
@@ -11,6 +11,8 @@
 
 ## キャラメイクと名前の追加音声
 
+お手伝いの追加7個はバッチ26で生成し、`helpLines()` を `allLines()` に統合した。`help-clips.asr.json` に個別認識とハッシュを保存。新PCでの認識環境は `faster-whisper==1.2.1` / `ctranslate2==4.6.0` / `av==16.0.1` / `setuptools<81`、Whisper small / CPU int8。`av` 19では読込の引数互換性エラーがあったため作業フォルダー内に互換版を導入した。認識モデルは `.models` に保持。以下の39個は以前の公開済み記録。
+
 キャラメイクと名前の呼びかけ39個を `characterLines()` として `allLines()` に統合済み。`pendingLines()` は空。生成前の台本を `pending-plan.json` に履歴として保持する。
 
 バッチ20～23で39個を生成し、24・25で「えへへ」「こむぎちゃん」「ぷうちゃん」を補修した。`character-generation.json` にスタイル・原本ハッシュ・生成回数、`character-clips.asr.json` に最終39個のMP3ハッシュと認識結果、`character-browser-check.json` にブラウザ検証結果を保持する。追加39個は合計369,012 bytes、切り出し長42.72秒。
@@ -18,6 +20,8 @@
 今後の追加は `node --import ./tools/register.mjs tools/gen-voice.mjs --plan --append --pending`。既存のバッチ番号・発音修正を保持して未生成分を10個ずつ末尾へ追加する。番号ごとに `node tools/import-voice.mjs --batch=番号` で取り込む。既存の原本が手元になくても未選択バッチの記録を維持できる。全原本が揃う前には番号なしの `--import` を実行しない。完成後に通常の収録対象へ統合して `--plan --append` と `--finalize` で確定する。
 
 ## 再生成
+
+お手伝いのバッチ26は弱い語頭を保護するため、`boundaries.json` の `leadingPad` を0.3秒に指定。他バッチは従来の0.08秒。認識の再現は `tools/check-new-voice.py --tools .tools --model small --batches 26 --clips --output help-clips.asr.json`。原本を認識する時は `--clips` を外す。短い個別音声の「ひよこ」に認識揺れが残るため、原本の認識区間も照合し、ASRだけで聴感の合格とは扱わない。
 
 1. `node --import ./tools/register.mjs tools/gen-voice.mjs --plan --append` で既存原本のバッチ番号を維持して `plan.json` と `batch-NN.txt` を出す。字幕やゲームルールは変えない。`--append` なしは全バッチを作り直す場合だけ使う。
 2. AI StudioのSpeech blockへ各バッチの文面を入力し、上記モデル・声と下記のStyleを設定する。各行は別の再利用音声。`<long pause>` を行間に挿入する（UIのExpressionで提供されているタグ）。文面の読み足し・読み落としを確認する。
