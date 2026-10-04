@@ -1,5 +1,11 @@
 # キラキラアイランドの作業入口
 
+## 最新状態：第一島とお手伝い案内の公開完了（2026-10-04）
+
+ユーザーの「公開して」を受け、[PR21](https://github.com/futsalife24-bot/Ichi-game/pull/21) をmainへ反映した。公開内容のSHAは `27ac5de15c05a6287f19b8d7b96756ed1367f612`。[必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37208102713) と [Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37208102717) は成功。第一島の改善、お手伝いの画面案内、追加音声7個を公開済み。合計698個の音声一覧・ゲーム用8ファイル・追加MP3全7個のハッシュが最終版と一致し、公開ブラウザーのお願い画面も確認した。
+
+公開後の記録は `codex/island-help-release-record` に保存。次回は [引継ぎ](docs/session-handoff.md) の冒頭を読む。実スマホ・完全オフライン・人による全音声の聴感確認は未実施。以下の「未公開」は公開前の各段階の履歴。
+
 ## 現在の作業：お手伝いの案内（2026-10-04）
 
 第一島の改善をユーザーが確認し「次に進んで」と指定。`codex/help-guidance`、基点 `06f7d69f394311ad3c1e991f358634951195de1a` で、お願い・収集・お届け・お礼の画面と音声を揃えた。追加生成承認を受け、Gemini 3.8 Flash TTS / Cleoで7個を追加。既存691個のMP3はハッシュ一致、合計698個。自動テスト93件と音声完全性、ブラウザーで一周・途中再開・声なしの案内・完了後の再読込を確認。詳細は [お手伝い案内の改修記録](docs/help-guidance.md)。mainへの統合・公開は未実施。
