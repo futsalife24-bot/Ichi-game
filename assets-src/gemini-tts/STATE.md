@@ -1,6 +1,8 @@
 # Gemini音声作業の現在地（2026-10-04）
 
-## お手伝い案内7個の追加（未公開）
+## お手伝い案内7個の追加・公開完了
+
+ユーザーの2026-10-04の公開承認を受け、[PR21](https://github.com/futsalife24-bot/Ichi-game/pull/21) で合計698個を公開。公開内容SHA `27ac5de15c05a6287f19b8d7b96756ed1367f612`。[公開処理](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37208102717) と必須検証が成功。公開音声一覧と追加MP3全7個のハッシュが最終版と一致。配信確認は `help-release-check.json`。以下の未公開表記は公開前の検証時の履歴。
 
 ユーザーの必要な音声生成の承認を受け、`codex/help-guidance` でGemini 3.8 Flash TTS / Cleoの7個を生成。バッチ26、生成1回、原本37.36秒。無音区切り6箇所で7個を切り出し、手動区切りなし。追加MP3は122,420 bytes、14.71秒。既存691個のSHA256を保持し、合計698個。
 

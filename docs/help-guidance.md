@@ -1,5 +1,9 @@
 # お手伝い案内の改善（2026-10-04）
 
+## 公開結果
+
+ユーザーの公開承認後、[PR21](https://github.com/futsalife24-bot/Ichi-game/pull/21) で第一島の改善とともにmainへ反映。実装HEAD `e8b903d9b24660dc85b2609c627721687a1bafd4`、公開内容SHA `27ac5de15c05a6287f19b8d7b96756ed1367f612`。必須チェック93件・音声698個の完全性と [Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37208102717) が成功。公開の8ファイル・音声一覧・追加MP3全7個のハッシュが最終版に一致し、公開ブラウザーで新しいお願い画面を確認した。配信照合は `artifacts/help-release-check.json`、画面証拠は `artifacts/help-public-intro.jpg`。以下の未公開表記は実装時の記録。
+
 ユーザーが第一島の改善を確認し、次の作業と必要な音声生成を承認した。主担当一体で実装・自己検証。任意監査省略を継続する。
 
 ## 作業場所と範囲

@@ -1,5 +1,9 @@
 # 第一島の見やすさの改修（2026-10-04）
 
+## 公開結果
+
+ユーザーの公開承認を受け、[PR21](https://github.com/futsalife24-bot/Ichi-game/pull/21) でお手伝い案内とともに公開した。公開内容SHAは `27ac5de15c05a6287f19b8d7b96756ed1367f612`。[Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37208102717) 成功。公開の `src/world.js`・`src/life.js`・`src/canvas.js`・画面用ファイルが最終版と一致。以下の未公開表記は実装時の履歴。実スマホと完全オフラインは未確認。
+
 ## 対象と保存
 
 作業ブランチは `codex/first-island-visibility`。開始HEADは `5a52bd64d2322e9d6ee716f2ec28f38cb175f810`、ゲーム本体の基点は公開main `9996bb2d541dcfd3b9942438b87df825bca5ea2a`。GitHubの最新mainも同じSHAと確認した。引継ぎ文書を保持して専用ブランチへ分けた。mainへの統合・公開は未実施。

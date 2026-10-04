@@ -1,0 +1,86 @@
+[
+  {
+    "buttons": [
+      {
+        "height": 44,
+        "id": "btnBgm",
+        "width": 44
+      },
+      {
+        "height": 44,
+        "id": "btnVoice",
+        "width": 44
+      },
+      {
+        "height": 44,
+        "id": "btnHome",
+        "width": 44
+      }
+    ],
+    "closetLabel": {
+      "height": 11.083333969116213,
+      "lineHeight": "11.088px",
+      "text": "きせかえ"
+    },
+    "size": [
+      740,
+      360
+    ]
+  },
+  {
+    "buttons": [
+      {
+        "height": 44,
+        "id": "btnBgm",
+        "width": 44
+      },
+      {
+        "height": 44,
+        "id": "btnVoice",
+        "width": 44
+      },
+      {
+        "height": 44,
+        "id": "btnHome",
+        "width": 44
+      }
+    ],
+    "closetLabel": {
+      "height": 11.552083969116213,
+      "lineHeight": "11.5603px",
+      "text": "きせかえ"
+    },
+    "size": [
+      667,
+      375
+    ]
+  },
+  {
+    "buttons": [
+      {
+        "height": 44,
+        "id": "btnBgm",
+        "width": 44
+      },
+      {
+        "height": 44,
+        "id": "btnVoice",
+        "width": 44
+      },
+      {
+        "height": 44,
+        "id": "btnHome",
+        "width": 44
+      }
+    ],
+    "closetLabel": {
+      "height": 12,
+      "lineHeight": "12.012px",
+      "text": "きせかえ"
+    },
+    "size": [
+      844,
+      390
+    ]
+  }
+]

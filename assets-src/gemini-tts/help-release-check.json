@@ -1,0 +1,106 @@
+{
+  "date": "2026-10-04T14:08:48.937Z",
+  "base": "https://futsalife24-bot.github.io/Ichi-game/",
+  "merge": "27ac5de15c05a6287f19b8d7b96756ed1367f612",
+  "files": [
+    {
+      "file": "index.html",
+      "status": 200,
+      "equal": true
+    },
+    {
+      "file": "style.css",
+      "status": 200,
+      "equal": true
+    },
+    {
+      "file": "sw.js",
+      "status": 200,
+      "equal": true
+    },
+    {
+      "file": "src/world.js",
+      "status": 200,
+      "equal": true
+    },
+    {
+      "file": "src/life.js",
+      "status": 200,
+      "equal": true
+    },
+    {
+      "file": "src/canvas.js",
+      "status": 200,
+      "equal": true
+    },
+    {
+      "file": "src/help.js",
+      "status": 200,
+      "equal": true
+    },
+    {
+      "file": "src/lines.js",
+      "status": 200,
+      "equal": true
+    }
+  ],
+  "manifest": {
+    "status": 200,
+    "equal": true,
+    "clips": 698,
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Cleo"
+  },
+  "clips": [
+    {
+      "hash": "87fe2a75",
+      "status": 200,
+      "bytes": 19436,
+      "sha256": "361f6054b38bcaaba4269227d9b38977dd006fb9bce41de08929b2ce3d83a90c",
+      "equal": true
+    },
+    {
+      "hash": "6ba29739",
+      "status": 200,
+      "bytes": 28268,
+      "sha256": "90e299651bda51c9154a720b345251b2e6c072c019381e22baf7b2c6b5c342d1",
+      "equal": true
+    },
+    {
+      "hash": "9a606f4c",
+      "status": 200,
+      "bytes": 16940,
+      "sha256": "b3d274723d7cb603dd220df568c85cb62f75c295b624f7baaab7b51ca5657ee6",
+      "equal": true
+    },
+    {
+      "hash": "d99f1cdd",
+      "status": 200,
+      "bytes": 13868,
+      "sha256": "c1aa99e298170223c8212bf781355604f4205211d24f715052729785f9a6ca78",
+      "equal": true
+    },
+    {
+      "hash": "20e0e102",
+      "status": 200,
+      "bytes": 12908,
+      "sha256": "61cc4882653432e200bc5857833e9159a43e932540181bf1ffd0ae98849b885f",
+      "equal": true
+    },
+    {
+      "hash": "7e87d874",
+      "status": 200,
+      "bytes": 14636,
+      "sha256": "dc5f276146ea4dbae55e6570e83b8af80e24200466a5c8485b46ed2542feb8f3",
+      "equal": true
+    },
+    {
+      "hash": "668c37b7",
+      "status": 200,
+      "bytes": 16364,
+      "sha256": "d2e0da5a7d90b45251299f1f6e074daf787a0e2254b435dc2d1da2fa7d5e45c9",
+      "equal": true
+    }
+  ],
+  "failures": []
+}
