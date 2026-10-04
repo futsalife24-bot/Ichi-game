@@ -25,6 +25,7 @@ import { setupRecordsUI } from './records-ui.js';
 import { setupSettingsUI } from './settings-ui.js';
 import { PlayTimer } from './play-time.js';
 import { setupTimeUI } from './time-ui.js';
+import { setupBirthdayUI } from './birthday-ui.js';
 import { L } from './lines.js';
 import { Help } from './help.js';
 import { setupSaveUI } from './save-ui.js';
@@ -179,6 +180,7 @@ profileUI.connect(() => {
 const selectedProfileLabel=profiles.summary().profiles.find(p=>p.id===profiles.summary().activeProfileId).label;
 setupRecordsUI(save,selectedProfileLabel);
 setupSettingsUI(save,persist,selectedProfileLabel);
+const birthdayUI=setupBirthdayUI(save,persist,selectedProfileLabel,{onFinished:()=>startGame()});
 let homePaused=false;
 const timeUI=setupTimeUI(save,persist,selectedProfileLabel,{
   onContinue:()=>{
@@ -252,6 +254,7 @@ function openMaker(draft) {
 
 function startGame() {
   if (saveBlocked) return;
+  if (!birthdayUI.beforePlay()) return;
   if (!playTimer.start()) return;
   climate.refresh();
   audio.setSong(climate.period);
