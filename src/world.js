@@ -366,8 +366,8 @@ export class World {
     // かんばん と はいりぐちの マット
     // やねの したから てまえへ。みちの よこで よめる かんばん。
     const signX = 2.9 * signSide;
-    const signMesh = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 0.85), new THREE.MeshBasicMaterial({ map: signTexture(sign, signOpts) }));
-    signMesh.position.set(signX, 1.8, 3.2);
+    const signMesh = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 0.85), new THREE.MeshBasicMaterial({ map: signTexture(sign, signOpts), transparent: true, alphaTest: 0.1 }));
+    signMesh.position.set(signX, 1.8, 3.3);
     g.add(signMesh);
     const signPole = cyl(0x9a6b43, 0.07, 1.8, signX, 0.9, 3.2);
     g.add(signPole);
@@ -758,7 +758,7 @@ export class World {
   buildLamps() {
     this.lampBulbs = [];
     this.lampHalos = [];
-    const spots = [{ x: 4.6, z: 5.2 }, { x: -4.8, z: 4.8 }, { x: -4.6, z: -1.2 }, { x: 9.5, z: 1.8 }, { x: -13, z: 11 }, { x: 17, z: 0 }];
+    const spots = [{ x: 4.6, z: 5.2 }, { x: -4.8, z: 4.8 }, { x: -7.5, z: 0 }, { x: 9.5, z: -4.5 }, { x: -13, z: 11 }, { x: 17, z: 0 }];
     const bulbMat = new THREE.MeshBasicMaterial({ color: 0xfff3c4 });
     this.lampMat = bulbMat;
     const glowTex = canvasTexture(128, 128, (x) => {
