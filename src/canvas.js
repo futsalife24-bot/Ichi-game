@@ -41,6 +41,6 @@ export function signTexture(text, { bg = '#fff6dc', fg = '#6b3a2a', border = '#c
     x.font = `bold ${Math.floor(h * 0.52)}px ${FONT}`;
     x.textAlign = 'center';
     x.textBaseline = 'middle';
-    x.fillText(text, w / 2, h * 0.54);
+    x.fillText(text, w / 2, h * 0.54, w - h * 0.28);
   });
 }

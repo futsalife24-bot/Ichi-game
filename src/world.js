@@ -53,6 +53,29 @@ export const ANIMAL_HOMES = {
   kaeru: { x: 25, z: -1 },
 };
 
+// こていの カメラへ はいりぐちを むける。みちも おなじ いちへ つなぐ。
+export function cottageDoor({ x, z }, yaw = 0) {
+  return { x: x + Math.sin(yaw) * 3.2, z: z + Math.cos(yaw) * 3.2, yaw };
+}
+
+export const ISLAND_PATHS = [
+  [LANDMARKS.spawn, { x: -4, z: -3 }],
+  [{ x: -4, z: -3 }, { x: -1, z: -6 }],
+  [LANDMARKS.spawn, cottageDoor(LANDMARKS.myHouse)],
+  [LANDMARKS.spawn, cottageDoor(LANDMARKS.school)],
+  [LANDMARKS.spawn, LANDMARKS.rainbow],
+  [LANDMARKS.spawn, ANIMAL_HOMES.hiyoko],
+  [LANDMARKS.rainbow, ANIMAL_HOMES.hitsuji],
+  [LANDMARKS.spawn, ANIMAL_HOMES.inu],
+  [LANDMARKS.spawn, LANDMARKS.garden],
+  [LANDMARKS.garden, cottageDoor(LANDMARKS.myHouse)],
+  [ANIMAL_HOMES.inu, { x: LANDMARKS.shop.x, z: LANDMARKS.shop.z + 4 }],
+];
+
+function pathDistance(x, z) {
+  return Math.min(...ISLAND_PATHS.map(([a, b]) => segDist(x, z, a.x, a.z, b.x, b.z)));
+}
+
 const tmpObj = new THREE.Object3D();
 const tmpColor = new THREE.Color();
 const tmpMat = new THREE.Matrix4();
@@ -87,11 +110,16 @@ export class World {
       this.noSpawn.push({ ...p, r: 2 });
     }
     // はいりぐちまで あるける みちを あける。
-    for (const end of [LANDMARKS.school, { x: LANDMARKS.myHouse.x, z: LANDMARKS.myHouse.z + 3.2 }]) {
-      for (let i = 0; i <= 12; i++) {
-        const k = i / 12;
-        this.reserve(LANDMARKS.spawn.x + (end.x - LANDMARKS.spawn.x) * k, LANDMARKS.spawn.z + (end.z - LANDMARKS.spawn.z) * k, 1.8);
+    for (const [start, end] of ISLAND_PATHS) {
+      const steps = Math.ceil(Math.hypot(end.x - start.x, end.z - start.z));
+      for (let i = 0; i <= steps; i++) {
+        const k = i / steps;
+        this.reserve(start.x + (end.x - start.x) * k, start.z + (end.z - start.z) * k, 1.8);
       }
+    }
+    // はいりぐちの てまえに はっぱが かぶらない ひろば。
+    for (const home of [LANDMARKS.school, LANDMARKS.myHouse, LANDMARKS.shop]) {
+      this.reserve(home.x, home.z + 6, 3.5);
     }
 
     this.buildSky();
@@ -218,19 +246,6 @@ export class World {
     const colors = new Float32Array(pos.count * 3);
     const grassA = new THREE.Color(0x86dc5c), grassB = new THREE.Color(0x5ec04c), grassC = new THREE.Color(0xa5e36a);
     const sand = new THREE.Color(0xf6e4a6), wetSand = new THREE.Color(0xd9c083), path = new THREE.Color(0xecd29a);
-    const paths = [
-      [LANDMARKS.spawn, { x: -4, z: -3 }],
-      [{ x: -4, z: -3 }, { x: -1, z: -6 }],
-      [LANDMARKS.spawn, { x: LANDMARKS.myHouse.x, z: LANDMARKS.myHouse.z + 3.2 }],
-      [LANDMARKS.spawn, LANDMARKS.school],
-      [LANDMARKS.spawn, { x: LANDMARKS.rainbow.x, z: LANDMARKS.rainbow.z }],
-      [LANDMARKS.spawn, ANIMAL_HOMES.hiyoko],
-      [{ x: LANDMARKS.rainbow.x, z: LANDMARKS.rainbow.z }, ANIMAL_HOMES.hitsuji],
-      [LANDMARKS.spawn, ANIMAL_HOMES.inu],
-      [LANDMARKS.spawn, LANDMARKS.garden],
-      [LANDMARKS.garden, LANDMARKS.myHouse],
-      [ANIMAL_HOMES.inu, LANDMARKS.shop],
-    ];
     this.terrainBase = new Float32Array(pos.count * 3);
     this.grassW = new Float32Array(pos.count);
     const c = new THREE.Color();
@@ -242,9 +257,8 @@ export class World {
       const n = 0.5 + 0.5 * Math.sin(x * 0.35 + Math.cos(z * 0.3) * 2.0) * Math.cos(z * 0.27 - x * 0.1);
       c.copy(grassA).lerp(grassB, n * 0.7);
       if (h > 1.4) c.lerp(grassC, Math.min(1, (h - 1.4) * 0.4));
-      let pd = Infinity;
-      for (const [a, b] of paths) pd = Math.min(pd, segDist(x, z, a.x, a.z, b.x, b.z));
-      const pw = 1 - smoothstep(0.9, 1.7, pd + 0.4 * Math.sin(x * 1.3 + z));
+      const pd = pathDistance(x, z);
+      const pw = 1 - smoothstep(1.05, 1.8, pd + 0.15 * Math.sin(x * 1.3 + z));
       c.lerp(path, pw);
       const shore = ISLAND_R - 4.5 + Math.sin(Math.atan2(z, x) * 5) * 0.8;
       const sw = smoothstep(shore - 1, shore + 1, r);
@@ -304,11 +318,11 @@ export class World {
   }
 
   /** たてもの（そとがわ）。はいりぐちの マット の いち を かえす。decorate(g) で かざりを たせる */
-  buildCottage({ x, z, wall, roof, door, sign, signOpts, matColor = 0xffd23d, glowColor = 0xfff6a0, chimney = false, decorate, yaw }) {
+  buildCottage({ x, z, wall, roof, door, sign, signOpts, signSide = 1, matColor = 0xffd23d, glowColor = 0xfff6a0, chimney = false, decorate, yaw }) {
     const g = new THREE.Group();
     const y = getHeight(x, z);
     g.position.set(x, y - 0.1, z);
-    g.rotation.y = yaw ?? Math.atan2(-x, -z);
+    g.rotation.y = yaw ?? 0;
     const body = new THREE.Mesh(new THREE.BoxGeometry(3.6, 2.6, 3.2), toon(wall));
     body.position.y = 1.3;
     body.castShadow = body.receiveShadow = true;
@@ -350,9 +364,13 @@ export class World {
     }
 
     // かんばん と はいりぐちの マット
-    const signMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.9, 0.6), new THREE.MeshBasicMaterial({ map: signTexture(sign, signOpts) }));
-    signMesh.position.set(0, 2.25, 1.66);
+    // やねの したから てまえへ。みちの よこで よめる かんばん。
+    const signX = 2.9 * signSide;
+    const signMesh = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 0.85), new THREE.MeshBasicMaterial({ map: signTexture(sign, signOpts) }));
+    signMesh.position.set(signX, 1.8, 3.2);
     g.add(signMesh);
+    const signPole = cyl(0x9a6b43, 0.07, 1.8, signX, 0.9, 3.2);
+    g.add(signPole);
     const mat = new THREE.Mesh(new THREE.CylinderGeometry(0.95, 0.95, 0.06, 28), toon(matColor));
     mat.position.set(0, 0.14, 3.2);
     g.add(mat);
@@ -365,10 +383,15 @@ export class World {
     g.add(glow);
     this.doorGlows.push(glow);
     const ry = g.rotation.y;
-    const doorPos = { x: x + Math.sin(ry) * 3.2, z: z + Math.cos(ry) * 3.2, yaw: ry };
+    const doorPos = cottageDoor({ x, z }, ry);
     const matY = getHeight(doorPos.x, doorPos.z) - g.position.y;
     mat.position.y = matY + 0.04;
     glow.position.y = matY + 0.1;
+    const signPos = { x: doorPos.x + Math.cos(ry) * signX, z: doorPos.z - Math.sin(ry) * signX };
+    const signY = getHeight(signPos.x, signPos.z) - g.position.y;
+    signMesh.position.y += signY;
+    signPole.position.y += signY;
+    this.colliders.push({ ...signPos, r: 0.15 });
     decorate?.(g);
 
     this.scene.add(g);
@@ -417,12 +440,12 @@ export class World {
   buildMyHouse() {
     this.roomDoor = this.buildCottage({
       ...LANDMARKS.myHouse, wall: 0xe8f4ff, roof: 0x4f9dff, door: 0x7a5238, sign: 'じぶんの おうち',
-      yaw: 0,
+      yaw: 0, signSide: -1,
       signOpts: { bg: '#eaf6ff', border: '#4f9dff', fg: '#2d4a8a' }, matColor: 0x8fd0ff, glowColor: 0xd8f0ff, chimney: true,
     });
     // ポスト と はな
     const { x, z } = LANDMARKS.myHouse;
-    const ry = Math.atan2(-x, -z);
+    const ry = this.roomDoor.yaw;
     const px = x + Math.sin(ry) * 2.4 + Math.cos(ry) * 2.3, pz = z + Math.cos(ry) * 2.4 - Math.sin(ry) * 2.3;
     const post = new THREE.Group();
     post.position.set(px, getHeight(px, pz), pz);
@@ -683,6 +706,7 @@ export class World {
       const a = rnd() * Math.PI * 2, r = 3 + Math.sqrt(rnd()) * (ISLAND_R - 9);
       const x = Math.cos(a) * r, z = Math.sin(a) * r;
       let ok = true;
+      if (pathDistance(x, z) < 1.8) continue;
       for (const c of this.colliders) if (Math.hypot(x - c.x, z - c.z) < c.r + 0.3) { ok = false; break; }
       if (ok) flowers.push({ x, z, col: palette[Math.floor(rnd() * palette.length)], s: 0.8 + rnd() * 0.5 });
     }
@@ -723,6 +747,7 @@ export class World {
       tmpObj.position.set(x, getHeight(x, z) + 0.15, z);
       tmpObj.rotation.set((rnd() - 0.5) * 0.5, 0, (rnd() - 0.5) * 0.5);
       tmpObj.scale.setScalar(0.7 + rnd() * 0.7);
+      if (pathDistance(x, z) < 1.8) tmpObj.scale.setScalar(0);
       tmpObj.updateMatrix();
       tufts.setMatrixAt(i, tmpObj.matrix);
     }
@@ -733,7 +758,7 @@ export class World {
   buildLamps() {
     this.lampBulbs = [];
     this.lampHalos = [];
-    const spots = [{ x: 4.6, z: 5.2 }, { x: -4.8, z: 4.8 }, { x: -4.6, z: -1.2 }, { x: 9.5, z: -1.2 }, { x: -13, z: 11 }, { x: 17, z: 2.5 }];
+    const spots = [{ x: 4.6, z: 5.2 }, { x: -4.8, z: 4.8 }, { x: -4.6, z: -1.2 }, { x: 9.5, z: 1.8 }, { x: -13, z: 11 }, { x: 17, z: 0 }];
     const bulbMat = new THREE.MeshBasicMaterial({ color: 0xfff3c4 });
     this.lampMat = bulbMat;
     const glowTex = canvasTexture(128, 128, (x) => {

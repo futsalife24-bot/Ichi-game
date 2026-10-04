@@ -1,5 +1,9 @@
 # 次セッションへの引継ぎ（2026-10-04）
 
+## 第一島の改修開始（2026-10-04追記）
+
+現在は `codex/first-island-visibility`。以下の公開状態を基点に、入口・看板・道・木や街灯の重なりを調整した。自動テスト93件・音声691件の完全性・道11本の移動計算成功。改修後の実描画と出入りは、ローカル確認画面の記録引継ぎダイアログが操作を止めているため確認待ち。詳細は [第一島の改修記録](first-island-visibility.md)。公開mainは変えていない。
+
 ## 現在地
 
 GitHubは https://github.com/futsalife24-bot/Ichi-game 、アプリは https://futsalife24-bot.github.io/Ichi-game/ 。公開mainは `9996bb2d541dcfd3b9942438b87df825bca5ea2a`（PR20）。公開処理は https://github.com/futsalife24-bot/Ichi-game/actions/runs/37183927999 、同じmainのCIは https://github.com/futsalife24-bot/Ichi-game/actions/runs/37183927992 。両方成功。

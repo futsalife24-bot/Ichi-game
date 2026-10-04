@@ -606,7 +606,7 @@ export class Life {
     const { x, z } = LANDMARKS.shop;
     const g = new THREE.Group();
     g.position.set(x, getHeight(x, z), z);
-    g.rotation.y = Math.atan2(-x, -z);
+    g.rotation.y = 0;
     this.scene.add(g);
     this.shopGroup = g;
     const box = (w, h, d, col, px, py, pz) => {
