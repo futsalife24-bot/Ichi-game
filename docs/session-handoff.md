@@ -1,5 +1,13 @@
 # 次セッションへの引継ぎ（2026-10-04）
 
+## 最新状態：横画面のボタン調整を公開（2026-10-05追記）
+
+ユーザーが公開を依頼し、[PR22](https://github.com/futsalife24-bot/Ichi-game/pull/22) を統合。公開前main `27ac5de15c05a6287f19b8d7b96756ed1367f612` → 公開main `08f9adf204ab64c1feff1892e862a65505cf617a`。実装HEADは `e78dc995638785840d2ca2bb37afec5f95401348`。未公開のゲーム変更はない。公開後の記録を `codex/mobile-release-record` に保存する。
+
+[mainの自動チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37223176179) と [Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37223176171) は成功。`index.html`・`style.css`・`sw.js`・`voice/index.json` の配信一致は [公開確認結果](mobile-release-check.json)。公開ブラウザーの実際のCSSでも最低44px・文字の折り返しなしを確認。通常表示のゲーム画面は `artifacts/mobile-public-release.jpg`、警告・エラーは0件。実スマホの結果には広げない。
+
+次はスマホで公開版を横向きに開き、ボタンの押しやすさ、誕生日入力後の保存、保護者画面の指スクロール、ホーム復帰、声なし案内を確認する。実スマホ・完全オフライン・全音声の人による聴感確認は未実施。以降は公開前の履歴。
+
 ## 小さい横画面の確認（2026-10-04追記）
 
 「次に進んで」を受け、`codex/mobile-usability` で小さい横画面を確認。基点は `b2ef408a4fbf60b50b14030d67b5451442a8cfd5`。667×375・740×360・844×390で右上の3ボタンを44px以上にし、きせかえの折り返しを修正。誕生日・時間の保存、1分での終了と継続、ホーム復帰、声なし案内、プロフィール間の設定分離を実UIで確認した。Service Workerのテスト3件成功。詳細・画像・制約は [確認記録](mobile-usability.md)、寸法は [測定値](mobile-layout-check.json)。

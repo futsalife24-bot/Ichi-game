@@ -1,5 +1,11 @@
 # 小さい横画面の確認と操作ボタンの調整
 
+## 公開完了（2026-10-05）
+
+ユーザーの公開依頼を受け、[PR22](https://github.com/futsalife24-bot/Ichi-game/pull/22) を統合した。公開mainは `08f9adf204ab64c1feff1892e862a65505cf617a`。[自動チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37223176179) と [Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37223176171) が成功。配信4ファイルは最終版と一致し、[結果](mobile-release-check.json) を保存。公開ブラウザーでも最低44pxのCSS・きせかえの折り返しなし・ゲーム開始と自由遊びを確認、警告とエラーは0件。画像は `artifacts/mobile-public-release.jpg`。
+
+ブラウザーのサイズ上書きでは今回もゲーム表示と画像のサイズが一致せず、上書きを解除した通常表示2560×1440で画面を確認した。公開版の厳密な小型サイズ・実スマホの確認成功とは扱わない。実装前の3サイズ確認は下記のiframe検証の範囲。実行モデルID・reasoning effortは取得できず未確認。以降の未公開記載は公開前の履歴。
+
 ## 対象と変更
 
 2026-10-04、ユーザーの「次に進んで」を受け、公開後の優先事項である小さい横画面の表示と操作を確認した。ブランチは `codex/mobile-usability`、基点は公開記録の `b2ef408a4fbf60b50b14030d67b5451442a8cfd5`。ゲームの公開版は `27ac5de15c05a6287f19b8d7b96756ed1367f612`。

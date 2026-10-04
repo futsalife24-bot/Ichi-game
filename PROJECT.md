@@ -1,5 +1,9 @@
 # キラキラアイランドの作業入口
 
+## 最新状態：横画面のボタン調整を公開（2026-10-05）
+
+ユーザーの「よろしく」を公開依頼として受け、[PR22](https://github.com/futsalife24-bot/Ichi-game/pull/22) をmainへ統合した。公開mainは `08f9adf204ab64c1feff1892e862a65505cf617a`。[自動チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37223176179) と [Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37223176171) は成功。画面・CSS・キャッシュ・音声一覧の配信内容が公開コミットと一致。公開ブラウザーでも最低44pxのボタン設定、きせかえの1行表示、ゲーム画面を確認した。公開後の記録は `codex/mobile-release-record`。実スマホ・完全オフラインは未確認。以下の「未公開」は公開前の履歴。
+
 ## 最新作業：小さい横画面の確認（2026-10-04）
 
 `codex/mobile-usability`、基点 `b2ef408a4fbf60b50b14030d67b5451442a8cfd5`。内蔵ブラウザーで667×375・740×360・844×390の表示を確認し、右上の音楽・声・ホームを最低44px、きせかえの文字を1行に調整した。誕生日保存、長い説明のスクロール、1分での終了と継続、ホーム復帰、声なし案内、別プロフィールへの設定分離を確認。詳細は [小さい横画面の確認記録](docs/mobile-usability.md)。実スマホ・完全オフラインは未確認。今回の変更は未公開、公開mainは下記のPR21のまま。
