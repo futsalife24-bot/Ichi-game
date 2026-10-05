@@ -48,6 +48,13 @@ export const L = {
   countDone: (fruit, n) => line(`${W(n)}！ ${fruit.name} が ${W(n)}こ！`, `${n}！ ${fruit.name} が ${n}こ！`),
 
   // ---- ひよこの おてつだい
+  flowerIntro: () => line('おはなを さんぼん あつめて、いぬさんに とどけよう！', 'おはなを 3ぼん あつめて、いぬさんに とどけよう！'),
+  flowerDeliver: () => line('おはなが そろったよ！ いぬさんに とどけよう！'),
+  flowerDone: () => line('ありがとう！ おうちの まえに おはなを かざったよ！'),
+  forestWelcome: () => line('こもれびの しまへ ようこそ！ はしを わたって あそぼう！'),
+  leafIntro: () => line('はっぱを さんまい あつめて、かえるさんに とどけよう！', 'はっぱを 3まい あつめて、かえるさんに とどけよう！'),
+  leafDeliver: () => line('はっぱが そろったよ！ かえるさんに とどけよう！'),
+  leafDone: () => line('ありがとう！ もりの ひろばを かざったよ！'),
   helpIntro: () => line('ひよこが おやつを まっているよ！ りんごを にこ あつめて、ひよこに とどけよう！',
     'ひよこが おやつを まっているよ！ りんごを 2こ あつめて、とどけよう！'),
   helpCollect: () => line('りんごに さわって あつめよう！'),
@@ -252,4 +259,5 @@ export function helpLines() {
 }
 
 /** そろったら ふつうの しゅうろくたいしょうへ うつす。 */
-export function pendingLines() { return []; }
+export function adventureLines() { return [L.flowerIntro(), L.flowerDeliver(), L.flowerDone(), L.forestWelcome(), L.leafIntro(), L.leafDeliver(), L.leafDone()].map(l => l.say); }
+export function pendingLines() { return adventureLines(); }

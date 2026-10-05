@@ -1,5 +1,13 @@
 # Gemini音声作業の現在地（2026-10-04）
 
+## 花と第二島の案内：送信承認待ち（2026-10-05）
+
+`codex/flower-and-second-island` で追加の台本10クリップを `batch-27.txt` に準備。計画は既存27バッチを保持し、末尾の１バッチだけを追加した。出荷済み698個は取り込み記録のハッシュと全件一致、`voice/index.json` は変更していない。
+
+Google AI Studioへの台本入力は自動承認レビューが拒否した。一般的な音声生成許可だけでは具体的な台本と送信先の承認が不足するとの理由で、ユーザーへ10文と `https://aistudio.google.com/generate-speech` を示して確認中。未送信・未生成。新規契約・キー作成・支払い設定変更・有料キーのリンクは実施していない。
+
+承認後は既存のGemini 3.8 Flash TTS / Cleoで生成し、27番だけを取り込み、追加音声の照合とゲーム内確認を行う。揃うまで `pendingLines()` と出荷済みindexを保持する。現時点の音声完了テストと `finalize-voice.mjs --check` は未完了として失敗する。詳しい実装・検証は `docs/second-island.md`。
+
 ## お手伝い案内7個の追加・公開完了
 
 ユーザーの2026-10-04の公開承認を受け、[PR21](https://github.com/futsalife24-bot/Ichi-game/pull/21) で合計698個を公開。公開内容SHA `27ac5de15c05a6287f19b8d7b96756ed1367f612`。[公開処理](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37208102717) と必須検証が成功。公開音声一覧と追加MP3全7個のハッシュが最終版と一致。配信確認は `help-release-check.json`。以下の未公開表記は公開前の検証時の履歴。

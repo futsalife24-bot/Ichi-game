@@ -3,13 +3,14 @@ const object=x=>x!==null && typeof x==='object' && !Array.isArray(x);
 const nonnegative=x=>Number.isFinite(x) && x>=0;
 const count=x=>Number.isSafeInteger(x) && x>=0;
 const domains=['color','shape','count','language'];
+const gifts=save=>({flower:save.adventure?.flower.stage==='done',leaf:save.adventure?.leaf.stage==='done'});
 export const newPlayTime=()=>({version:1,settings:{limitMinutes:null,warnSeconds:30},session:null});
 export function validTimeSettings(s) {
   return object(s) && (s.limitMinutes===null || (Number.isInteger(s.limitMinutes) && s.limitMinutes>=1 && s.limitMinutes<=1440))
     && [0,30,60,120].includes(s.warnSeconds) && (s.limitMinutes===null || s.warnSeconds<s.limitMinutes*60);
 }
 function baseline(save) {
-  return {help:save.help?.rewardedRound??0,domains:Object.fromEntries(domains.map(k=>[k,{completed:save.observations?.domains[k]?.completed??0,withHint:save.observations?.domains[k]?.withHint??0}]))};
+  return {help:save.help?.rewardedRound??0,gifts:gifts(save),domains:Object.fromEntries(domains.map(k=>[k,{completed:save.observations?.domains[k]?.completed??0,withHint:save.observations?.domains[k]?.withHint??0}]))};
 }
 export function validPlayTime(t) {
   if (!object(t) || t.version!==1 || !validTimeSettings(t.settings)) return false;
@@ -18,7 +19,7 @@ export function validPlayTime(t) {
   if(!object(s)||typeof s.id!=='string'||!s.id||!['active','ended'].includes(s.state)||!nonnegative(s.elapsedMs)||!validTimeSettings(s.settings))return false;
   if(!['warned','due','continued'].every(k=>typeof s[k]==='boolean') || (s.continued&&!s.due))return false;
   if(s.due&&(s.settings.limitMinutes===null||s.elapsedMs<s.settings.limitMinutes*60000))return false;
-  return object(s.baseline)&&count(s.baseline.help)&&object(s.baseline.domains)&&domains.every(k=>{
+  return object(s.baseline)&&(s.baseline.gifts===undefined||(object(s.baseline.gifts)&&['flower','leaf'].every(k=>typeof s.baseline.gifts[k]==='boolean')))&&count(s.baseline.help)&&object(s.baseline.domains)&&domains.every(k=>{
     const d=s.baseline.domains[k];return object(d)&&count(d.completed)&&count(d.withHint)&&d.withHint<=d.completed;
   });
 }
@@ -26,7 +27,7 @@ export function sessionSummary(save) {
   const s=save.playTime?.session;
   if(!s)return null;
   const current=baseline(save);
-  return {elapsedMs:s.elapsedMs,help:Math.max(0,current.help-s.baseline.help),domains:Object.fromEntries(domains.map(k=>[k,{
+  return {elapsedMs:s.elapsedMs,help:Math.max(0,current.help-s.baseline.help),gifts:['flower','leaf'].filter(k=>current.gifts[k]&&s.baseline.gifts?.[k]===false),domains:Object.fromEntries(domains.map(k=>[k,{
     completed:Math.max(0,current.domains[k].completed-s.baseline.domains[k].completed),
     withHint:Math.max(0,current.domains[k].withHint-s.baseline.domains[k].withHint),
   }]))};
@@ -47,6 +48,8 @@ export class PlayTimer {
     if(this.failed)return false;
     const next=clone(this.save.playTime??newPlayTime());
     if(next.session?.state!=='active')next.session={id:this.id(),state:'active',elapsedMs:0,settings:clone(next.settings),warned:false,due:false,continued:false,baseline:baseline(this.save)};
+    // ふるい かいに、まえの おくりものを かぞえなおさない。
+    next.session.baseline.gifts??=gifts(this.save);
     if(!this.commit(next))return false;
     this.last=this.now();this.running=!this.paused;
     if(this.paused)this.onDue();return true;

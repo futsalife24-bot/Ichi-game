@@ -22,6 +22,7 @@
   <canvas id="game"></canvas>
 
   <div id="hud" class="hidden">
+    <div id="placeLabel" class="hidden">🌳 こもれびのしま</div>
     <div id="pills">
       <div id="stars" class="pill"><span class="star">⭐</span><span id="starCount">0</span></div>
       <div id="bells" class="pill small"><span>🔔</span><span id="bellCount">0</span><span class="seed">🌱</span><span id="seedCount">0</span></div>
@@ -44,6 +45,7 @@
     </div>
 
     <div id="sideBtns">
+      <button id="btnAdventure" class="side-btn hidden" aria-label="ぼうけん"><span class="side-emoji">⛵</span><span class="side-label">ぼうけん</span></button>
       <button id="btnZukan" class="side-btn" aria-label="ずかん"><span class="side-emoji">📖</span><span class="side-label">ずかん</span><span class="badge hidden">!</span></button>
       <button id="btnCloset" class="side-btn" aria-label="きせかえ"><span class="side-emoji">👕</span><span class="side-label">きせかえ</span></button>
     </div>
@@ -61,6 +63,8 @@
     <button id="btnQuestHint" class="hidden" aria-label="ヒントをもらう">💡 ヒント</button>
     <button id="helpReturn" class="hidden">🐥 おてつだい</button>
     <button id="helpQuiz" class="hidden">🎈 みつける あそび</button>
+    <div id="adventureActions" class="hidden"><button id="adventureGo">🌼 いっしょに さがす</button><button id="adventurePause">🌳 あとで つづける</button></div>
+    <button id="adventureBack" class="hidden">⛵ もとの しまへ</button>
 
     <div id="subtitle"><div id="subName"></div><div id="subText"></div></div>
     <div id="itemPop"><div class="item-new">NEW!</div><div class="item-emoji"></div><div class="item-name"></div></div>
@@ -112,6 +116,16 @@
         <button id="helpAgain" class="hidden">🐥 もういちど おてつだい</button>
         <button id="helpFree">🌳 じゆうに あそぶ</button>
       </div>
+    </section>
+  </div>
+  <div id="adventurePanel" class="hidden help-panel" role="dialog" aria-modal="true" aria-labelledby="adventureHeading">
+    <section class="help-sheet">
+      <h2 id="adventureHeading">ぼうけんに いこう</h2>
+      <div id="adventureMenu"><p id="adventureMap"></p><div class="help-choices">
+        <button id="adventureFlower">🌼 おはなの おてつだい</button><button id="adventureSail" disabled>⛵ ふねで えんそく</button><button id="adventureLeaf" class="hidden">🍃 もりの おてつだい</button><button id="adventureReturn" class="hidden">⛵ もとの しまへ</button>
+      </div></div>
+      <div id="adventureTask" class="hidden"><div id="adventurePicture" class="help-picture" aria-hidden="true"></div><p id="adventureMessage"></p><p id="adventureReward" class="help-reward hidden">⭐を 1こ もらったよ！</p><div class="help-choices"><button id="adventureAccept">🌱 おてつだい する</button></div></div>
+      <div class="help-choices"><button id="adventureClose">🌳 じゆうに あそぶ</button></div>
     </section>
   </div>
   <div id="profilePanel" class="hidden help-panel" role="dialog" aria-modal="true" aria-labelledby="profileHeading">
@@ -174,7 +188,7 @@
   <div id="timeSummaryPanel" class="hidden help-panel" role="dialog" aria-modal="true" aria-labelledby="timeSummaryHeading">
     <section class="help-sheet">
       <h2 id="timeSummaryHeading">今回できたこと</h2><ul id="timeSummaryList"></ul>
-      <p>今回の「お手伝い」と「みつける あそび」を表示しています。学校・収集は集計対象外です。途中の活動は不正解にしません。</p>
+      <p>今回の「お手伝い」「おくりもの」「みつける あそび」を表示しています。学校・持ち物の収集は集計対象外です。途中の活動は不正解にしません。</p>
       <div class="help-choices"><button id="timeFinish">🏠 おしまいに する</button><button id="timeContinue">▶ つづける</button><button id="timeSummaryClose">タイトルへ</button></div>
     </section>
   </div>

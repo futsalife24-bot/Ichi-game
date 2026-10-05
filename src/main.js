@@ -29,6 +29,9 @@ import { setupTimeUI } from './time-ui.js';
 import { setupBirthdayUI } from './birthday-ui.js';
 import { L } from './lines.js';
 import { Help } from './help.js';
+import { Adventure } from './adventure.js';
+import { Forest, FOREST_SPAWN, DOCK } from './forest.js';
+import { FOREST_ORIGIN } from './adventure-state.js';
 import { setupSaveUI } from './save-ui.js';
 
 const $ = (id) => document.getElementById(id);
@@ -101,9 +104,10 @@ const input = new Input({
   canvas, joyZone: $('joyZone'), joyBase: $('joyBase'), joyKnob: $('joyKnob'), jumpBtn: $('btnJump'),
 });
 const quests = new QuestManager({ scene, world, player, animals, ui, audio, voice, effects, save, persist });
-animals.onMeet = (a) => { if (mode === 'play' && place === 'island' && !help.focused && !help.meet(a)) quests.onAnimalMeet(a); };
+animals.onMeet = (a) => { if (mode === 'play' && place === 'island' && !help.focused && !adventure.focused && !adventure.modal && !help.meet(a)) quests.onAnimalMeet(a); };
 const school = new School(scene, { player, audio, voice, ui, effects, quests });
 const room = new Room(scene, { player, audio, voice, ui, save, persist, climate, camera });
+const forest = new Forest(scene);
 const life = new Life({ scene, world, player, ui, audio, voice, effects, save, persist, quests, climate });
 const help = new Help({ scene, world, player, animals, ui, audio, voice, effects, save, persist, quests,
   onChange: () => {
@@ -113,6 +117,17 @@ const help = new Help({ scene, world, player, animals, ui, audio, voice, effects
   },
 });
 life.onBells = refreshHud;
+const adventure = new Adventure({ scene, player, animals, forest, ui, audio, voice, effects, save, persist, quests,
+  getPlace: () => place,
+  onSail: () => visitForest(),
+  onReturn: () => leaveForest(),
+  canAct: () => mode === 'play' && !saveBlocked && !transitioning && !playTimer.paused && !homePaused && !ui.panelOpen && !help.focused,
+  onChange: () => {
+    life.endFishing(); input.reset();
+    input.enabled = mode === 'play' && !adventure.modal && !help.modal && !saveBlocked && !playTimer.paused && !homePaused && !transitioning;
+    $('hud').classList.toggle('adventure-focus', adventure.focused);
+  },
+});
 life.onWear = (id) => wear(CLOTHES[id].slot, id, false);
 room.onCloset = () => openCloset();
 ui.setStars(save.stars);
@@ -120,8 +135,8 @@ ui.setQuest(null);
 refreshHud();
 
 let mode = 'title';
-let place = 'island'; // 'island' | 'school' | 'room'
-const env = () => (place === 'school' ? school : place === 'room' ? room : world);
+let place = 'island'; // だいいちの しま／がっこう／おうち／だいにの しま
+const env = () => (place === 'school' ? school : place === 'room' ? room : place === 'forest' ? forest : world);
 
 function refreshHud() {
   ui.setBells(save.bells, save.seeds);
@@ -189,7 +204,7 @@ const timeUI=setupTimeUI(save,persist,selectedProfileLabel,{
     if(saveBlocked)return;
     if(playTimer.paused ? !playTimer.continue() : !playTimer.tick(true))return;
     homePaused=false;
-    timeUI.hide();input.reset();input.enabled=!help.modal;
+    timeUI.hide();input.reset();input.enabled=!help.modal&&!adventure.modal;
   },
   onFinish:()=>{if(!saveBlocked && backToTitle())timeUI.hide();},
 });
@@ -273,6 +288,8 @@ function startGame() {
   mode = 'play';
   requestLandscape();
   help.start();
+  adventure.group.visible = true;
+  adventure.render();
   updateToggles();
   if(playTimer.paused)input.enabled=false;
 }
@@ -292,6 +309,7 @@ function backToTitle() {
   quests.stop();
   if(saveBlocked || !playTimer.end())return;
   help.stop();
+  adventure.stop();
   input.enabled = false;
   input.reset();
   voice.stop();
@@ -334,7 +352,7 @@ $('btnVoice').addEventListener('click', () => {
   updateToggles();
 });
 $('btnHome').addEventListener('click', openHomeSummary);
-$('questCard').addEventListener('click', () => (place === 'school' ? school.repeat() : place === 'island' ? (help.focused ? help.repeat() : quests.repeat()) : null));
+$('questCard').addEventListener('click', () => (adventure.focused ? adventure.repeat() : place === 'school' ? school.repeat() : place === 'island' ? (help.focused ? help.repeat() : quests.repeat()) : null));
 $('btnZukan').addEventListener('click', () => openZukan());
 $('btnCloset').addEventListener('click', () => openCloset());
 
@@ -410,7 +428,7 @@ function setRay(x, y) {
 input.onTap = (x, y) => {
   if (mode !== 'play') return false;
   if (place !== 'school' && tapPlayer(x, y)) return true;
-  if (place === 'island') return false;
+  if (place === 'island' || place === 'forest') return false;
   setRay(x, y);
   return place === 'school' ? school.tap(raycaster) : room.tap(raycaster, x, y);
 };
@@ -473,13 +491,13 @@ function transition(fn) {
     fadeEl.classList.remove('show');
     setTimeout(() => {
       transitioning = false;
-      if (mode === 'play') input.enabled = true;
+      if (mode === 'play') input.enabled = !saveBlocked && !playTimer.paused && !homePaused && !help.modal && !adventure.modal;
     }, 250);
   }, 380);
 }
 
 // おうちの なかでは しまの ものを かくす
-const keepVisible = () => new Set([school.group, room.group, player.model.root, player.marker, effects.mesh, effects.arrow, effects.beam, world.sunLight, world.sunLight.target, world.hemi]);
+const keepVisible = () => new Set([school.group, room.group, forest.group, player.model.root, player.marker, effects.mesh, effects.arrow, effects.beam, world.sunLight, world.sunLight.target, world.hemi]);
 let hiddenOutdoor = [];
 function setOutdoorVisible(on) {
   if (!on) {
@@ -496,7 +514,7 @@ function setOutdoorVisible(on) {
 
 /** カメラの めざす いち（しまでは プレイヤーを おう／おうちでは へや ぜんたい） */
 function cameraGoal() {
-  if (place !== 'island') {
+  if (place !== 'island' && place !== 'forest') {
     const [origin, cam] = place === 'school' ? [SCHOOL_ORIGIN, SCHOOL_CAM] : [ROOM_ORIGIN, ROOM_CAM];
     const dx = (player.pos.x - origin.x) * cam.follow;
     camTarget.copy(origin).add(cam.pos).setX(origin.x + dx);
@@ -520,7 +538,7 @@ const PLACES = {
 };
 
 function enterPlace(to) {
-  if (help.focused) return;
+  if (help.focused || adventure.focused || adventure.modal) return;
   audio.meet();
   transition(() => {
     const pl = PLACES[to];
@@ -538,6 +556,7 @@ function enterPlace(to) {
 }
 
 function leavePlace(instant = false) {
+  if (place === 'forest') { leaveForest(instant); return; }
   const go = () => {
     const pl = PLACES[place];
     if (!pl) return;
@@ -559,8 +578,39 @@ function leavePlace(instant = false) {
 }
 
 const doorArmed = { school: true, room: true };
+function visitForest() {
+  if (place !== 'island' || !adventure.unlocked || !adventure.canAct()) return;
+  quests.stop(); if (saveBlocked) return;
+  life.endFishing(); voice.stop(); audio.meet();
+  transition(() => {
+    setOutdoorVisible(false); place = 'forest'; forest.group.visible = true;
+    boatArmed = false;
+    player.teleport(FOREST_ORIGIN.x + FOREST_SPAWN.x, 0, FOREST_SPAWN.z, Math.PI);
+    document.body.classList.add('forest-place');
+    adventure.view = 'menu'; adventure.render();
+    voice.say(L.forestWelcome()); snapCamera();
+  });
+}
+function leaveForest(instant = false) {
+  const go = () => {
+    adventure.stop(); forest.group.visible = false; setOutdoorVisible(true); place = 'island';
+    boatArmed = false;
+    document.body.classList.remove('forest-place');
+    player.teleport(DOCK.x, getHeight(DOCK.x, DOCK.z), DOCK.z, Math.PI);
+    adventure.render(); snapCamera();
+  };
+  if (instant) go(); else { audio.meet(); transition(go); }
+}
+let boatArmed = true;
+function boatCheck() {
+  if (!adventure.canAct() || adventure.focused || adventure.modal || !adventure.unlocked || !['island','forest'].includes(place)) return;
+  const boat = place === 'forest' ? {x:FOREST_ORIGIN.x,z:18.3} : {x:DOCK.x,z:DOCK.z+2};
+  const d = Math.hypot(player.pos.x-boat.x,player.pos.z-boat.z);
+  if(d>5)boatArmed=true;
+  if(d<2.9 && boatArmed){boatArmed=false;adventure.open();}
+}
 function doorCheck() {
-  if (help.focused) return;
+  if (help.focused || adventure.focused || adventure.modal) return;
   for (const [key, pl] of Object.entries(PLACES)) {
     const d = pl.door();
     const dist = Math.hypot(player.pos.x - d.x, player.pos.z - d.z);
@@ -574,14 +624,14 @@ function doorCheck() {
 
 // ------------------------------------------------ てんき
 climate.onRainStart = (snow) => {
-  if (mode !== 'play' || help.focused) return;
+  if (mode !== 'play' || help.focused || adventure.focused || adventure.modal) return;
   player.emote(snow ? '⛄' : '☔', 3);
   voice.say(L.rainStart(snow));
   refreshHud();
 };
 climate.onRainEnd = (snow) => {
   refreshHud();
-  if (mode !== 'play' || help.focused) return;
+  if (mode !== 'play' || help.focused || adventure.focused || adventure.modal) return;
   voice.say(L.rainEnd(snow));
   if (!snow) {
     audio.sparkle();
@@ -619,6 +669,8 @@ let time = 0;
 let hudClock = 0;
 
 function frame(now) {
+  $('btnAdventure').classList.toggle('hidden', mode !== 'play' || !['island','forest'].includes(place) || help.focused || adventure.focused);
+  $('placeLabel').classList.toggle('hidden', place !== 'forest' || adventure.focused);
   if(!playTimer.tick(mode==='play'&&!saveBlocked&&!document.hidden&&!homePaused)) { requestAnimationFrame(frame); return; }
   $('btnQuestHint').classList.toggle('hidden', !(mode==='play' && place==='island' && !help.focused && !ui.panelOpen && !transitioning && quests.state==='active' && !saveBlocked && !playTimer.paused && !homePaused));
   const dt = Math.min(0.05, (now - last) / 1000);
@@ -644,13 +696,16 @@ function frame(now) {
         if (g) player.setTarget(g);
       }
     }
-    if (!help.modal && !ui.panelOpen && !transitioning) player.update(dt, input, env(), audio);
+    if (!help.modal && !adventure.modal && !ui.panelOpen && !transitioning) player.update(dt, input, env(), audio);
+    if (!ui.panelOpen && !transitioning) adventure.update(dt, time);
+    if (saveBlocked) { requestAnimationFrame(frame); return; }
+    if (!ui.panelOpen && !transitioning) boatCheck();
     if (place === 'island') {
       animals.update(dt, time, player);
       if (saveBlocked) { requestAnimationFrame(frame); return; }
-      if (!ui.panelOpen && !transitioning) help.update(dt, time);
+      if (!ui.panelOpen && !transitioning && !adventure.focused && !adventure.modal) help.update(dt, time);
       if (saveBlocked) { requestAnimationFrame(frame); return; }
-      if (!help.focused) {
+      if (!help.focused && !adventure.focused && !adventure.modal) {
         quests.update(dt, time);
         if (saveBlocked) { requestAnimationFrame(frame); return; }
         worldEvents(dt);
@@ -694,10 +749,11 @@ function frame(now) {
   }
   player.marker.visible = mode === 'play';
   player.sleepy = climate.night > 0.6 && place === 'island';
-  const outside = place === 'island';
-  if (outside && !help.focused) life.update(dt, time, mode === 'play' && !transitioning && !ui.panelOpen);
+  const outside = place === 'island' || place === 'forest';
+  if (place === 'island' && !help.focused && !adventure.focused && !adventure.modal) life.update(dt, time, mode === 'play' && !transitioning && !ui.panelOpen);
   if (saveBlocked) { requestAnimationFrame(frame); return; }
   climate.update(dt, { indoor: !outside, focus: mode === 'play' ? player.pos : lookAt, active: mode === 'play' });
+  if (place === 'forest') climate.skyColor(scene.background ??= new THREE.Color());
   hudClock -= dt;
   if (hudClock <= 0) {
     hudClock = 2;
