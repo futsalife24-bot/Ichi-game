@@ -2,6 +2,7 @@
 import * as THREE from 'three';
 import { World, getHeight, LANDMARKS } from './world.js';
 import { Player } from './player.js';
+import { ClosetPreview } from './closet-preview.js';
 import { Input } from './input.js';
 import { AudioEngine } from './audio.js';
 import { Voice } from './voice.js';
@@ -93,6 +94,7 @@ if (!save.avatar && (save.stars > 0 || save.questIdx > 0 || Object.keys(save.zuk
   persist();
 }
 const player = new Player(scene, save.avatar ?? PRESETS.usagi);
+const closetPreview = new ClosetPreview(scene);
 save.outfit ??= { hat: accessoryForStars(save.stars)?.id ?? null, face: null, body: null };
 player.setOutfit(save.outfit);
 const input = new Input({
@@ -341,7 +343,10 @@ function openPanel(opts) {
   audio.tap();
   input.enabled = false;
   input.reset();
-  ui.openPanel({ ...opts, onClose: () => { if (mode === 'play' && !transitioning) input.enabled = true; } });
+  ui.openPanel({ ...opts, onClose: () => {
+    opts.onClose?.();
+    if (mode === 'play' && !transitioning) input.enabled = true;
+  } });
 }
 
 function openZukan() {
@@ -362,9 +367,17 @@ function openZukan() {
 const owns = (c) => (c.stars ? save.stars >= c.stars : save.closet.includes(c.id));
 function openCloset() {
   if (ui.panelOpen) return;
+  closetPreview.open(player);
+  document.body.classList.add('closet-open');
+  $('closetPreview').classList.remove('hidden');
   voice.say(L.closet());
   openPanel({
     title: '👕 きせかえ',
+    onClose: () => {
+      closetPreview.close();
+      document.body.classList.remove('closet-open');
+      $('closetPreview').classList.add('hidden');
+    },
     tabs: SLOTS.map((s) => ({ id: s.id, label: `${s.emoji} ${s.name}` })),
     grid: (slot) => [
       { emoji: '🚫', name: 'なし', state: save.outfit[slot] ? 'off' : 'on', onClick: () => wear(slot, null) },
@@ -379,6 +392,7 @@ function wear(slot, id, talk = true) {
   save.outfit = { ...save.outfit, [slot]: id };
   persist();
   player.setOutfit(save.outfit);
+  if (closetPreview.active) closetPreview.update(player);
   audio.pop();
   if (id && talk) voice.say(L.wear(CLOTHES[id]));
 }
@@ -692,7 +706,11 @@ function frame(now) {
   }
   world.update(dt, mode === 'play' ? player.pos : lookAt);
   effects.update(dt, time, player.pos);
-  renderer.render(scene, camera);
+  if (closetPreview.active) {
+    const width = window.innerWidth, height = window.innerHeight;
+    const previewWidth = $('closetPreview').getBoundingClientRect().width;
+    closetPreview.render(renderer, width, height, previewWidth);
+  } else renderer.render(scene, camera);
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);

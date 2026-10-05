@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-04T18:09:34.097Z",
+  "base": "https://futsalife24-bot.github.io/Ichi-game/",
+  "merge": "08f9adf204ab64c1feff1892e862a65505cf617a",
+  "files": [
+    {
+      "file": "index.html",
+      "status": 200,
+      "equal": true
+    },
+    {
+      "file": "style.css",
+      "status": 200,
+      "equal": true
+    },
+    {
+      "file": "sw.js",
+      "status": 200,
+      "equal": true
+    },
+    {
+      "file": "voice/index.json",
+      "status": 200,
+      "equal": true
+    }
+  ],
+  "failures": []
+}
