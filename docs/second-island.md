@@ -54,3 +54,5 @@
 - 公開版の基点: `1a8f6f90d5af7ee52a5c0a836cb139cd8f6dae92`。
 - 公開と `main` 統合は完成版への明示承認を別途受ける。
 - 実モデルID・推論設定: 取得できず未確認。設定変更なし。
+- 実装保存版: `d5b318c49451595b16b9b80ef79bd5d471ff6acf`、GitHubへのpush成功。
+- [保存版の自動チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37314226031) は、追加音声が `pendingLines()` に残るため収録完了テストで失敗。新機能の９テストとそれ以外のゲーム側チェックは成功。公開用の音声条件は維持している。
