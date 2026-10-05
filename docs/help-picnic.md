@@ -1,5 +1,13 @@
 # お手伝い後のおやつ広場（2026-10-05）
 
+## 公開結果（2026-10-05追記）
+
+ユーザーの「公開して」を受け、[PR24](https://github.com/futsalife24-bot/Ichi-game/pull/24) をmainへ統合した。公開前main `d5e158890508e5a2238fa0231531ea1b4938a242`、実装HEAD `c53018315c9f90244e709e6a2795fced59477612`、公開main `1a8f6f90d5af7ee52a5c0a836cb139cd8f6dae92`。
+
+[mainの自動チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37303426378) と [Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37303426369) は成功。画面・CSS・マニフェスト・キャッシュ設定・メイン・お手伝い・せりふ・音声一覧の8ファイルがGit原本と一致し、音声698個を維持。配信照合は [確認記録](help-picnic-release-check.json)。下記の「未公開」は公開前の記録。
+
+公開Chromeでも、以前作成した架空の「公開確認」でりんご2個を集めて届け、新しい完了案内と自由遊びのひよこ・りんご・敷物・ハートを確認。星1個、警告・エラー0件。公開確認ではゲームの案内ボタンを使い、確認専用の移動補助は使っていない。画像は `artifacts/help-picnic-public.png`。公開後の文書更新は `codex/help-picnic-release-record` に保存し、ゲーム本体は追加変更していない。
+
 ## 範囲と判断
 
 ユーザーの「そこは後で大丈夫だから新機能にフォーカスして作業して」を受け、雨天・室内・実スマホの確認を後に回した。まず第一島のお手伝いの成果を残す局所機能として、おやつ広場を試作した。選択肢への返答で仕様を採用したとは扱わず、今回の実装を確認できる形で提示する。
