@@ -101,7 +101,7 @@ const input = new Input({
   canvas, joyZone: $('joyZone'), joyBase: $('joyBase'), joyKnob: $('joyKnob'), jumpBtn: $('btnJump'),
 });
 const quests = new QuestManager({ scene, world, player, animals, ui, audio, voice, effects, save, persist });
-animals.onMeet = (a) => { if (mode === 'play' && place === 'island' && !help.focused) quests.onAnimalMeet(a); };
+animals.onMeet = (a) => { if (mode === 'play' && place === 'island' && !help.focused && !help.meet(a)) quests.onAnimalMeet(a); };
 const school = new School(scene, { player, audio, voice, ui, effects, quests });
 const room = new Room(scene, { player, audio, voice, ui, save, persist, climate, camera });
 const life = new Life({ scene, world, player, ui, audio, voice, effects, save, persist, quests, climate });

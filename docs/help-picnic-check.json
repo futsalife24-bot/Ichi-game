@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-05",
+  "browser": "Chrome",
+  "origin": "http://127.0.0.1:5194",
+  "fixture": "架空のおやつ確認",
+  "viewports": [[844, 390], [667, 375]],
+  "delivered": true,
+  "reloadKeepsPicnic": true,
+  "starsAfterRevisit": "1",
+  "voiceClass": "round-btn off",
+  "greeting": "ひよこさん：ありがとう！ おやつを とどけたね！",
+  "browserWarnings": 0,
+  "browserErrors": 0,
+  "movement": "確認画面の移動補助から通常の目的地処理を使った",
+  "limits": ["実スマホ・雨天・室内・機内モードは後回し", "耳での音声評価は未実施", "新機能は未公開"]
+}

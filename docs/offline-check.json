@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-05T04:15:49.835Z",
+  "base": "d5e158890508e5a2238fa0231531ea1b4938a242",
+  "origin": "http://127.0.0.1:5193",
+  "serverStopped": {
+    "confirmed": true,
+    "response": "ECONNREFUSED",
+    "onlyTestServer": true
+  },
+  "prepared": {
+    "段階": "準備完了",
+    "キャッシュ": "kirakira-v25-closet-world-zoom",
+    "ゲーム用ファイル": 49,
+    "音声": 698,
+    "欠落": 0,
+    "操作": "確認用サーバーを停止してから、このページを再読み込みしてください。"
+  },
+  "voices": {
+    "段階": "配信元停止後の音声確認",
+    "対象": 698,
+    "取得": 698,
+    "デコード": 698,
+    "失敗": 0,
+    "詳細": []
+  },
+  "audio": {
+    "result": "再生完了: きせかえしよう！"
+  },
+  "afterReload": {
+    "hat": [
+      "🎩シルクハット"
+    ],
+    "body": [
+      "🧥レインコート"
+    ]
+  },
+  "browserWarnings": 0,
+  "browserErrors": 0,
+  "limits": [
+    "PCのChromeで配信元停止を確認。PC全体の回線は停止していない。",
+    "実スマホの機内モード・Fire・iOS・人による全音声の聴感確認は未実施。"
+  ]
+}

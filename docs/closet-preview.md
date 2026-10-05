@@ -1,5 +1,11 @@
 # 着せ替え中のキャラ拡大表示
 
+## 公開完了（2026-10-05）
+
+ユーザーの明示公開指示を受け、[PR23](https://github.com/futsalife24-bot/Ichi-game/pull/23) を統合した。公開mainは `d5e158890508e5a2238fa0231531ea1b4938a242`。実装HEADは `e7e04c54b2d50dfb377d7c4644aab118627bf61c`。[mainの自動チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37261138279) と [Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37261138238) は成功。
+
+画面・CSS・キャッシュ・mainコード・拡大表示モジュール・音声一覧の6ファイルがGit原本と一致。Windowsの作業ツリーの改行変換を避け、公開コミットのblobと配信バイトを照合した。詳細は [配信照合](closet-release-check.json)。公開Chromeでも、架空の「公開確認」で島の背景と光を残した左の拡大表示を確認した。警告・エラー0件、画像は `artifacts/closet-public-release.png`。以下の「未公開」は公開前の履歴。
+
 ## 現在の方式：島の背景と光でズーム（2026-10-05）
 
 ユーザーの追加指示「背景はそのままキャラクターにズーム」「外の明かりのまま」を受け、専用背景の版から修正。ブランチは `codex/closet-preview`、今回の基点は `5aed9dae9c57cf9fd448decc5a6b7e6987ea5954`。公開mainは `08f9adf204ab64c1feff1892e862a65505cf617a` のまま。以下の前版の記録は履歴であり、現在はこの節を優先する。
