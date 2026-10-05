@@ -94,7 +94,7 @@ if (!save.avatar && (save.stars > 0 || save.questIdx > 0 || Object.keys(save.zuk
   persist();
 }
 const player = new Player(scene, save.avatar ?? PRESETS.usagi);
-const closetPreview = new ClosetPreview();
+const closetPreview = new ClosetPreview(scene);
 save.outfit ??= { hat: accessoryForStars(save.stars)?.id ?? null, face: null, body: null };
 player.setOutfit(save.outfit);
 const input = new Input({

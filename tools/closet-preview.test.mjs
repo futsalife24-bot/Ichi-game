@@ -5,22 +5,21 @@ import {Player} from '../src/player.js';
 import {PRESETS,CLOTHES} from '../src/characters.js';
 import {ClosetPreview} from '../src/closet-preview.js';
 
-test('拡大表示は実際の衣装を写し、位置・向きと共有データを変えない',()=>{
-  const player=new Player(new THREE.Scene(),PRESETS.usagi);
+test('拡大表示は島の実キャラを使い、位置・向き・持ち物を変えない',()=>{
+  const scene=new THREE.Scene(),player=new Player(scene,PRESETS.usagi);
   player.teleport(12,3,9,1.7);
   player.setOutfit({hat:'ribbon',face:'megane',body:'dress'});
-  player.model.root.add(new THREE.Group());
+  const held=new THREE.Mesh(new THREE.BoxGeometry(30,30,30));player.model.root.add(held);
   const tool=new THREE.Group();player.model.pivot.add(tool);player.tool=tool;
+  player.model.root.updateWorldMatrix(true,true);
   const before=player.model.root.toJSON();
-  const preview=new ClosetPreview();preview.open(player);
+  const children=[...scene.children],preview=new ClosetPreview(scene);preview.open(player);
   assert.equal(preview.active,true);
-  assert.deepEqual(preview.model.position.toArray(),[0,0,0]);
-  assert.deepEqual(preview.model.rotation.toArray().slice(0,3),[0,0,0]);
-  assert.equal(preview.model.children.length,3);
-  assert.equal(preview.model.children[0].children.length,player.model.pivot.children.length-1);
-  const sourceMesh=player.model.pivot.children[0],copyMesh=preview.model.children[0].children[0];
-  assert.equal(copyMesh.geometry,sourceMesh.geometry);
-  assert.equal(copyMesh.material,sourceMesh.material);
+  assert.equal(preview.scene,scene);
+  assert.equal(preview.player,player);
+  assert.ok(preview.bounds.getSize(new THREE.Vector3()).length()<10);
+  preview.fit(844,390,447);
+  assert.deepEqual(scene.children,children);
   preview.close();
   assert.equal(preview.active,false);
   assert.deepEqual(player.model.root.toJSON(),before);
@@ -28,18 +27,18 @@ test('拡大表示は実際の衣装を写し、位置・向きと共有デー�
 
 test('各キャラと全衣装が小さい横画面の左枠に頭から足まで収まる',()=>{
   for(const avatar of Object.values(PRESETS)){
-    const player=new Player(new THREE.Scene(),avatar);
-    const preview=new ClosetPreview();
+    const scene=new THREE.Scene(),player=new Player(scene,avatar);
+    const preview=new ClosetPreview(scene);
     for(const [id,clothes] of Object.entries(CLOTHES)){
       player.setOutfit({hat:'silk',face:'megane',body:'raincoat',[clothes.slot]:id});
-      preview.open(player);
+      player.teleport(12,3,9,1.7);preview.open(player);
       for(const [w,h] of [[667,375],[844,390],[1280,582]]){
-        preview.fit(w*.53,h);
+        preview.fit(w,h,w*.53);
         for(const x of [preview.bounds.min.x,preview.bounds.max.x])
           for(const y of [preview.bounds.min.y,preview.bounds.max.y])
             for(const z of [preview.bounds.min.z,preview.bounds.max.z]){
               const p=new THREE.Vector3(x,y,z).project(preview.camera);
-              assert.ok(Math.abs(p.x)<=.801 && Math.abs(p.y)<=.801,`${id} ${w}×${h}`);
+              assert.ok(Math.abs(p.x+.47)<=.53*.801 && Math.abs(p.y)<=.801,`${id} ${w}×${h}`);
               assert.ok(p.z>=-1 && p.z<=1);
             }
       }
@@ -47,23 +46,27 @@ test('各キャラと全衣装が小さい横画面の左枠に頭から足ま�
   }
 });
 
-test('選び直した衣装に更新し、閉じた後に古いキャラを残さない',()=>{
-  const player=new Player(new THREE.Scene(),PRESETS.neko),preview=new ClosetPreview();
-  preview.open(player);const old=preview.model;
-  player.setOutfit({hat:'ribbon',face:'megane',body:'tshirt'});preview.update(player);
-  assert.equal(old.parent,null);
-  assert.equal(preview.model.children[0].children.length,player.model.pivot.children.length);
-  assert.notDeepEqual(preview.model.toJSON(),old.toJSON());
-  preview.close();assert.equal(preview.scene.children.length,2);
+test('衣装の外形と向きに合わせて寄り、閉じても島に実キャラを残す',()=>{
+  const scene=new THREE.Scene(),player=new Player(scene,PRESETS.neko),preview=new ClosetPreview(scene);
+  player.setOutfit({});preview.open(player);const old=preview.bounds.clone();
+  player.teleport(3,1,5,Math.PI);player.setOutfit({hat:'silk',face:'megane',body:'tshirt'});preview.update(player);
+  assert.notDeepEqual(preview.bounds,old);
+  preview.fit(844,390,447);
+  assert.ok(preview.camera.position.z<player.pos.z);
+  preview.close();assert.equal(preview.active,false);
+  assert.equal(player.model.root.parent,scene);
+  assert.equal(preview.bounds.isEmpty(),true);
 });
 
-test('左枠への描画後は、失敗時も通常の描画領域に戻す',()=>{
-  const preview=new ClosetPreview();preview.open(new Player(new THREE.Scene(),PRESETS.kuma));
-  for(const fail of [false,true]){
-    const viewports=[];
-    const renderer={setViewport:(...args)=>viewports.push(args),render:()=>{if(fail)throw Error('確認用');}};
-    if(fail)assert.throws(()=>preview.render(renderer,844,390,447),/確認用/);
-    else preview.render(renderer,844,390,447);
-    assert.deepEqual(viewports,[[0,0,447,390],[0,0,844,390]]);
+test('昼夜の照明・影・背景を同じ島から描画し、描画器の領域を変更しない',()=>{
+  const scene=new THREE.Scene(),player=new Player(scene,PRESETS.kuma),light=new THREE.DirectionalLight();
+  light.castShadow=true;scene.add(light);scene.fog=new THREE.Fog(0x334466,30,300);
+  const preview=new ClosetPreview(scene);preview.open(player);
+  for(const intensity of [2.2,.8]){
+    light.intensity=intensity;const before=scene.toJSON();let calls=0;
+    const renderer={render:(actual,camera)=>{calls++;assert.equal(actual,scene);assert.equal(actual.children.at(-1),light);assert.equal(camera,preview.camera);}};
+    preview.render(renderer,844,390,447);
+    assert.equal(calls,1);assert.deepEqual(scene.toJSON(),before);
   }
+  preview.close();preview.render({render:()=>assert.fail('閉じた後は描画しない')},844,390,447);
 });

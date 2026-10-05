@@ -1,70 +1,63 @@
 import * as THREE from 'three';
 
-// しまの いちや カメラを かえず、いまの きせかえを おおきく うつす。
+// しまの はいけいと ひかりの まま、ほんものの キャラに よる。
 export class ClosetPreview {
-  constructor() {
-    this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0xfff4df);
-    this.scene.add(new THREE.HemisphereLight(0xffffff, 0xe4c6a6, 2));
-    const light = new THREE.DirectionalLight(0xffffff, 2);
-    light.position.set(-3, 5, 7);
-    this.scene.add(light);
-    this.camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 50);
-    this.model = null;
+  constructor(scene) {
+    this.scene = scene;
+    this.camera = new THREE.PerspectiveCamera(40, 1, 0.1, 700);
+    this.player = null;
     this.bounds = new THREE.Box3();
+    this.direction = new THREE.Vector3();
   }
 
-  get active() { return this.model !== null; }
+  get active() { return this.player !== null; }
 
   open(player) { this.update(player); }
 
   update(player) {
-    this.close();
-    const original = player.model;
-    this.model = original.root.clone(true);
-    // もちもの・きもちの えもじは のぞき、ふくと からだだけを うつす。
-    const body = new Set([original.pivot, original.footL, original.footR]);
-    for (let i = this.model.children.length - 1; i >= 0; i--) {
-      if (!body.has(original.root.children[i])) this.model.remove(this.model.children[i]);
+    this.player = player;
+    const model = player.model;
+    model.root.updateWorldMatrix(true, true);
+    this.bounds.makeEmpty();
+    // もちものや えもじの おおきさで、キャラが ちいさく ならないようにする。
+    for (const part of [...model.pivot.children, model.footL, model.footR]) {
+      if (part !== player.tool) this.bounds.expandByObject(part, true);
     }
-    const pivot = this.model.children[original.root.children.indexOf(original.pivot)];
-    const toolIndex = original.pivot.children.indexOf(player.tool);
-    if (toolIndex >= 0) pivot.remove(pivot.children[toolIndex]);
-    this.model.position.set(0, 0, 0);
-    this.model.rotation.set(0, 0, 0);
-    this.model.scale.set(1, 1, 1);
-    pivot.position.set(0, 0, 0);
-    pivot.rotation.set(0, 0, 0);
-    this.scene.add(this.model);
-    this.bounds.setFromObject(this.model);
+    this.direction.set(0, 0, 1).applyQuaternion(model.root.getWorldQuaternion(new THREE.Quaternion()));
+    this.direction.y = 0.2;
+    this.direction.normalize();
   }
 
-  fit(width, height) {
+  fit(width, height, previewWidth) {
     const center = this.bounds.getCenter(new THREE.Vector3());
-    const size = this.bounds.getSize(new THREE.Vector3());
-    const aspect = width / height;
-    const viewHeight = Math.max(size.y, size.x / aspect) * 1.25;
-    this.camera.left = -viewHeight * aspect / 2;
-    this.camera.right = viewHeight * aspect / 2;
-    this.camera.top = viewHeight / 2;
-    this.camera.bottom = -viewHeight / 2;
-    this.camera.position.set(center.x, center.y, this.bounds.max.z + 6);
+    this.camera.aspect = width / height;
+    this.camera.position.copy(center).add(this.direction);
     this.camera.lookAt(center);
+    const inverse = this.camera.quaternion.clone().invert();
+    const tan = Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2));
+    const aspect = previewWidth / height;
+    let distance = 1;
+    for (const x of [this.bounds.min.x, this.bounds.max.x])
+      for (const y of [this.bounds.min.y, this.bounds.max.y])
+        for (const z of [this.bounds.min.z, this.bounds.max.z]) {
+          const p = new THREE.Vector3(x, y, z).sub(center).applyQuaternion(inverse);
+          distance = Math.max(distance, p.z + 1.25 * Math.max(Math.abs(p.y) / tan, Math.abs(p.x) / (tan * aspect)));
+        }
+    this.camera.position.copy(center).addScaledVector(this.direction, distance);
+    // がめん ぜんたいに しまを うつし、キャラの ちゅうしんだけ ひだりへ よせる。
+    this.camera.setViewOffset(width, height, (width - previewWidth) / 2, 0, width, height);
     this.camera.updateProjectionMatrix();
     this.camera.updateMatrixWorld();
   }
 
   render(renderer, width, height, previewWidth) {
     if (!this.active || previewWidth <= 0 || height <= 0) return;
-    this.fit(previewWidth, height);
-    renderer.setViewport(0, 0, previewWidth, height);
-    try { renderer.render(this.scene, this.camera); }
-    finally { renderer.setViewport(0, 0, width, height); }
+    this.fit(width, height, previewWidth);
+    renderer.render(this.scene, this.camera);
   }
 
   close() {
-    if (this.model) this.scene.remove(this.model);
-    // かたちと いろの データは ほんものの キャラと きょうゆうしている。
-    this.model = null;
+    this.player = null;
+    this.bounds.makeEmpty();
   }
 }
