@@ -1,5 +1,9 @@
 # キラキラアイランドの作業入口
 
+## 最新作業：着せ替え中のキャラを左に拡大（2026-10-05）
+
+ユーザーのスマホ画像を受け、`codex/closet-preview`、基点 `b1bcdc2acbc7fbd7fdde3fde308198001d4dfa9c` で改修。着せ替え中だけ左に明るい背景で正面のキャラを拡大し、帽子・めがね・服を即時反映する。閉じると通常の島へ復帰。テスト7件と構文検査、Chromeで3種類の横画面・衣装切替・解除・再開・図鑑への復帰を確認済み。詳細は [着せ替えの改修記録](docs/closet-preview.md)。実スマホ・完全オフラインは未確認。この改修は未公開で、公開mainは下記のPR22のまま。
+
 ## 最新状態：横画面のボタン調整を公開（2026-10-05）
 
 ユーザーの「よろしく」を公開依頼として受け、[PR22](https://github.com/futsalife24-bot/Ichi-game/pull/22) をmainへ統合した。公開mainは `08f9adf204ab64c1feff1892e862a65505cf617a`。[自動チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37223176179) と [Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37223176171) は成功。画面・CSS・キャッシュ・音声一覧の配信内容が公開コミットと一致。公開ブラウザーでも最低44pxのボタン設定、きせかえの1行表示、ゲーム画面を確認した。公開後の記録は `codex/mobile-release-record`。実スマホ・完全オフラインは未確認。以下の「未公開」は公開前の履歴。

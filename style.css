@@ -289,6 +289,9 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 
 /* ---------- ずかん・きせかえ の パネル */
 #panel { position: fixed; inset: 0; background: rgba(40,30,20,.25); z-index: 4; display: flex; justify-content: flex-end; }
+.closet-open #panel { background: transparent; }
+.closet-open #hud { visibility: hidden; }
+#closetPreview { flex: 1; pointer-events: none; }
 #panel .sheet {
   width: min(47vw, calc(100vw - var(--u) * 40)); height: 100%; background: #fffaf0;
   border-radius: calc(var(--u) * 6) 0 0 calc(var(--u) * 6); box-shadow: 0 0 calc(var(--u) * 5) rgba(0,0,0,.2);
