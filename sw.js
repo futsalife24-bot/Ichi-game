@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v25-closet-world-zoom';
+const VERSION = 'kirakira-v26-help-picnic';
 const ASSETS = [
   './',
   './index.html',

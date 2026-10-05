@@ -20,6 +20,14 @@ export class Help {
     this.dish = new THREE.Mesh(new THREE.CylinderGeometry(1.1, 1.1, 0.12, 32), new THREE.MeshLambertMaterial({ color: 0xfff5da }));
     this.dish.position.set(HELP_HOST.x + 1.6, getHeight(HELP_HOST.x + 1.6, HELP_HOST.z) + 0.12, HELP_HOST.z);
     this.group.add(this.dish);
+    // とどけた おやつを、ひろばの おもいでにする。
+    this.mat = new THREE.Mesh(new THREE.CircleGeometry(1.65, 40), new THREE.MeshLambertMaterial({ color: 0xbfe6d1, side: THREE.DoubleSide }));
+    this.mat.rotation.x = -Math.PI / 2;
+    this.mat.position.copy(this.dish.position);
+    this.mat.position.y -= 0.095;
+    this.group.add(this.mat);
+    this.heart = emojiSprite('💛', 0.85);
+    this.group.add(this.heart);
     for (let i = 0; i < HELP_NEED; i++) {
       const f = makeFruit('ringo');
       f.position.copy(this.dish.position).add(new THREE.Vector3((i - 0.5) * 0.8, 0.45, 0));
@@ -47,6 +55,7 @@ export class Help {
   get state() { return this.save.help ?? newHelp(); }
   get focused() { return this.active && this.state.stage !== 'free'; }
   get modal() { return this.focused && ['intro', 'done'].includes(this.state.stage); }
+  get picnic() { return this.active && this.state.rewardedRound > 0 && ['done', 'free'].includes(this.state.stage); }
 
   start() {
     this.quests.stop();
@@ -94,8 +103,8 @@ export class Help {
     document.getElementById('helpReturn').classList.toggle('hidden', !this.active || h.stage !== 'free');
     document.getElementById('helpQuiz').classList.toggle('hidden', !this.active || h.stage !== 'free');
     this.group.visible = this.active;
-    // おねがいの ときだけ ひろばで まっている。じゆうあそびでは もとの おうちへ。
-    if (this.focused) {
+    // おやつを とどけた あとは、ひろばで いっしょに すごす。
+    if (this.focused || this.picnic) {
       this.host.anchor = HELP_HOST;
       this.host.pos.set(HELP_HOST.x, getHeight(HELP_HOST.x, HELP_HOST.z), HELP_HOST.z);
       this.host.target = null;
@@ -104,6 +113,9 @@ export class Help {
     this.basket.position.set(HELP_HOST.x, getHeight(HELP_HOST.x, HELP_HOST.z) + 2.8, HELP_HOST.z);
     this.basket.visible = this.focused;
     this.dish.visible = this.active;
+    this.mat.visible = this.picnic;
+    this.heart.visible = this.picnic;
+    this.heart.position.set(HELP_HOST.x, getHeight(HELP_HOST.x, HELP_HOST.z) + 2.5, HELP_HOST.z);
     for (const it of this.items) it.obj.visible = it.plate ? h.rewardedRound > 0 : this.focused && h.stage === 'collect' && !h.collected.includes(it.index);
     if (this.focused) {
       const delivering = h.stage === 'deliver';
@@ -112,7 +124,7 @@ export class Help {
       const done = h.stage === 'done';
       document.getElementById('helpHeading').textContent = done ? 'ありがとう！' : 'ひよこから おねがい';
       document.getElementById('helpPicture').textContent = done ? '🐥 💛 🍎🍎' : '🐥 🍎🍎';
-      document.getElementById('helpMessage').textContent = done ? 'おやつを とどけたね！' : 'おやつの りんごを 2こ とどけてね';
+      document.getElementById('helpMessage').textContent = done ? 'ひろばに おやつが ならんだよ！\nひよこに あいに いこう' : 'おやつの りんごを 2こ とどけてね';
       document.getElementById('helpReward').classList.toggle('hidden', !done);
       document.getElementById('helpSteps').classList.toggle('hidden', done);
       document.getElementById('helpAccept').classList.toggle('hidden', done);
@@ -138,7 +150,20 @@ export class Help {
     else if (this.state.stage === 'intro') this.voice.say(L.helpIntro());
     else this.voice.say(L.helpCollect());
   }
+  meet(a) {
+    // みつける あそびの こえや、ほかの どうぶつの あいさつを さえぎらない。
+    if (!this.picnic || this.focused || a !== this.host || this.quests.state !== 'idle' || this.ui.panelOpen) return false;
+    this.host.hop = 1;
+    this.audio.meet();
+    this.effects.burst(this.dish.position, { n: 12, speed: 1.5, up: 2.5, colors: [0xffd23d, 0xffffff, 0xff8fc8] });
+    this.voice.say(L.helpThanks(), { who: { name: this.host.def.san, pitch: this.host.def.pitch } });
+    return true;
+  }
   update(dt, t) {
+    if (this.picnic) {
+      this.heart.position.y = getHeight(HELP_HOST.x, HELP_HOST.z) + 2.5 + Math.sin(t * 2) * 0.12;
+      this.heart.scale.setScalar(0.85 + Math.sin(t * 2) * 0.05);
+    }
     if (!this.focused || this.modal) return;
     const p = this.player.pos;
     if (this.state.stage === 'collect') {

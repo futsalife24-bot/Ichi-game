@@ -1,5 +1,9 @@
 # キラキラアイランドの作業入口
 
+## 最新作業：お手伝い後のおやつ広場（2026-10-05）
+
+ユーザーの「新機能にフォーカス」を受け、雨天・室内・実スマホの確認は後に回す。`codex/help-picnic`、開始HEADは `c7e2eb3015f5ef4ebedc7e207e1a6a2ee0acd02a`。最初の新機能として、お届け後にひよこが広場に残り、ハートとお礼で成果を返す「おやつ広場」を試作した。既存の完了記録を利用し、保存形式・報酬条件・音声698個を保持。自動テスト101件成功。Chromeで一周・再読み込み・再挨拶・声なし・再挑戦からのお散歩を確認し、星1個を維持、警告・エラー0件。詳細は [おやつ広場の改修記録](docs/help-picnic.md)。新機能は未公開、公開mainは下記PR23の `d5e1588`。
+
 ## 最新状態：着せ替えの拡大表示を公開（2026-10-05）
 
 ユーザーの「公開して次の作業に移って」を受け、[PR23](https://github.com/futsalife24-bot/Ichi-game/pull/23) をmainへ統合した。公開mainは `d5e158890508e5a2238fa0231531ea1b4938a242`。[自動チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37261138279) と [Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37261138238) は成功。画面・表示コード・キャッシュ設定・音声一覧の6ファイルがGit原本と一致し、音声698個を維持。結果は [配信照合](docs/closet-release-check.json)。公開Chromeでも島の背景と光を残した拡大表示を確認し、警告・エラー0件。

@@ -54,6 +54,7 @@ export const L = {
   helpDeliver: () => line('りんごが そろったよ！ ひよこに とどけよう！'),
   helpDone: () => line('ありがとう！ おやつを とどけたね！ ほしを いっこ もらったよ！',
     'ありがとう！ おやつを とどけたね！ ⭐を 1こ もらったよ！'),
+  helpThanks: () => line('ありがとう！ おやつを とどけたね！'),
 
   shapeAsk: (s) => line(`${s.name} の かたち を さがしてね！`),
   shapeRight: (s) => line(`${s.name}！ せいかい！`),
@@ -247,7 +248,7 @@ export function characterLines() {
 
 /** ひよこの おてつだいの せりふ */
 export function helpLines() {
-  return [L.helpIntro(), L.helpCollect(), L.helpDeliver(), L.helpDone()].map(l => l.say);
+  return [L.helpIntro(), L.helpCollect(), L.helpDeliver(), L.helpDone(), L.helpThanks()].map(l => l.say);
 }
 
 /** そろったら ふつうの しゅうろくたいしょうへ うつす。 */
