@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-05T03:55:08.055Z",
+  "base": "https://futsalife24-bot.github.io/Ichi-game/",
+  "merge": "d5e158890508e5a2238fa0231531ea1b4938a242",
+  "files": [
+    {
+      "file": "index.html",
+      "status": 200,
+      "equal": true,
+      "sha256": "046aab15bc7065972bec53d366194a3d17a7f836a1f3b72c8a6fdb1f114f6ae1",
+      "expectedSha256": "046aab15bc7065972bec53d366194a3d17a7f836a1f3b72c8a6fdb1f114f6ae1"
+    },
+    {
+      "file": "style.css",
+      "status": 200,
+      "equal": true,
+      "sha256": "e727fb49a7301b193b897fe860efca6c06391e74b1d0e47e3148e7a4f2e39066",
+      "expectedSha256": "e727fb49a7301b193b897fe860efca6c06391e74b1d0e47e3148e7a4f2e39066"
+    },
+    {
+      "file": "sw.js",
+      "status": 200,
+      "equal": true,
+      "sha256": "a021bdc60f8e9fc604d76bdd981072ae6f002f0df9d8ea6ae9eeebab027feff9",
+      "expectedSha256": "a021bdc60f8e9fc604d76bdd981072ae6f002f0df9d8ea6ae9eeebab027feff9"
+    },
+    {
+      "file": "src/main.js",
+      "status": 200,
+      "equal": true,
+      "sha256": "8e29e63ae17a68418eabda46fc7f60ea7cdaccd27815804d33571ca9d081afab",
+      "expectedSha256": "8e29e63ae17a68418eabda46fc7f60ea7cdaccd27815804d33571ca9d081afab"
+    },
+    {
+      "file": "src/closet-preview.js",
+      "status": 200,
+      "equal": true,
+      "sha256": "9ad191af15031231058042c5d30fa611bf63d8eed1b2ea2caf6f9893161401ba",
+      "expectedSha256": "9ad191af15031231058042c5d30fa611bf63d8eed1b2ea2caf6f9893161401ba"
+    },
+    {
+      "file": "voice/index.json",
+      "status": 200,
+      "equal": true,
+      "sha256": "1197ea36b034fd73f000d2047f9e615a9f4a4f7b92bbc235a2dc4b0eb6a56adb",
+      "expectedSha256": "1197ea36b034fd73f000d2047f9e615a9f4a4f7b92bbc235a2dc4b0eb6a56adb"
+    }
+  ],
+  "voices": 698
+}
