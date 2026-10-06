@@ -154,6 +154,7 @@ function buildTitle() {
   const av = save.avatar;
   const call = callName(av);
   player.reset();
+  player.setOutfit(save.outfit);
   player.model.root.visible = !!av;
   egg.visible = !av;
   egg.position.copy(player.pos);
@@ -251,6 +252,8 @@ function hatch() {
 function openMaker(draft) {
   mode = 'maker';
   $('title').classList.add('hidden');
+  // つくりなおす あいだは ふく・ぼうし・めがねを はずして、からだの いろや もようを みせる（セーブの きせかえは そのまま）
+  player.setOutfit({});
   maker.show(draft);
 }
 
@@ -263,6 +266,7 @@ function startGame() {
   audio.setBgm(save.bgm);
   if (climate.raining) audio.setRain(!climate.snowy);
   player.setAvatar(save.avatar);
+  player.setOutfit(save.outfit); // キャラメイクで はずした きせかえを もどす
   player.model.root.visible = true;
   egg.visible = false;
   player.reset();
