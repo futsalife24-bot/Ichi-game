@@ -8,6 +8,8 @@
 
 制作と自己検証は完了。独立監査の実施可否は本人へ一度質問済みで返答待ち。チームの制作検証を独立監査の承認に代えない。公開mainは `ca38419732e2daa8af8b1156defc97bb55892c37` のまま。今回の完成版を公開するには本人の新たな明示承認が必要。第三・第四島は将来案だけで未実装。以下は前回までの公開履歴。
 
+実装610dcbdと証拠・引継ぎ4400399を作業ブランチへpush済み。[GitHub必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37685539368)成功。次のコミットはこの結果の文書追記だけで、ゲーム内容は同じ。
+
 ## 最新状態：葉の影・看板・水源・岩段を公開（2026-10-07）
 
 本人の「公開して」で [PR29](https://github.com/futsalife24-bot/Ichi-game/pull/29) を統合。承認版 `eea63ebf019c874dfc8b93276dff0dbe1ada70bd` と公開main `ca38419732e2daa8af8b1156defc97bb55892c37` は全ファイル一致。[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37638380425)・[Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37638380423)成功。公開先の57資材と３開発者入口、計60件がGit原本と一致。音声708個、SW版 `kirakira-v31-forest-depth`。

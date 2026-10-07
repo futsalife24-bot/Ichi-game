@@ -10,6 +10,8 @@ PDCAでは水平なレンガが斜面へ埋まる問題を実地形への追従�
 
 独立監査の実施可否を本人へ一度確認済みで返答待ち。作業範囲・主なリスク・監査対象を添えて質問したため、同じ質問を重ねない。制作担当の検証を独立監査と呼ばない。公開main `ca38419732e2daa8af8b1156defc97bb55892c37`。今回への新しい公開指示はまだない。実モデルID・推論設定は取得不可で未確認、モデル切替なし。本人の「Astraウルトラにする」を実設定の証拠にしない。作業ブランチへの記録保存後、GitHub必須チェックを確認する。以下は過去履歴。
 
+実装610dcbd・制作記録4400399をpush済み。保存版 `44003997d9debc6080d077f82779c223db110187` の [GitHub必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37685539368) が成功。この後のコミットは検証結果の文書追記のみ。
+
 ## 葉の影・看板・水源・岩段の公開・確認完了（2026-10-07）
 
 本人の直接「公開して」で [PR29](https://github.com/futsalife24-bot/Ichi-game/pull/29) をmainへ統合。公開前 `26e421cc35367be678d83702f8dda6cabce808f5` → 公開main `ca38419732e2daa8af8b1156defc97bb55892c37`。承認版 `eea63ebf019c874dfc8b93276dff0dbe1ada70bd` と全ファイル一致。PR必須チェック２件、[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37638380425)、[Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37638380423)成功。57資材と３開発者入口をGit原本と照合し全一致、音声708個、SW `kirakira-v31-forest-depth`。
