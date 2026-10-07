@@ -1,5 +1,11 @@
 # 次セッションへの引継ぎ（2026-10-04）
 
+## 葉の影・看板・水源・岩段の公開・確認完了（2026-10-07）
+
+本人の直接「公開して」で [PR29](https://github.com/futsalife24-bot/Ichi-game/pull/29) をmainへ統合。公開前 `26e421cc35367be678d83702f8dda6cabce808f5` → 公開main `ca38419732e2daa8af8b1156defc97bb55892c37`。承認版 `eea63ebf019c874dfc8b93276dff0dbe1ada70bd` と全ファイル一致。PR必須チェック２件、[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37638380425)、[Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37638380423)成功。57資材と３開発者入口をGit原本と照合し全一致、音声708個、SW `kirakira-v31-forest-depth`。
+
+Chrome・844×390の公開版で第二島・看板、案内で葉１枚を集める操作、第一島へ戻って星１個保持を確認。通常プロフィールは開いていない。警告・エラー０。画面サイズ復元・確認タブ閉鎖済み。公開後に全配送・段差登頂は反復せず制作時の実確認と回帰検証を再利用。実スマホ性能は未確認。証拠は `docs/forest-depth-release-check.json` と公開画像３枚。記録ブランチ `codex/forest-depth-release-record`、基点は公開main。今回は公開と記録だけでゲーム本体の追加変更なし。実モデルID・推論設定は取得不可で未確認、モデル操作・並列なし。公開・配信・画面確認は完了。以下は制作時の履歴。
+
 ## 葉の影・看板・滝の水源・岩段の修正（2026-10-07、未公開）
 
 本人の画像指摘を受け、`codex/forest-depth-and-spring`、基点 `9dd689824712d6f0c56af9febddb25117366fc6c` で４点を修正。正本は `docs/forest-depth-and-spring.md`。134テスト成功後、岩段の手前の木が主人公を隠す問題を実画面で見つけ、配置を直して遮りの回帰を追加。関連12テスト成功。公開mainは下記の26e421cのまま。

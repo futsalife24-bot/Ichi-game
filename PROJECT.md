@@ -1,5 +1,11 @@
 # キラキラアイランドの作業入口
 
+## 最新状態：葉の影・看板・水源・岩段を公開（2026-10-07）
+
+本人の「公開して」で [PR29](https://github.com/futsalife24-bot/Ichi-game/pull/29) を統合。承認版 `eea63ebf019c874dfc8b93276dff0dbe1ada70bd` と公開main `ca38419732e2daa8af8b1156defc97bb55892c37` は全ファイル一致。[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37638380425)・[Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37638380423)成功。公開先の57資材と３開発者入口、計60件がGit原本と一致。音声708個、SW版 `kirakira-v31-forest-depth`。
+
+Chrome・844×390の公開確認用モードで第二島の描画・看板、案内移動による葉１枚の収集、星１個を保持した第一島への帰還を確認。警告・エラー０。制作時の水源・滝・三段への着地と自動検証は再利用。実スマホ性能は未確認。画面サイズ復元・確認タブ閉鎖済み。公開確認は完了し、記録は `codex/forest-depth-release-record` に保存する。[公開照合と画像](docs/forest-depth-release-check.json)。[第二島をすぐ確認](https://futsalife24-bot.github.io/Ichi-game/?dev=forest)。以下の未公開表記は制作時の履歴。
+
 ## 修正・実画面確認済み：葉の影・看板・滝の水源・岩段（2026-10-07、未公開）
 
 本人の画像３枚の指摘に対応。葉の接地影、文字に被らない看板支柱、小山の湧き水の池から滝へ続く流路、ジャンプで登る３段の苔岩を実装。ブランチ `codex/forest-depth-and-spring`、基点 `9dd689824712d6f0c56af9febddb25117366fc6c`。保存形式・報酬・音声は維持。134テストと実画面調整後の関連12テストが成功。Chrome・844×390で影・看板・水源・滝と三段への着地を確認し、警告・エラー０。画面サイズ復元・確認タブ閉鎖済み。実スマホ速度は未確認。詳細と画像は [遠近感と水源の修正](docs/forest-depth-and-spring.md)、[画面確認の証拠](docs/forest-depth-check.json)。以下は公開済み版の履歴。
