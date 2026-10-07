@@ -1,7 +1,7 @@
 // こもれびの しま。もりと こがわを めぐる ひろい えんそく。
 import * as THREE from 'three';
 import { ball, cyl, makeAnimal } from './characters.js';
-import { emojiSprite, makePlant } from './critters.js';
+import { emojiSprite } from './critters.js';
 import { canvasTexture, signTexture } from './canvas.js';
 import { mulberry32 } from './world.js';
 import { FOREST_ORIGIN, LEAF_SPOTS, LEAF_HOST } from './adventure-state.js';
@@ -106,8 +106,8 @@ export class Forest {
     }
     // たきの うしろの いわだな。みずの おちる すきまを のこす。
     for(let i=0;i<9;i++){
-      const x=-35+(i%3)*2.5,z=-9.1-Math.floor(i/3)*1.6,h=2.4+(i%3)*.8;
-      const o=mesh(new THREE.IcosahedronGeometry(1.8,1),i%2?0x879685:0x718875);o.scale.set(1.15,h/1.8,.75);o.position.set(x,riverY(-32)+h*.42,z);o.castShadow=true;o.receiveShadow=true;this.group.add(o);this.colliders.push({x:FOREST_ORIGIN.x+x,z,r:1.7});
+      const x=-35+(i%3)*2.5,z=-9.1-Math.floor(i/3)*1.6;
+      this.colliders.push({x:FOREST_ORIGIN.x+x,z,r:1.7});
     }
     for(const [x,z] of [[-29,22],[24,23]]){const y=landHeight(x,z);this.group.add(box(0xc29b6d,x,y+.6,z,3,.18,.8));for(const sx of [-1,1])this.group.add(timber([x+sx,y,z],[x+sx,y+.6,z],.14));}
   }
@@ -120,9 +120,12 @@ export class Forest {
     }
     this.butterflies=Array.from({length:8},(_,i)=>{const o=emojiSprite(i%3?'🦋':'✨',i%3?.5:.28);this.group.add(o);return o;});
     const rnd=this.rng;
+    const petalGeo=new THREE.SphereGeometry(1,8,6);
     for(let i=0;i<180;i++){
       const x=(rnd()-.5)*82,z=(rnd()-.5)*82,d=pathDistance(x,z);if(Math.hypot(x,z)>38||riverDistance(x,z)<riverWidth(x)+3||d<2.2||d>6)continue;
-      const f=makePlant(i%3?'daisy':'tulip',3);surface(f,x,z);f.scale.setScalar(.65+rnd()*.25);this.group.add(f);
+      const y=landHeight(x,z),height=.25+rnd()*.16;this.group.add(timber([x,y,z],[x,y+height,z],.022,0x587c3d));
+      for(let p=0;p<6;p++){const a=p*Math.PI/3,o=mesh(petalGeo,i%3?0xfff9d9:0xe49d9d);o.scale.set(.12,.045,.18);o.position.set(x+Math.sin(a)*.13,y+height,z+Math.cos(a)*.13);o.rotation.y=a;this.group.add(o);}
+      const heart=mesh(petalGeo,0xdcc34c);heart.scale.set(.085,.07,.085);heart.position.set(x,y+height+.015,z);this.group.add(heart);
     }
   }
   async loadAssets(data=null) {
@@ -160,6 +163,10 @@ export class Forest {
       const x=-38+rnd()*76,z=riverZ(x)+(rnd()-.5)*riverWidth(x)*1.6;put('rock',x,z,.14+rnd()*.3,0,-.04);
       if(i%4===0)this.water.addRockWake(x,z,.2);
     }
+    for(let i=0;i<9;i++){
+      const x=-35+(i%3)*2.5,z=-9.1-Math.floor(i/3)*1.6,size=1.9+(i%3)*.4;
+      sets.rockTall.push({x,y:riverY(-32)-.2,z,size,yaw:i*.9});
+    }
     for(const [x,z,s] of [[-19,19,.8],[18,-13,.8],[-15,-24,1],[23,27,.7]]){put('log',x,z,s);this.colliders.push({x:FOREST_ORIGIN.x+x,z,r:1.2});}
     for(const [x,z] of [[-12,19],[11,-12],[-6,-25],[7,-25]]){put('stump',x,z,.75);this.colliders.push({x:FOREST_ORIGIN.x+x,z,r:.55});}
     this.assetStats={};
@@ -169,9 +176,18 @@ export class Forest {
         shader.uniforms.forestTime=this.timeUniform;shader.vertexShader='uniform float forestTime;\n'+shader.vertexShader;
         shader.vertexShader=shader.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\n float bend = smoothstep(1.0, 7.0, position.y); transformed.x += sin(forestTime * 0.7 + position.y * 1.1 + instanceMatrix[3].x) * bend * 0.10;');
       };
-      const inst=new THREE.InstancedMesh(geometries[kind],mat,points.length),tmp=new THREE.Object3D();
-      points.forEach((p,i)=>{tmp.position.set(p.x,p.y,p.z);tmp.rotation.y=p.yaw;tmp.scale.setScalar(p.size);tmp.updateMatrix();inst.setMatrixAt(i,tmp.matrix);});
-      inst.castShadow=kind!=='fern';inst.receiveShadow=true;inst.computeBoundingSphere();this.group.add(inst);this.assetStats[kind]={count:points.length,triangles:geometries[kind].index.count/3};
+      // ちかい そざいを まとめ、がめんの そとは えがかない。
+      const chunks=new Map(),tmp=new THREE.Object3D();
+      for(const p of points){const key=`${Math.floor(p.x/16)},${Math.floor(p.z/16)}`;if(!chunks.has(key))chunks.set(key,[]);chunks.get(key).push(p);}
+      for(const chunk of chunks.values()){
+        const inst=new THREE.InstancedMesh(geometries[kind],mat,chunk.length);
+        chunk.forEach((p,i)=>{tmp.position.set(p.x,p.y,p.z);tmp.rotation.y=p.yaw;tmp.scale.setScalar(p.size);tmp.updateMatrix();inst.setMatrixAt(i,tmp.matrix);});
+        inst.castShadow=kind!=='fern';inst.receiveShadow=true;inst.frustumCulled=true;inst.computeBoundingBox();inst.computeBoundingSphere();
+        // かぜで ゆれる はも、はしで とぎれない ようにする。
+        const sway=['oak','birch','fern'].includes(kind)?.1*Math.max(...chunk.map(p=>p.size)):0;
+        inst.boundingBox.expandByScalar(sway);inst.boundingSphere.radius+=sway;this.group.add(inst);
+      }
+      this.assetStats[kind]={count:points.length,triangles:geometries[kind].index.count/3};
     }
     forestRoute(FOREST_SPAWN,LEAF_SPOTS[0]);
     this.assetsLoaded=true;

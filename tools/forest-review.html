@@ -13,20 +13,21 @@ import {FOREST_ORIGIN} from '../src/adventure-state.js';
 const renderer=new THREE.WebGLRenderer({canvas:document.querySelector('canvas'),antialias:true,powerPreference:'high-performance'});
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFShadowMap;
 const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(48,1,.1,700),world=new World(scene),outside=[...scene.children],forest=new Forest(scene),player=new Player(scene,PRESETS.usagi);
-let view='arrival',focus=new THREE.Vector3(),last=performance.now(),time=0,samples=[],frames=0,ready=false;
+const outsideVisibility=new Map(outside.map(o=>[o,o.visible]));
+let view='arrival',focus=new THREE.Vector3(),last=performance.now(),time=0,samples=[],renderSamples=[],frames=0,ready=false;
 const status=document.querySelector('output');
 function resize(){renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();}resize();addEventListener('resize',resize);
-function choose(name){view=name;samples=[];frames=0;const first=name==='first';
-  for(const o of outside)o.visible=first||[world.sunLight,world.sunLight.target,world.hemi].includes(o);
+function choose(name){view=name;samples=[];renderSamples=[];frames=0;const first=name==='first';
+  for(const o of outside)o.visible=first?outsideVisibility.get(o):[world.sunLight,world.sunLight.target,world.hemi].includes(o);
   forest.group.visible=!first;scene.background=first?null:new THREE.Color(0xa7dce0);
-  const points={first:[0,2],arrival:[0,33],bridge:[0,6.4],waterfall:[-31,-1.5],plaza:[3,-23],grove:[-18,19],overview:[0,0]};
+  const points={first:[0,2],arrival:[0,33],bridge:[0,6.4],waterfall:[-27,-7],plaza:[3,-23],grove:[-15,16],overview:[0,0]};
   const [x,z]=points[name],y=first?getHeight(x,z):forest.groundAt(FOREST_ORIGIN.x+x,z),origin=first?0:FOREST_ORIGIN.x;
   focus.set(origin+x,y,z);player.teleport(focus.x,focus.y,focus.z,Math.PI);player.marker.visible=false;
   camera.position.copy(focus).add(name==='overview'?new THREE.Vector3(58,82,72):new THREE.Vector3(0,9,11));camera.lookAt(focus.clone().add(new THREE.Vector3(0,1,0)));
 }
 for(const b of document.querySelectorAll('button'))b.onclick=()=>choose(b.dataset.view);
 try{await forest.loadAssets();forest.refresh({stage:'done',collected:[0,1,2]});ready=true;choose(view);}catch(e){status.textContent='読込失敗：'+e.message;throw e;}
-function frame(now){const ms=now-last,dt=Math.min(.05,ms/1000);last=now;time+=dt;if(ready){forest.update(dt,time);world.update(dt,focus);renderer.render(scene,camera);frames++;if(frames>30)samples.push(ms);if(samples.length>240)samples.shift();
-  if(frames%30===0){const sorted=[...samples].sort((a,b)=>a-b),p=n=>sorted[Math.floor((sorted.length-1)*n)]||0;status.textContent=`${view}｜${innerWidth}×${innerHeight}｜経過 ${frames}フレーム\nフレーム中央値 ${p(.5).toFixed(1)}ms / 95% ${p(.95).toFixed(1)}ms\n描画 ${renderer.info.render.calls}回 / 三角形 ${renderer.info.render.triangles.toLocaleString()} / 素材読込 ${forest.assetsLoaded?'完了':'未完了'}`;}
+function frame(now){const ms=now-last,dt=Math.min(.05,ms/1000);last=now;time+=dt;if(ready){forest.update(dt,time);world.update(dt,focus);const begun=performance.now();renderer.render(scene,camera);const renderTime=performance.now()-begun;frames++;if(frames>8){samples.push(ms);renderSamples.push(renderTime);}if(samples.length>120){samples.shift();renderSamples.shift();}
+  if(frames%10===0){const sorted=[...samples].sort((a,b)=>a-b),cpu=[...renderSamples].sort((a,b)=>a-b),p=(a,n)=>a[Math.floor((a.length-1)*n)]||0;status.textContent=`${view}｜${innerWidth}×${innerHeight}｜経過 ${frames}フレーム\n描画処理中央値 ${p(cpu,.5).toFixed(1)}ms / 95% ${p(cpu,.95).toFixed(1)}ms\nフレーム間隔 ${p(sorted,.5).toFixed(1)}ms（非表示時の制限を含む）\n描画 ${renderer.info.render.calls}回 / 三角形 ${renderer.info.render.triangles.toLocaleString()} / 素材読込 ${forest.assetsLoaded?'完了':'未完了'}`;}
 }requestAnimationFrame(frame);}requestAnimationFrame(frame);
 </script></html>

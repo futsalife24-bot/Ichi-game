@@ -30,6 +30,7 @@ function waterMaterial(clock, kind) {
     shader.vertexShader = shader.vertexShader.replace('#include <common>', `#include <common>\n${declarations}\n${kind === 'sea' ? 'attribute float waterShore;' : ''}`);
     const waves = kind === 'fall' ? `
       transformed.z += .035 * sin(position.y * 7.0 - uWaterTime * 5.0) * (1.0 - abs(uv.x));
+      transformed.x += .025 * sin(uv.y * 16.0 - uWaterTime * 2.5 + uv.x * 4.0) * smoothstep(0.0, .2, uv.y);
     ` : `
       transformed.y += .024 * sin(position.x * .83 - uWaterTime * 1.6)
         + .018 * sin(position.z * 1.45 + position.x * .32 - uWaterTime * 1.1);
@@ -73,11 +74,16 @@ function waterMaterial(clock, kind) {
     `;
     else if (kind === 'fall') surface = `
       float across = abs(vWaterUv.x);
-      float ribbon = .5 + .5 * sin(vWaterUv.x * 26.0 + sin(vWaterUv.y * 9.0 - uWaterTime * 3.5));
+      float ribbon = .5 + .5 * sin(vWaterUv.x * 48.0 + sin(vWaterUv.x * 13.0 + vWaterUv.y * 9.0 - uWaterTime * 3.5) * 2.0);
       float drop = .5 + .5 * sin(vWaterUv.y * 45.0 - uWaterTime * 10.0 + vWaterUv.x * 5.0);
-      float foam = .32 + .35 * ribbon + .15 * pow(drop, 4.0);
+      float fringe = .91 + .045 * sin(vWaterUv.y * 21.0 - uWaterTime * 1.8)
+        + .025 * sin(vWaterUv.y * 47.0 + vWaterUv.x * 8.0 - uWaterTime * 3.0);
+      float edge = 1.0 - smoothstep(fringe - .1, fringe, across);
+      float core = 1.0 - smoothstep(.55, .85, across);
+      float threads = mix(.13, 1.0, smoothstep(.32, .78, ribbon));
+      float foam = .46 + .22 * ribbon + .15 * pow(drop, 4.0);
       diffuseColor.rgb = mix(uShallowColor, uFoamColor, foam);
-      diffuseColor.a = (.65 + .25 * ribbon) * (1.0 - smoothstep(.83, 1.0, across));
+      diffuseColor.a = (.72 + .14 * ribbon) * edge * mix(threads, 1.0, core * .88);
     `;
     else surface = `
       float across = abs(vWaterUv.y);
@@ -187,10 +193,19 @@ export class ForestWater {
     this.waterfallGroup.name = 'もりの こたき';
     this.waterfallGroup.position.set(FALL_X, riverY(FALL_X), FALL_Z);
     this.group.add(this.waterfallGroup);
-    const fall = new THREE.Mesh(stripGeometry(28, 10, (t, across) => {
-      const y = 3.5 * (1 - t), z = -1.0 + 1.25 * Math.pow(t, .65);
-      return [across * (1.16 + .15 * t), y, z, across, t];
-    }), waterMaterial(this.clock, 'fall'));
+    const fallMaterial = waterMaterial(this.clock, 'fall');
+    const lipHeight = across => .045 * Math.sin(across * 6 + .8) + .025 * Math.sin(across * 15);
+    const fallWidth = t => (1.16 + .15 * t) * (1 + .045 * Math.sin(t * 13 + .8) + .02 * Math.sin(t * 31));
+    // いわだなを すべる みずが、そのまま ほそい すじに わかれて おちる。
+    const shelf = new THREE.Mesh(stripGeometry(8, 16, (t, across) => [
+      across * (1.1 * (1 - t) + fallWidth(0) * t),
+      3.5 + lipHeight(across) + .035 * (1 - t), -1.7 + .7 * t, across, (t - 1) * .2,
+    ]), fallMaterial);
+    shelf.renderOrder = 3; this.waterfallGroup.add(shelf);
+    const fall = new THREE.Mesh(stripGeometry(32, 16, (t, across) => {
+      const y = 3.5 * (1 - t) + lipHeight(across) * (1 - t), z = -1.0 + 1.25 * Math.pow(t, .65);
+      return [across * fallWidth(t) + .045 * Math.sin(t * 8.7), y, z, across, t];
+    }), fallMaterial);
     fall.renderOrder = 3; this.waterfallGroup.add(fall);
 
     // たきつぼから ほんりゅうへ。いしの あいだを ほそく ながれる。
