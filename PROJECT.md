@@ -4,7 +4,7 @@
 
 本人の「公開して」で [PR27](https://github.com/futsalife24-bot/Ichi-game/pull/27) を統合し、開発者モードを公開。公開前mainは `a3001b50db20e9227a7e9d0cf5f0def9f29a8279`、承認版は `78704c137bc50b730c0d97b20646e47e668c2853`、公開mainは `536f1fd2af28deea9958a0f885b3fcf1761bf771`。[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37583007978) と [Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37583008019) が成功。配信53ファイルと３つの開発者モードURLが公開コミットと一致し、音声一覧708個を維持。公開入口は [第二島の確認](https://futsalife24-bot.github.io/Ichi-game/?dev=forest)。
 
-記録ブランチは `codex/developer-mode-release-record`。制作時の119テスト・UI018の実画面検証は完了。公開後の実画面確認は新しい共有UI貸出待ちで、本人対応は不要。配信の証拠は [公開照合](docs/developer-mode-release-check.json)。以下は公開前の履歴。
+記録ブランチは `codex/developer-mode-release-record`。制作時の119テスト・UI018の実画面検証は完了。公開後もUI023のChrome・844×390で、第二島への直接移動・完成後の広場・第一島への切り替え・通常プロフィール「公開確認」の星３個保持・保護者画面からの入口を確認。警告・エラー０件。画面サイズを戻して確認タブを閉じ、UI023返却済み。配信と実画面の証拠は [公開照合](docs/developer-mode-release-check.json)。以下は公開前の履歴。
 
 ## 完成・未公開：島をすぐ確認する開発者モード（2026-10-07）
 

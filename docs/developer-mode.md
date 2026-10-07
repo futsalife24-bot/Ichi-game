@@ -2,7 +2,11 @@
 
 ## 公開結果（2026-10-07）
 
-本人の公開指示を受け、[PR27](https://github.com/futsalife24-bot/Ichi-game/pull/27) で公開。公開mainは `536f1fd2af28deea9958a0f885b3fcf1761bf771`。[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37583007978) と [Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37583008019) が成功。配信53ファイルと３つの入口を公開コミットのGit原本と照合し、全一致。音声一覧708個を維持。公開後の実画面は新しい共有Chromeの貸出待ち。制作時の実画面検証とは区別し、[公開照合](developer-mode-release-check.json) に記録する。以下の未公開は制作時の履歴。
+本人の公開指示を受け、[PR27](https://github.com/futsalife24-bot/Ichi-game/pull/27) で公開。公開mainは `536f1fd2af28deea9958a0f885b3fcf1761bf771`。[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37583007978) と [Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37583008019) が成功。配信53ファイルと３つの入口を公開コミットのGit原本と照合し、全一致。音声一覧708個を維持。
+
+公開後もUI023のChrome・844×390で、第二島へ直接開始（星１個）、完成後の広場（星２個）、第一島（星０個）の切り替えを確認。通常へ戻ると既存の架空プロフィール「公開確認」と星３個を保持し、保護者画面の入口から再び開発者モードへ入れた。警告・エラー０件。画面サイズを戻し、確認タブを閉じてUI023返却済み。制作時の検証とは分けて [公開照合](developer-mode-release-check.json) に保存。以下の未公開は制作時の履歴。
+
+![公開版の第二島・お手伝い完了後](images/developer-mode-public.png)
 
 - [第二島・はじめから](https://futsalife24-bot.github.io/Ichi-game/?dev=forest)
 - [第二島・お手伝い完了後](https://futsalife24-bot.github.io/Ichi-game/?dev=forest-done)

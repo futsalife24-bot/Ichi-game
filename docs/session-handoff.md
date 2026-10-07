@@ -4,7 +4,7 @@
 
 本人の公開指示を受け [PR27](https://github.com/futsalife24-bot/Ichi-game/pull/27) をmainへ統合。公開前 `a3001b50db20e9227a7e9d0cf5f0def9f29a8279` から、承認対象 `78704c137bc50b730c0d97b20646e47e668c2853` を反映し、公開mainは `536f1fd2af28deea9958a0f885b3fcf1761bf771`。追加のゲーム修正なし。対象HEAD・PR・mainの必須チェックと [Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37583008019) が成功。53配信ファイルと `?dev=forest`・`?dev=forest-done`・`?dev=island` の入口が公開コミットのGit原本と一致。音声708個、SW版 `kirakira-v29-developer-mode`。
 
-公開記録は `codex/developer-mode-release-record`、基点は公開main。証拠は `docs/developer-mode-release-check.json`。公開サイトの実画面確認だけ新しい共有Chromeの貸出待ち。このチャットへ目的・約５分のUI要求を記録した。旧UI018は再利用しない。新貸出で公開版への直接アクセスと場面切り替えを確認する。制作時の119テスト・通常データ保持・別タブ・小さい横画面の実確認は下記の通り成功済みで、変更がない限り繰り返さない。本人の公開承認は受領済み。以下は公開前の履歴。
+公開記録は `codex/developer-mode-release-record`、基点は公開main。証拠は `docs/developer-mode-release-check.json` と `docs/images/developer-mode-public.png`。UI023のChrome・844×390で、第二島へ直接入り、完成後の広場（星２個）・第一島（星０個）へ切り替えた。通常へ戻っても既存の架空プロフィール「公開確認」と星３個を保持。保護者画面から再び開発者モードへ入れることも確認した。警告・エラー０件。最後の遷移直後のDOM取得は一度時間切れになったが、再クリックせずAX画面で正しいURLとタイトルを確認。画面サイズを戻し確認タブを閉じ、UI023返却済み。制作時の119テスト・通常データ保持・別タブ・小さい横画面の実確認は下記の通り成功済み。今回の公開・実画面確認は完了し、再公開や同じテストの繰り返しは不要。実モデルID・推論設定は取得不可で未確認、変更・並列なし。以下は公開前の履歴。
 
 ## 開発者モードの実装・検証完了、未公開（2026-10-07）
 
