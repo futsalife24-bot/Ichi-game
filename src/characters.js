@@ -154,6 +154,7 @@ function paletteOf(color) {
     inner: dark ? tc.clone().lerp(new THREE.Color(0xffd9b0), 0.5).getHex() : 0xffaec9,
     foot: dark ? tc.clone().offsetHSL(0, 0, -0.1).getHex() : tc.clone().lerp(tw, 0.35).getHex(),
     mark: tc.clone().lerp(new THREE.Color(0x6b4a3a), 0.45).getHex(), // ぶち・しま（おちついた いろ）
+    stripe: tc.clone().lerp(new THREE.Color(0x4a3426), 0.6).getHex(), // しましまは すこし こく
   };
 }
 
@@ -171,8 +172,8 @@ function addPattern(pivot, head, def, p) {
     head.add(ball(p.mark, 0.14, 0.185, 0.06, 0.43, 1.2, 1.1, 0.35));
   } else if (def.pattern === 'shima') {
     for (const [a, b] of [[0.2, 0.27], [0.36, 0.43], [0.52, 0.59]]) {
-      const band = new THREE.Mesh(new THREE.SphereGeometry(1, 24, 4, 0, Math.PI * 2, Math.PI * a, Math.PI * (b - a)), toon(p.mark));
-      band.scale.set(0.505, 0.465, 0.445);
+      const band = new THREE.Mesh(new THREE.SphereGeometry(1, 24, 4, 0, Math.PI * 2, Math.PI * a, Math.PI * (b - a)), toon(p.stripe));
+      band.scale.set(0.51, 0.47, 0.47); // おなかの まえにも みえるように
       band.position.y = 0.62;
       pivot.add(band);
     }
