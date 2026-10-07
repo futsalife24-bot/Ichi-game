@@ -1,5 +1,9 @@
 # 次セッションへの引継ぎ（2026-10-04）
 
+## 開発者モードの実装・自動検証完了、実画面確認待ち（2026-10-07）
+
+本人の「すぐに次の島の確認が出来る開発者モードを実装して」に対応。ブランチ `codex/developer-island-preview`、基点 `abf94a1c1026a4bc608912ea9b9fca540abb7c0f`。端末保存を使わない確認用プロフィールを用意し、`?dev=forest`・`?dev=forest-done`・`?dev=island` の３場面を追加。通常タイトルの保護者画面にも入口を追加。切り替えメニュー中は進行と時間を止める。自動テスト119件・音声708個の完全性・構文確認・差分の空白確認は成功。実画面は共有Chromeの貸出待ちで、このチャットに目的と約10分のUI要求を記録済み。確認サーバーは `http://127.0.0.1:5187/`。新規公開の承認は受けておらず、mainは `a3001b50db20e9227a7e9d0cf5f0def9f29a8279` のまま。詳しくは [開発者モード](developer-mode.md)。
+
 ## 第二島の公開・配信照合・公開画面の確認完了（2026-10-07）
 
 本人の「公開して」でPR26をmainへ統合し、GitHub Pages公開成功。公開前main `61b59da305e5311fb0a2bba8a902911d1d29fb69` のキャラ作り直し修正を作業版へ取り込んだ後、112テストと音声完全性・PR必須チェックを再確認。PR対象HEAD `4ed0092e23a20d2fd44f3543d62d770240d14cfd`、公開main `a3001b50db20e9227a7e9d0cf5f0def9f29a8279`。[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37575015785)・[Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37575015826) が成功。62配信ファイルはGit原本と全一致、音声一覧は708個、追加10MP3も全一致。証拠は `docs/second-island-release-check.json`。音声原本の再取得・再生成は不要。

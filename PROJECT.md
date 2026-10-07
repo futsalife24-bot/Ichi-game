@@ -1,5 +1,9 @@
 # キラキラアイランドの作業入口
 
+## 作業中：島をすぐ確認する開発者モード（2026-10-07）
+
+本人の依頼で `codex/developer-island-preview`、基点 `abf94a1c1026a4bc608912ea9b9fca540abb7c0f` に実装。確認専用の一時プロフィールで第二島のはじめ・完成後・第一島を選べる。通常の保存先とロックには触れず、切り替え・再読み込みで確認状態をリセットする。自動テスト119件・音声708個の完全性・構文確認は成功。共有Chromeの新しい貸出を待って実画面確認を行う。未公開。仕様と検証は [開発者モード](docs/developer-mode.md)。以下は公開済みの状態と履歴。
+
 ## 最新状態：花のお手伝いと第二島を公開（2026-10-07）
 
 本人の「公開して」を受け、[PR26](https://github.com/futsalife24-bot/Ichi-game/pull/26) をmainへ統合。公開前mainのPR25「キャラ作り直し中に衣装を外す」修正を取り込み、自動テスト112件と音声完全性を再確認した。公開mainは `a3001b50db20e9227a7e9d0cf5f0def9f29a8279`。[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37575015785) と [GitHub Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37575015826) は成功。配信62ファイルは公開コミットのGit原本と全て一致し、音声一覧708個・追加MP3全10個の一致を確認。
