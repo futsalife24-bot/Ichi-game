@@ -6764,5 +6764,107 @@
         "sha256": "d2e0da5a7d90b45251299f1f6e074daf787a0e2254b435dc2d1da2fa7d5e45c9"
       }
     ]
+  },
+  {
+    "batchId": 27,
+    "status": "imported",
+    "filename": "batch-27-source.wav",
+    "sourceSha256": "0871e404b73aaf344b12f2a3fc13852cb953cf67502dd77451174bd5e5054ed5",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 90.64,
+    "peak": 28153,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "9ca1b591",
+        "text": "おはなをさんぼんあつめて、いぬさんにとどけよう！",
+        "reading": "おはなをさんぼんあつめて、いぬさんにとどけよう！",
+        "from": 0.2,
+        "to": 4.01,
+        "duration": 3.81,
+        "sha256": "ebeb2b3cce8e7611109950f5d89555300bbb30fcf0ed4146eac8faaaed42ac5c"
+      },
+      {
+        "hash": "770cd4db",
+        "text": "おはながそろったよ！",
+        "reading": "おはながそろったよ！",
+        "from": 14.82,
+        "to": 16.65,
+        "duration": 1.83,
+        "sha256": "e801b679d5d7c83ee88c491b32bb2f4d7668170f72d1378094061e35baf3e4e8"
+      },
+      {
+        "hash": "a8a8a621",
+        "text": "いぬさんにとどけよう！",
+        "reading": "いぬさんにとどけよう！",
+        "from": 24.1,
+        "to": 25.52,
+        "duration": 1.42,
+        "sha256": "3546439d73ef879a6b0dc2af2a4bdc35f09920de3e07b13f70bef32b5abbab21"
+      },
+      {
+        "hash": "18779056",
+        "text": "おうちのまえにおはなをかざったよ！",
+        "reading": "おうちのまえにおはなをかざったよ！",
+        "from": 35.77,
+        "to": 38.23,
+        "duration": 2.46,
+        "sha256": "8b7a814a996f2f27da502b3a7d6473bcfb0f83c7bfe5ba61523173e964a9fb09"
+      },
+      {
+        "hash": "bf8606d5",
+        "text": "こもれびのしまへようこそ！",
+        "reading": "こもれびのしまへようこそ！",
+        "from": 43.98,
+        "to": 45.9,
+        "duration": 1.92,
+        "sha256": "ac30471dce9746e0d93de07d2d0579cd95e68c1dc358f254d818b7feb19349c7"
+      },
+      {
+        "hash": "8a1c637e",
+        "text": "はしをわたってあそぼう！",
+        "reading": "はしをわたってあそぼう！",
+        "from": 52.05,
+        "to": 54.02,
+        "duration": 1.97,
+        "sha256": "4efa0eff1048aef73ca90865104f5b5ba25876da76397e9f0534fb527dc54ae4"
+      },
+      {
+        "hash": "39f63ef0",
+        "text": "はっぱをさんまいあつめて、かえるさんにとどけよう！",
+        "reading": "はっぱをさんまいあつめて、かえるさんにとどけよう！",
+        "from": 60.3,
+        "to": 63.9,
+        "duration": 3.6,
+        "sha256": "0488c8144226518a8f399ecb9e494caa0e325b3fad932fdb135a3fa161d262ec"
+      },
+      {
+        "hash": "09c0c3a5",
+        "text": "はっぱがそろったよ！",
+        "reading": "はっぱがそろったよ！",
+        "from": 69.95,
+        "to": 71.64,
+        "duration": 1.69,
+        "sha256": "724e57836a5d8635596701baa0dd5a804c4d692ae131a1d261a1929f3d56256d"
+      },
+      {
+        "hash": "1cfc11f3",
+        "text": "かえるさんにとどけよう！",
+        "reading": "かえるさんにとどけよう！",
+        "from": 77.14,
+        "to": 78.62,
+        "duration": 1.48,
+        "sha256": "e8e6f93b567d2fe23d57762ce411d4352acb9291b1f6aa71d24fb5850b007acf"
+      },
+      {
+        "hash": "739d344e",
+        "text": "もりのひろばをかざったよ！",
+        "reading": "もりのひろばをかざったよ！",
+        "from": 88.36,
+        "to": 90.4,
+        "duration": 2.04,
+        "sha256": "70c4c6940ef352f98d590877bdb1935711667257dff769cfb7b93f65245d62a0"
+      }
+    ]
   }
 ]

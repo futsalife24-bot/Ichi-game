@@ -15,6 +15,7 @@ import { PERIODS, SEASONS, NAMES } from '../src/catalog.js';
 import { FRUITS } from '../src/props.js';
 const samples=[['ごあいさつ',L.welcome('ももちゃん',PERIODS.asa,SEASONS.aki)],['ほめ言葉',withPraise({say:'せいかい！',sub:'せいかい！'},'じょうず！')],['色',L.rainbow()],['集める数',L.countAsk(Object.values(FRUITS)[0],3)],['学校',L.schoolCountRight(8,THINGS[0])],['学校の案内',L.schoolWelcome()],['お買い物',L.buy({name:'くまの ぬいぐるみ'})],['売る',L.sell(99)],['図鑑',L.zukan(0)],['図鑑が増えた',L.zukan(30)]];
 samples.push(['お手伝いのお願い',L.helpIntro()],['りんごを集める',L.helpCollect()],['ひよこへお届け',L.helpDeliver()],['お手伝いのお礼',L.helpDone()]);
+samples.push(['花のお願い',L.flowerIntro()],['花のお届け',L.flowerDeliver()],['花のお礼',L.flowerDone()],['第二島へ到着',L.forestWelcome()],['葉っぱのお願い',L.leafIntro()],['葉っぱのお届け',L.leafDeliver()],['森の広場のお礼',L.leafDone()]);
 for(let i=0;i<5;i++)samples.push(['キャラメイク '+(i+1),L.makerStep(i)]);
 samples.push(['たまごから誕生',L.hatch()],['名前つきのあいさつ',L.born('ももちゃん')]);
 for(const n of NAMES)samples.push(['呼びかけ '+n.name,L.call(n.name+'ちゃん')]);

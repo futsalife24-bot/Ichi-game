@@ -1,0 +1,72 @@
+[
+  {
+    "batchId": 27,
+    "hash": "9ca1b591",
+    "expected": "おはなをさんぼんあつめて、いぬさんにとどけよう！",
+    "sha256": "ebeb2b3cce8e7611109950f5d89555300bbb30fcf0ed4146eac8faaaed42ac5c",
+    "recognized": "お花を3本集めて犬さんに届けよう"
+  },
+  {
+    "batchId": 27,
+    "hash": "770cd4db",
+    "expected": "おはながそろったよ！",
+    "sha256": "e801b679d5d7c83ee88c491b32bb2f4d7668170f72d1378094061e35baf3e4e8",
+    "recognized": "お花が揃ったよ。"
+  },
+  {
+    "batchId": 27,
+    "hash": "a8a8a621",
+    "expected": "いぬさんにとどけよう！",
+    "sha256": "3546439d73ef879a6b0dc2af2a4bdc35f09920de3e07b13f70bef32b5abbab21",
+    "recognized": "犬さんに届けよう"
+  },
+  {
+    "batchId": 27,
+    "hash": "18779056",
+    "expected": "おうちのまえにおはなをかざったよ！",
+    "sha256": "8b7a814a996f2f27da502b3a7d6473bcfb0f83c7bfe5ba61523173e964a9fb09",
+    "recognized": "おうちの前にお花を飾ったよ"
+  },
+  {
+    "batchId": 27,
+    "hash": "bf8606d5",
+    "expected": "こもれびのしまへようこそ！",
+    "sha256": "ac30471dce9746e0d93de07d2d0579cd95e68c1dc358f254d818b7feb19349c7",
+    "recognized": "こもれ日の島へようこそ"
+  },
+  {
+    "batchId": 27,
+    "hash": "8a1c637e",
+    "expected": "はしをわたってあそぼう！",
+    "sha256": "4efa0eff1048aef73ca90865104f5b5ba25876da76397e9f0534fb527dc54ae4",
+    "recognized": "橋を渡って遊ぼう"
+  },
+  {
+    "batchId": 27,
+    "hash": "39f63ef0",
+    "expected": "はっぱをさんまいあつめて、かえるさんにとどけよう！",
+    "sha256": "0488c8144226518a8f399ecb9e494caa0e325b3fad932fdb135a3fa161d262ec",
+    "recognized": "葉っぱを3枚集めて、カエルさんに届けよう"
+  },
+  {
+    "batchId": 27,
+    "hash": "09c0c3a5",
+    "expected": "はっぱがそろったよ！",
+    "sha256": "724e57836a5d8635596701baa0dd5a804c4d692ae131a1d261a1929f3d56256d",
+    "recognized": "葉っぱが揃ったよ"
+  },
+  {
+    "batchId": 27,
+    "hash": "1cfc11f3",
+    "expected": "かえるさんにとどけよう！",
+    "sha256": "e8e6f93b567d2fe23d57762ce411d4352acb9291b1f6aa71d24fb5850b007acf",
+    "recognized": "カイルさんに届けよう"
+  },
+  {
+    "batchId": 27,
+    "hash": "739d344e",
+    "expected": "もりのひろばをかざったよ！",
+    "sha256": "70c4c6940ef352f98d590877bdb1935711667257dff769cfb7b93f65245d62a0",
+    "recognized": "森の広場を飾ったよ"
+  }
+]

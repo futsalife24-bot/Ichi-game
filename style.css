@@ -412,6 +412,18 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 .help-focus #btnHome { min-width: 52px; min-height: 52px; }
 .help-focus #subtitle { max-width: 48vw; bottom: 10px; pointer-events: none; }
 #savePanel { z-index: 120; }
+#adventureActions { position: absolute; right: 14px; bottom: calc(var(--u) * 32 + var(--safe-b) + 12px); display: flex; flex-direction: column; gap: 8px; align-items: end; }
+#adventureActions button, #adventureBack { min-height: 48px; padding: 10px 16px; border-radius: 16px; background: #d7f0df; font: inherit; font-weight: 800; font-size: clamp(16px, 2.8vh, 22px); box-shadow: 0 3px 0 #accdbb; }
+#adventurePause { background: #fff3cb !important; }
+#adventureBack { position: absolute; left: 14px; top: 30%; }
+#adventurePanel button:disabled { opacity: .5; cursor: default; }
+#adventureMessage { white-space: pre-line; }
+#placeLabel { position: absolute; top: 16px; left: 50%; transform: translateX(-50%); padding: 8px 12px; border-radius: 18px; background: #fff9e9; font-weight: 800; font-size: clamp(16px, 3vh, 22px); pointer-events: none; }
+.forest-place #helpReturn, .forest-place #helpQuiz, .forest-place #btnQuestHint { display: none; }
+.adventure-focus #pills, .adventure-focus #sideBtns, .adventure-focus #helpReturn, .adventure-focus #helpQuiz, .adventure-focus #btnQuestHint { display: none; }
+.adventure-focus #questCard { left: 14px; transform: none; max-width: calc(100vw - 180px); }
+.adventure-focus #questText { font-size: clamp(16px, 3.2vh, 24px); }
+.adventure-focus #subtitle { max-width: 48vw; bottom: 10px; }
 #profilePanel { z-index: 100; }
 #recordsPanel { z-index: 130; }
 #recordsPanel .help-sheet { width: min(760px, 96vw); padding: 12px 16px; }

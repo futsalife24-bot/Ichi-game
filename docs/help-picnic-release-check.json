@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-05T11:32:45.041Z",
+  "base": "https://futsalife24-bot.github.io/Ichi-game/",
+  "merge": "1a8f6f90d5af7ee52a5c0a836cb139cd8f6dae92",
+  "files": [
+    {
+      "file": "index.html",
+      "status": 200,
+      "equal": true,
+      "sha256": "046aab15bc7065972bec53d366194a3d17a7f836a1f3b72c8a6fdb1f114f6ae1",
+      "expectedSha256": "046aab15bc7065972bec53d366194a3d17a7f836a1f3b72c8a6fdb1f114f6ae1"
+    },
+    {
+      "file": "style.css",
+      "status": 200,
+      "equal": true,
+      "sha256": "e727fb49a7301b193b897fe860efca6c06391e74b1d0e47e3148e7a4f2e39066",
+      "expectedSha256": "e727fb49a7301b193b897fe860efca6c06391e74b1d0e47e3148e7a4f2e39066"
+    },
+    {
+      "file": "manifest.webmanifest",
+      "status": 200,
+      "equal": true,
+      "sha256": "237ac368e739a0f399e44530172634b1a3b30a93ffa1dd528e31515a6dc260d7",
+      "expectedSha256": "237ac368e739a0f399e44530172634b1a3b30a93ffa1dd528e31515a6dc260d7"
+    },
+    {
+      "file": "sw.js",
+      "status": 200,
+      "equal": true,
+      "sha256": "00156729e66103a18b434faabd65e30b55f540ca6f14198a8b9b1fc9e26909b4",
+      "expectedSha256": "00156729e66103a18b434faabd65e30b55f540ca6f14198a8b9b1fc9e26909b4"
+    },
+    {
+      "file": "src/main.js",
+      "status": 200,
+      "equal": true,
+      "sha256": "72cc07659477e68abe9dc0cca745090cd03c989e25c7fa921893815383a4c350",
+      "expectedSha256": "72cc07659477e68abe9dc0cca745090cd03c989e25c7fa921893815383a4c350"
+    },
+    {
+      "file": "src/help.js",
+      "status": 200,
+      "equal": true,
+      "sha256": "962c3da601fbbed92981bf47256892ac9c4c2c353660e513d4ae754c580c2f1e",
+      "expectedSha256": "962c3da601fbbed92981bf47256892ac9c4c2c353660e513d4ae754c580c2f1e"
+    },
+    {
+      "file": "src/lines.js",
+      "status": 200,
+      "equal": true,
+      "sha256": "86228a6b1dc3a0b9e53870323f583d28655449095411df7fc218d664d1764b85",
+      "expectedSha256": "86228a6b1dc3a0b9e53870323f583d28655449095411df7fc218d664d1764b85"
+    },
+    {
+      "file": "voice/index.json",
+      "status": 200,
+      "equal": true,
+      "sha256": "1197ea36b034fd73f000d2047f9e615a9f4a4f7b92bbc235a2dc4b0eb6a56adb",
+      "expectedSha256": "1197ea36b034fd73f000d2047f9e615a9f4a4f7b92bbc235a2dc4b0eb6a56adb"
+    }
+  ],
+  "voices": 698,
+  "browser": {
+    "name": "Chrome",
+    "fixture": "架空の公開確認",
+    "delivered": true,
+    "freePlayPicnicVisible": true,
+    "stars": 1,
+    "warnings": 0,
+    "errors": 0,
+    "screenshot": "artifacts/help-picnic-public.png"
+  }
+}

@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v26-help-picnic';
+const VERSION = 'kirakira-v28-second-island-voice';
 const ASSETS = [
   './',
   './index.html',
@@ -34,6 +34,9 @@ const ASSETS = [
   './src/birthday-ui.js',
   './src/save-ui.js',
   './src/help.js',
+  './src/adventure-state.js',
+  './src/adventure.js',
+  './src/forest.js',
   './src/help-state.js',
   './src/school.js',
   './src/canvas.js',

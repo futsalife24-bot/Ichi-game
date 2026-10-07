@@ -37,6 +37,8 @@ export function setupTimeUI(save,persist,label,{onContinue,onFinish}={}) {
       if(s){
         add(`🕒 あそんだ じかん：${Math.floor(s.elapsedMs/60000)}ふん ${Math.floor(s.elapsedMs/1000)%60}びょう`);
         add(`🐥 おてつだい：${s.help}かい`);
+        if(s.gifts.includes('flower'))add('🌼 おはなを とどけた！');
+        if(s.gifts.includes('leaf'))add('🍃 もりの ひろばを かざった！');
         for(const [k,name] of Object.entries(DOMAINS)){const d=s.domains[k];if(d.completed)add(`${name}の あそび：${d.completed}かい できた（ヒントといっしょに ${d.withHint}かい）`);}
       }
       $('timeContinue').textContent=canContinue?'つづけて あそぶ':'ゲームに もどる';

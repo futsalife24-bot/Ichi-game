@@ -1,5 +1,6 @@
 // セーブデータ（このたんまつの localStorage に ほぞん）
 import { validHelp } from './help-state.js';
+import { validAdventure } from './adventure-state.js';
 import { validObservations } from './observations.js';
 import { validPlaySettings } from './play-settings.js';
 import { validPlayTime } from './play-time.js';
@@ -43,6 +44,7 @@ export function validateGameSave(data) {
   if (!object(s.shop) || typeof s.shop.day !== 'string' || !Array.isArray(s.shop.sold) || !s.shop.sold.every(count)) throw new Error('お店の記録を確認してください');
   if (typeof s.bgm !== 'boolean' || typeof s.voice !== 'boolean' || (s.avatar !== null && !object(s.avatar)) || (s.outfit !== null && !object(s.outfit))) throw new Error('設定の記録を確認してください');
   if (s.help !== undefined && !validHelp(s.help)) throw new Error('おてつだいの記録を確認してください');
+  if (s.adventure !== undefined && !validAdventure(s.adventure)) throw new Error('ぼうけんの記録を確認してください');
   if (s.observations !== undefined && !validObservations(s.observations)) throw new Error('活動記録の形式を確認してください');
   if (s.playSettings !== undefined && !validPlaySettings(s.playSettings)) throw new Error('遊びの設定を確認してください');
   if (s.playTime !== undefined && !validPlayTime(s.playTime)) throw new Error('遊ぶ時間の記録を確認してください');

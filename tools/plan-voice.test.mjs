@@ -4,6 +4,7 @@ import { mkdtempSync, cpSync, readFileSync, rmSync, writeFileSync } from 'node:f
 import { tmpdir } from 'node:os';
 import { join, resolve, sep } from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { allLines, pendingLines, segments, clipKey, clipHash } from '../src/lines.js';
 
 test('追加計画は既存のバッチと発音修正を保持し、再実行しても重複しない', () => {
   const work = mkdtempSync(join(tmpdir(), 'ichi-voice-plan-'));
@@ -14,16 +15,18 @@ test('追加計画は既存のバッチと発音修正を保持し、再実行�
     }
     const path = join(work, 'assets-src/gemini-tts/plan.json');
     const before = JSON.parse(readFileSync(path));
-    // ついかまえの 691この きろくから、おてつだいの 7こを ためす。
+    // ついかまえの きろくから、いまの ついかぶんを ためす。
     before.batches = before.batches.slice(0, 26);
     before.clips = new Set(before.batches.flat().map(clip => clip.hash)).size;
+    const known = new Set(before.batches.flat().map(clip => clip.hash));
+    const added = new Set([...allLines(), ...pendingLines()].flatMap(segments).map(s => clipHash(clipKey(s))).filter(h => !known.has(h)));
     writeFileSync(path, JSON.stringify(before));
     const run = () => execFileSync(process.execPath, ['--import', './tools/register.mjs', 'tools/gen-voice.mjs', '--plan', '--append', '--pending'], { cwd: work });
     run();
     const first = JSON.parse(readFileSync(path));
     assert.deepEqual(first.batches.slice(0, before.batches.length), before.batches);
-    assert.equal(first.clips, before.clips + 7);
-    assert.deepEqual(first.batches.slice(before.batches.length).map(batch => batch.length), [7]);
+    assert.equal(first.clips, before.clips + added.size);
+    assert.deepEqual(new Set(first.batches.slice(before.batches.length).flat().map(c => c.hash)), added);
     assert.ok(first.batches.slice(before.batches.length).every(batch => batch.length <= 10));
     run();
     assert.deepEqual(JSON.parse(readFileSync(path)), first);
