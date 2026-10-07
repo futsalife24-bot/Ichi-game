@@ -1,5 +1,9 @@
 # キラキラアイランドの作業入口
 
+## 作業中：第二島の描写・広さを作り直す（2026-10-07）
+
+本人の品質指摘とBlender・ネット資料・サブエージェント使用指示を受け、`codex/second-island-craft`（基点 `37ddb2b1d7a8a68f8c314a7d94dfe758bd832fc6`）で改修。半径46の起伏ある島、蛇行川・滝・二つの橋、Blenderの広葉樹・根・樹皮・シダ・苔岩・切り株・倒木、地面の混色と凹凸を統合。素材を含む実移動、任意位置からの経路、橋と桟橋接地、通常記録・音声維持を検証し130テスト成功。道153地点の主人公への木の遮りは０。共有Chromeの貸出待ちで実画面の品質と負荷は未判定。未公開。正本は [作り込みと検証記録](docs/second-island-craft.md)、[制作資料](docs/second-island-art-references.md)、[Blender原本](assets-src/forest/README.md)。以下は公開済み版の履歴。
+
 ## 最新状態：開発者モードを公開（2026-10-07）
 
 本人の「公開して」で [PR27](https://github.com/futsalife24-bot/Ichi-game/pull/27) を統合し、開発者モードを公開。公開前mainは `a3001b50db20e9227a7e9d0cf5f0def9f29a8279`、承認版は `78704c137bc50b730c0d97b20646e47e668c2853`、公開mainは `536f1fd2af28deea9958a0f885b3fcf1761bf771`。[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37583007978) と [Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37583008019) が成功。配信53ファイルと３つの開発者モードURLが公開コミットと一致し、音声一覧708個を維持。公開入口は [第二島の確認](https://futsalife24-bot.github.io/Ichi-game/?dev=forest)。

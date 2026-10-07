@@ -30,7 +30,7 @@ import { setupBirthdayUI } from './birthday-ui.js';
 import { L } from './lines.js';
 import { Help } from './help.js';
 import { Adventure } from './adventure.js';
-import { Forest, FOREST_SPAWN, DOCK } from './forest.js';
+import { Forest, FOREST_SPAWN, FOREST_DOCK, DOCK } from './forest.js';
 import { FOREST_ORIGIN, LEAF_HOST } from './adventure-state.js';
 import { setupSaveUI } from './save-ui.js';
 
@@ -609,15 +609,25 @@ function leavePlace(instant = false) {
 }
 
 const doorArmed = { school: true, room: true };
-function visitForest(preview = null) {
+let forestLoading = false;
+async function visitForest(preview = null) {
   if (place !== 'island' || !adventure.unlocked || !adventure.canAct()) return;
+  if (forestLoading) return;
+  if (!forest.assetsLoaded) {
+    forestLoading = true;
+    ui.subtitle('もりを じゅんびしているよ', 12000);
+    try { await forest.loadAssets(); }
+    catch { ui.subtitle('もりを よめなかったよ。もういちど ためしてね', 6000); return; }
+    finally { forestLoading = false; }
+    if (place !== 'island' || !adventure.canAct()) return;
+  }
   quests.stop(); if (saveBlocked) return;
   life.endFishing(); voice.stop(); audio.meet();
   transition(() => {
     setOutdoorVisible(false); place = 'forest'; forest.group.visible = true;
     boatArmed = false;
     const spawn = preview === 'forest-done' ? { x: LEAF_HOST.x, z: LEAF_HOST.z + 3 } : FOREST_SPAWN;
-    player.teleport(FOREST_ORIGIN.x + spawn.x, 0, spawn.z, Math.PI);
+    player.teleport(FOREST_ORIGIN.x + spawn.x, forest.groundAt(FOREST_ORIGIN.x + spawn.x, spawn.z), spawn.z, Math.PI);
     document.body.classList.add('forest-place');
     adventure.view = preview === 'forest-done' ? null : 'menu'; adventure.render();
     voice.say(L.forestWelcome()); snapCamera();
@@ -636,7 +646,7 @@ function leaveForest(instant = false) {
 let boatArmed = true;
 function boatCheck() {
   if (!adventure.canAct() || adventure.focused || adventure.modal || !adventure.unlocked || !['island','forest'].includes(place)) return;
-  const boat = place === 'forest' ? {x:FOREST_ORIGIN.x,z:18.3} : {x:DOCK.x,z:DOCK.z+2};
+  const boat = place === 'forest' ? {x:FOREST_ORIGIN.x+FOREST_DOCK.x,z:FOREST_DOCK.z+2} : {x:DOCK.x,z:DOCK.z+2};
   const d = Math.hypot(player.pos.x-boat.x,player.pos.z-boat.z);
   if(d>5)boatArmed=true;
   if(d<2.9 && boatArmed){boatArmed=false;adventure.open();}

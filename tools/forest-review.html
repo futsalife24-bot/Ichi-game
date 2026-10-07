@@ -1,0 +1,32 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第二島の描画確認</title>
+<style>body{margin:0;background:#eaf4db;color:#25382b;font:14px sans-serif}canvas{display:block;width:100vw;height:100vh}nav{position:fixed;top:10px;left:10px;display:flex;flex-wrap:wrap;gap:5px;max-width:95vw}button{background:#fff9e8;border:1px solid #486b55;border-radius:8px;padding:9px;font:inherit}output{position:fixed;bottom:10px;left:12px;white-space:pre-line;background:#fff9e8dd;border-radius:8px;padding:9px;pointer-events:none}</style>
+<script type="importmap">{"imports":{"three":"../vendor/three.module.js"}}</script>
+<canvas id="view"></canvas><nav><button data-view="first">第一島・比較</button><button data-view="arrival">船着き場</button><button data-view="bridge">渓流と橋</button><button data-view="waterfall">滝と岩場</button><button data-view="plaza">森の広場</button><button data-view="grove">木と林床</button><button data-view="overview">島全景</button></nav><output id="status">素材を準備しています</output>
+<script type="module">
+import * as THREE from 'three';
+import {World,getHeight} from '../src/world.js';
+import {Forest} from '../src/forest.js';
+import {Player} from '../src/player.js';
+import {PRESETS} from '../src/characters.js';
+import {FOREST_ORIGIN} from '../src/adventure-state.js';
+const renderer=new THREE.WebGLRenderer({canvas:document.querySelector('canvas'),antialias:true,powerPreference:'high-performance'});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFShadowMap;
+const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(48,1,.1,700),world=new World(scene),outside=[...scene.children],forest=new Forest(scene),player=new Player(scene,PRESETS.usagi);
+let view='arrival',focus=new THREE.Vector3(),last=performance.now(),time=0,samples=[],frames=0,ready=false;
+const status=document.querySelector('output');
+function resize(){renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();}resize();addEventListener('resize',resize);
+function choose(name){view=name;samples=[];frames=0;const first=name==='first';
+  for(const o of outside)o.visible=first||[world.sunLight,world.sunLight.target,world.hemi].includes(o);
+  forest.group.visible=!first;scene.background=first?null:new THREE.Color(0xa7dce0);
+  const points={first:[0,2],arrival:[0,33],bridge:[0,6.4],waterfall:[-31,-1.5],plaza:[3,-23],grove:[-18,19],overview:[0,0]};
+  const [x,z]=points[name],y=first?getHeight(x,z):forest.groundAt(FOREST_ORIGIN.x+x,z),origin=first?0:FOREST_ORIGIN.x;
+  focus.set(origin+x,y,z);player.teleport(focus.x,focus.y,focus.z,Math.PI);player.marker.visible=false;
+  camera.position.copy(focus).add(name==='overview'?new THREE.Vector3(58,82,72):new THREE.Vector3(0,9,11));camera.lookAt(focus.clone().add(new THREE.Vector3(0,1,0)));
+}
+for(const b of document.querySelectorAll('button'))b.onclick=()=>choose(b.dataset.view);
+try{await forest.loadAssets();forest.refresh({stage:'done',collected:[0,1,2]});ready=true;choose(view);}catch(e){status.textContent='読込失敗：'+e.message;throw e;}
+function frame(now){const ms=now-last,dt=Math.min(.05,ms/1000);last=now;time+=dt;if(ready){forest.update(dt,time);world.update(dt,focus);renderer.render(scene,camera);frames++;if(frames>30)samples.push(ms);if(samples.length>240)samples.shift();
+  if(frames%30===0){const sorted=[...samples].sort((a,b)=>a-b),p=n=>sorted[Math.floor((sorted.length-1)*n)]||0;status.textContent=`${view}｜${innerWidth}×${innerHeight}｜経過 ${frames}フレーム\nフレーム中央値 ${p(.5).toFixed(1)}ms / 95% ${p(.95).toFixed(1)}ms\n描画 ${renderer.info.render.calls}回 / 三角形 ${renderer.info.render.triangles.toLocaleString()} / 素材読込 ${forest.assetsLoaded?'完了':'未完了'}`;}
+}requestAnimationFrame(frame);}requestAnimationFrame(frame);
+</script></html>

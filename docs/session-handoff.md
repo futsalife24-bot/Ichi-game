@@ -1,5 +1,11 @@
 # 次セッションへの引継ぎ（2026-10-04）
 
+## 第二島の品質改修・実画面確認前（2026-10-07）
+
+本人が第一島より品質が落ちたと指摘し、より広い島、第一島以上の描写、水の流れ、木と地面の質感、ネット資料調査、Blender制作、サブエージェント利用を指示。主担当＋３サブ担当で制作と数値レビューを実施。新作業ブランチ `codex/second-island-craft`、基点 `37ddb2b1d7a8a68f8c314a7d94dfe758bd832fc6`。公開mainは下記の開発者モード版のまま。
+
+実装・修正経緯は `docs/second-island-craft.md`。Blender原本とゲーム形状は `assets-src/forest/`・`assets/forest/`。保存形式・報酬条件は維持、音声変更なし。130テスト・708音声・７素材の検査成功。道153地点で樹冠の主人公遮り０。川岸/橋/桟橋の高さと任意位置経路を修正済み。次は共有Chromeの新貸出で `http://127.0.0.1:5187/tools/forest-review.html` の第一島同条件比較、船着き場/橋/滝/広場/林床/全景、`/?dev=forest` の実ゲーム一周を確認。要求はこのチャットへ約15分と記録済み。UI023を再利用しない。起動中のローカルサーバーはexec session `17294`。ブラウザー未確認を完成扱いせず、実画像と描画負荷を記録する。公開は別途本人の指示を受ける。
+
 ## 開発者モードの公開・配信照合完了（2026-10-07）
 
 本人の公開指示を受け [PR27](https://github.com/futsalife24-bot/Ichi-game/pull/27) をmainへ統合。公開前 `a3001b50db20e9227a7e9d0cf5f0def9f29a8279` から、承認対象 `78704c137bc50b730c0d97b20646e47e668c2853` を反映し、公開mainは `536f1fd2af28deea9958a0f885b3fcf1761bf771`。追加のゲーム修正なし。対象HEAD・PR・mainの必須チェックと [Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37583008019) が成功。53配信ファイルと `?dev=forest`・`?dev=forest-done`・`?dev=island` の入口が公開コミットのGit原本と一致。音声708個、SW版 `kirakira-v29-developer-mode`。
