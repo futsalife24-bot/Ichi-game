@@ -1,3 +1,4 @@
+import { adaptiveLevel } from './adaptive-play.js';
 export const SETTING_DOMAINS = {
   color:{label:'色',levels:4},shape:{label:'形',levels:2},count:{label:'数',levels:4},language:{label:'言葉（難しさはひらがな）',levels:3},
 };
@@ -11,10 +12,10 @@ export function validPlaySettings(s) {
   });
 }
 // あそびの はじめに きめて、とちゅうでは かえない。
-export function resolvePlaySettings(settings,type,stars) {
+export function resolvePlaySettings(settings,type,stars,adaptivePlay) {
   if (settings!==undefined && !validPlaySettings(settings)) throw Error('遊びの設定を確認してください');
   const d=(settings??newPlaySettings()).domains[domainOf[type]];
   if (!d) throw Error('遊びの種類を確認してください');
-  const legacy=Math.min(3,Math.floor(stars/5));
-  return {level:type==='animal'?legacy:(d.level??legacy),hints:d.hints};
+  const automatic=type!=='animal' && d.level===null;
+  return {level:type==='animal'?0:(d.level??adaptiveLevel(adaptivePlay,type)),hints:d.hints,automatic};
 }

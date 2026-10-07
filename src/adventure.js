@@ -5,6 +5,7 @@ import { getHeight } from './world.js';
 import { FLOWER_SPOTS, FLOWER_HOST, LEAF_SPOTS, LEAF_HOST, FOREST_ORIGIN, newAdventure, adventureAction } from './adventure-state.js';
 import { L } from './lines.js';
 import { makeBoat, DOCK } from './forest.js';
+import { nextIslandGuidance, islandGuidanceAction } from './island-guidance.js';
 const $ = id => document.getElementById(id);
 export class Adventure {
   constructor(opts) {
@@ -27,20 +28,49 @@ export class Adventure {
     bind('adventureGo', () => { if (!this.modal) this.go(); }); bind('adventurePause', () => this.stop());
     bind('adventureBack', () => { this.stop(); this.onReturn?.(); });
     bind('adventureReturn', () => { this.stop(); this.onReturn?.(); });
+    bind('adventureGuidanceAccept', () => this.acceptGuidance()); bind('adventureGuidanceLater', () => this.stop());
+    bind('adventureDoneSail', () => { if (this.unlocked) { this.stop(); this.onSail?.(); } });
+    bind('adventureStay', () => this.stop());
   }
   get state() { return this.save.adventure ?? newAdventure(); }
   get current() { return this.task ? this.state[this.task] : null; }
   get focused() { return this.task !== null; }
   get modal() { return this.view !== null; }
   get unlocked() { return this.state.flower.stage === 'done'; }
-  open() { this.quests.stop(); if (!this.canAct()) return; this.player.setTarget(null); this.route = []; this.view = 'menu'; this.render(); }
-  choose(task) { if (task === 'leaf' && !this.unlocked) return; this.task = task; this.view = this.current.stage === 'done' ? 'done' : 'intro'; this.render(); this.repeat(); }
+  open() { this.quests.stop(); if (!this.canAct()) return; this.guidance = null; this.player.setTarget(null); this.route = []; this.view = 'menu'; this.render(); }
+  choose(task) {
+    if (task === 'leaf' && !this.unlocked) return;
+    if (task === 'flower' && this.unlocked && nextIslandGuidance(this.save) === 'sail' && !this.saveGuidance('offerSail')) return;
+    this.guidance = null; this.task = task; this.view = this.current.stage === 'done' ? 'done' : 'intro'; this.render(); this.repeat();
+  }
   accept() { if (!this.task || (this.current.stage === 'available' && !this.act('accept'))) return; this.view = null; this.render(); this.repeat(); }
-  stop() { this.task = null; this.view = null; this.route = []; this.player.setTarget(null); this.effects.hideGuide(); this.ui.setQuest(null); this.render(); }
+  stop() { this.guidance = null; this.task = null; this.view = null; this.route = []; this.player.setTarget(null); this.effects.hideGuide(); this.ui.setQuest(null); this.render(); }
+  saveGuidance(action) {
+    const next = islandGuidanceAction(this.save, action); if (next === this.save) return false;
+    const before = this.save.islandGuidance, existed = Object.hasOwn(this.save, 'islandGuidance');
+    this.save.islandGuidance = next.islandGuidance;
+    let saved = false; try { saved = this.persist() === true; } catch { /* ほぞんできなければ、あんないも ださない。 */ }
+    if (!saved) { if (existed) this.save.islandGuidance = before; else delete this.save.islandGuidance; }
+    return saved;
+  }
+  offerGuidance() {
+    if (!this.canAct() || this.getPlace() !== 'island' || this.focused || this.modal || (this.quests && this.quests.state !== 'idle')) return false;
+    const kind = nextIslandGuidance(this.save); if (!kind || !this.saveGuidance(kind === 'flower' ? 'offerFlower' : 'offerSail')) return false;
+    this.guidance = kind; this.view = 'guidance'; this.player.setTarget(null); this.route = [];
+    this.render(); this.repeat(); return true;
+  }
+  acceptGuidance() {
+    if (this.view !== 'guidance') return;
+    const kind = this.guidance;
+    if (kind === 'flower') { this.choose('flower'); this.accept(); }
+    else if (kind === 'sail' && this.unlocked) { this.stop(); this.onSail?.(); }
+  }
+  markVisited() { return this.save.islandGuidance?.visited === true || this.saveGuidance('visit'); }
   act(action, index) {
-    const next = adventureAction(this.save, this.task, action, index); if (next === this.save) return false;
+    let next = adventureAction(this.save, this.task, action, index); if (next === this.save) return false;
+    if (this.task === 'flower' && action === 'deliver') next = islandGuidanceAction(next, 'offerSail');
     const before = { ...this.save }; Object.assign(this.save, next);
-    if (!this.persist()) { Object.assign(this.save, before); if (before.adventure === undefined) delete this.save.adventure; return false; }
+    if (!this.persist()) { Object.assign(this.save, before); if (before.adventure === undefined) delete this.save.adventure; if (before.islandGuidance === undefined) delete this.save.islandGuidance; return false; }
     this.player.setTarget(null); this.player.vel.x = this.player.vel.z = 0;
     if (action === 'deliver') { this.view = 'done'; this.player.celebrate(); this.audio.fanfare(); this.effects.confetti(this.player.pos); }
     if (action === 'collect') { this.audio.collect(); if(this.task==='leaf'&&this.forest?.makeLeaf)this.player.holdModel(this.forest.makeLeaf(index));else this.player.holdUp(this.task === 'flower' ? '🌼' : '🍃'); }
@@ -50,21 +80,27 @@ export class Adventure {
   }
   render() {
     const stage = this.current?.stage, forest = this.getPlace() === 'forest', flower = this.task === 'flower', done = stage === 'done';
+    const guidance = this.view === 'guidance', flowerDone = flower && done && !forest;
     this.present.visible = this.unlocked; this.boat.visible = this.unlocked;
     this.flowers.forEach((o, i) => { o.visible = flower && stage === 'collect' && !this.current.collected.includes(i); });
     this.host.anchor = flower || this.unlocked ? FLOWER_HOST : null;
     if (this.host.anchor) { this.host.pos.set(FLOWER_HOST.x, getHeight(FLOWER_HOST.x, FLOWER_HOST.z), FLOWER_HOST.z); this.host.target = null; this.host.model.root.position.copy(this.host.pos); }
     const hide = (id, yes) => $(id).classList.toggle('hidden', yes);
-    hide('adventurePanel', !this.modal); hide('adventureMenu', this.view !== 'menu'); hide('adventureTask', this.view === 'menu');
+    hide('adventurePanel', !this.modal); hide('adventureMenu', this.view !== 'menu'); hide('adventureTask', this.view === 'menu' || guidance);
+    hide('adventureGuidance', !guidance); hide('adventureDoneChoices', !flowerDone); hide('adventureClose', guidance || flowerDone);
+    $('adventurePanel').classList.toggle('island-guidance-open', guidance || flowerDone);
     hide('adventureActions', !this.focused || this.modal); hide('adventureBack', !forest || this.modal);
     hide('adventureFlower', forest); hide('adventureLeaf', !forest); hide('adventureSail', forest);
+    hide('adventureHarbor', !forest);
     hide('adventureReturn', !forest);
     $('adventureSail').disabled = !this.unlocked;
     $('adventureFlower').textContent = this.unlocked ? '🌼 おはなの おくりもの' : '🌼 おはなの おてつだい';
     $('adventureMap').textContent = forest ? '🌳 こもれびのしま' : this.unlocked ? '⛵ こもれびのしまへ いけるよ！' : '🐶 おはなを とどけたら、ふねで えんそく！';
-    $('adventureHeading').textContent = this.view === 'menu' ? 'ぼうけんに いこう' : done ? 'ありがとう！' : flower ? 'いぬさんから おねがい' : 'もりの おてつだい';
+    $('adventureHeading').textContent = guidance ? this.guidance === 'flower' ? 'ふねで おでかけ してみよう' : 'ふねの じゅんびが できたよ' : this.view === 'menu' ? 'ぼうけんに いこう' : done ? 'ありがとう！' : flower ? 'いぬさんから おねがい' : 'もりの おてつだい';
     $('adventurePicture').textContent = flower ? done ? '🐶 💛 🌼' : '🌼 🌷 🌸' : done ? '🐸 💛 🍃' : '🍃 🍂 🍁';
-    $('adventureMessage').textContent = flower ? done ? 'おうちの まえに おはなが さいたよ！\nふねで つぎの しまへ いこう' : 'おはなを 3ぼん あつめて\nいぬさんに とどけよう' : done ? 'もりの ひろばを かざったよ！\nのんびり あそんで いこう' : 'はしを わたって はっぱを 3まい あつめよう\nかえるさんに とどけてね';
+    $('adventureMessage').textContent = flower ? done ? 'おうちの まえに おはなが さいたよ！\nつぎは レンガの みなとまちへ。' : 'おはなを 3ぼん あつめて\nいぬさんに とどけよう' : done ? 'もりの ひろばを かざったよ！\nのんびり あそんで いこう' : 'はしを わたって はっぱを 3まい あつめよう\nかえるさんに とどけてね';
+    $('adventureGuidanceMessage').textContent = this.guidance === 'flower' ? 'いぬさんに おはなを 3ぼん とどけると\nあたらしい しまへ いけるよ。' : 'レンガの おうちと みずぐるまの しま！\nパンやさんの おてつだいも あるよ。';
+    $('adventureGuidanceAccept').textContent = this.guidance === 'flower' ? 'おはなを あつめる' : 'ふねで あそびにいく';
     hide('adventureReward', !done); hide('adventureAccept', done);
     $('adventureAccept').textContent = stage === 'available' ? '🌱 おてつだい する' : '🌱 つづきから あそぶ';
     $('adventureGo').textContent = stage === 'deliver' ? `${flower ? '🐶' : '🐸'} とどけに いく` : `${flower ? '🌼' : '🍃'} いっしょに さがす`;
@@ -81,7 +117,7 @@ export class Adventure {
     return new THREE.Vector3(x, flower ? getHeight(x, s.z) : this.forest.groundAt(x, s.z), s.z);
   }
   go() { const t = this.target(); if (!t) return; this.route = this.task === 'leaf' ? this.forest.route(this.player.pos, t) : [t]; this.waypoint = this.route.shift(); this.player.setTarget(this.waypoint); }
-  repeat() { if (this.task) this.voice.say(this.task === 'flower' ? this.current.stage === 'done' ? L.flowerDone() : this.current.stage === 'deliver' ? L.flowerDeliver() : L.flowerIntro() : this.current.stage === 'done' ? L.leafDone() : this.current.stage === 'deliver' ? L.leafDeliver() : L.leafIntro()); }
+  repeat() { if (this.view === 'guidance') this.voice.say(this.guidance === 'flower' ? L.flowerIntro() : L.flowerDone()); else if (this.task) this.voice.say(this.task === 'flower' ? this.current.stage === 'done' ? L.flowerDone() : this.current.stage === 'deliver' ? L.flowerDeliver() : L.flowerIntro() : this.current.stage === 'done' ? L.leafDone() : this.current.stage === 'deliver' ? L.leafDeliver() : L.leafIntro()); }
   update() {
     if (!this.focused || this.modal) return;
     if (this.route.length && !this.player.target) {

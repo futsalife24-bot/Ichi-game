@@ -17,6 +17,8 @@ export class Voice {
     this.synth = window.speechSynthesis || null;
     this.voice = null;
     this.speaking = false;
+    this.pending = false;
+    this.subtitleUntil = 0;
     this.clipIndex = null; // Map<hash, relative MP3 path>
     this.bytes = new Map(); // hash -> Promise<ArrayBuffer>
     this.decoded = new Map(); // hash -> AudioBuffer（さいきん つかった ぶんだけ）
@@ -71,9 +73,12 @@ export class Voice {
     const text = typeof a === 'string' ? a : a.say;
     const subtitle = typeof a === 'string' && typeof b === 'string' ? b : (a.sub ?? a.say ?? a);
     const who = typeof b === 'object' ? b?.who : null;
-    this.onSubtitle?.(subtitle, 1400 + subtitle.length * 150, who);
+    const duration = 1400 + subtitle.length * 150;
+    this.subtitleUntil = Date.now() + duration;
+    this.onSubtitle?.(subtitle, duration, who);
     if (!this.enabled) return;
     this.stopPlayback();
+    this.pending = true;
     if (who?.pitch) {
       this.audio?.babble(who.pitch);
       const token = this.token;
@@ -175,8 +180,11 @@ export class Voice {
       clearTimeout(this.safety);
       this.safety = setTimeout(done, 1500 + text.length * 250);
       this.synth.speak(u);
-    } catch { /* noop */ }
+    } catch { this.setSpeaking(false); }
   }
+
+  // よみこみちゅう・どうぶつの こえの あと・じまくを よむ あいだも まつ。
+  get busy() { return this.pending || this.speaking || Date.now() < this.subtitleUntil; }
 
   stopPlayback() {
     this.token++;
@@ -190,12 +198,14 @@ export class Voice {
   }
 
   setSpeaking(on) {
+    this.pending = false;
     if (this.speaking === on) return;
     this.speaking = on;
     this.onSpeaking?.(on);
   }
 
   stop() {
+    this.subtitleUntil = 0;
     this.stopPlayback();
     this.setSpeaking(false);
   }

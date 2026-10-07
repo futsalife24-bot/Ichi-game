@@ -1,0 +1,121 @@
+[
+  {
+    "batchId": 28,
+    "hash": "be7afb20",
+    "expected": "みなとのおやつかいをじゅんびしよう！",
+    "sha256": "c871e5897299dc78944ed70bc372e1afbbe8f6aa681d31fc7172dc0cc9a16c30",
+    "recognized": "港のおやつ会を準備しよう"
+  },
+  {
+    "batchId": 28,
+    "hash": "fd2eeef7",
+    "expected": "こむぎがいちばんおおいふくろはどれかな？",
+    "sha256": "f6328105afc54d0105f682f8713033b95538f46ae95e1fda239d27857767ff12",
+    "recognized": "小麦が一番多い袋はどれかな?"
+  },
+  {
+    "batchId": 28,
+    "hash": "ad891f91",
+    "expected": "おてほんとおなじかずになるように、パンをたそう！",
+    "sha256": "2179e3f8a65c8cb93fc8f3483f77ac776e41fee510ad28e98d74f34266cae876",
+    "recognized": "お手本と同じ数になるようにパンをたぞ"
+  },
+  {
+    "batchId": 28,
+    "hash": "40a4c83f",
+    "expected": "つぎにくるおはなはどれかな？",
+    "sha256": "2e7042c60926740ace20c204273515b7438105e5f75bcef492a12b5a5f8f61b9",
+    "recognized": "次に来るお花はどれかな?"
+  },
+  {
+    "batchId": 28,
+    "hash": "ac5db90f",
+    "expected": "そろったね！",
+    "sha256": "d7a2aab8049631bc841f32ea20db31b6a6889bd776d11e4ce38433aec634a124",
+    "recognized": "そろったね"
+  },
+  {
+    "batchId": 28,
+    "hash": "867f1566",
+    "expected": "とどけにいこう！",
+    "sha256": "76ca3097b2dbb9e9c43fdda859db8542471d5d356c549a78de1008f5c8f046c6",
+    "recognized": "届けに行こう"
+  },
+  {
+    "batchId": 28,
+    "hash": "90ca40a6",
+    "expected": "だいじょうぶ。",
+    "sha256": "6323155e74360b46615a5226b4e63d9bdf77d0368e16896dfbccebcb9f7c4680",
+    "recognized": "大丈夫"
+  },
+  {
+    "batchId": 28,
+    "hash": "0f1b5632",
+    "expected": "もういちどみてみよう！",
+    "sha256": "d6da37b0444ae319c8b156a9d40a8be61f1ab182d38824d16001d6cea24a8a32",
+    "recognized": "もう一度見てみよう"
+  },
+  {
+    "batchId": 28,
+    "hash": "e8cf2026",
+    "expected": "ひとつずつゆっくりみてみよう！",
+    "sha256": "4dce6e09af3c687c8bcc44e4ed21660c9b51b3e25804d5f4e105d795e5c181a7",
+    "recognized": "一つずつゆっくり見てみよう"
+  },
+  {
+    "batchId": 28,
+    "hash": "4ec099b4",
+    "expected": "すいしゃごやでこむぎをえらぼう！",
+    "sha256": "27c4dae9a0ab099a7f8c4c594a405f28e99d70b9c37b9638e38eb77eee07118a",
+    "recognized": "水車ごやで小麦を選ぼう"
+  },
+  {
+    "batchId": 29,
+    "hash": "796f35b9",
+    "expected": "パンやさんでパンをそろえよう！",
+    "sha256": "26a3add232d5265f2af8f2f7a110e27c43b3beeb56b12f20a3ea7be04bc57023",
+    "recognized": "パン屋さんでパンを揃えよう"
+  },
+  {
+    "batchId": 29,
+    "hash": "cd9025f7",
+    "expected": "おんしつでおはなをえらぼう！",
+    "sha256": "4bff2f78448f440566682209ee72765d5d1c468ea395d3331f6d083582977407",
+    "recognized": "音質でお花を選ぼう"
+  },
+  {
+    "batchId": 29,
+    "hash": "de4e975f",
+    "expected": "パンやさんにとどけよう！",
+    "sha256": "1669750a7baa82f0df39c15d413c248e0f0be53c799c15001f32c30aa3ef1eac",
+    "recognized": "パン屋さんに届けよう"
+  },
+  {
+    "batchId": 29,
+    "hash": "9bdaee95",
+    "expected": "とけいひろばにとどけよう！",
+    "sha256": "32c1195b903ba93cc62d9014871c5bf092a36484fc094dd66f815724870a4673",
+    "recognized": "時計広場に届けよう"
+  },
+  {
+    "batchId": 29,
+    "hash": "0a03df0c",
+    "expected": "おやつかいにひとつちかづいたよ！",
+    "sha256": "c12f2e8bf68274e572925bce032dc960d47280217cef138f19183edfe9d1008b",
+    "recognized": "おやつ会に一つ近づいたよ"
+  },
+  {
+    "batchId": 29,
+    "hash": "5a8fc56b",
+    "expected": "おやつかいのじゅんびができたよ！",
+    "sha256": "1d2563868627b19e18c3c3e106b1d989e60e23ee7e9fc7c67650c484eea3232d",
+    "recognized": "おやつ会の準備ができたよ"
+  },
+  {
+    "batchId": 29,
+    "hash": "7878d291",
+    "expected": "みんなでたのしもう！",
+    "sha256": "3474602d3e256d14e80ef9aa6932ac699021ca958a773fc5725ee5d1851cbd06",
+    "recognized": "みんなで楽しもう"
+  }
+]

@@ -4,13 +4,14 @@ import { allLines, characterLines, helpLines, adventureLines, pendingLines, L, s
 import { NAMES, PERIODS, SEASONS } from '../src/catalog.js';
 import { readFileSync } from 'node:fs';
 import { Voice } from '../src/voice.js';
+import { harborLines } from '../src/harbor-errands-lines.js';
 
-test('キャラメイク・全候補名・お手伝い・第二島の案内を収録済み音声で再生できる',()=>{
+test('キャラメイク・全候補名・お手伝い・第二島・港町の案内を収録済み音声で再生できる',()=>{
   const clips=JSON.parse(readFileSync(new URL('../voice/index.json',import.meta.url))).clips;
   const all=new Set(allLines());
   assert.deepEqual(pendingLines(),[]);
-  for(const text of [...characterLines(), ...helpLines(), ...adventureLines()])assert.ok(all.has(text));
-  const examples=[...characterLines(),...helpLines(),...adventureLines(),...NAMES.flatMap(n=>[L.born(n.name+'ちゃん').say,L.schoolWelcome(n.name+'ちゃん').say])];
+  for(const text of [...characterLines(), ...helpLines(), ...adventureLines(), ...harborLines()])assert.ok(all.has(text));
+  const examples=[...characterLines(),...helpLines(),...adventureLines(),...harborLines(),...NAMES.flatMap(n=>[L.born(n.name+'ちゃん').say,L.schoolWelcome(n.name+'ちゃん').say])];
   for(const n of NAMES)for(const period of Object.values(PERIODS))for(const season of Object.values(SEASONS))examples.push(L.welcome(n.name+'ちゃん',period,season).say);
   for(const text of examples)for(const part of segments(text))assert.ok(clips[clipHash(clipKey(part))],part);
 });
@@ -70,4 +71,18 @@ test('unavailable clip falls back safely and stale synth events cannot mute new 
 test('without a Japanese synth voice, lines with a new name still play the recorded parts',async()=>{
   const f=fixture();await f.voice.indexReady;f.voice.say('ももちゃん！ すごい！');await tick();await tick();
   assert.equal(f.voice.lastMode,'partial');assert.equal(f.starts.length,1);assert.equal(f.synth.length,0);f.voice.stop();
+});
+
+test('案内は音声の一覧待ち・デコード待ち・動物の声・字幕の表示中にも割り込まない',async()=>{
+  const wait=deferred(),f=fixture(wait);f.voice.say('すごい！');
+  assert.equal(f.voice.speaking,false);assert.equal(f.voice.pending,true);assert.equal(f.voice.busy,true);
+  f.voice.stop();assert.equal(f.voice.busy,false);
+  wait.resolve({ok:true,json:async()=>({schemaVersion:2,clips:{[f.hash]:{file:`gemini/${f.hash}.mp3`}}})});await tick();
+  const g=fixture();await g.voice.indexReady;const decoded=deferred();g.audio.ctx.decodeAudioData=(_b,ok)=>decoded.promise.then(ok);
+  g.voice.say('すごい！');await tick();assert.equal(g.voice.pending,true);assert.equal(g.voice.busy,true);
+  decoded.resolve({duration:1});await tick();assert.equal(g.voice.pending,false);assert.equal(g.voice.speaking,true);
+  g.voice.sources[0].onended();assert.equal(g.voice.speaking,false);assert.equal(g.voice.busy,true);g.voice.stop();assert.equal(g.voice.busy,false);
+  const h=fixture();h.audio.babble=()=>{};h.voice.say('すごい！',{who:{pitch:1}});
+  assert.equal(h.voice.speaking,false);assert.equal(h.voice.pending,true);assert.equal(h.voice.busy,true);h.voice.stop();
+  h.voice.enabled=false;h.voice.say('すごい！');assert.equal(h.voice.pending,false);assert.equal(h.voice.busy,true);h.voice.stop();
 });

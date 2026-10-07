@@ -1,0 +1,92 @@
+{
+  "task": "第二島の港町おつかいの案内音声",
+  "date": "2026-10-08",
+  "model": "gemini-3.8-flash-tts",
+  "voice": "Cleo",
+  "destination": "https://aistudio.google.com/generate-speech",
+  "style": "日本語の標準語。明るくやさしい大人の女性ガイド。はっきり、少しゆっくり、自然な声。台本のみを正確に読み、各行の間を1秒あける。相づちや説明は加えない。",
+  "styleApplied": true,
+  "pauseTag": "<long pause>",
+  "newLines": 14,
+  "newClips": 17,
+  "existingClips": 708,
+  "existingIndexUnchanged": false,
+  "existingClipHashMismatches": [],
+  "batches": [
+    {
+      "batchId": 28,
+      "clips": 10,
+      "generationCount": 1,
+      "status": "原本を取得し、無音区切りだけでMP3取り込み完了。",
+      "playerDurationDisplay": "0:42",
+      "tabId": "1271483112",
+      "proof": "ローカル限定: artifacts/harbor-voice-generated-28.png（個人情報を含むためGit対象外）",
+      "duration": 42.24,
+      "sourceSha256": "e9592445ed7a462a2e882e89ed6455a4440e75b1126df4fceb4fdf8043ddb684",
+      "sourceBytes": 2027564,
+      "sourceFile": "batch-28-source.wav",
+      "format": "PCM16 mono 24kHz",
+      "manualBoundaries": false,
+      "saturatedSamples": 0,
+      "clipDuration": 19.379999999999995,
+      "mp3Bytes": 162104
+    },
+    {
+      "batchId": 29,
+      "clips": 7,
+      "generationCount": 1,
+      "status": "原本を取得し、無音区切りだけでMP3取り込み完了。",
+      "tabId": "1271483133",
+      "playerDurationDisplay": "0:22",
+      "proof": "ローカル限定: artifacts/harbor-voice-generated-29.png（個人情報を含むためGit対象外）",
+      "duration": 22.16,
+      "sourceSha256": "dffee50008e8645bf60abb1cc4d0d20202e30311b59b0f10e9a0b4363aaa7dfc",
+      "sourceBytes": 1063724,
+      "sourceFile": "batch-29-source.wav",
+      "format": "PCM16 mono 24kHz",
+      "manualBoundaries": false,
+      "saturatedSamples": 0,
+      "clipDuration": 12.999999999999998,
+      "mp3Bytes": 108980
+    }
+  ],
+  "newContractOrKeyOrPaymentChange": false,
+  "billingAmount": "未確認",
+  "asrCheck": {
+    "model": "ローカルWhisper small / CPU int8",
+    "sourceFiles": [
+      "batch-28-source.asr.json",
+      "batch-29-source.asr.json"
+    ],
+    "clipFile": "harbor-clips.asr.json",
+    "clips": 17,
+    "notes": [
+      "パンをたそう：原本は「パンをたそ」、個別は「パンをたぞ」と認識。末尾の認識揺れを記録し、人の聴感の合格とは扱わない。",
+      "おんしつ：原本は「温室」、個別は「音質」。漢字表記の認識揺れ。",
+      "水車小屋は「水車ごや」と認識。"
+    ],
+    "humanListening": "未確認"
+  },
+  "browserPlayback": {
+    "proof": "harbor-browser-check.json",
+    "decoded": 725,
+    "completedLines": 14,
+    "mode": "clip",
+    "offlineCached": 725
+  },
+  "humanListening": "未確認",
+  "codexModelAndEffort": "取得できず未確認。設定変更なし。",
+  "requiredChecks": {
+    "tests": 12,
+    "passed": 12,
+    "failed": 0,
+    "skipped": 0,
+    "command": "node --import ./tools/register.mjs --test tools/plan-voice.test.mjs tools/voice.test.mjs tools/sw.test.mjs",
+    "finalizeCheck": "725 Gemini clips complete"
+  },
+  "existingIndexEntriesPreserved": true,
+  "totalClips": 725,
+  "newMp3Bytes": 271084,
+  "newClipDuration": 32.379999999999995,
+  "updatedAt": "2026-10-07T22:00:22.858Z"
+}

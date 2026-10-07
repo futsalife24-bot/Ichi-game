@@ -7,6 +7,7 @@ import { COLORS, FRUITS, SHAPES, MOJI } from './props.js';
 import { ANIMALS, ACCESSORIES, CLOTHES } from './characters.js';
 import { ITEMS, PERIODS, SEASONS, NAMES } from './catalog.js';
 import { FURNITURE } from './furniture.js';
+import { harborLines } from './harbor-errands-lines.js';
 
 export const NUM_WORDS = ['いち', 'に', 'さん', 'よん', 'ご', 'ろく', 'なな', 'はち', 'きゅう', 'じゅう'];
 export const PRAISE = ['すごい！', 'やったね！', 'じょうず！', 'できたね！', 'ばっちり！', 'さすが！'];
@@ -241,6 +242,7 @@ export function allLines() {
   out.push(...characterLines());
   out.push(...helpLines());
   out.push(...adventureLines());
+  out.push(...harborLines());
   return out;
 }
 

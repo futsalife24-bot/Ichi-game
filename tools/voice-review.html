@@ -6,6 +6,7 @@
 <label>試聴するセリフ <select id="sample"></select></label><button id="play">再生</button><button id="stop">停止</button>
 <p id="subtitle">セリフを選んで再生できます。</p><p id="status" role="status">音声一覧を読み込み中</p>
 <button id="check">全音声を検査</button><pre id="result"></pre>
+<button id="harborSequence">港町14案内を順番に確認</button><pre id="harbor-result"></pre>
 <button id="offline">オフライン用保存を検査</button><pre id="offline-result"></pre>
 <p><small>これは開発用の試聴ページです。ゲームのセーブデータは変更しません。</small></p>
 <script type="module">
@@ -13,17 +14,20 @@ import { Voice } from '../src/voice.js';
 import { L, withPraise, THINGS } from '../src/lines.js';
 import { PERIODS, SEASONS, NAMES } from '../src/catalog.js';
 import { FRUITS } from '../src/props.js';
+import { HARBOR_LINES } from '../src/harbor-errands-lines.js';
 const samples=[['ごあいさつ',L.welcome('ももちゃん',PERIODS.asa,SEASONS.aki)],['ほめ言葉',withPraise({say:'せいかい！',sub:'せいかい！'},'じょうず！')],['色',L.rainbow()],['集める数',L.countAsk(Object.values(FRUITS)[0],3)],['学校',L.schoolCountRight(8,THINGS[0])],['学校の案内',L.schoolWelcome()],['お買い物',L.buy({name:'くまの ぬいぐるみ'})],['売る',L.sell(99)],['図鑑',L.zukan(0)],['図鑑が増えた',L.zukan(30)]];
 samples.push(['お手伝いのお願い',L.helpIntro()],['りんごを集める',L.helpCollect()],['ひよこへお届け',L.helpDeliver()],['お手伝いのお礼',L.helpDone()]);
 samples.push(['花のお願い',L.flowerIntro()],['花のお届け',L.flowerDeliver()],['花のお礼',L.flowerDone()],['第二島へ到着',L.forestWelcome()],['葉っぱのお願い',L.leafIntro()],['葉っぱのお届け',L.leafDeliver()],['森の広場のお礼',L.leafDone()]);
+const harborNames = { welcome:'港町のおやつ会', flourAsk:'こむぎの問題', breadAsk:'パンの問題', flowersAsk:'おはなの問題', correct:'おつかい正解', wrong:'おつかい再挑戦', hint:'おつかいのヒント', goFlour:'水車小屋へ', goBread:'パン屋へ', goFlowers:'温室へ', deliverBread:'パン屋へお届け', deliverSquare:'時計広場へお届け', done:'おつかいのお礼', allDone:'おやつ会の準備完了' };
+for (const [id, line] of Object.entries(HARBOR_LINES)) samples.push([harborNames[id], line]);
 for(let i=0;i<5;i++)samples.push(['キャラメイク '+(i+1),L.makerStep(i)]);
 samples.push(['たまごから誕生',L.hatch()],['名前つきのあいさつ',L.born('ももちゃん')]);
 for(const n of NAMES)samples.push(['呼びかけ '+n.name,L.call(n.name+'ちゃん')]);
 const select=document.querySelector('#sample');for(const [i,[name]]of samples.entries())select.add(new Option(name,i));
-const audio={ctx:null,voiceOut:null};let started=0;
-// Base URL matches the game's fetch paths even though this page is in tools/.
+const audio={ctx:null,voiceOut:null};let started=0, finishedClip=null;
+// しちょうページでも ゲームと おなじ おんせいを よむ。
 const base=document.createElement('base');base.href='../';document.head.append(base);
-const voice=new Voice({audio,onSubtitle:text=>document.querySelector('#subtitle').textContent=text,onSpeaking:on=>{if(on){started=performance.now();document.querySelector('#status').textContent='再生中（'+voice.lastMode+'）';}else if(started){document.querySelector('#status').textContent='再生終了（'+voice.lastMode+'、'+((performance.now()-started)/1000).toFixed(2)+'秒）';started=0;}}});
+const voice=new Voice({audio,onSubtitle:text=>document.querySelector('#subtitle').textContent=text,onSpeaking:on=>{if(on){started=performance.now();document.querySelector('#status').textContent='再生中（'+voice.lastMode+'）';}else if(started){document.querySelector('#status').textContent='再生終了（'+voice.lastMode+'、'+((performance.now()-started)/1000).toFixed(2)+'秒）';const completed=finishedClip;finishedClip=null;started=0;completed?.(voice.lastMode);}}});
 async function unlock(){if(!audio.ctx){audio.ctx=new AudioContext();audio.voiceOut=audio.ctx.createGain();audio.voiceOut.gain.value=.75;audio.voiceOut.connect(audio.ctx.destination);}await audio.ctx.resume();}
 await voice.indexReady;
 const preview=new URL(location.href).searchParams.has('preview');
@@ -33,13 +37,32 @@ document.querySelector('#status').textContent=voice.clipIndex ? `${preview?'未�
 document.querySelector('#play').onclick=async()=>{await unlock();voice.say(samples[Number(select.value)][1]);};
 document.querySelector('#stop').onclick=()=>voice.stop();
 document.querySelector('#check').onclick=async()=>{await unlock();voice.stop();const errors=[];let checked=0,seconds=0;for(const hash of voice.clipIndex?.keys()??[]){try{const b=await voice.decode(hash);if(b.numberOfChannels!==1||b.duration<=.1)throw Error('invalid audio');seconds+=b.duration;checked++;}catch(e){errors.push({hash,error:String(e)});}if(checked%25===0)document.querySelector('#result').textContent=JSON.stringify({checked,errors});}document.querySelector('#result').textContent=JSON.stringify({checked,expected:voice.clipIndex?.size,errors,totalSeconds:Math.round(seconds)},null,2);};
+document.querySelector('#harborSequence').onclick=async()=>{
+ const output=document.querySelector('#harbor-result'),results=[];
+ const controls=['play','stop','check','offline','sample','harborSequence'].map(id=>document.getElementById(id));
+ controls.forEach(control=>control.disabled=true);
+ try {
+  await unlock();voice.stop();
+  for(const [id,line] of Object.entries(HARBOR_LINES)) {
+   output.textContent=JSON.stringify({再生中:id,完了:results},null,2);
+   const mode=await new Promise((resolve,reject)=>{
+    const timeout=setTimeout(()=>{finishedClip=null;voice.stop();reject(Error('再生終了を確認できません: '+id));},12000);
+    finishedClip=mode=>{clearTimeout(timeout);resolve(mode);};voice.say(line);
+   });
+   results.push({id,mode,ended:true});
+  }
+  output.textContent=JSON.stringify({完了:results.length,結果:results},null,2);
+ } catch(error) {output.textContent=JSON.stringify({完了:results.length,結果:results,エラー:String(error)},null,2);}
+ finally {controls.forEach(control=>control.disabled=false);}
+};
 document.querySelector('#offline').onclick=async()=>{
  const output=document.querySelector('#offline-result');output.textContent='保存完了を確認中…';
  try{
   if(preview||!voice.clipIndex?.size)throw Error('完成した音声一覧で検査してください');
   await navigator.serviceWorker.register('sw.js');
   let timer;try{await Promise.race([navigator.serviceWorker.ready,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('保存完了を確認できませんでした')),45000);})]);}finally{clearTimeout(timer);}
-  const cache=await caches.open('kirakira-v11-character-voices'),missing=[];let cached=0;
+  const source=await(await fetch('sw.js',{cache:'no-store'})).text();const version=source.match(/const VERSION = '([^']+)'/)[1];
+ const cache=await caches.open(version),missing=[];let cached=0;
   for(const [hash,file]of voice.clipIndex){const res=await cache.match(new URL('voice/'+file,document.baseURI));if(res?.ok&&(await res.arrayBuffer()).byteLength>100)cached++;else missing.push(hash);}
   output.textContent=JSON.stringify({cached,expected:voice.clipIndex.size,missing},null,2);
  }catch(error){output.textContent=String(error);}
