@@ -2,6 +2,7 @@
 
 2026-10-08。制作と検証完了、未公開。公開mainは `0427bef17bf02af1baec3e886bc87afe6188e90c` のまま。
 作業ブランチ `codex/harbor-errands`、基点 `e30c394bf9e58701edc7ec5c9c79e0a2aa5ae4c6`。
+実装HEAD [07253da](https://github.com/futsalife24-bot/Ichi-game/commit/07253daf10aefff42e8a0202315f2941b2daddf3) をpush済み。[GitHub必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37696382942)成功。続くコミットは検証結果の記録のみ。
 リポジトリ https://github.com/futsalife24-bot/Ichi-game 。ローカルは `C:/Users/futsa/Documents/Codex/2026-10-03/codex-ichi-game-futsalife24-bot-ichi/work/Ichi-game`。
 
 ## 港町ならではのおつかい

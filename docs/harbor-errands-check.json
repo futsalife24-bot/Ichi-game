@@ -4,6 +4,8 @@
   "base": "e30c394bf9e58701edc7ec5c9c79e0a2aa5ae4c6",
   "publicMain": "0427bef17bf02af1baec3e886bc87afe6188e90c",
   "published": false,
+  "implementationCommit": "07253daf10aefff42e8a0202315f2941b2daddf3",
+  "ci": { "url": "https://github.com/futsalife24-bot/Ichi-game/actions/runs/37696382942", "conclusion": "success" },
   "tests": {
     "command": "node --import ./tools/register.mjs --test tools/*.test.mjs",
     "passed": 208,
