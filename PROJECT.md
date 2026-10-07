@@ -1,5 +1,11 @@
 # キラキラアイランドの作業入口
 
+## 最新状態：花のお手伝いと第二島を公開（2026-10-07）
+
+本人の「公開して」を受け、[PR26](https://github.com/futsalife24-bot/Ichi-game/pull/26) をmainへ統合。公開前mainのPR25「キャラ作り直し中に衣装を外す」修正を取り込み、自動テスト112件と音声完全性を再確認した。公開mainは `a3001b50db20e9227a7e9d0cf5f0def9f29a8279`。[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37575015785) と [GitHub Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37575015826) は成功。配信62ファイルは公開コミットのGit原本と全て一致し、音声一覧708個・追加MP3全10個の一致を確認。
+
+公開後の記録は `codex/second-island-release-record` に保存。公開サイトの実画面確認は共有Chromeの新しいUI貸出待ち。制作時のChrome一周・途中再開・音声再生検証は下記の通り完了しているが、公開後の実画面確認は未実施として区別する。詳細は [公開配信照合](docs/second-island-release-check.json) と [第二島の公開結果](docs/second-island.md)。以下は公開前の履歴。
+
 ## 完成版：花のお手伝いと第二島、追加音声の検証完了（2026-10-07）
 
 本人の送信承認と保存操作を受け、90.64秒の原本から追加10音声を取り込んだ。既存698音声は全ハッシュ一致、合計708個。自動テスト112件と音声完全性、[実装版のGitHub必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37573653982) は成功。Chromeで全708音声の取得・デコード、追加７案内の収録音声による再生完了、実ゲームの花のお礼・第二島への到着・森のお礼の開始と終了を確認。再訪後の星２個と完成した広場を保持して帰島。警告・エラー０件。第一島のおすすめから第二島制作までの制作・検証範囲を完了した。

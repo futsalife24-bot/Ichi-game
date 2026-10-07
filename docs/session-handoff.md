@@ -1,5 +1,11 @@
 # 次セッションへの引継ぎ（2026-10-04）
 
+## 第二島の公開・配信照合完了、公開画面の確認待ち（2026-10-07）
+
+本人の「公開して」でPR26をmainへ統合し、GitHub Pages公開成功。公開前main `61b59da305e5311fb0a2bba8a902911d1d29fb69` のキャラ作り直し修正を作業版へ取り込んだ後、112テストと音声完全性・PR必須チェックを再確認。PR対象HEAD `4ed0092e23a20d2fd44f3543d62d770240d14cfd`、公開main `a3001b50db20e9227a7e9d0cf5f0def9f29a8279`。[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37575015785)・[Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37575015826) が成功。62配信ファイルはGit原本と全一致、音声一覧は708個、追加10MP3も全一致。証拠は `docs/second-island-release-check.json`。音声原本の再取得・再生成は不要。
+
+記録用ブランチは `codex/second-island-release-record`、開始HEADは公開main。ゲーム本体の追加変更はない。残るのは公開サイトの実画面確認で、新しいUI貸出待ち。現在は紹介サイト→スワフロ→SH→Ichiの調整待ち列。UI011は返却済みで再利用しない。新貸出が届いたら公開Chromeで架空の確認プロフィールを使い、花・第二島・音声・帰島を確認して警告・エラーと画面を保存する。本人の公開承認は受領済みなので再承認は不要。人による聴感・実スマホ・雨天・室内の旧未確認はそのまま。以下は公開前の履歴。
+
 ## 花のお手伝いと第二島の完成版、公開前（2026-10-07）
 
 本人の保存操作でDownloadsへ保存された4.35MB・90.64秒の原本を取得し、27番だけを取り込み。追加10音声・合計708個。既存698個のハッシュ差異０。原本と個別MP3をローカル認識で補助照合し、認識揺れと聴感未確認は `assets-src/gemini-tts/adventure-generation.json` に記録。原本は同ディレクトリのGit対象外 `batch-27-source.wav` に保持。台本を通常収録対象へ統合し、pending解除とSW版 `kirakira-v28-second-island-voice` 更新済み。自動テスト112件と音声完全性チェック成功。保存・push済みHEADは `ad08d25f196ee59b90076cfcb5d7f90b37fc765e`。

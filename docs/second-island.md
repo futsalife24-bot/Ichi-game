@@ -1,5 +1,13 @@
 # 花のお手伝いと第二島
 
+## 公開結果（2026-10-07）
+
+本人の「公開して」を受け、[PR26](https://github.com/futsalife24-bot/Ichi-game/pull/26) をmainへ統合した。公開前main `61b59da305e5311fb0a2bba8a902911d1d29fb69` のPR25修正も取り込み、衣装の保存を保ちながらキャラ作り直し中に衣装を外す動作を維持。公開対象HEADは `4ed0092e23a20d2fd44f3543d62d770240d14cfd`、公開mainは `a3001b50db20e9227a7e9d0cf5f0def9f29a8279`。
+
+最新mainを含むローカル112テスト・音声完全性・PR必須チェックが成功。[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37575015785) と [Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37575015826) も成功。配信62ファイルをGitの公開コミットのblobと照合し、全て一致。Windows作業ツリーの改行変換に依存しない比較で、全ゲーム素材・音声一覧708個・追加10MP3を確認した。証拠は [配信照合](second-island-release-check.json)。
+
+公開サイトの実ブラウザー確認は共有UI貸出待ち。制作時のChrome検証を公開後の確認へ読み替えない。記録は `codex/second-island-release-record` に保存し、ゲーム本体は追加変更していない。以下の未公開は過去の履歴。
+
 ## 今回の到達点
 
 第一島でいぬに花を届け、家の前に花を残す。そのあと船で第二島「こもれびのしま」へ行き、小川の橋を渡って葉っぱを集め、森の広場を飾るところまで遊べる版を作る。
