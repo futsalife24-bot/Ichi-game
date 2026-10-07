@@ -1,6 +1,6 @@
 // もりの みず。ひかりと きのかげを のこして、かわ・なみ・たきを ながす。
 import * as THREE from 'three';
-import { riverZ, riverWidth, riverY, coastRadius } from './forest-layout.js';
+import { riverZ, riverWidth, riverY, coastRadius, SPRING, springWaterY, smooth } from './forest-layout.js';
 
 const SEA_Y = -.65;
 const FALL_X = -32;
@@ -196,12 +196,18 @@ export class ForestWater {
     const fallMaterial = waterMaterial(this.clock, 'fall');
     const lipHeight = across => .045 * Math.sin(across * 6 + .8) + .025 * Math.sin(across * 15);
     const fallWidth = t => (1.16 + .15 * t) * (1 + .045 * Math.sin(t * 13 + .8) + .02 * Math.sin(t * 31));
-    // いわだなを すべる みずが、そのまま ほそい すじに わかれて おちる。
-    const shelf = new THREE.Mesh(stripGeometry(8, 16, (t, across) => [
-      across * (1.1 * (1 - t) + fallWidth(0) * t),
-      3.5 + lipHeight(across) + .035 * (1 - t), -1.7 + .7 * t, across, (t - 1) * .2,
-    ]), fallMaterial);
-    shelf.renderOrder = 3; this.waterfallGroup.add(shelf);
+    // こやまの わきみずの いけから、たきの くちまで つながる。
+    const springPoolGeo=new THREE.CircleGeometry(SPRING.radius,48);springPoolGeo.rotateX(-Math.PI/2);
+    const springPool=new THREE.Mesh(springPoolGeo,this.riverMaterial);springPool.name='やまの わきみず';
+    springPool.position.set(SPRING.x,SPRING.y,SPRING.z);springPool.scale.z=1/1.12;springPool.receiveShadow=true;springPool.renderOrder=2;this.group.add(springPool);
+    const upstreamGeo=stripGeometry(60,12,(t,across)=>{
+      const z=-15.7+(15.7+SPRING.lipZ)*t,width=.25+.65*smooth(-15.7,-14,z)+.26*smooth(-9,-8,z);
+      return [SPRING.x+across*width,springWaterY(z),z,t*8,across];
+    });
+    const upstreamIndex=upstreamGeo.index.array;
+    for(let i=0;i<upstreamIndex.length;i+=3)[upstreamIndex[i+1],upstreamIndex[i+2]]=[upstreamIndex[i+2],upstreamIndex[i+1]];
+    upstreamGeo.computeVertexNormals();
+    const upstream=new THREE.Mesh(upstreamGeo,this.riverMaterial);upstream.name='わきみずから たきへ';upstream.receiveShadow=true;upstream.renderOrder=2;this.group.add(upstream);
     const fall = new THREE.Mesh(stripGeometry(32, 16, (t, across) => {
       const y = 3.5 * (1 - t) + lipHeight(across) * (1 - t), z = -1.0 + 1.25 * Math.pow(t, .65);
       return [across * fallWidth(t) + .045 * Math.sin(t * 8.7), y, z, across, t];

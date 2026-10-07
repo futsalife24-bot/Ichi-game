@@ -1,5 +1,13 @@
 # 第二島の作り込みをやり直す
 
+## 公開完了（2026-10-07）
+
+制作後、本人の「第二島公開して」を調整チャットで直接確認。[PR28](https://github.com/futsalife24-bot/Ichi-game/pull/28)でmainへ反映した。承認版 `1057564501eae54fe632423090dc0ee139027987` のゲームは変更せず、公開準備で見つけたPagesの素材コピー漏れだけ修正（`5cd5eac4c1ae6cb9c49d54733d40451f6764089d`）。配信準備764ファイルを音声708個込みで原本照合、対象HEADのGitHubチェック２件成功。公開mainは `26e421cc35367be678d83702f8dda6cabce808f5`。
+
+[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37592441140)・[Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37592441190)成功。公開先56資材と開発者モードの３入口が原本と一致。UI036のChromeで素材読込、川の遠景、案内による移動、完成した広場、星２個を保持して帰島を確認した。警告・エラー０。UI032の一周・小さい横画面・滝の検証は再利用。実スマホ速度は未確認。[公開照合の詳細](second-island-craft-release-check.json)へ保存し、画面サイズを戻してタブを閉じ、UI036返却済み。[公開版の第二島](https://futsalife24-bot.github.io/Ichi-game/?dev=forest)で確認できる。以下の「未公開」は制作段階の履歴。
+
+![公開版の森の広場](images/forest-craft-public-plaza.png)
+
 2026-10-07。本人が「第一島を遊び込んだ先の島として、最低限第一島と同等、理想は流れる水と木・地面の質感を仕上げる」と指示。サブエージェントを使うこと、ネットで制作資料を調べること、Blenderで細部を作ることも明示された。公開指示はこの改修にはまだない。
 
 作業場所は `C:/Users/futsa/Documents/Codex/2026-10-03/codex-ichi-game-futsalife24-bot-ichi/work/Ichi-game`。GitHubは https://github.com/futsalife24-bot/Ichi-game 。ブランチは `codex/second-island-craft`、基点は `37ddb2b1d7a8a68f8c314a7d94dfe758bd832fc6`。公開mainは `536f1fd2af28deea9958a0f885b3fcf1761bf771` のまま。実モデルID・推論設定は取得不可で未確認。資料/数値レビュー、Blender素材、水表現/検証を３サブエージェントへ分担した。

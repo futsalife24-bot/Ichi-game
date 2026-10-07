@@ -369,7 +369,7 @@ export class World {
     const signMesh = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 0.85), new THREE.MeshBasicMaterial({ map: signTexture(sign, signOpts), transparent: true, alphaTest: 0.1 }));
     signMesh.position.set(signX, 1.8, 3.3);
     g.add(signMesh);
-    const signPole = cyl(0x9a6b43, 0.07, 1.8, signX, 0.9, 3.2);
+    const signPole = cyl(0x9a6b43, 0.07, 1.34, signX, 0.67, 3.15);
     g.add(signPole);
     const mat = new THREE.Mesh(new THREE.CylinderGeometry(0.95, 0.95, 0.06, 28), toon(matColor));
     mat.position.set(0, 0.14, 3.2);

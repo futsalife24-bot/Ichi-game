@@ -9,6 +9,24 @@ export const riverWidth = x => 2.8 + .45 * Math.cos(x * .12);
 export const riverY = x => .44 - x * .006;
 export const coastRadius = a => FOREST_RADIUS + Math.sin(a * 3) * 1.8 + Math.sin(a * 5 + .5) * 1.1;
 export const riverDistance = (x, z) => Math.abs(z - riverZ(x));
+export const SPRING = { x: -32, z: -14, y: 5.0, radius: 1.65, lipZ: -8 };
+export const springWaterY = z => SPRING.y + (riverY(-32)+3.5-SPRING.y)*smooth(-12.8,SPRING.lipZ,z);
+export const JUMP_STEPS = [
+  { x:27,z:23,r:1.55,rise:.75 }, { x:29.7,z:23,r:1.55,rise:1.45 }, { x:32.4,z:23,r:1.7,rise:2.15 },
+];
+export const stepTop = step => landHeight(27,23)+step.rise;
+export function stepAt(x,z,margin=0) {
+  if(x<25.45-margin||x>34.1+margin||Math.abs(z-23)>1.7+margin)return;
+  for(let i=JUMP_STEPS.length-1;i>=0;i--){const s=JUMP_STEPS[i];if(Math.hypot(x-s.x,z-s.z)<s.r+margin)return s;}
+}
+export function clampSteps(p) {
+  let changed=false;
+  for(let pass=0;pass<3;pass++)for(const s of JUMP_STEPS){
+    const dx=p.x-s.x,dz=p.z-s.z,d=Math.hypot(dx,dz),r=s.r+.4;
+    if(d<r&&p.y<stepTop(s)-.12){p.x=s.x+(d?dx/d:1)*r;p.z=s.z+(d?dz/d:0)*r;changed=true;}
+  }
+  return changed;
+}
 export const bridgeAt = (x, z) => BRIDGES.find(b => Math.abs(x - b) < 2.05 && Math.abs(z - riverZ(b)) <= 5.6);
 export const PATHS = [
   [[0,46],[0,33]], [[0,33],[-15,16]], [[-15,16],[0,7]], [[0,7],[0,-7]],
@@ -24,7 +42,8 @@ export function landHeight(x,z) {
   const h=1.0 + .32*Math.sin(x*.13)*Math.cos(z*.12)
     + 3.4*Math.exp(-((x+29)**2+(z+20)**2)/135)
     + 2.2*Math.exp(-((x-27)**2+(z+27)**2)/130)
-    + 1.1*Math.exp(-((x+27)**2+(z-23)**2)/95);
+    + 1.1*Math.exp(-((x+27)**2+(z-23)**2)/95)
+    + 4.3*Math.exp(-((x+33)**2/36+(z+15.5)**2/49));
   const d=riverDistance(x,z),w=riverWidth(x),bank=smooth(w,w+2.4,d);
   const riverbed=riverY(x)-.8 + .10*Math.sin(x*1.3+z*2);
   const shore=riverY(x)+.065;
@@ -33,9 +52,15 @@ export function landHeight(x,z) {
   const stream=1-smooth(1.1,2.3,Math.abs(x+32));
   const channel=stream*smooth(-8.5,-7.0,z)*(1-smooth(riverZ(-32)-.3,riverZ(-32)+1,z));
   surface=surface*(1-channel)+(riverY(-32)-.55)*channel;
+  // こやまの わきみずから、いわだなの たきへ つづく みずみち。
+  const pond=1-smooth(SPRING.radius-.2,SPRING.radius+.65,Math.hypot(x-SPRING.x,(z-SPRING.z)*1.12));
+  const upper=(1-smooth(.8,1.6,Math.abs(x-SPRING.x)))*smooth(-15.8,-14.5,z)*(1-smooth(-8,-7.7,z));
+  const cut=Math.max(pond,upper);
+  surface=surface*(1-cut)+(springWaterY(z)-.27)*cut;
   return surface*(1-smooth(edge-4,edge+2,r)) - 2.3*smooth(edge-4,edge+2,r);
 }
 export function groundHeight(x,z) {
+  const step=stepAt(x,z);if(step)return Math.max(landHeight(x,z),stepTop(step));
   if(Math.abs(x)<2.0&&z>=34&&z<=46.4)return 1.14;
   const b=bridgeAt(x,z);
   if(b===undefined)return landHeight(x,z);
@@ -52,11 +77,17 @@ export function clampForest(p) {
   const bank=riverWidth(p.x)+1.0, d=p.z-riverZ(p.x);
   if(Math.abs(d)<bank && bridgeAt(p.x,p.z)===undefined){p.z=riverZ(p.x)+(d<0?-bank:bank);changed=true;}
   if(p.z>-8.4&&p.z<riverZ(-32)-1&&Math.abs(p.x+32)<2.4){p.x=-32+(p.x<-32?-2.4:2.4);changed=true;}
+  if(p.z<=-8.4){
+    const dx=p.x-SPRING.x,dz=(p.z-SPRING.z)*1.12,d=Math.hypot(dx,dz);
+    if(d<2.1){p.x=SPRING.x+(d?dx/d:1)*2.1;p.z=SPRING.z+(d?dz/d:0)*2.1/1.12;changed=true;}
+    if(p.z>-14&&Math.abs(p.x-SPRING.x)<1.65){p.x=SPRING.x+(p.x<SPRING.x?-1.65:1.65);changed=true;}
+  }
   }
   return changed;
 }
 const routePointFree = p => {
   if(!Number.isFinite(p?.x)||!Number.isFinite(p?.z))return false;
+  if(stepAt(p.x,p.z,.65))return false;
   const copy={x:p.x,z:p.z};clampForest(copy);
   return Math.hypot(copy.x-p.x,copy.z-p.z)<1e-7;
 };
@@ -125,6 +156,11 @@ function routesTo(to,nodes) {
   const result={costs,next};if(routeTargets.size>=12)routeTargets.delete(routeTargets.keys().next().value);routeTargets.set(key,result);return result;
 }
 export function forestRoute(from,to) {
+  // いしの うえからは、まず よこの ひらけた じめんへ おりる。
+  if(Number.isFinite(from?.x)&&Number.isFinite(from?.z)&&stepAt(from.x,from.z,.65)){
+    const exit={x:from.x,z:23+(from.z<23?-1:1)*2.65},rest=forestRoute(exit,to);
+    return rest.length?[exit,...rest]:[];
+  }
   if(!routePointFree(from)||!routePointFree(to))return [];
   if(Math.hypot(to.x-from.x,to.z-from.z)<6&&routeClear(from,to))return [{x:to.x,z:to.z}];
   const nodes=forestRouteGraph(),target=routesTo(to,nodes),connections=routeConnections(from,nodes);

@@ -8,7 +8,7 @@ import { PRESETS } from '../src/characters.js';
 import { Adventure } from '../src/adventure.js';
 import { FOREST_ORIGIN, LEAF_SPOTS, LEAF_HOST, adventureAction } from '../src/adventure-state.js';
 import { freshSave, validateGameSave } from '../src/save.js';
-import { FOREST_RADIUS, FOREST_SPAWN, FOREST_DOCK, BRIDGES, coastRadius, riverZ, riverWidth, riverY, bridgeAt, landHeight, groundHeight, clampForest, forestRoute } from '../src/forest-layout.js';
+import { FOREST_RADIUS, FOREST_SPAWN, FOREST_DOCK, BRIDGES, SPRING, springWaterY, JUMP_STEPS, stepTop, coastRadius, riverZ, riverWidth, riverY, bridgeAt, landHeight, groundHeight, clampForest, forestRoute } from '../src/forest-layout.js';
 
 const originalDocument = globalThis.document;
 const still = { getMove: () => ({ x: 0, y: 0 }), consumeJump: () => false };
@@ -26,6 +26,66 @@ before(async () => {
   scene.updateMatrixWorld(true);
 });
 after(() => { if (originalDocument === undefined) delete globalThis.document; else globalThis.document = originalDocument; });
+
+test('葉の影は傾斜に沿い、収集や完成と同時に消える',()=>{
+  forest.refresh({stage:'collecting',collected:[]});
+  forest.leafShadows.forEach((shadow,i)=>{
+    assert.equal(shadow.visible,true);assert.equal(shadow.material.depthWrite,false);
+    const p=shadow.geometry.attributes.position,s=LEAF_SPOTS[i];
+    for(let n=0;n<p.count;n++)assert.ok(Math.abs(p.getY(n)-landHeight(s.x+p.getX(n),s.z+p.getZ(n))-.045)<1e-5);
+    const alpha=shadow.material.map.image.data;assert.equal(alpha[3],0);assert.ok(alpha[(32*64+32)*4+3]>230);
+  });
+  forest.refresh({stage:'collecting',collected:[1]});assert.equal(forest.leafShadows[1].visible,false);assert.equal(forest.leafShadows[0].visible,true);
+  forest.refresh({stage:'done',collected:[0,1,2]});assert.ok(forest.leafShadows.every(s=>!s.visible));
+});
+
+test('看板の文字面に正面から支柱が入り込まない',()=>{
+  const signs=forest.group.children.filter(o=>o.name==='もじの かんばん');assert.equal(signs.length,4);
+  const solids=[];forest.group.traverse(o=>{if(o.isMesh)solids.push(o);});
+  for(const sign of signs){
+    assert.equal(sign.material.transparent,true);assert.ok(sign.material.alphaTest>0);
+    for(const dy of [-.2,0,.2]){
+      const start=new THREE.Vector3(FOREST_ORIGIN.x+sign.position.x,sign.position.y+dy,sign.position.z+5);
+      const hit=new THREE.Raycaster(start,new THREE.Vector3(0,0,-1),0,6).intersectObjects(solids,false)[0];
+      assert.equal(hit?.object,sign);
+    }
+  }
+});
+
+test('湧き水の池と流路が小山を切り、滝の上端へ下り続ける',()=>{
+  assert.ok(landHeight(-33,-18)>SPRING.y+.3);
+  assert.ok(landHeight(SPRING.x,SPRING.z)<SPRING.y-.2);
+  let previous=SPRING.y;
+  for(let z=-14;z<=-8;z+=.1){const y=springWaterY(z);assert.ok(y<=previous+1e-8);assert.ok(landHeight(SPRING.x,z)<y-.1);previous=y;}
+  assert.ok(Math.abs(springWaterY(-8)-(riverY(-32)+3.5))<1e-9);
+  assert.ok(forest.group.getObjectByName('やまの わきみず'));assert.ok(forest.group.getObjectByName('わきみずから たきへ'));
+});
+
+test('岩段は歩いて乗り上げず、実プレイヤーのジャンプで三段を登って降りられる',()=>{
+  const player=playerAt({x:24.6,z:23}),walk={getMove:()=>({x:1,y:0}),consumeJump:()=>false};
+  for(let t=0;t<90;t++)player.update(.016,walk,forest,audio);
+  assert.ok(player.pos.x-FOREST_ORIGIN.x<25.1);assert.ok(player.pos.y<stepTop(JUMP_STEPS[0])-.5);
+  for(const step of JUMP_STEPS){
+    let jump=true;
+    const input={getMove:()=>({x:Math.max(-1,Math.min(1,(FOREST_ORIGIN.x+step.x-player.pos.x)*3)),y:0}),consumeJump:()=>{const result=jump;jump=false;return result;}};
+    for(let t=0;t<180;t++)player.update(.016,input,forest,audio);
+    assert.ok(Math.hypot(player.pos.x-FOREST_ORIGIN.x-step.x,player.pos.z-step.z)<.6,JSON.stringify(location(player)));
+    assert.ok(Math.abs(player.pos.y-stepTop(step))<.01);assert.equal(player.onGround,true);
+  }
+  const down={getMove:()=>({x:0,y:-1}),consumeJump:()=>false};let fell=false;
+  for(let t=0;t<70;t++){player.update(.016,down,forest,audio);fell||=!player.onGround;}
+  assert.ok(fell);assert.ok(Math.abs(player.pos.y-landHeight(player.pos.x-FOREST_ORIGIN.x,player.pos.z))<.01);
+});
+
+test('三段の足場では通常カメラと主人公の間に樹冠が入らない',()=>{
+  const counts=['oak','birch'].map(k=>kit.assets[k].positions.length/3);
+  const trees=forest.group.children.filter(o=>o.isInstancedMesh&&counts.includes(o.geometry.attributes.position.count));
+  for(const step of JUMP_STEPS){
+    const focus=new THREE.Vector3(FOREST_ORIGIN.x+step.x,stepTop(step),step.z),camera=focus.clone().add(new THREE.Vector3(0,9,11)),target=focus.clone().add(new THREE.Vector3(0,1,0)),direction=target.sub(camera);
+    const ray=new THREE.Raycaster(camera,direction.clone().normalize(),0,direction.length());
+    assert.equal(ray.intersectObjects(trees,false).length,0,`段 ${step.x} の前に木がある`);
+  }
+});
 
 const location = player => ({ x: +(player.pos.x - FOREST_ORIGIN.x).toFixed(3), y: +player.pos.y.toFixed(3), z: +player.pos.z.toFixed(3) });
 function playerAt(point) {

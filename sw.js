@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v30-woodland';
+const VERSION = 'kirakira-v31-forest-depth';
 const ASSETS = [
   './',
   './index.html',
