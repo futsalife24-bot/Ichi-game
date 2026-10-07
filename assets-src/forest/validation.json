@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "assets": {
+    "oak": {
+      "vertices": 3732,
+      "tris": 4344,
+      "minY": 0,
+      "maxNormalError": 0.00000728882343636883,
+      "zeroTriangles": 0
+    },
+    "birch": {
+      "vertices": 2423,
+      "tris": 2798,
+      "minY": 0,
+      "maxNormalError": 0.000007660779343776625,
+      "zeroTriangles": 0
+    },
+    "fern": {
+      "vertices": 1122,
+      "tris": 1122,
+      "minY": 0,
+      "maxNormalError": 0.0000067642228773756585,
+      "zeroTriangles": 0
+    },
+    "rock": {
+      "vertices": 393,
+      "tris": 426,
+      "minY": 0,
+      "maxNormalError": 0.0000068855237052023455,
+      "zeroTriangles": 0
+    },
+    "rockTall": {
+      "vertices": 393,
+      "tris": 426,
+      "minY": 0,
+      "maxNormalError": 0.0000074771779542404104,
+      "zeroTriangles": 0
+    },
+    "stump": {
+      "vertices": 731,
+      "tris": 1284,
+      "minY": 0,
+      "maxNormalError": 0.000007040324783047502,
+      "zeroTriangles": 0
+    },
+    "log": {
+      "vertices": 1392,
+      "tris": 2090,
+      "minY": 0,
+      "maxNormalError": 0.00000652962868197271,
+      "zeroTriangles": 0
+    }
+  },
+  "glbMeshes": 7,
+  "glbVertexColors": true,
+  "totalTriangles": 12490
+}

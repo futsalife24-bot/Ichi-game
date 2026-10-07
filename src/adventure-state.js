@@ -2,8 +2,8 @@
 export const FLOWER_SPOTS = [{ x: -3, z: 4.8 }, { x: -4.8, z: 6.4 }, { x: -6, z: 8 }];
 export const FLOWER_HOST = { x: -7, z: 12.8 };
 export const FOREST_ORIGIN = { x: 3000, z: 0 };
-export const LEAF_SPOTS = [{ x: -7, z: 7 }, { x: 5, z: -4 }, { x: -6, z: -9 }];
-export const LEAF_HOST = { x: 0, z: -11 };
+export const LEAF_SPOTS = [{ x: -15, z: 16 }, { x: 14, z: -9 }, { x: -10, z: -22 }];
+export const LEAF_HOST = { x: 3, z: -27 };
 export const newAdventure = () => ({ version: 1, flower: { stage: 'available', collected: [] }, leaf: { stage: 'available', collected: [] } });
 const validTask = (v) => {
   if (!v || typeof v !== 'object' || !['available', 'collect', 'deliver', 'done'].includes(v.stage) || !Array.isArray(v.collected)) return false;

@@ -1,0 +1,150 @@
+// もりの みちと ちけい。えと あたりはんていで おなじ かたちを つかう。
+export const FOREST_RADIUS = 46;
+export const FOREST_SPAWN = { x: 0, z: 33 };
+export const FOREST_DOCK = { x: 0, z: 46 };
+export const BRIDGES = [0, 24];
+export const smooth = (a, b, v) => { const t = Math.max(0, Math.min(1, (v - a) / (b - a))); return t * t * (3 - 2 * t); };
+export const riverZ = x => Math.sin(x * .095) * 3.2;
+export const riverWidth = x => 2.8 + .45 * Math.cos(x * .12);
+export const riverY = x => .44 - x * .006;
+export const coastRadius = a => FOREST_RADIUS + Math.sin(a * 3) * 1.8 + Math.sin(a * 5 + .5) * 1.1;
+export const riverDistance = (x, z) => Math.abs(z - riverZ(x));
+export const bridgeAt = (x, z) => BRIDGES.find(b => Math.abs(x - b) < 2.05 && Math.abs(z - riverZ(b)) <= 5.6);
+export const PATHS = [
+  [[0,46],[0,33]], [[0,33],[-15,16]], [[-15,16],[0,7]], [[0,7],[0,-7]],
+  [[0,-7],[14,-9]], [[14,-9],[24,-13]], [[24,-13],[27,-25]],
+  [[14,-9],[-10,-22]], [[-10,-22],[3,-27]], [[-10,-22],[-26,-20]],
+  [[-26,-20],[-27,-7]], [[0,33],[22,23]], [[22,23],[24,9]], [[24,9],[24,-3]],
+  [[-15,16],[-29,22]], [[3,-27],[19,-32]], [[27,-25],[19,-32]],
+];
+function segmentDistance(x,z,a,b) { const dx=b[0]-a[0],dz=b[1]-a[1],t=Math.max(0,Math.min(1,((x-a[0])*dx+(z-a[1])*dz)/(dx*dx+dz*dz))); return Math.hypot(x-a[0]-t*dx,z-a[1]-t*dz); }
+export const pathDistance = (x,z) => Math.min(...PATHS.map(([a,b])=>segmentDistance(x,z,a,b)));
+export function landHeight(x,z) {
+  const r=Math.hypot(x,z), edge=coastRadius(Math.atan2(z,x));
+  const h=1.0 + .32*Math.sin(x*.13)*Math.cos(z*.12)
+    + 3.4*Math.exp(-((x+29)**2+(z+20)**2)/135)
+    + 2.2*Math.exp(-((x-27)**2+(z+27)**2)/130)
+    + 1.1*Math.exp(-((x+27)**2+(z-23)**2)/95);
+  const d=riverDistance(x,z),w=riverWidth(x),bank=smooth(w,w+2.4,d);
+  const riverbed=riverY(x)-.8 + .10*Math.sin(x*1.3+z*2);
+  const shore=riverY(x)+.065;
+  let surface=d<w ? riverbed+(shore-riverbed)*smooth(w-1.7,w,d) : shore*(1-bank)+h*bank;
+  // たきから こがわへ つづく ほそい みずみち。
+  const stream=1-smooth(1.1,2.3,Math.abs(x+32));
+  const channel=stream*smooth(-8.5,-7.0,z)*(1-smooth(riverZ(-32)-.3,riverZ(-32)+1,z));
+  surface=surface*(1-channel)+(riverY(-32)-.55)*channel;
+  return surface*(1-smooth(edge-4,edge+2,r)) - 2.3*smooth(edge-4,edge+2,r);
+}
+export function groundHeight(x,z) {
+  if(Math.abs(x)<2.0&&z>=34&&z<=46.4)return 1.14;
+  const b=bridgeAt(x,z);
+  if(b===undefined)return landHeight(x,z);
+  const center=riverZ(b),t=(z-center+5.6)/11.2;
+  return landHeight(x,center-5.6)*(1-t)+landHeight(x,center+5.6)*t+.52*Math.sin(t*Math.PI);
+}
+export function clampForest(p) {
+  let changed=false;
+  // かわぐちでは きしと うみの りょうほうへ おさめる。
+  for(let pass=0;pass<6;pass++){
+  const r=Math.hypot(p.x,p.z), limit=coastRadius(Math.atan2(p.z,p.x))-4;
+  const dock=Math.abs(p.x)<1.75&&p.z>=34&&p.z<=46.35;
+  if(r>limit&&!dock){p.x*=limit/r;p.z*=limit/r;changed=true;}
+  const bank=riverWidth(p.x)+1.0, d=p.z-riverZ(p.x);
+  if(Math.abs(d)<bank && bridgeAt(p.x,p.z)===undefined){p.z=riverZ(p.x)+(d<0?-bank:bank);changed=true;}
+  if(p.z>-8.4&&p.z<riverZ(-32)-1&&Math.abs(p.x+32)<2.4){p.x=-32+(p.x<-32?-2.4:2.4);changed=true;}
+  }
+  return changed;
+}
+const routePointFree = p => {
+  if(!Number.isFinite(p?.x)||!Number.isFinite(p?.z))return false;
+  const copy={x:p.x,z:p.z};clampForest(copy);
+  return Math.hypot(copy.x-p.x,copy.z-p.z)<1e-7;
+};
+function routeClear(a,b,margin=.45) {
+  const distance=Math.hypot(b.x-a.x,b.z-a.z),steps=Math.max(1,Math.ceil(distance/.2));
+  for(let i=0;i<=steps;i++){
+    const t=i/steps,x=a.x+(b.x-a.x)*t,z=a.z+(b.z-a.z)*t;
+    // はしの はしや きしで、とまるまでの すこしの ずれも あける。
+    const r=Math.min(margin,distance*t*.5,distance*(1-t)*.5);
+    for(const [dx,dz] of [[0,0],[r,0],[-r,0],[0,r],[0,-r]])if(!routePointFree({x:x+dx,z:z+dz}))return false;
+  }
+  return true;
+}
+function routeCost(a,b) {
+  const length=Math.hypot(b.x-a.x,b.z-a.z),steps=Math.max(1,Math.ceil(length/2));let away=0;
+  for(let i=0;i<steps;i++){const t=(i+.5)/steps;away+=Math.min(6,pathDistance(a.x+(b.x-a.x)*t,a.z+(b.z-a.z)*t));}
+  return length*(1+away/steps*.22)+Math.abs(groundHeight(b.x,b.z)-groundHeight(a.x,a.z))*.5;
+}
+// こがわが まがっても、みずへ はいらない こまかい みちを いちどだけ つくる。
+let routeGraph;
+const routeTargets=new Map();
+function forestRouteGraph() {
+  if(routeGraph)return routeGraph;
+  const nodes=[],index=new Map();
+  for(let x=-48;x<=48;x+=2)for(let z=-48;z<=48;z+=2){
+    if(![[0,0],[.45,0],[-.45,0],[0,.45],[0,-.45]].every(([dx,dz])=>routePointFree({x:x+dx,z:z+dz})))continue;
+    index.set(`${x},${z}`,nodes.length);nodes.push({x,z,edges:[]});
+  }
+  for(const node of nodes)for(const [dx,dz] of [[2,0],[0,2],[2,2],[2,-2]]){
+    const next=index.get(`${node.x+dx},${node.z+dz}`);if(next===undefined||!routeClear(node,nodes[next]))continue;
+    const current=index.get(`${node.x},${node.z}`),cost=routeCost(node,nodes[next]);
+    node.edges.push({index:next,cost});nodes[next].edges.push({index:current,cost});
+  }
+  routeGraph=nodes;return nodes;
+}
+function routeConnections(point,nodes) {
+  const candidates=nodes.map((node,index)=>({index,distance:Math.hypot(point.x-node.x,point.z-node.z)})).sort((a,b)=>a.distance-b.distance||a.index-b.index);
+  const links=[];
+  for(const c of candidates){
+    if(links.length>=8||links.length&&c.distance>6)break;
+    if(routeClear(point,nodes[c.index]))links.push({index:c.index,cost:routeCost(point,nodes[c.index])});
+  }
+  return links;
+}
+function routePush(heap,item) {
+  let i=heap.length;heap.push(item);
+  while(i){const p=(i-1)>>1;if(heap[p].cost<=item.cost)break;heap[i]=heap[p];i=p;}heap[i]=item;
+}
+function routePop(heap) {
+  const first=heap[0],last=heap.pop();if(!heap.length)return first;
+  let i=0;
+  while(i*2+1<heap.length){let child=i*2+1;if(child+1<heap.length&&heap[child+1].cost<heap[child].cost)child++;if(heap[child].cost>=last.cost)break;heap[i]=heap[child];i=child;}
+  heap[i]=last;return first;
+}
+function routesTo(to,nodes) {
+  const key=`${to.x},${to.z}`;if(routeTargets.has(key))return routeTargets.get(key);
+  const costs=new Float64Array(nodes.length).fill(Infinity),next=new Int32Array(nodes.length).fill(-1),heap=[];
+  for(const edge of routeConnections(to,nodes)){costs[edge.index]=edge.cost;routePush(heap,edge);}
+  while(heap.length){
+    const current=routePop(heap);if(current.cost!==costs[current.index])continue;
+    for(const edge of nodes[current.index].edges){
+      const cost=current.cost+edge.cost;if(cost>=costs[edge.index])continue;
+      costs[edge.index]=cost;next[edge.index]=current.index;routePush(heap,{index:edge.index,cost});
+    }
+  }
+  const result={costs,next};if(routeTargets.size>=12)routeTargets.delete(routeTargets.keys().next().value);routeTargets.set(key,result);return result;
+}
+export function forestRoute(from,to) {
+  if(!routePointFree(from)||!routePointFree(to))return [];
+  if(Math.hypot(to.x-from.x,to.z-from.z)<6&&routeClear(from,to))return [{x:to.x,z:to.z}];
+  const nodes=forestRouteGraph(),target=routesTo(to,nodes),connections=routeConnections(from,nodes);
+  let first=-1,best=Infinity;
+  for(const edge of connections){const cost=edge.cost+target.costs[edge.index];if(cost<best){best=cost;first=edge.index;}}
+  if(first<0)return [];
+  const points=[{x:from.x,z:from.z}];
+  for(let at=first;at>=0;at=target.next[at])points.push({x:nodes[at].x,z:nodes[at].z});
+  points.push({x:to.x,z:to.z});
+  // みちから はなれない ところだけ まとめ、こまかな ジグザグを へらす。
+  const route=[];let at=0;
+  while(at<points.length-1){
+    let chosen=at+1,total=0;
+    for(let end=at+1;end<points.length;end++){
+      total+=routeCost(points[end-1],points[end]);
+      if(Math.hypot(points[end].x-points[at].x,points[end].z-points[at].z)>12)break;
+      if(routeCost(points[at],points[end])<=total*1.04+.001&&routeClear(points[at],points[end]))chosen=end;
+    }
+    if(Math.hypot(points[chosen].x-points[at].x,points[chosen].z-points[at].z)>1e-7)route.push(points[chosen]);
+    at=chosen;
+  }
+  return route;
+}

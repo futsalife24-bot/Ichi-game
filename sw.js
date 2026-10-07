@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v29-developer-mode';
+const VERSION = 'kirakira-v30-woodland';
 const ASSETS = [
   './',
   './index.html',
@@ -38,6 +38,9 @@ const ASSETS = [
   './src/adventure-state.js',
   './src/adventure.js',
   './src/forest.js',
+  './src/forest-layout.js',
+  './src/forest-water.js',
+  './assets/forest/woodland-kit.json',
   './src/help-state.js',
   './src/school.js',
   './src/canvas.js',

@@ -1,5 +1,15 @@
 # キラキラアイランドの作業入口
 
+## 改修・実画面確認済み：第二島の描写と広さ（2026-10-07、未公開）
+
+本人の品質指摘とBlender・ネット資料・サブエージェント使用指示を受け、`codex/second-island-craft`（基点 `37ddb2b1d7a8a68f8c314a7d94dfe758bd832fc6`）で改修。半径46の起伏ある島、蛇行川・滝・二つの橋、Blenderの広葉樹・根・樹皮・シダ・苔岩・切り株・倒木、地面の混色と凹凸を統合。130テスト・708音声・７素材の検査成功。描画調整後の関連20テストも成功。UI032のChromeで第一島と同じ照明・カメラの比較、川・滝・広場、実ゲームの葉３枚→配送→装飾→星１個→帰島、844×390・667×375を確認。警告・エラー０件。画面サイズを復元しタブを閉じ、UI032返却済み。描画の呼出回数を減らしたが、実スマホの速度は未確認。未公開。正本は [作り込みと検証記録](docs/second-island-craft.md)、[画像と計測](docs/second-island-craft-check.json)、[制作資料](docs/second-island-art-references.md)、[Blender原本](assets-src/forest/README.md)。以下は公開済み版の履歴。
+
+## 最新状態：開発者モードを公開（2026-10-07）
+
+本人の「公開して」で [PR27](https://github.com/futsalife24-bot/Ichi-game/pull/27) を統合し、開発者モードを公開。公開前mainは `a3001b50db20e9227a7e9d0cf5f0def9f29a8279`、承認版は `78704c137bc50b730c0d97b20646e47e668c2853`、公開mainは `536f1fd2af28deea9958a0f885b3fcf1761bf771`。[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37583007978) と [Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37583008019) が成功。配信53ファイルと３つの開発者モードURLが公開コミットと一致し、音声一覧708個を維持。公開入口は [第二島の確認](https://futsalife24-bot.github.io/Ichi-game/?dev=forest)。
+
+記録ブランチは `codex/developer-mode-release-record`。制作時の119テスト・UI018の実画面検証は完了。公開後もUI023のChrome・844×390で、第二島への直接移動・完成後の広場・第一島への切り替え・通常プロフィール「公開確認」の星３個保持・保護者画面からの入口を確認。警告・エラー０件。画面サイズを戻して確認タブを閉じ、UI023返却済み。配信と実画面の証拠は [公開照合](docs/developer-mode-release-check.json)。以下は公開前の履歴。
+
 ## 完成・未公開：島をすぐ確認する開発者モード（2026-10-07）
 
 本人の依頼で `codex/developer-island-preview`、基点 `abf94a1c1026a4bc608912ea9b9fca540abb7c0f` に実装。実装HEADは `34a3dabfafe167e2bfb4ed87432cb0c09570703e`。確認専用の一時プロフィールで第二島のはじめ・完成後・第一島を選べる。通常の保存先とロックには触れず、切り替え・再読み込みで確認状態をリセットする。自動テスト119件・音声708個の完全性・GitHub必須チェックは成功。UI018のChromeで844×390・667×375、直接移動・収集・リセット・完成した広場・第一島・通常の入口・別タブ併用を確認。通常へ戻っても架空プロフィールの星１個と船の未解放状態を保持、警告・エラー０件。UI018返却済み。未公開。仕様と証拠は [開発者モード](docs/developer-mode.md)。以下は公開済みの状態と履歴。

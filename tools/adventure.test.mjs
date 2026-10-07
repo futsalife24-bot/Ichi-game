@@ -5,6 +5,7 @@ import { adventureAction, validAdventure, newAdventure } from '../src/adventure-
 import { validateGameSave, freshSave } from '../src/save.js';
 import { Adventure } from '../src/adventure.js';
 import { Forest } from '../src/forest.js';
+import { bridgeAt, riverZ, riverWidth, FOREST_SPAWN } from '../src/forest-layout.js';
 import { Player } from '../src/player.js';
 import { PRESETS } from '../src/characters.js';
 import { FOREST_ORIGIN } from '../src/adventure-state.js';
@@ -63,12 +64,12 @@ test('実際の移動で橋を渡り、三枚を届けて飾りを残す', () =>
   const previous = globalThis.document;
   const elements = new Map();
   globalThis.document = {
-    createElement() { return { getContext: () => ({ clearRect() {}, fillText() {} }) }; },
+    createElement() { return { getContext: () => ({ clearRect() {}, fillText() {}, fillRect() {}, beginPath() {}, moveTo() {}, lineTo() {}, stroke() {}, rect() {}, roundRect() {}, fill() {} }) }; },
     getElementById(id) { if (!elements.has(id)) elements.set(id, { classList: { toggle() {} } }); return elements.get(id); },
   };
   try {
     const scene = new THREE.Scene(), forest = new Forest(scene), player = new Player(scene, PRESETS.usagi);
-    player.teleport(FOREST_ORIGIN.x, 0, 12, 0);
+    player.teleport(FOREST_ORIGIN.x + FOREST_SPAWN.x, forest.groundAt(FOREST_ORIGIN.x + FOREST_SPAWN.x, FOREST_SPAWN.z), FOREST_SPAWN.z, 0);
     const save = finish(freshSave(), 'flower'); let writes = 0, crossed = false;
     const audio = { collect() {}, fanfare() {}, jump() {}, boing() {} };
     const a = new Adventure({ scene, forest, player, save, animals: { get: () => ({ pos: new THREE.Vector3(), model: { root: new THREE.Group() } }) },
@@ -80,7 +81,8 @@ test('実際の移動で橋を渡り、三枚を届けて飾りを残す', () =>
       a.go(); const before = a.current.collected.length;
       for (let tick = 0; tick < 1000; tick++) {
         player.update(.016, input, forest, audio); a.update();
-        if (Math.abs(player.pos.z) < 2) { crossed = true; assert.ok(Math.abs(player.pos.x-FOREST_ORIGIN.x)<1.85); }
+        const localX=player.pos.x-FOREST_ORIGIN.x;
+        if (Math.abs(player.pos.z-riverZ(localX)) < riverWidth(localX)) { crossed = true; assert.notEqual(bridgeAt(localX,player.pos.z),undefined); }
         if (a.current.collected.length > before || a.current.stage === 'done') break;
       }
       assert.ok(step === 3 ? a.current.stage === 'done' : a.current.collected.length > before);
