@@ -6,7 +6,11 @@
 
 最新mainを含むローカル112テスト・音声完全性・PR必須チェックが成功。[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37575015785) と [Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37575015826) も成功。配信62ファイルをGitの公開コミットのblobと照合し、全て一致。Windows作業ツリーの改行変換に依存しない比較で、全ゲーム素材・音声一覧708個・追加10MP3を確認した。証拠は [配信照合](second-island-release-check.json)。
 
-公開サイトの実ブラウザー確認は共有UI貸出待ち。制作時のChrome検証を公開後の確認へ読み替えない。記録は `codex/second-island-release-record` に保存し、ゲーム本体は追加変更していない。以下の未公開は過去の履歴。
+UI016の公開Chrome・844×390で、既存の架空プロフィール「公開確認」を使って実プレイを確認した。花３本を集めていぬへ配送し、船の解放後に第二島へ移動。橋を通って葉っぱ３枚を集め、かえるへ届けて森の広場を完成し、第一島へ帰れた。星は開始１個、花の完了で２個、森の完了で３個。再読み込みと第二島への再訪でも星３個と両活動の完了を保持し、再訪だけで星は増えない。追加10MP3の実ゲームからの読み込みをページの取得資源一覧で観測し、警告・エラー０件。人による聴感は未確認として区別する。画面サイズを元に戻し、確認タブを閉じてUI016を返却。記録は `codex/second-island-release-record` に保存し、ゲーム本体は追加変更していない。以下の未公開は過去の履歴。
+
+![公開版の花のお届け完了](images/second-island-public-flower.png)
+
+![公開版の完成した森の広場と星３個](images/second-island-public.png)
 
 ## 今回の到達点
 

@@ -510,7 +510,139 @@
     "追加MP3ハッシュ一致": 10
   },
   "サービスワーカー版": "kirakira-v28-second-island-voice",
-  "公開ブラウザー": "未確認",
+  "公開ブラウザー": {
+    "結果": "成功",
+    "日付": "2026-10-07",
+    "貸出": "UI-20261007-016",
+    "URL": "https://futsalife24-bot.github.io/Ichi-game/",
+    "ブラウザー": "Chrome 2",
+    "画面": {
+      "幅": 844,
+      "高さ": 390
+    },
+    "プロフィール": "公開確認（既存の架空プロフィール）",
+    "確認": [
+      "花３本を収集していぬへ配送",
+      "花の完了で船を解放",
+      "船で第二島へ移動",
+      "橋を通る経路で葉っぱ３枚を収集",
+      "かえるへ配送して森の広場を完成",
+      "第一島へ帰島",
+      "再読み込み後に星３個と花の完了・船の解放を保持",
+      "第二島へ再訪して森の完了・星３個を保持"
+    ],
+    "星": {
+      "開始": 1,
+      "花完了": 2,
+      "森完了": 3,
+      "再訪": 3
+    },
+    "追加音声のページ取得": [
+      {
+        "url": "https://futsalife24-bot.github.io/Ichi-game/voice/gemini/9ca1b591.mp3",
+        "sources": [
+          {
+            "kind": "resource",
+            "property": "fetch"
+          }
+        ]
+      },
+      {
+        "url": "https://futsalife24-bot.github.io/Ichi-game/voice/gemini/770cd4db.mp3",
+        "sources": [
+          {
+            "kind": "resource",
+            "property": "fetch"
+          }
+        ]
+      },
+      {
+        "url": "https://futsalife24-bot.github.io/Ichi-game/voice/gemini/a8a8a621.mp3",
+        "sources": [
+          {
+            "kind": "resource",
+            "property": "fetch"
+          }
+        ]
+      },
+      {
+        "url": "https://futsalife24-bot.github.io/Ichi-game/voice/gemini/18779056.mp3",
+        "sources": [
+          {
+            "kind": "resource",
+            "property": "fetch"
+          }
+        ]
+      },
+      {
+        "url": "https://futsalife24-bot.github.io/Ichi-game/voice/gemini/bf8606d5.mp3",
+        "sources": [
+          {
+            "kind": "resource",
+            "property": "fetch"
+          }
+        ]
+      },
+      {
+        "url": "https://futsalife24-bot.github.io/Ichi-game/voice/gemini/8a1c637e.mp3",
+        "sources": [
+          {
+            "kind": "resource",
+            "property": "fetch"
+          }
+        ]
+      },
+      {
+        "url": "https://futsalife24-bot.github.io/Ichi-game/voice/gemini/39f63ef0.mp3",
+        "sources": [
+          {
+            "kind": "resource",
+            "property": "fetch"
+          }
+        ]
+      },
+      {
+        "url": "https://futsalife24-bot.github.io/Ichi-game/voice/gemini/09c0c3a5.mp3",
+        "sources": [
+          {
+            "kind": "resource",
+            "property": "fetch"
+          }
+        ]
+      },
+      {
+        "url": "https://futsalife24-bot.github.io/Ichi-game/voice/gemini/1cfc11f3.mp3",
+        "sources": [
+          {
+            "kind": "resource",
+            "property": "fetch"
+          }
+        ]
+      },
+      {
+        "url": "https://futsalife24-bot.github.io/Ichi-game/voice/gemini/739d344e.mp3",
+        "sources": [
+          {
+            "kind": "resource",
+            "property": "fetch"
+          }
+        ]
+      }
+    ],
+    "警告とエラー": [],
+    "未確認": [
+      "人による音声の聴感",
+      "実スマホ",
+      "雨天・室内"
+    ],
+    "画像": [
+      "docs/images/second-island-public-flower.png",
+      "docs/images/second-island-public.png"
+    ],
+    "貸出返却": "UI-20261007-016 UI解放済み",
+    "後片付け": "画面サイズを元に戻して確認用タブを閉じた",
+    "音声確認の範囲": "公開ページの取得資源一覧で追加10MP3のfetchを観測。人による聴感の合格とは扱わない。"
+  },
   "実モデルID推論設定": "取得不可で未確認、変更なし",
   "main必須チェック": {
     "url": "https://github.com/futsalife24-bot/Ichi-game/actions/runs/37575015785",

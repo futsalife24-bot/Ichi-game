@@ -4,7 +4,7 @@
 
 本人の「公開して」を受け、[PR26](https://github.com/futsalife24-bot/Ichi-game/pull/26) をmainへ統合。公開前mainのPR25「キャラ作り直し中に衣装を外す」修正を取り込み、自動テスト112件と音声完全性を再確認した。公開mainは `a3001b50db20e9227a7e9d0cf5f0def9f29a8279`。[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37575015785) と [GitHub Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37575015826) は成功。配信62ファイルは公開コミットのGit原本と全て一致し、音声一覧708個・追加MP3全10個の一致を確認。
 
-公開後の記録は `codex/second-island-release-record` に保存。公開サイトの実画面確認は共有Chromeの新しいUI貸出待ち。制作時のChrome一周・途中再開・音声再生検証は下記の通り完了しているが、公開後の実画面確認は未実施として区別する。詳細は [公開配信照合](docs/second-island-release-check.json) と [第二島の公開結果](docs/second-island.md)。以下は公開前の履歴。
+公開後の記録は `codex/second-island-release-record` に保存。UI016の公開Chrome・844×390で、既存の架空プロフィール「公開確認」を使用し、花３本の配送・船の解放・第二島への移動・橋を渡る葉っぱ３枚の配送・完成した森の広場・帰島まで一周した。星は１→２→３、再読み込みと第二島への再訪でも３個と両活動の完了を保持。追加10音声の実ゲームからの読み込み、警告・エラー０件を確認。UI016返却済み。人による聴感・実スマホ・雨天・室内は未確認。詳細は [公開配信照合と実画面確認](docs/second-island-release-check.json) と [第二島の公開結果](docs/second-island.md)。以下は公開前の履歴。
 
 ## 完成版：花のお手伝いと第二島、追加音声の検証完了（2026-10-07）
 
