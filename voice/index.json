@@ -23,6 +23,11 @@
       "text": "きゅうじゅうさんベル",
       "duration": 1.32
     },
+    "18779056": {
+      "file": "gemini/18779056.mp3",
+      "text": "おうちのまえにおはなをかざったよ！",
+      "duration": 2.46
+    },
     "23385742": {
       "file": "gemini/23385742.mp3",
       "text": "そふとくりーむの「そ」はどれかな？",
@@ -3492,6 +3497,51 @@
       "file": "gemini/668c37b7.mp3",
       "text": "ほしをいっこもらったよ！",
       "duration": 1.96
+    },
+    "9ca1b591": {
+      "file": "gemini/9ca1b591.mp3",
+      "text": "おはなをさんぼんあつめて、いぬさんにとどけよう！",
+      "duration": 3.81
+    },
+    "770cd4db": {
+      "file": "gemini/770cd4db.mp3",
+      "text": "おはながそろったよ！",
+      "duration": 1.83
+    },
+    "a8a8a621": {
+      "file": "gemini/a8a8a621.mp3",
+      "text": "いぬさんにとどけよう！",
+      "duration": 1.42
+    },
+    "bf8606d5": {
+      "file": "gemini/bf8606d5.mp3",
+      "text": "こもれびのしまへようこそ！",
+      "duration": 1.92
+    },
+    "8a1c637e": {
+      "file": "gemini/8a1c637e.mp3",
+      "text": "はしをわたってあそぼう！",
+      "duration": 1.97
+    },
+    "39f63ef0": {
+      "file": "gemini/39f63ef0.mp3",
+      "text": "はっぱをさんまいあつめて、かえるさんにとどけよう！",
+      "duration": 3.6
+    },
+    "09c0c3a5": {
+      "file": "gemini/09c0c3a5.mp3",
+      "text": "はっぱがそろったよ！",
+      "duration": 1.69
+    },
+    "1cfc11f3": {
+      "file": "gemini/1cfc11f3.mp3",
+      "text": "かえるさんにとどけよう！",
+      "duration": 1.48
+    },
+    "739d344e": {
+      "file": "gemini/739d344e.mp3",
+      "text": "もりのひろばをかざったよ！",
+      "duration": 2.04
     }
   }
 }

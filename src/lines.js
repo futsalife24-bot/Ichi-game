@@ -240,6 +240,7 @@ export function allLines() {
   for (const n of range(0, Object.keys(ITEMS).length)) add(L.zukan(n));
   out.push(...characterLines());
   out.push(...helpLines());
+  out.push(...adventureLines());
   return out;
 }
 
@@ -258,6 +259,6 @@ export function helpLines() {
   return [L.helpIntro(), L.helpCollect(), L.helpDeliver(), L.helpDone(), L.helpThanks()].map(l => l.say);
 }
 
-/** そろったら ふつうの しゅうろくたいしょうへ うつす。 */
+/** はなの おてつだいと、もりの しまの せりふ */
 export function adventureLines() { return [L.flowerIntro(), L.flowerDeliver(), L.flowerDone(), L.forestWelcome(), L.leafIntro(), L.leafDeliver(), L.leafDone()].map(l => l.say); }
-export function pendingLines() { return adventureLines(); }
+export function pendingLines() { return []; }

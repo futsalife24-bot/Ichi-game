@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v27-second-island';
+const VERSION = 'kirakira-v28-second-island-voice';
 const ASSETS = [
   './',
   './index.html',
