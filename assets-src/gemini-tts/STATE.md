@@ -1,5 +1,15 @@
 # Gemini音声作業の現在地（2026-10-04）
 
+## 花と第二島の案内：取り込み・実ブラウザー検証完了（2026-10-07）
+
+本人が保存ボタンを押した後、原本WAVをDownloadsから取得。90.64秒、4,350,764 bytes、PCM16 / mono / 24kHz、SHA256は `0871e404b73aaf344b12f2a3fc13852cb953cf67502dd77451174bd5e5054ed5`。原本はGit対象外の `batch-27-source.wav` に保持。27番だけを取り込み、無音の区切り９箇所から10個を出荷MP3へ変換。合計184,760 bytes、22.22秒。追加前の698音声は全ハッシュ一致。
+
+ローカルWhisper smallで原本と10個を補助照合し、`batch-27-source.asr.json`、`adventure-clips.asr.json` と `adventure-generation.json` に記録。短い「かえる」の「カイル」、木漏れ日の漢字表記などの認識揺れを明記。連続認識の末尾には余計な文が出たが、個別音声では台本の文を認識し、末尾無音のRMSも約4.87。人による聴感確認は未実施で、ASRだけを聴感の合格にはしない。
+
+`adventureLines()` を `allLines()` に統合、`pendingLines()` を空にして全708音声を確定。サービスワーカーを `kirakira-v28-second-island-voice` に更新し、音声テストを第二島まで拡張。必須テスト112件と `finalize-voice.mjs --check` は成功。コード・音声は作業ブランチの `ad08d25f196ee59b90076cfcb5d7f90b37fc765e` に保存・push済み。[GitHub必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37573653982) も成功。
+
+Chromeの `UI-20261007-011` で、全708音声の取得・デコード、７つの案内の再生終了を確認。全て `clip`、代替読み上げなし。実ゲームでも花のお礼・第二島到着・森のお礼の開始と終了を確認用ページの表示へ記録。星２個を保持し、完成した広場への再訪・帰島も成功。警告・エラー０。記録は `adventure-browser-check.json`、画像は `docs/images/second-island-voice-check.png` と `second-island-voice-game.png`。UI011返却済み。公開・main統合は未実施で別承認。以下は過去の原本取得待ちの記録。
+
 ## 花と第二島の案内：生成完了、原本の取得待ち（2026-10-07）
 
 このチャットの直接承認を受けた送信は自動レビューを通り、27番の10文を送信した。貸出 `UI-20261007-007` でGemini 3.8 Flash TTS / Cleo、既存の短い日本語スタイルをEnterで適用、各行に `<long pause>` を挟んで生成１回。生成完了後のプレイヤーは約90秒、Playと有効なDownloadを確認した。新規契約・有料キー・支払い設定変更なし。生成画面はChromeタブ `1271482898` に保持。
