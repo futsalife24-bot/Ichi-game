@@ -1,5 +1,13 @@
 # 次セッションへの引継ぎ（2026-10-04）
 
+## 第二島の港町版を公開・配信照合完了（2026-10-08）
+
+最新の本人依頼「チェックするから公開して」により[PR30](https://github.com/futsalife24-bot/Ichi-game/pull/30)を統合。公開前main `ca38419732e2daa8af8b1156defc97bb55892c37` → 公開main `0427bef17bf02af1baec3e886bc87afe6188e90c`。承認HEAD `c54f790f22bed2eed0f76f608d0893635399deba` と全ファイル一致。PR必須チェック・[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37687639375)・[Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37687639446)成功。公開62ファイルと３開発者入口の計65件がGit原本と一致。音声一覧708個、SW版 `kirakira-v32-harbor-town`。証拠は `docs/harbor-release-check.json`。
+
+公開前に担当１体が配信771ファイル・SW登録・素材ハッシュを読み取り照合。制作時の161テスト、Chromeの844×390・667×375での一周と画像12枚を再利用した。公開後の画面確認はChrome接続タイムアウト、内蔵ブラウザーの画面接続タイムアウト、その後のブラウザー操作ポリシー取得エラーで未実施。最後のブラウザー一覧に確認タブはなく、画面サイズや通常プロフィールの操作もしていない。公開後の実画面と実スマホ性能は未確認として区別する。
+
+[第二島の公開入口](https://futsalife24-bot.github.io/Ichi-game/?dev=forest)で本人チェックを待つ。独立監査は未実施、本人の今回の明示指示に基づく公開であり、制作検証を独立監査合格には代えない。記録ブランチ `codex/harbor-release-record` は公開mainを基点とし、文書と配信照合だけを保存する。ゲーム本体の追加変更・再公開は不要。実モデルID・推論設定は取得できず未確認、切替操作なし。リポジトリ https://github.com/futsalife24-bot/Ichi-game 、ローカル作業場所 `C:/Users/futsa/Documents/Codex/2026-10-03/codex-ichi-game-futsalife24-bot-ichi/work/Ichi-game`。以下は制作時の履歴。
+
 ## 第二島を港町へ再制作・自己検証完了（2026-10-08、未公開）
 
 最新の本人依頼は「第一島より見劣りする第二島を、色・街・海岸・木・立体の葉まで作り直す」。主担当と３担当で実装し、`codex/second-island-harbor`、基点 `0f7418dccee633659ea109a82d2b568fcadadb0a` → 実装 `610dcbd832dc5acc092342dfa9425f0453abdddf`。正本 `docs/second-island-harbor.md`、資料 `docs/harbor-art-references.md`、Blender `assets-src/harbor/README.md`。景観６棟と街路樹・葉の10素材、地形に沿う舗装、水車小屋・噴水・水筋・紙船・カモメ・蝶、岸近くまでの歩行、釣り・貝拾い、視線上の樹木/建物の局所的な透過、第二島用の遠景を見せるカメラを統合。

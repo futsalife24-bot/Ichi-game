@@ -1,5 +1,13 @@
 # キラキラアイランドの作業入口
 
+## 最新状態：第二島の港町版を公開（2026-10-08）
+
+本人の「チェックするから公開して」を受け、[PR30](https://github.com/futsalife24-bot/Ichi-game/pull/30)を統合。公開mainは `0427bef17bf02af1baec3e886bc87afe6188e90c`。承認版 `c54f790f22bed2eed0f76f608d0893635399deba` と全ファイル一致。[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37687639375)・[Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37687639446)成功。公開URLの62ファイルと３開発者入口、計65件をGit原本と照合し全一致。音声一覧708個、SW版 `kirakira-v32-harbor-town`。
+
+[第二島をすぐ確認](https://futsalife24-bot.github.io/Ichi-game/?dev=forest)。制作時の161テストとChromeでのプレイテストは下記記録を再利用。公開後のブラウザー確認はChromeの接続タイムアウト・内蔵ブラウザーの画面接続タイムアウト・ブラウザー操作ポリシー取得エラーで実施できず、公開画面の再確認と実スマホ性能は未確認。公開・配信照合は完了し、本人が公開版の見た目を確認する段階。独立監査の合格としては扱わない。
+
+公開記録は `codex/harbor-release-record`、基点は公開main。正本は [公開照合](docs/harbor-release-check.json)。この公開工程でゲーム内容の追加変更はない。以下の未公開・承認待ち表記は制作時の履歴。
+
 ## 最新状態：第二島をレンガと水路の港町へ再制作（2026-10-08、未公開）
 
 第一島との差・葉の絵文字と重なり・海岸の歩ける範囲への本人の指摘を受け、主担当と３担当で第二島を作り直した。レンガの６棟、青緑の屋根、地形に沿う石畳、枝葉のある珊瑚色・琥珀色の街路樹、立体の葉と正しい奥行き、水車小屋・噴水・紙船・カモメ・蝶、岸近くまでの歩行・釣り・貝拾いを統合。Blender原本・生成手順とネットの一次資料を保存した。正本は [港町の制作と検証](docs/second-island-harbor.md)。
