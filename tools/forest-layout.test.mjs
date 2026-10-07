@@ -8,12 +8,13 @@ import { PRESETS } from '../src/characters.js';
 import { Adventure } from '../src/adventure.js';
 import { FOREST_ORIGIN, LEAF_SPOTS, LEAF_HOST, adventureAction } from '../src/adventure-state.js';
 import { freshSave, validateGameSave } from '../src/save.js';
+import { coastWalkRadius } from '../src/harbor-layout.js';
 import { FOREST_RADIUS, FOREST_SPAWN, FOREST_DOCK, BRIDGES, SPRING, springWaterY, JUMP_STEPS, stepTop, coastRadius, riverZ, riverWidth, riverY, bridgeAt, landHeight, groundHeight, clampForest, forestRoute } from '../src/forest-layout.js';
 
 const originalDocument = globalThis.document;
 const still = { getMove: () => ({ x: 0, y: 0 }), consumeJump: () => false };
 const audio = { collect() {}, fanfare() {}, jump() {}, boing() {} };
-let scene, forest, kit;
+let scene, forest, kit, harborKit;
 before(async () => {
   const elements = new Map();
   const context = Object.fromEntries(['clearRect', 'fillText', 'fillRect', 'beginPath', 'moveTo', 'lineTo', 'stroke', 'rect', 'roundRect', 'fill', 'ellipse', 'arc', 'closePath', 'save', 'restore', 'translate', 'rotate', 'scale'].map(name => [name, () => {}]));
@@ -22,7 +23,8 @@ before(async () => {
     getElementById(id) { if (!elements.has(id)) elements.set(id, { classList: { toggle() {} } }); return elements.get(id); },
   };
   kit = JSON.parse(await readFile(new URL('../assets/forest/woodland-kit.json', import.meta.url), 'utf8'));
-  scene = new THREE.Scene(); forest = new Forest(scene); await forest.loadAssets(kit);
+  harborKit = JSON.parse(await readFile(new URL('../assets/harbor/harbor-kit.json', import.meta.url), 'utf8'));
+  scene = new THREE.Scene(); forest = new Forest(scene); await forest.loadAssets(kit,harborKit);
   scene.updateMatrixWorld(true);
 });
 after(() => { if (originalDocument === undefined) delete globalThis.document; else globalThis.document = originalDocument; });
@@ -78,8 +80,9 @@ test('岩段は歩いて乗り上げず、実プレイヤーのジャンプで�
 });
 
 test('三段の足場では通常カメラと主人公の間に樹冠が入らない',()=>{
-  const counts=['oak','birch'].map(k=>kit.assets[k].positions.length/3);
+  const counts=['treeCoral','treeGold'].map(k=>harborKit.assets[k].positions.length/3);
   const trees=forest.group.children.filter(o=>o.isInstancedMesh&&counts.includes(o.geometry.attributes.position.count));
+  assert.ok(trees.length>0);
   for(const step of JUMP_STEPS){
     const focus=new THREE.Vector3(FOREST_ORIGIN.x+step.x,stepTop(step),step.z),camera=focus.clone().add(new THREE.Vector3(0,9,11)),target=focus.clone().add(new THREE.Vector3(0,1,0)),direction=target.sub(camera);
     const ray=new THREE.Raycaster(camera,direction.clone().normalize(),0,direction.length());
@@ -124,7 +127,8 @@ test('広い岸線と二つの丘に起伏があり、岸外から歩行範囲�
     assert.ok(landHeight(Math.cos(angle) * (radius + 3), Math.sin(angle) * (radius + 3)) < -.65);
     const p = { x: Math.cos(angle) * (radius + 6), z: Math.sin(angle) * (radius + 6) };
     assert.equal(clampForest(p), true);
-    assert.ok(Math.hypot(p.x, p.z) <= coastRadius(Math.atan2(p.z, p.x)) - 4 + .02, `岸外へ残る: ${JSON.stringify(p)}`);
+    assert.ok(Math.hypot(p.x, p.z) <= coastWalkRadius(Math.atan2(p.z, p.x)) + .02, `岸外へ残る: ${JSON.stringify(p)}`);
+    assert.ok(groundHeight(p.x,p.z)>-.65+.1,`歩ける岸が水没する: ${JSON.stringify(p)}`);
   }
   assert.ok(landHeight(-29, -20) > landHeight(0, 20) + 2.5);
   assert.ok(landHeight(27, -27) > landHeight(0, 20) + 1.5);
@@ -185,8 +189,8 @@ test('自由移動でも本流と滝の支流へ入り込まない', () => {
 });
 
 test('Blender素材の頂点・法線・色・面が有効で、再読込が木を重複させない', async () => {
-  for (const kind of ['oak', 'birch', 'fern', 'rock', 'rockTall', 'stump', 'log']) {
-    const a = kit.assets[kind]; assert.ok(a, `素材がない: ${kind}`);
+  for (const kind of ['treeCoral','treeGold','brickHouse','bakery','clockTower','glasshouse','fern','rock','rockTall','stump','log']) {
+    const a = harborKit.assets[kind]??kit.assets[kind]; assert.ok(a, `素材がない: ${kind}`);
     assert.equal(a.positions.length % 3, 0); assert.equal(a.indices.length % 3, 0);
     assert.equal(a.normals.length, a.positions.length); assert.equal(a.colors.length, a.positions.length);
     assert.ok(a.positions.length > 9 && a.indices.length > 9);
@@ -207,7 +211,7 @@ test('Blender素材の頂点・法線・色・面が有効で、再読込が木�
     assert.ok(matrix.elements.every(Number.isFinite)); assert.ok(matrix.determinant() > 0);
   }
   const stats = JSON.stringify(forest.assetStats), collisions = forest.colliders.length, children = forest.group.children.length;
-  await forest.loadAssets(kit);
+  await forest.loadAssets(kit,harborKit);
   assert.equal(JSON.stringify(forest.assetStats), stats); assert.equal(forest.colliders.length, collisions); assert.equal(forest.group.children.length, children);
 });
 

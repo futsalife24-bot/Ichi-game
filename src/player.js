@@ -100,6 +100,13 @@ export class Player {
     this.holdTimer = dur;
   }
 
+  // まちで ひろった はっぱは、かたちのある まま みせる。
+  holdModel(model, dur = 1.8) {
+    if(this.held)this.model.root.remove(this.held);
+    this.held=model;this.held.scale.multiplyScalar(.8);this.held.position.set(0,2.45,0);
+    this.model.root.add(this.held);this.holdTimer=dur;
+  }
+
   setTarget(v) { this.target = v ? v.clone() : null; }
 
   celebrate() {

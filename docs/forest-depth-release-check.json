@@ -1,0 +1,470 @@
+{
+  "date": "2026-10-07T14:40:02.144Z",
+  "commit": "ca38419732e2daa8af8b1156defc97bb55892c37",
+  "approvedHead": "eea63ebf019c874dfc8b93276dff0dbe1ada70bd",
+  "previousMain": "26e421cc35367be678d83702f8dda6cabce808f5",
+  "site": "https://futsalife24-bot.github.io/Ichi-game/",
+  "swVersion": "kirakira-v31-forest-depth",
+  "voiceCount": 708,
+  "files": [
+    {
+      "path": "?dev=forest",
+      "status": 200,
+      "match": true,
+      "sha256": "d74ea3da12bf1ebd71ee7c6f0887a213eb41ab72ba2a5fe4b4f86691f3f41175",
+      "bytes": 19674
+    },
+    {
+      "path": "?dev=forest-done",
+      "status": 200,
+      "match": true,
+      "sha256": "d74ea3da12bf1ebd71ee7c6f0887a213eb41ab72ba2a5fe4b4f86691f3f41175",
+      "bytes": 19674
+    },
+    {
+      "path": "?dev=island",
+      "status": 200,
+      "match": true,
+      "sha256": "d74ea3da12bf1ebd71ee7c6f0887a213eb41ab72ba2a5fe4b4f86691f3f41175",
+      "bytes": 19674
+    },
+    {
+      "path": "assets/forest/woodland-kit.json",
+      "status": 200,
+      "match": true,
+      "sha256": "99ec615138bc46801f359193efbc1ea168104e4415c1a90959e593ac23d6b633",
+      "bytes": 892216
+    },
+    {
+      "path": "icons/apple-touch-icon.png",
+      "status": 200,
+      "match": true,
+      "sha256": "d69cbb652df0e037970f29309d33359f8f25edaf0a98f0054cffe17ef1646890",
+      "bytes": 9708
+    },
+    {
+      "path": "icons/icon-192.png",
+      "status": 200,
+      "match": true,
+      "sha256": "6d131fd16e69279cd9b44c32623470956ea716cd802c21e750cbae94cb513133",
+      "bytes": 10321
+    },
+    {
+      "path": "icons/icon-512.png",
+      "status": 200,
+      "match": true,
+      "sha256": "3348b0a97bf4fd8c868434891d2dca08fa6b9941bf2c42348d026ed7e5442729",
+      "bytes": 28955
+    },
+    {
+      "path": "icons/icon-maskable-512.png",
+      "status": 200,
+      "match": true,
+      "sha256": "3348b0a97bf4fd8c868434891d2dca08fa6b9941bf2c42348d026ed7e5442729",
+      "bytes": 28955
+    },
+    {
+      "path": "index.html",
+      "status": 200,
+      "match": true,
+      "sha256": "d74ea3da12bf1ebd71ee7c6f0887a213eb41ab72ba2a5fe4b4f86691f3f41175",
+      "bytes": 19674
+    },
+    {
+      "path": "manifest.webmanifest",
+      "status": 200,
+      "match": true,
+      "sha256": "237ac368e739a0f399e44530172634b1a3b30a93ffa1dd528e31515a6dc260d7",
+      "bytes": 769
+    },
+    {
+      "path": "src/adventure-state.js",
+      "status": 200,
+      "match": true,
+      "sha256": "7e541f5d44700a0b0a3f34ebc73f4bdd32b7c1c83763d1442d07d534c5481f31",
+      "bytes": 2003
+    },
+    {
+      "path": "src/adventure.js",
+      "status": 200,
+      "match": true,
+      "sha256": "13c939c7af440d9b58c982790fdf496186ae7b1262fb301702cf8581ccb783af",
+      "bytes": 8988
+    },
+    {
+      "path": "src/animals.js",
+      "status": 200,
+      "match": true,
+      "sha256": "450272580b1f77b427869d3dcceb214d7bf4c48e018a2d784a542b3550038431",
+      "bytes": 4342
+    },
+    {
+      "path": "src/audio.js",
+      "status": 200,
+      "match": true,
+      "sha256": "87ff3988f3267f4349fad90ace7b9d2069078b60c72f646d0acf9f138df5138d",
+      "bytes": 14659
+    },
+    {
+      "path": "src/birthday-ui.js",
+      "status": 200,
+      "match": true,
+      "sha256": "5dd8225ed4fb86199bc4b38a0594632fd9290eacd344ceb1cea3071d2e542433",
+      "bytes": 2989
+    },
+    {
+      "path": "src/birthday.js",
+      "status": 200,
+      "match": true,
+      "sha256": "ab77b59691595ffc6f037c7274e84639ca7c44129971979ac60e070ccaf652d4",
+      "bytes": 2769
+    },
+    {
+      "path": "src/canvas.js",
+      "status": 200,
+      "match": true,
+      "sha256": "0dd6335e9513dc1ad72ef455c72181f0c5d258fc290616130a0fb911acd32171",
+      "bytes": 1561
+    },
+    {
+      "path": "src/catalog.js",
+      "status": 200,
+      "match": true,
+      "sha256": "bbd7294a2b47eea661e05027bee500f8e690e544d42eb9f218e63f1b02a74c04",
+      "bytes": 8289
+    },
+    {
+      "path": "src/characters.js",
+      "status": 200,
+      "match": true,
+      "sha256": "1cfd535d39285a1c779e1cd74e1c21f07e7b7470bc2a34556bb81a608569daf5",
+      "bytes": 28491
+    },
+    {
+      "path": "src/climate.js",
+      "status": 200,
+      "match": true,
+      "sha256": "199bbbe54d8f004174c525e1eda86d5bc0c4389da48581381fabdce0c8a78084",
+      "bytes": 8042
+    },
+    {
+      "path": "src/closet-preview.js",
+      "status": 200,
+      "match": true,
+      "sha256": "9ad191af15031231058042c5d30fa611bf63d8eed1b2ea2caf6f9893161401ba",
+      "bytes": 2532
+    },
+    {
+      "path": "src/critters.js",
+      "status": 200,
+      "match": true,
+      "sha256": "318d937cc35d4f2531fb9913ef30a7ae2c30a24251184b70cd21a5380149709e",
+      "bytes": 13414
+    },
+    {
+      "path": "src/developer-mode.js",
+      "status": 200,
+      "match": true,
+      "sha256": "4f82b74852740699f8e038facfadca55cc7c8968983cbcdfbcba82bb63aaa293",
+      "bytes": 2502
+    },
+    {
+      "path": "src/effects.js",
+      "status": 200,
+      "match": true,
+      "sha256": "9591378a92a8171ca14914033c49be32cf17e4df11596332a075f8c65effdac5",
+      "bytes": 4137
+    },
+    {
+      "path": "src/forest-layout.js",
+      "status": 200,
+      "match": true,
+      "sha256": "38df34f12e2d304f050b4b0a1bcd906fa3603d748148c6750cfe1a8d2fc781ac",
+      "bytes": 10171
+    },
+    {
+      "path": "src/forest-water.js",
+      "status": 200,
+      "match": true,
+      "sha256": "5015db7df4cf493044789acd50f61663b91b455c44449bb8d70c4d2fd231421f",
+      "bytes": 14317
+    },
+    {
+      "path": "src/forest.js",
+      "status": 200,
+      "match": true,
+      "sha256": "b411b7d76b8099c05a30dda403cec7faf0c54be4bfb25e73dab8139a85d8ccc6",
+      "bytes": 18670
+    },
+    {
+      "path": "src/furniture.js",
+      "status": 200,
+      "match": true,
+      "sha256": "951d6fd4977ad0d5875fa28e0a0b1a759ecdc00e0780b8028e6c690d6d0b200d",
+      "bytes": 8403
+    },
+    {
+      "path": "src/help-state.js",
+      "status": 200,
+      "match": true,
+      "sha256": "b4a5bb8635a98367d4b85c388c3b4765d90db08dae18d9d98bd80e82c165256e",
+      "bytes": 2298
+    },
+    {
+      "path": "src/help.js",
+      "status": 200,
+      "match": true,
+      "sha256": "962c3da601fbbed92981bf47256892ac9c4c2c353660e513d4ae754c580c2f1e",
+      "bytes": 9389
+    },
+    {
+      "path": "src/input.js",
+      "status": 200,
+      "match": true,
+      "sha256": "ee2fd401393ad5fe3d43fc740810cdafef40f5db1f9dc536cb727dd2561d24eb",
+      "bytes": 4053
+    },
+    {
+      "path": "src/life.js",
+      "status": 200,
+      "match": true,
+      "sha256": "1502236f68dbcc5ae68f936f9af37b9e519968a7abb0539e29a88c714ed51a75",
+      "bytes": 31902
+    },
+    {
+      "path": "src/lines.js",
+      "status": 200,
+      "match": true,
+      "sha256": "c39fcf6a278fe9e0ef83865e30974fe44940bcbfab3a7a1550ba8960e68f12b2",
+      "bytes": 16544
+    },
+    {
+      "path": "src/main.js",
+      "status": 200,
+      "match": true,
+      "sha256": "116c11c180aead527b0aeab62de11515d32cf68c45e885cc94776364a5bc4828",
+      "bytes": 32662
+    },
+    {
+      "path": "src/maker.js",
+      "status": 200,
+      "match": true,
+      "sha256": "06b1c303f6b880ae8deb425f499de218d79743d4c492f97482c9d40be0e52e46",
+      "bytes": 8235
+    },
+    {
+      "path": "src/observations.js",
+      "status": 200,
+      "match": true,
+      "sha256": "fa6a6681c714f504885de969bd5feeb5c308e2fce927d1497a215ebf2e9119e6",
+      "bytes": 4003
+    },
+    {
+      "path": "src/play-settings.js",
+      "status": 200,
+      "match": true,
+      "sha256": "6dc908657270613eef02cc7445376a695abfaa8ddd23ca8cc4c909d87f79e6d2",
+      "bytes": 1341
+    },
+    {
+      "path": "src/play-time.js",
+      "status": 200,
+      "match": true,
+      "sha256": "c6e6f451890f542ff0ffe50739329bac4d30ae1972d49e0cd473d79052d78ae5",
+      "bytes": 5241
+    },
+    {
+      "path": "src/player.js",
+      "status": 200,
+      "match": true,
+      "sha256": "682806ce337c514923090d61fb5690e58599a9dc1c9efdde8ab987cf08692178",
+      "bytes": 12154
+    },
+    {
+      "path": "src/profile-ui.js",
+      "status": 200,
+      "match": true,
+      "sha256": "a321ec77d948f397aaddb3e9c610030493c12ba7543c0dd41dea219f80ba334a",
+      "bytes": 3789
+    },
+    {
+      "path": "src/profiles.js",
+      "status": 200,
+      "match": true,
+      "sha256": "f67d204ef0f7f0cb11f0082458872cfebe3bebc74543d19dad7c3b77761e713e",
+      "bytes": 6959
+    },
+    {
+      "path": "src/props.js",
+      "status": 200,
+      "match": true,
+      "sha256": "8f8c50cd81deff664169969bb506bc9c13fc940c7266d0e938687de49330e46a",
+      "bytes": 7888
+    },
+    {
+      "path": "src/quests.js",
+      "status": 200,
+      "match": true,
+      "sha256": "3a6885b7964b042f2f29a01d0e8398b4fa1ed0b589407c6a6728ebbf9b3f7bd6",
+      "bytes": 16191
+    },
+    {
+      "path": "src/records-ui.js",
+      "status": 200,
+      "match": true,
+      "sha256": "8c058463212af07000b32f007510c70346a233335ee20a15cb4294e7e30a344b",
+      "bytes": 2607
+    },
+    {
+      "path": "src/room.js",
+      "status": 200,
+      "match": true,
+      "sha256": "615fb75019f7a97af70d138404f40ce347f9cd80338fde51302afc2bcab6da62",
+      "bytes": 18893
+    },
+    {
+      "path": "src/save-ui.js",
+      "status": 200,
+      "match": true,
+      "sha256": "9630f0c7f4965f278874609d8ee5e0ffb021e8bf5c0b17a2c588f048ab92a476",
+      "bytes": 2072
+    },
+    {
+      "path": "src/save.js",
+      "status": 200,
+      "match": true,
+      "sha256": "5ea0343fa80d29eb2e64264f50bbea5ec93ad8ceb5f0569ecee49275191307cd",
+      "bytes": 8593
+    },
+    {
+      "path": "src/school.js",
+      "status": 200,
+      "match": true,
+      "sha256": "369a44be53c2b6da710e1053c5e056456b63ddf4f29a08c9ac5c604aaf68cb4a",
+      "bytes": 24804
+    },
+    {
+      "path": "src/settings-ui.js",
+      "status": 200,
+      "match": true,
+      "sha256": "a1a220fd201384857f2cf947525070f608cbf985f60177cf6d678b8868dadf57",
+      "bytes": 4217
+    },
+    {
+      "path": "src/suggestions.js",
+      "status": 200,
+      "match": true,
+      "sha256": "c283953e2a17cebb95b72eb4dfdb76b31268ac94fd4bebd1af6058d576a331f6",
+      "bytes": 3511
+    },
+    {
+      "path": "src/time-ui.js",
+      "status": 200,
+      "match": true,
+      "sha256": "9ea2274cb56f7d19b35f02c962242dc97f35ced4e296c6526fb1cca6b77b0c46",
+      "bytes": 3465
+    },
+    {
+      "path": "src/ui.js",
+      "status": 200,
+      "match": true,
+      "sha256": "4d99e1a52df12f8ffa2ff4b2f8bf225065be31ff3c5a832f5b40f1b4cde15565",
+      "bytes": 6599
+    },
+    {
+      "path": "src/voice.js",
+      "status": 200,
+      "match": true,
+      "sha256": "522e4e893570cb1c948fe760acfaa12e04151c32ed07b464fef396c0fb2883f9",
+      "bytes": 7185
+    },
+    {
+      "path": "src/world.js",
+      "status": 200,
+      "match": true,
+      "sha256": "36562e46e3df1f6218eac3c860428b595b6e8ea368f8cbc7a3a6435610ef9269",
+      "bytes": 35541
+    },
+    {
+      "path": "style.css",
+      "status": 200,
+      "match": true,
+      "sha256": "0e95259e2fb06794239fd98614241551d2e013f6c1beca6ce81db19e8e452f3d",
+      "bytes": 36471
+    },
+    {
+      "path": "sw.js",
+      "status": 200,
+      "match": true,
+      "sha256": "22cdec98bae96a61dfe0475886d53287a119aaa2ff314a192cf9ceb025e97ecc",
+      "bytes": 3213
+    },
+    {
+      "path": "vendor/three-LICENSE",
+      "status": 200,
+      "match": true,
+      "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+      "bytes": 1081
+    },
+    {
+      "path": "vendor/three.core.js",
+      "status": 200,
+      "match": true,
+      "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "bytes": 1458113
+    },
+    {
+      "path": "vendor/three.module.js",
+      "status": 200,
+      "match": true,
+      "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "bytes": 662772
+    },
+    {
+      "path": "voice/index.json",
+      "status": 200,
+      "match": true,
+      "sha256": "ac0be2a55709b297e8f8b964f05b0747bedb14277a0a7fb4e91e451f274b1ea7",
+      "bytes": 91496
+    }
+  ],
+  "mismatches": [],
+  "pr": "https://github.com/futsalife24-bot/Ichi-game/pull/29",
+  "ci": {
+    "main": "https://github.com/futsalife24-bot/Ichi-game/actions/runs/37638380425",
+    "pages": "https://github.com/futsalife24-bot/Ichi-game/actions/runs/37638380423",
+    "result": "成功"
+  },
+  "approval": "本人がこのチャットで完成版に対して「公開して」と直接指示",
+  "ui": {
+    "date": "2026-10-07T14:46:05.501Z",
+    "browser": "Chrome",
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "url": "https://futsalife24-bot.github.io/Ichi-game/?dev=forest&release=ca38419",
+    "observations": [
+      "第二島の描画と看板",
+      "案内移動による葉１枚の収集（画像の進捗で確認）",
+      "第一島へ帰還し星１個を保持"
+    ],
+    "logs": [],
+    "images": [
+      "docs/images/forest-depth-public-arrival.png",
+      "docs/images/forest-depth-public-leaf.png",
+      "docs/images/forest-depth-public-return.png"
+    ],
+    "limits": [
+      "公開後の全配送と段差登頂は再実施せず、制作時の確認と自動検証を再利用",
+      "実スマホ性能は未確認"
+    ],
+    "cleanup": "画面サイズ復元・確認タブ閉鎖"
+  },
+  "recordBranch": "codex/forest-depth-release-record",
+  "model": {
+    "id": "未確認",
+    "reasoning": "未確認",
+    "operation": "切り替え操作なし"
+  }
+}

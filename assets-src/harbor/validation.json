@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "assets": {
+    "brickHouse": {
+      "vertices": 29627,
+      "tris": 14311,
+      "bounds": [
+        7.16,
+        6.965,
+        6.35576
+      ],
+      "minY": 0,
+      "normalError": 0.000006783226993878344,
+      "zeroTriangles": 0
+    },
+    "bakery": {
+      "vertices": 29323,
+      "tris": 14391,
+      "bounds": [
+        7.16,
+        6.965,
+        6.44
+      ],
+      "minY": 0,
+      "normalError": 0.000007724620165072693,
+      "zeroTriangles": 0
+    },
+    "clockTower": {
+      "vertices": 16333,
+      "tris": 8993,
+      "bounds": [
+        4.3,
+        10.99,
+        4.445
+      ],
+      "minY": 0,
+      "normalError": 0.000007485328015199855,
+      "zeroTriangles": 0
+    },
+    "glasshouse": {
+      "vertices": 7987,
+      "tris": 4145,
+      "bounds": [
+        8.26,
+        5.335,
+        6.74511
+      ],
+      "minY": 0,
+      "normalError": 0.000007265376392839862,
+      "zeroTriangles": 0
+    },
+    "treeCoral": {
+      "vertices": 10996,
+      "tris": 4540,
+      "bounds": [
+        3.43815,
+        5.15589,
+        3.03566
+      ],
+      "minY": 0,
+      "normalError": 0.000007531421638784508,
+      "zeroTriangles": 0
+    },
+    "treeGold": {
+      "vertices": 10996,
+      "tris": 4540,
+      "bounds": [
+        3.37652,
+        5.21717,
+        3.00865
+      ],
+      "minY": 0,
+      "normalError": 0.000007434672362860439,
+      "zeroTriangles": 0
+    },
+    "leafGreen": {
+      "vertices": 114,
+      "tris": 120,
+      "bounds": [
+        0.78432,
+        1.24152,
+        0.2226
+      ],
+      "minY": 0,
+      "normalError": 0.0000073056233138579785,
+      "zeroTriangles": 0
+    },
+    "leafAmber": {
+      "vertices": 114,
+      "tris": 120,
+      "bounds": [
+        0.78432,
+        1.24152,
+        0.2226
+      ],
+      "minY": 0,
+      "normalError": 0.0000073056233138579785,
+      "zeroTriangles": 0
+    },
+    "leafRed": {
+      "vertices": 114,
+      "tris": 120,
+      "bounds": [
+        0.78432,
+        1.24152,
+        0.2226
+      ],
+      "minY": 0,
+      "normalError": 0.0000073056233138579785,
+      "zeroTriangles": 0
+    },
+    "lantern": {
+      "vertices": 332,
+      "tris": 310,
+      "bounds": [
+        0.54,
+        1.96,
+        0.54
+      ],
+      "minY": 0,
+      "normalError": 0.000005786233259641449,
+      "zeroTriangles": 0
+    }
+  },
+  "glbMeshes": 10,
+  "glbVertexColors": true,
+  "totalTriangles": 51590
+}

@@ -20,6 +20,7 @@ import { Maker } from './maker.js';
 import { makeEgg } from './critters.js';
 import { loadSave, writeSave, claimSaveSession, useSaveStore } from './save.js';
 import { openPlayProfiles, developerURL } from './developer-mode.js';
+import { HarborPlay } from './harbor-play.js';
 import { setupProfileUI } from './profile-ui.js';
 import { finishObservation } from './observations.js';
 import { setupRecordsUI } from './records-ui.js';
@@ -74,6 +75,7 @@ renderer.shadowMap.type = THREE.PCFShadowMap;
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 700);
 const CAM_OFFSET = new THREE.Vector3(0, 9, 11);
+const HARBOR_CAM_OFFSET = new THREE.Vector3(0, 11, 17);
 const camTarget = new THREE.Vector3();
 const lookAt = new THREE.Vector3(0, 1, 0);
 const lookTarget = new THREE.Vector3();
@@ -110,6 +112,7 @@ const school = new School(scene, { player, audio, voice, ui, effects, quests });
 const room = new Room(scene, { player, audio, voice, ui, save, persist, climate, camera });
 const forest = new Forest(scene);
 const life = new Life({ scene, world, player, ui, audio, voice, effects, save, persist, quests, climate });
+const harborPlay = new HarborPlay(forest,{player,audio,life,ui});
 const help = new Help({ scene, world, player, animals, ui, audio, voice, effects, save, persist, quests,
   onChange: () => {
     if (help.focused) life.endFishing();
@@ -551,8 +554,9 @@ function cameraGoal() {
     camTarget.copy(origin).add(cam.pos).setX(origin.x + dx);
     lookTarget.copy(origin).add(cam.look).setX(origin.x + dx);
   } else {
-    camTarget.copy(player.pos).add(CAM_OFFSET);
-    lookTarget.set(player.pos.x, player.pos.y + 1.0, player.pos.z);
+    const harbor=place==='forest';
+    camTarget.copy(player.pos).add(harbor?HARBOR_CAM_OFFSET:CAM_OFFSET);
+    lookTarget.set(player.pos.x, player.pos.y + (harbor?2:1), player.pos.z-(harbor?4:0));
   }
 }
 
@@ -635,6 +639,7 @@ async function visitForest(preview = null) {
 }
 function leaveForest(instant = false) {
   const go = () => {
+    harborPlay.cancel();
     adventure.stop(); forest.group.visible = false; setOutdoorVisible(true); place = 'island';
     boatArmed = false;
     document.body.classList.remove('forest-place');
@@ -796,6 +801,10 @@ function frame(now) {
   if (saveBlocked) { requestAnimationFrame(frame); return; }
   climate.update(dt, { indoor: !outside, focus: mode === 'play' ? player.pos : lookAt, active: mode === 'play' });
   if (place === 'forest') climate.skyColor(scene.background ??= new THREE.Color());
+  if(place==='forest'){
+    forest.updateView(closetPreview.active?closetPreview.camera:camera,player,dt,climate.night);
+    harborPlay.update(dt,time,mode==='play'&&!transitioning&&!ui.panelOpen&&!adventure.focused&&!adventure.modal);
+  }
   hudClock -= dt;
   if (hudClock <= 0) {
     hudClock = 2;

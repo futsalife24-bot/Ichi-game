@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v31-forest-depth';
+const VERSION = 'kirakira-v32-harbor-town';
 const ASSETS = [
   './',
   './index.html',
@@ -40,7 +40,13 @@ const ASSETS = [
   './src/forest.js',
   './src/forest-layout.js',
   './src/forest-water.js',
+  './src/harbor-layout.js',
+  './src/harbor-town.js',
+  './src/harbor-visibility.js',
+  './src/harbor-effects.js',
+  './src/harbor-play.js',
   './assets/forest/woodland-kit.json',
+  './assets/harbor/harbor-kit.json',
   './src/help-state.js',
   './src/school.js',
   './src/canvas.js',

@@ -1,5 +1,13 @@
 # 第二島の遠近感・看板・水源とジャンプ段差
 
+## 公開完了（2026-10-07）
+
+本人の直接「公開して」で [PR29](https://github.com/futsalife24-bot/Ichi-game/pull/29) を統合。公開main `ca38419732e2daa8af8b1156defc97bb55892c37` は承認版 `eea63ebf019c874dfc8b93276dff0dbe1ada70bd` と全ファイル一致。PRとmainの必須チェック・Pages公開成功。公開57資材と３開発者入口をGit原本と照合して全一致。音声708個、SW版 `kirakira-v31-forest-depth`。
+
+Chrome・844×390で公開された第二島と看板を表示、案内で葉１枚を収集し、第一島へ戻って星１個の保持を確認。警告・エラー０、画面サイズ復元・確認タブ閉鎖済み。制作時の４点の実確認と回帰検証は再利用。実スマホ性能は未確認。[公開証拠](forest-depth-release-check.json)、[第二島の確認入口](https://futsalife24-bot.github.io/Ichi-game/?dev=forest)。以下は制作時の履歴。
+
+![公開された第二島](images/forest-depth-public-arrival.png)
+
 2026-10-07。本人の画像３枚による指摘を受けた修正。新しい公開指示はなく、この版は未公開。
 
 ブランチ `codex/forest-depth-and-spring`、基点 `9dd689824712d6f0c56af9febddb25117366fc6c`。公開mainは `26e421cc35367be678d83702f8dda6cabce808f5`。作業場所は `C:/Users/futsa/Documents/Codex/2026-10-03/codex-ichi-game-futsalife24-bot-ichi/work/Ichi-game`、GitHubは https://github.com/futsalife24-bot/Ichi-game 。今回は単独で実施。実モデルID・推論設定は取得不可で未確認、切り替えなし。

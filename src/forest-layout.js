@@ -1,4 +1,6 @@
 // もりの みちと ちけい。えと あたりはんていで おなじ かたちを つかう。
+import { HARBOR_SEA_Y, harborCoastRadius, coastWalkRadius, harborLandHeight, harborPathDistance, clampBuildings } from './harbor-layout.js';
+export { coastWalkRadius } from './harbor-layout.js';
 export const FOREST_RADIUS = 46;
 export const FOREST_SPAWN = { x: 0, z: 33 };
 export const FOREST_DOCK = { x: 0, z: 46 };
@@ -7,7 +9,9 @@ export const smooth = (a, b, v) => { const t = Math.max(0, Math.min(1, (v - a) /
 export const riverZ = x => Math.sin(x * .095) * 3.2;
 export const riverWidth = x => 2.8 + .45 * Math.cos(x * .12);
 export const riverY = x => .44 - x * .006;
-export const coastRadius = a => FOREST_RADIUS + Math.sin(a * 3) * 1.8 + Math.sin(a * 5 + .5) * 1.1;
+export const coastRadius = harborCoastRadius;
+export const riverSurfaceWidth = x => riverWidth(x) + Math.max(0, Math.abs(x) - 41) / 8 * 1.6;
+export const riverSurfaceY = x => { const mouth = Math.min(1, Math.max(0, Math.abs(x) - 41) / 8); return riverY(x) * (1 - mouth * mouth) + HARBOR_SEA_Y * mouth * mouth; };
 export const riverDistance = (x, z) => Math.abs(z - riverZ(x));
 export const SPRING = { x: -32, z: -14, y: 5.0, radius: 1.65, lipZ: -8 };
 export const springWaterY = z => SPRING.y + (riverY(-32)+3.5-SPRING.y)*smooth(-12.8,SPRING.lipZ,z);
@@ -36,7 +40,7 @@ export const PATHS = [
   [[-15,16],[-29,22]], [[3,-27],[19,-32]], [[27,-25],[19,-32]],
 ];
 function segmentDistance(x,z,a,b) { const dx=b[0]-a[0],dz=b[1]-a[1],t=Math.max(0,Math.min(1,((x-a[0])*dx+(z-a[1])*dz)/(dx*dx+dz*dz))); return Math.hypot(x-a[0]-t*dx,z-a[1]-t*dz); }
-export const pathDistance = (x,z) => Math.min(...PATHS.map(([a,b])=>segmentDistance(x,z,a,b)));
+export const pathDistance = (x,z) => Math.min(harborPathDistance(x,z),...PATHS.map(([a,b])=>segmentDistance(x,z,a,b)));
 export function landHeight(x,z) {
   const r=Math.hypot(x,z), edge=coastRadius(Math.atan2(z,x));
   const h=1.0 + .32*Math.sin(x*.13)*Math.cos(z*.12)
@@ -44,9 +48,9 @@ export function landHeight(x,z) {
     + 2.2*Math.exp(-((x-27)**2+(z+27)**2)/130)
     + 1.1*Math.exp(-((x+27)**2+(z-23)**2)/95)
     + 4.3*Math.exp(-((x+33)**2/36+(z+15.5)**2/49));
-  const d=riverDistance(x,z),w=riverWidth(x),bank=smooth(w,w+2.4,d);
-  const riverbed=riverY(x)-.8 + .10*Math.sin(x*1.3+z*2);
-  const shore=riverY(x)+.065;
+  const d=riverDistance(x,z),w=riverSurfaceWidth(x),bank=smooth(w,w+2.4,d);
+  const riverbed=riverSurfaceY(x)-.8 + .10*Math.sin(x*1.3+z*2);
+  const shore=riverSurfaceY(x)+.065;
   let surface=d<w ? riverbed+(shore-riverbed)*smooth(w-1.7,w,d) : shore*(1-bank)+h*bank;
   // たきから こがわへ つづく ほそい みずみち。
   const stream=1-smooth(1.1,2.3,Math.abs(x+32));
@@ -57,7 +61,14 @@ export function landHeight(x,z) {
   const upper=(1-smooth(.8,1.6,Math.abs(x-SPRING.x)))*smooth(-15.8,-14.5,z)*(1-smooth(-8,-7.7,z));
   const cut=Math.max(pond,upper);
   surface=surface*(1-cut)+(springWaterY(z)-.27)*cut;
-  return surface*(1-smooth(edge-4,edge+2,r)) - 2.3*smooth(edge-4,edge+2,r);
+  // みずぐるまの こやを たいらにしても、かわぞこは うめない。
+  const developed=harborLandHeight(x,z,surface);
+  surface+=(developed-surface)*smooth(w-.3,w+.1,d);
+  // なみうちぎわの たかさと、あるける はしを そろえる。
+  const inland=edge-r,beach=HARBOR_SEA_Y+.55*inland;
+  if(inland>=5)return surface;
+  if(inland>=2){const mix=smooth(2,5,inland);return beach*(1-mix)+surface*mix;}
+  return Math.max(-2.3,beach);
 }
 export function groundHeight(x,z) {
   const step=stepAt(x,z);if(step)return Math.max(landHeight(x,z),stepTop(step));
@@ -70,11 +81,12 @@ export function groundHeight(x,z) {
 export function clampForest(p) {
   let changed=false;
   // かわぐちでは きしと うみの りょうほうへ おさめる。
-  for(let pass=0;pass<6;pass++){
-  const r=Math.hypot(p.x,p.z), limit=coastRadius(Math.atan2(p.z,p.x))-4;
+  for(let pass=0;pass<12;pass++){
+  const startX=p.x,startZ=p.z;
+  const r=Math.hypot(p.x,p.z), limit=coastWalkRadius(Math.atan2(p.z,p.x));
   const dock=Math.abs(p.x)<1.75&&p.z>=34&&p.z<=46.35;
   if(r>limit&&!dock){p.x*=limit/r;p.z*=limit/r;changed=true;}
-  const bank=riverWidth(p.x)+1.0, d=p.z-riverZ(p.x);
+  const bank=riverSurfaceWidth(p.x)+1.0, d=p.z-riverZ(p.x);
   if(Math.abs(d)<bank && bridgeAt(p.x,p.z)===undefined){p.z=riverZ(p.x)+(d<0?-bank:bank);changed=true;}
   if(p.z>-8.4&&p.z<riverZ(-32)-1&&Math.abs(p.x+32)<2.4){p.x=-32+(p.x<-32?-2.4:2.4);changed=true;}
   if(p.z<=-8.4){
@@ -82,6 +94,8 @@ export function clampForest(p) {
     if(d<2.1){p.x=SPRING.x+(d?dx/d:1)*2.1;p.z=SPRING.z+(d?dz/d:0)*2.1/1.12;changed=true;}
     if(p.z>-14&&Math.abs(p.x-SPRING.x)<1.65){p.x=SPRING.x+(p.x<SPRING.x?-1.65:1.65);changed=true;}
   }
+  changed=clampBuildings(p)||changed;
+  if(Math.hypot(p.x-startX,p.z-startZ)<1e-12)break;
   }
   return changed;
 }

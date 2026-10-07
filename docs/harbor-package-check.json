@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-08",
+  "published": false,
+  "packageFiles": 771,
+  "mp3": 708,
+  "cacheResources": 61,
+  "version": "kirakira-v32-harbor-town",
+  "allHashesMatch": true,
+  "assets": {
+    "assets/harbor/harbor-kit.json": "7e088a893ba81bec1b8349b32e2ffd1431f36251cee1e2fc4f30a20276830afc",
+    "assets/forest/woodland-kit.json": "99ec615138bc46801f359193efbc1ea168104e4415c1a90959e593ac23d6b633",
+    "voice/index.json": "ac0be2a55709b297e8f8b964f05b0747bedb14277a0a7fb4e91e451f274b1ea7"
+  }
+}

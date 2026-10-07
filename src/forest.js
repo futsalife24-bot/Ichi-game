@@ -1,12 +1,15 @@
-// こもれびの しま。もりと こがわを めぐる ひろい えんそく。
+// こもれびの しま。レンガと みずの みなとまちを めぐる えんそく。
 import * as THREE from 'three';
 import { ball, cyl, makeAnimal } from './characters.js';
-import { emojiSprite } from './critters.js';
 import { canvasTexture, signTexture } from './canvas.js';
 import { mulberry32 } from './world.js';
 import { FOREST_ORIGIN, LEAF_SPOTS, LEAF_HOST } from './adventure-state.js';
 import { FOREST_SPAWN, FOREST_DOCK, BRIDGES, SPRING, JUMP_STEPS, stepAt, stepTop, clampSteps, coastRadius, riverZ, riverWidth, riverY, riverDistance, pathDistance, landHeight, groundHeight, clampForest, forestRoute, smooth } from './forest-layout.js';
 import { ForestWater } from './forest-water.js';
+import { HarborTown, pavedDistance } from './harbor-town.js';
+import { HARBOR_BUILDINGS, buildingAt } from './harbor-layout.js';
+import { createHarborSight, harborSightMaterial } from './harbor-visibility.js';
+import { HarborEffects } from './harbor-effects.js';
 export { FOREST_SPAWN, FOREST_DOCK };
 export const DOCK = { x: 0, z: 28 };
 const mesh = (geometry, color) => new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({ color, roughness: .88 }));
@@ -28,14 +31,16 @@ export function makeBoat() {
   const g=new THREE.Group();
   g.add(ball(0xc98b54,1,0,.4,0,1.15,.4,2.3),box(0xf3ce88,0,.55,0,1.65,.15,2.6),cyl(0x845737,.07,3,0,2,0));
   const sail=mesh(new THREE.PlaneGeometry(1.8,1.8),0xfff2da);sail.material.side=THREE.DoubleSide;sail.position.set(.8,2,0);g.add(sail);
-  const sign=emojiSprite('⛵',1.4);sign.position.set(0,3.6,0);g.add(sign);return g;
+  const pennant=new THREE.Mesh(new THREE.ConeGeometry(.24,.75,3),new THREE.MeshStandardMaterial({color:0xf58c71}));pennant.rotation.z=-Math.PI/2;pennant.position.set(.26,3.38,0);g.add(pennant);return g;
 }
 export class Forest {
   constructor(scene) {
     this.group=new THREE.Group();this.group.position.x=FOREST_ORIGIN.x;this.group.visible=false;scene.add(this.group);
-    this.colliders=[];this.bouncers=[];this.timeUniform={value:0};this.assetsLoaded=false;
+    this.colliders=[];this.bouncers=[];this.timeUniform={value:0};this.assetsLoaded=false;this.sight=createHarborSight();this.playerLocal=new THREE.Vector3();
     this.rng=mulberry32(7312026);this.treePoints=[];
     this.buildTerrain();this.water=new ForestWater(this.group);this.buildBridges();this.buildPlaces();this.buildLife();this.batchStructures();
+    this.town=new HarborTown(this.group,this.sight);
+    this.ambience=new HarborEffects(this.group,{groundAt:landHeight,riverZ,riverY,butterflySpots:[{x:-8,z:21},{x:17,z:18},{x:-4,z:-19},{x:10,z:-27}]});
     this.refresh({stage:'available',collected:[]});
   }
   batchStructures() {
@@ -55,12 +60,12 @@ export class Forest {
   buildTerrain() {
     const geo=new THREE.PlaneGeometry(108,108,180,180);geo.rotateX(-Math.PI/2);
     const pos=geo.attributes.position,colors=new Float32Array(pos.count*3),c=new THREE.Color();
-    const grass=new THREE.Color(0x8cb566),moss=new THREE.Color(0x548b54),sun=new THREE.Color(0xa9c577),soil=new THREE.Color(0xc8b183),sand=new THREE.Color(0xe3d2a6),wet=new THREE.Color(0x797e69);
+    const grass=new THREE.Color(0xb4cbb0),moss=new THREE.Color(0x809b91),sun=new THREE.Color(0xe0d2a5),soil=new THREE.Color(0xd9cbb1),sand=new THREE.Color(0xf7dfb2),wet=new THREE.Color(0xafa896);
     for(let i=0;i<pos.count;i++){
       const x=pos.getX(i),z=pos.getZ(i),h=landHeight(x,z),r=Math.hypot(x,z),bank=riverDistance(x,z)-riverWidth(x);
       pos.setY(i,h);const n=.5+.5*Math.sin(x*.25+Math.sin(z*.23))*Math.cos(z*.19);
       c.copy(grass).lerp(moss,n*.5).lerp(sun,Math.max(0,h-1)*.1);
-      c.lerp(soil,1-smooth(1.25,2.25,pathDistance(x,z)+Math.sin(x*1.8+z*.9)*.09));
+      c.lerp(soil,1-smooth(1.6,2.4,pavedDistance(x,z)+Math.sin(x*1.8+z*.9)*.04));
       c.lerp(soil,(1-smooth(0,2.5,bank))*.6);c.lerp(wet,1-smooth(-.5,.9,bank));
       const edge=coastRadius(Math.atan2(z,x));c.lerp(sand,smooth(edge-5,edge-1.5,r));colors.set([c.r,c.g,c.b],i*3);
     }
@@ -88,7 +93,7 @@ export class Forest {
     sign.position.set(x,y+2.0,z+.15);sign.castShadow=true;sign.name='もじの かんばん';this.group.add(sign);
   }
   buildPlaces() {
-    this.sign(-3.8,32,'こもれびのしま',5.3);this.sign(-3.8,8,'こもれびばし',3.9);this.sign(-23,-17,'たきの こみち',3.8);this.sign(19,22,'みはらしの おか',4.4);
+    this.sign(-3.8,35,'レンガと みずの まち',5.7);this.sign(-3.8,8,'こもれびばし',3.9);this.sign(-23,-17,'たきの こみち',3.8);this.sign(19,22,'みはらしの おか',4.4);
     // みちの よこで、ジャンプして のぼる いしの だん。
     for(const [i,s] of JUMP_STEPS.entries()){
       const top=stepTop(s),base=Math.min(...Array.from({length:12},(_,n)=>landHeight(s.x+Math.sin(n*Math.PI/6)*s.r,s.z+Math.cos(n*Math.PI/6)*s.r)))-.2;
@@ -100,13 +105,6 @@ export class Forest {
     for(let i=0;i<35;i++)this.group.add(box(i%3?0xb98d62:0xc99d70,0,1.03,34+i*.36,4,.22,.32));
     for(const x of [-1.8,1.8])for(const z of [35,38,41,44,46])this.group.add(timber([x,-1.6,z],[x,1.8,z],.14));
     this.boat=makeBoat();this.boat.position.set(FOREST_DOCK.x,-.3,FOREST_DOCK.z+2);this.group.add(this.boat);
-    // もりの あずまや。まるたの はしらと かさなった こけいろの やね。
-    const px=3,pz=-32,py=landHeight(px,pz),deck=cyl(0xd1b183,4.1,.3,px,py+.1,pz);deck.receiveShadow=true;this.group.add(deck);
-    for(let i=0;i<6;i++){
-      const a=i*Math.PI/3,x=px+Math.sin(a)*3.2,z=pz+Math.cos(a)*3.2;
-      this.group.add(timber([x,py,z],[x,py+3.5,z],.18),timber([x,py+3.1,z],[px,py+5,pz],.12));this.colliders.push({x:FOREST_ORIGIN.x+x,z,r:.23});
-    }
-    for(let i=0;i<4;i++){const roof=mesh(new THREE.ConeGeometry(4.5-i*.85,1.6,12,1,true),i%2?0x66834b:0x789453);roof.position.set(px,py+3.6+i*.45,pz);roof.castShadow=true;roof.receiveShadow=true;this.group.add(roof);}
     for(let i=0;i<40;i++){
       const a=i*Math.PI/20,x=LEAF_HOST.x+Math.sin(a)*4.6,z=LEAF_HOST.z+Math.cos(a)*4.6;if(z>LEAF_HOST.z+3.7)continue;
       const o=ball(i%3?0xb8ba9a:0x929f86,.3,0,0,0,1.25,.5,.8);surface(o,x,z,.1);o.rotation.y=a;this.group.add(o);
@@ -119,7 +117,7 @@ export class Forest {
     for(const [x,z] of [[-29,22],[24,23]]){const y=landHeight(x,z);this.group.add(box(0xc29b6d,x,y+.6,z,3,.18,.8));for(const sx of [-1,1])this.group.add(timber([x+sx,y,z],[x+sx,y+.6,z],.14));}
   }
   buildLife() {
-    this.leaves=LEAF_SPOTS.map((s,i)=>{const o=emojiSprite(['🍃','🍂','🍁'][i],1.45);o.position.set(s.x,landHeight(s.x,s.z)+1.25,s.z);this.group.add(o);return o;});
+    this.leaves=LEAF_SPOTS.map(s=>{const o=new THREE.Group();o.name='あつめる りったいの はっぱ';o.position.set(s.x,landHeight(s.x,s.z)+1.0,s.z);this.group.add(o);return o;});
     // ういている はっぱの ましたに、ちけいに そう やわらかい かげ。
     const pixels=new Uint8Array(64*64*4);
     for(let y=0;y<64;y++)for(let x=0;x<64;x++){const i=(y*64+x)*4,r=Math.hypot((x-31.5)/31.5,(y-31.5)/31.5);pixels.set([255,255,255,Math.round(255*Math.pow(Math.max(0,1-r),1.2))],i);}
@@ -132,96 +130,90 @@ export class Forest {
     });
     this.host=makeAnimal('kaeru');surface(this.host.root,LEAF_HOST.x,LEAF_HOST.z);this.group.add(this.host.root);this.colliders.push({x:FOREST_ORIGIN.x+LEAF_HOST.x,z:LEAF_HOST.z,r:.55});
     this.decoration=new THREE.Group();this.group.add(this.decoration);
-    for(const [i,e] of ['🍃','🍂','🍁'].entries()){
-      const x=LEAF_HOST.x+(i-1)*1.5,z=LEAF_HOST.z-2,y=landHeight(x,z),o=emojiSprite(e,1.15);o.position.set(x,y+2,z);this.decoration.add(o);this.group.add(timber([x,y,z],[x,y+2,z],.06));
+    for(let i=0;i<3;i++){
+      const x=LEAF_HOST.x+(i-1)*1.5,z=LEAF_HOST.z-2,y=landHeight(x,z),o=new THREE.Group();o.position.set(x,y+1.8,z);this.decoration.add(o);this.group.add(timber([x,y,z],[x,y+1.8,z],.06));
     }
-    this.butterflies=Array.from({length:8},(_,i)=>{const o=emojiSprite(i%3?'🦋':'✨',i%3?.5:.28);this.group.add(o);return o;});
     const rnd=this.rng;
     const petalGeo=new THREE.SphereGeometry(1,8,6);
     for(let i=0;i<180;i++){
       const x=(rnd()-.5)*82,z=(rnd()-.5)*82,d=pathDistance(x,z);if(Math.hypot(x,z)>38||riverDistance(x,z)<riverWidth(x)+3||d<2.2||d>6)continue;
-      if(stepAt(x,z,.4)||Math.hypot(x-SPRING.x,z-SPRING.z)<2.2||z>-16&&z<-7&&Math.abs(x-SPRING.x)<1.7)continue;
+      if(buildingAt(x,z,1.2)||pavedDistance(x,z)<2.5||stepAt(x,z,.4)||Math.hypot(x-SPRING.x,z-SPRING.z)<2.2||z>-16&&z<-7&&Math.abs(x-SPRING.x)<1.7)continue;
       const y=landHeight(x,z),height=.25+rnd()*.16;this.group.add(timber([x,y,z],[x,y+height,z],.022,0x587c3d));
       for(let p=0;p<6;p++){const a=p*Math.PI/3,o=mesh(petalGeo,i%3?0xfff9d9:0xe49d9d);o.scale.set(.12,.045,.18);o.position.set(x+Math.sin(a)*.13,y+height,z+Math.cos(a)*.13);o.rotation.y=a;this.group.add(o);}
       const heart=mesh(petalGeo,0xdcc34c);heart.scale.set(.085,.07,.085);heart.position.set(x,y+height+.015,z);this.group.add(heart);
     }
   }
-  async loadAssets(data=null) {
+  async loadAssets(data=null,harborData=null) {
     if(this.assetsLoaded)return;
-    if(!data){const r=await fetch(new URL('../assets/forest/woodland-kit.json',import.meta.url));if(!r.ok)throw Error('もりの そざいを よめません');data=await r.json();}
+    const read=async path=>{const r=await fetch(new URL(path,import.meta.url));if(!r.ok)throw Error('まちの そざいを よめません');return r.json();};
+    if(!data||!harborData){const pair=await Promise.all([data??read('../assets/forest/woodland-kit.json'),harborData??read('../assets/harbor/harbor-kit.json')]);[data,harborData]=pair;}
     const geometries={};
-    for(const [key,a] of Object.entries(data.assets)){
+    for(const [key,a] of Object.entries({...data.assets,...harborData.assets})){
       const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(a.positions,3));geo.setAttribute('normal',new THREE.Float32BufferAttribute(a.normals,3));geo.setAttribute('color',new THREE.Float32BufferAttribute(a.colors,3));geo.setIndex(a.indices);geo.computeBoundingSphere();geometries[key]=geo;
     }
-    const sets=Object.fromEntries(Object.keys(geometries).map(k=>[k,[]])),rnd=mulberry32(934);
+    this.geometries=geometries;this.town.installBuildings(geometries);
+    const leafKinds=['leafGreen','leafAmber','leafRed'];
+    this.makeLeaf=i=>{const o=new THREE.Mesh(geometries[leafKinds[i%3]],new THREE.MeshStandardMaterial({vertexColors:true,roughness:.48,metalness:.03,side:THREE.DoubleSide}));o.castShadow=o.receiveShadow=true;o.rotation.x=.12;o.name='すじのある はっぱ';return o;};
+    this.leaves.forEach((o,i)=>o.add(this.makeLeaf(i)));
+    this.decoration.children.forEach((o,i)=>{const leaf=this.makeLeaf(i);leaf.scale.setScalar(.8);o.add(leaf);});
+    const sets=Object.fromEntries(['treeCoral','treeGold','fern','rock','rockTall','stump','log'].map(k=>[k,[]])),rnd=mulberry32(10282026);
     const put=(kind,x,z,size=1,yaw=rnd()*Math.PI*2,dy=0)=>{
-      const radius=(kind==='fern'?.25:kind==='log'?1.2:.85)*size;
-      let y=landHeight(x,z);
-      for(let i=0;i<8;i++){const a=i*Math.PI/4;y=Math.min(y,landHeight(x+Math.sin(a)*radius,z+Math.cos(a)*radius));}
-      sets[kind].push({x,y:y+dy-.06,z,size,yaw});
+      let y=landHeight(x,z);const radius=(kind==='fern'?.2:kind==='log'?1.0:.55)*size;
+      for(let i=0;i<6;i++){const a=i*Math.PI/3;y=Math.min(y,landHeight(x+Math.sin(a)*radius,z+Math.cos(a)*radius));}
+      sets[kind].push({x,y:y+dy-.035,z,size,yaw});
     };
-    for(let i=0;i<2200&&this.treePoints.length<76;i++){
-      const x=(rnd()-.5)*83,z=(rnd()-.5)*83;
-      if(stepAt(x,z,3.5)||stepAt(x,z-6,3.6)||stepAt(x,z-9,2.8)||Math.hypot(x-SPRING.x,z-SPRING.z)<5.3)continue;
-      if(Math.hypot(x,z)>39.5||pathDistance(x,z)<4.8||riverDistance(x,z)<riverWidth(x)+4.5||landHeight(x,z)<.7||Math.hypot(x-3,z+28)<9||Math.hypot(x+32,z+8)<7)continue;
-      if(pathDistance(x,z-6)<3.6||pathDistance(x,z-9)<2.8)continue;
-      if(this.treePoints.some(p=>Math.hypot(p.x-x,p.z-z)<4.7))continue;
-      const kind=i%3?'oak':'birch',size=.76+rnd()*.38;put(kind,x,z,size);this.treePoints.push({x,z});this.colliders.push({x:FOREST_ORIGIN.x+x,z,r:.62*size});
+    // まちでは きの あいだを ひろく あけ、はるか おくに もりを のこす。
+    const avenues=[[-7.8,34],[8.2,34],[-19,31],[18,28],[-8.5,16],[7.5,5.8],[-8.5,5.5],[29.2,6],[-22,-24],[-17,-29],[-3,-33],[15,-26],[25,-24],[31,19],[22,31],[-29,17],[-30,-24]];
+    for(let i=0;i<avenues.length;i++){
+      const [x,z]=avenues[i];if(buildingAt(x,z,2.5)||stepAt(x,z,2.5)||pavedDistance(x,z)<2.7)continue;
+      const kind=i%2?'treeGold':'treeCoral',size=.85+(i%3)*.08;put(kind,x,z,size);this.treePoints.push({x,z,kind});this.colliders.push({x:FOREST_ORIGIN.x+x,z,r:.36*size});
     }
-    for(let i=0;i<500;i++){
-      const x=(rnd()-.5)*86,z=(rnd()-.5)*86,d=pathDistance(x,z),rd=riverDistance(x,z);
-      if(stepAt(x,z,1)||Math.hypot(x-SPRING.x,z-SPRING.z)<3||z>-15&&z<-7&&Math.abs(x-SPRING.x)<1.9)continue;
-      if(Math.hypot(x,z)>40||d<2.2||rd<riverWidth(x)+.5||landHeight(x,z)<.3||Math.hypot(x-3,z+28)<5)continue;
-      if(i%2===0)put('fern',x,z,.55+rnd()*.55);
-      if(i%7===0&&d>3.5){put('rock',x,z,.45+rnd()*.65);this.colliders.push({x:FOREST_ORIGIN.x+x,z,r:.55});}
+    for(let i=0;i<900&&this.treePoints.length<32;i++){
+      const x=(rnd()-.5)*78,z=(rnd()-.5)*78;
+      if(z>8&&Math.abs(x)<23||buildingAt(x,z,3.1)||Math.hypot(x,z)>39||pavedDistance(x,z)<3.3||riverDistance(x,z)<riverWidth(x)+3.6||landHeight(x,z)<.7)continue;
+      if(stepAt(x,z,3.3)||Math.hypot(x-SPRING.x,z-SPRING.z)<5.0||Math.hypot(x-3,z+27)<7||this.treePoints.some(p=>Math.hypot(x-p.x,z-p.z)<5.5))continue;
+      const kind=i%2?'treeCoral':'treeGold',size=.72+rnd()*.28;put(kind,x,z,size);this.treePoints.push({x,z,kind});this.colliders.push({x:FOREST_ORIGIN.x+x,z,r:.36*size});
     }
-    for(let i=0;i<80;i++){
-      const x=-39+rnd()*78,side=i%2?1:-1,z=riverZ(x)+side*(riverWidth(x)+.5+rnd()*1.0);
-      if(BRIDGES.some(b=>Math.abs(x-b)<3))continue;put(i%4?'rock':'rockTall',x,z,.3+rnd()*.5);
+    for(let i=0;i<240;i++){
+      const x=(rnd()-.5)*82,z=(rnd()-.5)*82,d=pavedDistance(x,z);
+      if(buildingAt(x,z,1.4)||stepAt(x,z,1.5)||Math.hypot(x,z)>40||d<2.8||riverDistance(x,z)<riverWidth(x)+.9||landHeight(x,z)<.4||Math.hypot(x-3,z+27)<6)continue;
+      if(Math.hypot(x-SPRING.x,z-SPRING.z)<3||z>-16&&z<-7&&Math.abs(x-SPRING.x)<2)continue;
+      if(x<-22||z<-20)put('fern',x,z,.45+rnd()*.35);
+      if(i%7===0&&d>4){put('rock',x,z,.35+rnd()*.5);this.colliders.push({x:FOREST_ORIGIN.x+x,z,r:.35});}
     }
-    for(let i=0;i<80;i++){
-      const x=-38+rnd()*76,z=riverZ(x)+(rnd()-.5)*riverWidth(x)*1.6;put('rock',x,z,.14+rnd()*.3,0,-.04);
-      if(i%4===0)this.water.addRockWake(x,z,.2);
+    for(let i=0;i<56;i++){
+      const x=-40+rnd()*80,z=riverZ(x)+(rnd()-.5)*riverWidth(x)*1.5;put('rock',x,z,.13+rnd()*.24,0,-.04);if(i%4===0)this.water.addRockWake(x,z,.2);
     }
-    for(let i=0;i<9;i++){
-      const x=-35+(i%3)*2.5,z=-9.1-Math.floor(i/3)*1.6,size=1.9+(i%3)*.4;
-      sets.rockTall.push({x,y:riverY(-32)-.2,z,size,yaw:i*.9});
-    }
-    // やまの おくの いわの あいだから、いけへ わきみずが でる。
+    for(let i=0;i<9;i++){const x=-35+(i%3)*2.5,z=-9.1-Math.floor(i/3)*1.6;sets.rockTall.push({x,y:riverY(-32)-.2,z,size:1.9+(i%3)*.4,yaw:i*.9});}
     for(const [x,z,size] of [[-33.7,-15.4,.9],[-30.5,-15.5,.85],[-33.2,-17,1.15],[-34.9,-12.6,.7]])put('rockTall',x,z,size);
-    for(const [x,z,s] of [[-19,19,.8],[18,-13,.8],[-15,-24,1],[23,27,.7]]){put('log',x,z,s);this.colliders.push({x:FOREST_ORIGIN.x+x,z,r:1.2});}
-    for(const [x,z] of [[-12,19],[11,-12],[-6,-25],[7,-25]]){put('stump',x,z,.75);this.colliders.push({x:FOREST_ORIGIN.x+x,z,r:.55});}
+    for(const [x,z] of [[-25,-24],[-23,18]]){put('log',x,z,.7);this.colliders.push({x:FOREST_ORIGIN.x+x,z,r:.85});}
+    for(const [x,z] of [[-17,-24],[30,27]]){put('stump',x,z,.65);this.colliders.push({x:FOREST_ORIGIN.x+x,z,r:.45});}
     this.assetStats={};
     for(const [kind,points] of Object.entries(sets)){
-      if(!points.length)continue;const mat=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.94});
-      if(kind==='oak'||kind==='birch'||kind==='fern')mat.onBeforeCompile=shader=>{
-        shader.uniforms.forestTime=this.timeUniform;shader.vertexShader='uniform float forestTime;\n'+shader.vertexShader;
-        shader.vertexShader=shader.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\n float bend = smoothstep(1.0, 7.0, position.y); transformed.x += sin(forestTime * 0.7 + position.y * 1.1 + instanceMatrix[3].x) * bend * 0.10;');
-      };
-      // ちかい そざいを まとめ、がめんの そとは えがかない。
+      if(!points.length)continue;const tree=kind.startsWith('tree'),mat=tree?harborSightMaterial(this.sight,{sway:true}):new THREE.MeshStandardMaterial({vertexColors:true,roughness:.94});
       const chunks=new Map(),tmp=new THREE.Object3D();
       for(const p of points){const key=`${Math.floor(p.x/16)},${Math.floor(p.z/16)}`;if(!chunks.has(key))chunks.set(key,[]);chunks.get(key).push(p);}
       for(const chunk of chunks.values()){
-        const inst=new THREE.InstancedMesh(geometries[kind],mat,chunk.length);
+        const inst=new THREE.InstancedMesh(geometries[kind],mat,chunk.length);inst.name=tree?'まちの こずえ':kind;
         chunk.forEach((p,i)=>{tmp.position.set(p.x,p.y,p.z);tmp.rotation.y=p.yaw;tmp.scale.setScalar(p.size);tmp.updateMatrix();inst.setMatrixAt(i,tmp.matrix);});
-        inst.castShadow=kind!=='fern';inst.receiveShadow=true;inst.frustumCulled=true;inst.computeBoundingBox();inst.computeBoundingSphere();
-        // かぜで ゆれる はも、はしで とぎれない ようにする。
-        const sway=['oak','birch','fern'].includes(kind)?.1*Math.max(...chunk.map(p=>p.size)):0;
-        inst.boundingBox.expandByScalar(sway);inst.boundingSphere.radius+=sway;this.group.add(inst);
+        inst.castShadow=kind!=='fern';inst.receiveShadow=true;inst.computeBoundingBox();inst.computeBoundingSphere();inst.boundingBox.expandByScalar(.07);inst.boundingSphere.radius+=.07;this.group.add(inst);
       }
       this.assetStats[kind]={count:points.length,triangles:geometries[kind].index.count/3};
     }
-    forestRoute(FOREST_SPAWN,LEAF_SPOTS[0]);
-    this.assetsLoaded=true;
+    for(const b of HARBOR_BUILDINGS)this.assetStats[b.kind]={count:(this.assetStats[b.kind]?.count??0)+1,triangles:geometries[b.kind].index.count/3};
+    forestRoute(FOREST_SPAWN,LEAF_SPOTS[0]);this.assetsLoaded=true;
+  }
+  updateView(camera,player,dt,night=0){
+    this.sight.hero.value.copy(player.pos).y+=1.15;this.sight.eye.value=camera.position;
+    this.playerLocal.copy(player.pos).x-=FOREST_ORIGIN.x;this.night=night;
   }
   groundAt(x,z){return groundHeight(x-FOREST_ORIGIN.x,z);}
   clampPos(p){const local={x:p.x-FOREST_ORIGIN.x,y:p.y,z:p.z};let changed=clampForest(local);changed=clampSteps(local)||changed;p.x=local.x+FOREST_ORIGIN.x;p.z=local.z;return changed;}
   route(from,to){return forestRoute({x:from.x-FOREST_ORIGIN.x,z:from.z},{x:to.x-FOREST_ORIGIN.x,z:to.z}).map(p=>new THREE.Vector3(p.x+FOREST_ORIGIN.x,groundHeight(p.x,p.z),p.z));}
-  refresh(state){this.leaves.forEach((o,i)=>{o.visible=state.stage!=='done'&&!state.collected.includes(i);this.leafShadows[i].visible=o.visible;});this.decoration.visible=state.stage==='done';}
+  refresh(state){this.leaves.forEach((o,i)=>{const visible=state.stage!=='done'&&!state.collected.includes(i);if(o.visible&&!visible&&this.assetsLoaded)this.ambience.burst(o.position.x,o.position.y+.4,o.position.z,[0x8acb92,0xf1b95f,0xf08b78][i]);o.visible=visible;this.leafShadows[i].visible=visible;});this.decoration.visible=state.stage==='done';}
   update(dt,t){
-    this.timeUniform.value=t;this.water.update(dt,t);
-    this.leaves.forEach((o,i)=>{o.position.y=landHeight(LEAF_SPOTS[i].x,LEAF_SPOTS[i].z)+1.25+Math.sin(t*2+i)*.12;});
-    this.butterflies.forEach((o,i)=>{const x=LEAF_HOST.x+Math.sin(t*.25+i*2)*6,z=LEAF_HOST.z+Math.cos(t*.28+i)*4;o.position.set(x,landHeight(x,z)+1.8+Math.sin(t+i)*.3,z);});
+    this.timeUniform.value=t;this.sight.time.value=t;this.water.update(dt,t);this.ambience.update(dt,t,this.playerLocal);this.town.update(dt,t,this.playerLocal,this.night??0);
+    this.leaves.forEach((o,i)=>{o.position.y=landHeight(LEAF_SPOTS[i].x,LEAF_SPOTS[i].z)+1.0+Math.sin(t*2+i)*.12;o.rotation.y=Math.sin(t*.65+i)*.48;o.rotation.z=Math.sin(t*1.2+i)*.12;});
     this.boat.position.y=-.3+Math.sin(t*1.4)*.06;this.host.pivot.scale.y=1+Math.sin(t*2)*.02;
   }
 }
