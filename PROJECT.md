@@ -1,5 +1,13 @@
 # キラキラアイランドの作業入口
 
+## 最新状態：第二島の改修を公開・配信確認完了（2026-10-07）
+
+調整チャットでの本人の「第二島公開して」を直接照合し、[PR28](https://github.com/futsalife24-bot/Ichi-game/pull/28)を統合。公開前mainは `536f1fd2af28deea9958a0f885b3fcf1761bf771`、承認済み完成版は `1057564501eae54fe632423090dc0ee139027987`。公開前にPagesの森素材コピー漏れを見つけ、配信設定だけ２行を追加した対象HEADは `5cd5eac4c1ae6cb9c49d54733d40451f6764089d`。必須チェック成功、音声708個を含む配信準備764ファイルの原本一致を確認。公開mainは `26e421cc35367be678d83702f8dda6cabce808f5`、対象HEADと全ファイルが一致する。
+
+制作時の130テストとUI032の一周を再利用。[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37592441140)・[Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37592441190)成功。公開先の56資材・３つの開発者モード入口が公開コミットと一致。音声一覧708個を維持、SW版 `kirakira-v30-woodland`。UI036のChrome・844×390で第二島の素材読込・案内による移動・川の遠景・完成後の広場・星２個を保って帰島を確認、警告・エラー０。通常プロフィールは開かず一時状態のみ使用。画面サイズを戻してタブを閉じ、UI036返却済み。
+
+公開入口は [第二島をすぐ確認](https://futsalife24-bot.github.io/Ichi-game/?dev=forest)。記録ブランチは `codex/second-island-craft-release-record`、証拠は [公開照合](docs/second-island-craft-release-check.json) と公開画像３枚。公開・検証は完了し、再公開や同じ一周の反復は不要。実スマホ性能は未確認。以下は公開前の制作記録。
+
 ## 改修・実画面確認済み：第二島の描写と広さ（2026-10-07、未公開）
 
 本人の品質指摘とBlender・ネット資料・サブエージェント使用指示を受け、`codex/second-island-craft`（基点 `37ddb2b1d7a8a68f8c314a7d94dfe758bd832fc6`）で改修。半径46の起伏ある島、蛇行川・滝・二つの橋、Blenderの広葉樹・根・樹皮・シダ・苔岩・切り株・倒木、地面の混色と凹凸を統合。130テスト・708音声・７素材の検査成功。描画調整後の関連20テストも成功。UI032のChromeで第一島と同じ照明・カメラの比較、川・滝・広場、実ゲームの葉３枚→配送→装飾→星１個→帰島、844×390・667×375を確認。警告・エラー０件。画面サイズを復元しタブを閉じ、UI032返却済み。描画の呼出回数を減らしたが、実スマホの速度は未確認。未公開。正本は [作り込みと検証記録](docs/second-island-craft.md)、[画像と計測](docs/second-island-craft-check.json)、[制作資料](docs/second-island-art-references.md)、[Blender原本](assets-src/forest/README.md)。以下は公開済み版の履歴。

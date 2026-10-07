@@ -1,5 +1,15 @@
 # 次セッションへの引継ぎ（2026-10-04）
 
+## 第二島の改修を公開・配信確認完了（2026-10-07）
+
+本人の公開承認は調整チャット `01a10f48-5eb8-7762-8042-ea529c7d053d` の直接発言 `01a11569-21fa-7b82-ad66-cd2f1f50f6c5`「第二島公開して」を読んで照合済み。PR28統合、公開main `26e421cc35367be678d83702f8dda6cabce808f5`。承認版1057564のゲーム本体はそのまま、公開準備でPagesの森素材コピー漏れだけ２行修正し、対象HEAD `5cd5eac4c1ae6cb9c49d54733d40451f6764089d` の必須チェック２件成功。配信準備764ファイル（708音声含む）を原本照合済み。
+
+制作時の130テスト・UI032の実プレイは再利用。[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37592441140)・[Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37592441190)成功。公開先56資材をキャッシュ除去用クエリを付けず取得し、全ハッシュが公開コミットと一致。３つの開発者入口のHTMLも一致。音声一覧708個、SW版 `kirakira-v30-woodland`。
+
+UI036のChrome・844×390で公開URLから第二島の素材を読み込み、案内で森を移動して川の遠景を確認。完成後への切り替えで広場の装飾・星２個、第一島へ戻って星２個保持を確認。警告・エラー０。通常プロフィールは開かず一時状態だけ使用。完成後は直接広場へ入るため、不要な自由に遊ぶボタン待機が一度終了したが、DOMで正しい広場を確認して継続した。画面サイズ復元・タブを閉じ、`UI-20261007-036 UI解放済み`。画像は `docs/images/forest-craft-public-arrival.png`、`forest-craft-public-river.png`、`forest-craft-public-plaza.png`。実スマホ性能は未確認のまま。
+
+記録ブランチ `codex/second-island-craft-release-record`、公開前main `536f1fd2af28deea9958a0f885b3fcf1761bf771`。公開照合用スクリプトはGit対象外 `artifacts/check-woodland-release.mjs`、結果は `docs/second-island-craft-release-check.json`。公開・必要な検証は完了。再公開・素材の再生成・同じ一周の反復は不要。次の依頼まで範囲を広げない。以下は制作完了時の記録。
+
 ## 第二島の品質改修・実画面確認済み（2026-10-07、未公開）
 
 本人が第一島より品質が落ちたと指摘し、より広い島、第一島以上の描写、水の流れ、木と地面の質感、ネット資料調査、Blender制作、サブエージェント利用を指示。主担当＋３サブ担当で制作と数値レビューを実施。新作業ブランチ `codex/second-island-craft`、基点 `37ddb2b1d7a8a68f8c314a7d94dfe758bd832fc6`。公開mainは下記の開発者モード版のまま。
