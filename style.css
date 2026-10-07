@@ -436,6 +436,100 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 #adventureBack { position: absolute; left: 14px; top: 30%; }
 #adventurePanel button:disabled { opacity: .5; cursor: default; }
 #adventureMessage { white-space: pre-line; }
+/* みなとの おつかい。えを みて、かずや ならびを ためす。 */
+.harbor-errands-sheet { width: min(800px, 96vw); max-height: 95dvh; overflow: auto; padding: 18px 22px; border: 3px solid #e2d4b5; border-radius: 26px; background: #fffaf0; color: #254e4b; box-shadow: 0 12px 45px #173a4240; touch-action: pan-y; }
+.errands-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.errands-heading h2 { margin: 3px 0 0; font-size: clamp(21px, 4.4vh, 31px); line-height: 1.25; }
+.errands-kicker { color: #657d75; font-size: 13px; font-weight: 700; letter-spacing: .08em; }
+.harbor-errands-sheet button, #harborErrandsActions button { font: inherit; font-weight: 800; color: #254e4b; border-radius: 16px; min-height: 46px; touch-action: manipulation; cursor: pointer; }
+.harbor-errands-sheet button:focus-visible, #harborErrandsActions button:focus-visible { outline: 4px solid #307e83; outline-offset: 3px; }
+#harborErrandsClose { background: #efeadc; min-width: 48px; font-size: 29px; }
+.errands-board-note { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 4px 0 12px; font-size: 17px; font-weight: 700; }
+.errands-stamps { display: flex; gap: 5px; }
+.errands-stamps > span { display: grid; place-items: center; width: 38px; height: 38px; border: 2px dashed #bbc8bf; border-radius: 50%; opacity: .38; }
+.errands-stamps > .stamped { opacity: 1; border-style: solid; border-color: #dda951; background: #fff0b9; }
+.errands-jobs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.errands-jobs > button { display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 12px 8px; background: #f2e8d1; box-shadow: 0 4px 0 #d9c9a8; border: 2px solid #e4d4b2; }
+.errands-jobs > button:nth-child(2) { background: #fbe5d4; border-color: #eac4a7; }
+.errands-jobs > button:nth-child(3) { background: #e3eedf; border-color: #c1d8bc; }
+.errands-jobs strong { font-size: 19px; }
+.errands-jobs span { font-size: 14px; line-height: 1.6; }
+.errands-jobs small { margin-top: auto; font-size: 13px; border-radius: 12px; background: #fffaf0c9; padding: 6px 9px; }
+#harborErrandsFooter { display: flex; justify-content: center; flex-wrap: wrap; gap: 9px; margin-top: 15px; }
+#harborErrandsFooter button { background: #e8eee7; padding: 10px 16px; font-size: 16px; }
+#harborErrandsFooter .errands-primary { background: #317e79; color: #fffaf0; box-shadow: 0 3px 0 #205954; }
+.errands-brief { display: flex; align-items: center; justify-content: center; gap: 26px; padding: 16px 4px; }
+.errands-brief > svg { flex-shrink: 0; }
+.errands-brief p { font-size: 21px; margin: 0 0 12px; line-height: 1.5; }
+.errands-brief small { font-size: 14px; }
+.errands-route { color: #397d76; font-weight: 800; }
+.errands-route span { margin: 0 12px; color: #ce9456; }
+.errands-steps { display: flex; list-style: none; padding: 0; gap: 10px; counter-reset: errands; }
+.errands-steps li { flex: 1; padding: 12px 5px; text-align: center; background: #eeeadc; border-radius: 12px; font-size: 15px; font-weight: 700; }
+.errands-steps li::before { counter-increment: errands; content: counter(errands) ' '; color: #358378; }
+.errands-question { text-align: center; font-size: 23px; font-weight: 800; margin: 12px 0; }
+.errands-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.errands-options button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; background: #f4ead5; border: 2px solid #e3ceb0; padding: 9px; box-shadow: 0 3px 0 #ddc7a7; }
+.errands-options button:active, .errands-jobs button:active { transform: translateY(2px); box-shadow: none; }
+.errands-options small { font-size: 15px; }
+.wheat-count { display: flex; justify-content: center; flex-wrap: wrap; max-width: 156px; min-height: 60px; }
+.wheat-count svg { flex-shrink: 0; }
+#harborErrandsFeedback { min-height: 1.3em; text-align: center; font-weight: 700; font-size: 16px; color: #79593d; margin: 12px 0 0; }
+.bread-puzzle { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.bread-tray { min-height: 106px; border: 3px solid #c79765; border-radius: 18px; background: #f1ddbc; padding: 8px; text-align: center; }
+.bread-tray.sample { background: #e3ece0; border-color: #a8c6b6; }
+.bread-tray > div { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; min-height: 54px; margin-top: 6px; }
+.added-bread { display: contents; }
+.added-bread svg { background: #fff7d6; border-radius: 50%; }
+.bread-controls { display: flex; justify-content: center; align-items: center; gap: 12px; margin: 12px 0 0; }
+.bread-controls button { background: #e5ede3; padding: 9px 13px; }
+.bread-controls button:last-child { background: #f5d9b5; }
+.bread-controls button:disabled { opacity: .4; cursor: default; }
+.flower-pattern { display: flex; justify-content: center; align-items: center; gap: 8px; margin: 8px 0 13px; padding: 7px; background: #e6eedc; border-radius: 16px; }
+.flower-pattern > span { display: grid; place-items: center; }
+.flower-pattern small { font-size: 12px; }
+.pattern-missing { width: 58px; height: 58px; background: #fffdf5; border: 2px dashed #9dad94; border-radius: 12px; font-size: 34px; }
+.flower-options { max-width: 570px; margin: 0 auto; }
+#harborErrandsActions { position: absolute; right: 14px; bottom: calc(var(--u) * 32 + var(--safe-b) + 12px); display: flex; flex-direction: column; align-items: flex-end; gap: 8px; pointer-events: auto; }
+#harborErrandsActions button { background: #e2efda; padding: 10px 16px; font-size: clamp(16px, 2.8vh, 22px); box-shadow: 0 3px 0 #aec7ad; }
+#harborErrandsPause { background: #fff0cd !important; }
+.harbor-errand-focus #adventureBack { display: none; }
+#adventureHarbor { background: #cbe4db; }
+@media (max-height: 440px) {
+  .harbor-errands-sheet { padding: 10px 17px; }
+  .errands-heading { margin-bottom: 5px; }
+  .errands-heading h2 { font-size: 22px; }
+  .errands-board-note { font-size: 15px; margin: 2px 0 6px; }
+  .errands-stamps > span { width: 30px; height: 30px; }
+  .errands-jobs > button { gap: 4px; padding: 7px; }
+  .errands-jobs > button > svg { width: 60px; height: 60px; }
+  .errands-jobs strong { font-size: 17px; }
+  .errands-jobs span { font-size: 13px; line-height: 1.3; }
+  .errands-jobs small { font-size: 12px; padding: 5px 7px; }
+  #harborErrandsFooter { margin-top: 9px; }
+  #harborErrandsFooter button { padding: 8px 13px; }
+  .errands-question { font-size: 20px; margin: 7px 0; }
+  .flour-bag > svg { width: 54px; height: 54px; }
+  .wheat-count { min-height: 33px; max-width: 190px; }
+  .bread-tray { min-height: 93px; }
+  .bread-controls { margin-top: 8px; }
+  #harborErrandsFeedback { margin-top: 7px; font-size: 14px; }
+  .flower-pattern { margin: 5px 0 8px; }
+  .flower-pattern svg, .pattern-missing { width: 48px; height: 48px; }
+  .flower-options svg { width: 44px; height: 44px; }
+  .errands-brief { padding: 8px 4px; }
+  .errands-brief p { font-size: 19px; margin-bottom: 8px; }
+}
+@media (max-width: 560px) {
+  .errands-jobs { grid-template-columns: 1fr; }
+  .errands-jobs > button { display: grid; grid-template-columns: 70px 1fr; text-align: left; }
+  .errands-jobs > button > svg { grid-row: span 3; }
+  .errands-brief { gap: 10px; }
+  .errands-brief > svg { width: 76px; }
+  .bread-controls { gap: 6px; font-size: 13px; }
+  .bread-controls button { padding: 8px; }
+  .errands-question { font-size: 19px; }
+}
 #placeLabel { position: absolute; top: 16px; left: 50%; transform: translateX(-50%); padding: 8px 12px; border-radius: 18px; background: #fff9e9; font-weight: 800; font-size: clamp(16px, 3vh, 22px); pointer-events: none; }
 .forest-place #helpReturn, .forest-place #helpQuiz, .forest-place #btnQuestHint { display: none; }
 .adventure-focus #pills, .adventure-focus #sideBtns, .adventure-focus #helpReturn, .adventure-focus #helpQuiz, .adventure-focus #btnQuestHint { display: none; }
@@ -517,3 +611,19 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 #birthdaySettingsPanel button { background:#d7f0df; color:#234d45; }
 .birthday-picture { font-size:clamp(40px,12vh,86px); }
 .birthday-sheet h2 { font-size:clamp(22px,5vh,32px); overflow-wrap:anywhere; }
+/* あたらしい しまへ。あそびの くぎりに みじかく さそう。 */
+#adventurePanel .island-guidance-picture { display: block; width: min(360px, 100%); height: 120px; margin: 4px auto; }
+#adventureGuidanceMessage { white-space: pre-line; line-height: 1.6; }
+#adventurePanel .island-guidance-later { margin: 5px 0 14px; font-size: 15px; color: #57766b; }
+#adventurePanel .island-guidance-choices { gap: 10px; }
+#adventurePanel .island-guidance-choices button { white-space: normal; min-width: 0; }
+#adventureGuidanceAccept, #adventureDoneSail { background: #398b83; color: #fffaf0; box-shadow: 0 3px 0 #23655e; }
+#adventureGuidanceLater, #adventureStay { background: #fff0cc; color: #5a6145; box-shadow: 0 3px 0 #dac7a0; }
+@media (max-height: 500px) {
+  #adventurePanel.island-guidance-open .help-sheet { padding: 12px 18px; }
+  #adventurePanel.island-guidance-open h2 { font-size: 22px; margin-bottom: 2px; }
+  #adventurePanel .island-guidance-picture { height: 86px; margin: 0 auto; }
+  #adventureGuidanceMessage { margin: 5px 0 7px; font-size: 17px; line-height: 1.4; }
+  #adventurePanel .island-guidance-later { margin: 4px 0 10px; }
+  #adventurePanel .island-guidance-choices button { min-height: 48px; padding: 10px 14px; font-size: 17px; }
+}

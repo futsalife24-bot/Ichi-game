@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-08",
+  "browser": "Chrome",
+  "viewport": "844x390",
+  "scope": "いちかの名前選択・録音・保存と全音声の更新",
+  "voicePlayback": {"subtitle": "いちかちゃん！", "mode": "clip", "ended": true, "seconds": 1.20},
+  "decode": {"checked": 726, "expected": 726, "errors": []},
+  "offline": {"cached": 726, "expected": 726, "missing": []},
+  "maker": {"selected": "いちか", "call": "いちかちゃん", "buttonWithinViewport": true, "finished": true, "reloadTitle": "▶ いちかちゃん と あそぶ"},
+  "profileProtection": "空のlocalhost:5198専用記録を画面で作成して確認。利用者の公開サイトと既存127.0.0.1の記録は変更していない。",
+  "consoleWarnings": [],
+  "consoleErrors": [],
+  "tests": {"passed": 13, "failed": 0, "skipped": 0, "log": "artifacts/ichika-voice-tests.txt"},
+  "completeClips": 726,
+  "independentReview": "実Makerの候補選択・確定、25種の名前付き台詞分割、新MP3のハッシュとSW登録を別担当が確認。修正必須指摘なし。",
+  "images": ["docs/images/ichika-name-choice.png", "docs/images/ichika-voice-check.png"],
+  "humanListening": "未確認",
+  "realSmartphonePerformance": "未確認",
+  "agentModelAndEffort": "未確認"
+}

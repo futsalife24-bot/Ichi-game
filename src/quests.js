@@ -12,6 +12,7 @@ import { callName } from './catalog.js';
 import { beginObservation, noteObservation, finishObservation } from './observations.js';
 import { resolvePlaySettings } from './play-settings.js';
 import { addEvidence } from './suggestions.js';
+import { addAdaptiveEvidence } from './adaptive-play.js';
 const HINT_AFTER = 18;
 
 export const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
@@ -116,7 +117,7 @@ export class QuestManager {
     if (this.observationId !== null) this.stop();
     if (this.saveFailed) return;
     let type = TYPES[this.save.questIdx % TYPES.length];
-    this.activitySettings = resolvePlaySettings(this.save.playSettings,type,this.save.stars);
+    this.activitySettings = resolvePlaySettings(this.save.playSettings,type,this.save.stars,this.save.adaptivePlay);
     const previousIdx = this.save.questIdx;
     this.save.questIdx++;
     const next = beginObservation(this.save.observations,type,this.activityLevel);
@@ -125,7 +126,7 @@ export class QuestManager {
     this.clearItems();
     this.quest = { type, got: 0, need: 1 };
     this['setup_' + type]();
-    this.evidenceChallenge={target:this.quest.target?.id??this.quest.target?.ch,choices:this.items.length};
+    this.evidenceChallenge={target:this.quest.target?.id??this.quest.target?.ch,choices:this.items.length,need:this.quest.need};
     this.state = 'active';
     this.elapsed = 0;
     this.hinted = false;
@@ -400,6 +401,9 @@ export class QuestManager {
     if (this.saveFailed || this.state !== 'active') return;
     const previous = this.save.observations;
     const previousSuggestions = this.save.suggestions;
+    const previousAdaptive = this.save.adaptivePlay;
+    const adaptive = addAdaptiveEvidence(previousAdaptive,previous?.active?{...previous.active,outcome:'completed'}:null,this.evidenceChallenge,this.activitySettings);
+    if(adaptive!==undefined)this.save.adaptivePlay=adaptive;
     const evidence = addEvidence(previousSuggestions,previous?.active?{...previous.active,outcome:'completed'}:null,this.evidenceChallenge,this.activitySettings);
     if(evidence!==undefined)this.save.suggestions=evidence;
     if (this.observationId !== null) this.save.observations = finishObservation(previous,this.observationId,'completed');
@@ -407,6 +411,7 @@ export class QuestManager {
     if (this.saveFailed) {
       this.save.observations = previous;
       if(previousSuggestions===undefined)delete this.save.suggestions;else this.save.suggestions=previousSuggestions;
+      if(previousAdaptive===undefined)delete this.save.adaptivePlay;else this.save.adaptivePlay=previousAdaptive;
       return;
     }
     this.observationId = null;

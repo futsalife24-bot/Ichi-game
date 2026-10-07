@@ -2,11 +2,15 @@
 import { createProfileStore } from './profiles.js';
 import { newHelp } from './help-state.js';
 import { newAdventure } from './adventure-state.js';
+import { beginObservation, noteObservation, finishObservation } from './observations.js';
+import { addAdaptiveEvidence } from './adaptive-play.js';
 
 export const DEVELOPER_SCENARIOS = Object.freeze({
   forest: Object.freeze({ id: 'forest', label: '第二島・はじめから', place: 'forest' }),
   'forest-done': Object.freeze({ id: 'forest-done', label: '第二島・お手伝い完了後', place: 'forest' }),
   island: Object.freeze({ id: 'island', label: '第一島・花のお手伝い前', place: 'island' }),
+  'island-guide': Object.freeze({ id: 'island-guide', label: '第一島・自動調整と花への案内', place: 'island' }),
+  'island-sail': Object.freeze({ id: 'island-sail', label: '第一島・船への案内', place: 'island' }),
 });
 
 export function developerScenario(search) {
@@ -47,6 +51,23 @@ export async function openPlayProfiles({ search, getStorage, claimSession, avata
     if (scenario.id === 'forest-done') {
       save.adventure.leaf = { stage: 'done', collected: [0, 1, 2] };
       save.stars = 2;
+    }
+    if (scenario.id === 'island-guide') {
+      // この かくにんがめんだけに、いろを はちかい あそんだ きろくを つくる。
+      for (let index = 0; index < 8; index++) {
+        save.observations = beginObservation(save.observations, 'color', 0);
+        const id = save.observations.active.id;
+        save.observations = noteObservation(save.observations, id, 'selections');
+        const event = { ...save.observations.active, outcome: 'completed' };
+        save.adaptivePlay = addAdaptiveEvidence(save.adaptivePlay, event,
+          { target: ['aka', 'ao', 'kiiro'][index % 3], choices: 4 }, { level: 0, hints: 'auto', automatic: true });
+        save.observations = finishObservation(save.observations, id, 'completed');
+      }
+      save.stars = 8; save.questIdx = 0;
+    }
+    if (scenario.id === 'island-sail') {
+      save.adventure.flower = { stage: 'done', collected: [0, 1, 2] };
+      save.stars = 1;
     }
     profiles.write(save);
   } else {

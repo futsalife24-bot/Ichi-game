@@ -1,0 +1,87 @@
+{
+  "date": "2026-10-08",
+  "url": "http://127.0.0.1:5198/tools/voice-review.html",
+  "decode": {
+    "checked": 725,
+    "expected": 725,
+    "errors": [],
+    "totalSeconds": 984
+  },
+  "playback": {
+    "完了": 14,
+    "結果": [
+      {
+        "id": "welcome",
+        "mode": "clip",
+        "ended": true
+      },
+      {
+        "id": "flourAsk",
+        "mode": "clip",
+        "ended": true
+      },
+      {
+        "id": "breadAsk",
+        "mode": "clip",
+        "ended": true
+      },
+      {
+        "id": "flowersAsk",
+        "mode": "clip",
+        "ended": true
+      },
+      {
+        "id": "correct",
+        "mode": "clip",
+        "ended": true
+      },
+      {
+        "id": "wrong",
+        "mode": "clip",
+        "ended": true
+      },
+      {
+        "id": "hint",
+        "mode": "clip",
+        "ended": true
+      },
+      {
+        "id": "goFlour",
+        "mode": "clip",
+        "ended": true
+      },
+      {
+        "id": "goBread",
+        "mode": "clip",
+        "ended": true
+      },
+      {
+        "id": "goFlowers",
+        "mode": "clip",
+        "ended": true
+      },
+      {
+        "id": "deliverBread",
+        "mode": "clip",
+        "ended": true
+      },
+      {
+        "id": "deliverSquare",
+        "mode": "clip",
+        "ended": true
+      },
+      {
+        "id": "done",
+        "mode": "clip",
+        "ended": true
+      },
+      {
+        "id": "allDone",
+        "mode": "clip",
+        "ended": true
+      }
+    ]
+  },
+  "offline": "{\n  \"cached\": 725,\n  \"expected\": 725,\n  \"missing\": []\n}",
+  "humanListening": "未実施"
+}

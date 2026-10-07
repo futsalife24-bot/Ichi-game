@@ -21,6 +21,7 @@ import { makeEgg } from './critters.js';
 import { loadSave, writeSave, claimSaveSession, useSaveStore } from './save.js';
 import { openPlayProfiles, developerURL } from './developer-mode.js';
 import { HarborPlay } from './harbor-play.js';
+import { HarborErrands } from './harbor-errands.js';
 import { setupProfileUI } from './profile-ui.js';
 import { finishObservation } from './observations.js';
 import { setupRecordsUI } from './records-ui.js';
@@ -125,13 +126,28 @@ const adventure = new Adventure({ scene, player, animals, forest, ui, audio, voi
   getPlace: () => place,
   onSail: () => visitForest(),
   onReturn: () => leaveForest(),
-  canAct: () => mode === 'play' && !saveBlocked && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !help.focused,
+  canAct: () => mode === 'play' && !saveBlocked && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !help.focused && !harborBusy(),
   onChange: () => {
     life.endFishing(); input.reset();
-    input.enabled = mode === 'play' && !adventure.modal && !help.modal && !saveBlocked && !playTimer.paused && !homePaused && !transitioning;
-    $('hud').classList.toggle('adventure-focus', adventure.focused);
+    refreshActivityInput();
   },
 });
+const harborErrands = new HarborErrands({ forest, player, save, persist, ui, audio, voice, effects,
+  canAct: () => mode === 'play' && place === 'forest' && !saveBlocked && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !help.focused,
+  beforeOpen: () => { adventure.stop(); harborPlay.cancel(); life.endFishing(); },
+  onChange: () => { input.reset(); refreshActivityInput(); },
+  onLeaf: () => { adventure.choose('leaf'); },
+  onReturn: () => leaveForest(),
+});
+const harborBusy = () => harborErrands.focused || harborErrands.modal;
+function refreshActivityInput() {
+  input.enabled = mode === 'play' && !adventure.modal && !harborErrands.modal && !help.modal && !saveBlocked && !playTimer.paused && !homePaused && !transitioning;
+  $('hud').classList.toggle('adventure-focus', adventure.focused || harborBusy());
+  $('hud').classList.toggle('harbor-errand-focus', harborBusy());
+  $('developerTools').classList.toggle('invisible', harborErrands.modal || adventure.modal);
+}
+$('btnAdventure').onclick = () => { if (place === 'forest') harborErrands.open(); else if (adventure.canAct()) adventure.open(); };
+$('adventureHarbor').onclick = () => harborErrands.open();
 life.onWear = (id) => wear(CLOTHES[id].slot, id, false);
 room.onCloset = () => openCloset();
 ui.setStars(save.stars);
@@ -210,7 +226,7 @@ const timeUI=setupTimeUI(save,persist,selectedProfileLabel,{
     if(saveBlocked)return;
     if(playTimer.paused ? !playTimer.continue() : !playTimer.tick(true))return;
     homePaused=false;
-    timeUI.hide();input.reset();input.enabled=!help.modal&&!adventure.modal;
+    timeUI.hide();input.reset();refreshActivityInput();
   },
   onFinish:()=>{if(!saveBlocked && backToTitle())timeUI.hide();},
 });
@@ -245,12 +261,19 @@ if (developerScenario) {
   $('developerTools').onclick = () => {
     if (transitioning) return;
     input.reset(); input.enabled = false; player.setTarget(null); voice.stop();
+    $('developerErrand').disabled = mode !== 'play' || place !== 'forest' || !harborErrands.focused || harborErrands.modal || !['pickup','deliver'].includes(harborErrands.current?.stage);
     $('developerPanel').showModal();
+  };
+  $('developerErrand').onclick = () => {
+    $('developerPanel').close();
+    if (!harborErrands.canAct() || !harborErrands.focused || harborErrands.modal || !['pickup','deliver'].includes(harborErrands.current?.stage)) return;
+    const target = harborErrands.target(); harborErrands.halt();
+    player.teleport(target.x, target.y, target.z, Math.PI); snapCamera(); harborErrands.update();
   };
   $('developerClose').onclick = () => $('developerPanel').close();
   $('developerPanel').addEventListener('close', () => {
     input.reset();
-    input.enabled = mode === 'play' && !saveBlocked && !transitioning && !playTimer.paused && !homePaused && !help.modal && !adventure.modal && !ui.panelOpen;
+    refreshActivityInput();
   });
 }
 
@@ -344,6 +367,7 @@ function backToTitle() {
   if(saveBlocked || !playTimer.end())return;
   help.stop();
   adventure.stop();
+  harborErrands.stop();
   input.enabled = false;
   input.reset();
   voice.stop();
@@ -386,7 +410,7 @@ $('btnVoice').addEventListener('click', () => {
   updateToggles();
 });
 $('btnHome').addEventListener('click', openHomeSummary);
-$('questCard').addEventListener('click', () => (adventure.focused ? adventure.repeat() : place === 'school' ? school.repeat() : place === 'island' ? (help.focused ? help.repeat() : quests.repeat()) : null));
+$('questCard').addEventListener('click', () => (harborErrands.focused ? harborErrands.repeat() : adventure.focused ? adventure.repeat() : place === 'school' ? school.repeat() : place === 'island' ? (help.focused ? help.repeat() : quests.repeat()) : null));
 $('btnZukan').addEventListener('click', () => openZukan());
 $('btnCloset').addEventListener('click', () => openCloset());
 
@@ -397,7 +421,7 @@ function openPanel(opts) {
   input.reset();
   ui.openPanel({ ...opts, onClose: () => {
     opts.onClose?.();
-    if (mode === 'play' && !transitioning) input.enabled = true;
+    if (mode === 'play' && !transitioning) refreshActivityInput();
   } });
 }
 
@@ -525,7 +549,7 @@ function transition(fn) {
     fadeEl.classList.remove('show');
     setTimeout(() => {
       transitioning = false;
-      if (mode === 'play') input.enabled = !saveBlocked && !playTimer.paused && !homePaused && !help.modal && !adventure.modal;
+      if (mode === 'play') refreshActivityInput();
     }, 250);
   }, 380);
 }
@@ -626,6 +650,7 @@ async function visitForest(preview = null) {
     if (place !== 'island' || !adventure.canAct()) return;
   }
   quests.stop(); if (saveBlocked) return;
+  if (!adventure.markVisited()) return;
   life.endFishing(); voice.stop(); audio.meet();
   transition(() => {
     setOutdoorVisible(false); place = 'forest'; forest.group.visible = true;
@@ -633,13 +658,15 @@ async function visitForest(preview = null) {
     const spawn = preview === 'forest-done' ? { x: LEAF_HOST.x, z: LEAF_HOST.z + 3 } : FOREST_SPAWN;
     player.teleport(FOREST_ORIGIN.x + spawn.x, forest.groundAt(FOREST_ORIGIN.x + spawn.x, spawn.z), spawn.z, Math.PI);
     document.body.classList.add('forest-place');
-    adventure.view = preview === 'forest-done' ? null : 'menu'; adventure.render();
-    voice.say(L.forestWelcome()); snapCamera();
+    adventure.view = null; adventure.render();
+    harborErrands.view = preview === 'forest-done' ? null : 'board'; harborErrands.render();
+    harborErrands.repeat(); snapCamera();
   });
 }
 function leaveForest(instant = false) {
   const go = () => {
     harborPlay.cancel();
+    harborErrands.stop();
     adventure.stop(); forest.group.visible = false; setOutdoorVisible(true); place = 'island';
     boatArmed = false;
     document.body.classList.remove('forest-place');
@@ -649,6 +676,11 @@ function leaveForest(instant = false) {
   if (instant) go(); else { audio.meet(); transition(go); }
 }
 let boatArmed = true;
+function islandGuideCheck() {
+  if (mode !== 'play' || place !== 'island' || saveBlocked || transitioning || forestLoading || document.hidden || playTimer.paused || homePaused || developerMenuOpen()
+    || ui.panelOpen || help.focused || help.modal || adventure.focused || adventure.modal || harborBusy() || quests.state !== 'idle' || voice.busy || life.fishing || life.busy > 0) return;
+  adventure.offerGuidance();
+}
 function boatCheck() {
   if (!adventure.canAct() || adventure.focused || adventure.modal || !adventure.unlocked || !['island','forest'].includes(place)) return;
   const boat = place === 'forest' ? {x:FOREST_ORIGIN.x+FOREST_DOCK.x,z:FOREST_DOCK.z+2} : {x:DOCK.x,z:DOCK.z+2};
@@ -671,14 +703,14 @@ function doorCheck() {
 
 // ------------------------------------------------ てんき
 climate.onRainStart = (snow) => {
-  if (mode !== 'play' || help.focused || adventure.focused || adventure.modal) return;
+  if (mode !== 'play' || help.focused || adventure.focused || adventure.modal || harborBusy()) return;
   player.emote(snow ? '⛄' : '☔', 3);
   voice.say(L.rainStart(snow));
   refreshHud();
 };
 climate.onRainEnd = (snow) => {
   refreshHud();
-  if (mode !== 'play' || help.focused || adventure.focused || adventure.modal) return;
+  if (mode !== 'play' || help.focused || adventure.focused || adventure.modal || harborBusy()) return;
   voice.say(L.rainEnd(snow));
   if (!snow) {
     audio.sparkle();
@@ -716,8 +748,10 @@ let time = 0;
 let hudClock = 0;
 
 function frame(now) {
-  $('btnAdventure').classList.toggle('hidden', mode !== 'play' || !['island','forest'].includes(place) || help.focused || adventure.focused);
-  $('placeLabel').classList.toggle('hidden', place !== 'forest' || adventure.focused);
+  $('btnAdventure').classList.toggle('hidden', mode !== 'play' || !['island','forest'].includes(place) || help.focused || adventure.focused || harborBusy());
+  $('btnAdventure').querySelector('.side-label').textContent = place === 'forest' ? 'おつかい' : 'ぼうけん';
+  $('btnAdventure').setAttribute('aria-label', place === 'forest' ? 'みなとの おつかい' : 'ぼうけん');
+  $('placeLabel').classList.toggle('hidden', place !== 'forest' || adventure.focused || harborBusy());
   if(!playTimer.tick(mode==='play'&&!saveBlocked&&!document.hidden&&!homePaused&&!developerMenuOpen())) { requestAnimationFrame(frame); return; }
   $('btnQuestHint').classList.toggle('hidden', !(mode==='play' && place==='island' && !help.focused && !ui.panelOpen && !transitioning && quests.state==='active' && !saveBlocked && !playTimer.paused && !homePaused));
   const dt = Math.min(0.05, (now - last) / 1000);
@@ -743,8 +777,9 @@ function frame(now) {
         if (g) player.setTarget(g);
       }
     }
-    if (!help.modal && !adventure.modal && !ui.panelOpen && !transitioning) player.update(dt, input, env(), audio);
+    if (!help.modal && !adventure.modal && !harborErrands.modal && !ui.panelOpen && !transitioning) player.update(dt, input, env(), audio);
     if (!ui.panelOpen && !transitioning) adventure.update(dt, time);
+    if (place === 'forest' && !ui.panelOpen && !transitioning) harborErrands.update(dt, time);
     if (saveBlocked) { requestAnimationFrame(frame); return; }
     if (!ui.panelOpen && !transitioning) boatCheck();
     if (place === 'island') {
@@ -758,6 +793,8 @@ function frame(now) {
         worldEvents(dt);
         if (saveBlocked) { requestAnimationFrame(frame); return; }
       }
+      islandGuideCheck();
+      if (saveBlocked) { requestAnimationFrame(frame); return; }
       doorCheck();
     } else if (env().update(dt, time) === 'exit' && !transitioning) {
       leavePlace();
@@ -803,7 +840,7 @@ function frame(now) {
   if (place === 'forest') climate.skyColor(scene.background ??= new THREE.Color());
   if(place==='forest'){
     forest.updateView(closetPreview.active?closetPreview.camera:camera,player,dt,climate.night);
-    harborPlay.update(dt,time,mode==='play'&&!transitioning&&!ui.panelOpen&&!adventure.focused&&!adventure.modal);
+    harborPlay.update(dt,time,mode==='play'&&!transitioning&&!ui.panelOpen&&!adventure.focused&&!adventure.modal&&!harborBusy());
   }
   hudClock -= dt;
   if (hudClock <= 0) {

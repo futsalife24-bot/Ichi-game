@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v32-harbor-town';
+const VERSION = 'kirakira-v34-ichika-harbor';
 const ASSETS = [
   './',
   './index.html',
@@ -19,6 +19,8 @@ const ASSETS = [
   './src/effects.js',
   './src/animals.js',
   './src/quests.js',
+  './src/adaptive-play.js',
+  './src/island-guidance.js',
   './src/props.js',
   './src/characters.js',
   './src/save.js',
@@ -45,6 +47,10 @@ const ASSETS = [
   './src/harbor-visibility.js',
   './src/harbor-effects.js',
   './src/harbor-play.js',
+  './src/harbor-errands.js',
+  './src/harbor-errands-state.js',
+  './src/harbor-errands-art.js',
+  './src/harbor-errands-lines.js',
   './assets/forest/woodland-kit.json',
   './assets/harbor/harbor-kit.json',
   './src/help-state.js',

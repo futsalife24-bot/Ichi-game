@@ -1,0 +1,100 @@
+{
+  "date": "2026-10-08",
+  "branch": "codex/harbor-errands",
+  "base": "e30c394bf9e58701edc7ec5c9c79e0a2aa5ae4c6",
+  "publicMain": "0427bef17bf02af1baec3e886bc87afe6188e90c",
+  "published": false,
+  "implementationCommit": "07253daf10aefff42e8a0202315f2941b2daddf3",
+  "ci": { "url": "https://github.com/futsalife24-bot/Ichi-game/actions/runs/37696382942", "conclusion": "success" },
+  "tests": {
+    "command": "node --import ./tools/register.mjs --test tools/*.test.mjs",
+    "passed": 208,
+    "failed": 0,
+    "skipped": 0,
+    "log": "artifacts/harbor-progression-final-tests.txt",
+    "logSha256": "538d7536685be263758735c92bef7a96bd92bde9b4a4956150bab955ce2831a6",
+    "voiceClips": 725,
+    "forestAssets": 7,
+    "harborAssets": 10
+  },
+  "browser": {
+    "name": "Chrome",
+    "viewports": [
+      "844x390",
+      "667x375"
+    ],
+    "persistentProfileOpened": false,
+    "completedErrands": 3,
+    "finalStars": 4,
+    "returnedToFirstIsland": true,
+    "normalWalking": "パン屋で受取・時計広場へ通常歩行で配達。他の小画面通しは開発移動補助。実Forest/Playerで３件の全経路を自動検証。",
+    "quizChecks": [
+      "誤答で進行しない",
+      "ヒント",
+      "聞き直し",
+      "パンを足す・戻す",
+      "問題と同じ個数の実物",
+      "次回のパン６個の紹介",
+      "３件完了の表示"
+    ],
+    "guidanceChecks": [
+      "花への案内を断って色クイズを開始",
+      "船案内から港町のおつかいへ到着",
+      "帰島後の再案内なし",
+      "花完了画面からこの島に残る"
+    ],
+    "warnings": 0,
+    "errors": 0,
+    "viewportRestored": true,
+    "reviewTabClosed": true
+  },
+  "audio": {
+    "proof": "../assets-src/gemini-tts/harbor-browser-check.json",
+    "newClips": 17,
+    "existingUnchanged": 708,
+    "decoded": 725,
+    "playbackLines": 14,
+    "allPlaybackMode": "clip",
+    "offlineCached": 725,
+    "humanListening": "未確認"
+  },
+  "audit": {
+    "reviewer": "/root/harbor_errands_audit",
+    "authorized": true,
+    "requiredFindingsRemaining": 0,
+    "resolved": [
+      "配達パンの個数",
+      "再挑戦の紹介の個数",
+      "保護者説明の矛盾",
+      "音声準備と案内の割込み"
+    ],
+    "mixedActivities": 40,
+    "reviewedFileHashes": {
+      "src/adaptive-play.js": "c6e5176e5301830fcebc3ac02ebaaf4de310f060ecec21dd20c4092399b96f79",
+      "src/island-guidance.js": "cada6783b284e9112a52f5cb029574e3bbc2f2a3f35eef8eac949de8037d9436",
+      "src/voice.js": "e44556f419a22ab3f03d19ac011ef0b90c8c4787e1bf2db710c4e5e0ad60bd73",
+      "src/developer-mode.js": "428952bc9d0fd3c7ee10fb9b5043d8400f12293d92251ff21e1bc55d4bf08b37",
+      "src/main.js": "b96e3258b8f0f0a5c9d60cb5c2d44ec7379e1482cdddce22d9ca0c85197f3f5e",
+      "index.html": "9eba590015ceda88ff9528b3dc39b4bb3990edbefce6901aa1724660704a0be8",
+      "src/harbor-errands.js": "3de1afc74104fe833a34fc56a83a195eb691eb95bd7be6ccbcb3970275528bfa",
+      "src/harbor-errands-art.js": "4a9b17fcdac184d76646580de460b76f09023f35625d05106500faf30ba27570",
+      "voice/index.json": "41d01fbc891db66c4200f2bb426d720120fd896ffda7a83484e1ed468573d067"
+    },
+    "browserAndListening": "主担当の実画面確認と別。監査担当はコードと独立実行。"
+  },
+  "images": {
+    "harbor-errands-bread.png": "5b8485349f22db0bf5bf245ddb3a4e747d17ec01a234bc4efcd80d632c20dfd2",
+    "harbor-errands-flour-small.png": "7aae4d68e7cbc03b03b7949e7fbbf717fc91c92f0998fb84de4bfd7957d19049",
+    "harbor-errands-flowers-small.png": "af6e6b1df05d2d57fb2883a5043f618f81f690197fa5a1a09c5457134c86307d",
+    "harbor-errands-complete.png": "e7ae55f356938e6e6e7fe91ed293d295351d28610b04cf9cbad2a02b51b1c7b5",
+    "island-guide-flower-small.png": "0348c2a77e17ee40e7599674442a687a1abf750bdeecc5b353c229213a2f2775",
+    "island-guide-sail-small.png": "0cd23340e302e803dbd8e233be9406d5372b50f16c4d0a8cffbbbb2b22b9d1de",
+    "island-guide-flower-done.png": "e5a65c87afbe3d7cf471c44a79e8b6f32db80a25ab115747d0806c80b3eb1ae4"
+  },
+  "limitations": [
+    "実スマホ性能は未確認。操作環境の描画間隔を実機速度として評価しない。",
+    "自動調整は第一島のみつける遊び。学校は従来の星連動、港町は各仕事の再挑戦回数。",
+    "完了画像は開発ボタン非表示修正前の工程記録。小画面花クイズと島案内は修正後。"
+  ],
+  "model": "実モデルID・推論設定は取得不可で未確認。切替なし。"
+}

@@ -6,18 +6,18 @@ import {createProfileStore} from '../src/profiles.js';
 import {QuestManager} from '../src/quests.js';
 import {setupSettingsUI} from '../src/settings-ui.js';
 
-test('未設定は従来の星連動を維持し、固定した分野だけ星から切り離す',()=>{
+test('未設定は分野ごとの自動調整を使い、星やおつかい報酬で難しくしない',()=>{
   assert.equal(validateGameSave({stars:20}).playSettings,undefined);
   const s=newPlaySettings();s.domains.color.level=0;
   assert.equal(resolvePlaySettings(s,'color',99).level,0);
-  assert.equal(resolvePlaySettings(s,'count',99).level,3);
-  assert.equal(resolvePlaySettings(undefined,'color',10).level,2);
+  assert.equal(resolvePlaySettings(s,'count',99).level,0);
+  assert.equal(resolvePlaySettings(undefined,'color',10).level,0);
 });
 
 test('形と言葉は有効な段階だけ受け付け、鳴き声の内容は固定設定で変えない',()=>{
   const s=newPlaySettings();s.domains.shape.level=1;s.domains.language.level=2;s.domains.language.hints='manual';
   assert.equal(validPlaySettings(s),true);assert.equal(resolvePlaySettings(s,'moji',0).level,2);
-  assert.deepEqual(resolvePlaySettings(s,'animal',0),{level:0,hints:'manual'});
+  assert.deepEqual(resolvePlaySettings(s,'animal',0),{level:0,hints:'manual',automatic:false});
   s.domains.shape.level=2;assert.equal(validPlaySettings(s),false);assert.throws(()=>validateGameSave({playSettings:s}));
   assert.equal(validPlaySettings({...newPlaySettings(),version:2}),false);
 });

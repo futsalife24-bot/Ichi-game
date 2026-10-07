@@ -1,5 +1,29 @@
 # 次セッションへの引継ぎ（2026-10-04）
 
+## 公開承認済み：いちかちゃんの音声追加（2026-10-08）
+
+本人の明示指示により名前候補「いちか」と録音「いちかちゃん！」を追加済み。30番１回生成・１個取り込み、全726音声。既存725個と旧バッチは不変、SWは `kirakira-v34-ichika-harbor`。音声必須13テスト・完全性検査、Chromeで名前選択・確定・再読み込み、録音再生終了、726個デコードと保存成功。追加差分の独立確認も修正必須指摘なし。次は既存の港町おつかい・自動調整・船案内と一緒に公開して配信確認。正本は [生成](../assets-src/gemini-tts/ichika-generation.json)、[ブラウザー](../assets-src/gemini-tts/ichika-browser-check.json)。以下は制作時の履歴。
+
+## 完成・未公開：港町のおつかいと第一島の自動調整・船案内（2026-10-08）
+
+実装 [07253da](https://github.com/futsalife24-bot/Ichi-game/commit/07253daf10aefff42e8a0202315f2941b2daddf3) を作業ブランチへpush済み。[GitHub必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37696382942)成功。この次のコミットは結果記録のみ。
+
+港町の３件のおつかい（量比べ・パンの補充・花の規則性）を、移動・途中保存・配達・初回報酬へ接続。本人が保存した音声17個を取り込み、合計725個。続けて本人の追加依頼で第一島「みつける あそび」の分野別自動調整と、花のお手伝いから第二島へ誘う案内を実装。固定設定優先・活動中は変更なし。学校は別体系のまま。
+
+ブランチ `codex/harbor-errands`、基点 `e30c394bf9e58701edc7ec5c9c79e0a2aa5ae4c6`。全208テスト・725音声完全性成功。Chromeの844×390・667×375で３件の配達、誤答／ヒント、星４個を持って帰島、案内を断って再開、船案内から港町へ到着・帰島を確認。全725音声の取得・デコード・オフライン保存、14案内の録音再生終了を確認。警告・エラー０、画面サイズ復元・確認タブ閉鎖済み。
+
+本人承認の独立監査を実施し、パンの実物数・再挑戦の紹介・保護者説明・音声準備中の割込みを修正して再監査済み。修正必須残件なし。通常歩行と開発移動補助は記録で区別。原本WAVは保存済みで再生成不要。人の聴感と実スマホ性能は未確認。詳細は [制作と検証](harbor-errands.md)、[検証結果](harbor-errands-check.json)、[音声確認](../assets-src/gemini-tts/harbor-browser-check.json)。
+
+公開mainは `0427bef17bf02af1baec3e886bc87afe6188e90c` のまま。今回の完成版は未公開で、次は本人の新しい公開指示に従う。開発確認は `?dev=forest`、`?dev=island-guide`、`?dev=island-sail`。実モデルID・推論設定は未確認、切替なし。以下は前回までの履歴。
+
+## 第二島の港町版を公開・配信照合完了（2026-10-08）
+
+最新の本人依頼「チェックするから公開して」により[PR30](https://github.com/futsalife24-bot/Ichi-game/pull/30)を統合。公開前main `ca38419732e2daa8af8b1156defc97bb55892c37` → 公開main `0427bef17bf02af1baec3e886bc87afe6188e90c`。承認HEAD `c54f790f22bed2eed0f76f608d0893635399deba` と全ファイル一致。PR必須チェック・[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37687639375)・[Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37687639446)成功。公開62ファイルと３開発者入口の計65件がGit原本と一致。音声一覧708個、SW版 `kirakira-v32-harbor-town`。証拠は `docs/harbor-release-check.json`。
+
+公開前に担当１体が配信771ファイル・SW登録・素材ハッシュを読み取り照合。制作時の161テスト、Chromeの844×390・667×375での一周と画像12枚を再利用した。公開後の画面確認はChrome接続タイムアウト、内蔵ブラウザーの画面接続タイムアウト、その後のブラウザー操作ポリシー取得エラーで未実施。最後のブラウザー一覧に確認タブはなく、画面サイズや通常プロフィールの操作もしていない。公開後の実画面と実スマホ性能は未確認として区別する。
+
+[第二島の公開入口](https://futsalife24-bot.github.io/Ichi-game/?dev=forest)で本人チェックを待つ。独立監査は未実施、本人の今回の明示指示に基づく公開であり、制作検証を独立監査合格には代えない。記録ブランチ `codex/harbor-release-record` は公開mainを基点とし、文書と配信照合だけを保存する。ゲーム本体の追加変更・再公開は不要。実モデルID・推論設定は取得できず未確認、切替操作なし。リポジトリ https://github.com/futsalife24-bot/Ichi-game 、ローカル作業場所 `C:/Users/futsa/Documents/Codex/2026-10-03/codex-ichi-game-futsalife24-bot-ichi/work/Ichi-game`。以下は制作時の履歴。
+
 ## 第二島を港町へ再制作・自己検証完了（2026-10-08、未公開）
 
 最新の本人依頼は「第一島より見劣りする第二島を、色・街・海岸・木・立体の葉まで作り直す」。主担当と３担当で実装し、`codex/second-island-harbor`、基点 `0f7418dccee633659ea109a82d2b568fcadadb0a` → 実装 `610dcbd832dc5acc092342dfa9425f0453abdddf`。正本 `docs/second-island-harbor.md`、資料 `docs/harbor-art-references.md`、Blender `assets-src/harbor/README.md`。景観６棟と街路樹・葉の10素材、地形に沿う舗装、水車小屋・噴水・水筋・紙船・カモメ・蝶、岸近くまでの歩行、釣り・貝拾い、視線上の樹木/建物の局所的な透過、第二島用の遠景を見せるカメラを統合。

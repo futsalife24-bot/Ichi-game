@@ -1,10 +1,13 @@
 // セーブデータ（このたんまつの localStorage に ほぞん）
 import { validHelp } from './help-state.js';
 import { validAdventure } from './adventure-state.js';
+import { validHarborErrands } from './harbor-errands-state.js';
 import { validObservations } from './observations.js';
 import { validPlaySettings } from './play-settings.js';
 import { validPlayTime } from './play-time.js';
 import { validSuggestions } from './suggestions.js';
+import { validAdaptivePlay } from './adaptive-play.js';
+import { validIslandGuidance } from './island-guidance.js';
 import { validBirthday } from './birthday.js';
 export const OLD_KEY = 'kirakira-island-save-v1';
 export const KEY = 'kirakira-island-save-v2';
@@ -45,10 +48,13 @@ export function validateGameSave(data) {
   if (typeof s.bgm !== 'boolean' || typeof s.voice !== 'boolean' || (s.avatar !== null && !object(s.avatar)) || (s.outfit !== null && !object(s.outfit))) throw new Error('設定の記録を確認してください');
   if (s.help !== undefined && !validHelp(s.help)) throw new Error('おてつだいの記録を確認してください');
   if (s.adventure !== undefined && !validAdventure(s.adventure)) throw new Error('ぼうけんの記録を確認してください');
+  if (s.harborErrands !== undefined && (!validHarborErrands(s.harborErrands) || s.adventure?.flower.stage !== 'done')) throw new Error('みなとの おつかいの記録を確認してください');
   if (s.observations !== undefined && !validObservations(s.observations)) throw new Error('活動記録の形式を確認してください');
   if (s.playSettings !== undefined && !validPlaySettings(s.playSettings)) throw new Error('遊びの設定を確認してください');
   if (s.playTime !== undefined && !validPlayTime(s.playTime)) throw new Error('遊ぶ時間の記録を確認してください');
   if (s.suggestions !== undefined && !validSuggestions(s.suggestions)) throw new Error('提案の記録を確認してください');
+  if (s.adaptivePlay !== undefined && (!validAdaptivePlay(s.adaptivePlay) || Object.values(s.adaptivePlay.domains).some(d=>d.lastId>=(s.observations?.nextId??1)))) throw new Error('自動調整の記録を確認してください');
+  if (s.islandGuidance !== undefined && !validIslandGuidance(s.islandGuidance)) throw new Error('島への案内の記録を確認してください');
   if (s.birthday !== undefined && !validBirthday(s.birthday)) throw new Error('お祝いの記録を確認してください');
   if(s.suggestions!==undefined){
     const nextId=s.observations?.nextId??1;
