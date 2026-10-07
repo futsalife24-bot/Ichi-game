@@ -1,10 +1,14 @@
 # キラキラアイランドの作業入口
 
-## 公開準備：いちかちゃんの音声追加（2026-10-08）
+## 公開完了：港町のおつかい・自動調整・船案内といちかちゃんの声（2026-10-08）
+
+本人の「音声追加後、公開まで完了」に従い、[PR31](https://github.com/futsalife24-bot/Ichi-game/pull/31)を統合。公開mainは `da6f9cae160559af29605716aaa6322696d59e81`。承認版 `85682ee9e76ce6593aa334654f5581995a7f72c2` と全内容一致。[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37699057873)・[Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37699057841)成功。公開795ファイルと５確認入口、計800件がGit原本と全一致。
+
+[公開ゲーム](https://futsalife24-bot.github.io/Ichi-game/)には、港町３件のおつかい・途中保存・初回報酬、第一島「みつける あそび」の分野別自動調整、花のお手伝いから第二島への船案内を反映。名前候補「いちか」と「いちかちゃん！」の録音も公開済み。Chromeの844×390で公開版の第二島到着・３件一覧・小麦のおつかい紹介と復帰を確認。警告・エラー０。確認画面とタブを復元・閉鎖済み。公開サイトの通常プロフィールは開いていない。
 
 本人が「いちか(ちゃん)」の音声追加と、その後の公開まで明示承認。名前候補に「いちか」、録音に「いちかちゃん！」を追加した。Gemini 3.8 Flash TTS / Cleoで１回生成し、30番だけ取り込み。合計726音声、既存725個のファイル・一覧エントリーと既存バッチは不変。SWは `kirakira-v34-ichika-harbor`。
 
-音声必須13テスト・完全性検査成功。Chromeの844×390で名前の選択・確定・再読み込みを確認し、録音再生終了、全726個のデコード・オフライン保存成功。追加差分の独立確認も修正必須指摘なし。人の聴感と実スマホ性能は未確認。証拠は [生成記録](assets-src/gemini-tts/ichika-generation.json) と [ブラウザー確認](assets-src/gemini-tts/ichika-browser-check.json)。次は港町のおつかい・第一島の自動調整・船案内を含めて公開し、配信を照合する。以下は制作時の履歴。
+音声必須13テスト・完全性検査成功。Chromeの844×390で名前の選択・確定・再読み込みを確認し、録音再生終了、全726個のデコード・オフライン保存成功。追加差分の独立確認も修正必須指摘なし。人の聴感と実スマホ性能は未確認。証拠は [生成記録](assets-src/gemini-tts/ichika-generation.json)、[ブラウザー確認](assets-src/gemini-tts/ichika-browser-check.json)、[公開照合](docs/ichika-harbor-release-check.json)。記録専用ブランチ `codex/ichika-harbor-release-record` は公開mainが基点。実モデルID・推論設定は未確認。依頼範囲は完了し、次は本人のプレイ確認。以下は制作時の履歴。
 
 ## 完成・未公開：港町のおつかいと第一島の自動調整・船案内（2026-10-08）
 
