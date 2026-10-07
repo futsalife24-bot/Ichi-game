@@ -1,8 +1,8 @@
 {
   "model": "gemini-3.8-flash-tts",
   "voice": "Cleo",
-  "lines": 982,
-  "clips": 725,
+  "lines": 983,
+  "clips": 726,
   "batches": [
     [
       {
@@ -3783,6 +3783,13 @@
         "hash": "7878d291",
         "text": "みんなでたのしもう！",
         "reading": "みんなでたのしもう！"
+      }
+    ],
+    [
+      {
+        "hash": "3d3a5c63",
+        "text": "いちかちゃん！",
+        "reading": "いちかちゃん！"
       }
     ]
   ]

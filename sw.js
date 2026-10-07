@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v33-harbor-errands';
+const VERSION = 'kirakira-v34-ichika-harbor';
 const ASSETS = [
   './',
   './index.html',

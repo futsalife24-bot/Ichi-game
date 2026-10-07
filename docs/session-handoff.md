@@ -1,5 +1,9 @@
 # 次セッションへの引継ぎ（2026-10-04）
 
+## 公開承認済み：いちかちゃんの音声追加（2026-10-08）
+
+本人の明示指示により名前候補「いちか」と録音「いちかちゃん！」を追加済み。30番１回生成・１個取り込み、全726音声。既存725個と旧バッチは不変、SWは `kirakira-v34-ichika-harbor`。音声必須13テスト・完全性検査、Chromeで名前選択・確定・再読み込み、録音再生終了、726個デコードと保存成功。追加差分の独立確認も修正必須指摘なし。次は既存の港町おつかい・自動調整・船案内と一緒に公開して配信確認。正本は [生成](../assets-src/gemini-tts/ichika-generation.json)、[ブラウザー](../assets-src/gemini-tts/ichika-browser-check.json)。以下は制作時の履歴。
+
 ## 完成・未公開：港町のおつかいと第一島の自動調整・船案内（2026-10-08）
 
 実装 [07253da](https://github.com/futsalife24-bot/Ichi-game/commit/07253daf10aefff42e8a0202315f2941b2daddf3) を作業ブランチへpush済み。[GitHub必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37696382942)成功。この次のコミットは結果記録のみ。

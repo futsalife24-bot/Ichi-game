@@ -1,0 +1,9 @@
+[
+  {
+    "batchId": 30,
+    "hash": "3d3a5c63",
+    "expected": "いちかちゃん！",
+    "sha256": "99edc2af43fe5ee46ded134b80c4130cbe7a150e41b27ad60094be382b44b44a",
+    "recognized": "いちかちゃん"
+  }
+]

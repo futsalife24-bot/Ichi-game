@@ -7043,5 +7043,26 @@
         "sha256": "3474602d3e256d14e80ef9aa6932ac699021ca958a773fc5725ee5d1851cbd06"
       }
     ]
+  },
+  {
+    "batchId": 30,
+    "status": "imported",
+    "filename": "batch-30-source.wav",
+    "sourceSha256": "d32ae863be7a251bcc778df439a291d3082a3d2d422ec9f8db5fe3550aa5024c",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 1.6,
+    "peak": 21732,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "3d3a5c63",
+        "text": "いちかちゃん！",
+        "reading": "いちかちゃん！",
+        "from": 0.2,
+        "to": 1.38,
+        "duration": 1.18,
+        "sha256": "99edc2af43fe5ee46ded134b80c4130cbe7a150e41b27ad60094be382b44b44a"
+      }
+    ]
   }
 ]

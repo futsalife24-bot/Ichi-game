@@ -1,5 +1,11 @@
 # キラキラアイランドの作業入口
 
+## 公開準備：いちかちゃんの音声追加（2026-10-08）
+
+本人が「いちか(ちゃん)」の音声追加と、その後の公開まで明示承認。名前候補に「いちか」、録音に「いちかちゃん！」を追加した。Gemini 3.8 Flash TTS / Cleoで１回生成し、30番だけ取り込み。合計726音声、既存725個のファイル・一覧エントリーと既存バッチは不変。SWは `kirakira-v34-ichika-harbor`。
+
+音声必須13テスト・完全性検査成功。Chromeの844×390で名前の選択・確定・再読み込みを確認し、録音再生終了、全726個のデコード・オフライン保存成功。追加差分の独立確認も修正必須指摘なし。人の聴感と実スマホ性能は未確認。証拠は [生成記録](assets-src/gemini-tts/ichika-generation.json) と [ブラウザー確認](assets-src/gemini-tts/ichika-browser-check.json)。次は港町のおつかい・第一島の自動調整・船案内を含めて公開し、配信を照合する。以下は制作時の履歴。
+
 ## 完成・未公開：港町のおつかいと第一島の自動調整・船案内（2026-10-08）
 
 実装 [07253da](https://github.com/futsalife24-bot/Ichi-game/commit/07253daf10aefff42e8a0202315f2941b2daddf3) を作業ブランチへpush済み。[GitHub必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37696382942)成功。この次のコミットは結果記録のみ。
