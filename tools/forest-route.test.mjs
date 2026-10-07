@@ -13,7 +13,7 @@ function checkRoute(from,to) {
     const count=Math.max(1,Math.ceil(Math.hypot(end.x-previous.x,end.z-previous.z)/.1));
     for(let i=0;i<=count;i++){
       const t=i/count,point={x:previous.x+(end.x-previous.x)*t,z:previous.z+(end.z-previous.z)*t};
-      assert.ok(valid(point),`みず/うみへ はいる: ${JSON.stringify({from,to,point})}`);
+      assert.ok(valid(point),`みず・うみ・たてものへ はいる: ${JSON.stringify({from,to,point})}`);
       if(riverDistance(point.x,point.z)<riverWidth(point.x)){assert.notEqual(bridgeAt(point.x,point.z),undefined);bridges.add(bridgeAt(point.x,point.z));}
     }
     previous=end;
@@ -33,9 +33,9 @@ test('滝の支流・海岸・桟橋を避け、両方の橋を利用できる',
 });
 test('有限格子の全ての有効開始点から既存の目的地まで安全に案内する',()=>{
   let starts=0;
-  for(let x=-42;x<=42;x+=4)for(let z=-42;z<=42;z+=4){
+  for(let x=-46;x<=46;x+=4)for(let z=-46;z<=46;z+=4){
     const from={x,z};if(!valid(from))continue;starts++;
-    for(const to of [...LEAF_SPOTS,LEAF_HOST,FOREST_SPAWN])checkRoute(from,to);
+    for(const to of [...LEAF_SPOTS,LEAF_HOST,FOREST_SPAWN,FOREST_DOCK])checkRoute(from,to);
   }
   assert.ok(starts>250);
 });

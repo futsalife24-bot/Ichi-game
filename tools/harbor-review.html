@@ -1,0 +1,58 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>港町の歩行と景観の確認</title>
+<style>body{margin:0;background:#e8d7b9;color:#254f5a;font:13px sans-serif}canvas{display:block;width:100vw;height:100vh}nav{position:fixed;top:8px;left:8px;display:flex;flex-wrap:wrap;gap:4px;max-width:98vw}button{border:1px solid #6b999d;border-radius:6px;padding:6px 9px;background:#fff8e8;font:inherit;color:inherit}output{position:fixed;bottom:8px;right:8px;white-space:pre-line;font-size:11px;background:#fff8e8dd;padding:8px;border-radius:8px}#toggle{position:fixed;bottom:8px;left:8px;font-size:10px}body.clean nav,body.clean output{display:none}</style>
+<script type="importmap">{"imports":{"three":"../vendor/three.module.js"}}</script>
+<canvas id="view"></canvas><nav>
+<button data-view="first">第一島・通常画角</button><button data-view="arrival">港町・入口</button><button data-view="square">時計と噴水</button><button data-view="street">レンガの家並み</button><button data-view="canal">運河と水車</button><button data-view="garden">温室の広場</button><button data-view="leaf">立体の葉っぱ</button><button data-view="canopy">木の後ろ</button><button data-view="spring">小山の泉</button><button data-view="waterfall">滝</button><button data-view="steps">岩段</button><button data-view="coast">波打ち際</button><button data-view="overview">島の全景</button><button id="night">昼／夜</button><button id="hop">ジャンプ</button><button id="nextStep">次の段へジャンプ</button><button id="fish">水辺へ歩く</button><button id="leafRoute">葉を順に巡る</button>
+</nav><button id="toggle">操作を隠す</button><output id="status">素材を読み込んでいます</output>
+<script type="module">
+import * as THREE from 'three';
+import {World,getHeight} from '../src/world.js';
+import {Climate} from '../src/climate.js';
+import {Forest} from '../src/forest.js';
+import {HarborPlay} from '../src/harbor-play.js';
+import {Player} from '../src/player.js';
+import {PRESETS} from '../src/characters.js';
+import {FOREST_ORIGIN,LEAF_SPOTS} from '../src/adventure-state.js';
+import {JUMP_STEPS} from '../src/forest-layout.js';
+import {FISH_SPOTS} from '../src/harbor-layout.js';
+const canvas=document.querySelector('canvas'),status=document.querySelector('output');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFShadowMap;
+const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(48,1,.1,700),world=new World(scene),outside=[...scene.children],forest=new Forest(scene),player=new Player(scene,PRESETS.usagi);
+const quiet={jump(){},boing(){},swing(){},splash(){},caught(){},setRain(){}};
+const climate=new Climate(scene,world,quiet);climate.hour=12;climate.raining=false;
+const caught=[],play=new HarborPlay(forest,{player,audio:quiet,life:{obtain(item){caught.push(item.name);}},ui:{subtitle(){}}});
+const visibility=new Map(outside.map(o=>[o,o.visible]));
+const keys=new Set();let jump=false,stepTarget=null,route=[],view='arrival',night=false,time=0,last=performance.now(),ready=false,frames=0,walked=0,leafIndex=0;
+addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key)){e.preventDefault();keys.add(e.key);if(e.key===' '&&!e.repeat)jump=true;}});addEventListener('keyup',e=>keys.delete(e.key));addEventListener('blur',()=>keys.clear());
+const input={getMove:()=>({x:stepTarget?Math.max(-1,Math.min(1,(FOREST_ORIGIN.x+stepTarget.x-player.pos.x)*3)):Number(keys.has('ArrowRight'))-Number(keys.has('ArrowLeft')),y:Number(keys.has('ArrowUp'))-Number(keys.has('ArrowDown'))}),consumeJump:()=>{const j=jump;jump=false;return j;}};
+function resize(){renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.fov=camera.aspect<1.5?56:48;camera.updateProjectionMatrix();}resize();addEventListener('resize',resize);
+function choose(name){view=name;route=[];stepTarget=null;jump=false;play.cancel();const first=name==='first';
+  for(const o of outside)o.visible=first?visibility.get(o):[world.sunLight,world.sunLight.target,world.hemi].includes(o);
+  forest.group.visible=!first;scene.background=first?null:new THREE.Color(0xb5e2e1);
+  const tree=forest.treePoints[0]??{x:8,z:34},fish=FISH_SPOTS[0];
+  const points={first:[0,2],arrival:[0,33],square:[-2,27.5],street:[-12,33],canal:[-15,6.5],garden:[3,-23],leaf:[-15,19],canopy:[tree.x,tree.z-2.7],spring:[-28,-15],waterfall:[-27,-6],steps:[24.6,23],coast:[fish.x-3,fish.z-2],overview:[0,0]};
+  const [x,z]=points[name],origin=first?0:FOREST_ORIGIN.x,y=first?getHeight(x,z):forest.groundAt(origin+x,z);player.teleport(origin+x,y,z,0);player.marker.visible=false;frames=0;
+}
+for(const b of document.querySelectorAll('[data-view]'))b.onclick=()=>choose(b.dataset.view);
+document.querySelector('#hop').onclick=()=>{jump=true;};
+document.querySelector('#nextStep').onclick=()=>{if(view!=='steps')choose('steps');if(!player.onGround)return;stepTarget=JUMP_STEPS.find(s=>s.x>player.pos.x-FOREST_ORIGIN.x+.6)??null;jump=!!stepTarget;};
+function walkTo(p){route=forest.route(player.pos,new THREE.Vector3(FOREST_ORIGIN.x+p.x,forest.groundAt(FOREST_ORIGIN.x+p.x,p.z),p.z));player.setTarget(route.shift());}
+document.querySelector('#fish').onclick=()=>{if(view!=='coast')choose('coast');walkTo(FISH_SPOTS[0]);};
+document.querySelector('#leafRoute').onclick=()=>{if(view==='first')choose('arrival');walkTo(LEAF_SPOTS[leafIndex++%3]);};
+document.querySelector('#night').onclick=()=>{night=!night;climate.hour=night?22:12;};
+document.querySelector('#toggle').onclick=()=>{document.body.classList.toggle('clean');document.querySelector('#toggle').textContent=document.body.classList.contains('clean')?'操作を表示':'操作を隠す';};
+canvas.addEventListener('pointerdown',e=>{if(!ready||view==='overview')return;const ray=new THREE.Raycaster();ray.setFromCamera(new THREE.Vector2(e.clientX/innerWidth*2-1,1-e.clientY/innerHeight*2),camera);const hit=ray.intersectObject(view==='first'?world.terrain:forest.terrain)[0];if(hit){route=[];player.setTarget(hit.point);}});
+try{await forest.loadAssets();forest.refresh({stage:'available',collected:[]});ready=true;choose('arrival');}catch(e){status.textContent='読込失敗：'+e.message;throw e;}
+const frameTimes=[],drawTimes=[];
+function frame(now){const ms=now-last,dt=Math.min(.05,ms/1000);last=now;time+=dt;
+  if(ready){const first=view==='first',before=player.pos.clone();player.update(dt,input,first?world:forest,quiet);walked+=before.distanceTo(player.pos);
+    if(!player.target&&route.length)player.setTarget(route.shift());if(stepTarget&&player.onGround&&Math.abs(player.pos.x-FOREST_ORIGIN.x-stepTarget.x)<.1)stepTarget=null;
+    camera.position.copy(player.pos).add(view==='overview'?new THREE.Vector3(57,79,72):first?new THREE.Vector3(0,9,11):new THREE.Vector3(0,11,17));camera.lookAt(player.pos.clone().add(view==='overview'||first?new THREE.Vector3(0,1,0):new THREE.Vector3(0,2,-4)));
+    climate.hour=night?22:12;climate.update(dt,{indoor:false,focus:player.pos,active:false});if(!first)climate.skyColor(scene.background??=new THREE.Color());world.update(dt,player.pos);
+    forest.updateView(camera,player,dt,climate.night);if(!first){forest.update(dt,time);play.update(dt,time,true);}const start=performance.now();renderer.render(scene,camera);drawTimes.push(performance.now()-start);frameTimes.push(ms);if(frameTimes.length>100){frameTimes.shift();drawTimes.shift();}frames++;
+    const med=a=>[...a].sort((x,y)=>x-y)[Math.floor(a.length/2)]??0;
+    status.textContent=`${view}｜${innerWidth}×${innerHeight}｜${night?'夜':'昼'}｜素材読込 完了\n描画 ${renderer.info.render.calls}回／三角形 ${renderer.info.render.triangles.toLocaleString()}\n足元 ${player.pos.y.toFixed(2)}m・${player.onGround?'着地':'空中'}｜位置 ${(player.pos.x-(first?0:FOREST_ORIGIN.x)).toFixed(1)},${player.pos.z.toFixed(1)}\n取得 ${caught.join('・')||'なし'}｜歩行 ${walked.toFixed(1)}m\n描画呼出 ${med(drawTimes).toFixed(1)}ms／間隔 ${med(frameTimes).toFixed(1)}ms（環境制限を含む）`;
+  }requestAnimationFrame(frame);
+}requestAnimationFrame(frame);
+</script></html>

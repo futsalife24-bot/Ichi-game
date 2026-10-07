@@ -43,7 +43,7 @@ export class Adventure {
     if (!this.persist()) { Object.assign(this.save, before); if (before.adventure === undefined) delete this.save.adventure; return false; }
     this.player.setTarget(null); this.player.vel.x = this.player.vel.z = 0;
     if (action === 'deliver') { this.view = 'done'; this.player.celebrate(); this.audio.fanfare(); this.effects.confetti(this.player.pos); }
-    if (action === 'collect') { this.audio.collect(); this.player.holdUp(this.task === 'flower' ? '🌼' : '🍃'); }
+    if (action === 'collect') { this.audio.collect(); if(this.task==='leaf'&&this.forest?.makeLeaf)this.player.holdModel(this.forest.makeLeaf(index));else this.player.holdUp(this.task === 'flower' ? '🌼' : '🍃'); }
     this.render(); this.ui.setStars(this.save.stars, action === 'deliver');
     if (action === 'collect' && this.current.stage === 'collect') this.voice.say(L.countTick(this.current.collected.length)); else this.repeat();
     return true;

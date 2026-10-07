@@ -36,6 +36,8 @@ jobs:
           cp -r index.html style.css manifest.webmanifest sw.js src vendor icons _site/
           mkdir -p _site/assets/forest
           cp assets/forest/woodland-kit.json _site/assets/forest/
+          mkdir -p _site/assets/harbor
+          cp assets/harbor/harbor-kit.json _site/assets/harbor/
           mkdir -p _site/voice/gemini
           cp voice/index.json _site/voice/
           cp voice/gemini/*.mp3 _site/voice/gemini/

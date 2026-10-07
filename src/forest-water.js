@@ -1,6 +1,6 @@
 // もりの みず。ひかりと きのかげを のこして、かわ・なみ・たきを ながす。
 import * as THREE from 'three';
-import { riverZ, riverWidth, riverY, coastRadius, SPRING, springWaterY, smooth } from './forest-layout.js';
+import { riverZ, riverY, riverSurfaceWidth, riverSurfaceY, coastRadius, SPRING, springWaterY, smooth } from './forest-layout.js';
 
 const SEA_Y = -.65;
 const FALL_X = -32;
@@ -163,9 +163,8 @@ export class ForestWater {
 
     // かわぐちは うみまで つなぐ。まんなかの ひろさは ちけいと おなじ。
     this.river = new THREE.Mesh(stripGeometry(192, 10, (t, across) => {
-      const x = -49 + t * 98, distance = Math.max(0, Math.abs(x) - 41) / 8;
-      const y = riverY(x) * (1 - distance * distance) + SEA_Y * distance * distance;
-      return [x, y, riverZ(x) + across * (riverWidth(x) + distance * 1.6), x, across];
+      const x = -49 + t * 98;
+      return [x, riverSurfaceY(x), riverZ(x) + across * riverSurfaceWidth(x), x, across];
     }), this.riverMaterial);
     this.river.receiveShadow = true; this.river.renderOrder = 2; group.add(this.river);
 
