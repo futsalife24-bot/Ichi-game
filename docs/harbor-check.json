@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-08",
+  "branch": "codex/second-island-harbor",
+  "base": "0f7418dccee633659ea109a82d2b568fcadadb0a",
+  "implementationCommit": "610dcbd832dc5acc092342dfa9425f0453abdddf",
+  "publicMain": "ca38419732e2daa8af8b1156defc97bb55892c37",
+  "published": false,
+  "tests": { "passed": 161, "failed": 0, "skipped": 0, "voiceClips": 708, "harborAssets": 10, "forestAssets": 7, "harborAssetTriangles": 51590, "routes": 2112 },
+  "browser": "Chrome",
+  "viewports": [{"width":844,"height":390},{"width":667,"height":375}],
+  "game": { "scenario": "dev=forest", "persistentProfileOpened": false, "leavesCollected": 3, "delivered": true, "rewardStars": 1, "finalStars": 2, "closetOutdoorZoom": true, "returnedToFirstIsland": true },
+  "reviewPage": { "path": "tools/harbor-review.html", "usesRealSceneAndPlayer": true, "usesPersistentSave": false, "coastFishingCaught": "あじ", "canopyCutout": true, "terrainPavingRetested": true, "nightScene": true },
+  "drawMeasurement": { "viewport": "844x390", "arrivalDrawCalls": 246, "arrivalTrianglesIncludingShadows": 877904, "coastDrawCalls": 204, "coastTrianglesIncludingShadows": 717317, "canalDrawCalls": 217, "canalTrianglesIncludingShadows": 751482, "hardwareFPSVerified": false, "note": "実ブラウザーの同一描画情報。自動操作環境の間隔制限があり、実スマホの速度として扱わない。第一島は近い通常画角を維持し、港町は遠景を見せる画角なので単純な性能比較にはしない。" },
+  "images": ["harbor-arrival.png","harbor-canal.png","harbor-canopy.png","harbor-coast.png","harbor-first-island-reference.png","harbor-fishing.png","harbor-night.png","harbor-game-leaf-one.png","harbor-game-small.png","harbor-game-delivery.png","harbor-game-closet.png","harbor-game-return.png"],
+  "imageNote": "harbor-fishing.pngのみ舗装を地形へ沿わせる前の魚取得の工程記録。現行舗装はharbor-coast.pngで確認。",
+  "consoleWarnings": 0,
+  "consoleErrors": 0,
+  "viewportRestored": true,
+  "reviewTabClosed": true,
+  "independentAudit": "実施可否を本人へ一度確認済み、返答待ち。チーム検証と区別する。",
+  "model": "実モデルIDと推論設定は取得できず未確認。切替操作なし。"
+}
