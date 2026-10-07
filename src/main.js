@@ -19,7 +19,7 @@ import { ITEMS, CATEGORIES, PERIODS, SEASONS, itemsOf, callName } from './catalo
 import { Maker } from './maker.js';
 import { makeEgg } from './critters.js';
 import { loadSave, writeSave, claimSaveSession, useSaveStore } from './save.js';
-import { createProfileStore } from './profiles.js';
+import { openPlayProfiles, developerURL } from './developer-mode.js';
 import { setupProfileUI } from './profile-ui.js';
 import { finishObservation } from './observations.js';
 import { setupRecordsUI } from './records-ui.js';
@@ -31,7 +31,7 @@ import { L } from './lines.js';
 import { Help } from './help.js';
 import { Adventure } from './adventure.js';
 import { Forest, FOREST_SPAWN, DOCK } from './forest.js';
-import { FOREST_ORIGIN } from './adventure-state.js';
+import { FOREST_ORIGIN, LEAF_HOST } from './adventure-state.js';
 import { setupSaveUI } from './save-ui.js';
 
 const $ = (id) => document.getElementById(id);
@@ -45,11 +45,12 @@ const showSaveProblem = setupSaveUI(() => {
 let save;
 let profileUI;
 let profiles;
+let developerScenario = null;
 try {
-  if (!await claimSaveSession()) throw new Error('ほかのゲーム画面を閉じて読み直してください。対応ブラウザーでもう一度お試しください。');
-  profiles = createProfileStore(localStorage);
+  ({ profiles, scenario: developerScenario } = await openPlayProfiles({
+    search: location.search, getStorage: () => localStorage, claimSession: claimSaveSession, avatar: PRESETS.usagi,
+  }));
   useSaveStore(profiles);
-  profiles.open();
   profileUI = setupProfileUI(profiles, error => showSaveProblem(error.message, true));
   await profileUI.ensure();
   save = loadSave();
@@ -121,7 +122,7 @@ const adventure = new Adventure({ scene, player, animals, forest, ui, audio, voi
   getPlace: () => place,
   onSail: () => visitForest(),
   onReturn: () => leaveForest(),
-  canAct: () => mode === 'play' && !saveBlocked && !transitioning && !playTimer.paused && !homePaused && !ui.panelOpen && !help.focused,
+  canAct: () => mode === 'play' && !saveBlocked && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !help.focused,
   onChange: () => {
     life.endFishing(); input.reset();
     input.enabled = mode === 'play' && !adventure.modal && !help.modal && !saveBlocked && !playTimer.paused && !homePaused && !transitioning;
@@ -184,6 +185,7 @@ function buildTitle() {
   if (save.bells > 0) bits.push(`🔔 × ${save.bells}`);
   if (life.found > 0) bits.push(`📖 ${life.found}`);
   $('titleStars').textContent = bits.join('　');
+  if (developerScenario) $('btnPlay').textContent = developerScenario.place === 'forest' ? '🌳 第二島を確認する' : '🌼 第一島を確認する';
 }
 buildTitle();
 profileUI.connect(() => {
@@ -223,6 +225,30 @@ function unlockSound() {
   climate.refresh();
   audio.setSong(climate.period);
   audio.setBgm(save.bgm);
+}
+
+function developerMenuOpen() { return !!developerScenario && $('developerPanel').open; }
+if (developerScenario) {
+  document.body.classList.add('developer-mode');
+  document.querySelector('#title .logo').textContent = '開発者モード';
+  $('developerStart').textContent = `${developerScenario.label}。確認用のデータは読み直すとリセットされます。`;
+  $('developerStart').classList.remove('hidden');
+  $('developerTools').classList.remove('hidden');
+  $('developerCurrent').textContent = developerScenario.label;
+  for (const link of document.querySelectorAll('[data-developer-scenario]')) {
+    link.href = developerURL(location.href, link.dataset.developerScenario);
+  }
+  $('developerExit').href = developerURL(location.href);
+  $('developerTools').onclick = () => {
+    if (transitioning) return;
+    input.reset(); input.enabled = false; player.setTarget(null); voice.stop();
+    $('developerPanel').showModal();
+  };
+  $('developerClose').onclick = () => $('developerPanel').close();
+  $('developerPanel').addEventListener('close', () => {
+    input.reset();
+    input.enabled = mode === 'play' && !saveBlocked && !transitioning && !playTimer.paused && !homePaused && !help.modal && !adventure.modal && !ui.panelOpen;
+  });
 }
 
 $('btnPlay').addEventListener('click', () => {
@@ -296,6 +322,7 @@ function startGame() {
   adventure.render();
   updateToggles();
   if(playTimer.paused)input.enabled=false;
+  if (developerScenario?.place === 'forest') visitForest(developerScenario.id);
 }
 
 function openHomeSummary() {
@@ -582,16 +609,17 @@ function leavePlace(instant = false) {
 }
 
 const doorArmed = { school: true, room: true };
-function visitForest() {
+function visitForest(preview = null) {
   if (place !== 'island' || !adventure.unlocked || !adventure.canAct()) return;
   quests.stop(); if (saveBlocked) return;
   life.endFishing(); voice.stop(); audio.meet();
   transition(() => {
     setOutdoorVisible(false); place = 'forest'; forest.group.visible = true;
     boatArmed = false;
-    player.teleport(FOREST_ORIGIN.x + FOREST_SPAWN.x, 0, FOREST_SPAWN.z, Math.PI);
+    const spawn = preview === 'forest-done' ? { x: LEAF_HOST.x, z: LEAF_HOST.z + 3 } : FOREST_SPAWN;
+    player.teleport(FOREST_ORIGIN.x + spawn.x, 0, spawn.z, Math.PI);
     document.body.classList.add('forest-place');
-    adventure.view = 'menu'; adventure.render();
+    adventure.view = preview === 'forest-done' ? null : 'menu'; adventure.render();
     voice.say(L.forestWelcome()); snapCamera();
   });
 }
@@ -675,12 +703,12 @@ let hudClock = 0;
 function frame(now) {
   $('btnAdventure').classList.toggle('hidden', mode !== 'play' || !['island','forest'].includes(place) || help.focused || adventure.focused);
   $('placeLabel').classList.toggle('hidden', place !== 'forest' || adventure.focused);
-  if(!playTimer.tick(mode==='play'&&!saveBlocked&&!document.hidden&&!homePaused)) { requestAnimationFrame(frame); return; }
+  if(!playTimer.tick(mode==='play'&&!saveBlocked&&!document.hidden&&!homePaused&&!developerMenuOpen())) { requestAnimationFrame(frame); return; }
   $('btnQuestHint').classList.toggle('hidden', !(mode==='play' && place==='island' && !help.focused && !ui.panelOpen && !transitioning && quests.state==='active' && !saveBlocked && !playTimer.paused && !homePaused));
   const dt = Math.min(0.05, (now - last) / 1000);
   last = now;
   time += dt;
-  if (saveBlocked || document.hidden || playTimer.paused || homePaused) { last = now; requestAnimationFrame(frame); return; }
+  if (saveBlocked || document.hidden || playTimer.paused || homePaused || developerMenuOpen()) { last = now; requestAnimationFrame(frame); return; }
 
   if (mode === 'play') {
     const ptr = input.pointer;

@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v28-second-island-voice';
+const VERSION = 'kirakira-v29-developer-mode';
 const ASSETS = [
   './',
   './index.html',
@@ -8,6 +8,7 @@ const ASSETS = [
   './vendor/three.module.js',
   './vendor/three.core.js',
   './src/main.js',
+  './src/developer-mode.js',
   './src/world.js',
   './src/player.js',
   './src/closet-preview.js',

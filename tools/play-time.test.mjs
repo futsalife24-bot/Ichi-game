@@ -112,6 +112,6 @@ test('時間設定の保存失敗では元の値を保持する',()=>{
 test('期限画面を出しているフレームでは島の処理へ進まない',()=>{
   const main=fs.readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
   const frame=main.match(/function frame\(now\) \{[\s\S]*?\n\}\r?\nrequestAnimationFrame\(frame\);/)[0];
-  let scheduled=0;const context={homePaused:false,playTimer:{tick:()=>true,paused:true},mode:'play',place:'island',saveBlocked:false,document:{hidden:false},help:{focused:false},adventure:{focused:false},ui:{panelOpen:false},transitioning:false,quests:{state:'active'},$:()=>({classList:{toggle(){}}}),last:0,time:0,requestAnimationFrame(){scheduled++;}};
+  let scheduled=0;const context={developerMenuOpen:()=>false,homePaused:false,playTimer:{tick:()=>true,paused:true},mode:'play',place:'island',saveBlocked:false,document:{hidden:false},help:{focused:false},adventure:{focused:false},ui:{panelOpen:false},transitioning:false,quests:{state:'active'},$:()=>({classList:{toggle(){}}}),last:0,time:0,requestAnimationFrame(){scheduled++;}};
   vm.runInNewContext(frame+'\nframe(10);',context);assert.equal(scheduled,2);
 });

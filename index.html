@@ -87,6 +87,7 @@
   <div id="title" class="screen">
     <h1 class="logo"><span>キ</span><span>ラ</span><span>キ</span><span>ラ</span><br><span>ア</span><span>イ</span><span>ラ</span><span>ン</span><span>ド</span></h1>
     <p id="titleStars"></p>
+    <p id="developerStart" class="hidden"></p>
     <div class="title-actions">
       <button id="btnPlay" class="play-btn"></button>
       <button id="btnQuickPlay" class="remake-btn">🐰 このこで すぐ あそぶ</button>
@@ -227,8 +228,27 @@
         <button id="saveReload">画面を読み直す</button>
         <button id="saveClose">とじる</button>
       </div>
+      <details class="developer-entry">
+        <summary>開発者モード</summary>
+        <p>確認専用の一時データで開きます。普段の記録は変わりません。</p>
+        <a href="?dev=forest">第二島をすぐ確認する</a>
+      </details>
     </section>
   </div>
+
+  <button id="developerTools" class="hidden" aria-haspopup="dialog">🛠 開発者モード・切り替え</button>
+  <dialog id="developerPanel" aria-labelledby="developerHeading">
+    <h2 id="developerHeading">開発者モード</h2>
+    <p id="developerCurrent"></p>
+    <p>普段のプロフィール・星・活動記録は変わりません。<br>切り替え・読み直しで確認用データをリセットします。</p>
+    <nav aria-label="確認する場面">
+      <a href="?dev=forest" data-developer-scenario="forest">🌳 第二島・はじめから</a>
+      <a href="?dev=forest-done" data-developer-scenario="forest-done">🍃 第二島・お手伝い完了後</a>
+      <a href="?dev=island" data-developer-scenario="island">🌼 第一島・花のお手伝い前</a>
+      <a id="developerExit" href="?">通常モードに戻る</a>
+    </nav>
+    <button id="developerClose">確認を続ける</button>
+  </dialog>
 
   <div id="maker" class="hidden">
     <div class="maker-panel">

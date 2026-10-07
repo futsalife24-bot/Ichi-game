@@ -33,6 +33,24 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 
 .hidden { display: none !important; }
 
+/* かくにんちゅうは、ふだんの あそびと みわけられるようにする。 */
+.developer-mode #btnProfiles, .developer-mode #btnSave, .developer-mode #btnRemake, .developer-mode #title .parents { display: none; }
+.developer-mode #title .logo { font-size: clamp(24px, 7vh, 40px); margin: 0; }
+#developerStart { max-width: 88vw; margin: 4px 0; padding: 8px 14px; border-radius: 12px; background: #fff9e9; font-size: 15px; }
+#developerTools { position: fixed; z-index: 140; left: 50%; bottom: calc(6px + var(--safe-b)); transform: translateX(-50%); min-height: 44px; padding: 8px 14px; border: 2px solid #315d67; border-radius: 14px; background: #e9f8ff; color: #234650; font-size: 14px; font-weight: 800; }
+.developer-mode #subtitle { bottom: calc(66px + var(--safe-b)); }
+#developerPanel { width: min(580px, 94vw); max-height: 92dvh; overflow: auto; padding: 20px; border: 2px solid #315d67; border-radius: 20px; background: #fff9e9; color: #294e48; text-align: center; touch-action: pan-y; }
+#developerPanel::backdrop { background: #14302888; }
+#developerPanel h2 { margin: 0 0 8px; }
+#developerPanel p { margin: 8px 0; font-size: 15px; }
+#developerPanel nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 12px 0; }
+#developerPanel a, #developerClose, .developer-entry a { display: grid; place-items: center; min-height: 48px; padding: 10px 12px; border-radius: 12px; background: #d7f0df; color: #234d45; font: inherit; font-weight: 700; text-decoration: none; }
+#developerClose { width: 100%; background: #e5edf0; }
+.developer-entry { margin-top: 18px; text-align: left; }
+.developer-entry summary { min-height: 44px; padding: 12px; cursor: pointer; }
+.developer-entry p { font-size: 15px; }
+@media (max-width: 480px) { #developerPanel nav { grid-template-columns: 1fr; } }
+
 #hud { position: fixed; inset: 0; pointer-events: none; }
 #hud > * { pointer-events: auto; }
 
