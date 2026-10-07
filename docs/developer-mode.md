@@ -1,5 +1,13 @@
 # 島をすぐ確認する開発者モード
 
+## 公開結果（2026-10-07）
+
+本人の公開指示を受け、[PR27](https://github.com/futsalife24-bot/Ichi-game/pull/27) で公開。公開mainは `536f1fd2af28deea9958a0f885b3fcf1761bf771`。[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37583007978) と [Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37583008019) が成功。配信53ファイルと３つの入口を公開コミットのGit原本と照合し、全一致。音声一覧708個を維持。公開後の実画面は新しい共有Chromeの貸出待ち。制作時の実画面検証とは区別し、[公開照合](developer-mode-release-check.json) に記録する。以下の未公開は制作時の履歴。
+
+- [第二島・はじめから](https://futsalife24-bot.github.io/Ichi-game/?dev=forest)
+- [第二島・お手伝い完了後](https://futsalife24-bot.github.io/Ichi-game/?dev=forest-done)
+- [第一島・花のお手伝い前](https://futsalife24-bot.github.io/Ichi-game/?dev=island)
+
 ## 目的と使い方
 
 第二島へ行く前提のお手伝いやキャラ作成を繰り返さず、確認したい場面をすぐ開く。2026-10-07の本人の実装依頼に対応。今回は作業ブランチで実装し、公開は行わない。

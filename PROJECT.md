@@ -1,5 +1,11 @@
 # キラキラアイランドの作業入口
 
+## 最新状態：開発者モードを公開（2026-10-07）
+
+本人の「公開して」で [PR27](https://github.com/futsalife24-bot/Ichi-game/pull/27) を統合し、開発者モードを公開。公開前mainは `a3001b50db20e9227a7e9d0cf5f0def9f29a8279`、承認版は `78704c137bc50b730c0d97b20646e47e668c2853`、公開mainは `536f1fd2af28deea9958a0f885b3fcf1761bf771`。[main必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37583007978) と [Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/37583008019) が成功。配信53ファイルと３つの開発者モードURLが公開コミットと一致し、音声一覧708個を維持。公開入口は [第二島の確認](https://futsalife24-bot.github.io/Ichi-game/?dev=forest)。
+
+記録ブランチは `codex/developer-mode-release-record`。制作時の119テスト・UI018の実画面検証は完了。公開後の実画面確認は新しい共有UI貸出待ちで、本人対応は不要。配信の証拠は [公開照合](docs/developer-mode-release-check.json)。以下は公開前の履歴。
+
 ## 完成・未公開：島をすぐ確認する開発者モード（2026-10-07）
 
 本人の依頼で `codex/developer-island-preview`、基点 `abf94a1c1026a4bc608912ea9b9fca540abb7c0f` に実装。実装HEADは `34a3dabfafe167e2bfb4ed87432cb0c09570703e`。確認専用の一時プロフィールで第二島のはじめ・完成後・第一島を選べる。通常の保存先とロックには触れず、切り替え・再読み込みで確認状態をリセットする。自動テスト119件・音声708個の完全性・GitHub必須チェックは成功。UI018のChromeで844×390・667×375、直接移動・収集・リセット・完成した広場・第一島・通常の入口・別タブ併用を確認。通常へ戻っても架空プロフィールの星１個と船の未解放状態を保持、警告・エラー０件。UI018返却済み。未公開。仕様と証拠は [開発者モード](docs/developer-mode.md)。以下は公開済みの状態と履歴。
