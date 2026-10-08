@@ -208,8 +208,12 @@ export class Forest {
     this.playerLocal.copy(player.pos).x-=FOREST_ORIGIN.x;this.night=night;
   }
   groundAt(x,z){return groundHeight(x-FOREST_ORIGIN.x,z);}
-  clampPos(p){const local={x:p.x-FOREST_ORIGIN.x,y:p.y,z:p.z};let changed=clampForest(local);changed=clampSteps(local)||changed;p.x=local.x+FOREST_ORIGIN.x;p.z=local.z;return changed;}
-  route(from,to){return forestRoute({x:from.x-FOREST_ORIGIN.x,z:from.z},{x:to.x-FOREST_ORIGIN.x,z:to.z}).map(p=>new THREE.Vector3(p.x+FOREST_ORIGIN.x,groundHeight(p.x,p.z),p.z));}
+  clampPos(p){const local={x:p.x-FOREST_ORIGIN.x,y:p.y,z:p.z};let changed=clampForest(local);changed=clampSteps(local)||changed;
+    const obstacle=this.gatheringObstacle;
+    if(obstacle){const dx=local.x-obstacle.x,dz=local.z-obstacle.z,w=obstacle.width/2+.45,d=obstacle.depth/2+.45;
+      if(Math.abs(dx)<w&&Math.abs(dz)<d){if(w-Math.abs(dx)<d-Math.abs(dz))local.x=obstacle.x+(dx<0?-w:w);else local.z=obstacle.z+(dz<0?-d:d);changed=true;}}
+    p.x=local.x+FOREST_ORIGIN.x;p.z=local.z;return changed;}
+  route(from,to,obstacle=this.gatheringObstacle){return forestRoute({x:from.x-FOREST_ORIGIN.x,z:from.z},{x:to.x-FOREST_ORIGIN.x,z:to.z},obstacle).map(p=>new THREE.Vector3(p.x+FOREST_ORIGIN.x,groundHeight(p.x,p.z),p.z));}
   refresh(state){this.leaves.forEach((o,i)=>{const visible=state.stage!=='done'&&!state.collected.includes(i);if(o.visible&&!visible&&this.assetsLoaded)this.ambience.burst(o.position.x,o.position.y+.4,o.position.z,[0x8acb92,0xf1b95f,0xf08b78][i]);o.visible=visible;this.leafShadows[i].visible=visible;});this.decoration.visible=state.stage==='done';}
   update(dt,t){
     this.timeUniform.value=t;this.sight.time.value=t;this.water.update(dt,t);this.ambience.update(dt,t,this.playerLocal);this.town.update(dt,t,this.playerLocal,this.night??0);

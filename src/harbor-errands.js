@@ -5,6 +5,7 @@ import { HARBOR_JOBS, newHarborErrands, harborChallenge, harborErrandAction } fr
 import { iconSVG, makeParcel, makeDeliveryDisplay } from './harbor-errands-art.js';
 import { HARBOR_LINES as V } from './harbor-errands-lines.js';
 import { L } from './lines.js';
+import { HarborGathering } from './harbor-gathering.js';
 
 const $ = id => document.getElementById(id);
 const flowerNames = { green: 'はっぱ', pink: 'まるい おはな', gold: 'ほしの おはな' };
@@ -24,6 +25,7 @@ export class HarborErrands {
       model.visible = false; this.root.add(model); return model;
     });
     this.parcels = Object.fromEntries(HARBOR_JOBS.map(j => [j.id, makeParcel(j.id)]));
+    this.gathering = new HarborGathering(this);
     document.body.insertAdjacentHTML('beforeend', `
       <div id="harborErrandsPanel" class="hidden help-panel" role="dialog" aria-modal="true" aria-labelledby="harborErrandsHeading">
         <section class="harbor-errands-sheet">
@@ -53,6 +55,8 @@ export class HarborErrands {
       if (action === 'free') this.stop();
       if (action === 'leaf') { this.stop(); this.onLeaf?.(); }
       if (action === 'return') { this.stop(); this.onReturn?.(); }
+      if (action === 'party-start') this.gathering.start();
+      if (action === 'party-finish') this.gathering.finish();
     };
   }
   get state() { return this.save.harborErrands ?? newHarborErrands(); }
@@ -81,7 +85,8 @@ export class HarborErrands {
   open() {
     if (!this.canAct()) return;
     this.beforeOpen?.(); this.task = null; this.view = 'board'; this.halt();
-    this.effects.hideGuide(); this.ui.setQuest(null); this.render(); this.voice.say(V.welcome);
+    this.gathering.pause();
+    this.effects.hideGuide(); this.ui.setQuest(null); this.render(); this.repeat();
   }
   choose(id) {
     if (!HARBOR_JOBS.some(j => j.id === id)) return;
@@ -94,6 +99,7 @@ export class HarborErrands {
   }
   stop() {
     this.halt(); this.task = null; this.view = null; this.effects.hideGuide(); this.ui.setQuest(null);
+    this.gathering.pause();
     this.voice.stop(); this.render();
   }
   act(action, answer) {
@@ -110,6 +116,7 @@ export class HarborErrands {
     return true;
   }
   target() {
+    if (this.gathering.active) return this.gathering.target();
     if (!this.job) return null;
     const s = this.current.stage === 'deliver' ? this.job.destination : this.job.source;
     const x = s.x + FOREST_ORIGIN.x;
@@ -117,12 +124,13 @@ export class HarborErrands {
   }
   atTarget() { const t = this.target(); return !!t && Math.hypot(this.player.pos.x - t.x, this.player.pos.z - t.z) < 1.45 && Math.abs(this.player.pos.y - t.y) < .8; }
   go() {
-    if (!this.focused || !['pickup', 'deliver'].includes(this.current.stage)) return;
+    if (!this.focused || (!this.gathering.active && !['pickup', 'deliver'].includes(this.current.stage))) return;
     this.route = this.forest.route(this.player.pos, this.target());
     this.waypoint = this.route.shift(); this.player.setTarget(this.waypoint ?? null);
   }
   repeat() {
-    if (!this.task) { this.voice.say(V.welcome); return; }
+    if (this.gathering.active) { this.gathering.repeat(); return; }
+    if (!this.task) { if (this.gathering.unlocked) this.gathering.repeat(); else this.voice.say(V.welcome); return; }
     const line = this.view === 'puzzle' ? askLines[this.task] : this.current.stage === 'deliver' ? this.task === 'flour' ? V.deliverBread : V.deliverSquare : goLines[this.task];
     this.voice.say(line);
   }
@@ -153,7 +161,9 @@ export class HarborErrands {
     this.parcels[this.task].scale.setScalar(1); this.player.holdModel(this.parcels[this.task]);
     this.render(); this.voice.say(V.correct);
   }
-  update() {
+  update(dt = .016, time = 0) {
+    this.gathering.update(dt, time);
+    if (this.gathering.active) return;
     if (!this.focused || this.modal || !this.canAct()) return;
     if (this.route.length && !this.player.target) {
       if (this.player.pos.distanceTo(this.waypoint) < .8) { this.waypoint = this.route.shift(); this.player.setTarget(this.waypoint); }
@@ -164,7 +174,7 @@ export class HarborErrands {
       this.halt(); this.view = 'puzzle'; this.added = 0; this.hinted = false; this.render(); this.repeat();
     } else if (this.current.stage === 'deliver' && this.act('deliver')) {
       this.halt(); this.view = 'done'; this.player.celebrate(); this.audio.fanfare(); this.effects.confetti(this.player.pos);
-      this.render(); this.voice.say(this.stamps === 3 ? V.allDone : V.done);
+      this.render(); if (this.save.harborGathering?.stage === 'done') this.gathering.repeat(); else this.voice.say(this.stamps === 3 ? V.allDone : V.done);
     }
   }
   renderPuzzle() {
@@ -182,14 +192,18 @@ export class HarborErrands {
   }
   render() {
     this.refreshBread();
+    this.gathering.scene.setBreadCount(this.displays[1].userData.count ?? 5);
     this.displays.forEach((model, i) => { model.visible = this.state.jobs[HARBOR_JOBS[i].id].rewarded; });
+    if (this.gathering.active) { this.gathering.render(); return; }
+    this.gathering.refresh();
+    $('harborErrandsPanel').classList.toggle('harbor-party-scene', false);
     $('harborErrandsPanel').classList.toggle('hidden', !this.modal);
     $('harborErrandsActions').classList.toggle('hidden', !this.focused || this.modal);
     let title = 'みなとの おやつかい', content = '', footer = '';
     const button = (action, text, primary = false) => `<button data-action="${action}" class="${primary ? 'errands-primary' : ''}">${text}</button>`;
     if (this.view === 'board') {
-      content = `<div class="errands-board-note"><span>${this.stamps === 3 ? 'じゅんび できたね！ また あそべるよ' : 'おみせを まわって、じゅんびを てつだおう'}</span><span class="errands-stamps" aria-label="おつかい ${this.stamps}こ できた">${HARBOR_JOBS.map(j => `<span class="${this.state.jobs[j.id].rewarded ? 'stamped' : ''}">${iconSVG(j.id, { size: 30 })}</span>`).join('')}</span></div><div class="errands-jobs">${HARBOR_JOBS.map(j => { const t = this.state.jobs[j.id]; return `<button data-job="${j.id}">${iconSVG(j.id, { size: 74 })}<strong>${j.title}</strong><span>${j.sourceName}<br>↓ ${j.destinationName}</span><small>${t.stage === 'done' ? 'できた！ もういちど あそぶ' : ['pickup', 'deliver'].includes(t.stage) ? 'つづきから あそぶ' : 'おてつだい する'}</small></button>`; }).join('')}</div>`;
-      footer = button('leaf', 'はっぱの おてつだい') + button('return', 'もとの しまへ') + button('free', 'さんぽする');
+      content = `<div class="errands-board-note"><span>${this.stamps === 3 ? this.gathering.note : 'おみせを まわって、じゅんびを てつだおう'}</span><span class="errands-stamps" aria-label="おつかい ${this.stamps}こ できた">${HARBOR_JOBS.map(j => `<span class="${this.state.jobs[j.id].rewarded ? 'stamped' : ''}">${iconSVG(j.id, { size: 30 })}</span>`).join('')}</span></div><div class="errands-jobs">${HARBOR_JOBS.map(j => { const t = this.state.jobs[j.id]; return `<button data-job="${j.id}">${iconSVG(j.id, { size: 74 })}<strong>${j.title}</strong><span>${j.sourceName}<br>↓ ${j.destinationName}</span><small>${t.stage === 'done' ? 'できた！ もういちど あそぶ' : ['pickup', 'deliver'].includes(t.stage) ? 'つづきから あそぶ' : 'おてつだい する'}</small></button>`; }).join('')}</div>`;
+      footer = this.gathering.button() + button('leaf', 'はっぱの おてつだい') + button('return', 'もとの しまへ') + button('free', 'さんぽする');
     } else if (this.focused) {
       title = this.job.title;
       if (this.view === 'brief') {
@@ -201,9 +215,9 @@ export class HarborErrands {
         content = `<div class="errands-brief">${iconSVG(this.task, { size: 112 })}<div><p>そろったね！</p><p>${this.job.destinationName}へ とどけよう</p><small>「いっしょに いく」で みちを あんないするよ</small></div></div>`;
         footer = button('walk', 'とどけに いこう', true);
       } else if (this.view === 'done') {
-        title = this.stamps === 3 ? 'おやつかいの じゅんびが できた！' : 'とどけて くれて ありがとう！';
+        title = this.stamps === 3 && this.save.harborGathering?.stage !== 'done' ? 'おやつかいの じゅんびが できた！' : 'とどけて くれて ありがとう！';
         content = `<div class="errands-brief">${iconSVG('stamp', { size: 118 })}<div><p>${this.job.destinationName}に ${this.task === 'flour' ? 'こむぎが' : this.task === 'bread' ? 'パンが' : 'おはなが'} とどいたよ！</p><strong>${this.earnedStar ? 'ほしを 1こ もらったよ！' : 'また てつだって くれて ありがとう！'}</strong><p>おつかい ${this.stamps} / 3</p></div></div>`;
-        footer = button('free', 'まちを みてみる') + button('board', 'おつかいを えらぶ', true);
+        footer = this.gathering.button() + button('free', 'まちを みてみる') + button('board', 'おつかいを えらぶ', this.stamps < 3);
       }
       if (!this.modal) {
         const destination = this.current.stage === 'deliver';

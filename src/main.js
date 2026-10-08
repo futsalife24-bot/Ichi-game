@@ -572,6 +572,12 @@ function setOutdoorVisible(on) {
 
 /** カメラの めざす いち（しまでは プレイヤーを おう／おうちでは へや ぜんたい） */
 function cameraGoal() {
+  const gatheringFocus = place === 'forest' ? harborErrands.gathering.cameraFocus : null;
+  if (gatheringFocus) {
+    camTarget.copy(gatheringFocus).add(new THREE.Vector3(0, 9, 12));
+    lookTarget.copy(gatheringFocus).y += .8;
+    return;
+  }
   if (place !== 'island' && place !== 'forest') {
     const [origin, cam] = place === 'school' ? [SCHOOL_ORIGIN, SCHOOL_CAM] : [ROOM_ORIGIN, ROOM_CAM];
     const dx = (player.pos.x - origin.x) * cam.follow;

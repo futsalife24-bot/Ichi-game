@@ -137,12 +137,23 @@ function forestRouteGraph() {
   }
   routeGraph=nodes;return nodes;
 }
-function routeConnections(point,nodes) {
+// あたらしい かぐが あるときだけ、その まわりを とおる。
+export function routeObstacleClear(a,b,obstacle,margin=.45) {
+  if(!obstacle)return true;
+  let near=0,far=1;
+  for(const [axis,half] of [['x',obstacle.width/2+margin],['z',obstacle.depth/2+margin]]) {
+    const delta=b[axis]-a[axis],low=obstacle[axis]-half,high=obstacle[axis]+half;
+    if(Math.abs(delta)<1e-10) { if(a[axis]<=low||a[axis]>=high)return true; }
+    else { const u=(low-a[axis])/delta,v=(high-a[axis])/delta;near=Math.max(near,Math.min(u,v));far=Math.min(far,Math.max(u,v));if(near>=far)return true; }
+  }
+  return false;
+}
+function routeConnections(point,nodes,obstacle) {
   const candidates=nodes.map((node,index)=>({index,distance:Math.hypot(point.x-node.x,point.z-node.z)})).sort((a,b)=>a.distance-b.distance||a.index-b.index);
   const links=[];
   for(const c of candidates){
     if(links.length>=8||links.length&&c.distance>6)break;
-    if(routeClear(point,nodes[c.index]))links.push({index:c.index,cost:routeCost(point,nodes[c.index])});
+    if(routeObstacleClear(point,nodes[c.index],obstacle)&&routeClear(point,nodes[c.index]))links.push({index:c.index,cost:routeCost(point,nodes[c.index])});
   }
   return links;
 }
@@ -156,28 +167,29 @@ function routePop(heap) {
   while(i*2+1<heap.length){let child=i*2+1;if(child+1<heap.length&&heap[child+1].cost<heap[child].cost)child++;if(heap[child].cost>=last.cost)break;heap[i]=heap[child];i=child;}
   heap[i]=last;return first;
 }
-function routesTo(to,nodes) {
-  const key=`${to.x},${to.z}`;if(routeTargets.has(key))return routeTargets.get(key);
+function routesTo(to,nodes,obstacle) {
+  const key=`${to.x},${to.z},${obstacle?JSON.stringify(obstacle):''}`;if(routeTargets.has(key))return routeTargets.get(key);
   const costs=new Float64Array(nodes.length).fill(Infinity),next=new Int32Array(nodes.length).fill(-1),heap=[];
-  for(const edge of routeConnections(to,nodes)){costs[edge.index]=edge.cost;routePush(heap,edge);}
+  for(const edge of routeConnections(to,nodes,obstacle)){costs[edge.index]=edge.cost;routePush(heap,edge);}
   while(heap.length){
     const current=routePop(heap);if(current.cost!==costs[current.index])continue;
     for(const edge of nodes[current.index].edges){
+      if(!routeObstacleClear(nodes[current.index],nodes[edge.index],obstacle))continue;
       const cost=current.cost+edge.cost;if(cost>=costs[edge.index])continue;
       costs[edge.index]=cost;next[edge.index]=current.index;routePush(heap,{index:edge.index,cost});
     }
   }
   const result={costs,next};if(routeTargets.size>=12)routeTargets.delete(routeTargets.keys().next().value);routeTargets.set(key,result);return result;
 }
-export function forestRoute(from,to) {
+export function forestRoute(from,to,obstacle=null) {
   // いしの うえからは、まず よこの ひらけた じめんへ おりる。
   if(Number.isFinite(from?.x)&&Number.isFinite(from?.z)&&stepAt(from.x,from.z,.65)){
-    const exit={x:from.x,z:23+(from.z<23?-1:1)*2.65},rest=forestRoute(exit,to);
+    const exit={x:from.x,z:23+(from.z<23?-1:1)*2.65},rest=forestRoute(exit,to,obstacle);
     return rest.length?[exit,...rest]:[];
   }
-  if(!routePointFree(from)||!routePointFree(to))return [];
-  if(Math.hypot(to.x-from.x,to.z-from.z)<6&&routeClear(from,to))return [{x:to.x,z:to.z}];
-  const nodes=forestRouteGraph(),target=routesTo(to,nodes),connections=routeConnections(from,nodes);
+  if(!routePointFree(from)||!routePointFree(to)||!routeObstacleClear(from,from,obstacle)||!routeObstacleClear(to,to,obstacle))return [];
+  if(Math.hypot(to.x-from.x,to.z-from.z)<6&&routeObstacleClear(from,to,obstacle)&&routeClear(from,to))return [{x:to.x,z:to.z}];
+  const nodes=forestRouteGraph(),target=routesTo(to,nodes,obstacle),connections=routeConnections(from,nodes,obstacle);
   let first=-1,best=Infinity;
   for(const edge of connections){const cost=edge.cost+target.costs[edge.index];if(cost<best){best=cost;first=edge.index;}}
   if(first<0)return [];
@@ -191,7 +203,7 @@ export function forestRoute(from,to) {
     for(let end=at+1;end<points.length;end++){
       total+=routeCost(points[end-1],points[end]);
       if(Math.hypot(points[end].x-points[at].x,points[end].z-points[at].z)>12)break;
-      if(routeCost(points[at],points[end])<=total*1.04+.001&&routeClear(points[at],points[end]))chosen=end;
+      if(routeCost(points[at],points[end])<=total*1.04+.001&&routeObstacleClear(points[at],points[end],obstacle)&&routeClear(points[at],points[end]))chosen=end;
     }
     if(Math.hypot(points[chosen].x-points[at].x,points[chosen].z-points[at].z)>1e-7)route.push(points[chosen]);
     at=chosen;

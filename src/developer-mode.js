@@ -4,10 +4,14 @@ import { newHelp } from './help-state.js';
 import { newAdventure } from './adventure-state.js';
 import { beginObservation, noteObservation, finishObservation } from './observations.js';
 import { addAdaptiveEvidence } from './adaptive-play.js';
+import { newHarborErrands } from './harbor-errands-state.js';
 
 export const DEVELOPER_SCENARIOS = Object.freeze({
   forest: Object.freeze({ id: 'forest', label: '第二島・はじめから', place: 'forest' }),
   'forest-done': Object.freeze({ id: 'forest-done', label: '第二島・お手伝い完了後', place: 'forest' }),
+  'harbor-ready': Object.freeze({ id: 'harbor-ready', label: '港町・おやつ会の開催前', place: 'forest' }),
+  'harbor-party': Object.freeze({ id: 'harbor-party', label: '港町・おやつ会の途中', place: 'forest' }),
+  'harbor-grown': Object.freeze({ id: 'harbor-grown', label: '港町・発展した広場', place: 'forest' }),
   island: Object.freeze({ id: 'island', label: '第一島・花のお手伝い前', place: 'island' }),
   'island-guide': Object.freeze({ id: 'island-guide', label: '第一島・自動調整と花への案内', place: 'island' }),
   'island-sail': Object.freeze({ id: 'island-sail', label: '第一島・船への案内', place: 'island' }),
@@ -51,6 +55,12 @@ export async function openPlayProfiles({ search, getStorage, claimSession, avata
     if (scenario.id === 'forest-done') {
       save.adventure.leaf = { stage: 'done', collected: [0, 1, 2] };
       save.stars = 2;
+    }
+    if (['harbor-ready', 'harbor-party', 'harbor-grown'].includes(scenario.id)) {
+      save.harborErrands = newHarborErrands();
+      for (const job of Object.values(save.harborErrands.jobs)) Object.assign(job, { stage: 'done', round: 1, rewarded: true });
+      save.stars = 4;
+      if (scenario.id !== 'harbor-ready') save.harborGathering = { version: 1, stage: scenario.id === 'harbor-party' ? 'gathering' : 'done' };
     }
     if (scenario.id === 'island-guide') {
       // この かくにんがめんだけに、いろを はちかい あそんだ きろくを つくる。

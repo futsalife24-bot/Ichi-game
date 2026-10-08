@@ -1,0 +1,82 @@
+{
+  "task": "TASK-20261009-ICHI-001",
+  "checkedAt": "2026-10-08T23:06:37.072Z",
+  "branch": "codex/harbor-gathering",
+  "base": "e9c08df7e0144c7725832d4b6e910506c799491d",
+  "checks": {
+    "fullTests": {
+      "total": 218,
+      "passed": 218,
+      "failed": 0,
+      "skipped": 0,
+      "log": "artifacts/harbor-gathering-full-tests.txt"
+    },
+    "finalTargetedTests": {
+      "total": 24,
+      "passed": 24,
+      "failed": 0,
+      "log": "artifacts/harbor-gathering-final-tests.txt"
+    },
+    "staticPackage": {
+      "files": 798,
+      "voiceFiles": 726,
+      "hashMatches": 798,
+      "swAssets": 72,
+      "relativeImports": 163,
+      "syntax": "成功",
+      "workflow": ".github/workflows/pages.yml"
+    },
+    "forestAssets": {
+      "count": 7,
+      "triangles": 12490
+    },
+    "harborAssets": {
+      "count": 10,
+      "triangles": 51590
+    },
+    "voice": {
+      "complete": 726,
+      "changed": 0
+    }
+  },
+  "sourceHashes": {
+    ".github/workflows/pages.yml": "cacaf67a95094bd94490142fb35ad67758c5b1b2aeb7fca0020716b04d5c3555",
+    ".github/workflows/voice-check.yml": "f09e0235054cd5fa88c57ed3bcf64ae298ac0c0b1c011a5d914223ad65cb9158",
+    "src/developer-mode.js": "eaf73c0cc03476bc6f9800e3ef8b98ef4af0e7b95059d61d291b86f2823c6b02",
+    "src/forest-layout.js": "2c6f5bc155c7b045c6500fd0fb11371278ab71354bcd907cc9d29922b4f10131",
+    "src/forest.js": "b59baeb9072f10692bb4715de0f53f04940fc2aec02cba0b27f7c333d1fa2ffc",
+    "src/harbor-errands.js": "eee9b4fa4d9fb4f28eb7e2727f7a927229eff90ee436f2b9da736b8219f37a23",
+    "src/harbor-gathering-scene.js": "e483c8046321236c196858a861df46388e8b373939c52f858b028ff99f1c2618",
+    "src/harbor-gathering-state.js": "53c8369bf8c1b06e1ccf81312a9da0584b2105f3bebacc82dfbc5faceb71575f",
+    "src/harbor-gathering.js": "2d790df699351c4289fe32c2f31d3f5545f0dfec9412561d5b6dd0d4d2da7fe5",
+    "src/main.js": "b01425051548ddd3ce80578335cde82626c4a4f87505fc7539fe2f0c29e45ae2",
+    "src/save.js": "a1d31b9169031c197f2d5b3c41f828b293cd8a360fee448389b49b1d2b03e8ca",
+    "style.css": "d35840ac3a15e48c1a21f5c0cd5e8882cc3224fb0f80c8e1bb458721ed834f68",
+    "sw.js": "f583043dee35d04e343b657a58aea887cb38958b6c03eb9fedff65963214efb8",
+    "tools/developer-mode.test.mjs": "1ce9eae2f76e7aa61e9dd2b83cfcc4333a4077ef70e44e874df18bc1c0b886eb",
+    "tools/harbor-gathering-state.test.mjs": "0d1da4c0f5d777f2f3ad626ccfe3406cc8361d69b6133f7cfba5b4f37746d89f",
+    "tools/harbor-gathering.test.mjs": "8f152f2bb8cb67bcc363c0a9ac15d881e8e37a62ea2579d86d17e90041ba6ac1"
+  },
+  "browser": {
+    "status": "未実施",
+    "reason": "共有UIの新しい貸出ID未受領",
+    "requestedMinutes": 20,
+    "sizes": [
+      "844×390",
+      "667×375"
+    ]
+  },
+  "independentAudit": {
+    "choice": "本人が独立監査を付けると回答",
+    "status": "未実施"
+  },
+  "release": {
+    "status": "未公開",
+    "main": "da6f9cae160559af29605716aaa6322696d59e81",
+    "approval": "今回の差分は未承認"
+  },
+  "model": {
+    "id": "未確認",
+    "effort": "未確認"
+  }
+}

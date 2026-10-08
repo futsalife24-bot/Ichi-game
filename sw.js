@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v34-ichika-harbor';
+const VERSION = 'kirakira-v35-harbor-gathering';
 const ASSETS = [
   './',
   './index.html',
@@ -48,6 +48,9 @@ const ASSETS = [
   './src/harbor-effects.js',
   './src/harbor-play.js',
   './src/harbor-errands.js',
+  './src/harbor-gathering.js',
+  './src/harbor-gathering-state.js',
+  './src/harbor-gathering-scene.js',
   './src/harbor-errands-state.js',
   './src/harbor-errands-art.js',
   './src/harbor-errands-lines.js',
