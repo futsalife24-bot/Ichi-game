@@ -78,5 +78,18 @@
   "model": {
     "id": "未確認",
     "effort": "未確認"
+  },
+  "git": {
+    "ciResult": "成功",
+    "ci": "https://github.com/futsalife24-bot/Ichi-game/actions/runs/37857707901",
+    "pushed": true,
+    "implementation": "9737994e9cbbec9a491bcc4bc60678271d07b75a",
+    "laterChanges": "結果記録のみ"
+  },
+  "auditPacket": {
+    "sent": false,
+    "characters": 103737,
+    "sha256": "1cedeb68b8207586425b64577312f1ec5e69c3c8b3c24e2b0f004bf7a58907d7",
+    "path": "artifacts/harbor-gathering-audit-packet.md"
   }
 }

@@ -7,7 +7,7 @@
 - リポジトリ：https://github.com/futsalife24-bot/Ichi-game
 - ブランチ：`codex/harbor-gathering`
 - 基点：`e9c08df7e0144c7725832d4b6e910506c799491d`
-- 対象HEAD：作業ブランチ保存後の記録を `harbor-gathering.md` に追記する。実際の監査依頼にはそのSHAを明記し、送信中の変更を混ぜない。
+- 対象HEAD：`9737994e9cbbec9a491bcc4bc60678271d07b75a`。作業ブランチへpush済み、必須チェック成功。これより後の結果記録だけのコミットはゲーム本体を変更しない。実際の監査依頼には固定SHAを明記し、送信中の変更を混ぜない。
 - 制作内容：`harbor-gathering.md`、検証結果と対象ソースのSHA256：`harbor-gathering-check.json`
 - ローカル：`C:/Users/futsa/Documents/Codex/2026-10-03/codex-ichi-game-futsalife24-bot-ichi/work/Ichi-game`
 - 実モデルID・推論設定：未確認。制作担当による自己検証と独立した監査を区別する。
