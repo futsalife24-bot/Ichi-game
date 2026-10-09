@@ -1,0 +1,35 @@
+{
+  "uiLease": "UI-20261010-004",
+  "product": "54fd944154075ce19407176289a06bcab661ad63",
+  "origin": "http://127.0.0.1:5207/",
+  "tabId": "1271483435",
+  "emptyStorageObserved": true,
+  "createdProfiles": [
+    "おやつ確認Ａ：星４・３配達済み",
+    "別の子Ｂ：星０・未進行"
+  ],
+  "normalModeObserved": true,
+  "selectedProfile": "おやつ確認Ａ",
+  "starsObserved": 4,
+  "failure": "Timed out after 2558ms waiting for CDP command Input.dispatchMouseEvent.",
+  "action": "プロフィールＡの選択。失敗応答後のAXでは選択が反映済み。重ねて入力しない。",
+  "completed": [
+    "専用保存先が空であることを確認",
+    "通常の保存処理でＡ・Ｂ作成",
+    "通常モードでＡを読み込み星４表示"
+  ],
+  "remaining": [
+    "gathering/ready/doneの各段階の再読込み",
+    "プロフィール分離の実操作",
+    "非表示成立と15秒以上後の復帰"
+  ],
+  "evidence": [
+    "artifacts/harbor-gathering-ui004-seed-ax.txt",
+    "artifacts/harbor-gathering-ui004-timeout-ax.txt"
+  ],
+  "tabRetained": true,
+  "serverStopped": true,
+  "viewportChanged": false,
+  "leaseReleased": true,
+  "next": "新IDで同originのサーバーを起動し保持タブから続行。確認用ＡＢを再作成せず、あそぶボタンから進める。"
+}
