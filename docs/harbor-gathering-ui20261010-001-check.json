@@ -1,0 +1,23 @@
+{
+  "uiLease": "UI-20261010-001",
+  "recordedAt": "2026-10-09T21:32:51Z",
+  "product": "54fd944154075ce19407176289a06bcab661ad63",
+  "packetSha256": "c4a7bb162d4d179fc5c6305eed21a4373a83912fb3ef2e632df4b11ef276c6a3",
+  "browser": {"type": "iab", "id": "3", "tabId": "1", "url": "https://chatgpt.com/"},
+  "draftObserved": true,
+  "attachmentsObserved": 7,
+  "promptObserved": true,
+  "submitted": false,
+  "sendActionAttempted": false,
+  "generationStarted": false,
+  "modelUi": {"modelName": null, "effort": "Medium", "settingsChanged": false},
+  "recoveryAttempt": "公式viewport機能で1100×800を設定し、画面取得を試行。",
+  "error": "Timed out running CDP command \"Page.captureScreenshot\" for tab 1",
+  "viewportResetSucceeded": true,
+  "tabMarkHandoffSucceeded": true,
+  "serverStarted": false,
+  "otherTabsOperated": false,
+  "leaseReleased": true,
+  "coordinatorNotified": true,
+  "proposedNextStep": "内蔵ブラウザーで同種障害が２回続いたため、次の貸出で接続済みChromeの専用タブへ同じ固定７ファイルと本文を添付して送信する案を調整担当へ提示。新ID前に操作しない。旧下書きは未送信のまま保持。"
+}

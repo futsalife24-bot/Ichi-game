@@ -1,0 +1,53 @@
+{
+  "uiLease": "UI-20261010-002",
+  "sentAt": "2026-10-10T06:35:41.067+09:00",
+  "branch": "codex/harbor-gathering",
+  "base": "e9c08df7e0144c7725832d4b6e910506c799491d",
+  "product": "54fd944154075ce19407176289a06bcab661ad63",
+  "recordHeadBefore": "56d3cac38160f9893e04ab9f7fb85ee5bce06081",
+  "packetSha256": "c4a7bb162d4d179fc5c6305eed21a4373a83912fb3ef2e632df4b11ef276c6a3",
+  "browser": {
+    "tabId": "1271483431",
+    "id": "2",
+    "type": "chrome"
+  },
+  "url": "https://chatgpt.com/c/6ac95e18-d534-83ec-9998-8ae651929fda",
+  "title": "キラキラアイランド｜独立監査｜港町のおやつ会と保存互換",
+  "submitted": true,
+  "sendCount": 1,
+  "receiverAttachments": 7,
+  "receiverFullPromptVerified": true,
+  "generationStarted": true,
+  "completedResponseRetrieved": false,
+  "auditAccepted": false,
+  "modelUi": {
+    "effort": "Medium",
+    "settingsChanged": false,
+    "name": null
+  },
+  "notes": [
+    "送信直前に固定資料と画像６枚のハッシュ一致を確認。",
+    "添付先でファイル名に(1)が付いたが同一原本を使用。",
+    "画面に途中結果が表示されたが、生成停止ボタンがあり最終監査結果と扱わない。",
+    "旧IAB下書きは未送信で保持。再送禁止。"
+  ],
+  "evidence": [
+    {
+      "sha256": "0eb3fe5f9562b89ed784e6508095bb82386b3672070f08b8eaedf30ade005c1d",
+      "path": "artifacts/harbor-gathering-audit-submitted.png"
+    },
+    {
+      "sha256": "0ee952b11bc14674ac08c0ee5725953713e0c0f99d56bc56116e27a2af103e00",
+      "path": "artifacts/harbor-gathering-audit-submitted-ax.txt"
+    }
+  ],
+  "evidenceVisibility": "サイドバー情報を含むためローカルのGit除外先に保持",
+  "tabMarkHandoffSucceeded": true,
+  "viewportChanged": false,
+  "serverStarted": false,
+  "otherTabsOperated": false,
+  "leaseReleased": true,
+  "coordinatorNotified": true,
+  "next": "新しいUI貸出IDを受領して完成回答を回収・照合する。",
+  "published": false
+}
