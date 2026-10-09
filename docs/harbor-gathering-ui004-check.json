@@ -155,5 +155,20 @@
       "version": "修正前",
       "diagnostics": false
     }
+  },
+  "git": {
+    "implementation": "54fd944154075ce19407176289a06bcab661ad63",
+    "previous": "9d2dff57c83e8c4d161fc94907cde6fbbe8c2188",
+    "pushed": true,
+    "ci": "https://github.com/futsalife24-bot/Ichi-game/actions/runs/37863568777",
+    "ciResult": "成功",
+    "laterChanges": "結果記録のみ"
+  },
+  "auditPacket": {
+    "path": "artifacts/harbor-gathering-ui004-audit-packet.md",
+    "head": "54fd944154075ce19407176289a06bcab661ad63",
+    "characters": 113538,
+    "sha256": "5337826946f9b51b41abf722725ecabffbdf6a66b5e5b5d1ee25f82deb2c73ca",
+    "sent": false
   }
 }
