@@ -29,5 +29,16 @@
   "leaseReleased": true,
   "coordinatorNotified": true,
   "published": false,
-  "nextStep": "接続復旧後、新しいUI IDで専用下書きの存在・添付・未送信を確認して送信。固定資料の再生成や重送をしない。"
+  "coordinatorRecovery": {
+    "id": "RECOVERY-20261009-002",
+    "source": "調整担当からの報告。主担当によるUI再確認はしていない。",
+    "chromeConnectionObservedByCoordinator": true,
+    "newExternalActivityAt": "2026-10-09T14:18:43.920Z",
+    "activityAfterUserAvailabilityAnswer": true,
+    "newUiLeaseGranted": false,
+    "availabilityQuestionHandledByCoordinator": true,
+    "draftMustBeRetained": true,
+    "shareApprovalStillValid": true
+  },
+  "nextStep": "調整担当が新しい外部活動後の空きを確認し、新UI IDを受領してから接続を確認する。専用IAB下書きの存在・７添付・本文・未送信を再観測して送信へ進む。ブラウザーIDは担当間で同一と仮定しない。固定資料の再生成・重送・重複質問をしない。"
 }
