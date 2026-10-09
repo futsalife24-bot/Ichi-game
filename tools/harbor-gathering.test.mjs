@@ -65,6 +65,30 @@ test('集合の途中と集合後を保存から再開し、一時停止中に�
   const s=fixture(ready);try{s.errands.render();assert.equal(s.party.scene.root.visible,true);s.party.start();s.arrive();assert.match(s.el('harborErrandsFooter').innerHTML,/いただきます/);assert.equal(s.save.harborGathering.stage,'ready');s.party.finish();assert.equal(s.save.harborGathering.stage,'done');}finally{s.close();}
 });
 
+test('描画が遅くても集合は実時間で進み、操作できない間は進めない',()=>{
+  const h=fixture();try{
+    h.party.start();h.arrive();
+    h.errands.update(.05,1,3);assert.equal(h.party.elapsed,3);
+    h.allowed=false;h.errands.update(.05,2,60);assert.equal(h.party.elapsed,3);
+    h.allowed=true;h.errands.update(.05,3,3);assert.equal(h.save.harborGathering.stage,'gathering');
+    h.errands.update(.05,4,1);assert.equal(h.save.harborGathering.stage,'ready');
+    assert.equal(h.save.stars,4);
+  }finally{h.close();}
+});
+
+test('小さい横画面でも集合した住民と主人公の足元が下部の案内に隠れない',()=>{
+  const h=fixture();try{
+    h.party.start();h.arrive();const pose=h.party.cameraPose;
+    for(const [width,height] of [[844,390],[667,375]]){
+      const camera=new THREE.PerspectiveCamera(48,width/height,.1,700);camera.position.copy(pose.position);camera.lookAt(pose.target);camera.updateMatrixWorld();
+      const points=[h.player.pos,...h.party.scene.guests.map(g=>h.party.scene.point(...g.end))];
+      for(const point of points){const p=point.clone().project(camera),y=(1-p.y)*height/2;assert.ok(y>10&&y<height-140,`${width}×${height} 足元 ${y}`);assert.ok(Math.abs(p.x)<.9);}
+      const flag=h.party.scene.point(GATHERING_TABLE.x,GATHERING_TABLE.z);flag.y+=3.55;flag.z-=.74;
+      assert.ok(flag.project(camera).y<1,'旗も上端で切れない');
+    }
+  }finally{h.close();}
+});
+
 test('各保存の失敗では未確定の発展を見せず、元の記録に戻す',()=>{
   for(const stage of [undefined,'gathering','ready']){
     const save=prepared();if(stage)save.harborGathering={version:1,stage};const h=fixture(save);

@@ -1,0 +1,159 @@
+{
+  "task": "TASK-20261009-ICHI-001",
+  "checkedAt": "2026-10-09T00:11:59.873Z",
+  "branch": "codex/harbor-gathering",
+  "base": "e9c08df7e0144c7725832d4b6e910506c799491d",
+  "checks": {
+    "fullTests": {
+      "total": 220,
+      "passed": 220,
+      "failed": 0,
+      "skipped": 0,
+      "log": "artifacts/harbor-gathering-ui004-full-tests.txt"
+    },
+    "finalTargetedTests": {
+      "total": 26,
+      "passed": 26,
+      "failed": 0,
+      "log": "artifacts/harbor-gathering-ui004-tests.txt"
+    },
+    "staticPackage": {
+      "files": 798,
+      "voiceFiles": 726,
+      "hashMatches": 798,
+      "swAssets": 72,
+      "relativeImports": 163,
+      "syntax": "成功",
+      "workflow": ".github/workflows/pages.yml"
+    },
+    "forestAssets": {
+      "count": 7,
+      "triangles": 12490
+    },
+    "harborAssets": {
+      "count": 10,
+      "triangles": 51590
+    },
+    "voice": {
+      "complete": 726,
+      "changed": 0
+    }
+  },
+  "sourceHashes": {
+    "src/harbor-errands.js": "789366f3a602f171a8a00449debc903dd5ebe0f420f72df95e7f825b5d356958",
+    "src/harbor-gathering-scene.js": "8bdf9bdad679a5c5fbc05d1cbd12e1167a95a4a3c29bd7a407c21a4d28d17db7",
+    "src/harbor-gathering.js": "b68666e4b3977196f1f2c2e0fba57e4dc6c1d4e9d5eb2de0bcb5c19c04305733",
+    "src/main.js": "720b59e7ccb2930cfe9f78155d71764423de172a4fb124fd0e0d3db68ac46050",
+    "tools/harbor-gathering.test.mjs": "54f71a56a868e79f4da1be1224b480abfa48ad4d5d5c09930014bb91ddb75032"
+  },
+  "browser": {
+    "lease": "UI-20261009-004",
+    "received": "2026-10-09T08:56:55+09:00",
+    "released": "2026-10-09T09:05:12+09:00",
+    "status": "画面サイズ復元・専用タブ閉鎖・明示返却済み",
+    "testedHead": "9d2dff57c83e8c4d161fc94907cde6fbbe8c2188",
+    "runtimeHead": "9737994e9cbbec9a491bcc4bc60678271d07b75a",
+    "browser": "Chrome",
+    "origin": "http://127.0.0.1:5199",
+    "scenarios": [
+      "harbor-ready",
+      "harbor-grown"
+    ],
+    "viewportSizes": [
+      [
+        844,
+        390
+      ],
+      [
+        667,
+        375
+      ]
+    ],
+    "normalProfilesOpened": false,
+    "diagnosticOverlay": "後半のみ配信コピーへ追加。返却後にコピーを原本へ復元",
+    "verified": [
+      "開催前の第二島へ到着",
+      "一覧から開催を選択",
+      "集合途中を表示",
+      "中断して町へ戻る",
+      "一覧からつづきを再開",
+      "開催済みシナリオのテーブルと３住民を表示",
+      "通常画面の星４個を維持"
+    ],
+    "notVerified": [
+      "集合完了からいただきますまでの一周",
+      "開催後の帰島と再訪",
+      "修正後の実画面",
+      "描画が遅い環境要因",
+      "実スマホ性能",
+      "人の聴感"
+    ],
+    "observations": {
+      "gatheringElapsed": [
+        0.68,
+        2,
+        3.85
+      ],
+      "frameDt": 0.05,
+      "canAct": true,
+      "panelAt667x375": {
+        "top": 233,
+        "height": 134.3333
+      }
+    },
+    "pageWarnings": 0,
+    "pageErrors": 0,
+    "logs": "artifacts/harbor-gathering-ui004-logs.json",
+    "screenshotCaveat": "サイズ変更直後の集合画像は667×308。後続DOM測定は667×375、開催済み画像も667×375。安定した集合画面の再確認が必要。"
+  },
+  "independentAudit": {
+    "choice": "本人が独立監査を付けると回答",
+    "status": "未実施・未送信",
+    "oldPacket": "9737994対象の資料は更新が必要"
+  },
+  "release": {
+    "status": "未公開",
+    "main": "da6f9cae160559af29605716aaa6322696d59e81",
+    "approval": "今回の差分は未承認"
+  },
+  "model": {
+    "id": "未確認",
+    "effort": "未確認"
+  },
+  "postUiFix": {
+    "scope": [
+      "低速描画でも集合待ちを実時間で進める",
+      "非表示中の経過を加算しない",
+      "主人公と住民の足元を案内より上へ映す",
+      "おやつ会中のカメラ移動も実時間で進める"
+    ],
+    "browserVerified": false,
+    "performanceImprovementClaimed": false
+  },
+  "images": {
+    "docs/images/harbor-gathering-ui004-grown.jpg": {
+      "sha256": "3f7e98bff88b8edf392c8b5b152788fa630f18511bfa9309550f097c6901157e",
+      "width": 667,
+      "height": 375,
+      "format": "JPEG",
+      "version": "修正前",
+      "diagnostics": true
+    },
+    "docs/images/harbor-gathering-ui004-small-waiting.jpg": {
+      "sha256": "dc1152a7ddf7799effe73f8d32ca64028102219fb09497c060a0c5c7e1b81c1e",
+      "width": 667,
+      "height": 308,
+      "format": "JPEG",
+      "version": "修正前",
+      "diagnostics": true
+    },
+    "docs/images/harbor-gathering-ui004-waiting.jpg": {
+      "sha256": "5dcddb5f87ab45a0922198f4bb603a63d2a552415b907a68363180ef2875be73",
+      "width": 844,
+      "height": 390,
+      "format": "JPEG",
+      "version": "修正前",
+      "diagnostics": false
+    }
+  }
+}

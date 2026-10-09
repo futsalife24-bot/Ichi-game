@@ -8,6 +8,10 @@ export const GATHERING_SPOT = Object.freeze({ x: 1, z: 33.8 });
 export const GATHERING_TABLE = Object.freeze({ x: 1, z: 29.4 });
 export const GATHERING_SOLID = Object.freeze({ x: 1, z: 29.4, width: 3.3, depth: 1.7 });
 export const GATHERING_SECONDS = 7;
+// したの あんないより うえに、みんなの あしもとまで うつす。
+export function gatheringCameraPose(focus) {
+  return { position: focus.clone().add(new THREE.Vector3(0, 9, 12)), target: focus.clone().add(new THREE.Vector3(0, -3, 0)) };
+}
 const GUESTS = [
   { kind: 'neko', start: [12.9, 28], end: [3.35, 29.4], facing: -Math.PI / 2 },
   { kind: 'kuma', start: [-8, 32], end: [-1.35, 29.4], facing: Math.PI / 2 },

@@ -161,8 +161,8 @@ export class HarborErrands {
     this.parcels[this.task].scale.setScalar(1); this.player.holdModel(this.parcels[this.task]);
     this.render(); this.voice.say(V.correct);
   }
-  update(dt = .016, time = 0) {
-    this.gathering.update(dt, time);
+  update(dt = .016, time = 0, presentationDt = dt) {
+    this.gathering.update(dt, time, presentationDt);
     if (this.gathering.active) return;
     if (!this.focused || this.modal || !this.canAct()) return;
     if (this.route.length && !this.player.target) {

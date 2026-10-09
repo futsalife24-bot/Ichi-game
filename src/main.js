@@ -572,10 +572,10 @@ function setOutdoorVisible(on) {
 
 /** カメラの めざす いち（しまでは プレイヤーを おう／おうちでは へや ぜんたい） */
 function cameraGoal() {
-  const gatheringFocus = place === 'forest' ? harborErrands.gathering.cameraFocus : null;
-  if (gatheringFocus) {
-    camTarget.copy(gatheringFocus).add(new THREE.Vector3(0, 9, 12));
-    lookTarget.copy(gatheringFocus).y += .8;
+  const gatheringPose = place === 'forest' ? harborErrands.gathering.cameraPose : null;
+  if (gatheringPose) {
+    camTarget.copy(gatheringPose.position);
+    lookTarget.copy(gatheringPose.target);
     return;
   }
   if (place !== 'island' && place !== 'forest') {
@@ -738,6 +738,8 @@ window.addEventListener('orientationchange', () => setTimeout(resize, 200));
 resize();
 
 document.addEventListener('visibilitychange', () => {
+  // がめんを はなれていた じかんは、おやつかいに たさない。
+  last = performance.now();
   if(document.hidden)playTimer.pause();
   else playTimer.tick(mode==='play'&&!saveBlocked&&!homePaused);
   if (document.hidden) { audio.suspend(); voice.stop(); input.reset(); player.setTarget(null); }
@@ -760,7 +762,8 @@ function frame(now) {
   $('placeLabel').classList.toggle('hidden', place !== 'forest' || adventure.focused || harborBusy());
   if(!playTimer.tick(mode==='play'&&!saveBlocked&&!document.hidden&&!homePaused&&!developerMenuOpen())) { requestAnimationFrame(frame); return; }
   $('btnQuestHint').classList.toggle('hidden', !(mode==='play' && place==='island' && !help.focused && !ui.panelOpen && !transitioning && quests.state==='active' && !saveBlocked && !playTimer.paused && !homePaused));
-  const dt = Math.min(0.05, (now - last) / 1000);
+  const presentationDt = Math.max(0, (now - last) / 1000);
+  const dt = Math.min(0.05, presentationDt);
   last = now;
   time += dt;
   if (saveBlocked || document.hidden || playTimer.paused || homePaused || developerMenuOpen()) { last = now; requestAnimationFrame(frame); return; }
@@ -785,7 +788,7 @@ function frame(now) {
     }
     if (!help.modal && !adventure.modal && !harborErrands.modal && !ui.panelOpen && !transitioning) player.update(dt, input, env(), audio);
     if (!ui.panelOpen && !transitioning) adventure.update(dt, time);
-    if (place === 'forest' && !ui.panelOpen && !transitioning) harborErrands.update(dt, time);
+    if (place === 'forest' && !ui.panelOpen && !transitioning) harborErrands.update(dt, time, presentationDt);
     if (saveBlocked) { requestAnimationFrame(frame); return; }
     if (!ui.panelOpen && !transitioning) boatCheck();
     if (place === 'island') {
@@ -806,7 +809,8 @@ function frame(now) {
       leavePlace();
     }
     cameraGoal();
-    const k = 1 - Math.exp(-4 * dt);
+    const cameraDt = place === 'forest' && harborErrands.gathering.active && harborErrands.view === 'party' ? presentationDt : dt;
+    const k = 1 - Math.exp(-4 * cameraDt);
     camera.position.lerp(camTarget, k);
     lookAt.lerp(lookTarget, k * 1.5);
     camera.lookAt(lookAt);

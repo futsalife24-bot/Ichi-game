@@ -1,6 +1,6 @@
 // ひろばへ あるいて、みんなを むかえる。ちゅうだんしても くぎりから つづけられる。
 import { gatheringUnlocked, gatheringAction } from './harbor-gathering-state.js';
-import { HarborGatheringScene, GATHERING_SPOT, GATHERING_TABLE, GATHERING_SOLID, GATHERING_SECONDS } from './harbor-gathering-scene.js';
+import { HarborGatheringScene, gatheringCameraPose, GATHERING_SPOT, GATHERING_TABLE, GATHERING_SOLID, GATHERING_SECONDS } from './harbor-gathering-scene.js';
 import { iconSVG } from './harbor-errands-art.js';
 const $ = id => document.getElementById(id);
 export const GATHERING_LINES = { invite: { say: 'みんなで たのしもう！' }, thanks: { say: 'ありがとう！' } };
@@ -10,6 +10,7 @@ export class HarborGathering {
   get stage() { return this.replayStage ?? this.host.save.harborGathering?.stage; }
   get active() { return this.host.task === 'party'; }
   get cameraFocus() { return this.active && this.host.view === 'party' ? this.scene.point(GATHERING_TABLE.x, GATHERING_TABLE.z) : null; }
+  get cameraPose() { const focus = this.cameraFocus; return focus ? gatheringCameraPose(focus) : null; }
   target() { return this.scene.point(GATHERING_SPOT.x, GATHERING_SPOT.z); }
   get label() { return this.host.save.harborGathering?.stage === 'done' ? 'みんなと おやつ' : this.host.save.harborGathering ? 'おやつかいの つづき' : 'おやつかいを ひらく'; }
   get note() { return this.host.save.harborGathering?.stage === 'done' ? 'みんなの おやつひろばが できたよ！' : this.host.save.harborGathering ? 'おやつかいの つづきを しよう' : 'じゅんび できたね！ おやつかいを ひらこう'; }
@@ -31,7 +32,7 @@ export class HarborGathering {
   }
   pause() { this.elapsed = 0; this.replayStage = null; this.refresh(); }
   repeat() { this.host.voice.say(this.stage === 'done' ? GATHERING_LINES.thanks : GATHERING_LINES.invite); }
-  update(dt, time) {
+  update(dt, time, presentationDt = dt) {
     const h = this.host;
     if (this.active && h.canAct()) {
       if (!h.modal) {
@@ -41,7 +42,9 @@ export class HarborGathering {
         }
         if (h.atTarget()) { h.halt(); h.view = 'party'; h.render(); this.repeat(); }
       } else if (h.view === 'party' && this.stage === 'gathering') {
-        this.elapsed = Math.min(GATHERING_SECONDS, this.elapsed + Math.max(0, Math.min(dt, .1)));
+        // えがくのが おそくても、まつ じかんまで ながくしない。
+        const elapsed = Number.isFinite(presentationDt) ? Math.max(0, presentationDt) : 0;
+        this.elapsed = Math.min(GATHERING_SECONDS, this.elapsed + elapsed);
         if (this.elapsed >= GATHERING_SECONDS) {
           if (this.replayStage) this.replayStage = 'ready';
           else if (!this.commit('arrived')) { h.stop(); return; }
