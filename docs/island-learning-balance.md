@@ -95,3 +95,13 @@
 既存の基本５役は [PROJECT_TEAM.md](../PROJECT_TEAM.md) を適用。方針・統合・批判的確認・記録は主担当が兼務し、独立監査ではない。子担当も実装とテストの担当であり、監査の代わりにはしていない。
 
 リポジトリ：https://github.com/futsalife24-bot/Ichi-game 。ローカル作業場所は [PROJECT.md](../PROJECT.md) とGit管理外の `PROJECT.local.md` を参照。
+
+## 公開の結果（2026-10-12）
+
+本人の「公開までやって」の明示指示に基づき、[PR #32](https://github.com/futsalife24-bot/Ichi-game/pull/32)をmainへ統合した。統合前のmainは `da6f9cae160559af29605716aaa6322696d59e81`、実装HEADは `4ac35b74b9ea080bab6f9408d3efb9abe91486a0`、国の資料との照合と公開承認を追記したPRのHEADは `785b2353f91b177931a8d4c4e111eb25e6a2ac66`、公開されたmainは `93fb46badca4ba8c3c4c8df17e3dadabfbcee357`。先行する港町のおやつ会の未公開変更も含む。今回の独立監査は未実施、以前のおやつ会集合中の実非表示復帰も未確認のまま記録し、成功扱いにはしていない。
+
+PR側の[必須チェック](https://github.com/futsalife24-bot/Ichi-game/actions/runs/38209080602)とmainの[公開処理](https://github.com/futsalife24-bot/Ichi-game/actions/runs/38209197876)は成功。[公開先](https://futsalife24-bot.github.io/Ichi-game/)のHTML・CSS・全src・vendor・icons・森と港町の素材・音声一覧など75ファイルを取得し、公開コミットのGit内容とSHA-256が全件一致した。[照合記録](island-learning-release-check.json)に対象とハッシュを保持。録音726個の再配信全件照合は今回再実行しておらず、公開前の音声完全性と公開処理での検査が成功している。
+
+公開画面を内蔵ブラウザーの `?dev=second` の一時プロフィールで開き、第二島の開始・学習メニュー・大文字Aの見本合わせから正答を確認。通常の島選択で第一島へ戻り、星０維持、ジャンプと学習パネル入口の非表示、見つける遊びとお手伝いの入口を確認した。確認範囲の警告・エラーは０件。本人の通常保存へ入力せず、確認用タブは終了後に閉じた。ローカル版で済ませた第三島・暮らしの広場の操作を今回の公開画面で再実行したとは扱わない。
+
+公開後の結果は作業ブランチへ保存し、アプリ本体を再公開する変更は追加していない。主担当の実モデルID・推論設定は未確認。この公開作業は主担当単独で実施した。
