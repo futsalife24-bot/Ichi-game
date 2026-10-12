@@ -25,6 +25,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
+      - name: 制作基準とパーツ台帳を確認
+        run: node tools/island-content-docs.mjs --check
       - run: node --import ./tools/register.mjs --test tools/island-balance.test.mjs tools/island-learning.test.mjs tools/tutorial-island.test.mjs
       - name: Validate voice release
         run: |
