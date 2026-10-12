@@ -85,7 +85,7 @@ export class QuestManager {
       const a = Math.random() * Math.PI * 2;
       const r = 5 + Math.random() * (tries < 300 ? 15 : 24);
       const x = pp.x + Math.cos(a) * r, z = pp.z + Math.sin(a) * r;
-      if (Math.hypot(x, z) > ISLAND_R - 6) continue;
+      if (Math.hypot(x, z) > (this.world.radius ?? ISLAND_R) - 6) continue;
       if (!this.world.isFree(x, z, clearance, { ignoreReserved: true })) continue;
       if (this.animals.list.some((an) => Math.hypot(an.pos.x - x, an.pos.z - z) < 3)) continue;
       if (spots.some((s) => Math.hypot(s.x - x, s.z - z) < 3.2)) continue;

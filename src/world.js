@@ -6,6 +6,7 @@ import { seasonOf } from './catalog.js';
 import { islandRules } from './island-rules.js';
 
 export const ISLAND_R = 36;
+export const TUTORIAL_R = 24;
 export const WATER_Y = -0.35;
 
 const smoothstep = (a, b, x) => {
@@ -17,8 +18,12 @@ const hill = (x, z, cx, cz, h, s) => {
   return h * Math.exp(-(dx * dx + dz * dz) / s);
 };
 
-export function getHeight(x, z) {
+export function getHeight(x, z, island = 1) {
   const r = Math.hypot(x, z);
+  if (island === 1) {
+    const e = smoothstep(TUTORIAL_R - 5, TUTORIAL_R + 4, r);
+    return (0.45 + 0.08 * Math.sin(x * 0.15) * Math.cos(z * 0.15)) * (1 - e) - 2.6 * e;
+  }
   let h = 0.45 + 0.3 * Math.sin(x * 0.19 + 1.3) * Math.cos(z * 0.17) + 0.2 * Math.sin((x - z) * 0.11);
   h += hill(x, z, 16, -14, 3.0, 45);
   h += hill(x, z, -19, 7, 1.8, 30);
@@ -54,6 +59,11 @@ export const ANIMAL_HOMES = {
   kaeru: { x: 25, z: -1 },
 };
 
+export const TUTORIAL_HOMES = {
+  inu: { x: -7, z: 10 }, buta: { x: -12, z: -3 }, ushi: { x: -13, z: 5 },
+  hitsuji: { x: 12, z: 7 }, hiyoko: { x: -3, z: 1 }, kaeru: { x: 13, z: -5 },
+};
+
 // こていの カメラへ はいりぐちを むける。みちも おなじ いちへ つなぐ。
 export function cottageDoor({ x, z }, yaw = 0) {
   return { x: x + Math.sin(yaw) * 3.2, z: z + Math.cos(yaw) * 3.2, yaw };
@@ -73,8 +83,13 @@ export const ISLAND_PATHS = [
   [ANIMAL_HOMES.inu, { x: LANDMARKS.shop.x, z: LANDMARKS.shop.z + 4 }],
 ];
 
-function pathDistance(x, z) {
-  return Math.min(...ISLAND_PATHS.map(([a, b]) => segDist(x, z, a.x, a.z, b.x, b.z)));
+export const TUTORIAL_PATHS = [
+  [LANDMARKS.spawn, { x: -4, z: -3 }], [{ x: -4, z: -3 }, { x: -1, z: -6 }],
+  [LANDMARKS.spawn, { x: -7, z: 12.8 }], [LANDMARKS.spawn, { x: 0, z: 20 }],
+];
+
+function pathDistance(x, z, paths = ISLAND_PATHS) {
+  return Math.min(...paths.map(([a, b]) => segDist(x, z, a.x, a.z, b.x, b.z)));
 }
 
 const tmpObj = new THREE.Object3D();
@@ -86,6 +101,11 @@ const autumnGrass = new THREE.Color(0xd8c35a);
 export class World {
   constructor(scene, { island = 3 } = {}) {
     this.scene = scene;
+    this.island = island;
+    this.tutorial = island === 1;
+    this.radius = this.tutorial ? TUTORIAL_R : ISLAND_R;
+    this.paths = this.tutorial ? TUTORIAL_PATHS : ISLAND_PATHS;
+    this.animalHomes = this.tutorial ? TUTORIAL_HOMES : ANIMAL_HOMES;
     this.rules = islandRules(island);
     this.colliders = []; // {x,z,r}
     this.bouncers = []; // {x,z,r,top,cap,squash}
@@ -93,26 +113,29 @@ export class World {
     this.noSpawn = []; // クエストの ものも 置かない 場所（はたけ・おみせ）
     this.doorGlows = [];
     this.windowMats = [];
+    this.lampHalos = [];
     this.trees = [];
     this.rng = mulberry32(20250926);
     this.time = 0;
 
     this.reserve(LANDMARKS.spawn.x, LANDMARKS.spawn.z, 5);
     this.reserve(LANDMARKS.owl.x, LANDMARKS.owl.z, 2);
-    this.reserve(LANDMARKS.school.x, LANDMARKS.school.z, 5);
-    this.reserve(LANDMARKS.rainbow.x, LANDMARKS.rainbow.z, 7.5);
-    this.reserve(LANDMARKS.myHouse.x, LANDMARKS.myHouse.z, 5.5);
-    this.reserve(LANDMARKS.shop.x, LANDMARKS.shop.z, 6);
-    this.reserve(LANDMARKS.garden.x, LANDMARKS.garden.z, 4);
-    this.noSpawn.push({ ...LANDMARKS.shop, r: 5 }, { ...LANDMARKS.garden, r: 3.4 });
-    for (const h of Object.values(ANIMAL_HOMES)) this.reserve(h.x, h.z, 4);
+    if (!this.tutorial) {
+      this.reserve(LANDMARKS.school.x, LANDMARKS.school.z, 5);
+      this.reserve(LANDMARKS.rainbow.x, LANDMARKS.rainbow.z, 7.5);
+      this.reserve(LANDMARKS.myHouse.x, LANDMARKS.myHouse.z, 5.5);
+      this.reserve(LANDMARKS.shop.x, LANDMARKS.shop.z, 6);
+      this.reserve(LANDMARKS.garden.x, LANDMARKS.garden.z, 4);
+      this.noSpawn.push({ ...LANDMARKS.shop, r: 5 }, { ...LANDMARKS.garden, r: 3.4 });
+    }
+    for (const h of Object.values(this.animalHomes)) this.reserve(h.x, h.z, this.tutorial ? 2 : 4);
     // さいしょの おてつだいの みち。てまえの おおきな ものを よける。
     for (const p of [{ x: -4, z: -3 }, { x: -1, z: -6 }, { x: -3, z: 1 }]) {
       this.reserve(p.x, p.z, 3.2);
       this.noSpawn.push({ ...p, r: 2 });
     }
     // はいりぐちまで あるける みちを あける。
-    for (const [start, end] of ISLAND_PATHS) {
+    for (const [start, end] of this.paths) {
       const steps = Math.ceil(Math.hypot(end.x - start.x, end.z - start.z));
       for (let i = 0; i <= steps; i++) {
         const k = i / steps;
@@ -120,7 +143,7 @@ export class World {
       }
     }
     // はいりぐちの てまえに はっぱが かぶらない ひろば。
-    for (const home of [LANDMARKS.school, LANDMARKS.myHouse, LANDMARKS.shop]) {
+    for (const home of this.tutorial ? [] : [LANDMARKS.school, LANDMARKS.myHouse, LANDMARKS.shop]) {
       this.reserve(home.x, home.z + 6, 3.5);
     }
 
@@ -131,24 +154,24 @@ export class World {
     this.buildClouds();
     if (this.rules.school) this.buildSchool();
     if (this.rules.room) this.buildMyHouse();
-    this.buildRainbow();
+    if (!this.tutorial) this.buildRainbow();
     this.buildOwl();
     if (this.rules.jump) this.buildMushrooms();
     this.buildTrees();
     if (!this.rules.trees) this.fruitMesh.visible = false;
     this.buildRocks();
     this.buildFlowers();
-    this.buildLamps();
+    if (!this.tutorial) this.buildLamps();
     this.applySeason(seasonOf());
   }
 
   reserve(x, z, r) { this.reserved.push({ x, z, r }); }
 
   // ---- プレイヤーの いどう に つかう（おうちの なか と おなじ かたち）
-  groundAt(x, z) { return getHeight(x, z); }
+  groundAt(x, z) { return getHeight(x, z, this.island); }
 
   clampPos(p) {
-    const r = Math.hypot(p.x, p.z), maxR = ISLAND_R - 2;
+    const r = Math.hypot(p.x, p.z), maxR = this.radius - 2;
     if (r <= maxR) return false;
     p.x *= maxR / r;
     p.z *= maxR / r;
@@ -157,7 +180,7 @@ export class World {
 
   /** 物が置けるか（障害物・予約地・島の外をさける） */
   isFree(x, z, clearance, { ignoreReserved = false } = {}) {
-    if (Math.hypot(x, z) > ISLAND_R - 5) return false;
+    if (Math.hypot(x, z) > this.radius - 5) return false;
     for (const c of this.noSpawn) if (Math.hypot(x - c.x, z - c.z) < c.r + clearance) return false;
     for (const c of this.colliders) if (Math.hypot(x - c.x, z - c.z) < c.r + clearance) return false;
     for (const b of this.bouncers) if (Math.hypot(x - b.x, z - b.z) < b.r + clearance) return false;
@@ -254,16 +277,16 @@ export class World {
     const c = new THREE.Color();
     for (let i = 0; i < pos.count; i++) {
       const x = pos.getX(i), z = pos.getZ(i);
-      const h = getHeight(x, z);
+      const h = this.groundAt(x, z);
       pos.setY(i, h);
       const r = Math.hypot(x, z);
       const n = 0.5 + 0.5 * Math.sin(x * 0.35 + Math.cos(z * 0.3) * 2.0) * Math.cos(z * 0.27 - x * 0.1);
       c.copy(grassA).lerp(grassB, n * 0.7);
       if (h > 1.4) c.lerp(grassC, Math.min(1, (h - 1.4) * 0.4));
-      const pd = pathDistance(x, z);
+      const pd = pathDistance(x, z, this.paths);
       const pw = 1 - smoothstep(1.05, 1.8, pd + 0.15 * Math.sin(x * 1.3 + z));
       c.lerp(path, pw);
-      const shore = ISLAND_R - 4.5 + Math.sin(Math.atan2(z, x) * 5) * 0.8;
+      const shore = this.radius - 4.5 + Math.sin(Math.atan2(z, x) * 5) * 0.8;
       const sw = smoothstep(shore - 1, shore + 1, r);
       c.lerp(sand, sw);
       this.grassW[i] = (1 - pw) * (1 - sw);
@@ -323,7 +346,7 @@ export class World {
   /** たてもの（そとがわ）。はいりぐちの マット の いち を かえす。decorate(g) で かざりを たせる */
   buildCottage({ x, z, wall, roof, door, sign, signOpts, signSide = 1, matColor = 0xffd23d, glowColor = 0xfff6a0, chimney = false, decorate, yaw }) {
     const g = new THREE.Group();
-    const y = getHeight(x, z);
+    const y = this.groundAt(x, z);
     g.position.set(x, y - 0.1, z);
     g.rotation.y = yaw ?? 0;
     const body = new THREE.Mesh(new THREE.BoxGeometry(3.6, 2.6, 3.2), toon(wall));
@@ -387,11 +410,11 @@ export class World {
     this.doorGlows.push(glow);
     const ry = g.rotation.y;
     const doorPos = cottageDoor({ x, z }, ry);
-    const matY = getHeight(doorPos.x, doorPos.z) - g.position.y;
+    const matY = this.groundAt(doorPos.x, doorPos.z) - g.position.y;
     mat.position.y = matY + 0.04;
     glow.position.y = matY + 0.1;
     const signPos = { x: doorPos.x + Math.cos(ry) * signX, z: doorPos.z - Math.sin(ry) * signX };
-    const signY = getHeight(signPos.x, signPos.z) - g.position.y;
+    const signY = this.groundAt(signPos.x, signPos.z) - g.position.y;
     signMesh.position.y += signY;
     signPole.position.y += signY;
     this.colliders.push({ ...signPos, r: 0.15 });
@@ -451,7 +474,7 @@ export class World {
     const ry = this.roomDoor.yaw;
     const px = x + Math.sin(ry) * 2.4 + Math.cos(ry) * 2.3, pz = z + Math.cos(ry) * 2.4 - Math.sin(ry) * 2.3;
     const post = new THREE.Group();
-    post.position.set(px, getHeight(px, pz), pz);
+    post.position.set(px, this.groundAt(px, pz), pz);
     post.rotation.y = ry;
     post.add(cyl(0x9a6b43, 0.07, 1.0, 0, 0.5, 0));
     const boxM = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.4, 0.6), toon(0xff5a5a));
@@ -467,7 +490,7 @@ export class World {
     const { x, z, radius } = LANDMARKS.rainbow;
     const colors = [0xff4b4b, 0xff9a2e, 0xffd23d, 0x3ccf5a, 0x4fc3f7, 0x3d7bff, 0xa66bff];
     const g = new THREE.Group();
-    const baseY = Math.min(getHeight(x - radius, z), getHeight(x + radius, z)) - 0.4;
+    const baseY = Math.min(this.groundAt(x - radius, z), this.groundAt(x + radius, z)) - 0.4;
     g.position.set(x, baseY, z);
     colors.forEach((col, i) => {
       const r = radius - i * 0.62;
@@ -490,7 +513,7 @@ export class World {
   buildOwl() {
     const { x, z } = LANDMARKS.owl;
     this.owl = makeOwl();
-    this.owl.root.position.set(x, getHeight(x, z) - 0.05, z);
+    this.owl.root.position.set(x, this.groundAt(x, z) - 0.05, z);
     this.owl.root.rotation.y = Math.atan2(LANDMARKS.spawn.x - x, LANDMARKS.spawn.z - z) + 0.4;
     this.scene.add(this.owl.root);
     this.colliders.push({ x, z, r: 0.8 });
@@ -501,7 +524,7 @@ export class World {
     const rnd = mulberry32(77);
     const spots = [{ x: -4, z: -8 }, { x: 8, z: -6 }, { x: -12, z: 4 }, { x: 13, z: 16 }, { x: -3, z: 22 }];
     for (const s of spots) {
-      const y = getHeight(s.x, s.z);
+      const y = this.groundAt(s.x, s.z);
       const g = new THREE.Group();
       g.position.set(s.x, y, s.z);
       g.add(cyl(0xfff3e0, 0.38, 0.9, 0, 0.45, 0));
@@ -528,17 +551,17 @@ export class World {
   buildTrees() {
     const rnd = this.rng;
     const round = [], pine = [];
-    for (let i = 0; i < 34; i++) {
-      const p = this.randomSpot(7, ISLAND_R - 7, 2.2, rnd);
+    for (let i = 0; i < (this.tutorial ? 5 : 34); i++) {
+      const p = this.randomSpot(7, this.radius - 7, 2.2, rnd);
       if (!p) continue;
       const s = 0.85 + rnd() * 0.5;
-      const t = { ...p, s, y: getHeight(p.x, p.z), r: 0.55 * s + 0.2, parts: [], fruitParts: [], shake: 0 };
+      const t = { ...p, s, y: this.groundAt(p.x, p.z), r: 0.55 * s + 0.2, parts: [], fruitParts: [], shake: 0 };
       (rnd() < 0.62 ? round : pine).push(t);
       this.colliders.push({ x: p.x, z: p.z, r: t.r });
     }
     // 丘の上の大きな木
-    const hx = 16, hz = -14;
-    round.push({ x: hx, z: hz, s: 1.8, y: getHeight(hx, hz), special: true, r: 1.1, parts: [], fruitParts: [], shake: 0 });
+    const hx = 16, hz = this.tutorial ? -2 : -14;
+    round.push({ x: hx, z: hz, s: 1.8, y: this.groundAt(hx, hz), special: true, r: 1.1, parts: [], fruitParts: [], shake: 0 });
     this.colliders.push({ x: hx, z: hz, r: 1.1 });
 
     const trunkGeo = new THREE.CylinderGeometry(0.2, 0.28, 1.6, 8);
@@ -682,14 +705,14 @@ export class World {
   buildRocks() {
     const rnd = this.rng;
     const list = [];
-    for (let i = 0; i < 16; i++) {
-      const p = this.randomSpot(6, ISLAND_R - 3, 1.2, rnd);
+    for (let i = 0; i < (this.tutorial ? 3 : 16); i++) {
+      const p = this.randomSpot(6, this.radius - 3, 1.2, rnd);
       if (p) list.push({ ...p, s: 0.3 + rnd() * 0.5 });
     }
     const mat = new THREE.MeshLambertMaterial({ color: 0xffffff, flatShading: true });
     const rocks = new THREE.InstancedMesh(new THREE.DodecahedronGeometry(1, 0), mat, list.length);
     list.forEach((r, i) => {
-      tmpObj.position.set(r.x, getHeight(r.x, r.z) + r.s * 0.3, r.z);
+      tmpObj.position.set(r.x, this.groundAt(r.x, r.z) + r.s * 0.3, r.z);
       tmpObj.rotation.set(rnd() * 3, rnd() * 3, rnd() * 3);
       tmpObj.scale.set(r.s * 1.2, r.s * 0.8, r.s);
       tmpObj.updateMatrix();
@@ -705,11 +728,11 @@ export class World {
     const rnd = this.rng;
     const palette = [0xff8fc8, 0xffffff, 0xffe066, 0xb78bff, 0xff5a5a, 0xffa94d, 0x7fd0ff];
     const flowers = [];
-    for (let i = 0; i < 110; i++) {
-      const a = rnd() * Math.PI * 2, r = 3 + Math.sqrt(rnd()) * (ISLAND_R - 9);
+    for (let i = 0; i < (this.tutorial ? 16 : 110); i++) {
+      const a = rnd() * Math.PI * 2, r = 3 + Math.sqrt(rnd()) * (this.radius - 9);
       const x = Math.cos(a) * r, z = Math.sin(a) * r;
       let ok = true;
-      if (pathDistance(x, z) < 1.8) continue;
+      if (pathDistance(x, z, this.paths) < 1.8) continue;
       for (const c of this.colliders) if (Math.hypot(x - c.x, z - c.z) < c.r + 0.3) { ok = false; break; }
       if (ok) flowers.push({ x, z, col: palette[Math.floor(rnd() * palette.length)], s: 0.8 + rnd() * 0.5 });
     }
@@ -720,7 +743,7 @@ export class World {
     const stems = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.025, 0.025, 1, 5), toon(0x3f9a3a), flowers.length);
     let k = 0;
     flowers.forEach((f, i) => {
-      const y = getHeight(f.x, f.z) + 0.32 * f.s;
+      const y = this.groundAt(f.x, f.z) + 0.32 * f.s;
       tmpObj.rotation.set(0, 0, 0);
       tmpObj.position.set(f.x, y - 0.16 * f.s, f.z);
       tmpObj.scale.set(f.s, 0.32 * f.s, f.s);
@@ -743,14 +766,15 @@ export class World {
     this.scene.add(stems, centers, petals);
 
     // 草のふさ
-    const tufts = new THREE.InstancedMesh(new THREE.ConeGeometry(0.08, 0.5, 4), toon(0x4fae43), 260);
-    for (let i = 0; i < 260; i++) {
-      const a = rnd() * Math.PI * 2, r = Math.sqrt(rnd()) * (ISLAND_R - 6);
+    const tuftCount = this.tutorial ? 24 : 260;
+    const tufts = new THREE.InstancedMesh(new THREE.ConeGeometry(0.08, 0.5, 4), toon(0x4fae43), tuftCount);
+    for (let i = 0; i < tuftCount; i++) {
+      const a = rnd() * Math.PI * 2, r = Math.sqrt(rnd()) * (this.radius - 6);
       const x = Math.cos(a) * r, z = Math.sin(a) * r;
-      tmpObj.position.set(x, getHeight(x, z) + 0.15, z);
+      tmpObj.position.set(x, this.groundAt(x, z) + 0.15, z);
       tmpObj.rotation.set((rnd() - 0.5) * 0.5, 0, (rnd() - 0.5) * 0.5);
       tmpObj.scale.setScalar(0.7 + rnd() * 0.7);
-      if (pathDistance(x, z) < 1.8) tmpObj.scale.setScalar(0);
+      if (pathDistance(x, z, this.paths) < 1.8) tmpObj.scale.setScalar(0);
       tmpObj.updateMatrix();
       tufts.setMatrixAt(i, tmpObj.matrix);
     }
@@ -773,7 +797,7 @@ export class World {
       x.fillRect(0, 0, 128, 128);
     });
     for (const s of spots) {
-      const y = getHeight(s.x, s.z);
+      const y = this.groundAt(s.x, s.z);
       const g = new THREE.Group();
       g.position.set(s.x, y, s.z);
       g.add(cyl(0x4a5a6a, 0.08, 2.4, 0, 1.2, 0));
@@ -798,7 +822,7 @@ export class World {
       m.emissive.setRGB(1.0 * k, 0.85 * k, 0.45 * k);
       m.color.setHex(0x9fe3ff).lerp(tmpColor.setHex(0xffe08a), k);
     }
-    this.lampMat.color.setHex(0xe8e8e0).lerp(tmpColor.setHex(0xfff0a0), k);
+    this.lampMat?.color.setHex(0xe8e8e0).lerp(tmpColor.setHex(0xfff0a0), k);
     for (const h of this.lampHalos) h.material.opacity = 0.9 * k;
   }
 

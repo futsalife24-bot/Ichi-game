@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v36-island-learning';
+const VERSION = 'kirakira-v37-tutorial-island';
 const ASSETS = [
   './',
   './index.html',
