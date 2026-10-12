@@ -494,6 +494,14 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 #harborErrandsActions button { background: #e2efda; padding: 10px 16px; font-size: clamp(16px, 2.8vh, 22px); box-shadow: 0 3px 0 #aec7ad; }
 #harborErrandsPause { background: #fff0cd !important; }
 .harbor-errand-focus #adventureBack { display: none; }
+.help-panel.harbor-party-scene { align-items: flex-end; padding: 8px; background: linear-gradient(transparent 48%, #23443b22); }
+.harbor-party-scene .harbor-errands-sheet { width: min(680px, 96vw); padding: 8px 14px; border-radius: 20px; }
+.harbor-party-scene .errands-kicker { display: none; }
+.harbor-party-scene .errands-heading h2 { font-size: clamp(18px, 3.6vh, 24px); }
+.harbor-party-scene #harborErrandsClose { min-height: 36px; min-width: 40px; }
+.party-message { margin: 4px 0; font-size: clamp(14px, 2.7vh, 18px); line-height: 1.5; }
+.harbor-party-scene #harborErrandsFooter { margin-top: 5px; }
+.party-wait { align-self: center; font-size: 14px; }
 #adventureHarbor { background: #cbe4db; }
 @media (max-height: 440px) {
   .harbor-errands-sheet { padding: 10px 17px; }
@@ -627,3 +635,10 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
   #adventurePanel .island-guidance-later { margin: 4px 0 10px; }
   #adventurePanel .island-guidance-choices button { min-height: 48px; padding: 10px 14px; font-size: 17px; }
 }
+/* しまを えらぶ いりぐち。おねがいの とちゅうは かくす。 */
+#islandActions { position:fixed; left:50%; bottom:12px; transform:translateX(-50%); display:flex; gap:8px; z-index:12; }
+#islandActions.hidden { display:none; }
+body.developer-mode #islandActions { bottom:58px; }
+#islandActions button { display:flex; align-items:center; gap:5px; min-height:44px; padding:8px 12px; border:2px solid #fff; border-radius:18px; background:#fff9e8; color:#365c49; box-shadow:0 2px 6px #0002; font-size:22px; cursor:pointer; }
+#islandActions button span { font-size:15px; font-weight:bold; }
+@media (max-height:400px) { #islandActions { bottom:6px; gap:5px; } #islandActions button { padding:6px 9px; } }

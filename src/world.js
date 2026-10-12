@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { toon, ball, cone, cyl, makeOwl } from './characters.js';
 import { signTexture, canvasTexture } from './canvas.js';
 import { seasonOf } from './catalog.js';
+import { islandRules } from './island-rules.js';
 
 export const ISLAND_R = 36;
 export const WATER_Y = -0.35;
@@ -83,8 +84,9 @@ const snow = new THREE.Color(0xf4f8ff);
 const autumnGrass = new THREE.Color(0xd8c35a);
 
 export class World {
-  constructor(scene) {
+  constructor(scene, { island = 3 } = {}) {
     this.scene = scene;
+    this.rules = islandRules(island);
     this.colliders = []; // {x,z,r}
     this.bouncers = []; // {x,z,r,top,cap,squash}
     this.reserved = []; // 置かない場所
@@ -127,12 +129,13 @@ export class World {
     this.buildTerrain();
     this.buildWater();
     this.buildClouds();
-    this.buildSchool();
-    this.buildMyHouse();
+    if (this.rules.school) this.buildSchool();
+    if (this.rules.room) this.buildMyHouse();
     this.buildRainbow();
     this.buildOwl();
-    this.buildMushrooms();
+    if (this.rules.jump) this.buildMushrooms();
     this.buildTrees();
+    if (!this.rules.trees) this.fruitMesh.visible = false;
     this.buildRocks();
     this.buildFlowers();
     this.buildLamps();

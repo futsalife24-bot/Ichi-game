@@ -14,13 +14,15 @@ const hudElement=()=>({classList:{toggle(){}},querySelector(){return {textConten
 test('ホームの振り返りは活動を終了せず、戻ると同じ回の計測を再開する',()=>{
   const open=main.match(/function openHomeSummary\(\) \{[\s\S]*?\n\}/)[0];
   const callbacks=main.match(/const timeUI=setupTimeUI\(save,persist,selectedProfileLabel,\{([\s\S]*?)\n\}\);/)[1];
-  let now=0,shown=0,ended=0;
+  let now=0,shown=0,ended=0,endedFishing=0,closedLearning=0;
   const save=freshSave(),timer=new PlayTimer(save,()=>true,{now:()=>now,id:()=> 'same'});timer.start();now=3000;
   const context={saveBlocked:false,mode:'play',transitioning:false,homePaused:false,playTimer:timer,
-    $:hudElement,harborErrands:{modal:false,focused:false},input:{enabled:true,reset(){}},player:{setTarget(){}},voice:{stop(){}},help:{modal:false},adventure:{modal:false},
+    $:hudElement,harborErrands:{modal:false,focused:false},learning:{opened:true,close(){closedLearning++;this.opened=false;},stopSpeech(){}},endAllFishing(){endedFishing++;},
+    input:{enabled:true,reset(){}},player:{setTarget(){}},voice:{stop(){}},help:{modal:false},adventure:{modal:false},ui:{panelOpen:false},
     timeUI:{show(){shown++;},hide(){}},backToTitle(){ended++;return true;}};
   vm.runInNewContext(activityInput+'\n'+open+'\nopenHomeSummary();',context);
-  assert.equal(context.homePaused,true);assert.equal(ended,0);assert.equal(shown,1);assert.equal(save.playTime.session.state,'active');
+  assert.equal(context.homePaused,true);assert.equal(ended,0);assert.equal(shown,1);assert.equal(endedFishing,1);
+  assert.equal(closedLearning,1);assert.equal(context.learning.opened,false);assert.equal(save.playTime.session.state,'active');
   now=9000;timer.tick(false);assert.equal(save.playTime.session.elapsedMs,3000);
   const handlers=vm.runInNewContext('({'+callbacks+'})',context);handlers.onContinue();
   assert.equal(context.homePaused,false);assert.equal(context.input.enabled,true);assert.equal(save.playTime.session.continued,false);
@@ -31,10 +33,25 @@ test('ホームの振り返りは活動を終了せず、戻ると同じ回の�
 test('ホーム画面中のフレームは島も活動も進めず、計測を再開しない',()=>{
   const frame=main.match(/function frame\(now\) \{[\s\S]*?\n\}\r?\nrequestAnimationFrame\(frame\);/)[0];
   for(const place of ['island','forest']){
-    let active,advanced=0;
-    const context={homePaused:true,playTimer:{tick:x=>{active=x;return true;},paused:false},mode:'play',place,saveBlocked:false,document:{hidden:false},help:{focused:false,update(){advanced++;}},adventure:{focused:false,update(){advanced++;}},harborErrands:{modal:false,focused:false,update(){advanced++;}},ui:{panelOpen:false},transitioning:false,quests:{state:'active',update(){advanced++;}},$:hudElement,last:0,time:0,requestAnimationFrame(){}};
-    vm.runInNewContext(activityInput+'\n'+frame+'\nframe(10);',context);assert.equal(active,false);assert.equal(advanced,0);
+    let active,advanced=0,closedLearning=0;
+    const context={homePaused:true,playTimer:{tick:x=>{active=x;return true;},paused:false},mode:'play',place,saveBlocked:false,document:{hidden:false},
+      islandNumber:()=>place==='island'?1:3,islandRules:()=>({name:'みなと'}),input:{},
+      learning:{opened:true,close(){closedLearning++;this.opened=false;},stopSpeech(){}},
+      help:{focused:false,update(){advanced++;}},adventure:{focused:false,update(){advanced++;}},harborErrands:{modal:false,focused:false,update(){advanced++;}},ui:{panelOpen:false},transitioning:false,quests:{state:'active',update(){advanced++;}},$:hudElement,last:0,time:0,requestAnimationFrame(){}};
+    vm.runInNewContext(activityInput+'\n'+frame+'\nframe(10);',context);
+    assert.equal(active,false);assert.equal(advanced,0);assert.equal(closedLearning,1);assert.equal(context.learning.opened,false);
   }
+});
+
+test('期限到達の案内は学習パネルを閉じてから表示する',()=>{
+  const due=main.match(/onDue:\(\)=>\{([^}]*)\}/)[1];
+  const events=[];
+  const context={learning:{opened:true,close(){events.push('学習を閉じる');this.opened=false;}},
+    input:{enabled:true,reset(){events.push('入力を戻す');}},player:{setTarget(){events.push('移動を止める');}},
+    voice:{stop(){events.push('声を止める');}},timeUI:{show(){events.push('期限を表示');}}};
+  vm.runInNewContext(due,context);
+  assert.deepEqual(events,['学習を閉じる','入力を戻す','移動を止める','声を止める','期限を表示']);
+  assert.equal(context.learning.opened,false);assert.equal(context.input.enabled,false);
 });
 
 function fixture(save={...freshSave(),playTime:{...newPlayTime(),settings:{limitMinutes:1,warnSeconds:30}}}) {
@@ -115,7 +132,11 @@ test('時間設定の保存失敗では元の値を保持する',()=>{
 test('期限画面を出しているフレームでは島の処理へ進まない',()=>{
   const frame=main.match(/function frame\(now\) \{[\s\S]*?\n\}\r?\nrequestAnimationFrame\(frame\);/)[0];
   for(const place of ['island','forest']){
-    let scheduled=0,advanced=0;const context={developerMenuOpen:()=>false,homePaused:false,playTimer:{tick:()=>true,paused:true},mode:'play',place,saveBlocked:false,document:{hidden:false},help:{focused:false,update(){advanced++;}},adventure:{focused:false,update(){advanced++;}},harborErrands:{modal:false,focused:false,update(){advanced++;}},ui:{panelOpen:false},transitioning:false,quests:{state:'active',update(){advanced++;}},$:hudElement,last:0,time:0,requestAnimationFrame(){scheduled++;}};
-    vm.runInNewContext(activityInput+'\n'+frame+'\nframe(10);',context);assert.equal(scheduled,2);assert.equal(advanced,0);
+    let scheduled=0,advanced=0,closedLearning=0;const context={developerMenuOpen:()=>false,homePaused:false,playTimer:{tick:()=>true,paused:true},mode:'play',place,saveBlocked:false,document:{hidden:false},
+      islandNumber:()=>place==='island'?1:3,islandRules:()=>({name:'みなと'}),input:{},
+      learning:{opened:true,close(){closedLearning++;this.opened=false;},stopSpeech(){}},
+      help:{focused:false,update(){advanced++;}},adventure:{focused:false,update(){advanced++;}},harborErrands:{modal:false,focused:false,update(){advanced++;}},ui:{panelOpen:false},transitioning:false,quests:{state:'active',update(){advanced++;}},$:hudElement,last:0,time:0,requestAnimationFrame(){scheduled++;}};
+    vm.runInNewContext(activityInput+'\n'+frame+'\nframe(10);',context);
+    assert.equal(scheduled,2);assert.equal(advanced,0);assert.equal(closedLearning,1);assert.equal(context.learning.opened,false);
   }
 });

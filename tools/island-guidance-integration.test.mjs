@@ -24,15 +24,17 @@ test('案内は活動・報酬・休憩・釣り・発話・画面遷移を邪�
 });
 
 const sail=main.match(/async function visitForest\(preview = null\) \{[\s\S]*?\n\}/)[0];
+const islandNumberCode=main.match(/const islandNumber = [^\n]+/)[0];
 function voyage(){
   const events=[];
-  const c={place:'island',saveBlocked:false,forestLoading:false,forest:{assetsLoaded:true},
+  const c={mode:'play',place:'island',saveBlocked:false,forestLoading:false,forest:{assetsLoaded:true},
     adventure:{unlocked:true,canAct:()=>true,markVisited(){events.push('save');return true;}},
-    quests:{stop(){events.push('stop');}},life:{endFishing(){}},voice:{stop(){}},audio:{meet(){}},
+    quests:{stop(){events.push('stop');}},leaveArea(){},endAllFishing(){},voice:{stop(){}},audio:{meet(){}},
     transition(){events.push('transition');},events};
   return c;
 }
-test('船は訪問の保存が成功してから遷移し、失敗時は第一島に残る',async()=>{
+test('第三島への船は訪問の保存が成功してから遷移し、失敗時は第一島に残る',async()=>{
+  assert.equal(vm.runInNewContext(islandNumberCode+'\nislandNumber();',{place:'forest'}),3);
   const failed=voyage();failed.adventure.markVisited=()=>{failed.events.push('failed');return false;};
   await vm.runInNewContext(sail+'\nvisitForest();',failed);
   assert.deepEqual(failed.events,['stop','failed']);assert.equal(failed.place,'island');

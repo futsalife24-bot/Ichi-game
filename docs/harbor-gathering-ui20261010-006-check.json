@@ -1,0 +1,22 @@
+{
+  "uiLease": "UI-20261010-006",
+  "product": "54fd944154075ce19407176289a06bcab661ad63",
+  "origin": "http://127.0.0.1:5207/",
+  "tabId": "1271483435",
+  "method": "公式844×390で通常reloadし、観測したＡの標準buttonをEnter選択",
+  "failure": "Timed out after 2934ms waiting for CDP command Input.dispatchKeyEvent.",
+  "observed": "Ａ選択済み・星４・あそぶボタン。選択自体は反映。",
+  "finding": "小画面とキー入力でも未解消。マウス入力固有の問題ではない。初期化負荷は仮説のまま。",
+  "evidence": "artifacts/harbor-gathering-ui006-keyboard-timeout-ax.txt",
+  "additionalAcceptancePassed": [],
+  "remaining": [
+    "gathering/ready/doneの状態保持照合",
+    "プロフィール分離",
+    "実hidden成立と復帰"
+  ],
+  "viewportRestored": true,
+  "serverStopped": true,
+  "tabRetained": true,
+  "leaseReleased": true,
+  "next": "同じ初期選択を反復せず、選択が反映された現在地点を保持。次の操作と障害判定方針を調整担当へ報告済み。"
+}

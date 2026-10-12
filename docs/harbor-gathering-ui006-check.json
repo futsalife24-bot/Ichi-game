@@ -1,0 +1,157 @@
+{
+  "task": "TASK-20261009-ICHI-001",
+  "lease": "UI-20261009-006",
+  "received": "2026-10-09T09:21:55+09:00",
+  "released": "2026-10-09T09:28:04+09:00",
+  "branch": "codex/harbor-gathering",
+  "head": "b0e9154dc11650bc12a68ef5374859dba3bb2d09",
+  "product": "54fd944154075ce19407176289a06bcab661ad63",
+  "productUnchanged": true,
+  "package": {
+    "files": 798,
+    "matches": 798,
+    "diagnosticOverlay": false
+  },
+  "browser": {
+    "name": "Chrome",
+    "url": "http://127.0.0.1:5199/?dev=harbor-ready",
+    "sizes": [
+      [
+        844,
+        390
+      ],
+      [
+        667,
+        375
+      ]
+    ],
+    "normalProfileOpened": false,
+    "normalStorageRead": false,
+    "directProgressMutation": false,
+    "verified": [
+      "開催を選び住民が集合",
+      "いただきますから開催完了",
+      "自由移動への復帰とジョイスティック操作",
+      "第一島に帰還して星４を保持",
+      "同じ一時プロフィールで第二島へ再訪し発展を保持",
+      "案内を使った集合地点への歩行",
+      "再開催を途中で閉じても開催済み状態を保持",
+      "再開催を完了しても星４を維持",
+      "２横画面サイズで足元とボタンが見える"
+    ],
+    "warnings": 0,
+    "errors": 0,
+    "logs": "artifacts/harbor-gathering-ui006-logs.json",
+    "smallLayout": {
+      "width": 667,
+      "height": 375,
+      "panelTop": 233,
+      "panelHeight": 134.3333,
+      "buttonBottom": 356.6667,
+      "buttonHeight": 46
+    },
+    "hiddenTest": {
+      "status": "対象条件を作れず未確認",
+      "action": "集合開始後に空の確認タブを作成",
+      "elapsedSinceSwitchMs": 10384,
+      "observed": {
+        "hidden": false,
+        "visibility": "visible",
+        "heading": "みんな そろったよ！"
+      }
+    },
+    "cleanup": {
+      "viewportRestored": true,
+      "tabsCreated": 3,
+      "tabsClosed": 3,
+      "serverStopped": true,
+      "explicitlyReleased": true
+    }
+  },
+  "images": [
+    {
+      "path": "docs/images/harbor-gathering-ui006-done-667.jpg",
+      "format": "JPEG",
+      "width": 667,
+      "height": 375,
+      "sha256": "ff9df672d15c11eb40b8048ce86558187fc8b2e3cdda535fd6f04fdcb304373a",
+      "version": "54fd944154075ce19407176289a06bcab661ad63"
+    },
+    {
+      "path": "docs/images/harbor-gathering-ui006-first-island.jpg",
+      "format": "JPEG",
+      "width": 667,
+      "height": 375,
+      "sha256": "4525c4ce4fdd64bad3003a729b1f9cf8d2b6e86370beff32a92c929d91124bcf",
+      "version": "54fd944154075ce19407176289a06bcab661ad63"
+    },
+    {
+      "path": "docs/images/harbor-gathering-ui006-movement.jpg",
+      "format": "JPEG",
+      "width": 667,
+      "height": 375,
+      "sha256": "bdc0d1f51794c2a83a31180bde0a4c64e11a42ed78e8c5973302261b06b8e870",
+      "version": "54fd944154075ce19407176289a06bcab661ad63"
+    },
+    {
+      "path": "docs/images/harbor-gathering-ui006-ready-667.jpg",
+      "format": "JPEG",
+      "width": 667,
+      "height": 375,
+      "sha256": "ff6c5baf01849c49e455f4044d448cdab07815b553fd52957826720562d56f3f",
+      "version": "54fd944154075ce19407176289a06bcab661ad63"
+    },
+    {
+      "path": "docs/images/harbor-gathering-ui006-ready-844.jpg",
+      "format": "JPEG",
+      "width": 844,
+      "height": 390,
+      "sha256": "6845abc98b8156794624a4e24590a7fdcfcac356fd0cda705cea2c070361bb50",
+      "version": "54fd944154075ce19407176289a06bcab661ad63"
+    },
+    {
+      "path": "docs/images/harbor-gathering-ui006-revisit.jpg",
+      "format": "JPEG",
+      "width": 667,
+      "height": 375,
+      "sha256": "a44fae079a25498be47ffdd6a7fddbf211aa9d1a285ba2845c1699bba2f6c32a",
+      "version": "54fd944154075ce19407176289a06bcab661ad63"
+    }
+  ],
+  "tests": {
+    "reusedFrom": "docs/harbor-gathering-ui004-check.json",
+    "total": 220,
+    "passed": 220,
+    "rerun": false,
+    "reason": "本体・テスト変更なし"
+  },
+  "limits": [
+    "非表示中の停止は実ブラウザー未確認",
+    "通常プロフィールでのブラウザー再読込みは対象外",
+    "実スマホ性能未確認",
+    "人の聴感未確認"
+  ],
+  "audit": {
+    "selected": true,
+    "sent": false,
+    "completed": false,
+    "reason": "今回の貸出は送信を含まない",
+    "packet": {
+      "path": "artifacts/harbor-gathering-ui006-audit-packet.md",
+      "base": "e9c08df7e0144c7725832d4b6e910506c799491d",
+      "head": "54fd944154075ce19407176289a06bcab661ad63",
+      "characters": 116976,
+      "sha256": "c4a7bb162d4d179fc5c6305eed21a4373a83912fb3ef2e632df4b11ef276c6a3",
+      "sent": false
+    }
+  },
+  "release": {
+    "published": false,
+    "approved": false,
+    "main": "da6f9cae160559af29605716aaa6322696d59e81"
+  },
+  "model": {
+    "id": "未確認",
+    "effort": "未確認"
+  }
+}

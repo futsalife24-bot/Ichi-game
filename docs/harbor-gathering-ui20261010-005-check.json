@@ -1,0 +1,32 @@
+{
+  "uiLease": "UI-20261010-005",
+  "product": "54fd944154075ce19407176289a06bcab661ad63",
+  "origin": "http://127.0.0.1:5207/",
+  "tabId": "1271483435",
+  "completed": [
+    "既存Ａの星４を確認",
+    "通常プレイ・船で第二島へ移動",
+    "おやつ会開始、ひろばへいく案内",
+    "集合途中に実reload",
+    "Ａ再選択反映、タイトル星４保持"
+  ],
+  "failure": "Timed out after 2443ms waiting for CDP command Input.dispatchMouseEvent.",
+  "action": "再読込み後のＡ選択。読取AXで選択反映済み、以後入力停止。",
+  "samePathFailures": 2,
+  "remaining": [
+    "集合途中の復帰一覧確認",
+    "ready/done再読込み",
+    "別プロフィールとの分離",
+    "実hidden成立と復帰"
+  ],
+  "evidence": [
+    "artifacts/harbor-gathering-ui005-before-reload-ax.txt",
+    "artifacts/harbor-gathering-ui005-timeout-ax.txt"
+  ],
+  "sourceReview": "profile-ui.jsの初期選択がensure待機を解除し、main.jsの初期化が続く。初期化負荷による入力応答遅延は仮説であり確定していない。",
+  "nextMethod": "新IDで844×390の公式viewportを使用し、プロフィール選択に通常のEnterキーを使う案を調整担当へ提示。既存ＡＢを保持、同じクリックを反復しない。",
+  "tabRetained": true,
+  "serverStopped": true,
+  "viewportChanged": false,
+  "leaseReleased": true
+}

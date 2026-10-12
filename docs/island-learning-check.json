@@ -1,0 +1,104 @@
+{
+  "date": "2026-10-12",
+  "branch": "codex/island-learning-balance",
+  "taskBase": "f5a398263229b60880a4a5cfa3f724e5feb523ac",
+  "implementationBase": "803653e623066fc8824e0273b3a21f15a020bdaf",
+  "tests": {
+    "passed": 235,
+    "latestLearning": 9,
+    "afterFinalMainChanges": 32,
+    "latestBalance": 4,
+    "all": 235
+  },
+  "voices": {
+    "changed": false,
+    "count": 726,
+    "integrity": "成功"
+  },
+  "assets": {
+    "forest": 7,
+    "validation": "成功",
+    "harbor": 10
+  },
+  "browser": {
+    "steps": [
+      "第一島でジャンプなし、色の出題とヒント",
+      "第一島から第二島へ移動",
+      "大文字の誤答・再挑戦・正答・次の問題",
+      "第二島から第三島へ移動",
+      "英単語の絵と綴りの見本から正答",
+      "第三島の暮らしの広場へ移動",
+      "通常歩行で種まき",
+      "おうちへ入室・いす配置・確定・退室",
+      "第一島へ帰り星１を保持、ジャンプとベル表示を非表示",
+      "667x375で６〜１０個の回答、10個の問題の枠高さ260と内容高さ260一致",
+      "第二島からホームの振り返り"
+    ],
+    "sizes": [
+      "844x390",
+      "667x375"
+    ],
+    "type": "内蔵ブラウザー",
+    "warningsObserved": 0,
+    "storage": "開発者モードの一時プロフィール",
+    "englishVoice": "利用不可・発音ボタン無効、見本で進行",
+    "errorsObserved": 0
+  },
+  "reset": "許可受領・未実施",
+  "independentAudit": "要否の回答待ち・未実施",
+  "release": "未承認・未公開",
+  "sourceHashes": [
+    {
+      "sha256": "81dda1dc4e290caa534d34b486d4b9093a1dd65e5dfa7621f9f776fa03176c5b",
+      "path": "src/main.js"
+    },
+    {
+      "sha256": "9010aac5eebe9316f7c14cbb57fd0aba4a9660008d065ed75498a8d3132ced07",
+      "path": "src/island-rules.js"
+    },
+    {
+      "sha256": "5e80b399fcb0c525fbccbb7d13cfe30052d7297af1f59bd8142509936e9ce92c",
+      "path": "src/island-learning.js"
+    },
+    {
+      "sha256": "83fbaa747ca4786d8e1c51b14a8e38dcc7a333f36d4bb96e754d591531e5a107",
+      "path": "src/island-learning.css"
+    },
+    {
+      "sha256": "e0859db4b31a8f8d992d58dd7ee39a280fa4de1ff498162406100b5d0a7446ae",
+      "path": "src/world.js"
+    },
+    {
+      "sha256": "312cee19b79c4bc8ff3ca14a3a968667c349e5cf2d110b0c3c6d28146b7b02fd",
+      "path": "src/life.js"
+    },
+    {
+      "sha256": "3bc2f74190a86b1b99d35ba26e498ae946d5765374dc430fcdb0e563b7124222",
+      "path": "src/quests.js"
+    },
+    {
+      "sha256": "dddd461cca7b6fb02b26ad9a22607feebea5ce8fd277940500ae5f2e49ebf5fe",
+      "path": "src/input.js"
+    },
+    {
+      "sha256": "da9005da290a0077b3cb13794cd656cfe630ecb7d08d169d94dac2d3a82935cb",
+      "path": "src/adventure.js"
+    },
+    {
+      "sha256": "4f294ea153c1f32a0484b6c677e9c8e31ff32a48672628e4fef2d168a1fe8463",
+      "path": "src/developer-mode.js"
+    },
+    {
+      "sha256": "27734d03d3422160ad7b3d6180b36027a07bd37e213f0daec68936880eb819c5",
+      "path": "index.html"
+    },
+    {
+      "sha256": "6b5b9f263f66506239a2bb15b33f41072bbc75ef91e3428ec0e995e022e452d6",
+      "path": "style.css"
+    },
+    {
+      "sha256": "6d821ed7940f1ab8fa30c74dedf3ceb20fd3569431f1c6dfab4e5ea47201be1b",
+      "path": "sw.js"
+    }
+  ]
+}

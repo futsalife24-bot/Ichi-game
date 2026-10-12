@@ -35,3 +35,8 @@
 - 追加音声は既存バッチを保持して生成する。音声が揃うまでは `pendingLines()` と出荷済みの `voice/index.json` を維持する。
 - 音声変更時は `tools/plan-voice.test.mjs`、`tools/voice.test.mjs`、`tools/sw.test.mjs` と `tools/finalize-voice.mjs --check` を実行する。
 - `main` への反映でGitHub Pagesが公開されるため、作業ブランチの保存と公開を区別し、公開にはユーザーの明示承認を得る。
+
+
+## プロジェクトの役割と体制
+
+企画・方針変更・体制見直しでは [役割と進め方](PROJECT_TEAM.md) を参照する。基本5役を既存担当へ対応付け、追加の専門役は必要性と兼務可能性を本人へ提案する。通常の小修正に全工程を強制せず、既存の監査・公開条件とサブエージェントの許可条件を維持する。

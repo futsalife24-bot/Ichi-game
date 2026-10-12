@@ -1,0 +1,75 @@
+{
+  "checkedAt": "2026-10-09T04:56:30.656Z",
+  "branch": "codex/harbor-gathering",
+  "checkedHead": "7f14da6fcc09890a0403f944542a93d04b1d9be9",
+  "base": "e9c08df7e0144c7725832d4b6e910506c799491d",
+  "product": "54fd944154075ce19407176289a06bcab661ad63",
+  "packet": {
+    "path": "artifacts/harbor-gathering-ui006-audit-packet.md",
+    "characters": 116976,
+    "bytes": 133270,
+    "sha256": "c4a7bb162d4d179fc5c6305eed21a4373a83912fb3ef2e632df4b11ef276c6a3",
+    "unchanged": true
+  },
+  "productAndTestsUnchanged": true,
+  "diffMatches": true,
+  "surroundingSourcesMatched": [
+    "src/save.js",
+    "src/profiles.js",
+    "src/harbor-errands.js",
+    "src/harbor-errands-state.js"
+  ],
+  "priorEvidenceMatches": true,
+  "images": [
+    {
+      "path": "docs/images/harbor-gathering-ui006-done-667.jpg",
+      "sha256": "ff9df672d15c11eb40b8048ce86558187fc8b2e3cdda535fd6f04fdcb304373a",
+      "bytes": 51341,
+      "matched": true
+    },
+    {
+      "path": "docs/images/harbor-gathering-ui006-first-island.jpg",
+      "sha256": "4525c4ce4fdd64bad3003a729b1f9cf8d2b6e86370beff32a92c929d91124bcf",
+      "bytes": 36509,
+      "matched": true
+    },
+    {
+      "path": "docs/images/harbor-gathering-ui006-movement.jpg",
+      "sha256": "bdc0d1f51794c2a83a31180bde0a4c64e11a42ed78e8c5973302261b06b8e870",
+      "bytes": 56176,
+      "matched": true
+    },
+    {
+      "path": "docs/images/harbor-gathering-ui006-ready-667.jpg",
+      "sha256": "ff6c5baf01849c49e455f4044d448cdab07815b553fd52957826720562d56f3f",
+      "bytes": 48438,
+      "matched": true
+    },
+    {
+      "path": "docs/images/harbor-gathering-ui006-ready-844.jpg",
+      "sha256": "6845abc98b8156794624a4e24590a7fdcfcac356fd0cda705cea2c070361bb50",
+      "bytes": 66345,
+      "matched": true
+    },
+    {
+      "path": "docs/images/harbor-gathering-ui006-revisit.jpg",
+      "sha256": "a44fae079a25498be47ffdd6a7fddbf211aa9d1a285ba2845c1699bba2f6c32a",
+      "bytes": 56905,
+      "matched": true
+    }
+  ],
+  "approval": {
+    "sourceThread": "01a10f48-5eb8-7762-8042-ea529c7d053d",
+    "turn": "01a11ede-66ea-7d23-ba05-9a60b2a531d7",
+    "userMessage": "01a11ede-6deb-7b62-9f3f-0f9307ccbe6c",
+    "userText": "承認します。",
+    "scopeMessage": "msg_04896b931ed75e7b016ac83866671887d0a2ac7b6f5a140c24",
+    "verifiedByReadThread": true,
+    "destination": "本人の別ChatGPT「キラキラアイランド｜独立監査｜港町のおやつ会と保存互換」"
+  },
+  "uiUsed": false,
+  "sent": false,
+  "destinationUrl": null,
+  "receiverEvidence": null,
+  "published": false
+}

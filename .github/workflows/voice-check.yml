@@ -10,8 +10,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
+      - run: node --import ./tools/register.mjs --test tools/island-balance.test.mjs tools/island-learning.test.mjs
       - run: node --import ./tools/register.mjs --test tools/adventure.test.mjs tools/developer-mode.test.mjs
       - run: node --import ./tools/register.mjs --test tools/harbor-errands-state.test.mjs tools/harbor-errands.test.mjs
+      - run: node --import ./tools/register.mjs --test tools/harbor-gathering-state.test.mjs tools/harbor-gathering.test.mjs
       - run: node --import ./tools/register.mjs --test tools/adaptive-play.test.mjs tools/adaptive-integration.test.mjs tools/island-guidance.test.mjs tools/island-guidance-integration.test.mjs
       - run: node --import ./tools/register.mjs --test tools/forest-layout.test.mjs tools/forest-route.test.mjs
       - run: node --import ./tools/register.mjs --test tools/harbor-layout.test.mjs tools/harbor-effects.test.mjs tools/harbor-play.test.mjs tools/harbor-visibility.test.mjs tools/harbor-integration.test.mjs tools/harbor-paving.test.mjs

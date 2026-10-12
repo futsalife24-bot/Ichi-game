@@ -95,11 +95,11 @@ export class Adventure {
     hide('adventureReturn', !forest);
     $('adventureSail').disabled = !this.unlocked;
     $('adventureFlower').textContent = this.unlocked ? '🌼 おはなの おくりもの' : '🌼 おはなの おてつだい';
-    $('adventureMap').textContent = forest ? '🌳 こもれびのしま' : this.unlocked ? '⛵ こもれびのしまへ いけるよ！' : '🐶 おはなを とどけたら、ふねで えんそく！';
+    $('adventureMap').textContent = forest ? '⛵ だいさんの しま・みなと' : this.unlocked ? '🌳 だいにの しまへ いけるよ！' : '🐶 おはなを とどけたら、ふねで えんそく！';
     $('adventureHeading').textContent = guidance ? this.guidance === 'flower' ? 'ふねで おでかけ してみよう' : 'ふねの じゅんびが できたよ' : this.view === 'menu' ? 'ぼうけんに いこう' : done ? 'ありがとう！' : flower ? 'いぬさんから おねがい' : 'もりの おてつだい';
     $('adventurePicture').textContent = flower ? done ? '🐶 💛 🌼' : '🌼 🌷 🌸' : done ? '🐸 💛 🍃' : '🍃 🍂 🍁';
-    $('adventureMessage').textContent = flower ? done ? 'おうちの まえに おはなが さいたよ！\nつぎは レンガの みなとまちへ。' : 'おはなを 3ぼん あつめて\nいぬさんに とどけよう' : done ? 'もりの ひろばを かざったよ！\nのんびり あそんで いこう' : 'はしを わたって はっぱを 3まい あつめよう\nかえるさんに とどけてね';
-    $('adventureGuidanceMessage').textContent = this.guidance === 'flower' ? 'いぬさんに おはなを 3ぼん とどけると\nあたらしい しまへ いけるよ。' : 'レンガの おうちと みずぐるまの しま！\nパンやさんの おてつだいも あるよ。';
+    $('adventureMessage').textContent = flower ? done ? 'おうちの まえに おはなが さいたよ！\nつぎは だいにの しまで もじと ABC！' : 'おはなを 3ぼん あつめて\nいぬさんに とどけよう' : done ? 'もりの ひろばを かざったよ！\nのんびり あそんで いこう' : 'はしを わたって はっぱを 3まい あつめよう\nかえるさんに とどけてね';
+    $('adventureGuidanceMessage').textContent = this.guidance === 'flower' ? 'いぬさんに おはなを 3ぼん とどけると\nだいさんの しままで えんそくできるよ。' : 'だいにの しまで もじと ABC！\nきゆらしと ジャンプでも あそべるよ。';
     $('adventureGuidanceAccept').textContent = this.guidance === 'flower' ? 'おはなを あつめる' : 'ふねで あそびにいく';
     hide('adventureReward', !done); hide('adventureAccept', done);
     $('adventureAccept').textContent = stage === 'available' ? '🌱 おてつだい する' : '🌱 つづきから あそぶ';
