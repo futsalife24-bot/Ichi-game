@@ -13,6 +13,7 @@ import { beginObservation, noteObservation, finishObservation } from './observat
 import { resolvePlaySettings } from './play-settings.js';
 import { addEvidence } from './suggestions.js';
 import { addAdaptiveEvidence } from './adaptive-play.js';
+import { FIRST_TYPES, firstCount } from './island-rules.js';
 const HINT_AFTER = 18;
 
 export const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
@@ -26,8 +27,9 @@ export const shuffle = (arr) => {
 };
 
 export class QuestManager {
-  constructor({ scene, world, player, animals, ui, audio, voice, effects, save, persist }) {
+  constructor({ scene, world, player, animals, ui, audio, voice, effects, save, persist, starter = false }) {
     Object.assign(this, { scene, world, player, animals, ui, audio, voice, effects, save, persist });
+    this.starter = starter;
     this.items = [];
     this.quest = null;
     this.state = 'idle';
@@ -116,8 +118,12 @@ export class QuestManager {
     if (this.saveFailed) return;
     if (this.observationId !== null) this.stop();
     if (this.saveFailed) return;
-    let type = TYPES[this.save.questIdx % TYPES.length];
+    const types = this.starter ? FIRST_TYPES : TYPES;
+    let type = types[this.save.questIdx % types.length];
     this.activitySettings = resolvePlaySettings(this.save.playSettings,type,this.save.stars,this.save.adaptivePlay);
+    // だいいちの しまは、ほしや せっていが ふえても やさしいまま。
+    if (this.starter) this.activitySettings = { ...this.activitySettings, level: 0, automatic: false };
+    this.countNeed = this.starter ? firstCount(this.save.questIdx) : null;
     const previousIdx = this.save.questIdx;
     this.save.questIdx++;
     const next = beginObservation(this.save.observations,type,this.activityLevel);
@@ -136,9 +142,9 @@ export class QuestManager {
   }
 
   setup_color() {
-    const pool = COLORS.slice(0, [4, 6, 7, 8][this.activityLevel]);
+    const pool = COLORS.slice(0, this.starter ? 3 : [4, 6, 7, 8][this.activityLevel]);
     const target = pick(pool);
-    const others = shuffle(pool.filter((c) => c !== target)).slice(0, Math.min(pool.length - 1, 3 + this.activityLevel));
+    const others = shuffle(pool.filter((c) => c !== target)).slice(0, this.starter ? 1 : Math.min(pool.length - 1, 3 + this.activityLevel));
     const spots = this.spawnSpots(1 + others.length);
     const list = shuffle([target, ...others]);
     list.forEach((c, i) => {
@@ -155,11 +161,12 @@ export class QuestManager {
   setup_count() {
     const kind = pick(Object.keys(FRUITS));
     const f = FRUITS[kind];
-    const need = Math.min(10, 2 + this.activityLevel + Math.floor(Math.random() * 2));
-    const spots = this.spawnSpots(need + 1);
+    const wanted = this.countNeed ?? Math.min(10, 2 + this.activityLevel + Math.floor(Math.random() * 2));
+    const spots = this.spawnSpots(wanted + 1);
+    const need = Math.min(wanted, spots.length);
     spots.forEach((s) => this.addItem(makeFruit(kind), s, { yOff: 0.55, radius: 1.0, correct: true, data: kind }));
     Object.assign(this.quest, {
-      need: Math.min(need, spots.length),
+      need,
       line: L.countAsk(f, need),
       card: { icon: `<span class="emoji">${f.emoji}</span>`, text: `${f.name} を ${need}こ`, progress: { need, emoji: f.emoji } },
       fruit: f,
@@ -167,11 +174,12 @@ export class QuestManager {
   }
 
   setup_shape() {
-    const pool = SHAPES.slice(0, [4, 5, 5, 5][this.activityLevel]);
+    const pool = SHAPES.slice(0, this.starter ? 3 : [4, 5, 5, 5][this.activityLevel]);
     const target = pick(pool);
     const palette = shuffle(COLORS.slice(0, 7));
-    const spots = this.spawnSpots(pool.length);
-    shuffle(pool).forEach((s, i) => {
+    const choices = this.starter ? shuffle([target, pick(pool.filter(s => s !== target))]) : shuffle(pool);
+    const spots = this.spawnSpots(choices.length);
+    choices.forEach((s, i) => {
       if (!spots[i]) return;
       this.addItem(makeShape(s.id, palette[i].hex), spots[i], { yOff: 1.3, radius: 1.2, correct: s === target, data: s, spinSpeed: 1.0 });
     });
@@ -404,7 +412,7 @@ export class QuestManager {
     const previousAdaptive = this.save.adaptivePlay;
     const adaptive = addAdaptiveEvidence(previousAdaptive,previous?.active?{...previous.active,outcome:'completed'}:null,this.evidenceChallenge,this.activitySettings);
     if(adaptive!==undefined)this.save.adaptivePlay=adaptive;
-    const evidence = addEvidence(previousSuggestions,previous?.active?{...previous.active,outcome:'completed'}:null,this.evidenceChallenge,this.activitySettings);
+    const evidence = this.starter ? previousSuggestions : addEvidence(previousSuggestions,previous?.active?{...previous.active,outcome:'completed'}:null,this.evidenceChallenge,this.activitySettings);
     if(evidence!==undefined)this.save.suggestions=evidence;
     if (this.observationId !== null) this.save.observations = finishObservation(previous,this.observationId,'completed');
     this.pendingReward = this.awardStar();

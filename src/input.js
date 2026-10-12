@@ -14,6 +14,7 @@ export class Input {
     this.keys = new Set();
     this.pointer = null; // {id, x, y} 画面を おしている ゆび
     this.enabled = false;
+    this.jumpEnabled = true;
     this.onTap = null;
 
     joyZone.addEventListener('pointerdown', (e) => this.joyDown(e));
@@ -23,7 +24,7 @@ export class Input {
 
     const jump = (e) => {
       e.preventDefault();
-      if (!this.enabled) return;
+      if (!this.enabled || !this.jumpEnabled) return;
       this.jumpQueued = true;
       jumpBtn.classList.add('pressed');
       setTimeout(() => jumpBtn.classList.remove('pressed'), 150);
@@ -39,7 +40,7 @@ export class Input {
     });
 
     window.addEventListener('keydown', (e) => {
-      if (e.code === 'Space') { this.jumpQueued = this.enabled; e.preventDefault(); }
+      if (e.code === 'Space') { this.jumpQueued = this.enabled && this.jumpEnabled; e.preventDefault(); }
       this.keys.add(e.code);
     });
     window.addEventListener('keyup', (e) => this.keys.delete(e.code));

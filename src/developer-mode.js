@@ -7,8 +7,9 @@ import { addAdaptiveEvidence } from './adaptive-play.js';
 import { newHarborErrands } from './harbor-errands-state.js';
 
 export const DEVELOPER_SCENARIOS = Object.freeze({
-  forest: Object.freeze({ id: 'forest', label: '第二島・はじめから', place: 'forest' }),
-  'forest-done': Object.freeze({ id: 'forest-done', label: '第二島・お手伝い完了後', place: 'forest' }),
+  second: Object.freeze({ id: 'second', label: '第二島・文字と木ゆらし', place: 'second' }),
+  forest: Object.freeze({ id: 'forest', label: '第三島・みなと', place: 'forest' }),
+  'forest-done': Object.freeze({ id: 'forest-done', label: '第三島・お手伝い完了後', place: 'forest' }),
   'harbor-ready': Object.freeze({ id: 'harbor-ready', label: '港町・おやつ会の開催前', place: 'forest' }),
   'harbor-party': Object.freeze({ id: 'harbor-party', label: '港町・おやつ会の途中', place: 'forest' }),
   'harbor-grown': Object.freeze({ id: 'harbor-grown', label: '港町・発展した広場', place: 'forest' }),

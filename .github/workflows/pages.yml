@@ -25,6 +25,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
+      - run: node --import ./tools/register.mjs --test tools/island-balance.test.mjs tools/island-learning.test.mjs
       - name: Validate voice release
         run: |
           node --import ./tools/register.mjs --test tools/adventure.test.mjs

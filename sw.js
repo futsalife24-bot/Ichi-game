@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v35-harbor-gathering';
+const VERSION = 'kirakira-v36-island-learning';
 const ASSETS = [
   './',
   './index.html',
@@ -8,6 +8,9 @@ const ASSETS = [
   './vendor/three.module.js',
   './vendor/three.core.js',
   './src/main.js',
+  './src/island-rules.js',
+  './src/island-learning.js',
+  './src/island-learning.css',
   './src/developer-mode.js',
   './src/world.js',
   './src/player.js',

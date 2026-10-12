@@ -8,6 +8,7 @@ import { CLOTHES, makeHero, toon, ball, cyl } from './characters.js';
 import { makeBug, makeFishShadow, makeBeachItem, makeDigMark, makeDrop, makePlant, emojiSprite } from './critters.js';
 import { signTexture } from './canvas.js';
 import { L } from './lines.js';
+import { islandRules } from './island-rules.js';
 
 const VERB = { mushi: 'つかまえた', sakana: 'つりあげた', umibe: 'ひろった', kaseki: 'ほりだした', kinomi: 'ひろった', hana: 'つんだ' };
 const TANUKI = { name: 'たぬきさん', pitch: 250 };
@@ -36,14 +37,16 @@ export class Life {
     this.onWear = null; // ふくを かった とき
     this.onBells = null; // ベル・たね が かわった とき
     for (const t of this.world.trees) Object.assign(t, { dropCool: 0, shakeCool: 0, touch: false, regrow: 0 });
-    this.buildGarden();
-    this.buildShop();
+    this.rules = islandRules(this.island ?? 3);
+    this.plots = [];
+    if (this.rules.garden) this.buildGarden();
+    if (this.rules.shop) this.buildShop();
     // さいしょ から すこし いる
     for (let i = 0; i < 6; i++) this.spawnBug(false);
     for (let i = 0; i < 4; i++) this.spawnFish(false);
     for (let i = 0; i < 5; i++) this.spawnBeach(false);
     for (let i = 0; i < 2; i++) this.spawnCrab(false);
-    for (let i = 0; i < 3; i++) this.spawnDig(false);
+    if (this.rules.digging) for (let i = 0; i < 3; i++) this.spawnDig(false);
   }
 
   get cond() {
@@ -93,7 +96,7 @@ export class Life {
 
   // ================================================ むし
   spawnBug(far = true) {
-    const def = pickWeighted(available('mushi', this.cond));
+    const def = pickWeighted(available('mushi', this.cond).filter(item => this.rules.trees || item.move !== 'tree'));
     if (!def) return;
     let x, z, tree = null;
     for (let i = 0; i < 12; i++) {
@@ -302,7 +305,7 @@ export class Life {
 
   // ================================================ うみべ・かせき
   spawnBeach(far = true) {
-    const def = pickWeighted(available('umibe', this.cond));
+    const def = pickWeighted(available('umibe', this.cond).filter(item => this.rules.room || item.id !== 'bottle'));
     const spot = this.beachSpot(far);
     if (!def || !spot) return;
     const model = makeBeachItem(def.id);
@@ -327,7 +330,7 @@ export class Life {
   updateGround(dt, t, active) {
     const p = this.player.pos;
     if (this.beach.length < 5 && Math.random() < dt * 0.05) this.spawnBeach();
-    if (this.digs.length < 3 && Math.random() < dt * 0.02) this.spawnDig();
+    if (this.rules.digging && this.digs.length < 3 && Math.random() < dt * 0.02) this.spawnDig();
     if (this.bugs.filter((b) => b.def.id === 'kani').length < 2 && Math.random() < dt * 0.03) this.spawnCrab();
     for (const b of [...this.beach]) {
       b.glint -= dt;
@@ -784,10 +787,10 @@ export class Life {
     this.updateBugs(dt, t, active);
     this.updateFish(dt, t, active);
     this.updateGround(dt, t, active);
-    this.updateTrees(dt, active);
+    if (this.rules.trees) this.updateTrees(dt, active);
     this.updateDrops(dt, t, active);
-    this.updateGarden(dt, t, active);
-    this.updateShop(dt, t, active);
+    if (this.rules.garden) this.updateGarden(dt, t, active);
+    if (this.rules.shop) this.updateShop(dt, t, active);
     if (this.fishing && (!active || Math.hypot(this.player.pos.x - this.fishing.start.x, this.player.pos.z - this.fishing.start.z) > 6)) this.endFishing();
   }
 

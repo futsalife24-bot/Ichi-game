@@ -12,7 +12,7 @@ import { nextIslandGuidance, completedFindActivities } from '../src/island-guida
 import { resolvePlaySettings } from '../src/play-settings.js';
 
 const avatar = PRESETS.usagi;
-const scenarios = ['forest', 'forest-done', 'harbor-ready', 'harbor-party', 'harbor-grown', 'island', 'island-guide', 'island-sail'];
+const scenarios = ['second', 'forest', 'forest-done', 'harbor-ready', 'harbor-party', 'harbor-grown', 'island', 'island-guide', 'island-sail'];
 const forbidden = () => { throw new Error('通常の保存先へ接続してはいけない'); };
 const preview = id => openPlayProfiles({ search: `?dev=${id}`, getStorage: forbidden, claimSession: forbidden, avatar });
 const finish = (save, task) => {
@@ -21,16 +21,17 @@ const finish = (save, task) => {
   return adventureAction(save, task, 'deliver');
 };
 
-test('指定した八場面だけを開発者モードとして受け付け、元の三場面を変えない', () => {
+test('指定した九場面だけを開発者モードとして受け付け、各島の行き先を固定する', () => {
   assert.deepEqual(Object.keys(DEVELOPER_SCENARIOS), scenarios);
   for (const id of scenarios) assert.equal(developerScenario(`?dev=${id}`).id, id);
-  assert.deepEqual(DEVELOPER_SCENARIOS.forest, { id: 'forest', label: '第二島・はじめから', place: 'forest' });
-  assert.deepEqual(DEVELOPER_SCENARIOS['forest-done'], { id: 'forest-done', label: '第二島・お手伝い完了後', place: 'forest' });
+  assert.deepEqual(DEVELOPER_SCENARIOS.second, { id: 'second', label: '第二島・文字と木ゆらし', place: 'second' });
+  assert.deepEqual(DEVELOPER_SCENARIOS.forest, { id: 'forest', label: '第三島・みなと', place: 'forest' });
+  assert.deepEqual(DEVELOPER_SCENARIOS['forest-done'], { id: 'forest-done', label: '第三島・お手伝い完了後', place: 'forest' });
   assert.deepEqual(DEVELOPER_SCENARIOS.island, { id: 'island', label: '第一島・花のお手伝い前', place: 'island' });
   for (const search of ['', '?dev', '?dev=true', '?dev=toString', '?dev=__proto__', '?dev=forest&dev=island', '?dev=forest&dev=forest', '?developer=forest', '?dev=island-guide&dev=island-sail', '?dev=island-other']) assert.equal(developerScenario(search), null);
 });
 
-test('八場面を有効な一時プロフィールで開き、通常の保存先とロックに触れない', async () => {
+test('九場面を有効な一時プロフィールで開き、通常の保存先とロックに触れない', async () => {
   for (const id of scenarios) {
     const { profiles, scenario } = await preview(id);
     const save = profiles.load();
@@ -40,10 +41,10 @@ test('八場面を有効な一時プロフィールで開き、通常の保存�
     assert.equal(profiles.summary().profiles[0].label, '開発確認');
     assert.deepEqual(save.avatar, { ...avatar, name: '' });
     assert.equal(save.help.stage, 'free');
-    assert.equal(save.stars, { forest: 1, 'forest-done': 2, 'harbor-ready': 4, 'harbor-party': 4, 'harbor-grown': 4, island: 0, 'island-guide': 8, 'island-sail': 1 }[id]);
-    assert.equal(save.adventure.flower.stage, ['island', 'island-guide'].includes(id) ? 'available' : 'done');
+    assert.equal(save.stars, { second: 0, forest: 1, 'forest-done': 2, 'harbor-ready': 4, 'harbor-party': 4, 'harbor-grown': 4, island: 0, 'island-guide': 8, 'island-sail': 1 }[id]);
+    assert.equal(save.adventure.flower.stage, ['second', 'island', 'island-guide'].includes(id) ? 'available' : 'done');
     assert.equal(save.adventure.leaf.stage, id === 'forest-done' ? 'done' : 'available');
-    if (['forest', 'forest-done', 'island'].includes(id)) {
+    if (['second', 'forest', 'forest-done', 'island'].includes(id)) {
       assert.equal(save.observations, undefined); assert.equal(save.adaptivePlay, undefined); assert.equal(save.islandGuidance, undefined);
     }
   }
@@ -66,7 +67,7 @@ test('花への確認は実活動八回の自動段階、船への確認は花�
   assert.equal(sailing.observations, undefined); assert.equal(sailing.adaptivePlay, undefined);
 });
 
-test('八場面すべてで別の確認画面と状態を分け、開き直した時には確認用の初期状態へ戻る', async () => {
+test('九場面すべてで別の確認画面と状態を分け、開き直した時には確認用の初期状態へ戻る', async () => {
   for (const id of scenarios) {
     const first = await preview(id), other = await preview(id), initial = first.profiles.load();
     const changed = first.profiles.load(); changed.stars += 10; changed.previewScratch = '確認中'; first.profiles.write(changed);
@@ -75,7 +76,7 @@ test('八場面すべてで別の確認画面と状態を分け、開き直し�
   }
 });
 
-test('第二島の収集・報酬を試せて、開き直しと別の確認画面へ結果が漏れない', async () => {
+test('第三島の収集・報酬を試せて、開き直しと別の確認画面へ結果が漏れない', async () => {
   const first = await preview('forest');
   const second = await preview('forest');
   first.profiles.write(finish(first.profiles.load(), 'leaf'));
@@ -134,6 +135,7 @@ test('開発者メニュー中は時間を進めず、島の収集処理にも�
   const ticks = [];
   const context = { developerMenuOpen: () => true, homePaused: false, playTimer: { tick: active => { ticks.push(active); return true; }, paused: false },
     mode: 'play', place: 'forest', saveBlocked: false, document: { hidden: false }, help: { focused: false }, adventure: { focused: false },
+    islandNumber: () => 3, islandRules: () => ({ name: 'みなと' }), input: {}, learning: { opened: false, close() {}, stopSpeech() {} },
     ui: { panelOpen: false }, transitioning: false, harborBusy: () => false, quests: { state: 'idle' }, $: () => ({ classList: { toggle() {} }, querySelector: () => ({}), setAttribute() {} }),
     last: 0, time: 0, requestAnimationFrame() { scheduled++; } };
   vm.runInNewContext(frame + '\nframe(20);', context);
