@@ -160,7 +160,7 @@ const learning = new IslandLearning({ ui, audio, voice, voiceEnabled: () => save
   onClose: () => refreshActivityInput(),
 });
 document.body.insertAdjacentHTML('beforeend', '<div id="islandActions"><button id="btnIslands" aria-label="しまを えらぶ">⛵<span>しま</span></button><button id="btnLearning" aria-label="ことばと かずで あそぶ">🔤<span>まなぶ</span></button><button id="btnTown" aria-label="くらしの ひろばへ いく">🏡<span>くらし</span></button></div>');
-$('btnIslands').onclick = openIslands;
+$('btnIslands').onclick = () => { if (place === 'island') visitSecond(); else openIslands(); };
 $('btnLearning').onclick = () => learning.open(islandNumber());
 $('btnTown').onclick = () => place === 'town' ? visitForest() : visitTown();
 room.onCloset = () => openCloset();
@@ -192,7 +192,7 @@ function openIslands() {
   if (mode !== 'play' || saveBlocked || transitioning || homePaused || playTimer.paused || help.modal || adventure.modal || harborErrands.modal || learning.opened || ui.panelOpen) return;
   quests.stop(); help.stop(); adventure.stop(); harborErrands.stop(); endAllFishing(); voice.stop(); player.setTarget(null);
   openPanel({ title: 'どの しまへ いく？', onClose: () => { if (place === 'island' && mode === 'play' && !transitioning) help.start(); }, tabs: [{ id: 'islands', label: 'しまを えらぶ' }], grid: () => [
-    { emoji: '🌼', name: 'だいいちの しま', note: 'いろ・かたち・かず・どうぶつ', state: 'on', onClick: () => { ui.closePanel(); returnFirst(); } },
+    { emoji: '🌼', name: 'だいいちの しま', note: 'あるく・あつめる・はじめの れんしゅう', state: 'on', onClick: () => { ui.closePanel(); returnFirst(); } },
     { emoji: '🌳', name: 'だいにの しま', note: 'もじ・ABC・きゆらし・ジャンプ', state: 'on', onClick: () => { ui.closePanel(); visitSecond(); } },
     { emoji: '⛵', name: 'だいさんの しま', note: adventure.unlocked ? 'えいご・おつかい・くらし' : 'いぬさんに おはなを とどけると いけるよ', state: adventure.unlocked ? 'on' : 'lock', onClick: () => {
       ui.closePanel(); if (adventure.unlocked) visitForest(); else { returnFirst(true); adventure.choose('flower'); }
@@ -215,7 +215,7 @@ function visitSecond() {
   if (mode !== 'play' || saveBlocked || transitioning || homePaused || playTimer.paused) return;
   prepareArea(2); leaveArea(); if (saveBlocked) return;
   transition(() => {
-    setOutdoorVisible(false); place = 'second'; secondRoot.visible = true; player.reset();
+    setOutdoorVisible(false); place = 'second'; secondRoot.visible = true; player.teleport(0, secondArea.world.groundAt(0, 2), 2, 0);
     adventure.group.visible = false; ui.setQuest(null); ui.subtitle('だいにの しま。もじと ABCで あそぼう！', 6000); snapCamera();
   });
 }
@@ -593,7 +593,7 @@ function worldEvents(dt) {
   owlCool -= dt;
   const p = player.pos;
   const rb = LANDMARKS.rainbow;
-  if (rainbowCool <= 0 && Math.abs(p.x - rb.x) < 3.5 && Math.abs(p.z - rb.z) < 1.2 && quests.state !== 'done') {
+  if (world.rainbow && rainbowCool <= 0 && Math.abs(p.x - rb.x) < 3.5 && Math.abs(p.z - rb.z) < 1.2 && quests.state !== 'done') {
     rainbowCool = 40;
     audio.sparkle();
     effects.burst(new THREE.Vector3(rb.x, p.y + 5, rb.z), { n: 50, speed: 5, up: 2 });
@@ -707,7 +707,7 @@ function leavePlace(instant = false) {
     (place === 'second' ? secondRoot : townRoot).visible = true;
     const d = pl.door();
     const x = d.x + Math.sin(d.yaw) * 1.6, z = d.z + Math.cos(d.yaw) * 1.6;
-    player.teleport(x, getHeight(x, z), z, d.yaw);
+    player.teleport(x, env().groundAt(x, z), z, d.yaw);
     for (const k in doorArmed) doorArmed[k] = false;
     ui.setQuest(null);
     help.group.visible = false;
@@ -845,9 +845,11 @@ function frame(now) {
   $('btnTown').classList.toggle('hidden', !['forest', 'town'].includes(place));
   $('btnTown').querySelector('span').textContent = place === 'town' ? 'みなと' : 'くらし';
   $('btnTown').setAttribute('aria-label', place === 'town' ? 'みなとへ もどる' : 'くらしの ひろばへ いく');
+  $('btnIslands').querySelector('span').textContent = place === 'island' ? 'つぎの しま' : 'しま';
+  $('btnIslands').setAttribute('aria-label', place === 'island' ? 'だいにの しまへ いく' : 'しまを えらぶ');
   if (place !== 'forest') $('adventureBack').classList.toggle('hidden', true);
   $('bells').classList.toggle('hidden', island < 3);
-  $('btnAdventure').classList.toggle('hidden', mode !== 'play' || !['island','forest'].includes(place) || help.focused || adventure.focused || harborBusy());
+  $('btnAdventure').classList.toggle('hidden', mode !== 'play' || place !== 'forest' || help.focused || adventure.focused || harborBusy());
   $('btnAdventure').querySelector('.side-label').textContent = place === 'forest' ? 'おつかい' : 'ぼうけん';
   $('btnAdventure').setAttribute('aria-label', place === 'forest' ? 'みなとの おつかい' : 'ぼうけん');
   $('placeLabel').textContent = `だい${['', 'いち', 'に', 'さん'][island]}の しま・${islandRules(island).name}`;

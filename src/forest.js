@@ -11,7 +11,7 @@ import { HARBOR_BUILDINGS, buildingAt } from './harbor-layout.js';
 import { createHarborSight, harborSightMaterial } from './harbor-visibility.js';
 import { HarborEffects } from './harbor-effects.js';
 export { FOREST_SPAWN, FOREST_DOCK };
-export const DOCK = { x: 0, z: 28 };
+export const DOCK = { x: 0, z: 20 };
 const mesh = (geometry, color) => new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({ color, roughness: .88 }));
 const box = (color,x,y,z,w,h,d) => { const o=mesh(new THREE.BoxGeometry(w,h,d),color);o.position.set(x,y,z);o.castShadow=true;o.receiveShadow=true;return o; };
 const surface = (o,x,z,dy=0) => { o.position.set(x,landHeight(x,z)+dy,z);return o; };

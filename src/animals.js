@@ -1,7 +1,7 @@
 // どうぶつ たち：おうちの まわりを のんびり おさんぽ。ちかづくと あいさつ。
 import * as THREE from 'three';
 import { makeAnimal, ANIMALS } from './characters.js';
-import { getHeight, ANIMAL_HOMES } from './world.js';
+import { ANIMAL_HOMES } from './world.js';
 
 const lerpAngle = (a, b, t) => {
   let d = ((b - a + Math.PI) % (Math.PI * 2)) - Math.PI;
@@ -14,11 +14,11 @@ export class Animals {
     this.world = world;
     this.list = [];
     this.onMeet = null;
-    for (const [kind, home] of Object.entries(ANIMAL_HOMES)) {
+    for (const [kind, home] of Object.entries(world.animalHomes ?? ANIMAL_HOMES)) {
       const model = makeAnimal(kind);
       const a = {
         kind, def: ANIMALS[kind], model, home,
-        pos: new THREE.Vector3(home.x, getHeight(home.x, home.z), home.z),
+        pos: new THREE.Vector3(home.x, this.world.groundAt(home.x, home.z), home.z),
         target: null, wait: Math.random() * 3, yaw: Math.random() * 6, hop: 0, phase: 0, cooldown: 0, near: false,
       };
       scene.add(model.root);
@@ -77,7 +77,7 @@ export class Animals {
         a.hop = Math.max(0, a.hop - dt * (a.model.hopper ? 1.8 : 2.2));
         hopY = Math.sin((1 - a.hop) * Math.PI) * (a.model.hopper ? 0.9 : 0.7);
       }
-      a.pos.y = getHeight(a.pos.x, a.pos.z);
+      a.pos.y = this.world.groundAt(a.pos.x, a.pos.z);
       const m = a.model;
       m.root.position.set(a.pos.x, a.pos.y + hopY, a.pos.z);
       m.root.rotation.y = a.yaw;

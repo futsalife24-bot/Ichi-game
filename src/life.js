@@ -1,7 +1,7 @@
 // しまの くらし：むし・さかな・かいがら・かせき・きのみ・はたけ・おみせ
 //   さわる だけで あそべる（どうぐは かってに もちかえる）。とった ものは ずかん と バッグ に はいる。
 import * as THREE from 'three';
-import { getHeight, ISLAND_R, WATER_Y, LANDMARKS, mulberry32 } from './world.js';
+import { WATER_Y, LANDMARKS, mulberry32 } from './world.js';
 import { ITEMS, available, pickWeighted, dayKey, callName } from './catalog.js';
 import { FURNITURE, makeFurniture } from './furniture.js';
 import { CLOTHES, makeHero, toon, ball, cyl } from './characters.js';
@@ -106,7 +106,7 @@ export class Life {
         if (!tree) return;
         x = tree.x; z = tree.z;
       } else {
-        const p = this.world.randomSpot(4, ISLAND_R - 7, 0.6, Math.random);
+        const p = this.world.randomSpot(4, this.world.radius - 7, 0.6, Math.random);
         if (!p) return;
         ({ x, z } = p);
       }
@@ -114,7 +114,7 @@ export class Life {
     }
     const model = makeBug(def.id);
     this.scene.add(model);
-    const bug = { def, model, home: { x, z }, pos: new THREE.Vector3(x, getHeight(x, z), z), ph: Math.random() * 10, dir: Math.random() * 6, hop: 0, wait: 0, tree };
+    const bug = { def, model, home: { x, z }, pos: new THREE.Vector3(x, this.world.groundAt(x, z), z), ph: Math.random() * 10, dir: Math.random() * 6, hop: 0, wait: 0, tree };
     if (tree) {
       const a = Math.atan2(-z, -x) + rand(-0.8, 0.8); // しまの まんなか がわ
       bug.pos.set(x + Math.cos(a) * 0.3 * tree.s, tree.y + 1.0 * tree.s, z + Math.sin(a) * 0.3 * tree.s);
@@ -149,7 +149,7 @@ export class Life {
         const sp = mv === 'glow' ? 0.3 : 0.5;
         const a = b.ph * sp, rad = mv === 'glow' ? 1.6 : 3;
         const x = b.home.x + Math.cos(a) * rad, z = b.home.z + Math.sin(a * 1.3) * rad;
-        b.pos.set(x, getHeight(x, z) + (mv === 'glow' ? 0.9 : 1.2) + Math.sin(b.ph * 2) * 0.35, z);
+        b.pos.set(x, this.world.groundAt(x, z) + (mv === 'glow' ? 0.9 : 1.2) + Math.sin(b.ph * 2) * 0.35, z);
         m.rotation.y = -a + Math.PI;
         const w = m.userData.wings;
         if (w) { const f = Math.sin(b.ph * (b.def.id === 'hachi' ? 40 : 18)) * 0.9; w[0].rotation.z = f; w[1].rotation.z = -f; }
@@ -179,7 +179,7 @@ export class Life {
           b.pos.x += Math.sin(b.dir) * sp * dt;
           b.pos.z += Math.cos(b.dir) * sp * dt;
         }
-        b.pos.y = getHeight(b.pos.x, b.pos.z) + Math.sin((1 - b.hop) * Math.PI) * 0.6 * (b.hop > 0 ? 1 : 0);
+        b.pos.y = this.world.groundAt(b.pos.x, b.pos.z) + Math.sin((1 - b.hop) * Math.PI) * 0.6 * (b.hop > 0 ? 1 : 0);
         m.rotation.y = b.def.id === 'kani' ? b.dir + Math.PI / 2 : b.dir;
       }
       m.position.copy(b.pos);
@@ -206,14 +206,14 @@ export class Life {
     const def = ITEMS.kani;
     const model = makeBug('kani');
     this.scene.add(model);
-    this.bugs.push({ def: { ...def, move: 'crawl' }, model, home: spot, pos: new THREE.Vector3(spot.x, getHeight(spot.x, spot.z), spot.z), ph: 0, dir: Math.random() * 6, hop: 0, wait: 0 });
+    this.bugs.push({ def: { ...def, move: 'crawl' }, model, home: spot, pos: new THREE.Vector3(spot.x, this.world.groundAt(spot.x, spot.z), spot.z), ph: 0, dir: Math.random() * 6, hop: 0, wait: 0 });
   }
 
   beachSpot(far = true) {
     for (let i = 0; i < 30; i++) {
-      const a = Math.random() * Math.PI * 2, r = rand(ISLAND_R - 4.2, ISLAND_R - 2.4);
+      const a = Math.random() * Math.PI * 2, r = rand(this.world.radius - 6, this.world.radius - 5);
       const x = Math.cos(a) * r, z = Math.sin(a) * r;
-      if (getHeight(x, z) < WATER_Y + 0.15) continue;
+      if (this.world.groundAt(x, z) < WATER_Y + 0.15) continue;
       if (!this.world.isFree(x, z, 0.5, { ignoreReserved: true })) continue;
       if (far && !this.farFromPlayer(x, z, 9)) continue;
       return { x, z };
@@ -226,9 +226,9 @@ export class Life {
     const def = pickWeighted(available('sakana', this.cond));
     if (!def) return;
     for (let i = 0; i < 30; i++) {
-      const a = Math.random() * Math.PI * 2, r = rand(ISLAND_R - 0.6, ISLAND_R + 1.4);
+      const a = Math.random() * Math.PI * 2, r = rand(this.world.radius - 0.6, this.world.radius + 1.4);
       const x = Math.cos(a) * r, z = Math.sin(a) * r;
-      if (getHeight(x, z) > WATER_Y - 0.4) continue;
+      if (this.world.groundAt(x, z) > WATER_Y - 0.4) continue;
       if (far && !this.farFromPlayer(x, z, 10)) continue;
       const model = makeFishShadow(def.size);
       model.position.set(x, WATER_Y + 0.13, z);
@@ -309,7 +309,7 @@ export class Life {
     const spot = this.beachSpot(far);
     if (!def || !spot) return;
     const model = makeBeachItem(def.id);
-    model.position.set(spot.x, getHeight(spot.x, spot.z) + 0.02, spot.z);
+    model.position.set(spot.x, this.world.groundAt(spot.x, spot.z) + 0.02, spot.z);
     model.rotation.y = Math.random() * 6;
     this.scene.add(model);
     this.beach.push({ def, model, glint: Math.random() * 4 });
@@ -317,10 +317,10 @@ export class Life {
 
   spawnDig(far = true) {
     for (let i = 0; i < 10; i++) {
-      const p = this.world.randomSpot(5, ISLAND_R - 7, 1.0, Math.random);
+      const p = this.world.randomSpot(5, this.world.radius - 7, 1.0, Math.random);
       if (!p || (far && !this.farFromPlayer(p.x, p.z, 9))) continue;
       const model = makeDigMark();
-      model.position.set(p.x, getHeight(p.x, p.z) + 0.02, p.z);
+      model.position.set(p.x, this.world.groundAt(p.x, p.z) + 0.02, p.z);
       this.scene.add(model);
       this.digs.push({ model, x: p.x, z: p.z });
       return;
@@ -360,7 +360,7 @@ export class Life {
         this.audio.dig();
         this.later(0.6, () => {
           this.scene.remove(d.model);
-          this.effects.burst(tmp.set(d.x, getHeight(d.x, d.z) + 0.3, d.z), { n: 26, speed: 2.5, up: 4, colors: [0x9a6b43, 0x7a4a2a, 0xc9a070] });
+          this.effects.burst(tmp.set(d.x, this.world.groundAt(d.x, d.z) + 0.3, d.z), { n: 26, speed: 2.5, up: 4, colors: [0x9a6b43, 0x7a4a2a, 0xc9a070] });
           this.digReward();
         });
         this.digs.splice(this.digs.indexOf(d), 1);
@@ -432,7 +432,7 @@ export class Life {
     const base = Math.atan2(p.z - t.z, p.x - t.x);
     const a = base + rand(-0.9, 0.9), rr = t.r + 0.9 + Math.random() * 0.5;
     const to = new THREE.Vector3(t.x + Math.cos(a) * rr, 0, t.z + Math.sin(a) * rr);
-    to.y = getHeight(to.x, to.z);
+    to.y = this.world.groundAt(to.x, to.z);
     const from = new THREE.Vector3(t.x + Math.cos(a) * 0.9 * t.s, t.y + 2.1 * t.s, t.z + Math.sin(a) * 0.9 * t.s);
     const model = makeDrop(kind, id);
     model.position.copy(from);
@@ -487,7 +487,7 @@ export class Life {
     this.scene.add(g);
     for (let i = 0; i < PLOTS; i++) {
       const lx = ((i % 4) - 1.5) * 1.7, lz = (Math.floor(i / 4) - 0.5) * 1.9;
-      const x = gx + lx, z = gz + lz, y = getHeight(x, z);
+      const x = gx + lx, z = gz + lz, y = this.world.groundAt(x, z);
       const soil = ball(0x8a5a33, 0.62, lx, y - 0.02, lz, 1, 0.16, 1);
       soil.castShadow = false;
       soil.receiveShadow = true;
@@ -500,11 +500,11 @@ export class Life {
     // さく と かんばん
     for (let i = 0; i <= 8; i++) {
       for (const [px, pz] of [[-3.8 + i * 0.95, -2.2], [-3.8 + i * 0.95, 2.2]]) {
-        g.add(cyl(0xffffff, 0.06, 0.55, px, getHeight(gx + px, gz + pz) + 0.27, pz));
+        g.add(cyl(0xffffff, 0.06, 0.55, px, this.world.groundAt(gx + px, gz + pz) + 0.27, pz));
       }
     }
     const sign = new THREE.Mesh(new THREE.PlaneGeometry(1.4, 0.45), new THREE.MeshBasicMaterial({ map: signTexture('はたけ', { bg: '#f1ffe0', border: '#5cbf49' }) }));
-    const sy = getHeight(gx + 1.6, gz + 2.4);
+    const sy = this.world.groundAt(gx + 1.6, gz + 2.4);
     sign.position.set(1.6, sy + 1.0, 2.45);
     g.add(sign, cyl(0x9a6b43, 0.05, 0.9, 1.6, sy + 0.45, 2.4));
     this.gardenGroup = g;
@@ -548,7 +548,7 @@ export class Life {
     const s = this.save;
     const plant = s.garden[pl.i];
     const st = this.stageOf(plant);
-    const pos = tmp.set(pl.x, getHeight(pl.x, pl.z) + 0.5, pl.z);
+    const pos = tmp.set(pl.x, this.world.groundAt(pl.x, pl.z) + 0.5, pl.z);
     if (!plant) {
       if (s.seeds <= 0) {
         if (this.talkCool <= 0) { this.talkCool = 5; this.say(L.noSeeds()); }
@@ -608,7 +608,7 @@ export class Life {
   buildShop() {
     const { x, z } = LANDMARKS.shop;
     const g = new THREE.Group();
-    g.position.set(x, getHeight(x, z), z);
+    g.position.set(x, this.world.groundAt(x, z), z);
     g.rotation.y = 0;
     this.scene.add(g);
     this.shopGroup = g;
@@ -771,7 +771,7 @@ export class Life {
     this.addBells(total);
     this.audio.coin();
     this.later(0.25, () => this.audio.coin());
-    this.effects.burst(tmp.set(this.sellBox.x, getHeight(this.sellBox.x, this.sellBox.z) + 1.2, this.sellBox.z), { n: 40, speed: 3, up: 6, colors: [0xffd23d, 0xffc93d, 0xffffff] });
+    this.effects.burst(tmp.set(this.sellBox.x, this.world.groundAt(this.sellBox.x, this.sellBox.z) + 1.2, this.sellBox.z), { n: 40, speed: 3, up: 6, colors: [0xffd23d, 0xffc93d, 0xffffff] });
     this.ui.popNumber(total);
     this.say(L.sell(total), TANUKI);
   }
