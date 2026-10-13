@@ -14,8 +14,8 @@ export function surfaceTexture(type) {
     c.strokeStyle=`rgba(65,52,37,${.04+rnd()*.18})`;c.lineWidth=.4+rnd()*1.2;c.beginPath();
     const x=rnd()*256;for(let y=0;y<=256;y+=4){const px=x+Math.sin(y*.025+i)*3+Math.sin(y*.11+i*2)*.7;y?c.lineTo(px,y):c.moveTo(px,y);}c.stroke();
   }
-  if(type==='stone'||type==='paving'){c.fillStyle='#b7ada0';c.fillRect(0,0,256,256);for(let row=-1;row<7;row++)for(let col=-1;col<7;col++){
-    const w=type==='paving'?48:56,h=type==='paving'?42:40,x=col*w+(row%2?w/2:0),y=row*h,k=Math.floor(206+rnd()*29);c.fillStyle=`rgb(${k},${k-8},${k-21})`;c.beginPath();c.roundRect(x+1.5,y+1.5,w-3,h-3,type==='paving'?5:2);c.fill();c.strokeStyle='rgba(255,250,239,.35)';c.lineWidth=1;c.stroke();
+  if(type==='stone'||type==='paving'||type==='whiteStone'){c.fillStyle=type==='whiteStone'?'#c0cbc9':'#b7ada0';c.fillRect(0,0,256,256);for(let row=-1;row<7;row++)for(let col=-1;col<7;col++){
+    const w=type==='stone'?56:48,h=type==='stone'?40:42,x=col*w+(row%2?w/2:0),y=row*h,k=Math.floor((type==='whiteStone'?229:206)+rnd()*(type==='whiteStone'?20:29));c.fillStyle=type==='whiteStone'?`rgb(${k},${k-1},${k-6})`:`rgb(${k},${k-8},${k-21})`;c.beginPath();c.roundRect(x+1.5,y+1.5,w-3,h-3,type==='stone'?2:5);c.fill();c.strokeStyle='rgba(255,250,239,.35)';c.lineWidth=1;c.stroke();
     for(let i=0;i<8;i++){c.fillStyle='rgba(94,80,65,.045)';c.fillRect(x+3+rnd()*(w-6),y+3+rnd()*(h-6),1+rnd()*4,1+rnd()*3);}
   }}
   if(type==='cloth'){c.strokeStyle='rgba(255,255,255,.18)';c.lineWidth=.6;for(let i=0;i<256;i+=3){c.beginPath();c.moveTo(0,i);c.lineTo(256,i);c.moveTo(i,0);c.lineTo(i,256);c.stroke();}}
@@ -25,12 +25,12 @@ export function conceptMaterial(def={}) {
   const color=Array.isArray(def.color)?new THREE.Color().setRGB(...def.color,THREE.SRGBColorSpace):new THREE.Color(def.color??0xffffff);
   const options={color,roughness:def.roughness??.82,metalness:def.metalness??0,side:THREE.DoubleSide};
   const type=def.type??'plaster';
-  if(['wood','bark','rock','stone','paving','cloth','plaster','roof'].includes(type))options.map=surfaceTexture(type);
+  if(['wood','bark','rock','stone','paving','whiteStone','cloth','plaster','roof'].includes(type))options.map=surfaceTexture(type);
   if(type==='rock'||type==='plaster'){options.bumpMap=surfaceTexture(type);options.bumpScale=type==='rock'?.15:.018;}
-  if(type==='stone'||type==='paving'){options.bumpMap=surfaceTexture(type);options.bumpScale=type==='paving'?.14:.08;}
+  if(type==='stone'||type==='paving'||type==='whiteStone'){options.bumpMap=surfaceTexture(type);options.bumpScale=type==='paving'?.14:.08;}
   if(def.opacity!==undefined&&def.opacity<1)Object.assign(options,{transparent:true,opacity:def.opacity,depthWrite:false});
   if(type==='glass')Object.assign(options,{transparent:true,opacity:Math.min(def.opacity??.25,.32),roughness:.14,metalness:.15,depthWrite:false});
-  if(type==='pearl'){const gem=(def.roughness??.16)<.25;return new THREE.MeshPhysicalMaterial({...options,color,emissive:gem?0xffd795:0x7f4e49,emissiveIntensity:gem?.22:.055,roughness:def.roughness??.16,metalness:def.metalness??.1,clearcoat:1,iridescence:gem?.5:.25,iridescenceIOR:1.32});}
+  if(type==='pearl'){const gem=(def.roughness??.16)<.25;return new THREE.MeshPhysicalMaterial({...options,color,emissive:gem?0xffd795:0x7f4e49,emissiveIntensity:gem?.4:.055,envMapIntensity:gem?2.4:1,roughness:def.roughness??.16,metalness:def.metalness??.1,clearcoat:1,iridescence:gem?.5:.25,iridescenceIOR:1.32});}
   const material=new THREE.MeshStandardMaterial(options);material.userData.conceptType=type;return material;
 }
 export function addCaustics(material,time) {

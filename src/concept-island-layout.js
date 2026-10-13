@@ -60,7 +60,11 @@ export const CONCEPT_LAYOUTS = Object.freeze({
         22
       ]
     },
-    "season": "spring"
+    "season": "spring",
+    "reviewSide": [
+      8,
+      0
+    ]
   },
   "2": {
     "n": 2,
@@ -364,7 +368,11 @@ export const CONCEPT_LAYOUTS = Object.freeze({
         16
       ]
     },
-    "season": "summer"
+    "season": "summer",
+    "reviewSide": [
+      18,
+      0
+    ]
   },
   "5": {
     "n": 5,
@@ -450,7 +458,11 @@ export const CONCEPT_LAYOUTS = Object.freeze({
         14
       ]
     },
-    "season": "summer"
+    "season": "summer",
+    "reviewSide": [
+      18,
+      5
+    ]
   },
   "6": {
     "n": 6,
@@ -464,41 +476,41 @@ export const CONCEPT_LAYOUTS = Object.freeze({
     ],
     "hero": [
       0,
-      -15
+      -27
     ],
     "models": [
       [
         "greatPearlShell",
         0,
-        -18,
+        -30,
         1.35,
         0
       ],
       [
         "coralArch",
-        -16,
-        -1,
-        1,
+        -12,
+        -24,
+        0.62,
         0.3
       ],
       [
         "coralArch",
-        17,
-        -4,
-        1,
+        13,
+        -25,
+        0.68,
         -0.4
       ],
       [
         "spiralShellSeat",
-        -13,
-        14,
+        -10,
+        -4,
         1,
         0.2
       ],
       [
         "spiralShellSeat",
-        14,
-        9,
+        11,
+        -7,
         1,
         -0.3
       ]
@@ -522,7 +534,11 @@ export const CONCEPT_LAYOUTS = Object.freeze({
       ],
       [
         0,
-        -15
+        -23
+      ],
+      [
+        0,
+        -27
       ]
     ],
     "palette": {
@@ -631,15 +647,53 @@ export const CONCEPT_LAYOUTS = Object.freeze({
       ]
     },
     "season": "summer",
+    "bridges": [
+      {
+        "a": [
+          0,
+          15
+        ],
+        "b": [
+          0,
+          -12
+        ],
+        "width": 7.1,
+        "arched": true
+      },
+      {
+        "a": [
+          -17,
+          -4
+        ],
+        "b": [
+          -3,
+          -4
+        ],
+        "width": 6.2,
+        "arched": true
+      },
+      {
+        "a": [
+          3,
+          -5
+        ],
+        "b": [
+          17,
+          -5
+        ],
+        "width": 6.2,
+        "arched": true
+      }
+    ],
     "camera": {
       "offset": [
         2.8,
         5.2,
-        15
+        18
       ],
       "lookOffset": [
         1,
-        7,
+        8,
         -14
       ],
       "fov": 50

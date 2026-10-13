@@ -5,7 +5,8 @@ import { conceptMaterial } from './concept-materials.js';
 const pose=new THREE.Object3D();
 const houseRows=[
   [-14.0,-18.2,5.6,5.8,6.0,'dome'],[-15.0,-24.4,6.4,7.3,6.3,'flat'],[-12.8,-30.0,5.4,6.1,5.6,'dome'],
-  [14.0,-18.4,5.8,6.2,6.1,'flat'],[15.0,-24.5,6.3,7.1,6.2,'dome'],[12.8,-30.1,5.5,5.9,5.7,'flat']
+  [14.0,-18.4,5.8,6.2,6.1,'flat'],[15.0,-24.5,6.3,7.1,6.2,'dome'],[12.8,-30.1,5.5,5.9,5.7,'flat'],
+  [-18.0,-34.0,4.5,5.2,4.8,'flat'],[18.0,-34.0,4.5,5.2,4.8,'dome']
 ];
 
 function roundedBlock() {
@@ -18,12 +19,12 @@ function archGeometry() {
   const g=new THREE.ExtrudeGeometry(s,{depth:.09,steps:1,bevelEnabled:true,bevelThickness:.015,bevelSize:.015,bevelSegments:2});
   g.computeVertexNormals();return g;
 }
-function add(list,x,y,z,w,h,d,ry=0) {list.push({at:[x,y,z],size:[w,h,d],ry});}
+function add(list,x,y,z,w,h,d,ry=0,rx=0) {list.push({at:[x,y,z],size:[w,h,d],ry,rx});}
 function put(group,geometry,mat,list) {
   if(!list.length)return;
   const o=new THREE.InstancedMesh(geometry,mat,list.length);
   for(let i=0;i<list.length;i++){
-    const v=list[i];pose.position.set(...v.at);pose.rotation.set(0,v.ry??0,0);pose.scale.set(...v.size);pose.updateMatrix();o.setMatrixAt(i,pose.matrix);
+    const v=list[i];pose.position.set(...v.at);pose.rotation.set(v.rx??0,v.ry??0,0);pose.scale.set(...v.size);pose.updateMatrix();o.setMatrixAt(i,pose.matrix);
   }
   o.castShadow=o.receiveShadow=true;o.computeBoundingSphere();group.add(o);
 }
@@ -87,9 +88,43 @@ function rooftop(parts,x,y,z,w,d,h,kind,index) {
   }
 }
 
+function terracedHill(scenery,parts) {
+  // まちの したに しろい だんを かさね、つちの さかを くもの おかへ かえる。
+  for(const side of [-1,1])for(const [radius,z,w,d,drop] of [[11.2,-15.7,9.6,6.2,3.1],[13.4,-24.7,12.1,11.7,4.4],[16.1,-33.1,10.2,6.5,3.2]]){
+    const x=side*radius,top=scenery.groundAt(x,z)+.26,bottom=Math.max(.1,top-drop),front=z+d/2;
+    add(parts.white,x,(top+bottom)/2,z,w,top-bottom,d);
+    add(parts.white,x,top+.2,z,w+.9,.42,d+.55);
+    add(parts.white,x,top+.53,front-.03,w+.7,.36,.44);
+    for(const offset of [-w*.28,w*.28]){
+      const archHeight=Math.min(2.35,top-bottom-.35);
+      if(archHeight>1.3)add(parts.shadow,x+offset,bottom+.16,front+.11,1.65,archHeight,.1);
+    }
+    for(const edge of [-1,1])add(parts.pot,x+edge*w*.38,top+.6,front-.28,.38,.58,.38);
+  }
+
+  // のぼりみちの りょうがわへ、さかに そった ひくい てすりを おく。
+  for(const side of [-1,1])for(let i=0;i<11;i++){
+    if(i>=1&&i<=4)continue;
+    const z=-12.5-i*1.08,x=side*4.28,y=scenery.groundAt(x,z),slope=(scenery.groundAt(x,z-.35)-scenery.groundAt(x,z+.35))/.7;
+    add(parts.white,x,y+.57,z,.48,1.05,1.15,0,Math.atan(slope));
+    if(i%3===0)add(parts.gold,x,y+1.22,z,.19,.26,.19);
+  }
+  for(const side of [-1,1])scenery.solids.push({x:side*4.28,z:-17.9,width:.48,depth:12.2,yaw:0});
+
+  // だんの そとがわに くもの かさなりと おくゆきを つくる。
+  for(const side of [-1,1])for(let i=0;i<38;i++)for(let layer=0;layer<3;layer++){
+    const z=-11-i*.72+Math.sin(i*2.7+layer)*.35;
+    const x=side*(12.7+(i%5)*1.65+layer*1.7+Math.sin(i*1.9)*.7);
+    const ground=scenery.groundAt(x,z),y=ground-1.7-layer*1.55-(i%4)*.16;
+    const scale=1.65+(i%7)*.21+layer*.3;
+    add((i+layer)%3?parts.cloudWarm:parts.cloudCool,x,y,z,scale*1.4,scale*.78,scale*1.05);
+  }
+}
+
 export function buildSkyDetail(scenery) {
   if(!scenery||scenery.number!==7)return;
-  const parts={white:[],blue:[],glass:[],wood:[],gold:[],dome:[],pot:[],plant:[],flower:[],shadow:[],door:[]};
+  const parts={white:[],blue:[],glass:[],wood:[],gold:[],dome:[],pot:[],plant:[],flower:[],shadow:[],door:[],cloudWarm:[],cloudCool:[]};
+  terracedHill(scenery,parts);
   for(let i=0;i<houseRows.length;i++){
     const [x,z,w,h,d,kind]=houseRows[i],y=scenery.groundAt(x,z);
     terrace(parts,x,y,z,w,d);
@@ -114,4 +149,6 @@ export function buildSkyDetail(scenery) {
   put(group,new THREE.IcosahedronGeometry(1,0),conceptMaterial({color:0xffe8af,type:'foliage'}),parts.flower);
   put(group,archGeometry(),conceptMaterial({color:0x29455b,type:'plaster'}),parts.shadow);
   put(group,archGeometry(),conceptMaterial({color:0x2765a4,type:'wood'}),parts.door);
+  put(group,new THREE.SphereGeometry(1,20,12),conceptMaterial({color:0xfff9f0,type:'plaster'}),parts.cloudWarm);
+  put(group,new THREE.SphereGeometry(1,20,12),conceptMaterial({color:0xdceef3,type:'plaster'}),parts.cloudCool);
 }

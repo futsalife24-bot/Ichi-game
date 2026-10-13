@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { CONCEPT_LAYOUTS } from './concept-island-layout.js';
 
 const pose=new THREE.Object3D();
 export function buildConceptSky(scenery) {
@@ -42,13 +43,13 @@ export function createConceptEnvironment(renderer) {
 const nightTop=new THREE.Color(0x10233f),nightBottom=new THREE.Color(0x445676),moonLight=new THREE.Color(0xabc7f5);
 export function applyConceptLight(world,scene,number,climate=null,scenery=null) {
   if(!number)return;
-  const n=number;
-  world.hemi.color.set(n===6?0xd9f7ff:n===8?0xd5b7cd:0xe9f4ff);world.hemi.groundColor.set(n===6?0x91b5b5:n===8?0x988693:0xbbbba9);world.hemi.intensity=n===8?.75:1.1;
-  world.sunLight.color.set(n===6?0xe0faff:n===8?0xffc597:0xfff0db);world.sunLight.intensity=n===8?1.35:2.65;
+  const n=number,light=CONCEPT_LAYOUTS[n].light;
+  world.hemi.color.set(n===6?0xd9f7ff:0xe9f4ff);world.hemi.groundColor.set(n===8?0x988693:0xbbbba9);world.hemi.intensity=n===8?.75:1.1;
+  world.sunLight.color.set(light.sun);world.sunLight.intensity=light.intensity;
   const night=n===6||n===8?0:(climate?.night??0),rain=n===6?0:(climate?.rain??0);
   world.hemi.intensity*=1-night*.5;world.sunLight.intensity*=(1-night*.75)*(1-rain*.45);world.sunLight.color.lerp(moonLight,night);
   if(scenery?.skyMaterial){const u=scenery.skyMaterial.uniforms;u.top.value.copy(scenery.skyDay.top).lerp(nightTop,night);u.bottom.value.copy(scenery.skyDay.bottom).lerp(nightBottom,night);}
-  world.sunOffset.set(...(n===8?[-25,18,-20]:n===6?[-12,45,-5]:[-30,42,22]));
+  world.sunOffset.set(...light.angle);
   const color=n===6?0x4ebcca:n===8?0xb58fba:0xb3d9ef;
   if(!scene.fog||!scene.fog.isFog)scene.fog=new THREE.Fog(color,n===6?65:120,n===6?160:245);
   scene.fog.color.set(color);scene.fog.near=n===6?65:120;scene.fog.far=n===6?160:245;

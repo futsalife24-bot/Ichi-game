@@ -1,5 +1,5 @@
 """第五〜第八島のコンセプト主役を作り、原本と配信用形状を書き出す。"""
-import bpy, math, json, os, sys
+import bpy, math, json, os, sys, hashlib
 from mathutils import Vector
 from math import sin, cos, pi
 
@@ -325,69 +325,173 @@ def build_coralArch():
             sphere('珊瑚の根元の塊',(s*(3.55+dx),dy,.42),(r,r*.9,.52),'coralPink',20,12)
     sphere('つながる珊瑚の冠',(0,.42,7.48),(.60,.60,.54),'coralPink',20,12)
 def build_spiralShellSeat():
-    sphere('巻き貝の胴',(0,.45,1.35),(1.6,1.1,1.25),'shell')
-    pts=[]
-    for i in range(100):
-        a=5*pi*i/99; r=.10+1.3*i/99
-        pts.append((r*cos(a),-1.05,r*sin(a)+1.35))
-    tube('大きな渦巻き',pts,.13,'shellInner')
-    cyl('座面',(0,-.85,.47),1.34,.23,'shellInner',28,.09)
+    # 厚い乳白の殻を実際にくり抜き、前から奥へ続く休憩穴を作る。
+    body=sphere('巻き貝のふくらむ殻',(-.12,.31,1.48),(1.56,1.04,1.28),'pearl',56,36)
+    cutter=sphere('開口のくり抜き用',(.77,-.52,.92),(.82,1.02,.67),'shellInner',56,36)
+    mod=body.modifiers.new('奥へ入る貝の開口','BOOLEAN');mod.operation='DIFFERENCE';mod.solver='EXACT';mod.object=cutter
+    bpy.context.view_layer.objects.active=body
+    bpy.ops.object.modifier_apply(modifier=mod.name)
+    bpy.data.objects.remove(cutter,do_unlink=True)
+    for face in body.data.polygons: face.use_smooth=True
+    # 前面のらせんは、中心から外へ太くなりながら殻の奥へ溶け込む立体。
+    points=[]; radii=[]
+    for i in range(97):
+        t=i/96; a=-pi/4+4*pi*t; r=.08+1.28*t**1.08
+        points.append(Vector((-.35+r*cos(a),-.81+.22*t,1.58+r*sin(a))))
+        radii.append(.10+.20*t)
+    sides=12; vertices=[]; faces=[]
+    for i,p in enumerate(points):
+        tangent=(points[min(i+1,96)]-points[max(0,i-1)]).normalized()
+        u=tangent.cross(Vector((0,1,0))).normalized();v=tangent.cross(u).normalized()
+        for j in range(sides):
+            a=2*pi*j/sides; q=p+radii[i]*(u*cos(a)+v*sin(a))
+            vertices.append(tuple(q))
+    for i in range(96):
+        for j in range(sides):
+            k=i*sides+j;n=i*sides+(j+1)%sides
+            faces.append((k,n,n+sides,k+sides))
+    faces.append(tuple(range(sides-1,-1,-1)))
+    faces.append(tuple(96*sides+j for j in range(sides)))
+    me=bpy.data.meshes.new('厚みのある巻き殻');me.from_pydata(vertices,[],faces);me.update()
+    coil=bpy.data.objects.new('中心から膨らむ巻き殻',me);bpy.context.collection.objects.link(coil);use(coil,coil.name,'pearl')
+    for face in me.polygons: face.use_smooth=True
+    # 殻口から奥へ幅が狭まる壁を作る。穴は面で塞がず、奥だけを丸く閉じる。
+    sides=48
+    def mouth_wall(name,rings,material,inside):
+        verts=[];faces=[]
+        for y,rx,rz,cz in rings:
+            for j in range(sides):
+                a=2*pi*j/sides
+                verts.append((.77+rx*cos(a),y,cz+rz*sin(a)))
+        for k in range(len(rings)-1):
+            for j in range(sides):
+                a=k*sides+j;b=k*sides+(j+1)%sides
+                faces.append((a,b,b+sides,a+sides) if inside else (a,a+sides,b+sides,b))
+        if inside: faces.append(tuple((len(rings)-1)*sides+j for j in range(sides)))
+        me=bpy.data.meshes.new(name);me.from_pydata(verts,[],faces);me.update()
+        ob=bpy.data.objects.new(name,me);bpy.context.collection.objects.link(ob);use(ob,name,material)
+        for face in me.polygons:face.use_smooth=True
+    mouth_wall('殻の厚い外側の口縁',[(-.93,.72,.53,.91),(-.72,.82,.61,.91),(-.42,.86,.64,.92)],'pearl',False)
+    mouth_wall('奥まで続く淡い桃色の内壁',[(-.94,.66,.48,.91),(-.70,.64,.48,.91),(-.42,.58,.44,.89),(-.10,.48,.37,.86),(.22,.30,.22,.84)],'shellInner',True)
+    lip=[(.77+.69*cos(2*pi*i/48),-.94,.91+.50*sin(2*pi*i/48)) for i in range(49)]
+    tube('殻口の丸い乳白の縁',lip,.085,'tileWhite')
+    seam=[(.77+.86*cos(2*pi*i/48),-.41,.92+.64*sin(2*pi*i/48)) for i in range(49)]
+    tube('殻と口がつながる丸い縁',seam,.055,'pearl')
+    seat=cyl('開口前の低い丸座面',(.62,-1.10,.15),1.00,.26,'tileWhite',48,.10)
+    seat.scale.y=.76
+    sphere('座面の淡い内張り',(.62,-1.13,.29),(.81,.67,.075),'shellInner',40,20)
+    for x in [-.91,-.48,.20,.62]:
+        ridge=[]
+        for j in range(20):
+            y=-.48+1.32*j/19
+            inside=1-((x+.12)/1.56)**2-((y-.31)/1.04)**2
+            if inside>.02: ridge.append((x,y,1.48+1.28*math.sqrt(inside)+.018))
+        if len(ridge)>3:tube('殻の砂金色の柔らかな稜線',ridge,.018,'tileWhite')
+def city_dome(n,x,y,z,r,h,m='blue'):
+    # 下半分を持たない半球で、白壁の上に載る青い屋根を作る。
+    steps=18; sides=40; vs=[]; fs=[]
+    for j in range(steps+1):
+        t=(pi/2)*j/steps
+        for i in range(sides):
+            a=2*pi*i/sides
+            vs.append((x+r*cos(t)*cos(a),y+r*cos(t)*sin(a),z+h*sin(t)))
+    for j in range(steps):
+        for i in range(sides):
+            k=j*sides+i; next_i=j*sides+(i+1)%sides
+            fs.append((k,next_i,next_i+sides,k+sides))
+    me=bpy.data.meshes.new(n); me.from_pydata(vs,[],fs); me.update()
+    ob=bpy.data.objects.new(n,me); bpy.context.collection.objects.link(ob); use(ob,n,m)
+    for f in me.polygons: f.use_smooth=True
+    cyl('丸屋根の白い厚い縁',(x,y,z),r*1.025,.22,'white',48,.07)
+def city_arch(n,x,y,z,r,wall,depth,m='white'):
+    # 二つの半円と前後面を閉じた厚い石積み。穴の内側には面を置かない。
+    count=32; vs=[]; fs=[]
+    for yy in [y-depth/2,y+depth/2]:
+        for radius in [r,r+wall]:
+            for i in range(count+1):
+                a=pi*i/count
+                vs.append((x+radius*cos(a),yy,z+radius*sin(a)))
+    stride=count+1
+    for i in range(count):
+        fs.append((i,i+1,stride+i+1,stride+i))
+        fs.append((2*stride+i,3*stride+i,3*stride+i+1,2*stride+i+1))
+        fs.append((i,2*stride+i,2*stride+i+1,i+1))
+        fs.append((stride+i,stride+i+1,3*stride+i+1,3*stride+i))
+    fs.extend([(0,stride,3*stride,2*stride),(count,2*stride+count,3*stride+count,stride+count)])
+    me=bpy.data.meshes.new(n); me.from_pydata(vs,[],fs); me.update()
+    ob=bpy.data.objects.new(n,me); bpy.context.collection.objects.link(ob);use(ob,n,m)
+    for face in me.polygons: face.use_smooth=True
+    return ob
 def build_windCity():
-    # 円筒の白い街は、階層ごとの建物と抜けた玄関で構成する。
-    cyl('円形の町の基礎',(0,0,.55),10.5,1.1,'white',48,.28)
-    for i,(x,y,r,h) in enumerate([(-6,0,2.8,7),(6,0,2.8,7),(-5,5,2.2,9),(5,5,2.2,9),(0,5.8,3,11)]):
-        cyl('白い円筒の家',(x,y,1+h/2),r,h,'white',32,.20)
-        sphere('コバルトの丸屋根',(x,y,1+h),(.97*r,.97*r,1.45),'blue',48,28)
-        arch_gateway(x,y-r-.08,1.4,2.55,.12,'blueDark','家の入口')
-        cube('入口の青い奥',(x,y-r+.02,1.3),(1.2,.06,2.3),'turquoise',.05)
-        for j in [-1,1]:
-            sphere('丸い窓',(x+j*r*.55,y-r*.91,h*.63),(.33,.08,.44),'blueDark',12,8)
-        for side in [-1,1]:
-            cube('小さな白いバルコニー',(x+side*r*.62,y-r*.90,4.35),(.84,.85,.18),'white',.08)
-            for off in [-.28,.28]:
-                cyl('バルコニーの短い柱',(x+side*r*.62+off,y-r*1.22,4.70),.055,.62,'white',12,.02)
-            tube('バルコニーの手すり',[(x+side*r*.62-.42,y-r*1.22,5.02),(x+side*r*.62+.42,y-r*1.22,5.02)],.065,'white')
-    # 左右の段状テラスを重ね、中央の通りだけはまっすぐ抜ける。
+    # 地上には幅７の通路を残し、左右の石壁と高い城門で街を持ち上げる。
     for s in [-1,1]:
-        for j,(xx,yy,r,h,level) in enumerate([(8.3,3.5,1.75,5.5,1.35),(8.2,-3.5,1.70,4.7,1.35),
-                                                (5.9,7.3,1.55,5.2,2.65),(7.9,6.3,1.25,4.4,2.65)]):
+        x=s*4.25
+        cube('門の厚い白い柱',(x,-9.0,2.45),(1.48,2.8,4.9),'white',.30)
+        cube('門を支える横の石壁',(s*6.55,-8.9,2.70),(3.4,3.0,5.4),'white',.35)
+        for h in [1.2,3.2,4.65]: cube('石柱の明るい縁',(x,-10.47,h),(1.63,.14,.16),'cream',.04)
+        for j in range(4):
+            cube('門の側の段',(s*(5.3+j*.55),-11.25+j*.35,.14+j*.22),(1.6,1.15,.28+j*.44),'white',.07)
+    city_arch('中央を抜ける大きな半円門',0,-9.0,4.75,3.5,.77,3.02)
+    city_arch('門の青い奥行き縁',0,-10.54,4.75,3.54,.10,.15,'tile')
+    cube('門の上の歩廊',(0,-8.95,8.73),(9.9,3.25,.75),'white',.24)
+    for s in [-1,1]:
+        for j in range(7):
+            x=s*(.7+j*.59)
+            cyl('上層の白い手すり柱',(x,-10.58,9.25),.075,.66,'white',12,.025)
+    tube('門上の曲がる手すり',[(x,-10.58,9.61+.11*cos(pi*x/5)) for x in [-4.6+i*.23 for i in range(41)]],.095,'white')
+    # 門の下から中央塔へ、白い階段が段階的に上がる。
+    for j in range(12):
+        y=-11.7+j*.72; z=.18+j*.34
+        cube('街へ上がる幅広い階段',(0,y,z/2),(6.8-j*.13,.81,z),'white',.09)
+    for s in [-1,1]:
+        for j in range(7):
+            y=-7.3+j*.69; z=1.35+j*.50
+            cube('脇へ上がる折り階段',(s*(5.0+j*.40),y,z-.12),(2.15,.8,z+.25),'white',.07)
+    # 低い棟、中庭の棟、奥の高い棟をずらして重ねる。
+    buildings=[(6.9,-4.1,2.75,7.2,1.0,1.65),(8.0,2.3,2.55,5.4,3.4,1.35),
+               (5.35,5.8,2.25,6.0,5.0,1.4),(8.45,7.4,1.4,4.4,6.15,.9)]
+    for s in [-1,1]:
+        city_arch('左右の下層に続くアーチ',s*7.25,-6.75,2.65,1.45,.45,1.9)
+        cube('上下の町をつなぐ張り出し床',(s*6.8,.9,4.55),(6.9,11.0,.52),'white',.25)
+        for y in [-3.6,-1.6,.4,2.4,4.4]:
+            cyl('上の歩廊の石の欄干',(s*10.15,y,5.10),.10,.78,'white',12,.035)
+        tube('上の歩廊の長い手すり',[(s*10.15,-4.35+j*.24,5.54) for j in range(40)],.11,'white')
+    for s in [-1,1]:
+        for k,(xx,yy,r,h,base,cap) in enumerate(buildings):
             x=s*xx
-            cyl('街を広げる白いテラス',(x,yy,level-.26),r+1.0,.56,'white',32,.18)
-            cyl('段状の円筒の家',(x,yy,level+h/2),r,h,'white',32,.16)
-            sphere('小さな青い丸屋根',(x,yy,level+h),(.98*r,.98*r,.87+r*.13),'blue',40,24)
-            front=yy-r-.01
-            tube('家の丸窓の縁',[(x+.38*cos(pi*i/20),front,level+h*.55+.38*sin(pi*i/20)) for i in range(21)],.09,'cream')
-            sphere('小窓の青い奥',(x,front+.025,level+h*.48),(.33,.07,.39),'blueDark',20,12)
-            for a in [pi*k/4 for k in range(8)]:
-                px=x+(r+.76)*cos(a); py=yy+(r+.76)*sin(a)
-                if abs(px)<3.3 and py<-4.2: continue
-                sphere('テラスの緑の房',(px,py,level+.08),(.24,.28,.22),'leaf',12,8)
-        for y,z,w in [(-6.9,1.65,3.5),(-5.8,2.20,3.0),(-4.7,2.75,2.55)]:
-            cube('左右の前方テラス',(s*7.15,y,z-.19),(w,2.1,.38),'white',.13)
-            for xoff in [-1.0,0,1.0]:
-                sphere('テラスの花壇',(s*7.15+xoff,y-.72,z+.15),(.42,.38,.24),'leaf',16,10)
-    for j in range(4):
-        y=-11.4+j*.52
-        height=.25*(j+1)
-        cube('入口の低い白階段',(0,y,height/2),(5.1,.78,height),'white',.10)
-    # 下の中央入口の左右を柱で形成する。
-    for x in [-3.1,3.1]: cube('門の大柱',(x,-8.3,2.75),(1.2,2.3,5.5),'white',.29)
-    tube('門の上半円',[(2.5*cos(pi*i/28),-8.4,5.2+2.5*sin(pi*i/28)) for i in range(29)],.58,'white')
-    for s in [-1,1]:
-        for z in [1.35,3.60,5.58]:
-            cube('門柱の彫り縁',(s*3.1,-9.52,z),(1.42,.18,.15),'cream',.055)
-    cyl('風車の中央塔',(0,0,13.4),2.8,17.2,'white',40,.18)
-    cone('円錐の青い塔屋根',(0,0,22.15),3.1,.45,1.9,'blue',40)
+            cyl('階層をつなぐ丸い石のテラス',(x,yy,base-.22),r+.55,.55,'white',48,.18)
+            cyl('層をなす曲面の白壁',(x,yy,base+h/2),r,h,'white',40,.18)
+            city_dome('半球の青い屋根',x,yy,base+h,r*.94,cap)
+            front=yy-r-.035
+            city_arch('彫り込んだ青い入口',x,front,base+1.28,.58,.13,.10,'tile')
+            cube('扉の濃い奥',(x,front+.11,base+.83),(1.05,.12,1.66),'blueDark',.09)
+            for dx in [-r*.60,r*.60]:
+                sphere('壁の奥まった丸窓',(x+dx,front+.06,base+h*.61),(.24,.13,.43),'blueDark',20,12)
+                city_arch('窓の白い彫り縁',x+dx,front-.08,base+h*.61,.32,.09,.11,'cream')
+            if k<3:
+                cube('前へ張り出すバルコニー',(x,front-.42,base+h*.58),(r*1.42,.95,.22),'white',.09)
+                for j in range(7):
+                    px=x-r*.62+j*r*.206
+                    cyl('バルコニーの欄干',(px,front-.84,base+h*.58+.40),.075,.70,'white',12,.02)
+                tube('バルコニーの丸い笠木',[(x-r*.72+j*r*.048,front-.85,base+h*.58+.80) for j in range(31)],.095,'white')
+            for j in range(10):
+                a=2*pi*j/10
+                px=x+(r+.31)*cos(a); py=yy+(r+.31)*sin(a)
+                if abs(px)<3.75 and py<-4: continue
+                sphere('城の縁に垂れる緑',(px,py,base+.2),(.25,.28,.36),'leaf',12,8)
+    # 中央塔の芯と帆の高さ・前後位置は旧原本と同じ。
+    cyl('塔を囲む上の白い円形庭',(0,0,5.55),4.8,.65,'white',48,.19)
+    cyl('風車の中央塔',(0,0,13.4),2.8,17.2,'white',48,.18)
+    city_dome('中央塔の低い青い冠',0,0,22.0,2.88,.98)
     for z in [8.4,11.7,15.4,18.5]:
         for a in [0,pi/2,pi,3*pi/2]:
-            sphere('塔の細い窓',(2.79*cos(a),2.79*sin(a),z),(.24,.24,.62),'blueDark',12,8)
-    for z in [7.6,13.3,19.2]:
-        cyl('中央塔の白い帯',(0,0,z),2.92,.18,'cream',48,.07)
-    for a in [2*pi*i/8 for i in range(8)]:
-        sphere('塔の上庭の葉',(3.22*cos(a),3.22*sin(a),5.83),(.31,.35,.42),'leaf',16,10)
-    for a in [pi*i/8 for i in range(16)]:
-        x,y=9*cos(a),9*sin(a)
-        sphere('町の低木',(x,y,1.3),(.55,.55,.75),'leaf',12,8)
+            sphere('塔の細長い青窓',(2.79*cos(a),2.79*sin(a),z),(.23,.23,.60),'blueDark',16,10)
+    for z in [7.6,13.3,19.2]: cyl('塔の彫り込んだ白い帯',(0,0,z),2.92,.18,'cream',48,.07)
+    for s in [-1,1]:
+        for j in range(5):
+            x=s*(4.5+j*1.25)
+            sphere('城門の花壇の緑',(x,-7.0-(j%2)*1.2,5.55),(.38,.42,.30),'leaf',16,10)
+            for k in range(3): sphere('花壇の小花',(x+(k-1)*.18,-7.43-(j%2)*1.2,5.72),(.09,.10,.09),'light',10,6)
 def build_windSails():
     # 支点のまわりで回す前提で、羽根は支点相対へ書き出す。
     hub=(0,-.45,7.0)
@@ -514,6 +618,7 @@ def render_preview(id):
     world=bpy.context.scene.world or bpy.data.worlds.new('空'); bpy.context.scene.world=world; world.color=(.32,.43,.55)
     camera_pos=(SIZES[id][0]*1.15,-SIZES[id][2]*1.75,SIZES[id][1]*1.0)
     if id=='windSails': camera_pos=(0,-23,9)
+    if id=='windCity': camera_pos=(0,-37,19)
     bpy.ops.object.camera_add(location=camera_pos)
     cam=bpy.context.object; cam.name='確認カメラ'; target=Vector((0,0,SIZES[id][1]*.45)); cam.rotation_euler=(target-cam.location).to_track_quat('-Z','Y').to_euler()
     cam.data.type='ORTHO'; cam.data.ortho_scale=max(SIZES[id][0]*1.35,SIZES[id][1]*1.65); bpy.context.scene.camera=cam
@@ -580,10 +685,24 @@ def export_asset(id):
         v=next(iter(PIVOTS.get(id,{'x':(0,0,0)}).values()))
         p[mesh['name']]=dict(position=[round(v[0],4),round(v[2],4),round(-v[1],4)],axis=[0,1,0] if id=='starCarousel' else [0,0,1])
     asset=dict(meshes=meshes,size=SIZES[id])
+    if id=='windCity':
+        # Three.js座標の円形障害物。中央の幅７の門は空ける。
+        asset['colliderCircles']=[[-4.25,9.0,.70],[4.25,9.0,.70],[-6.55,8.9,1.8],[6.55,8.9,1.8]]
     if p: asset['pivots']=p
-    report=dict(id=id,requestedSize=SIZES[id],staticBounds=[round(x,3) for x in bounds],triangles=sum(counts.values()),meshCount=len(meshes),opening='通過口あり' if id in ('greatFruitMarket','coralArch','windCity') else '該当なし',pivots=p,preview=id+'.png',blend=id+'.blend')
+    report=dict(id=id,requestedSize=SIZES[id],staticBounds=[round(x,3) for x in bounds],triangles=sum(counts.values()),meshCount=len(meshes),opening='休憩用の穴あり' if id=='spiralShellSeat' else '通過口あり' if id in ('greatFruitMarket','coralArch','windCity') else '該当なし',pivots=p,preview=id+'.png',blend=id+'.blend')
     return asset,report
 
+def signature(value):
+    return hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode('utf-8')).hexdigest()
+
+protected=None
+if UPDATE in ('windCity','spiralShellSeat'):
+    with open(DEST,encoding='utf-8') as f: protected=json.load(f,parse_constant=lambda x: (_ for _ in ()).throw(ValueError(x)))
+    if len(protected['assets'])!=14 or UPDATE not in protected['assets']: raise ValueError('既存14素材が揃っていません')
+    protected_hash={id:signature(asset) for id,asset in protected['assets'].items() if id!=UPDATE}
+    material_hash=signature(protected['materials'])
+    with open(os.path.join(OUT,'geometry-report.json'),encoding='utf-8') as f: old_report_ids={row['id'] for row in json.load(f)}
+    if old_report_ids!=set(protected['assets']): raise ValueError('既存14素材の報告が揃っていません')
 assets={}; reports=[]
 ids=list(SIZES)
 if FIRST: ids=['greatFruitMarket','greatPearlShell']
@@ -599,15 +718,20 @@ for id in ids:
     print('完成:',id,'三角形:',report['triangles'])
 if PREVIEW: sys.exit(0)
 if UPDATE:
-    with open(DEST,encoding='utf-8') as f:
-        old=json.load(f,parse_constant=lambda x: (_ for _ in ()).throw(ValueError(x)))
-    old['materials'].update({k:v[1] for k,v in M.items()})
+    if protected: old=protected
+    else:
+        with open(DEST,encoding='utf-8') as f:
+            old=json.load(f,parse_constant=lambda x: (_ for _ in ()).throw(ValueError(x)))
+        old['materials'].update({k:v[1] for k,v in M.items()})
     old['assets'].update(assets); assets=old['assets']
     with open(os.path.join(OUT,'geometry-report.json'),encoding='utf-8') as f: old_reports=json.load(f)
     changed={r['id']:r for r in reports}
     reports=[changed.get(r['id'],r) for r in old_reports]
+    if protected:
+        if any(signature(assets[id])!=old_hash for id,old_hash in protected_hash.items()): raise ValueError('他13素材の形状が変わりました')
+        if signature(old['materials'])!=material_hash: raise ValueError('既存材質が変わりました')
 with open(DEST+'.tmp','w',encoding='utf-8') as f:
-    json.dump(dict(version=1,materials={k:v[1] for k,v in M.items()},assets=assets),f,separators=(',',':'),allow_nan=False)
+    json.dump(dict(version=1,materials=old['materials'] if protected else {k:v[1] for k,v in M.items()},assets=assets),f,separators=(',',':'),allow_nan=False)
 os.replace(DEST+'.tmp',DEST)
 with open(os.path.join(OUT,'geometry-report.json.tmp'),'w',encoding='utf-8') as f:
     json.dump(reports,f,ensure_ascii=False,indent=2,allow_nan=False)

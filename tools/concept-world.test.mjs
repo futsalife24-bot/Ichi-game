@@ -11,6 +11,7 @@ import { freshSave } from '../src/save.js';
 import { TUTORIAL_HOMES } from '../src/world.js';
 import { FLOWER_SPOTS, FLOWER_HOST } from '../src/adventure-state.js';
 import { HELP_SPOTS, HELP_HOST } from '../src/help-state.js';
+import { applyConceptLight } from '../src/concept-atmosphere.js';
 
 const kits=Object.fromEntries([1,2,3].map(number=>{
   const assets=JSON.parse(readFileSync(new URL(`../assets/islands/concept-${number}.json`,import.meta.url))).assets;
@@ -63,6 +64,38 @@ test('第三島の家・学校・店・畑が建物と水面を避けてつな�
   assert.ok(life.fish.length>0&&life.beach.length>0);
   for(const target of [...life.plots,...life.slots])assert.ok(conceptRoutePointValid(target,solids));
   assert.ok(life.gardenGroup.visible&&life.shopGroup.visible);
+});
+
+test('通常画面の昼の太陽は八島すべて採用レイアウトの色・強さ・角度に一致する',()=>{
+  const world={hemi:new THREE.HemisphereLight(),sunLight:new THREE.DirectionalLight(),sunOffset:new THREE.Vector3()},scene=new THREE.Scene();
+  for(const [number,layout] of Object.entries(CONCEPT_LAYOUTS)){
+    applyConceptLight(world,scene,Number(number),{night:0,rain:0});
+    assert.equal(world.sunLight.color.getHex(),layout.light.sun,`しま${number}の ひの いろ`);
+    assert.equal(world.sunLight.intensity,layout.light.intensity,`しま${number}の ひの つよさ`);
+    assert.deepEqual(world.sunOffset.toArray(),layout.light.angle,`しま${number}の ひの むき`);
+    assert.equal(world.hemi.color.getHex(),Number(number)===6?0xd9f7ff:0xe9f4ff,`しま${number}の そらの ひかり`);
+    assert.equal(world.hemi.groundColor.getHex(),Number(number)===8?0x988693:0xbbbba9,`しま${number}の じめんの ひかり`);
+    assert.equal(world.hemi.intensity,Number(number)===8?.75:1.1,`しま${number}の まわりの ひかり`);
+  }
+});
+
+test('夜と雨の減衰・夜空を保ち、昼に戻したとき強さを積み重ねない',()=>{
+  const world={hemi:new THREE.HemisphereLight(),sunLight:new THREE.DirectionalLight(),sunOffset:new THREE.Vector3()},scene=new THREE.Scene();
+  const skyDay={top:new THREE.Color(0x7bbcf2),bottom:new THREE.Color(0xdaf0fc)};
+  const scenery={skyDay,skyMaterial:{uniforms:{top:{value:new THREE.Color()},bottom:{value:new THREE.Color()}}}};
+  const light=CONCEPT_LAYOUTS[3].light,night=.6,rain=.4;
+  applyConceptLight(world,scene,3,{night,rain},scenery);
+  assert.ok(Math.abs(world.sunLight.intensity-light.intensity*(1-night*.75)*(1-rain*.45))<1e-12);
+  assert.ok(Math.abs(world.hemi.intensity-1.1*(1-night*.5))<1e-12);
+  assert.ok(world.sunLight.color.equals(new THREE.Color(light.sun).lerp(new THREE.Color(0xabc7f5),night)));
+  assert.ok(scenery.skyMaterial.uniforms.top.value.equals(skyDay.top.clone().lerp(new THREE.Color(0x10233f),night)));
+  assert.ok(scenery.skyMaterial.uniforms.bottom.value.equals(skyDay.bottom.clone().lerp(new THREE.Color(0x445676),night)));
+  applyConceptLight(world,scene,3,{night:0,rain:0},scenery);
+  assert.equal(world.sunLight.intensity,light.intensity);
+  assert.ok(scenery.skyMaterial.uniforms.top.value.equals(skyDay.top));
+  applyConceptLight(world,scene,6,{night:1,rain:1},scenery);
+  assert.equal(world.sunLight.intensity,CONCEPT_LAYOUTS[6].light.intensity);
+  assert.ok(scenery.skyMaterial.uniforms.top.value.equals(skyDay.top));
 });
 
 test.after(()=>{if(oldDocument===undefined)delete globalThis.document;else globalThis.document=oldDocument;});

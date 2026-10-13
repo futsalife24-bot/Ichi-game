@@ -76,6 +76,11 @@ if (catalog.concept_scenes) {
   const concepts = JSON.parse(readFileSync(resolve(root, catalog.concept_scenes), 'utf8'));
   const sceneryParts=[...concepts.parts,...(concepts.nature_parts?JSON.parse(readFileSync(resolve(root,concepts.nature_parts),'utf8')).parts:[])];
   assert.equal(concepts.islands.length, 8, '景観正本の島数');
+  // せいほんの はいちを、ゲームでも おなじ いちから よむ。
+  const layoutPath=resolve(root,'src/concept-island-layout.js');
+  const layoutSource=`// さいようした げんがから、みちと おおきな かたちを きめる。\nexport const CONCEPT_LAYOUTS = Object.freeze(${JSON.stringify(Object.fromEntries(concepts.islands.map(island=>[island.n,island])),null,2)});\nexport const CONCEPT_CAMERA = Object.freeze(${JSON.stringify(concepts.camera,null,2)});\n`;
+  if(process.argv.includes('--write'))writeFileSync(layoutPath,layoutSource);
+  else assert.equal(readFileSync(layoutPath,'utf8').replace(/\r\n/g,'\n'),layoutSource,'ゲームの景観配置が正本と一致しない');
   assert.equal(new Set(sceneryParts.map(part => part.id)).size, sceneryParts.length, '景観パーツの重複');
   const sceneIds = new Set(concepts.parts.map(part => part.id));
   for (const island of concepts.islands) {

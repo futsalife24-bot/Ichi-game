@@ -1,0 +1,316 @@
+{
+  "status": "原画との比較用・自己検証の記録",
+  "viewport": [
+    1280,
+    720
+  ],
+  "captureMethod": "同じ景観コードと実プレイヤーを描いたWebGL画面。画像の加工なし",
+  "originals": [
+    {
+      "island": 1,
+      "file": "assets-src/islands/concept-art/v1/01-sunlit-cove.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2810845,
+      "sha256": "2c1fd7af6b2dddf479c962d97c4a9128d9ad8b70afaf50e298ef54092973900c"
+    },
+    {
+      "island": 2,
+      "file": "assets-src/islands/concept-art/v1/02-rainbow-forest.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 3116144,
+      "sha256": "2c408bbeff3dfba06dcda1ef09573ba0dc11c91555f8e356f4f77fb12c7f22db"
+    },
+    {
+      "island": 3,
+      "file": "assets-src/islands/concept-art/v1/03-lantern-harbor.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2667757,
+      "sha256": "7db9ecc14c30f4934e689e15035931d4671398b9e1c9d74263a05501b4d2739e"
+    },
+    {
+      "island": 4,
+      "file": "assets-src/islands/concept-art/v1/04-waterwheel-workshop.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2922572,
+      "sha256": "f56638056237186eae84fd350fbc7ff5fa7907021f6d9759f0a5729a479c28f4"
+    },
+    {
+      "island": 5,
+      "file": "assets-src/islands/concept-art/v1/05-fruit-market.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2879439,
+      "sha256": "b03da11cfc4ce98e60ec9280683ce5ef580e431753b5b52fc69d4bad33d49b3a"
+    },
+    {
+      "island": 6,
+      "file": "assets-src/islands/concept-art/v1/06-pearl-seabed.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2745998,
+      "sha256": "18e5ae68e37e821c5f71adbf1f942a1916cd3169a9edbe523d666e9975fcc348"
+    },
+    {
+      "island": 7,
+      "file": "assets-src/islands/concept-art/v1/07-cloud-windcastle.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2445168,
+      "sha256": "93bee2ad4709915c99c436bac342565db502b07739ada1a5eef59ac41a7701af"
+    },
+    {
+      "island": 8,
+      "file": "assets-src/islands/concept-art/v1/08-starlight-festival.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2640862,
+      "sha256": "215c79a5279213bfd8826822e89b1873f06e5edfab70460ca494f06bb153c2ca"
+    }
+  ],
+  "captures": [
+    {
+      "island": 1,
+      "point": "entry",
+      "file": "01-entry.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1029234,
+      "sha256": "b024efaa93d61cd1286820a4cb5749f943a453f62af4391fdcb7efffe37b7b49",
+      "capturedAt": "2026-10-13T14:37:53.022Z"
+    },
+    {
+      "island": 1,
+      "point": "hero",
+      "file": "01-hero.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1198185,
+      "sha256": "ef412de1f0d73dca405eecff03ad15223b4a94b72fc4f9ae752069279e1b00c3",
+      "capturedAt": "2026-10-13T14:37:54.932Z"
+    },
+    {
+      "island": 1,
+      "point": "side",
+      "file": "01-side.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1248242,
+      "sha256": "e17919558269c4cee2cc635281a2c307c1ec6b2567d1f8984c7cd883de3c1b84",
+      "capturedAt": "2026-10-13T14:42:37.179Z"
+    },
+    {
+      "island": 2,
+      "point": "entry",
+      "file": "02-entry.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1334720,
+      "sha256": "8f41ef0c7e09c3eca46423e609a42dbda25367f34998702261ed8c0145afc46e",
+      "capturedAt": "2026-10-13T14:39:57.389Z"
+    },
+    {
+      "island": 2,
+      "point": "hero",
+      "file": "02-hero.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1368313,
+      "sha256": "f73eb0ddb27bc750483e5c491370aef9df4f5a3f9bcc4dc46bb7184ac6df773b",
+      "capturedAt": "2026-10-13T14:39:59.384Z"
+    },
+    {
+      "island": 2,
+      "point": "side",
+      "file": "02-side.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1296353,
+      "sha256": "b0161ff4e4f4513b6a7fa4e59e9419d746e467cbf4f601033273ceb06f67e363",
+      "capturedAt": "2026-10-13T14:40:01.244Z"
+    },
+    {
+      "island": 3,
+      "point": "entry",
+      "file": "03-entry.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1070379,
+      "sha256": "477763b8f7428c068e0d9a1f1a6000cd9b4558701be0b1a54b2ee1d644ed7032",
+      "capturedAt": "2026-10-13T14:42:41.296Z"
+    },
+    {
+      "island": 3,
+      "point": "hero",
+      "file": "03-hero.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1613220,
+      "sha256": "959f4f610a212f6ff3a2c67cd72d7b930846801b7c3100de18244fda12f7a29e",
+      "capturedAt": "2026-10-13T14:43:52.039Z"
+    },
+    {
+      "island": 3,
+      "point": "side",
+      "file": "03-side.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1166513,
+      "sha256": "a5803b7b55c1d4529ac169f17a9a4b1bd3774f502942243bbd7c09397c57b6b9",
+      "capturedAt": "2026-10-13T14:45:16.351Z"
+    },
+    {
+      "island": 4,
+      "point": "entry",
+      "file": "04-entry.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1218484,
+      "sha256": "c3e9268882efb95ac5e42de98d3eb73b60cc6bbb27578066b487adeb4aa42c9b",
+      "capturedAt": "2026-10-13T14:49:16.898Z"
+    },
+    {
+      "island": 4,
+      "point": "hero",
+      "file": "04-hero.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1279530,
+      "sha256": "76f33880216711172328b8cd3e27b14427ed866d1a3636410c3e6dd3c9dd3421",
+      "capturedAt": "2026-10-13T14:54:22.985Z"
+    },
+    {
+      "island": 4,
+      "point": "side",
+      "file": "04-side.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1213323,
+      "sha256": "b849151f94042dcae86878a6d0a381bab6cded7051c898f91677e40da229a873",
+      "capturedAt": "2026-10-13T14:54:44.208Z"
+    },
+    {
+      "island": 5,
+      "point": "entry",
+      "file": "05-entry.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1137561,
+      "sha256": "d08f41c6b56446c6cdb4cd25f50379fe470f9b1531748584e69500760332acd6",
+      "capturedAt": "2026-10-13T14:54:45.539Z"
+    },
+    {
+      "island": 5,
+      "point": "hero",
+      "file": "05-hero.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1157902,
+      "sha256": "c9b07796d8c63a1f4ada1d79cf6c3ad8c65f56298c974c087f89ee3413b9bf15",
+      "capturedAt": "2026-10-13T14:54:46.920Z"
+    },
+    {
+      "island": 5,
+      "point": "side",
+      "file": "05-side.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1154897,
+      "sha256": "8facf070cc52ec2b1cd3fed7cd25ac60d378700daa02d79a6eaf61a712da1744",
+      "capturedAt": "2026-10-13T14:56:50.081Z"
+    },
+    {
+      "island": 6,
+      "point": "entry",
+      "file": "06-entry.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1161714,
+      "sha256": "c4f556e4c89fa9f4d7b9beb049d65c35ca9219c015345465f6fbc3374a012b05",
+      "capturedAt": "2026-10-13T14:58:29.230Z"
+    },
+    {
+      "island": 6,
+      "point": "hero",
+      "file": "06-hero.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1093941,
+      "sha256": "6b0595056a50d8e6cfe411f3b4730c1f657ad62a282015532caeb7e72fc73d20",
+      "capturedAt": "2026-10-13T14:58:30.807Z"
+    },
+    {
+      "island": 6,
+      "point": "side",
+      "file": "06-side.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1106869,
+      "sha256": "dc857a90b454b11dc8f3b5e315e9e454a4752be9e4aa151636de7997a1726907",
+      "capturedAt": "2026-10-13T14:58:32.241Z"
+    },
+    {
+      "island": 7,
+      "point": "entry",
+      "file": "07-entry.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 984422,
+      "sha256": "c7e5815d78dbacfca17433e58ffc3051b96e42ab5b20f40389014ed67d9dc02f",
+      "capturedAt": "2026-10-13T14:56:52.702Z"
+    },
+    {
+      "island": 7,
+      "point": "hero",
+      "file": "07-hero.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1244656,
+      "sha256": "b2ac36367887f05fbd54cb0b2538ef2195741e459d1bfb47e45ebce5cf2d6222",
+      "capturedAt": "2026-10-13T14:56:54.437Z"
+    },
+    {
+      "island": 7,
+      "point": "side",
+      "file": "07-side.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1006938,
+      "sha256": "bf4ef707eb0a2d29ebc2600a69270b1fb5874bd483f84ff3ed3cbeee5b1863c3",
+      "capturedAt": "2026-10-13T14:56:56.118Z"
+    },
+    {
+      "island": 8,
+      "point": "entry",
+      "file": "08-entry.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1112880,
+      "sha256": "369a21bd096daaa7f0378932e1e56ef25f27eadfbe05b47bd8568eb30ed99879",
+      "capturedAt": "2026-10-13T14:57:47.167Z"
+    },
+    {
+      "island": 8,
+      "point": "hero",
+      "file": "08-hero.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1130301,
+      "sha256": "1e6c88f85b0f7f93635e23201739922d325461796b1475d3f01db8b3da13ac38",
+      "capturedAt": "2026-10-13T14:57:49.252Z"
+    },
+    {
+      "island": 8,
+      "point": "side",
+      "file": "08-side.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1103950,
+      "sha256": "d18d39266d593d9a188756892a8c4bed77fb6b9133053699d6417f1b67e5a7e6",
+      "capturedAt": "2026-10-13T14:57:51.234Z"
+    }
+  ]
+}

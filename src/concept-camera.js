@@ -1,11 +1,5 @@
 import { CONCEPT_LAYOUTS } from './concept-island-layout.js';
 
-const SKY_BRIDGES = [
-  { a: [0, 15], b: [0, -12], width: 7.1 },
-  { a: [-17, -4], b: [-3, -4], width: 6.2 },
-  { a: [3, -5], b: [17, -5], width: 6.2 },
-];
-
 const smooth = (a, b, value) => {
   const t = Math.max(0, Math.min(1, (value - a) / (b - a)));
   return t * t * (3 - 2 * t);
@@ -24,10 +18,22 @@ function spanWeight(x, z, span) {
 
 // はしの はしから ゆっくり たかく みる。ほかの ばしょの がかくは そのまま。
 export function conceptBridgeCameraWeight(number, x, z) {
-  if (number === 3) return spanWeight(x, z, CONCEPT_LAYOUTS[3].bridge);
+  if (number === 3) {
+    const bridge = CONCEPT_LAYOUTS[3].bridge;
+    const exit = 1 - smooth(2, 7, Math.hypot(x - bridge.b[0], z - bridge.b[1]));
+    return Math.max(spanWeight(x, z, bridge), exit);
+  }
   if (number === 7) {
     let weight = 0;
-    for (const bridge of SKY_BRIDGES) weight = Math.max(weight, spanWeight(x, z, bridge));
+    for (const bridge of CONCEPT_LAYOUTS[7].bridges) {
+      weight = Math.max(weight, spanWeight(x, z, bridge));
+      const exit = 1 - smooth(1, 4, Math.hypot(x - bridge.b[0], z - bridge.b[1]));
+      weight = Math.max(weight, exit);
+      if (bridge !== CONCEPT_LAYOUTS[7].bridges[0]) {
+        const otherExit = 1 - smooth(1, 4, Math.hypot(x - bridge.a[0], z - bridge.a[1]));
+        weight = Math.max(weight, otherExit);
+      }
+    }
     return weight;
   }
   return 0;
@@ -35,11 +41,11 @@ export function conceptBridgeCameraWeight(number, x, z) {
 
 // offset と lookOffset を たもったまま、はしの うえだけ うさぎを みやすくする。
 // outPosition と outTarget は さいりようできる Vector3。fov は かえない。
-export function setConceptCameraGoal(number, playerPosition, view, outPosition, outTarget) {
+export function setConceptCameraGoal(number, playerPosition, view, outPosition, outTarget, compactHud = false) {
   const weight = conceptBridgeCameraWeight(number, playerPosition.x, playerPosition.z);
-  const lift = number === 3 ? 3.4 : 2.8;
-  const lowerAim = number === 3 ? 1.7 : 1.4;
-  const stepBack = number === 3 ? 3.5 : 2.5;
+  const lift = number === 3 ? 6 : 4.5;
+  const lowerAim = number === 3 ? 7.5 : 5;
+  const stepBack = number === 3 ? -4 : 0;
   outPosition.set(
     playerPosition.x + view.offset[0],
     playerPosition.y + view.offset[1] + lift * weight,
@@ -50,5 +56,11 @@ export function setConceptCameraGoal(number, playerPosition, view, outPosition, 
     playerPosition.y + view.lookOffset[1] - lowerAim * weight,
     playerPosition.z + view.lookOffset[2],
   );
+  // ちいさい がめんでは、したの ボタンより うえに からだを うつす。
+  if (compactHud) {
+    if (number === 3) outTarget.y -= 7;
+    else if (number === 7) { outPosition.z += 12 * (1 - weight); outTarget.y -= 4 + 2 * weight; }
+    else { outPosition.z += 12; outTarget.y -= 4; }
+  }
   return weight;
 }

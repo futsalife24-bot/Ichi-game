@@ -1,18 +1,41 @@
 import { CONCEPT_LAYOUTS } from './concept-island-layout.js';
 
 export const smooth = (a,b,x) => { const t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t); };
+// まんなかの さかから、左右の さんごの にわへ つながる みち。
+export const SEA_SIDE_PATHS = Object.freeze([
+  [[-1,-5],[-9,-4],[-12,-1]],
+  [[1,-7],[9,-7],[12,-4]],
+]);
 export function segmentDistance(x,z,a,b) {
   const dx=b[0]-a[0],dz=b[1]-a[1],t=Math.max(0,Math.min(1,((x-a[0])*dx+(z-a[1])*dz)/(dx*dx+dz*dz||1)));
   return Math.hypot(x-a[0]-dx*t,z-a[1]-dz*t);
 }
 export function conceptPathDistance(number,x,z) {
   const path=CONCEPT_LAYOUTS[number].path;
-  return Math.min(...path.slice(1).map((p,i)=>segmentDistance(x,z,path[i],p)));
+  const main=Math.min(...path.slice(1).map((p,i)=>segmentDistance(x,z,path[i],p)));
+  if(number!==6)return main;
+  let distance=main;
+  for(const side of SEA_SIDE_PATHS)for(let i=1;i<side.length;i++)distance=Math.min(distance,segmentDistance(x,z,side[i-1],side[i]));
+  return distance;
 }
 const ellipse=(x,z,cx,cz,rx,rz)=>(Math.hypot((x-cx)/rx,(z-cz)/rz)-1)*Math.min(rx,rz);
+function skyHillHeight(x,z) {
+  const rise=2.1*(1-smooth(4,17,z))+2.3*(1-smooth(-12,4,z))+2.8*(1-smooth(-25,-12,z));
+  const shoulder=.4+.6*(1-smooth(5,28,Math.abs(x)));
+  return .75+rise*shoulder;
+}
+// はしの おわりと しろの いちばん てまえの だんを あわせる きじゅん。
+export function conceptWindCityRootHeight() { return skyHillHeight(0,-12.3)-.18; }
+function skyStairHeight(z) {
+  const u=Math.max(0,Math.min(11,(-12.3-z)/.72)),index=Math.floor(u),fraction=u-index;
+  return conceptWindCityRootHeight()+.18+.34*(index+(index<11?smooth(.25,.44,fraction):0));
+}
 export function conceptLandDistance(number,x,z) {
   if(number===1)return Math.min(ellipse(x,z,0,-3,20,17),ellipse(x,z,0,14,5.5,14));
-  if(number===7)return Math.min(ellipse(x,z,0,25,12,11),ellipse(x,z,0,-25,21,17),ellipse(x,z,-24,-4,9,8),ellipse(x,z,24,-5,9,8),conceptPathDistance(number,x,z)-3.7,segmentDistance(x,z,[-24,-4],[0,-4])-3.3,segmentDistance(x,z,[0,-5],[24,-5])-3.3);
+  if(number===7){
+    const sides=CONCEPT_LAYOUTS[7].bridges.slice(1).map(bridge=>segmentDistance(x,z,bridge.a,bridge.b)-bridge.width/2-.2);
+    return Math.min(ellipse(x,z,0,25,12,11),ellipse(x,z,0,-25,21,17),ellipse(x,z,-24,-4,9,8),ellipse(x,z,24,-5,9,8),conceptPathDistance(number,x,z)-3.7,...sides);
+  }
   return ellipse(x,z,0,-3,CONCEPT_LAYOUTS[number].radius,CONCEPT_LAYOUTS[number].radius*1.16);
 }
 export function conceptWaterDistance(number,x,z) {
@@ -24,12 +47,27 @@ export function conceptWaterDistance(number,x,z) {
 }
 export function conceptHeight(number,x,z) {
   const layout=CONCEPT_LAYOUTS[number],distance=conceptLandDistance(number,x,z),path=conceptPathDistance(number,x,z);
-  if(number===7){return .65+1.5*(1-smooth(-19,14,z))+(Math.abs(x)>16?.2:0);}
+  if(number===7){
+    // てまえの にわから まちの だんおかへ、みちも はしも とぎれず のぼる。
+    const hill=skyHillHeight(x,z);
+    if(z>=-12.3||z<=-26)return hill;
+    // もけいの だんと おなじ たかさへ、ふみこむ すこし まえから なめらかに のぼる。
+    const top=skyStairHeight(z),fade=z>=-20.22?1:smooth(-26,-20.22,z);
+    const corridor=1-smooth(2.8,4.1,Math.abs(x));
+    return hill+(top-hill)*fade*corridor;
+  }
+  if(number===6){
+    // さんだんの すなのおか。みちは なだらかで、さんごの にわは すこし たかい。
+    const stage=1.1*(1-smooth(-2,3,z))+1.6*(1-smooth(-9,-4,z))+2.65*(1-smooth(-16,-11,z));
+    const garden=.72*smooth(3.2,8.5,Math.abs(x))*(1-smooth(25,35,Math.abs(x)))*smooth(2.8,7.5,path);
+    const ripple=.1*Math.sin(x*.14)*Math.cos(z*.18)*smooth(3.3,7.5,path);
+    const coast=1-smooth(-3.7,2.2,distance);
+    return (.65+stage+garden+ripple)*coast-2.5*(1-coast);
+  }
   const coast=1-smooth(-3.7,2.2,distance);
   let h=.65;
   if(number===1)h+=.55*Math.exp(-(x*x+(z+6)*(z+6))/90);
   if(number===2||number===4)h+=3.8*Math.exp(-((x-26)**2+(z+18)**2)/130)+2.6*Math.exp(-((x+29)**2+(z+22)**2)/140);
-  if(number===6)h+=.2*Math.sin(x*.13)*Math.cos(z*.18);
   h=(h*(.35+.65*smooth(2.8,7,path))+.65*(1-smooth(2.8,7,path)));
   if(number===3) {
     const water=ellipse(x,z,-7,10,27,16);
@@ -56,7 +94,8 @@ export function clampConceptPosition(number,p) {
   }
   if(constraint(p.x,p.z)<=0)return true;
   const layout=CONCEPT_LAYOUTS[number],segments=layout.path.slice(1).map((b,i)=>[layout.path[i],b]);
-  if(number===7)segments.push([[-24,-4],[0,-4]],[[0,-5],[24,-5]]);
+  if(number===7)for(const bridge of layout.bridges.slice(1))segments.push([bridge.a,bridge.b]);
+  if(number===6)for(const side of SEA_SIDE_PATHS)for(let i=1;i<side.length;i++)segments.push([side[i-1],side[i]]);
   let best=null,bestDistance=Infinity;
   for(const [a,b] of segments){const dx=b[0]-a[0],dz=b[1]-a[1],t=Math.max(0,Math.min(1,((p.x-a[0])*dx+(p.z-a[1])*dz)/(dx*dx+dz*dz||1))),x=a[0]+dx*t,z=a[1]+dz*t,d=Math.hypot(p.x-x,p.z-z);if(d<bestDistance&&constraint(x,z)<=0){best={x,z};bestDistance=d;}}
   if(best){p.x=best.x;p.z=best.z;}return true;
@@ -75,11 +114,5 @@ export function clampConceptSolids(solids,p) {
 export function conceptWalkHeight(number,x,z) {
   let h=conceptHeight(number,x,z);
   if(number===5)h+=.6*(1-smooth(.86,1.03,Math.hypot(x/11.8,(z+13)/8.8)));
-  if(number===7){
-    const base=conceptHeight(7,0,-24);
-    if(Math.hypot(x,z+24)<10.5)h=Math.max(h,base+1.1);
-    if(Math.abs(x)<2.55)for(let step=0;step<4;step++)if(Math.abs(z-(-12.6-step*.52))<.39)h=Math.max(h,base+.25*(step+1));
-    for(const [cx,cz] of [[-24,-4],[24,-5]]){const d=Math.hypot(x-cx,z-cz);if(d<4.25)h=Math.max(h,conceptHeight(7,cx,cz)+.7*(1-smooth(2.9,4.25,d)));}
-  }
   return h;
 }

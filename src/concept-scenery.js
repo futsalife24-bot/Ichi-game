@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { CONCEPT_LAYOUTS } from './concept-island-layout.js';
-import { conceptHeight, conceptLandDistance, conceptPathDistance, conceptWaterDistance, smooth } from './concept-terrain.js';
+import { conceptHeight, conceptLandDistance, conceptPathDistance, conceptWaterDistance, conceptWindCityRootHeight, smooth } from './concept-terrain.js';
 import { conceptMaterial, addCaustics } from './concept-materials.js';
 import { buildConceptGardens, petalGeometry, instanceParts } from './concept-gardens.js';
 import { buildSeabed } from './concept-seabed.js';
@@ -12,6 +12,7 @@ import { buildBackdrop } from './concept-backdrop.js';
 import { buildSkyDetail } from './concept-sky-detail.js';
 import { buildWorkshopDetail } from './concept-workshop-detail.js';
 import { createIslandOneSeasons } from './concept-seasons.js';
+import { buildSkyAccents } from './concept-sky-accents.js';
 
 const caches=new Map();
 async function loadPack(pack) {
@@ -61,7 +62,7 @@ export class ConceptScenery {
     if(number===6)buildSeabed(this,kit.nature);
     if(number===2||number===4)buildForestDetail(this);
     buildCityDetail(this,kit);
-    if(number===7)buildSkyDetail(this);
+    if(number===7){buildSkyDetail(this);buildSkyAccents(this);}
     if(number===4)buildWorkshopDetail(this);
   }
   installModels(kit) {
@@ -69,7 +70,8 @@ export class ConceptScenery {
       const asset=kit.assets[id];if(!asset)throw new Error(`しまの かたちが たりません: ${id}`);
       const root=new THREE.Group();root.name=id;root.position.set(x,this.groundAt(x,z),z);root.scale.setScalar(scale);root.rotation.y=yaw;
       if(id==='skyAirship')root.position.y=16;
-      if(id==='windSails'){root.position.y+=13.4;root.position.z+=3;}
+      if(id==='windCity')root.position.y=conceptWindCityRootHeight();
+      if(id==='windSails'){root.position.y=conceptWindCityRootHeight()+13.4;root.position.z+=3;}
       for(const part of asset.meshes) {
         const m=new THREE.Mesh(part.geometry,part.materialObject);m.name=part.name;m.castShadow=m.receiveShadow=true;
         if(asset.pivots?.[part.name]) {
@@ -85,6 +87,7 @@ export class ConceptScenery {
       if(id==='forestArch')for(const [sx,r] of [[-7.6,2.5],[8,1.65]])this.solids.push({x:x+sx*scale,z,r:r*scale});
       if(id==='coralArch')for(const sx of [-3.0,3.0])this.solids.push({x:x+Math.cos(yaw)*sx*scale,z:z-Math.sin(yaw)*sx*scale,r:.75*scale});
       if(id==='windCity')for(const [sx,sz,r] of [[0,0,2.85],[-6,0,2.8],[6,0,2.8],[-5,-5,2.2],[5,-5,2.2],[0,-5.8,3]])this.solids.push({x:x+sx,z:z+sz,r});
+      if(id==='windCity')for(const [sx,sz,r] of asset.colliderCircles??[])this.solids.push({x:x+(Math.cos(yaw)*sx+Math.sin(yaw)*sz)*scale,z:z+(-Math.sin(yaw)*sx+Math.cos(yaw)*sz)*scale,r:r*scale});
       if(id==='blueDomePavilion')for(let i=0;i<8;i++){const a=i*Math.PI/4;this.solids.push({x:x+Math.cos(a)*2.65,z:z+Math.sin(a)*2.65,r:.23});}
     }
   }
@@ -102,7 +105,7 @@ export class ConceptScenery {
     const old=geometry.index.array,indices=[];
     for(let i=0;i<old.length;i+=3){const a=old[i],b=old[i+1],c2=old[i+2];if(n===6||[a,b,c2].some(v=>conceptLandDistance(n,p.getX(v),p.getZ(v))<1.2))indices.push(a,b,c2);}
     geometry.setIndex(indices);geometry.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));geometry.computeVertexNormals();
-    const mat=conceptMaterial({color:0xffffff,type:n===3||n===5||n===7||n===8?'paving':'plaster',roughness:.94});mat.vertexColors=true;
+    const mat=conceptMaterial({color:0xffffff,type:n===7?'whiteStone':n===3||n===5||n===8?'paving':'plaster',roughness:.94});mat.vertexColors=true;
     if(n===6)addCaustics(mat,this.time);
     this.terrain=new THREE.Mesh(geometry,mat);this.terrain.receiveShadow=true;this.group.add(this.terrain);
     if(n===4)for(let z=-14;z<24;z+=.8){const o=mesh(new THREE.BoxGeometry(5.4,.12,.74),z%2?0xb58b55:0xc39762,'wood');o.position.set(0,this.groundAt(0,z)+.035,z);this.group.add(o);}
@@ -162,7 +165,7 @@ export class ConceptScenery {
     for(let i=0;i<24;i++){const root=new THREE.Group(),body=mesh(new THREE.SphereGeometry(1,24,16),i%3?0xf0c46b:0x7fd9cb);body.scale.set(.7,.35,.23);root.add(body);
       const tail=mesh(new THREE.ConeGeometry(.25,.48,3),0xe6b15c);tail.rotation.z=Math.PI/2;tail.position.x=-.73;root.add(tail);
       for(const z of [-.2,.2]){const eye=mesh(new THREE.SphereGeometry(.045,12,8),0x2e4a4d);eye.position.set(.36,.08,z);root.add(eye);}
-      root.position.set((rnd()-.5)*60,4+rnd()*13,-22+rnd()*40);root.userData.rest=root.position.clone();this.group.add(root);fish.push(root);
+      root.position.set((rnd()-.5)*60,4+rnd()*13,-22-rnd()*55);root.userData.rest=root.position.clone();this.group.add(root);fish.push(root);
     }this.fish=fish;
     const whale=new THREE.Group(),body=mesh(new THREE.SphereGeometry(1,48,32),0x73b7cd);body.scale.set(6,2.1,2.1);whale.add(body);
     const belly=mesh(new THREE.SphereGeometry(1,40,24),0xc4e6de);belly.position.set(.5,-.7,.15);belly.scale.set(5.2,1.35,1.85);whale.add(belly);

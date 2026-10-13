@@ -57,6 +57,11 @@ let save;
 let profileUI;
 let profiles;
 let developerScenario = null;
+// かくにんモードでは、きどうの どこで まっているかを よめるようにする。
+function startupStage(stage) {
+  if(new URLSearchParams(location.search).has('dev')){ $('btnPlay').textContent='しまを よみこみちゅう';$('btnPlay').title=stage; }
+}
+startupStage('プロフィールの準備');
 try {
   ({ profiles, scenario: developerScenario } = await openPlayProfiles({
     search: location.search, getStorage: () => localStorage, claimSession: claimSaveSession, avatar: PRESETS.usagi,
@@ -77,6 +82,7 @@ catch (error) {
 }
 $('saveClose').addEventListener('click', () => { saveBlocked = false; });
 
+startupStage('描画の準備');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 renderer.shadowMap.enabled = true;
@@ -107,7 +113,9 @@ const voice = new Voice({
 });
 voice.enabled = save.voice;
 
+startupStage('島の素材の読み込み');
 const conceptKitA = await loadConceptKit(1);
+startupStage('島の組み立て');
 const world = new World(scene, { island: 1 });
 world.installConcept(conceptKitA);
 const secondRoot = new THREE.Group(); secondRoot.visible = false; scene.add(secondRoot);
@@ -330,6 +338,8 @@ function buildTitle() {
   if (developerScenario) $('btnPlay').textContent = developerScenario.place.startsWith('learning-') ? `⛵ 第${developerScenario.place.slice(9)}島を確認する` : developerScenario.place === 'forest' ? '⛵ 第三島を確認する' : developerScenario.place === 'second' ? '🌳 第二島を確認する' : '🌼 第一島を確認する';
 }
 buildTitle();
+$('btnPlay').removeAttribute('title');
+$('btnPlay').disabled=false;
 profileUI.connect(() => {
   if (mode !== 'title' || saveBlocked || !persist()) return false;
   saveBlocked = true;
@@ -723,7 +733,8 @@ function cameraGoal() {
     const view=CONCEPT_LAYOUTS[number]?.camera??CONCEPT_CAMERA;
     cameraSubject.copy(player.pos);
     if(harbor)cameraSubject.x-=FOREST_ORIGIN.x;
-    setConceptCameraGoal(number,cameraSubject,view,camTarget,lookTarget);
+    const compactHud=mode==='play'&&window.innerWidth>window.innerHeight&&window.innerHeight<=400&&!$('islandActions').classList.contains('hidden');
+    setConceptCameraGoal(number,cameraSubject,view,camTarget,lookTarget,compactHud);
     if(harbor){camTarget.x+=FOREST_ORIGIN.x;lookTarget.x+=FOREST_ORIGIN.x;}
   }
 }
@@ -1048,7 +1059,9 @@ requestAnimationFrame(frame);
 
 // ------------------------------------------------ PWA
 if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+  const registerOffline=()=>navigator.serviceWorker.register('./sw.js').catch(() => {});
+  if(document.readyState==='complete')registerOffline();
+  else window.addEventListener('load',registerOffline,{once:true});
 }
 
 // デバッグ用
