@@ -22,7 +22,7 @@ test('第一島は文字・木ゆらし・掘る遊び・ジャンプ・学校�
   for (const feature of ['trees', 'digging', 'jump', 'school', 'garden', 'shop', 'room']) assert.equal(first[feature], false);
   assert.equal(islandRules(2).trees, true); assert.equal(islandRules(2).jump, true);
   assert.equal(islandRules(2).shop, false); assert.equal(islandRules(3).shop, true); assert.equal(islandRules(3).room, true);
-  assert.throws(() => islandRules(4));
+  assert.equal(islandRules(4).number,4); assert.equal(islandRules(8).number,8); assert.throws(() => islandRules(9));
 });
 
 test('第一島の実物収集は１〜１０まで出題し、声と実物の枠が同じ個数になる', () => {

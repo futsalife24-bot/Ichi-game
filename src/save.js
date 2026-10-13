@@ -10,6 +10,7 @@ import { validSuggestions } from './suggestions.js';
 import { validAdaptivePlay } from './adaptive-play.js';
 import { validIslandGuidance } from './island-guidance.js';
 import { validBirthday } from './birthday.js';
+import { validIslandActivityProgress } from './island-activities.js';
 export const OLD_KEY = 'kirakira-island-save-v1';
 export const KEY = 'kirakira-island-save-v2';
 export const BACKUP_KEY = KEY + '-previous';
@@ -58,6 +59,7 @@ export function validateGameSave(data) {
   if (s.adaptivePlay !== undefined && (!validAdaptivePlay(s.adaptivePlay) || Object.values(s.adaptivePlay.domains).some(d=>d.lastId>=(s.observations?.nextId??1)))) throw new Error('自動調整の記録を確認してください');
   if (s.islandGuidance !== undefined && !validIslandGuidance(s.islandGuidance)) throw new Error('島への案内の記録を確認してください');
   if (s.birthday !== undefined && !validBirthday(s.birthday)) throw new Error('お祝いの記録を確認してください');
+  if (s.islandActivities !== undefined && !validIslandActivityProgress(s.islandActivities)) throw new Error('しまの あそびの記録を確認してください');
   if(s.suggestions!==undefined){
     const nextId=s.observations?.nextId??1;
     if(Object.values(s.suggestions.after).some(id=>id>=nextId)||Object.values(s.suggestions.recent).some(list=>list.some(e=>e.id>=nextId)))throw new Error('提案と活動の記録を確認してください');

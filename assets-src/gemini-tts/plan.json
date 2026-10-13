@@ -1,8 +1,8 @@
 {
   "model": "gemini-3.8-flash-tts",
   "voice": "Cleo",
-  "lines": 983,
-  "clips": 726,
+  "lines": 1060,
+  "clips": 811,
   "batches": [
     [
       {
@@ -3790,6 +3790,534 @@
         "hash": "3d3a5c63",
         "text": "いちかちゃん！",
         "reading": "いちかちゃん！"
+      }
+    ],
+    [
+      {
+        "hash": "80c5cdd9",
+        "text": "まず、みほんをみてね。",
+        "reading": "まず、みほんを みてね。",
+        "lang": "ja"
+      },
+      {
+        "hash": "c3a2fb83",
+        "text": "いっしょにやってみよう。",
+        "reading": "いっしょに やってみよう。",
+        "lang": "ja"
+      },
+      {
+        "hash": "062a0e8b",
+        "text": "こんどはじぶんでやってみよう。",
+        "reading": "こんどは じぶんで やってみよう。",
+        "lang": "ja"
+      },
+      {
+        "hash": "afab5722",
+        "text": "みほんをみて、もういちどためしてね。",
+        "reading": "みほんを みて、もういちど ためしてね。",
+        "lang": "ja"
+      },
+      {
+        "hash": "29899dce",
+        "text": "どうなるかな。",
+        "reading": "どうなるかな。",
+        "lang": "ja"
+      },
+      {
+        "hash": "492534cb",
+        "text": "よそうして、ためして、よくみてね。",
+        "reading": "よそうして、ためして、よく みてね。",
+        "lang": "ja"
+      },
+      {
+        "hash": "ac65180f",
+        "text": "えらんだものをとどけよう。",
+        "reading": "えらんだ ものを とどけよう。",
+        "lang": "ja"
+      },
+      {
+        "hash": "55c22009",
+        "text": "どんなおまつりにする？",
+        "reading": "どんな おまつりに する？",
+        "lang": "ja"
+      },
+      {
+        "hash": "f6bc74c9",
+        "text": "えをえらんでね。",
+        "reading": "えを えらんでね。",
+        "lang": "ja"
+      },
+      {
+        "hash": "60d16f36",
+        "text": "あかいふうせんはどれ？",
+        "reading": "あかい ふうせんは どれ？",
+        "lang": "ja"
+      }
+    ],
+    [
+      {
+        "hash": "4f11f81d",
+        "text": "りんごを３こあつめよう",
+        "reading": "りんごを さんこ あつめよう",
+        "lang": "ja"
+      },
+      {
+        "hash": "2943751e",
+        "text": "まるとおなじかたちはどれ？",
+        "reading": "まると おなじ かたちは どれ？",
+        "lang": "ja"
+      },
+      {
+        "hash": "dc3f1a69",
+        "text": "もーもーはだあれ？",
+        "reading": "もーもーは だあれ？",
+        "lang": "ja"
+      },
+      {
+        "hash": "ab65f934",
+        "text": "ひよこにりんごを２ことどける",
+        "reading": "ひよこに りんごを にこ とどける",
+        "lang": "ja"
+      },
+      {
+        "hash": "f2b77eeb",
+        "text": "かいがらをおさらへはこぶ",
+        "reading": "かいがらを おさらへ はこぶ",
+        "lang": "ja"
+      },
+      {
+        "hash": "dab67015",
+        "text": "３とおなじりんごのおさら",
+        "reading": "さんと おなじ りんごの おさら",
+        "lang": "ja"
+      },
+      {
+        "hash": "81ab5d53",
+        "text": "あかいものをあつめよう",
+        "reading": "あかい ものを あつめよう",
+        "lang": "ja"
+      },
+      {
+        "hash": "98d8532a",
+        "text": "Aとおなじカード",
+        "reading": "Aと おなじ カード",
+        "lang": "ja"
+      },
+      {
+        "hash": "82b8edb7",
+        "text": "みほんどおりにおさらをならべる",
+        "reading": "みほんどおりに おさらを ならべる",
+        "lang": "ja"
+      },
+      {
+        "hash": "2cb43471",
+        "text": "おちたりんごをかごへ",
+        "reading": "おちたりんごを かごへ",
+        "lang": "ja"
+      }
+    ],
+    [
+      {
+        "hash": "810dbb34",
+        "text": "４こと２こ、どちらがおおい？",
+        "reading": "よんこと にこ、どちらが おおい？",
+        "lang": "ja"
+      },
+      {
+        "hash": "2e1231de",
+        "text": "１・２・□・４",
+        "reading": "いち・に・□・よん",
+        "lang": "ja"
+      },
+      {
+        "hash": "af1f3332",
+        "text": "りんごとapple",
+        "reading": "りんごと apple",
+        "lang": "ja"
+      },
+      {
+        "hash": "3d461412",
+        "text": "あかいはなを３ぼんとどける",
+        "reading": "あかい はなを さんぼん とどける",
+        "lang": "ja"
+      },
+      {
+        "hash": "a5de1496",
+        "text": "おさらを３こと３こに",
+        "reading": "おさらを さんこと さんこに",
+        "lang": "ja"
+      },
+      {
+        "hash": "101c5878",
+        "text": "かえるさんにはっぱを３まい",
+        "reading": "かえるさんに はっぱを さんまい",
+        "lang": "ja"
+      },
+      {
+        "hash": "e91428b9",
+        "text": "さんかく２まいでしかく",
+        "reading": "さんかく にまいで しかく",
+        "lang": "ja"
+      },
+      {
+        "hash": "c2b77728",
+        "text": "あか・あお・あか・あお",
+        "reading": "あか・あお・あか・あお",
+        "lang": "ja"
+      },
+      {
+        "hash": "d144786d",
+        "text": "はしにとどくいた",
+        "reading": "はしに とどく いた",
+        "lang": "ja"
+      },
+      {
+        "hash": "c49b3053",
+        "text": "12このみほんとおなじかず",
+        "reading": "じゅうにこの みほんと おなじ かず",
+        "lang": "ja"
+      }
+    ],
+    [
+      {
+        "hash": "acc351b7",
+        "text": "おうちのやねとかべ",
+        "reading": "おうちの やねと かべ",
+        "lang": "ja"
+      },
+      {
+        "hash": "1ad1e295",
+        "text": "ながいいたとみじかいいた",
+        "reading": "ながい いたと みじかい いた",
+        "lang": "ja"
+      },
+      {
+        "hash": "d21fa1ad",
+        "text": "３こと２こをあわせる",
+        "reading": "さんこと にこを あわせる",
+        "lang": "ja"
+      },
+      {
+        "hash": "d6dc0af6",
+        "text": "４こをふたりにわける",
+        "reading": "よんこを ふたりに わける",
+        "lang": "ja"
+      },
+      {
+        "hash": "7824c5f0",
+        "text": "えのリストでおかいもの",
+        "reading": "えの リストで おかいもの",
+        "lang": "ja"
+      },
+      {
+        "hash": "c345db26",
+        "text": "おやつを５こそろえる",
+        "reading": "おやつを ごこ そろえる",
+        "lang": "ja"
+      },
+      {
+        "hash": "3fc62709",
+        "text": "おきゃくさんにひとつずつ",
+        "reading": "おきゃくさんに ひとつずつ",
+        "lang": "ja"
+      },
+      {
+        "hash": "7b1b6bab",
+        "text": "５こから２こわたす",
+        "reading": "ごこから にこ わたす",
+        "lang": "ja"
+      },
+      {
+        "hash": "ac20257a",
+        "text": "みずをあげたはな",
+        "reading": "みずを あげた はな",
+        "lang": "ja"
+      },
+      {
+        "hash": "dc1bfda9",
+        "text": "おもり３こと１こ",
+        "reading": "おもり さんこと いっこ",
+        "lang": "ja"
+      }
+    ],
+    [
+      {
+        "hash": "3046caaa",
+        "text": "かぜとはね",
+        "reading": "かぜと はね",
+        "lang": "ja"
+      },
+      {
+        "hash": "c559c7b8",
+        "text": "ふたつのはなをくらべる",
+        "reading": "ふたつの はなを くらべる",
+        "lang": "ja"
+      },
+      {
+        "hash": "c1d2aa15",
+        "text": "しゅうかくしてとどける",
+        "reading": "しゅうかくして とどける",
+        "lang": "ja"
+      },
+      {
+        "hash": "94b96461",
+        "text": "10こを３ことのこりに",
+        "reading": "じゅっこを さんこと のこりに",
+        "lang": "ja"
+      },
+      {
+        "hash": "92edd1de",
+        "text": "えのちずのみち",
+        "reading": "えの ちずの みち",
+        "lang": "ja"
+      },
+      {
+        "hash": "b63d9e5c",
+        "text": "おてつだいのえをならべる",
+        "reading": "おてつだいの えを ならべる",
+        "lang": "ja"
+      },
+      {
+        "hash": "c508c353",
+        "text": "じゅんび→はし→テント",
+        "reading": "じゅんび→はし→テント",
+        "lang": "ja"
+      },
+      {
+        "hash": "c9fb9e52",
+        "text": "２かしょへわけてはこぶ",
+        "reading": "にかしょへ わけて はこぶ",
+        "lang": "ja"
+      },
+      {
+        "hash": "e450d514",
+        "text": "５にんとパン３こ",
+        "reading": "ごにんと パンさんこ",
+        "lang": "ja"
+      },
+      {
+        "hash": "5d8ade50",
+        "text": "みんながとおれるならべかた",
+        "reading": "みんなが とおれる ならべかた",
+        "lang": "ja"
+      }
+    ],
+    [
+      {
+        "hash": "8a44c1f0",
+        "text": "にんずうとおなじいす",
+        "reading": "にんずうと おなじ いす",
+        "lang": "ja"
+      },
+      {
+        "hash": "14764dc0",
+        "text": "じぶんのおまつり",
+        "reading": "じぶんの おまつり",
+        "lang": "ja"
+      },
+      {
+        "hash": "271f092d",
+        "text": "みんなでかたづける",
+        "reading": "みんなで かたづける",
+        "lang": "ja"
+      },
+      {
+        "hash": "6877c463",
+        "text": "だいよんのしま。",
+        "reading": "だいよんの しま。",
+        "lang": "ja"
+      },
+      {
+        "hash": "7c1bc642",
+        "text": "かたちをあわせて、つくってみよう。",
+        "reading": "かたちを あわせて、つくって みよう。",
+        "lang": "ja"
+      },
+      {
+        "hash": "0567205c",
+        "text": "だいごのしま。",
+        "reading": "だいごの しま。",
+        "lang": "ja"
+      },
+      {
+        "hash": "22bbc9c7",
+        "text": "おかいものと、わけるおてつだいをしよう。",
+        "reading": "おかいものと、わける おてつだいを しよう。",
+        "lang": "ja"
+      },
+      {
+        "hash": "b8317f96",
+        "text": "だいろくのしま。",
+        "reading": "だいろくの しま。",
+        "lang": "ja"
+      },
+      {
+        "hash": "f45d8cb3",
+        "text": "うみのそこにきたよ。",
+        "reading": "うみの そこに きたよ。",
+        "lang": "ja"
+      },
+      {
+        "hash": "61657d41",
+        "text": "ここはくうきのあるかんさつドームだよ。",
+        "reading": "ここは くうきの ある かんさつドームだよ。",
+        "lang": "ja"
+      }
+    ],
+    [
+      {
+        "hash": "436ea966",
+        "text": "だいななのしま。",
+        "reading": "だいななの しま。",
+        "lang": "ja"
+      },
+      {
+        "hash": "530b011b",
+        "text": "くものうえをたんけんしよう。",
+        "reading": "くもの うえを たんけんしよう。",
+        "lang": "ja"
+      },
+      {
+        "hash": "4cfbf1b3",
+        "text": "みちとはしをたどってね。",
+        "reading": "みちと はしを たどってね。",
+        "lang": "ja"
+      },
+      {
+        "hash": "985f85f6",
+        "text": "だいはちのしま。",
+        "reading": "だいはちの しま。",
+        "lang": "ja"
+      },
+      {
+        "hash": "8950ef26",
+        "text": "みんなのおまつりを、じぶんでじゅんびしよう。",
+        "reading": "みんなの おまつりを、じぶんで じゅんびしよう。",
+        "lang": "ja"
+      }
+    ],
+    [
+      {
+        "hash": "10bc2abf",
+        "text": "apple",
+        "reading": "apple",
+        "lang": "en"
+      },
+      {
+        "hash": "7ff24232",
+        "text": "Thankyou",
+        "reading": "Thank you",
+        "lang": "en"
+      },
+      {
+        "hash": "cf77833a",
+        "text": "Ilikeit",
+        "reading": "I like it",
+        "lang": "en"
+      },
+      {
+        "hash": "c40bf6cc",
+        "text": "A",
+        "reading": "A",
+        "lang": "en"
+      },
+      {
+        "hash": "c70bfb85",
+        "text": "B",
+        "reading": "B",
+        "lang": "en"
+      },
+      {
+        "hash": "c60bf9f2",
+        "text": "C",
+        "reading": "C",
+        "lang": "en"
+      },
+      {
+        "hash": "c10bf213",
+        "text": "D",
+        "reading": "D",
+        "lang": "en"
+      },
+      {
+        "hash": "c00bf080",
+        "text": "E",
+        "reading": "E",
+        "lang": "en"
+      },
+      {
+        "hash": "06745c07",
+        "text": "cat",
+        "reading": "cat",
+        "lang": "en"
+      },
+      {
+        "hash": "e668bd09",
+        "text": "dog",
+        "reading": "dog",
+        "lang": "en"
+      }
+    ],
+    [
+      {
+        "hash": "afad8963",
+        "text": "fish",
+        "reading": "fish",
+        "lang": "en"
+      },
+      {
+        "hash": "977128b2",
+        "text": "bird",
+        "reading": "bird",
+        "lang": "en"
+      },
+      {
+        "hash": "40f480dc",
+        "text": "red",
+        "reading": "red",
+        "lang": "en"
+      },
+      {
+        "hash": "82fbf5cd",
+        "text": "blue",
+        "reading": "blue",
+        "lang": "en"
+      },
+      {
+        "hash": "05025085",
+        "text": "triangle",
+        "reading": "triangle",
+        "lang": "en"
+      },
+      {
+        "hash": "0b41f02c",
+        "text": "red,blue",
+        "reading": "red, blue",
+        "lang": "en"
+      },
+      {
+        "hash": "56893ba4",
+        "text": "redapple",
+        "reading": "red apple",
+        "lang": "en"
+      },
+      {
+        "hash": "bd6788dc",
+        "text": "watertheflower",
+        "reading": "water the flower",
+        "lang": "en"
+      },
+      {
+        "hash": "81417a23",
+        "text": "heavyandlight",
+        "reading": "heavy and light",
+        "lang": "en"
+      },
+      {
+        "hash": "089d11a8",
+        "text": "Gotothebridge",
+        "reading": "Go to the bridge",
+        "lang": "en"
       }
     ]
   ]

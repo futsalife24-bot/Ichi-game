@@ -47,6 +47,21 @@ function fixture(indexWait) {
   const voice=new Voice({audio});
   return {voice,starts,requests,synth,hash,audio};
 }
+
+test('英語の端末音声がなくても英語録音を優先して再生する',async()=>{
+  const wait=deferred(),f=fixture(wait),hash=clipHash(clipKey('apple'));
+  wait.resolve({ok:true,json:async()=>({schemaVersion:2,clips:{[hash]:{file:`gemini/${hash}.mp3`}}})});
+  await f.voice.indexReady;assert.equal(f.voice.canSpeakEnglish('apple'),true);
+  f.voice.say({say:'apple',sub:'apple',lang:'en'});await tick();await tick();
+  assert.equal(f.voice.lastMode,'clip');assert.equal(f.synth.length,0);assert.equal(f.starts.length,1);f.voice.stop();
+});
+
+test('英語の録音がなくても日本語の端末音声へ置き換えない',async()=>{
+  const f=fixture();f.voice.synth.getVoices=()=>[{lang:'ja-JP',name:'にほんご'}];f.voice.pick();
+  await f.voice.indexReady;assert.equal(f.voice.canSpeakEnglish('apple'),false);
+  f.voice.say({say:'apple',lang:'en'});await tick();await tick();assert.equal(f.synth.length,0);assert.equal(f.starts.length,0);
+  f.voice.stop();
+});
 test('first speech waits for manifest and uses the Gemini clip',async()=>{
   const wait=deferred(),f=fixture(wait);f.voice.say('すごい！');await tick();assert.equal(f.synth.length,0);assert.equal(f.starts.length,0);
   wait.resolve({ok:true,json:async()=>({schemaVersion:2,clips:{[f.hash]:{file:`gemini/${f.hash}.mp3`}}})});await tick();await tick();

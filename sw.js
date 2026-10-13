@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v37-tutorial-island';
+const VERSION = 'kirakira-v38-eight-islands';
 const ASSETS = [
   './',
   './index.html',
@@ -11,6 +11,14 @@ const ASSETS = [
   './src/island-rules.js',
   './src/island-learning.js',
   './src/island-learning.css',
+  './src/island-activities.js',
+  './src/island-activities.css',
+  './src/activity-voice-lines.js',
+  './src/eight-island-lines.js',
+  './src/learning-islands.js',
+  './src/learning-island-layout.js',
+  './assets/islands/learning-kit.json',
+  './assets/islands/learning-kit-attachments.json',
   './src/developer-mode.js',
   './src/world.js',
   './src/player.js',

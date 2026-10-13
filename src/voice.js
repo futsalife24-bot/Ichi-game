@@ -73,6 +73,7 @@ export class Voice {
     const text = typeof a === 'string' ? a : a.say;
     const subtitle = typeof a === 'string' && typeof b === 'string' ? b : (a.sub ?? a.say ?? a);
     const who = typeof b === 'object' ? b?.who : null;
+    const lang=typeof a==='object'&&a.lang==='en'?'en':'ja';
     const duration = 1400 + subtitle.length * 150;
     this.subtitleUntil = Date.now() + duration;
     this.onSubtitle?.(subtitle, duration, who);
@@ -82,13 +83,18 @@ export class Voice {
     if (who?.pitch) {
       this.audio?.babble(who.pitch);
       const token = this.token;
-      setTimeout(() => { if (token === this.token) this.speak(text); }, 520);
+      setTimeout(() => { if (token === this.token) this.speak(text,lang); }, 520);
       return;
     }
-    this.speak(text);
+    this.speak(text,lang);
   }
 
-  async speak(text) {
+  canSpeakEnglish(text) {
+    const hashes=segments(text).map(part=>clipHash(clipKey(part)));
+    return Boolean((hashes.length&&hashes.every(hash=>this.clipIndex?.has(hash))) || this.synth?.getVoices?.().some(v=>/^en(?:-|$)/i.test(v.lang)));
+  }
+
+  async speak(text,lang='ja') {
     const token = this.token;
     await this.indexReady;
     if (token !== this.token || !this.enabled) return;
@@ -97,14 +103,14 @@ export class Voice {
     const have = this.clipIndex ? hashes.filter((h) => this.clipIndex.has(h)) : [];
     if (ctx && hashes.length && have.length === hashes.length) {
       this.lastMode = 'clip';
-      this.playClips(hashes, text);
-    } else if (ctx && have.length && !this.voice) {
+      this.playClips(hashes, text,lang);
+    } else if (lang==='ja' && ctx && have.length && !this.voice) {
       // にほんごの よみあげが ない たんまつ：おんせいが ある ぶぶん だけ ならす（なまえ など まだ ない ところは とばす）
       this.lastMode = 'partial';
       this.playClips(have, text);
     } else {
       this.lastMode = 'synth';
-      this.speakSynth(text);
+      this.speakSynth(text,lang);
     }
   }
 
@@ -136,13 +142,13 @@ export class Voice {
     return buf;
   }
 
-  async playClips(hashes, text) {
+  async playClips(hashes, text,lang='ja') {
     const token = ++this.token;
     let buffers;
     try {
       buffers = await Promise.all(hashes.map((h) => this.decode(h)));
     } catch {
-      if (token === this.token && this.enabled) { this.lastMode = 'synth'; this.speakSynth(text); }
+      if (token === this.token && this.enabled) { this.lastMode = 'synth'; this.speakSynth(text,lang); }
       return;
     }
     if (token !== this.token || !this.enabled) return;
@@ -163,13 +169,15 @@ export class Voice {
     });
   }
 
-  speakSynth(text) {
+  speakSynth(text,lang='ja') {
     if (!this.synth || !text) { this.setSpeaking(false); return; }
     try {
+      const english=lang==='en'?this.synth.getVoices().find(v=>/^en(?:-|$)/i.test(v.lang)):null;
+      if(lang==='en'&&!english){this.setSpeaking(false);return;}
       const u = new SpeechSynthesisUtterance(text.replace(/[「」]/g, ''));
-      u.lang = 'ja-JP';
-      if (this.voice) u.voice = this.voice;
-      u.rate = 1.0;
+      u.lang = english?.lang??'ja-JP';
+      if(english)u.voice=english;else if(this.voice)u.voice=this.voice;
+      u.rate = lang==='en'?.85:1.0;
       u.pitch = 1.3;
       u.volume = 1;
       const token = this.token;

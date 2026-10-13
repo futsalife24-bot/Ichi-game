@@ -13,6 +13,8 @@ jobs:
       - name: 制作基準とパーツ台帳を確認
         run: node tools/island-content-docs.mjs --check
       - run: node --import ./tools/register.mjs --test tools/island-balance.test.mjs tools/island-learning.test.mjs tools/tutorial-island.test.mjs
+      - name: 八島の活動と景観素材を確認
+        run: node --import ./tools/register.mjs --test tools/island-activities.test.mjs tools/learning-island-scene.test.mjs tools/island-assets.test.mjs
       - run: node --import ./tools/register.mjs --test tools/adventure.test.mjs tools/developer-mode.test.mjs
       - run: node --import ./tools/register.mjs --test tools/harbor-errands-state.test.mjs tools/harbor-errands.test.mjs
       - run: node --import ./tools/register.mjs --test tools/harbor-gathering-state.test.mjs tools/harbor-gathering.test.mjs

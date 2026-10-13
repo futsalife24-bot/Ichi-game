@@ -1,0 +1,373 @@
+{
+  "version": 1,
+  "coordinateSystem": "右手系Y-up、正面+Z",
+  "components": {
+    "cmBasket": [
+      "cmBasket",
+      "cmBasket_handle"
+    ],
+    "cmCrate": [
+      "cmCrate",
+      "cmCrate_display"
+    ],
+    "cmTicket": [
+      "cmTicket"
+    ],
+    "cmPlanBoard": [
+      "cmPlanBoard",
+      "cmPlanBoard_frame",
+      "cmPlanBoard_display"
+    ],
+    "cmSign": [
+      "cmSign",
+      "cmSign_frame",
+      "cmSign_display"
+    ],
+    "i03ReceivingBox": [
+      "i03ReceivingBox",
+      "i03ReceivingBox_surface",
+      "i03ReceivingBox_display"
+    ],
+    "i04WorkTable": [
+      "i04WorkTable",
+      "i04WorkTable_surface"
+    ],
+    "i04Triangle": [
+      "i04Triangle"
+    ],
+    "i04BuildBase": [
+      "i04BuildBase",
+      "i04BuildBase_display"
+    ],
+    "i04Plank": [
+      "i04Plank_short",
+      "i04Plank"
+    ],
+    "i04Post": [
+      "i04Post"
+    ],
+    "i04HouseBlocks": [
+      "i04HouseBlocks",
+      "i04HouseBlocks_roof",
+      "i04HouseBlocks_window"
+    ],
+    "i04Shelf": [
+      "i04Shelf",
+      "i04Shelf_display"
+    ],
+    "i05Stall": [
+      "i05Stall",
+      "i05Stall_surface",
+      "i05Stall_posts",
+      "i05Stall_awning"
+    ],
+    "i05Counter": [
+      "i05Counter",
+      "i05Counter_surface",
+      "i05Counter_zones"
+    ],
+    "i05DisplayRack": [
+      "i05DisplayRack",
+      "i05DisplayRack_display"
+    ],
+    "i05Awning": [
+      "i05Awning",
+      "i05Awning_cloth"
+    ],
+    "i05MarketEntrance": [
+      "i05MarketEntrance",
+      "i05MarketEntrance_display"
+    ],
+    "i06ExperimentTable": [
+      "i06ExperimentTable",
+      "i06ExperimentTable_surface"
+    ],
+    "i06Balance": [
+      "i06Balance",
+      "i06Balance_arm",
+      "i06Balance_panLeft",
+      "i06Balance_panRight"
+    ],
+    "i06Weight": [
+      "i06Weight",
+      "i06Weight_handle"
+    ],
+    "i06WaterTray": [
+      "i06WaterTray",
+      "i06WaterTray_traySlope"
+    ],
+    "i06Windmill": [
+      "i06Windmill",
+      "i06Windmill_rotor"
+    ],
+    "i07Bridge": [
+      "i07Bridge",
+      "i07Bridge_railLeft",
+      "i07Bridge_railRight"
+    ],
+    "i07Tent": [
+      "i07Tent",
+      "i07Tent_entrance"
+    ],
+    "i07Pack": [
+      "i07Pack",
+      "i07Pack_handle"
+    ],
+    "i07RouteGate": [
+      "i07RouteGate",
+      "i07RouteGate_display"
+    ],
+    "i08Arch": [
+      "i08Arch",
+      "i08Arch_cap",
+      "i08Arch_display"
+    ],
+    "i08Table": [
+      "i08Table",
+      "i08Table_surface"
+    ],
+    "i08Stage": [
+      "i08Stage",
+      "i08Stage_slope"
+    ],
+    "i08Canopy": [
+      "i08Canopy",
+      "i08Canopy_roof"
+    ],
+    "i08Bunting": [
+      "i08Bunting",
+      "i08Bunting_flag"
+    ],
+    "i08CleanupBin": [
+      "i08CleanupBin",
+      "i08CleanupBin_display"
+    ],
+    "i08DecorationStand": [
+      "i08DecorationStand",
+      "i08DecorationStand_surface"
+    ]
+  },
+  "anchors": {
+    "i04Plank_short": {
+      "left": [
+        -0.5,
+        0.09,
+        0
+      ],
+      "center": [
+        0,
+        0.09,
+        0
+      ],
+      "right": [
+        0.5,
+        0.09,
+        0
+      ]
+    },
+    "i04Plank": {
+      "left": [
+        -1.0,
+        0.09,
+        0
+      ],
+      "center": [
+        0,
+        0.09,
+        0
+      ],
+      "right": [
+        1.0,
+        0.09,
+        0
+      ]
+    },
+    "i04Post": {
+      "top": [
+        0,
+        0.65,
+        0
+      ]
+    },
+    "i05MarketEntrance": {
+      "entrance": [
+        0,
+        0,
+        0
+      ],
+      "walkableWidth": 3.44
+    },
+    "i06WaterTray": {
+      "inlet": [
+        -1.0,
+        0.08,
+        0
+      ],
+      "outlet": [
+        1.0,
+        0.08,
+        0
+      ],
+      "slope": 0
+    },
+    "i06WaterTray_traySlope": {
+      "inlet": [
+        -1.0,
+        0.08,
+        0
+      ],
+      "outlet": [
+        1.0,
+        0.08,
+        0
+      ],
+      "slope": 0.1
+    },
+    "i07Bridge": {
+      "walkable": [
+        3.2,
+        1.4400000000000002,
+        0.22000000000000003
+      ]
+    },
+    "i07Tent": {
+      "entrance": [
+        0,
+        0,
+        -1.35
+      ],
+      "walkableWidth": 1.6800000000000002
+    },
+    "i07RouteGate": {
+      "entrance": [
+        0,
+        0,
+        0
+      ],
+      "walkableWidth": 2.44
+    },
+    "i08Arch": {
+      "entrance": [
+        0,
+        0,
+        0
+      ],
+      "walkableWidth": 4.14
+    },
+    "i08Stage": {
+      "stageTop": [
+        0,
+        0.3,
+        0
+      ],
+      "rampFoot": [
+        -0.748,
+        0,
+        -1.6500000000000001
+      ]
+    }
+  },
+  "pivots": {
+    "i04Triangle": {
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "purpose": "床面の回転中心"
+    },
+    "i06Balance_arm": {
+      "position": [
+        0,
+        1.066,
+        0
+      ],
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "purpose": "針の支点"
+    },
+    "i06Balance_panLeft": {
+      "position": [
+        -0.7200000000000001,
+        1.0270000000000001,
+        0
+      ],
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "purpose": "皿のつり点"
+    },
+    "i06Balance_panRight": {
+      "position": [
+        0.7200000000000001,
+        1.0270000000000001,
+        0
+      ],
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "purpose": "皿のつり点"
+    },
+    "i06Windmill_rotor": {
+      "position": [
+        0,
+        1.0919999999999999,
+        -0.1125
+      ],
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "purpose": "羽根の回転軸"
+    },
+    "i08Bunting_flag": {
+      "position": [
+        0,
+        0.432,
+        0
+      ],
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "purpose": "旗の吊り点"
+    }
+  },
+  "squarePair": {
+    "asset": "i04Triangle",
+    "first": {
+      "position": [
+        -0.13333333333333333,
+        0,
+        0.13333333333333333
+      ],
+      "rotationY": 0
+    },
+    "second": {
+      "position": [
+        0.13333333333333333,
+        0,
+        -0.13333333333333333
+      ],
+      "rotationY": 3.141592653589793
+    },
+    "resultSize": [
+      0.8,
+      0.8
+    ]
+  }
+}
