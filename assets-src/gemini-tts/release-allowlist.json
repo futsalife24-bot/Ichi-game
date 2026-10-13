@@ -1,0 +1,361 @@
+{
+  "schemaVersion": 1,
+  "reason": "未収録85音声の生成を続けながら、本人承認により既存726音声で暫定公開する。",
+  "shippedCount": 726,
+  "pendingBatchIds": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39
+  ],
+  "importReportSha256": "640419711c628c4cd2936c69c2ddd5239311efda07adbc5498d7893435edf1ed",
+  "indexSha256": "74261bb03bb2cb5e65cd9c66e61ff42065d28675dcc3f830c1a5a93dd0399fcf",
+  "pending": [
+    {
+      "hash": "80c5cdd9",
+      "lang": "ja"
+    },
+    {
+      "hash": "c3a2fb83",
+      "lang": "ja"
+    },
+    {
+      "hash": "062a0e8b",
+      "lang": "ja"
+    },
+    {
+      "hash": "afab5722",
+      "lang": "ja"
+    },
+    {
+      "hash": "29899dce",
+      "lang": "ja"
+    },
+    {
+      "hash": "492534cb",
+      "lang": "ja"
+    },
+    {
+      "hash": "ac65180f",
+      "lang": "ja"
+    },
+    {
+      "hash": "55c22009",
+      "lang": "ja"
+    },
+    {
+      "hash": "f6bc74c9",
+      "lang": "ja"
+    },
+    {
+      "hash": "60d16f36",
+      "lang": "ja"
+    },
+    {
+      "hash": "4f11f81d",
+      "lang": "ja"
+    },
+    {
+      "hash": "2943751e",
+      "lang": "ja"
+    },
+    {
+      "hash": "dc3f1a69",
+      "lang": "ja"
+    },
+    {
+      "hash": "ab65f934",
+      "lang": "ja"
+    },
+    {
+      "hash": "f2b77eeb",
+      "lang": "ja"
+    },
+    {
+      "hash": "dab67015",
+      "lang": "ja"
+    },
+    {
+      "hash": "81ab5d53",
+      "lang": "ja"
+    },
+    {
+      "hash": "98d8532a",
+      "lang": "ja"
+    },
+    {
+      "hash": "82b8edb7",
+      "lang": "ja"
+    },
+    {
+      "hash": "2cb43471",
+      "lang": "ja"
+    },
+    {
+      "hash": "810dbb34",
+      "lang": "ja"
+    },
+    {
+      "hash": "2e1231de",
+      "lang": "ja"
+    },
+    {
+      "hash": "af1f3332",
+      "lang": "ja"
+    },
+    {
+      "hash": "3d461412",
+      "lang": "ja"
+    },
+    {
+      "hash": "a5de1496",
+      "lang": "ja"
+    },
+    {
+      "hash": "101c5878",
+      "lang": "ja"
+    },
+    {
+      "hash": "e91428b9",
+      "lang": "ja"
+    },
+    {
+      "hash": "c2b77728",
+      "lang": "ja"
+    },
+    {
+      "hash": "d144786d",
+      "lang": "ja"
+    },
+    {
+      "hash": "c49b3053",
+      "lang": "ja"
+    },
+    {
+      "hash": "acc351b7",
+      "lang": "ja"
+    },
+    {
+      "hash": "1ad1e295",
+      "lang": "ja"
+    },
+    {
+      "hash": "d21fa1ad",
+      "lang": "ja"
+    },
+    {
+      "hash": "d6dc0af6",
+      "lang": "ja"
+    },
+    {
+      "hash": "7824c5f0",
+      "lang": "ja"
+    },
+    {
+      "hash": "c345db26",
+      "lang": "ja"
+    },
+    {
+      "hash": "3fc62709",
+      "lang": "ja"
+    },
+    {
+      "hash": "7b1b6bab",
+      "lang": "ja"
+    },
+    {
+      "hash": "ac20257a",
+      "lang": "ja"
+    },
+    {
+      "hash": "dc1bfda9",
+      "lang": "ja"
+    },
+    {
+      "hash": "3046caaa",
+      "lang": "ja"
+    },
+    {
+      "hash": "c559c7b8",
+      "lang": "ja"
+    },
+    {
+      "hash": "c1d2aa15",
+      "lang": "ja"
+    },
+    {
+      "hash": "94b96461",
+      "lang": "ja"
+    },
+    {
+      "hash": "92edd1de",
+      "lang": "ja"
+    },
+    {
+      "hash": "b63d9e5c",
+      "lang": "ja"
+    },
+    {
+      "hash": "c508c353",
+      "lang": "ja"
+    },
+    {
+      "hash": "c9fb9e52",
+      "lang": "ja"
+    },
+    {
+      "hash": "e450d514",
+      "lang": "ja"
+    },
+    {
+      "hash": "5d8ade50",
+      "lang": "ja"
+    },
+    {
+      "hash": "8a44c1f0",
+      "lang": "ja"
+    },
+    {
+      "hash": "14764dc0",
+      "lang": "ja"
+    },
+    {
+      "hash": "271f092d",
+      "lang": "ja"
+    },
+    {
+      "hash": "6877c463",
+      "lang": "ja"
+    },
+    {
+      "hash": "7c1bc642",
+      "lang": "ja"
+    },
+    {
+      "hash": "0567205c",
+      "lang": "ja"
+    },
+    {
+      "hash": "22bbc9c7",
+      "lang": "ja"
+    },
+    {
+      "hash": "b8317f96",
+      "lang": "ja"
+    },
+    {
+      "hash": "f45d8cb3",
+      "lang": "ja"
+    },
+    {
+      "hash": "61657d41",
+      "lang": "ja"
+    },
+    {
+      "hash": "436ea966",
+      "lang": "ja"
+    },
+    {
+      "hash": "530b011b",
+      "lang": "ja"
+    },
+    {
+      "hash": "4cfbf1b3",
+      "lang": "ja"
+    },
+    {
+      "hash": "985f85f6",
+      "lang": "ja"
+    },
+    {
+      "hash": "8950ef26",
+      "lang": "ja"
+    },
+    {
+      "hash": "10bc2abf",
+      "lang": "en"
+    },
+    {
+      "hash": "7ff24232",
+      "lang": "en"
+    },
+    {
+      "hash": "cf77833a",
+      "lang": "en"
+    },
+    {
+      "hash": "c40bf6cc",
+      "lang": "en"
+    },
+    {
+      "hash": "c70bfb85",
+      "lang": "en"
+    },
+    {
+      "hash": "c60bf9f2",
+      "lang": "en"
+    },
+    {
+      "hash": "c10bf213",
+      "lang": "en"
+    },
+    {
+      "hash": "c00bf080",
+      "lang": "en"
+    },
+    {
+      "hash": "06745c07",
+      "lang": "en"
+    },
+    {
+      "hash": "e668bd09",
+      "lang": "en"
+    },
+    {
+      "hash": "afad8963",
+      "lang": "en"
+    },
+    {
+      "hash": "977128b2",
+      "lang": "en"
+    },
+    {
+      "hash": "40f480dc",
+      "lang": "en"
+    },
+    {
+      "hash": "82fbf5cd",
+      "lang": "en"
+    },
+    {
+      "hash": "05025085",
+      "lang": "en"
+    },
+    {
+      "hash": "0b41f02c",
+      "lang": "en"
+    },
+    {
+      "hash": "56893ba4",
+      "lang": "en"
+    },
+    {
+      "hash": "bd6788dc",
+      "lang": "en"
+    },
+    {
+      "hash": "81417a23",
+      "lang": "en"
+    },
+    {
+      "hash": "089d11a8",
+      "lang": "en"
+    }
+  ],
+  "planSha256": "7eec12450b2fb0c923e7ce7bc675c1fb99c1f00efd6455d27cd69cec81b61418"
+}

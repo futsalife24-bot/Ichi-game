@@ -9,7 +9,9 @@ import { harborLines } from '../src/harbor-errands-lines.js';
 test('キャラメイク・全候補名・お手伝い・第二島・港町の案内を収録済み音声で再生できる',()=>{
   const clips=JSON.parse(readFileSync(new URL('../voice/index.json',import.meta.url))).clips;
   const all=new Set(allLines());
-  assert.deepEqual(pendingLines(),[]);
+  const approved=JSON.parse(readFileSync(new URL('../assets-src/gemini-tts/release-allowlist.json',import.meta.url))).pending;
+  const missing=[...new Set(pendingLines().flatMap(segments).map(part=>clipHash(clipKey(part))).filter(hash=>!clips[hash]))].sort();
+  assert.deepEqual(missing,approved.map(clip=>clip.hash).sort());
   for(const text of [...characterLines(), ...helpLines(), ...adventureLines(), ...harborLines()])assert.ok(all.has(text));
   const examples=[...characterLines(),...helpLines(),...adventureLines(),...harborLines(),...NAMES.flatMap(n=>[L.born(n.name+'ちゃん').say,L.schoolWelcome(n.name+'ちゃん').say])];
   for(const n of NAMES)for(const period of Object.values(PERIODS))for(const season of Object.values(SEASONS))examples.push(L.welcome(n.name+'ちゃん',period,season).say);
