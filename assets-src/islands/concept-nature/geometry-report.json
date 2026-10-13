@@ -1,0 +1,178 @@
+[
+  {
+    "id": "branchCoral",
+    "requestedSize": [
+      2.5,
+      3,
+      2.5
+    ],
+    "bounds": [
+      -0.819,
+      -1.055,
+      -0.041,
+      0.865,
+      1.033,
+      3.072
+    ],
+    "triangles": 7968,
+    "excludedDegenerateTriangles": 0,
+    "meshCount": 1,
+    "opening": "該当なし",
+    "blend": "branchCoral.blend",
+    "render": "branchCoral.png"
+  },
+  {
+    "id": "tubeSponge",
+    "requestedSize": [
+      1.8,
+      2.5,
+      1.8
+    ],
+    "bounds": [
+      -0.9,
+      -0.677,
+      -0.09,
+      0.88,
+      0.796,
+      2.57
+    ],
+    "triangles": 7964,
+    "excludedDegenerateTriangles": 0,
+    "meshCount": 2,
+    "opening": "該当なし",
+    "blend": "tubeSponge.blend",
+    "render": "tubeSponge.png"
+  },
+  {
+    "id": "broadSeaweed",
+    "requestedSize": [
+      2.5,
+      4,
+      2.5
+    ],
+    "bounds": [
+      -0.91,
+      -0.637,
+      -0.07,
+      1.208,
+      0.593,
+      3.859
+    ],
+    "triangles": 4032,
+    "excludedDegenerateTriangles": 0,
+    "meshCount": 1,
+    "opening": "該当なし",
+    "blend": "broadSeaweed.blend",
+    "render": "broadSeaweed.png"
+  },
+  {
+    "id": "tableCoral",
+    "requestedSize": [
+      3.5,
+      2,
+      3.5
+    ],
+    "bounds": [
+      -1.78,
+      -1.858,
+      -0.019,
+      1.93,
+      1.835,
+      1.91
+    ],
+    "triangles": 2748,
+    "excludedDegenerateTriangles": 0,
+    "meshCount": 1,
+    "opening": "該当なし",
+    "blend": "tableCoral.blend",
+    "render": "tableCoral.png"
+  },
+  {
+    "id": "coralBoulder",
+    "requestedSize": [
+      3,
+      2.5,
+      3
+    ],
+    "bounds": [
+      -1.547,
+      -1.37,
+      -0.068,
+      1.482,
+      1.436,
+      2.276
+    ],
+    "triangles": 11328,
+    "excludedDegenerateTriangles": 0,
+    "meshCount": 1,
+    "opening": "該当なし",
+    "blend": "coralBoulder.blend",
+    "render": "coralBoulder.png"
+  },
+  {
+    "id": "reefRockArch",
+    "requestedSize": [
+      22,
+      24,
+      8
+    ],
+    "bounds": [
+      -12.477,
+      -5.22,
+      -0.964,
+      12.737,
+      4.995,
+      23.686
+    ],
+    "triangles": 13832,
+    "excludedDegenerateTriangles": 0,
+    "meshCount": 1,
+    "opening": "中央通過口あり",
+    "blend": "reefRockArch.blend",
+    "render": "reefRockArch.png"
+  },
+  {
+    "id": "friendlyWhale",
+    "requestedSize": [
+      24,
+      6,
+      7
+    ],
+    "bounds": [
+      -12.52,
+      -3.456,
+      0.452,
+      11.7,
+      3.456,
+      5.761
+    ],
+    "triangles": 17500,
+    "excludedDegenerateTriangles": 0,
+    "meshCount": 7,
+    "opening": "該当なし",
+    "blend": "friendlyWhale.blend",
+    "render": "friendlyWhale.png"
+  },
+  {
+    "id": "branchCoralFar",
+    "requestedSize": [
+      2.5,
+      3,
+      2.5
+    ],
+    "bounds": [
+      -0.819,
+      -1.055,
+      -0.039,
+      0.865,
+      1.033,
+      3.072
+    ],
+    "triangles": 2980,
+    "excludedDegenerateTriangles": 0,
+    "meshCount": 1,
+    "opening": "該当なし",
+    "blend": "branchCoralFar.blend",
+    "render": "branchCoralFar.png"
+  }
+]

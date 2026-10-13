@@ -3,20 +3,14 @@ import * as THREE from 'three';
 import { makeAvatar, PRESETS } from './characters.js';
 import { makeParcel } from './harbor-errands-art.js';
 import { FOREST_ORIGIN } from './adventure-state.js';
+import { GATHERING_SPOT, GATHERING_TABLE, GATHERING_SOLID, GATHERING_GUESTS } from './harbor-gathering-layout.js';
+export { GATHERING_SPOT, GATHERING_TABLE, GATHERING_SOLID, GATHERING_GUESTS } from './harbor-gathering-layout.js';
 
-export const GATHERING_SPOT = Object.freeze({ x: 1, z: 33.8 });
-export const GATHERING_TABLE = Object.freeze({ x: 1, z: 29.4 });
-export const GATHERING_SOLID = Object.freeze({ x: 1, z: 29.4, width: 3.3, depth: 1.7 });
 export const GATHERING_SECONDS = 7;
 // したの あんないより うえに、みんなの あしもとまで うつす。
 export function gatheringCameraPose(focus) {
   return { position: focus.clone().add(new THREE.Vector3(0, 9, 12)), target: focus.clone().add(new THREE.Vector3(0, -3, 0)) };
 }
-const GUESTS = [
-  { kind: 'neko', start: [12.9, 28], end: [3.35, 29.4], facing: -Math.PI / 2 },
-  { kind: 'kuma', start: [-8, 32], end: [-1.35, 29.4], facing: Math.PI / 2 },
-  { kind: 'usagi', start: [-4, 35], end: [1, 31.3], facing: Math.PI },
-];
 export class HarborGatheringScene {
   constructor(forest) {
     this.forest = forest;
@@ -50,7 +44,7 @@ export class HarborGatheringScene {
       const flag = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: [0xf0b965, 0xe58c7c, 0x65ada0][i % 3], side: THREE.DoubleSide, roughness: .9 }));
       flag.position.set((i - 3) * .39, 3.23, -.74); flag.castShadow = true; this.table.add(flag); this.flags.push(flag);
     }
-    this.guests = GUESTS.map((guest, index) => {
+    this.guests = GATHERING_GUESTS.map((guest, index) => {
       const model = makeAvatar(PRESETS[guest.kind]); model.root.name = ['パンやさんの ねこ', 'すいしゃごやの くま', 'おはなの うさぎ'][index];
       model.root.scale.setScalar(.8); this.root.add(model.root);
       model.root.traverse(o => { if (o.isMesh) o.castShadow = o.receiveShadow = true; });

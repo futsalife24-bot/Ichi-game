@@ -1,5 +1,6 @@
 {
   "schema_version": 1,
+  "concept_scenes": "assets-src/islands/concept-scenes.json",
   "adopted_on": "2026-10-12",
   "curriculum": "docs/island-curriculum.md",
   "state": "新規34素材の原本・配信データと細部の仕上げは完了。実ゲーム確認は接続復旧待ち。海・空の環境はゲーム側で構成する。",

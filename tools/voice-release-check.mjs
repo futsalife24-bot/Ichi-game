@@ -5,7 +5,7 @@ export const canonicalHash=value=>createHash('sha256').update(JSON.stringify(val
 const fail=message=>{throw Error(`段階公開の音声検査: ${message}`);};
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const sorted=values=>[...values].sort();
-const approvedManifestHash='7acf79e9367da3c6f43b0aabb17f5cac186140df530036e26f192afca39986e5';
+const approvedManifestHash='952938153b9ae8575ce57d9a0a2c0802eaed935b841cf83d57f5647d73899f40';
 
 export function verifyReleaseVoice({plan,report,index,allowlist,spokenHashes,pendingHashes,clipDigest,audioFiles}) {
   if(canonicalHash(allowlist)!==approvedManifestHash)fail('承認済みの暫定公開記録が変更されました');

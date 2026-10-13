@@ -4,10 +4,12 @@ import { signTexture } from './canvas.js';
 import { makeAnimal } from './characters.js';
 import { makeFurniture } from './furniture.js';
 import { LEARNING_ISLAND_LAYOUTS, SKY_PLATFORMS, skySurfaceDistance, learningIslandHeight, clampLearningIsland, learningPathDistance } from './learning-island-layout.js';
+import { ConceptScenery, loadConceptKit } from './concept-scenery.js';
+import { clampConceptSolids, conceptWalkHeight } from './concept-terrain.js';
 
 let kitPromise;
-export function loadLearningIslandKit() {
-  return kitPromise ??= fetch('assets/islands/learning-kit.json').then(async response => {
+export async function loadLearningIslandKit(number = 4) {
+  const kit = await (kitPromise ??= fetch('assets/islands/learning-kit.json').then(async response => {
     if (!response.ok) throw new Error('しまの そざいを よめませんでした');
     const data = await response.json();
     if (data.version !== 1 || !data.assets) throw new Error('しまの そざいを かくにんしてね');
@@ -30,7 +32,8 @@ export function loadLearningIslandKit() {
       geometry.setIndex(a.indices);geometry.computeBoundingBox();geometry.computeBoundingSphere();result.set(key,geometry);
     }
     return result;
-  }).catch(error => { kitPromise = null; throw error; });
+  }).catch(error => { kitPromise = null; throw error; }));
+  kit.conceptKits??=new Map();kit.conceptKits.set(number,await loadConceptKit(number));return kit;
 }
 const solid = (geometry,color) => new THREE.Mesh(geometry,new THREE.MeshStandardMaterial({color,roughness:.88}));
 export class LearningIsland {
@@ -40,16 +43,17 @@ export class LearningIsland {
     this.material=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.84});this.kit=kit;this.rotorActive=true;
     this.walkSurfaces=this.layout.places.filter(([id])=>['i07Bridge','i08Stage'].includes(id)).map(([id,x,z,rotation])=>{const size=kit.get(id).boundingBox.getSize(new THREE.Vector3()),walkable=kit.attachments.anchors?.[id]?.walkable;return{x,z,rotation,width:walkable?.[0]??size.x,depth:walkable?.[1]??size.z,height:walkable?.[2]??size.y};});
     this.decorGroup=new THREE.Group();root.add(this.decorGroup);this.decorKey='';
-    this.buildGround();
+    this.scenery=new ConceptScenery(root,number,kit.conceptKits.get(number));this.terrain=this.scenery.terrain;
+    this.colliders.push(...this.scenery.solids.filter(s=>s.r));
     for (const [id,x,z,rot] of this.layout.places) this.addModel(kit,id,x,z,rot,{y:id==='i06Balance'?.83:0});
-    this.buildDetails(kit); this.buildLandscaping(kit); this.buildSpots();this.buildHabitat();
+    this.buildSpots();
   }
   groundAt(x,z) {
     for(const surface of this.walkSurfaces??[]){const dx=x-surface.x,dz=z-surface.z,c=Math.cos(surface.rotation),s=Math.sin(surface.rotation);if(Math.abs(c*dx-s*dz)<surface.width/2&&Math.abs(s*dx+c*dz)<surface.depth/2)return learningIslandHeight(this.number,surface.x,surface.z)+surface.height;}
-    return learningIslandHeight(this.number,x,z);
+    return conceptWalkHeight(this.number,x,z);
   }
   clampPos(pos) {
-    const x=pos.x,z=pos.z; clampLearningIsland(this.number,pos);
+    const x=pos.x,z=pos.z;clampConceptSolids(this.scenery.solids,pos);clampLearningIsland(this.number,pos);
     return x!==pos.x || z!==pos.z;
   }
   buildGround() {
@@ -193,8 +197,8 @@ export class LearningIsland {
   buildSpots() {
     for(const spot of this.layout.spots) {
       const group=new THREE.Group();group.position.set(spot.x,this.groundAt(spot.x,spot.z),spot.z);
-      const ring=solid(new THREE.CylinderGeometry(1.55,1.55,.08,24),spot.help?0xffd5a6:0xbbe8ed);ring.position.y=.06;group.add(ring);
-      const sign=new THREE.Mesh(new THREE.PlaneGeometry(3.6,1.1),new THREE.MeshBasicMaterial({map:signTexture(`${spot.emoji} ${spot.label}`,{w:768,h:192}),side:THREE.DoubleSide}));sign.position.set(0,2.3,0);group.add(sign);
+      const ring=solid(new THREE.TorusGeometry(.55,.03,8,32),spot.help?0xe0ad76:0x80bbb3);ring.rotation.x=-Math.PI/2;ring.position.y=.06;group.add(ring);
+      const sign=new THREE.Mesh(new THREE.PlaneGeometry(.85,.65),new THREE.MeshBasicMaterial({map:signTexture(spot.emoji,{w:192,h:160}),side:THREE.DoubleSide}));sign.position.set(0,1.15,0);group.add(sign);
       group.userData.spot=spot;this.group.add(group);this.spots.push(group);
     }
   }
@@ -204,7 +208,7 @@ export class LearningIsland {
     if(this.number!==8)return;
     const key=JSON.stringify(decor??null);if(this.decorKey===key)return;this.decorKey=key;
     this.decorGroup.traverse(object=>{if(object.isMesh){object.geometry.dispose();for(const material of Array.isArray(object.material)?object.material:[object.material]){material.map?.dispose();material.dispose();}}});this.decorGroup.clear();this.colliders=this.colliders.filter(c=>!c.decor);
-    const positions=[[-7,-2],[-7,-5],[0,0],[0,4],[7,-2],[7,-5]];
+    const positions=[[-12,0],[-12,4],[0,0],[0,4],[12,0],[12,4]];
     for(const slot of decor?.chairs??[]) {
       if(!positions[slot]||[2,3].includes(slot))continue;
       const [x,z]=positions[slot],chair=makeFurniture('isu');chair.position.set(x,this.groundAt(x,z),z);chair.rotation.y=x<0?Math.PI/2:-Math.PI/2;this.decorGroup.add(chair);
@@ -212,8 +216,8 @@ export class LearningIsland {
     }
     if(decor?.festivalPlan) {
       const text=decor.festivalPlan==='music'?'🎵 みんなの おんがくかい':'🎪 みんなの ピクニック';
-      const sign=new THREE.Mesh(new THREE.PlaneGeometry(5.5,1.15),new THREE.MeshBasicMaterial({map:signTexture(text,{w:768,h:160}),side:THREE.DoubleSide}));sign.position.set(0,2.4,-14);this.decorGroup.add(sign);
-      for(const x of [-3,3]){const decoration=solid(decor.festivalPlan==='music'?new THREE.TorusGeometry(.42,.09,6,12):new THREE.SphereGeometry(.4,10,6),decor.festivalPlan==='music'?0xffd484:0xf3b3ad);decoration.position.set(x,1.35,-13);this.decorGroup.add(decoration);}
+      const sign=new THREE.Mesh(new THREE.PlaneGeometry(2.3,.5),new THREE.MeshBasicMaterial({map:signTexture(text,{w:768,h:160}),side:THREE.DoubleSide}));sign.position.set(20,this.groundAt(20,5)+1.4,5);this.decorGroup.add(sign);
+      for(const x of [17,23]){const decoration=solid(decor.festivalPlan==='music'?new THREE.TorusGeometry(.32,.07,6,16):new THREE.SphereGeometry(.3,16,10),decor.festivalPlan==='music'?0xffd484:0xf3b3ad);decoration.position.set(x,this.groundAt(x,6)+1.1,6);this.decorGroup.add(decoration);}
     }
   }
   activityState({id,state,decor}) {
@@ -226,6 +230,7 @@ export class LearningIsland {
     }
   }
   update(dt,time) {
+    this.scenery.update(dt,time);
     for(const [index,object] of (this.habitatAnimated??[]).entries()) {
       if(this.number===6){const a=object.userData.angle+time*.025;object.position.set(Math.cos(a)*object.userData.radius,object.userData.height+Math.sin(time*.6+index)*.15,Math.sin(a)*object.userData.radius);object.rotation.y=-a-Math.PI/2;}
       if(this.number===7)object.position.x=object.userData.originX+Math.sin(time*.035+index)*1.5;

@@ -1,5 +1,7 @@
 // しまの ちがいと、とおれる みちを まとめる。
-export const LEARNING_ISLAND_LAYOUTS = Object.freeze({
+import { CONCEPT_LAYOUTS } from './concept-island-layout.js';
+import { conceptHeight, conceptLandDistance, clampConceptPosition } from './concept-terrain.js';
+const LEGACY_LAYOUTS = Object.freeze({
   4: { name: 'ものづくりの しま', emoji: '🧩', radius: 27, color: 0xcddda9, path: 0xf3dbad, spawn: [0, 12],
     roads: [[0, 12, 0, -11], [-12, 0, 12, 0]],
     places: [['i04WorkTable', -7, -3, 0], ['i04BuildBase', 0, -8, 0], ['i04Shelf', 8, -4, 0], ['i04HouseBlocks', 4, -10, 0]],
@@ -21,11 +23,18 @@ export const LEARNING_ISLAND_LAYOUTS = Object.freeze({
     places: [['i08Arch', 0, 9, 0], ['i08Canopy', -12, -7, 0], ['i08Canopy', 12, -7, 0], ['i08Table', -11, 0, 0], ['i08Stage', 0, -14, 0], ['i08CleanupBin', 12, 7, 0], ['i08DecorationStand', -12, 7, 0]],
     spots: [{x:-7,z:4,emoji:'🪑',label:'じゅんびと ならべかた',help:false},{x:7,z:4,emoji:'🎁',label:'おまつりの おてつだい',help:true}] },
 });
-export const SKY_PLATFORMS = Object.freeze([{x:0,z:12,r:7},{x:-9,z:4,r:5.5},{x:0,z:-3,r:6},{x:9,z:-12,r:8.5}]);
+export const LEARNING_ISLAND_LAYOUTS = Object.freeze(Object.fromEntries([4,5,6,7,8].map(number=>{
+  const c=CONCEPT_LAYOUTS[number],old=LEGACY_LAYOUTS[number];
+  const spots={4:[[-11,8],[11,8]],5:[[-13,12],[14,12]],6:[[-11,6],[11,6]],7:[[-9,22],[9,22]],8:[[-16,7],[16,7]]}[number];
+  const places=old.places.filter(([id])=>!['i07Bridge','i08Arch','i08Canopy','i08Stage','i05MarketEntrance'].includes(id)).map(([id,x,z,rot],i)=>[id,x<0?spots[0][0]:spots[1][0],spots[i%2][1]-3-i*.3,rot]);
+  return [number,{...old,radius:c.radius,color:c.palette.ground,path:c.palette.path,spawn:c.spawn,roads:c.path.slice(1).map((p,i)=>[...c.path[i],...p]),places,spots:old.spots.map((s,i)=>({...s,x:spots[i][0],z:spots[i][1]}))}];
+})));
+export const SKY_PLATFORMS = Object.freeze([{x:0,z:25,r:11},{x:0,z:-25,r:17},{x:-24,z:-4,r:8},{x:24,z:-5,r:8}]);
 export function skySurfaceDistance(x,z) {
-  return Math.min(...SKY_PLATFORMS.map(p=>Math.hypot(x-p.x,z-p.z)-p.r),learningPathDistance(7,x,z)-1.4);
+  return conceptLandDistance(7,x,z);
 }
 export function learningIslandHeight(number, x, z) {
+  if(LEARNING_ISLAND_LAYOUTS[number]&&Number.isFinite(x)&&Number.isFinite(z))return conceptHeight(number,x,z);
   const r = LEARNING_ISLAND_LAYOUTS[number]?.radius;
   if (!r || !Number.isFinite(x) || !Number.isFinite(z)) throw new RangeError('しまの ばしょを かくにんしてね');
   const edge = Math.max(0, Math.hypot(x, z) - r + 3);
@@ -33,6 +42,7 @@ export function learningIslandHeight(number, x, z) {
   return .5 + hill - edge * .23;
 }
 export function clampLearningIsland(number, pos) {
+  if(LEARNING_ISLAND_LAYOUTS[number])return clampConceptPosition(number,pos);
   if(number===7 && skySurfaceDistance(pos.x,pos.z)>-.65) {
     const options=SKY_PLATFORMS.map(p=>{const dx=pos.x-p.x,dz=pos.z-p.z,l=Math.hypot(dx,dz)||1,r=p.r-.7;return{x:p.x+dx/l*Math.min(l,r),z:p.z+dz/l*Math.min(l,r)};});
     for(const [ax,az,bx,bz] of LEARNING_ISLAND_LAYOUTS[7].roads){const dx=bx-ax,dz=bz-az,t=Math.max(0,Math.min(1,((pos.x-ax)*dx+(pos.z-az)*dz)/(dx*dx+dz*dz))),x=ax+dx*t,z=az+dz*t,ox=pos.x-x,oz=pos.z-z,l=Math.hypot(ox,oz)||1;options.push({x:x+ox/l*Math.min(l,.7),z:z+oz/l*Math.min(l,.7)});}

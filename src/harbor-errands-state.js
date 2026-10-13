@@ -1,12 +1,9 @@
 // みなとの おつかい。できたことと はじめての ごほうびを いっしょに のこす。
 import { validAdventure } from './adventure-state.js';
-import { HARBOR_BUILDINGS, WATERMILL, buildingEntrance } from './harbor-layout.js';
-
-const entrance = kind => buildingEntrance(HARBOR_BUILDINGS.find(b => b.kind === kind));
 export const HARBOR_JOBS = [
-  { id: 'flour', title: 'こむぎを はこぼう', sourceName: 'すいしゃごや', destinationName: 'パンやさん', source: buildingEntrance(WATERMILL), destination: entrance('bakery') },
-  { id: 'bread', title: 'パンを そろえよう', sourceName: 'パンやさん', destinationName: 'とけいひろば', source: entrance('bakery'), destination: entrance('clockTower') },
-  { id: 'flowers', title: 'おはなの つづき', sourceName: 'おんしつ', destinationName: 'とけいひろば', source: entrance('glasshouse'), destination: entrance('clockTower') },
+  { id: 'flour', title: 'こむぎを はこぼう', sourceName: 'みなとの こむぎばこ', destinationName: 'パンやさん', source: { x: 5, z: 35 }, destination: { x: 28.5, z: 15.5 } },
+  { id: 'bread', title: 'パンを そろえよう', sourceName: 'パンやさん', destinationName: 'とけいひろば', source: { x: 28.5, z: 15.5 }, destination: { x: -8, z: -26 } },
+  { id: 'flowers', title: 'おはなの つづき', sourceName: 'おんしつ', destinationName: 'とけいひろば', source: { x: 29, z: -23 }, destination: { x: -8, z: -26 } },
 ];
 const IDS = HARBOR_JOBS.map(job => job.id);
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);

@@ -1,7 +1,8 @@
 import test, { before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
-import { World, getHeight, mulberry32, ISLAND_R, WATER_Y } from '../src/world.js';
+import { World, getHeight, mulberry32, WATER_Y } from '../src/world.js';
+import { CONCEPT_LAYOUTS } from '../src/concept-island-layout.js';
 import { Animals } from '../src/animals.js';
 import { Life } from '../src/life.js';
 import { Player } from '../src/player.js';
@@ -22,13 +23,14 @@ before(() => {
 });
 after(() => { if (oldDocument === undefined) delete globalThis.document; else globalThis.document = oldDocument; });
 
-test('第一島は小さく平らで、第二島には元の丘と虹と学校が残る', () => {
-  assert.ok(first.radius < second.radius); assert.equal(second.radius, ISLAND_R);
+test('第一島の小さな入江と第二島の学校へ続く地形を保つ', () => {
+  assert.ok(first.radius < second.radius); assert.equal(second.radius, CONCEPT_LAYOUTS[2].radius);
   assert.ok(first.trees.length < second.trees.length / 2);
   assert.equal(first.rainbow, undefined); assert.ok(second.rainbow);
   assert.equal(first.schoolDoor, undefined); assert.ok(second.schoolDoor);
-  assert.ok(Math.abs(first.groundAt(16, -14)) < 0.6);
-  assert.ok(second.groundAt(16, -14) > 3);
+  assert.ok(first.groundAt(16, -14) < -0.3);
+  assert.ok(first.groundAt(0, 16) > 0.05);
+  assert.ok(second.groundAt(16, -14) > 1);
   assert.equal(first.groundAt(0, 2), getHeight(0, 2));
   first.setNight(1); first.update(0.02, new THREE.Vector3());
   second.setNight(1); second.update(0.02, new THREE.Vector3());

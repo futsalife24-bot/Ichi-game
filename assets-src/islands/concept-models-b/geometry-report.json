@@ -1,0 +1,480 @@
+[
+  {
+    "id": "greatFruitMarket",
+    "requestedSize": [
+      24,
+      17,
+      18
+    ],
+    "staticBounds": [
+      -11.759,
+      -9.6,
+      0.0,
+      11.79,
+      9.6,
+      16.979
+    ],
+    "triangles": 126028,
+    "meshCount": 16,
+    "opening": "通過口あり",
+    "pivots": {},
+    "preview": "greatFruitMarket.png",
+    "blend": "greatFruitMarket.blend"
+  },
+  {
+    "id": "moroccanStall",
+    "requestedSize": [
+      6,
+      5,
+      5
+    ],
+    "staticBounds": [
+      -3.0,
+      -3.263,
+      0.0,
+      3.0,
+      1.01,
+      4.65
+    ],
+    "triangles": 23144,
+    "meshCount": 16,
+    "opening": "該当なし",
+    "pivots": {},
+    "preview": "moroccanStall.png",
+    "blend": "moroccanStall.blend"
+  },
+  {
+    "id": "moroccanHouse",
+    "requestedSize": [
+      8,
+      9,
+      6
+    ],
+    "staticBounds": [
+      -4.0,
+      -3.495,
+      0.0,
+      4.0,
+      3.2,
+      8.55
+    ],
+    "triangles": 13704,
+    "meshCount": 7,
+    "opening": "該当なし",
+    "pivots": {},
+    "preview": "moroccanHouse.png",
+    "blend": "moroccanHouse.blend"
+  },
+  {
+    "id": "greatPearlShell",
+    "requestedSize": [
+      15,
+      11,
+      8
+    ],
+    "staticBounds": [
+      -7.629,
+      -3.6,
+      0.39,
+      7.566,
+      3.6,
+      10.694
+    ],
+    "triangles": 19025,
+    "meshCount": 3,
+    "opening": "該当なし",
+    "pivots": {},
+    "preview": "greatPearlShell.png",
+    "blend": "greatPearlShell.blend"
+  },
+  {
+    "id": "coralArch",
+    "requestedSize": [
+      10,
+      8,
+      3
+    ],
+    "staticBounds": [
+      -5.03,
+      -1.454,
+      -0.194,
+      5.03,
+      1.39,
+      8.02
+    ],
+    "triangles": 98136,
+    "meshCount": 3,
+    "opening": "通過口あり",
+    "pivots": {},
+    "preview": "coralArch.png",
+    "blend": "coralArch.blend"
+  },
+  {
+    "id": "spiralShellSeat",
+    "requestedSize": [
+      4,
+      3,
+      3
+    ],
+    "staticBounds": [
+      -1.6,
+      -2.19,
+      0.1,
+      1.6,
+      1.55,
+      2.742
+    ],
+    "triangles": 2952,
+    "meshCount": 2,
+    "opening": "該当なし",
+    "pivots": {},
+    "preview": "spiralShellSeat.png",
+    "blend": "spiralShellSeat.blend"
+  },
+  {
+    "id": "windCity",
+    "requestedSize": [
+      22,
+      23,
+      17
+    ],
+    "staticBounds": [
+      -11.05,
+      -11.79,
+      0.0,
+      11.05,
+      10.5,
+      23.1
+    ],
+    "triangles": 92096,
+    "meshCount": 6,
+    "opening": "通過口あり",
+    "pivots": {},
+    "preview": "windCity.png",
+    "blend": "windCity.blend"
+  },
+  {
+    "id": "windSails",
+    "requestedSize": [
+      14,
+      14,
+      1.5
+    ],
+    "staticBounds": [
+      -6.72,
+      -0.9,
+      0.28,
+      6.72,
+      0.9,
+      13.72
+    ],
+    "triangles": 6204,
+    "meshCount": 6,
+    "opening": "該当なし",
+    "pivots": {
+      "rotate_basket": {
+        "position": [
+          0,
+          7.0,
+          0.45
+        ],
+        "axis": [
+          0,
+          0,
+          1
+        ]
+      },
+      "rotate_cream": {
+        "position": [
+          0,
+          7.0,
+          0.45
+        ],
+        "axis": [
+          0,
+          0,
+          1
+        ]
+      },
+      "rotate_fabric": {
+        "position": [
+          0,
+          7.0,
+          0.45
+        ],
+        "axis": [
+          0,
+          0,
+          1
+        ]
+      },
+      "rotate_gold": {
+        "position": [
+          0,
+          7.0,
+          0.45
+        ],
+        "axis": [
+          0,
+          0,
+          1
+        ]
+      },
+      "rotate_basketLight": {
+        "position": [
+          0,
+          7.0,
+          0.45
+        ],
+        "axis": [
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    "preview": "windSails.png",
+    "blend": "windSails.blend"
+  },
+  {
+    "id": "blueDomePavilion",
+    "requestedSize": [
+      7,
+      8,
+      7
+    ],
+    "staticBounds": [
+      -3.4,
+      -3.4,
+      0.0,
+      3.4,
+      3.4,
+      8.35
+    ],
+    "triangles": 8376,
+    "meshCount": 4,
+    "opening": "該当なし",
+    "pivots": {},
+    "preview": "blueDomePavilion.png",
+    "blend": "blueDomePavilion.blend"
+  },
+  {
+    "id": "skyAirship",
+    "requestedSize": [
+      10,
+      7,
+      14
+    ],
+    "staticBounds": [
+      -4.6,
+      -6.8,
+      0.4,
+      4.6,
+      6.8,
+      6.6
+    ],
+    "triangles": 5508,
+    "meshCount": 2,
+    "opening": "該当なし",
+    "pivots": {},
+    "preview": "skyAirship.png",
+    "blend": "skyAirship.blend"
+  },
+  {
+    "id": "starCarousel",
+    "requestedSize": [
+      17,
+      15,
+      17
+    ],
+    "staticBounds": [
+      -8.25,
+      -8.25,
+      0.0,
+      8.25,
+      8.25,
+      15.1
+    ],
+    "triangles": 31936,
+    "meshCount": 11,
+    "opening": "該当なし",
+    "pivots": {
+      "rotate_basketLight": {
+        "position": [
+          0,
+          1.1,
+          0
+        ],
+        "axis": [
+          0,
+          1,
+          0
+        ]
+      },
+      "rotate_gold": {
+        "position": [
+          0,
+          1.1,
+          0
+        ],
+        "axis": [
+          0,
+          1,
+          0
+        ]
+      },
+      "rotate_light": {
+        "position": [
+          0,
+          1.1,
+          0
+        ],
+        "axis": [
+          0,
+          1,
+          0
+        ]
+      },
+      "rotate_fabric": {
+        "position": [
+          0,
+          1.1,
+          0
+        ],
+        "axis": [
+          0,
+          1,
+          0
+        ]
+      },
+      "rotate_red": {
+        "position": [
+          0,
+          1.1,
+          0
+        ],
+        "axis": [
+          0,
+          1,
+          0
+        ]
+      },
+      "rotate_redLight": {
+        "position": [
+          0,
+          1.1,
+          0
+        ],
+        "axis": [
+          0,
+          1,
+          0
+        ]
+      },
+      "rotate_cream": {
+        "position": [
+          0,
+          1.1,
+          0
+        ],
+        "axis": [
+          0,
+          1,
+          0
+        ]
+      },
+      "rotate_woodDark": {
+        "position": [
+          0,
+          1.1,
+          0
+        ],
+        "axis": [
+          0,
+          1,
+          0
+        ]
+      },
+      "rotate_basket": {
+        "position": [
+          0,
+          1.1,
+          0
+        ],
+        "axis": [
+          0,
+          1,
+          0
+        ]
+      }
+    },
+    "preview": "starCarousel.png",
+    "blend": "starCarousel.blend"
+  },
+  {
+    "id": "festivalShellStage",
+    "requestedSize": [
+      12,
+      9,
+      7
+    ],
+    "staticBounds": [
+      -6.073,
+      -6.0,
+      0.0,
+      6.013,
+      5.8,
+      8.602
+    ],
+    "triangles": 9465,
+    "meshCount": 5,
+    "opening": "該当なし",
+    "pivots": {},
+    "preview": "festivalShellStage.png",
+    "blend": "festivalShellStage.blend"
+  },
+  {
+    "id": "mexicanHouseA",
+    "requestedSize": [
+      7,
+      9,
+      6
+    ],
+    "staticBounds": [
+      -3.5,
+      -3.14,
+      0.0,
+      3.5,
+      3.05,
+      9.37
+    ],
+    "triangles": 5420,
+    "meshCount": 6,
+    "opening": "該当なし",
+    "pivots": {},
+    "preview": "mexicanHouseA.png",
+    "blend": "mexicanHouseA.blend"
+  },
+  {
+    "id": "mexicanHouseB",
+    "requestedSize": [
+      7,
+      12,
+      6
+    ],
+    "staticBounds": [
+      -3.5,
+      -3.14,
+      0.0,
+      3.5,
+      3.05,
+      11.67
+    ],
+    "triangles": 5420,
+    "meshCount": 6,
+    "opening": "該当なし",
+    "pivots": {},
+    "preview": "mexicanHouseB.png",
+    "blend": "mexicanHouseB.blend"
+  }
+]

@@ -4,13 +4,17 @@ import { ball, cyl, makeAnimal } from './characters.js';
 import { canvasTexture, signTexture } from './canvas.js';
 import { mulberry32 } from './world.js';
 import { FOREST_ORIGIN, LEAF_SPOTS, LEAF_HOST } from './adventure-state.js';
-import { FOREST_SPAWN, FOREST_DOCK, BRIDGES, SPRING, JUMP_STEPS, stepAt, stepTop, clampSteps, coastRadius, riverZ, riverWidth, riverY, riverDistance, pathDistance, landHeight, groundHeight, clampForest, forestRoute, smooth } from './forest-layout.js';
+import { FOREST_DOCK, BRIDGES, SPRING, JUMP_STEPS, stepAt, stepTop, clampSteps, coastRadius, riverZ, riverWidth, riverY, riverDistance, pathDistance, landHeight, groundHeight, clampForest, forestRoute, smooth } from './forest-layout.js';
 import { ForestWater } from './forest-water.js';
 import { HarborTown, pavedDistance } from './harbor-town.js';
 import { HARBOR_BUILDINGS, buildingAt } from './harbor-layout.js';
 import { createHarborSight, harborSightMaterial } from './harbor-visibility.js';
 import { HarborEffects } from './harbor-effects.js';
-export { FOREST_SPAWN, FOREST_DOCK };
+import { ConceptScenery } from './concept-scenery.js';
+import { conceptHeight, clampConceptPosition, clampConceptSolids } from './concept-terrain.js';
+import { conceptRoute } from './concept-route.js';
+export { FOREST_DOCK };
+export const FOREST_SPAWN={x:0,z:35};
 export const DOCK = { x: 0, z: 20 };
 const mesh = (geometry, color) => new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({ color, roughness: .88 }));
 const box = (color,x,y,z,w,h,d) => { const o=mesh(new THREE.BoxGeometry(w,h,d),color);o.position.set(x,y,z);o.castShadow=true;o.receiveShadow=true;return o; };
@@ -41,7 +45,24 @@ export class Forest {
     this.buildTerrain();this.water=new ForestWater(this.group);this.buildBridges();this.buildPlaces();this.buildLife();this.batchStructures();
     this.town=new HarborTown(this.group,this.sight);
     this.ambience=new HarborEffects(this.group,{groundAt:landHeight,riverZ,riverY,butterflySpots:[{x:-8,z:21},{x:17,z:18},{x:-4,z:-19},{x:10,z:-27}]});
-    this.refresh({stage:'available',collected:[]});
+    this.refresh({stage:'available',collected:[]});this.baseVisuals=[...this.group.children];
+  }
+  installConcept(kit) {
+    if(this.conceptScenery)return this.conceptScenery;
+    const keep=new Set([this.host.root,this.boat,...this.leaves,...this.leafShadows,this.decoration]);
+    for(const object of this.baseVisuals)if(!keep.has(object))object.visible=false;
+    this.conceptScenery=new ConceptScenery(this.group,3,kit);
+    const cargoY=conceptHeight(3,5,38);
+    this.group.add(box(0x9d7652,5,cargoY+.35,38,2.3,.7,1.35),box(0xc5a576,4.45,cargoY+.92,38,.9,.5,.9),box(0xc5a576,5.55,cargoY+.92,38,.9,.5,.9));
+    this.host.root.position.y=conceptHeight(3,LEAF_HOST.x,LEAF_HOST.z);
+    this.leaves.forEach((leaf,i)=>{const spot=LEAF_SPOTS[i];leaf.position.set(spot.x,conceptHeight(3,spot.x,spot.z)+1,spot.z);
+      const shadow=this.leafShadows[i],p=shadow.geometry.attributes.position;
+      for(let n=0;n<p.count;n++)p.setY(n,conceptHeight(3,spot.x+p.getX(n),spot.z+p.getZ(n))+.045);
+      p.needsUpdate=true;shadow.geometry.computeVertexNormals();shadow.position.set(spot.x,0,spot.z);
+    });
+    this.decoration.children.forEach((leaf,i)=>leaf.position.set(LEAF_HOST.x+(i-1)*1.5,conceptHeight(3,LEAF_HOST.x+(i-1)*1.5,LEAF_HOST.z-2)+1.8,LEAF_HOST.z-2));
+    this.colliders=this.conceptScenery.solids.filter(s=>s.r).map(s=>({...s,x:s.x+FOREST_ORIGIN.x}));
+    return this.conceptScenery;
   }
   batchStructures() {
     // うごかない はし・いし・はしらは ひとまとめに えがく。
@@ -146,6 +167,16 @@ export class Forest {
   async loadAssets(data=null,harborData=null) {
     if(this.assetsLoaded)return;
     const read=async path=>{const r=await fetch(new URL(path,import.meta.url));if(!r.ok)throw Error('まちの そざいを よめません');return r.json();};
+    if(this.conceptScenery){
+      harborData=harborData??await read('../assets/harbor/harbor-kit.json');
+      const leafKinds=['leafGreen','leafAmber','leafRed'];
+      this.makeLeaf=i=>{const a=harborData.assets[leafKinds[i%3]],geo=new THREE.BufferGeometry();
+        geo.setAttribute('position',new THREE.Float32BufferAttribute(a.positions,3));geo.setAttribute('normal',new THREE.Float32BufferAttribute(a.normals,3));geo.setAttribute('color',new THREE.Float32BufferAttribute(a.colors,3));geo.setIndex(a.indices);
+        const leaf=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({vertexColors:true,roughness:.48,metalness:.03,side:THREE.DoubleSide}));leaf.castShadow=leaf.receiveShadow=true;leaf.name='すじのある はっぱ';return leaf;};
+      this.leaves.forEach((o,i)=>o.add(this.makeLeaf(i)));
+      this.decoration.children.forEach((o,i)=>{const leaf=this.makeLeaf(i);leaf.scale.setScalar(.8);o.add(leaf);});
+      this.assetsLoaded=true;return;
+    }
     if(!data||!harborData){const pair=await Promise.all([data??read('../assets/forest/woodland-kit.json'),harborData??read('../assets/harbor/harbor-kit.json')]);[data,harborData]=pair;}
     const geometries={};
     for(const [key,a] of Object.entries({...data.assets,...harborData.assets})){
@@ -207,17 +238,21 @@ export class Forest {
     this.sight.hero.value.copy(player.pos).y+=1.15;this.sight.eye.value=camera.position;
     this.playerLocal.copy(player.pos).x-=FOREST_ORIGIN.x;this.night=night;
   }
-  groundAt(x,z){return groundHeight(x-FOREST_ORIGIN.x,z);}
-  clampPos(p){const local={x:p.x-FOREST_ORIGIN.x,y:p.y,z:p.z};let changed=clampForest(local);changed=clampSteps(local)||changed;
+  groundAt(x,z){return this.conceptScenery?conceptHeight(3,x-FOREST_ORIGIN.x,z):groundHeight(x-FOREST_ORIGIN.x,z);}
+  clampPos(p){const local={x:p.x-FOREST_ORIGIN.x,y:p.y,z:p.z};let changed=this.conceptScenery?clampConceptPosition(3,local):clampForest(local);if(!this.conceptScenery)changed=clampSteps(local)||changed;
+    if(this.conceptScenery){changed=clampConceptSolids(this.conceptScenery.solids,local)||changed;changed=clampConceptPosition(3,local)||changed;}
     const obstacle=this.gatheringObstacle;
     if(obstacle){const dx=local.x-obstacle.x,dz=local.z-obstacle.z,w=obstacle.width/2+.45,d=obstacle.depth/2+.45;
       if(Math.abs(dx)<w&&Math.abs(dz)<d){if(w-Math.abs(dx)<d-Math.abs(dz))local.x=obstacle.x+(dx<0?-w:w);else local.z=obstacle.z+(dz<0?-d:d);changed=true;}}
     p.x=local.x+FOREST_ORIGIN.x;p.z=local.z;return changed;}
-  route(from,to,obstacle=this.gatheringObstacle){return forestRoute({x:from.x-FOREST_ORIGIN.x,z:from.z},{x:to.x-FOREST_ORIGIN.x,z:to.z},obstacle).map(p=>new THREE.Vector3(p.x+FOREST_ORIGIN.x,groundHeight(p.x,p.z),p.z));}
+  route(from,to,obstacle=this.gatheringObstacle){const localFrom={x:from.x-FOREST_ORIGIN.x,z:from.z},localTo={x:to.x-FOREST_ORIGIN.x,z:to.z};
+    const route=this.conceptScenery?conceptRoute(localFrom,localTo,this.conceptScenery.solids,obstacle):forestRoute(localFrom,localTo,obstacle);
+    return route.map(p=>new THREE.Vector3(p.x+FOREST_ORIGIN.x,this.conceptScenery?conceptHeight(3,p.x,p.z):groundHeight(p.x,p.z),p.z));}
   refresh(state){this.leaves.forEach((o,i)=>{const visible=state.stage!=='done'&&!state.collected.includes(i);if(o.visible&&!visible&&this.assetsLoaded)this.ambience.burst(o.position.x,o.position.y+.4,o.position.z,[0x8acb92,0xf1b95f,0xf08b78][i]);o.visible=visible;this.leafShadows[i].visible=visible;});this.decoration.visible=state.stage==='done';}
   update(dt,t){
+    this.conceptScenery?.update(dt,t);
     this.timeUniform.value=t;this.sight.time.value=t;this.water.update(dt,t);this.ambience.update(dt,t,this.playerLocal);this.town.update(dt,t,this.playerLocal,this.night??0);
-    this.leaves.forEach((o,i)=>{o.position.y=landHeight(LEAF_SPOTS[i].x,LEAF_SPOTS[i].z)+1.0+Math.sin(t*2+i)*.12;o.rotation.y=Math.sin(t*.65+i)*.48;o.rotation.z=Math.sin(t*1.2+i)*.12;});
+    this.leaves.forEach((o,i)=>{o.position.y=(this.conceptScenery?conceptHeight(3,LEAF_SPOTS[i].x,LEAF_SPOTS[i].z):landHeight(LEAF_SPOTS[i].x,LEAF_SPOTS[i].z))+1.0+Math.sin(t*2+i)*.12;o.rotation.y=Math.sin(t*.65+i)*.48;o.rotation.z=Math.sin(t*1.2+i)*.12;});
     this.boat.position.y=-.3+Math.sin(t*1.4)*.06;this.host.pivot.scale.y=1+Math.sin(t*2)*.02;
   }
 }

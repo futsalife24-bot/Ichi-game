@@ -4,6 +4,9 @@ import { toon, ball, cone, cyl, makeOwl } from './characters.js';
 import { signTexture, canvasTexture } from './canvas.js';
 import { seasonOf } from './catalog.js';
 import { islandRules } from './island-rules.js';
+import { ConceptScenery } from './concept-scenery.js';
+import { CONCEPT_LAYOUTS } from './concept-island-layout.js';
+import { conceptHeight, conceptLandDistance, conceptPathDistance, clampConceptPosition, clampConceptSolids } from './concept-terrain.js';
 
 export const ISLAND_R = 36;
 export const TUTORIAL_R = 24;
@@ -19,6 +22,7 @@ const hill = (x, z, cx, cz, h, s) => {
 };
 
 export function getHeight(x, z, island = 1) {
+  if (island >= 1 && island <= 3) return conceptHeight(island, x, z);
   const r = Math.hypot(x, z);
   if (island === 1) {
     const e = smoothstep(TUTORIAL_R - 5, TUTORIAL_R + 4, r);
@@ -41,13 +45,13 @@ export function mulberry32(seed) {
 }
 
 export const LANDMARKS = {
-  spawn: { x: 0, z: 2 },
+  spawn: { x: 0, z: 16 },
   owl: { x: 3, z: -2.5 },
-  school: { x: -12, z: -14 },
+  school: { x: 16, z: -10 },
   rainbow: { x: 10, z: 8, radius: 6 },
-  myHouse: { x: 21, z: 5 },
-  shop: { x: -20, z: 13 },
-  garden: { x: 13.5, z: -2 },
+  myHouse: { x: -29, z: -13 },
+  shop: { x: 34, z: -9 },
+  garden: { x: 35, z: -22 },
 };
 
 export const ANIMAL_HOMES = {
@@ -100,10 +104,11 @@ const autumnGrass = new THREE.Color(0xd8c35a);
 
 export class World {
   constructor(scene, { island = 3 } = {}) {
+    const existingChildren = new Set(scene.children);
     this.scene = scene;
     this.island = island;
     this.tutorial = island === 1;
-    this.radius = this.tutorial ? TUTORIAL_R : ISLAND_R;
+    this.radius = CONCEPT_LAYOUTS[island]?.radius??(this.tutorial?TUTORIAL_R:ISLAND_R);
     this.paths = this.tutorial ? TUTORIAL_PATHS : ISLAND_PATHS;
     this.animalHomes = this.tutorial ? TUTORIAL_HOMES : ANIMAL_HOMES;
     this.rules = islandRules(island);
@@ -163,6 +168,58 @@ export class World {
     this.buildFlowers();
     if (!this.tutorial) this.buildLamps();
     this.applySeason(seasonOf());
+    this.baseVisuals = scene.children.filter(child => !existingChildren.has(child));
+  }
+
+  installConcept(kit) {
+    if(this.conceptScenery)return this.conceptScenery;
+    const keep=new Set([this.hemi,this.sunLight,this.sunLight.target,this.owl.root]);
+    for(const object of this.baseVisuals)if(!keep.has(object))object.visible=false;
+    this.conceptScenery=new ConceptScenery(this.scene,this.island,kit,{groundAt:(x,z)=>this.groundAt(x,z)});
+    this.conceptScenery.applySeason(this.season);
+    if(this.island===2){
+      this.schoolDoor={x:15.35,z:-4.4,yaw:-.12};
+      const entrance=new THREE.Mesh(new THREE.CylinderGeometry(1.05,1.05,.06,24),toon(0x9fc6cf));
+      entrance.position.set(this.schoolDoor.x,this.groundAt(this.schoolDoor.x,this.schoolDoor.z)+.04,this.schoolDoor.z);
+      entrance.receiveShadow=true;this.scene.add(entrance);
+    }
+    if(this.island===3){
+      this.schoolDoor={x:-21,z:-7.5,yaw:0};
+      this.roomDoor={x:-29,z:-7.5,yaw:0};
+      for(const [x,z,label] of [[-21,-7.5,'がっこう'],[-29,-7.5,'おうち']]){
+        const marker=new THREE.Mesh(new THREE.PlaneGeometry(1.8,.55),new THREE.MeshBasicMaterial({map:signTexture(label,{bg:'#f9efdc',fg:'#34596c',border:'#a07856'}),side:THREE.DoubleSide}));
+        marker.position.set(x,this.groundAt(x,z)+2.1,z-.45);this.scene.add(marker);
+      }
+    }
+    const jumpSpots=this.island===2?[[-14,14],[14,14],[-22,-19],[25,4],[-9,-25]]:this.island===3?[[35,-16],[-34,21],[34,23],[-35,-22],[-18,32]]:[];
+    this.bouncers.forEach((b,i)=>{const spot=jumpSpots[i],group=b.cap.parent;if(!spot){group.visible=false;return;}
+      const [x,z]=spot,y=this.groundAt(x,z);group.position.set(x,y,z);group.visible=true;b.x=x;b.z=z;b.top=y+1.45;
+    });
+    const interactive=this.rules.trees?this.trees.filter(t=>this.conceptTreeFree(t)):[];
+    this.trees=interactive;
+    for(const t of interactive)this.addConceptTree(t);
+    this.colliders=[...interactive.map(t=>({x:t.x,z:t.z,r:t.r})),...this.conceptScenery.solids.filter(s=>s.r)];
+    return this.conceptScenery;
+  }
+
+  conceptTreeFree(t){
+    if(conceptLandDistance(this.island,t.x,t.z)>-2||this.groundAt(t.x,t.z)<.05)return false;
+    if(conceptPathDistance(this.island,t.x,t.z)<3.5)return false;
+    if(this.bouncers.some(b=>Math.hypot(t.x-b.x,t.z-b.z)<b.r+t.r+2))return false;
+    if(this.conceptScenery.solids.some(s=>s.r?Math.hypot(t.x-s.x,t.z-s.z)<s.r+t.r+2:Math.abs(t.x-s.x)<s.width/2+t.r+2&&Math.abs(t.z-s.z)<s.depth/2+t.r+2))return false;
+    if(this.island===2&&Math.abs(t.x)<13&&t.z>-17&&t.z<-2)return false;
+    return true;
+  }
+
+  addConceptTree(t){
+    const root=new THREE.Group();root.position.set(t.x,this.groundAt(t.x,t.z),t.z);this.scene.add(root);
+    const trunk=new THREE.Mesh(new THREE.CylinderGeometry(.24*t.s,.35*t.s,2.8*t.s,9),toon(0x806449));
+    trunk.position.y=1.4*t.s;trunk.castShadow=true;root.add(trunk);
+    const canopy=new THREE.Mesh(t.kind==='pine'?new THREE.ConeGeometry(1.35*t.s,3.8*t.s,10):new THREE.IcosahedronGeometry(1.55*t.s,1),toon(this.island===3?0xcfa34e:t.kind==='pine'?0x367259:0x729f58));
+    canopy.position.y=(t.kind==='pine'?3.6:3.45)*t.s;canopy.castShadow=true;root.add(canopy);
+    t.conceptRoot=root;t.conceptCanopy=canopy;
+    t.conceptFruit=[];
+    if(t.fruit)for(let i=0;i<3;i++){const a=i*Math.PI*2/3,fruit=ball({ringo:0xe75248,momo:0xf1a9ae,mikan:0xf2a34b}[t.fruit],.18*t.s,Math.cos(a)*1.0*t.s,3.1*t.s+Math.sin(i)*.25,Math.sin(a)*1.0*t.s);fruit.visible=t.fruitsOn;root.add(fruit);t.conceptFruit.push(fruit);}
   }
 
   reserve(x, z, r) { this.reserved.push({ x, z, r }); }
@@ -171,6 +228,7 @@ export class World {
   groundAt(x, z) { return getHeight(x, z, this.island); }
 
   clampPos(p) {
+    if(this.conceptScenery){const changed=clampConceptSolids(this.conceptScenery.solids,p);return clampConceptPosition(this.island,p)||changed;}
     const r = Math.hypot(p.x, p.z), maxR = this.radius - 2;
     if (r <= maxR) return false;
     p.x *= maxR / r;
@@ -180,7 +238,14 @@ export class World {
 
   /** 物が置けるか（障害物・予約地・島の外をさける） */
   isFree(x, z, clearance, { ignoreReserved = false } = {}) {
+    if (conceptLandDistance(this.island,x,z)>-clearance||this.groundAt(x,z)<.05) return false;
     if (Math.hypot(x, z) > this.radius - 5) return false;
+    if(this.conceptScenery&&conceptPathDistance(this.island,x,z)<clearance+1)return false;
+    for(const b of this.conceptScenery?.solids??[]){
+      if(b.r){if(Math.hypot(x-b.x,z-b.z)<b.r+clearance)return false;continue;}
+      const c=Math.cos(b.yaw??0),s=Math.sin(b.yaw??0),dx=x-b.x,dz=z-b.z;
+      if(Math.abs(c*dx-s*dz)<b.width/2+clearance&&Math.abs(s*dx+c*dz)<b.depth/2+clearance)return false;
+    }
     for (const c of this.noSpawn) if (Math.hypot(x - c.x, z - c.z) < c.r + clearance) return false;
     for (const c of this.colliders) if (Math.hypot(x - c.x, z - c.z) < c.r + clearance) return false;
     for (const b of this.bouncers) if (Math.hypot(x - b.x, z - b.z) < b.r + clearance) return false;
@@ -660,6 +725,7 @@ export class World {
 
   /** 木の くだものを かくす／もどす */
   setTreeFruit(t, on) {
+    for(const fruit of t.conceptFruit??[])fruit.visible=on;
     for (const p of t.fruitParts) {
       if (on) p.mesh.setMatrixAt(p.i, p.base);
       else p.mesh.setMatrixAt(p.i, tmpMat.makeScale(0, 0, 0));
@@ -700,6 +766,7 @@ export class World {
       col.setXYZ(i, tmpColor.r, tmpColor.g, tmpColor.b);
     }
     col.needsUpdate = true;
+    this.conceptScenery?.applySeason(season);
   }
 
   buildRocks() {
@@ -830,6 +897,7 @@ export class World {
 
   update(dt, focus) {
     this.time += dt;
+    this.conceptScenery?.update(dt,this.time);
     const t = this.time;
     // なみ
     const pos = this.water.geometry.attributes.position;
@@ -854,6 +922,7 @@ export class World {
       if (tr.shake <= 0) continue;
       tr.shake = Math.max(0, tr.shake - dt * 1.6);
       const off = Math.sin(t * 38) * 0.14 * tr.shake * tr.s;
+      if(tr.conceptCanopy)tr.conceptCanopy.position.x=off;
       for (const p of tr.parts) {
         if (p.mesh === this.fruitMesh && !tr.fruitsOn) continue;
         p.mesh.setMatrixAt(p.i, tmpMat.makeTranslation(off, 0, off * 0.5).multiply(p.base));
