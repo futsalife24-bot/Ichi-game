@@ -9,7 +9,9 @@ import { harborLines } from '../src/harbor-errands-lines.js';
 test('キャラメイク・全候補名・お手伝い・第二島・港町の案内を収録済み音声で再生できる',()=>{
   const clips=JSON.parse(readFileSync(new URL('../voice/index.json',import.meta.url))).clips;
   const all=new Set(allLines());
-  assert.deepEqual(pendingLines(),[]);
+  const approved=JSON.parse(readFileSync(new URL('../assets-src/gemini-tts/release-allowlist.json',import.meta.url))).pending;
+  const missing=[...new Set(pendingLines().flatMap(segments).map(part=>clipHash(clipKey(part))).filter(hash=>!clips[hash]))].sort();
+  assert.deepEqual(missing,approved.map(clip=>clip.hash).sort());
   for(const text of [...characterLines(), ...helpLines(), ...adventureLines(), ...harborLines()])assert.ok(all.has(text));
   const examples=[...characterLines(),...helpLines(),...adventureLines(),...harborLines(),...NAMES.flatMap(n=>[L.born(n.name+'ちゃん').say,L.schoolWelcome(n.name+'ちゃん').say])];
   for(const n of NAMES)for(const period of Object.values(PERIODS))for(const season of Object.values(SEASONS))examples.push(L.welcome(n.name+'ちゃん',period,season).say);
@@ -47,6 +49,21 @@ function fixture(indexWait) {
   const voice=new Voice({audio});
   return {voice,starts,requests,synth,hash,audio};
 }
+
+test('英語の端末音声がなくても英語録音を優先して再生する',async()=>{
+  const wait=deferred(),f=fixture(wait),hash=clipHash(clipKey('apple'));
+  wait.resolve({ok:true,json:async()=>({schemaVersion:2,clips:{[hash]:{file:`gemini/${hash}.mp3`}}})});
+  await f.voice.indexReady;assert.equal(f.voice.canSpeakEnglish('apple'),true);
+  f.voice.say({say:'apple',sub:'apple',lang:'en'});await tick();await tick();
+  assert.equal(f.voice.lastMode,'clip');assert.equal(f.synth.length,0);assert.equal(f.starts.length,1);f.voice.stop();
+});
+
+test('英語の録音がなくても日本語の端末音声へ置き換えない',async()=>{
+  const f=fixture();f.voice.synth.getVoices=()=>[{lang:'ja-JP',name:'にほんご'}];f.voice.pick();
+  await f.voice.indexReady;assert.equal(f.voice.canSpeakEnglish('apple'),false);
+  f.voice.say({say:'apple',lang:'en'});await tick();await tick();assert.equal(f.synth.length,0);assert.equal(f.starts.length,0);
+  f.voice.stop();
+});
 test('first speech waits for manifest and uses the Gemini clip',async()=>{
   const wait=deferred(),f=fixture(wait);f.voice.say('すごい！');await tick();assert.equal(f.synth.length,0);assert.equal(f.starts.length,0);
   wait.resolve({ok:true,json:async()=>({schemaVersion:2,clips:{[f.hash]:{file:`gemini/${f.hash}.mp3`}}})});await tick();await tick();

@@ -1,0 +1,29 @@
+.island-activity-menu { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:8px 0 16px; }
+.island-activity-menu button { font-size:17px; min-height:56px; text-align:left; }
+.island-activity-guide { display:flex;justify-content:center;gap:12px;flex-wrap:wrap;font-size:17px;margin:6px 0; }
+.island-activity-guide button { background:#e9f5ec;border-radius:12px;padding:4px 10px;font-size:16px;min-height:44px; }
+.island-activity-guide button.active { background:#167296;color:white; }
+.island-activity-sample { background:#fff;border:2px solid #e6c781;border-radius:16px;padding:10px;margin:8px 0;font-size:clamp(22px,4vw,32px);line-height:1.4;overflow-wrap:anywhere; }
+.island-activity-steps { display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:8px 0;font-size:18px; }
+.island-activity-board { display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;margin:10px 0; }
+.island-activity-board p { width:100%;margin:4px 0;font-size:20px; }
+.island-activity-items { display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;width:min(420px,100%); }
+.island-activity-items button { min-width:0;min-height:52px; }
+.island-activity-trays { display:flex;flex-wrap:wrap;justify-content:center;gap:10px;width:100%; }
+.island-activity-tray { box-sizing:border-box;flex:1 1 190px;min-width:0;max-width:320px;padding:7px;border:2px solid #bd8d58;border-radius:16px;background:#fffdf5; }
+.island-activity-tray-label { display:block;font-size:16px;margin-bottom:4px; }
+.island-activity-tray-slots,.island-activity-tray-objects { display:flex;flex-wrap:wrap;align-content:flex-start;justify-content:center;gap:3px;min-height:31px; }
+.island-activity-slot,.island-activity-object { box-sizing:border-box;display:grid;place-items:center;flex:none;width:28px;height:28px;font-size:22px;line-height:1; }
+.island-activity-slot { color:#7b674f; }
+.island-activity-rows { display:grid;gap:8px;width:100%; }
+.island-activity-map { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;width:min(330px,100%); }
+.island-activity-map button { min-height:44px; }
+.island-activity-map button.selected { background:#cce8d6; }
+.island-activity-time-note { font-size:16px !important; }
+.island-activity-row { display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border-bottom:1px solid #decda7; }
+.island-activity-row span { min-width:44px;font-size:28px; }
+.island-activity-row button { font-size:18px; }
+.island-activity-feedback { min-height:26px;font-size:19px;font-weight:700; }
+.island-activity-back,.island-activity-reset,.island-activity-resume,.island-activity-english { font-size:17px !important; }
+@media (max-height:440px) { .island-activity-menu { grid-template-columns:repeat(2,minmax(0,1fr)); } .island-activity-menu button { min-height:44px;font-size:16px; } .island-activity-guide { font-size:14px;margin:2px 0; } .island-activity-sample { padding:5px;margin:4px 0;font-size:22px; } .island-activity-board { gap:5px;margin:5px 0; } .island-activity-items button { min-height:44px; } }
+@media (max-width:600px) { .island-activity-menu { grid-template-columns:1fr; } }

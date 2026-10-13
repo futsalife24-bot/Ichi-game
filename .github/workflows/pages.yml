@@ -25,13 +25,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
+      - name: 制作基準とパーツ台帳を確認
+        run: node tools/island-content-docs.mjs --check
       - run: node --import ./tools/register.mjs --test tools/island-balance.test.mjs tools/island-learning.test.mjs tools/tutorial-island.test.mjs
-      - name: Validate voice release
+      - name: 八島の活動と景観素材を確認
+        run: node --import ./tools/register.mjs --test tools/island-activities.test.mjs tools/learning-island-scene.test.mjs tools/island-assets.test.mjs
+      - name: 出荷済み音声と承認済みの収録待ちを検査
         run: |
+          node --import ./tools/register.mjs --test tools/voice-release-check.test.mjs
           node --import ./tools/register.mjs --test tools/adventure.test.mjs
           node --import ./tools/register.mjs --test tools/harbor-gathering-state.test.mjs tools/harbor-gathering.test.mjs
           node --import ./tools/register.mjs --test tools/birthday.test.mjs tools/suggestions.test.mjs tools/play-time.test.mjs tools/play-settings.test.mjs tools/observations.test.mjs tools/observation-integration.test.mjs tools/profiles.test.mjs tools/profile-ui.test.mjs tools/help-save.test.mjs tools/help-integration.test.mjs tools/plan-voice.test.mjs tools/voice.test.mjs tools/sw.test.mjs
-          node --import ./tools/register.mjs tools/finalize-voice.mjs --check
+          node --import ./tools/register.mjs tools/finalize-voice.mjs --check-release
       - name: Prepare site
         run: |
           mkdir _site
@@ -40,6 +45,8 @@ jobs:
           cp assets/forest/woodland-kit.json _site/assets/forest/
           mkdir -p _site/assets/harbor
           cp assets/harbor/harbor-kit.json _site/assets/harbor/
+          mkdir -p _site/assets/islands
+          cp assets/islands/learning-kit.json assets/islands/learning-kit-attachments.json _site/assets/islands/
           mkdir -p _site/voice/gemini
           cp voice/index.json _site/voice/
           cp voice/gemini/*.mp3 _site/voice/gemini/

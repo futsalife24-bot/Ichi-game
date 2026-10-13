@@ -7,6 +7,11 @@ import { addAdaptiveEvidence } from './adaptive-play.js';
 import { newHarborErrands } from './harbor-errands-state.js';
 
 export const DEVELOPER_SCENARIOS = Object.freeze({
+  workshop: Object.freeze({ id:'workshop',label:'第四島・ものづくり',place:'learning-4' }),
+  market: Object.freeze({ id:'market',label:'第五島・おかいもの',place:'learning-5' }),
+  nature: Object.freeze({ id:'nature',label:'第六島・観察と実験',place:'learning-6' }),
+  expedition: Object.freeze({ id:'expedition',label:'第七島・探検',place:'learning-7' }),
+  festival: Object.freeze({ id:'festival',label:'第八島・おまつり',place:'learning-8' }),
   second: Object.freeze({ id: 'second', label: '第二島・文字と木ゆらし', place: 'second' }),
   forest: Object.freeze({ id: 'forest', label: '第三島・みなと', place: 'forest' }),
   'forest-done': Object.freeze({ id: 'forest-done', label: '第三島・お手伝い完了後', place: 'forest' }),

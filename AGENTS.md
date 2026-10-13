@@ -31,6 +31,7 @@
 ## 4. 継続作業の入口
 
 - 最初に `PROJECT.md` を読み、現在の作業場所・残作業・必要な検証を確認する。
+- 新しい問題・おてつだい・島の景観は `docs/island-curriculum.md` の８島カリキュラムを基準正本とする。Blender素材の制作前に `assets-src/islands/README.md` と `parts.json` を読み、学習との対応・再利用・部品の分離を確認する。制作済みと制作要求を分け、台帳の更新後は `node tools/island-content-docs.mjs --write` と `--check` で一覧と対応を確認する。
 - 音声の詳細は `assets-src/gemini-tts/STATE.md` と同じ場所の `README.md` を参照する。
 - 追加音声は既存バッチを保持して生成する。音声が揃うまでは `pendingLines()` と出荷済みの `voice/index.json` を維持する。
 - 音声変更時は `tools/plan-voice.test.mjs`、`tools/voice.test.mjs`、`tools/sw.test.mjs` と `tools/finalize-voice.mjs --check` を実行する。

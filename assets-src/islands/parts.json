@@ -1,0 +1,2167 @@
+{
+  "schema_version": 1,
+  "adopted_on": "2026-10-12",
+  "curriculum": "docs/island-curriculum.md",
+  "state": "新規34素材の原本・配信データと細部の仕上げは完了。実ゲーム確認は接続復旧待ち。海・空の環境はゲーム側で構成する。",
+  "units": "m",
+  "size_note": "新規と要調整の寸法は初期目安。既存素材のnullは現物の寸法を正とし、自動変更しない。配置上限は初回の目安で、実スマホで調整する。",
+  "parts": [
+    {
+      "id": "cmActors",
+      "name": "主人公 どうぶつ ふくろう先生",
+      "islands": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8
+      ],
+      "production": "現状維持",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": null,
+      "detail": "既存の体格と表情を保つ。第一島では近くへ配置し、実会話につながる相手にする。",
+      "references": [
+        "src/characters.js",
+        "src/animals.js"
+      ],
+      "separate": "既存のリグと動きを保持。新しい骨格は依頼しない。",
+      "max_instances": 8,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I01-Q04",
+        "I01-H01",
+        "I02-H01",
+        "I03-Q03",
+        "I03-H03",
+        "I05-Q02",
+        "I05-H02",
+        "I06-Q01",
+        "I06-H02",
+        "I07-H01",
+        "I08-Q01",
+        "I08-Q03",
+        "I08-H01",
+        "I08-H02"
+      ]
+    },
+    {
+      "id": "cmFruit",
+      "name": "りんご みかん いちご",
+      "islands": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "production": "再利用",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": null,
+      "detail": "１個で１つと分かる実物。20個まで数えられ、重なりを避ける。",
+      "references": [
+        "src/props.js#makeFruit"
+      ],
+      "separate": "果物１個ごと。かごや皿へ結合しない。",
+      "max_instances": 20,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I01-Q02",
+        "I01-H01",
+        "I02-Q01",
+        "I02-Q02",
+        "I02-H02",
+        "I03-Q01",
+        "I03-Q02",
+        "I03-Q03",
+        "I04-Q04",
+        "I05-Q01",
+        "I05-Q02",
+        "I05-Q03",
+        "I05-H02",
+        "I06-Q01",
+        "I07-Q01"
+      ]
+    },
+    {
+      "id": "cmBalloon",
+      "name": "色のふうせん",
+      "islands": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "production": "再利用",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": null,
+      "detail": "第一島は赤青黄。背景より目立ち、正答だけ大きくしない。",
+      "references": [
+        "src/props.js#makeBalloon"
+      ],
+      "separate": "ふうせん単位。紐は既存の処理を保持。",
+      "max_instances": 8,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I01-Q01"
+      ]
+    },
+    {
+      "id": "cmShape",
+      "name": "基本の形の立体",
+      "islands": [
+        1,
+        2,
+        4
+      ],
+      "production": "再利用",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": null,
+      "detail": "丸 三角 四角。星とハートは発展用。図形の外形が見える。",
+      "references": [
+        "src/props.js#makeShape"
+      ],
+      "separate": "図形１個ごと。積み木用の直角三角形とは別。",
+      "max_instances": 20,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I01-Q03",
+        "I02-Q02",
+        "I04-Q01",
+        "I04-Q02"
+      ]
+    },
+    {
+      "id": "cmCard",
+      "name": "文字 数字 絵のカード枠",
+      "islands": [
+        2,
+        3,
+        4,
+        5,
+        7,
+        8
+      ],
+      "production": "再利用",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": null,
+      "detail": "あ行・A〜Eから短い単語まで差し替える。字をメッシュへ焼き込まない。",
+      "references": [
+        "src/props.js#makeLetterBlock",
+        "src/canvas.js"
+      ],
+      "separate": "枠と表示面。文字・点・絵はゲーム側。",
+      "max_instances": 12,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I02-Q01",
+        "I02-Q03",
+        "I03-Q02",
+        "I03-Q03",
+        "I04-Q04",
+        "I04-H02",
+        "I07-Q03",
+        "I08-H02"
+      ]
+    },
+    {
+      "id": "cmCritters",
+      "name": "見える虫 魚 貝 カニ",
+      "islands": [
+        1,
+        2,
+        3,
+        6,
+        7
+      ],
+      "production": "現状維持",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": null,
+      "detail": "第一島で木や地中から出さず、地面と魚影が見える。",
+      "references": [
+        "src/critters.js"
+      ],
+      "separate": "既存の種類別モデルと動きを保持。",
+      "max_instances": 12,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I01-H02"
+      ]
+    },
+    {
+      "id": "cmPlants",
+      "name": "花と作物の成長段階",
+      "islands": [
+        3,
+        6
+      ],
+      "production": "再利用",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": null,
+      "detail": "種 芽 成長 収穫を同じ場所で比べられる。ゲーム内の成長時間と実物を区別する。",
+      "references": [
+        "src/critters.js#makePlant"
+      ],
+      "separate": "作物ごとに段階を別モデルで保持。土や鉢と結合しない。",
+      "max_instances": 12,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I03-H01",
+        "I06-Q02",
+        "I06-H01",
+        "I06-H02"
+      ]
+    },
+    {
+      "id": "cmWateringCan",
+      "name": "じょうろ",
+      "islands": [
+        3,
+        6
+      ],
+      "production": "再利用",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": null,
+      "detail": "既存の手持ち道具。水はゲーム側の演出で、液体メッシュを新規要求しない。",
+      "references": [
+        "src/critters.js#makeTool"
+      ],
+      "separate": "既存の持ち手の基準を保持。",
+      "max_instances": 1,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I06-Q02",
+        "I06-H01"
+      ]
+    },
+    {
+      "id": "cmBoat",
+      "name": "島を往復する船",
+      "islands": [
+        1,
+        2,
+        3,
+        7
+      ],
+      "production": "再利用",
+      "priority": "先行",
+      "kind": "景観",
+      "target_size_m": null,
+      "detail": "既存の船の見た目と接続を保つ。渡航は文字や点数の試験にしない。",
+      "references": [
+        "src/forest.js#makeBoat"
+      ],
+      "separate": "船と乗り場の当たり判定を分ける。",
+      "max_instances": 1,
+      "delivery": "既存素材",
+      "activity_refs": []
+    },
+    {
+      "id": "cmTray",
+      "name": "数える皿と５個区切りの受け皿",
+      "islands": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "production": "再利用要調整",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        1.8,
+        0.15,
+        1.1
+      ],
+      "detail": "ひよこの既存の皿を出発点に、単体皿と５個区切りへ整える。中身は見渡せる。",
+      "references": [
+        "src/help.js"
+      ],
+      "separate": "皿単体。置く位置と個数の枠はゲーム側。",
+      "max_instances": 4,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I01-Q02",
+        "I01-H01",
+        "I01-H02",
+        "I02-Q01",
+        "I02-H01",
+        "I03-Q01",
+        "I03-H02",
+        "I04-Q04",
+        "I05-Q01",
+        "I05-Q02",
+        "I05-H01",
+        "I06-Q01",
+        "I06-H02",
+        "I07-Q01",
+        "I08-Q01"
+      ]
+    },
+    {
+      "id": "cmBasket",
+      "name": "中身の見える運搬かご",
+      "islands": [
+        2,
+        3,
+        5,
+        6,
+        7
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        1.2,
+        0.65,
+        0.9
+      ],
+      "detail": "低い縁の開いたかご。側面の編み込みを控え、中身の数が見える。",
+      "references": [
+        "assets/islands/learning-kit.json#cmBasket"
+      ],
+      "separate": "本体と持ち手。中身は別モデル。",
+      "max_instances": 3,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I02-Q02",
+        "I02-H02",
+        "I03-H01",
+        "I05-H01",
+        "I06-H02",
+        "I07-H02"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#cmBasket",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "cmCrate",
+      "name": "仕分けと保管の木箱",
+      "islands": [
+        5,
+        7,
+        8
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        1.2,
+        0.65,
+        0.9
+      ],
+      "detail": "開いた箱。数と種類のラベルはゲーム側で入れ替える。",
+      "references": [
+        "assets/islands/learning-kit.json#cmCrate"
+      ],
+      "separate": "本体と表示面。中身を結合しない。",
+      "max_instances": 4,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I05-H02",
+        "I07-Q01",
+        "I07-H02",
+        "I08-H02"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#cmCrate",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "cmTicket",
+      "name": "少数のお買い物チケット",
+      "islands": [
+        5
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        0.45,
+        0.04,
+        0.3
+      ],
+      "detail": "１枚ずつ数えられる丸い角の札。文字と貨幣額を刻まない。",
+      "references": [
+        "assets/islands/learning-kit.json#cmTicket"
+      ],
+      "separate": "札１枚ごと。ベルのモデルと見た目を区別。",
+      "max_instances": 10,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I05-Q03"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#cmTicket",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "cmPlanBoard",
+      "name": "絵の手順と準備のボード",
+      "islands": [
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        1.8,
+        1.5,
+        0.35
+      ],
+      "detail": "明るい無地の面と低い台。図やチェック欄を大きく差し替える。",
+      "references": [
+        "assets/islands/learning-kit.json#cmPlanBoard"
+      ],
+      "separate": "台 枠 表示面。表示面を正面+Zへ向ける。",
+      "max_instances": 2,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I04-H01",
+        "I05-Q03",
+        "I06-H01",
+        "I07-Q02",
+        "I07-Q03",
+        "I07-H01",
+        "I08-Q02",
+        "I08-H01"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#cmPlanBoard",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "cmSign",
+      "name": "文字と絵を差し替える道しるべ",
+      "islands": [
+        2,
+        3,
+        5,
+        7,
+        8
+      ],
+      "production": "新規",
+      "priority": "追加",
+      "kind": "景観",
+      "target_size_m": [
+        1.3,
+        1.6,
+        0.25
+      ],
+      "detail": "輪郭を明瞭にした看板。文字を読めない子にも絵と方向で案内。",
+      "references": [
+        "assets/islands/learning-kit.json#cmSign"
+      ],
+      "separate": "支柱 枠 表示面。矢印はゲーム側。",
+      "max_instances": 5,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I07-Q02"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#cmSign",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "cmChair",
+      "name": "来客の数を合わせるいす",
+      "islands": [
+        3,
+        8
+      ],
+      "production": "再利用",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": null,
+      "detail": "既存のいす。客１人に１脚で、座面が見える。",
+      "references": [
+        "src/furniture.js#isu"
+      ],
+      "separate": "いす１脚単位。移動と向きはゲーム側。",
+      "max_instances": 8,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I08-Q02",
+        "I08-Q03"
+      ]
+    },
+    {
+      "id": "cmBread",
+      "name": "１個ずつ配るパン",
+      "islands": [
+        3,
+        5,
+        8
+      ],
+      "production": "再利用要調整",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        0.6,
+        0.28,
+        0.4
+      ],
+      "detail": "既存のパン荷物の形を単体へ整理。束や紙袋を１個のパンと数えない。",
+      "references": [
+        "src/harbor-errands-art.js#makeParcel"
+      ],
+      "separate": "パン１個ごと。荷物の包みと分ける。",
+      "max_instances": 20,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I03-H02",
+        "I05-H01",
+        "I08-Q01"
+      ]
+    },
+    {
+      "id": "i01Ground",
+      "name": "小さく平らな練習島の地面",
+      "islands": [
+        1
+      ],
+      "production": "現状維持",
+      "priority": "先行",
+      "kind": "土台",
+      "target_size_m": null,
+      "detail": "半径24。平らな広場と短い４本の道。学校・虹・大きな丘を置かない。",
+      "references": [
+        "src/world.js"
+      ],
+      "separate": "地形と岸・歩行・タップの判定はゲーム側。",
+      "max_instances": 1,
+      "delivery": "ゲーム側",
+      "activity_refs": []
+    },
+    {
+      "id": "i01PicnicMat",
+      "name": "ひよこのお届けの敷物",
+      "islands": [
+        1
+      ],
+      "production": "再利用",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": null,
+      "detail": "既存の明るい丸い敷物と皿を保つ。受取場所を一つに絞る。",
+      "references": [
+        "src/help.js"
+      ],
+      "separate": "敷物・皿・りんごは別。",
+      "max_instances": 1,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I01-H01"
+      ]
+    },
+    {
+      "id": "i01SmallTrees",
+      "name": "端に置く少数の木",
+      "islands": [
+        1
+      ],
+      "production": "現状維持",
+      "priority": "先行",
+      "kind": "景観",
+      "target_size_m": null,
+      "detail": "通常５本と端の１本。広場と回答を隠さず、木ゆらしを出さない。",
+      "references": [
+        "src/world.js#buildTrees"
+      ],
+      "separate": "現在の木と配置の制限を保持。",
+      "max_instances": 6,
+      "delivery": "既存素材",
+      "activity_refs": []
+    },
+    {
+      "id": "i01Shore",
+      "name": "見渡せる岸と短い乗り場",
+      "islands": [
+        1
+      ],
+      "production": "現状維持",
+      "priority": "先行",
+      "kind": "土台",
+      "target_size_m": null,
+      "detail": "貝と魚影まで歩ける岸。乗り場は現在の位置を使い、装飾の港を追加しない。",
+      "references": [
+        "src/world.js",
+        "src/life.js",
+        "src/forest.js#DOCK"
+      ],
+      "separate": "岸と船の判定はゲーム側。",
+      "max_instances": 1,
+      "delivery": "ゲーム側",
+      "activity_refs": []
+    },
+    {
+      "id": "i02School",
+      "name": "時計台のある数の学校",
+      "islands": [
+        2
+      ],
+      "production": "再利用",
+      "priority": "先行",
+      "kind": "景観",
+      "target_size_m": null,
+      "detail": "現在の学校。入口の黄色いマットが見え、出入口まで歩ける。",
+      "references": [
+        "src/world.js#buildSchool"
+      ],
+      "separate": "建物と入口マット・判定を分ける。",
+      "max_instances": 1,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I02-Q03",
+        "I02-H01"
+      ]
+    },
+    {
+      "id": "i02RoundTree",
+      "name": "木ゆらし用の丸い木",
+      "islands": [
+        2
+      ],
+      "production": "再利用",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": null,
+      "detail": "現在の木を使う。落ちる果物と木にいる虫を別に保持。",
+      "references": [
+        "src/world.js#buildTrees"
+      ],
+      "separate": "幹 葉 果物。ゆらす中心は根元。",
+      "max_instances": 22,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I02-H02"
+      ]
+    },
+    {
+      "id": "i02Pine",
+      "name": "第二島の針葉樹",
+      "islands": [
+        2
+      ],
+      "production": "再利用",
+      "priority": "追加",
+      "kind": "景観",
+      "target_size_m": null,
+      "detail": "広い島の奥行を保つ現在の針葉樹。学校への道を覆わない。",
+      "references": [
+        "src/world.js#buildTrees"
+      ],
+      "separate": "既存の配置と回転を保持。",
+      "max_instances": 12,
+      "delivery": "既存素材",
+      "activity_refs": []
+    },
+    {
+      "id": "i02Mushroom",
+      "name": "ジャンプで遊ぶきのこ",
+      "islands": [
+        2
+      ],
+      "production": "再利用",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": null,
+      "detail": "現在の５か所。跳ねる位置と見た目の高さが一致する。",
+      "references": [
+        "src/world.js#buildMushrooms"
+      ],
+      "separate": "柄と傘。傘の弾みは既存の中心を保持。",
+      "max_instances": 5,
+      "delivery": "既存素材",
+      "activity_refs": []
+    },
+    {
+      "id": "i02Rainbow",
+      "name": "第二島の虹",
+      "islands": [
+        2
+      ],
+      "production": "再利用",
+      "priority": "追加",
+      "kind": "景観",
+      "target_size_m": null,
+      "detail": "第一島に置かず、第二島の広い景色の目印として保持。",
+      "references": [
+        "src/world.js#buildRainbow"
+      ],
+      "separate": "虹と雲。足元の衝突を維持。",
+      "max_instances": 1,
+      "delivery": "既存素材",
+      "activity_refs": []
+    },
+    {
+      "id": "i02Woodland",
+      "name": "森７素材の背景候補",
+      "islands": [
+        2,
+        4,
+        6,
+        7
+      ],
+      "production": "再利用要調整",
+      "priority": "追加",
+      "kind": "景観",
+      "target_size_m": null,
+      "detail": "oak birch fern rock rockTall stump log。現行第二島へ置く際は幅と遮蔽を確認する。",
+      "references": [
+        "assets/forest/woodland-kit.json",
+        "assets-src/forest/README.md"
+      ],
+      "separate": "既存の７素材を保持。第一島へ密集配置しない。",
+      "max_instances": 12,
+      "delivery": "既存素材",
+      "activity_refs": []
+    },
+    {
+      "id": "i03House",
+      "name": "港町のお届け先の家",
+      "islands": [
+        3
+      ],
+      "production": "再利用",
+      "priority": "先行",
+      "kind": "景観",
+      "target_size_m": null,
+      "detail": "既存のレンガと青緑屋根。家全体をタップ対象にせず受取場所を明確にする。",
+      "references": [
+        "assets/harbor/harbor-kit.json#brickHouse"
+      ],
+      "separate": "建物と受取の箱・マットは別。",
+      "max_instances": 4,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I03-H01"
+      ]
+    },
+    {
+      "id": "i03Bakery",
+      "name": "港町のパン屋",
+      "islands": [
+        3
+      ],
+      "production": "再利用",
+      "priority": "先行",
+      "kind": "景観",
+      "target_size_m": null,
+      "detail": "既存の縞の日よけとパン看板。届けるパンと窓の装飾を区別する。",
+      "references": [
+        "assets/harbor/harbor-kit.json#bakery"
+      ],
+      "separate": "外観と配れるパン・皿は別。",
+      "max_instances": 1,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I03-H02"
+      ]
+    },
+    {
+      "id": "i03ClockTower",
+      "name": "港町の時計塔",
+      "islands": [
+        3
+      ],
+      "production": "再利用",
+      "priority": "追加",
+      "kind": "景観",
+      "target_size_m": null,
+      "detail": "既存の縦長の目印。時計を読むことを通行条件にしない。",
+      "references": [
+        "assets/harbor/harbor-kit.json#clockTower"
+      ],
+      "separate": "既存の塔と時計盤を保持。",
+      "max_instances": 1,
+      "delivery": "既存素材",
+      "activity_refs": []
+    },
+    {
+      "id": "i03Glasshouse",
+      "name": "港町の温室",
+      "islands": [
+        3
+      ],
+      "production": "再利用",
+      "priority": "追加",
+      "kind": "景観",
+      "target_size_m": null,
+      "detail": "既存の青緑ガラスと格子。第六島では観察用に別途調整する。",
+      "references": [
+        "assets/harbor/harbor-kit.json#glasshouse"
+      ],
+      "separate": "外観素材。内部は納品済み扱いにしない。",
+      "max_instances": 1,
+      "delivery": "既存素材",
+      "activity_refs": []
+    },
+    {
+      "id": "i03CoralTree",
+      "name": "珊瑚色の街路樹",
+      "islands": [
+        3,
+        8
+      ],
+      "production": "再利用",
+      "priority": "追加",
+      "kind": "景観",
+      "target_size_m": null,
+      "detail": "既存の透ける枝と葉。届け先への視界を開ける。",
+      "references": [
+        "assets/harbor/harbor-kit.json#treeCoral"
+      ],
+      "separate": "既存の木を保持。",
+      "max_instances": 5,
+      "delivery": "既存素材",
+      "activity_refs": []
+    },
+    {
+      "id": "i03GoldTree",
+      "name": "金色の街路樹",
+      "islands": [
+        3,
+        5,
+        8
+      ],
+      "production": "再利用",
+      "priority": "追加",
+      "kind": "景観",
+      "target_size_m": null,
+      "detail": "既存の街路樹を港町の配色に合わせて使用。",
+      "references": [
+        "assets/harbor/harbor-kit.json#treeGold"
+      ],
+      "separate": "既存の木を保持。",
+      "max_instances": 5,
+      "delivery": "既存素材",
+      "activity_refs": []
+    },
+    {
+      "id": "i03GreenLeaf",
+      "name": "集める緑の葉",
+      "islands": [
+        3
+      ],
+      "production": "再利用",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": null,
+      "detail": "既存の葉。背景の落ち葉と収集物を区別する。",
+      "references": [
+        "assets/harbor/harbor-kit.json#leafGreen"
+      ],
+      "separate": "１枚ごと。通常の前後関係で表示。",
+      "max_instances": 3,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I03-H03"
+      ]
+    },
+    {
+      "id": "i03AmberLeaf",
+      "name": "集める琥珀色の葉",
+      "islands": [
+        3
+      ],
+      "production": "再利用",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": null,
+      "detail": "既存の葉。色だけで取れるかどうかを決めない。",
+      "references": [
+        "assets/harbor/harbor-kit.json#leafAmber"
+      ],
+      "separate": "１枚ごと。",
+      "max_instances": 3,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I03-H03"
+      ]
+    },
+    {
+      "id": "i03RedLeaf",
+      "name": "集める赤い葉",
+      "islands": [
+        3
+      ],
+      "production": "再利用",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": null,
+      "detail": "既存の葉をお届けと復習に使用。",
+      "references": [
+        "assets/harbor/harbor-kit.json#leafRed"
+      ],
+      "separate": "１枚ごと。",
+      "max_instances": 3,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I03-H03"
+      ]
+    },
+    {
+      "id": "i03Lantern",
+      "name": "港町の街灯",
+      "islands": [
+        3,
+        8
+      ],
+      "production": "再利用",
+      "priority": "演出",
+      "kind": "景観",
+      "target_size_m": null,
+      "detail": "既存のランタン。照明を派手にして回答物を見失わせない。",
+      "references": [
+        "assets/harbor/harbor-kit.json#lantern"
+      ],
+      "separate": "灯具とゲーム側の点灯を分ける。",
+      "max_instances": 6,
+      "delivery": "既存素材",
+      "activity_refs": []
+    },
+    {
+      "id": "i03ReceivingBox",
+      "name": "港町の受取台",
+      "islands": [
+        3
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        1.5,
+        0.65,
+        0.9
+      ],
+      "detail": "一つのお届け先を示す低い台。絵の表示面を用意する。",
+      "references": [
+        "assets/islands/learning-kit.json#i03ReceivingBox"
+      ],
+      "separate": "台・表示面。届けた品は独立して並べる。",
+      "max_instances": 3,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I03-H01"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i03ReceivingBox",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i04WorkTable",
+      "name": "ものづくりの作業台",
+      "islands": [
+        4
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        3.2,
+        0.85,
+        1.8
+      ],
+      "detail": "広い明るい面と丸い角。数えたり組み立てたりする物を隠さない。",
+      "references": [
+        "assets/islands/learning-kit.json#i04WorkTable"
+      ],
+      "separate": "台本体と作業面。配置位置の表示はゲーム側。",
+      "max_instances": 2,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I04-Q02"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i04WorkTable",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i04Triangle",
+      "name": "正方形を作る直角三角形",
+      "islands": [
+        4
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        0.8,
+        0.12,
+        0.8
+      ],
+      "detail": "同じ大きさの直角二等辺三角形２枚で正方形が成立。接辺に隙間や飾りを付けない。",
+      "references": [
+        "assets/islands/learning-kit.json#i04Triangle"
+      ],
+      "separate": "１枚ずつ。回転中心を図形の中心に置く。",
+      "max_instances": 8,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I04-Q01"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i04Triangle",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i04BuildBase",
+      "name": "組み立てる土台",
+      "islands": [
+        4
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        3,
+        0.08,
+        2
+      ],
+      "detail": "平らな縁の低い板。完成の影や置く場所を動的に表示。",
+      "references": [
+        "assets/islands/learning-kit.json#i04BuildBase"
+      ],
+      "separate": "土台と表示面。図形を一体化しない。",
+      "max_instances": 2,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I04-Q01",
+        "I04-Q03",
+        "I04-H01"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i04BuildBase",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i04Plank",
+      "name": "長さが違う板",
+      "islands": [
+        4
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        2,
+        0.18,
+        0.5
+      ],
+      "detail": "同じ断面で長さ1mと2mの２種。長さ以外で正答を区別させない。",
+      "references": [
+        "assets/islands/learning-kit.json#i04Plank"
+      ],
+      "separate": "short longを別メッシュ。両端と中心を記録。",
+      "max_instances": 10,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I04-Q03",
+        "I04-H02"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i04Plank",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i04Post",
+      "name": "橋を支える低い柱",
+      "islands": [
+        4
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        0.5,
+        0.65,
+        0.5
+      ],
+      "detail": "板が届く距離を比較するための同じ高さの柱。",
+      "references": [
+        "assets/islands/learning-kit.json#i04Post"
+      ],
+      "separate": "１本単位。接続点は上面中央。",
+      "max_instances": 4,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I04-Q03"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i04Post",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i04HouseBlocks",
+      "name": "壁 屋根 窓の積み木",
+      "islands": [
+        4
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        1,
+        1,
+        0.3
+      ],
+      "detail": "少数の壁・屋根・窓の形で家を構成。複数の完成を認める。",
+      "references": [
+        "assets/islands/learning-kit.json#i04HouseBlocks"
+      ],
+      "separate": "wall roof windowを分離し、基準サイズをそろえる。",
+      "max_instances": 12,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I04-H01"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i04HouseBlocks",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i04Shelf",
+      "name": "長短を分ける低い棚",
+      "islands": [
+        4
+      ],
+      "production": "新規",
+      "priority": "追加",
+      "kind": "学習物",
+      "target_size_m": [
+        2.4,
+        0.8,
+        0.8
+      ],
+      "detail": "板を置く２区画が見える。背景の細かい工具を増やさない。",
+      "references": [
+        "assets/islands/learning-kit.json#i04Shelf"
+      ],
+      "separate": "棚本体と表示面。入れる板は別。",
+      "max_instances": 1,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I04-H02"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i04Shelf",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i05Stall",
+      "name": "開いた市場の屋台",
+      "islands": [
+        5
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "景観",
+      "target_size_m": [
+        3.6,
+        3,
+        2.8
+      ],
+      "detail": "赤と淡い黄の日よけ。奥に壁を作りすぎず、商品を見渡せる。",
+      "references": [
+        "assets/islands/learning-kit.json#i05Stall"
+      ],
+      "separate": "柱 日よけ 台。商品の配置は別。",
+      "max_instances": 3,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I05-Q03",
+        "I05-H02"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i05Stall",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i05Counter",
+      "name": "合わせる２区画の売り台",
+      "islands": [
+        5
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        2.8,
+        0.75,
+        1.2
+      ],
+      "detail": "２枚のお皿から実物を合わせられる明るい作業面。",
+      "references": [
+        "assets/islands/learning-kit.json#i05Counter"
+      ],
+      "separate": "台と２区画の表示面。皿と商品は別。",
+      "max_instances": 2,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I05-Q01"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i05Counter",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i05DisplayRack",
+      "name": "商品を見渡せる陳列棚",
+      "islands": [
+        5
+      ],
+      "production": "新規",
+      "priority": "追加",
+      "kind": "景観",
+      "target_size_m": [
+        2.2,
+        1.2,
+        0.8
+      ],
+      "detail": "低い２段。数える物が段の奥に隠れない。",
+      "references": [
+        "assets/islands/learning-kit.json#i05DisplayRack"
+      ],
+      "separate": "棚と値段の表示面。商品は結合しない。",
+      "max_instances": 3,
+      "delivery": "Blender",
+      "activity_refs": [],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i05DisplayRack",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i05Awning",
+      "name": "市場の短いひさし",
+      "islands": [
+        5
+      ],
+      "production": "新規",
+      "priority": "追加",
+      "kind": "景観",
+      "target_size_m": [
+        3.2,
+        0.25,
+        1.8
+      ],
+      "detail": "屋台と同じ配色。通常カメラで商品を覆わない高さにする。",
+      "references": [
+        "assets/islands/learning-kit.json#i05Awning"
+      ],
+      "separate": "日よけ１枚と柱。物理的な布の再現は要求しない。",
+      "max_instances": 3,
+      "delivery": "Blender",
+      "activity_refs": [],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i05Awning",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i05MarketEntrance",
+      "name": "市場の入口の目印",
+      "islands": [
+        5
+      ],
+      "production": "新規",
+      "priority": "演出",
+      "kind": "景観",
+      "target_size_m": [
+        3.8,
+        3.4,
+        0.6
+      ],
+      "detail": "低い横看板で開いた市場を示す。第八島の華やかなアーチと区別。",
+      "references": [
+        "assets/islands/learning-kit.json#i05MarketEntrance"
+      ],
+      "separate": "柱と無地の横看板。名前はゲーム側。",
+      "max_instances": 1,
+      "delivery": "Blender",
+      "activity_refs": [],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i05MarketEntrance",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i06Planter",
+      "name": "観察用の同じ花鉢",
+      "islands": [
+        6
+      ],
+      "production": "再利用要調整",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        0.8,
+        0.6,
+        0.8
+      ],
+      "detail": "既存の植木鉢から空の鉢へ整理。２個を同条件で並べる。",
+      "references": [
+        "src/furniture.js#uekibachi"
+      ],
+      "separate": "鉢と土。植物の成長段階は別。",
+      "max_instances": 4,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I06-Q02",
+        "I06-H01"
+      ]
+    },
+    {
+      "id": "i06Bed",
+      "name": "２区画の小さな畑",
+      "islands": [
+        6
+      ],
+      "production": "再利用要調整",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        3.4,
+        0.2,
+        2.2
+      ],
+      "detail": "既存の畑を比較用の２区画へ整理。植える位置は見える。",
+      "references": [
+        "src/life.js#buildGarden"
+      ],
+      "separate": "土区画 枠。水・植物・成長はゲーム側。",
+      "max_instances": 2,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I06-H02"
+      ]
+    },
+    {
+      "id": "i06ExperimentTable",
+      "name": "安全な実験の低い台",
+      "islands": [
+        6
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        2.8,
+        0.8,
+        1.6
+      ],
+      "detail": "ミント色の枠と明るい面。火や薬品を置かない。",
+      "references": [
+        "assets/islands/learning-kit.json#i06ExperimentTable"
+      ],
+      "separate": "台と作業面。道具は別。",
+      "max_instances": 1,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I06-Q03"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i06ExperimentTable",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i06Balance",
+      "name": "同じおもりで比べる天びん",
+      "islands": [
+        6
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        1.8,
+        1.3,
+        0.6
+      ],
+      "detail": "左右の皿と腕。片側３個まで見える。装飾が数に混ざらない。",
+      "references": [
+        "assets/islands/learning-kit.json#i06Balance"
+      ],
+      "separate": "stand arm panLeft panRightを分離。腕の支点を原点で記録。傾きはゲーム側。",
+      "max_instances": 1,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I06-Q03"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i06Balance",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i06Weight",
+      "name": "同じ大きさのおもり",
+      "islands": [
+        6
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        0.22,
+        0.22,
+        0.22
+      ],
+      "detail": "全部同じ形と重さの設定。１個ずつ見える。",
+      "references": [
+        "assets/islands/learning-kit.json#i06Weight"
+      ],
+      "separate": "１個単位。物理設定はゲーム側。",
+      "max_instances": 10,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I06-Q03"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i06Weight",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i06ObservationHouse",
+      "name": "見通しのよい観察温室",
+      "islands": [
+        6
+      ],
+      "production": "再利用要調整",
+      "priority": "追加",
+      "kind": "景観",
+      "target_size_m": null,
+      "detail": "港町の既存温室を出発点に、観察面の視界を確保。内部素材は新たに確認が必要。",
+      "references": [
+        "assets/harbor/harbor-kit.json#glasshouse"
+      ],
+      "separate": "外枠と観察対象を分ける。ガラスの透明化は実描画で調整。",
+      "max_instances": 1,
+      "delivery": "既存素材",
+      "activity_refs": []
+    },
+    {
+      "id": "i06WaterTray",
+      "name": "流れを試す浅い水路",
+      "islands": [
+        6
+      ],
+      "production": "新規",
+      "priority": "追加",
+      "kind": "学習物",
+      "target_size_m": [
+        2,
+        0.16,
+        0.6
+      ],
+      "detail": "平らと傾斜の見本を比べられる浅い器。液体はゲーム側。",
+      "references": [
+        "assets/islands/learning-kit.json#i06WaterTray"
+      ],
+      "separate": "trayFlat traySlopeを分離し、入口と出口を記録。",
+      "max_instances": 2,
+      "delivery": "Blender",
+      "activity_refs": [],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i06WaterTray",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i06Windmill",
+      "name": "風で回る小さな風車",
+      "islands": [
+        6
+      ],
+      "production": "新規",
+      "priority": "演出",
+      "kind": "学習物",
+      "target_size_m": [
+        0.8,
+        1.4,
+        0.25
+      ],
+      "detail": "羽の回転と風の有無を比べる発展用。初回の課題には不要。",
+      "references": [
+        "assets/islands/learning-kit.json#i06Windmill"
+      ],
+      "separate": "stand rotorを分離。rotorの軸を記録。",
+      "max_instances": 2,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I06-Q04"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i06Windmill",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i07Bridge",
+      "name": "短い探検用の橋",
+      "islands": [
+        7
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "景観",
+      "target_size_m": [
+        3.2,
+        0.4,
+        1.8
+      ],
+      "detail": "見通しのよい短い板橋。橋の上を歩け、落下で罰を与えない。",
+      "references": [
+        "assets/islands/learning-kit.json#i07Bridge"
+      ],
+      "separate": "deck railLeft railRightを分離。歩行面は別に記録。",
+      "max_instances": 2,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I07-Q02",
+        "I07-H01"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i07Bridge",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i07Waystone",
+      "name": "道の目印になる岩",
+      "islands": [
+        7
+      ],
+      "production": "再利用要調整",
+      "priority": "先行",
+      "kind": "景観",
+      "target_size_m": null,
+      "detail": "森のrock rockTallを再利用。絵の表示面を邪魔しない輪郭へ調整。",
+      "references": [
+        "assets/forest/woodland-kit.json#rock",
+        "assets/forest/woodland-kit.json#rockTall"
+      ],
+      "separate": "岩と絵の印は別。",
+      "max_instances": 3,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I07-Q02",
+        "I07-H02"
+      ]
+    },
+    {
+      "id": "i07Tent",
+      "name": "届け先と休憩用のテント",
+      "islands": [
+        7
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "景観",
+      "target_size_m": [
+        3,
+        2.4,
+        2.7
+      ],
+      "detail": "入口が見える明るいテント。暗い内部を必須にしない。",
+      "references": [
+        "assets/islands/learning-kit.json#i07Tent"
+      ],
+      "separate": "本体と入口。開いた通路を確保。",
+      "max_instances": 1,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I07-H01",
+        "I07-H02"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i07Tent",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i07Pack",
+      "name": "補給品を入れる開いた袋",
+      "islands": [
+        7
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        0.9,
+        0.65,
+        0.6
+      ],
+      "detail": "上が開いて中身が見える。荷物の数は独立モデルで示す。",
+      "references": [
+        "assets/islands/learning-kit.json#i07Pack"
+      ],
+      "separate": "袋と持ち手。補給品は別。",
+      "max_instances": 2,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I07-H01"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i07Pack",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i07RouteGate",
+      "name": "分かれ道を示す小さな門",
+      "islands": [
+        7
+      ],
+      "production": "新規",
+      "priority": "追加",
+      "kind": "景観",
+      "target_size_m": [
+        2.8,
+        2.4,
+        0.5
+      ],
+      "detail": "左右の道を絵で区別。通路をせばめず、迷路を増やさない。",
+      "references": [
+        "assets/islands/learning-kit.json#i07RouteGate"
+      ],
+      "separate": "柱と表示面。矢印と選択状態はゲーム側。",
+      "max_instances": 2,
+      "delivery": "Blender",
+      "activity_refs": [],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i07RouteGate",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i07RestBench",
+      "name": "探検の休憩台",
+      "islands": [
+        7
+      ],
+      "production": "再利用要調整",
+      "priority": "追加",
+      "kind": "景観",
+      "target_size_m": [
+        1.8,
+        0.7,
+        0.7
+      ],
+      "detail": "森の倒木を休憩の目印へ整える。学習の必須操作にはしない。",
+      "references": [
+        "assets/forest/woodland-kit.json#log"
+      ],
+      "separate": "倒木と置く物は別。",
+      "max_instances": 1,
+      "delivery": "既存素材",
+      "activity_refs": []
+    },
+    {
+      "id": "i08Arch",
+      "name": "お祭りの入口アーチ",
+      "islands": [
+        8
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "景観",
+      "target_size_m": [
+        4.5,
+        4,
+        0.8
+      ],
+      "detail": "白と珊瑚色。中央の広場へ通じる入口。文字と飾りを詰めすぎない。",
+      "references": [
+        "assets/islands/learning-kit.json#i08Arch"
+      ],
+      "separate": "左右の柱と上部、無地の表示面。通り抜け判定はゲーム側。",
+      "max_instances": 1,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I08-Q02"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i08Arch",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i08Table",
+      "name": "人数に合わせて準備する食卓",
+      "islands": [
+        8
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        3.6,
+        0.8,
+        1.6
+      ],
+      "detail": "パンと皿を１人ずつ対応させて並べる広い面。",
+      "references": [
+        "assets/islands/learning-kit.json#i08Table"
+      ],
+      "separate": "台単体。皿・パン・いすを結合しない。",
+      "max_instances": 2,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I08-Q01",
+        "I08-Q02",
+        "I08-Q03"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i08Table",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i08Stage",
+      "name": "希望を伝える低いステージ",
+      "islands": [
+        8
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "景観",
+      "target_size_m": [
+        3.4,
+        0.3,
+        2.2
+      ],
+      "detail": "小さい段差とスロープ。登れない子も前で発表できる。",
+      "references": [
+        "assets/islands/learning-kit.json#i08Stage"
+      ],
+      "separate": "台とスロープ。立つ場所の基準点を記録。",
+      "max_instances": 1,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I08-H01"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i08Stage",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i08Canopy",
+      "name": "広場の外周に置くお祭りテント",
+      "islands": [
+        8
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "景観",
+      "target_size_m": [
+        3.8,
+        3.2,
+        3
+      ],
+      "detail": "中央を空ける開いた天幕。市場の日よけとは白と珊瑚色で区別する。",
+      "references": [
+        "assets/islands/learning-kit.json#i08Canopy"
+      ],
+      "separate": "柱と天幕。屋根で台や客を隠さない。",
+      "max_instances": 2,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I08-H01"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i08Canopy",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i08Bunting",
+      "name": "自分で並べる旗飾り",
+      "islands": [
+        8
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        2.4,
+        0.45,
+        0.08
+      ],
+      "detail": "少数の旗を色や並びで飾れる。中央の回答物に重ねない。",
+      "references": [
+        "assets/islands/learning-kit.json#i08Bunting"
+      ],
+      "separate": "rope flagを分離。個々の旗の色と並びはゲーム側。",
+      "max_instances": 4,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I08-H01"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i08Bunting",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i08Gift",
+      "name": "配るおみやげの箱",
+      "islands": [
+        8
+      ],
+      "production": "再利用要調整",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        0.6,
+        0.6,
+        0.6
+      ],
+      "detail": "既存のプレゼントを１人１個配れる単体へ整理。中身の数と箱の数を混ぜない。",
+      "references": [
+        "src/furniture.js#present"
+      ],
+      "separate": "箱単体。開閉が必要なら蓋を別にする。",
+      "max_instances": 8,
+      "delivery": "既存素材",
+      "activity_refs": [
+        "I08-H01"
+      ]
+    },
+    {
+      "id": "i08CleanupBin",
+      "name": "種類を分けて戻す片付け箱",
+      "islands": [
+        8
+      ],
+      "production": "新規",
+      "priority": "先行",
+      "kind": "学習物",
+      "target_size_m": [
+        1.1,
+        0.8,
+        0.9
+      ],
+      "detail": "中身が見える３区分。文字と色だけに頼らず絵を表示する。",
+      "references": [
+        "assets/islands/learning-kit.json#i08CleanupBin"
+      ],
+      "separate": "箱と表示面。入れる物は別。",
+      "max_instances": 3,
+      "delivery": "Blender",
+      "activity_refs": [
+        "I08-H02"
+      ],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i08CleanupBin",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i08DecorationStand",
+      "name": "飾りを並べる低い台",
+      "islands": [
+        8
+      ],
+      "production": "新規",
+      "priority": "追加",
+      "kind": "景観",
+      "target_size_m": [
+        1.4,
+        0.6,
+        0.8
+      ],
+      "detail": "自由な配置を支える小さな台。入口や移動経路を塞がない。",
+      "references": [
+        "assets/islands/learning-kit.json#i08DecorationStand"
+      ],
+      "separate": "台と載せる飾りは別。",
+      "max_instances": 3,
+      "delivery": "Blender",
+      "activity_refs": [],
+      "status": "原本と仕上げ完了（実ゲーム確認待ち）",
+      "generated": {
+        "source": "assets-src/islands/learning-kit.blend",
+        "geometry": "assets/islands/learning-kit.json#i08DecorationStand",
+        "connections": "assets/islands/learning-kit-attachments.json",
+        "report": "assets-src/islands/learning-kit-geometry-report.json",
+        "generator": "tools/build-island-assets.py"
+      }
+    },
+    {
+      "id": "i06ObservationDome",
+      "name": "空気のある海底観察ドーム",
+      "islands": [
+        6
+      ],
+      "production": "再利用要調整",
+      "priority": "先行",
+      "kind": "土台",
+      "target_size_m": [
+        46,
+        23,
+        46
+      ],
+      "detail": "透明な半球と細い骨組み。土の畑と風の実験をドーム内へ、遊べる範囲を窓の内側に制限する。",
+      "references": [
+        "src/learning-islands.js#buildHabitat"
+      ],
+      "separate": "地面・背景・動く生き物や雲を分ける。文字と活動状態はゲーム側。",
+      "max_instances": 1,
+      "delivery": "ゲーム側",
+      "status": "環境の実装済み（実画面確認中）",
+      "activity_refs": [
+        "I06-Q02",
+        "I06-Q04"
+      ]
+    },
+    {
+      "id": "i06Reef",
+      "name": "窓の外の魚とサンゴ",
+      "islands": [
+        6
+      ],
+      "production": "再利用要調整",
+      "priority": "先行",
+      "kind": "景観",
+      "target_size_m": [
+        64,
+        6,
+        64
+      ],
+      "detail": "青緑の海底背景に、少数の魚と枝のあるサンゴ。数量の回答物へ重ねない。魚は窓の外をゆっくり泳ぐ。",
+      "references": [
+        "src/learning-islands.js#buildHabitat"
+      ],
+      "separate": "地面・背景・動く生き物や雲を分ける。文字と活動状態はゲーム側。",
+      "max_instances": 1,
+      "delivery": "ゲーム側",
+      "status": "環境の実装済み（実画面確認中）",
+      "activity_refs": []
+    },
+    {
+      "id": "i07SkyGround",
+      "name": "雲上の浮島と道の土台",
+      "islands": [
+        7
+      ],
+      "production": "再利用要調整",
+      "priority": "先行",
+      "kind": "土台",
+      "target_size_m": [
+        60,
+        10,
+        60
+      ],
+      "detail": "４つの見える足場と道をつなぐ。青灰色の下面、短い道、落下しない移動範囲。",
+      "references": [
+        "src/learning-islands.js#buildGround"
+      ],
+      "separate": "地面・背景・動く生き物や雲を分ける。文字と活動状態はゲーム側。",
+      "max_instances": 1,
+      "delivery": "ゲーム側",
+      "status": "環境の実装済み（実画面確認中）",
+      "activity_refs": [
+        "I07-Q02"
+      ]
+    },
+    {
+      "id": "i07Clouds",
+      "name": "足場の下と遠景の雲",
+      "islands": [
+        7
+      ],
+      "production": "再利用要調整",
+      "priority": "先行",
+      "kind": "景観",
+      "target_size_m": [
+        90,
+        7,
+        90
+      ],
+      "detail": "白いふくらみを少数ずつまとめた雲。足場と目印を隠さず、ゆっくり流れる。",
+      "references": [
+        "src/learning-islands.js#buildHabitat"
+      ],
+      "separate": "地面・背景・動く生き物や雲を分ける。文字と活動状態はゲーム側。",
+      "max_instances": 1,
+      "delivery": "ゲーム側",
+      "status": "環境の実装済み（実画面確認中）",
+      "activity_refs": [
+        "I07-Q02"
+      ]
+    }
+  ]
+}
