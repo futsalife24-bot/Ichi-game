@@ -7,7 +7,7 @@ export const CONCEPT_LAYOUTS = Object.freeze({
     "kind": "cove",
     "radius": 25,
     "spawn": [
-      0,
+      -2,
       16
     ],
     "hero": [

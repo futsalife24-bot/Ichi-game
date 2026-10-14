@@ -79,9 +79,9 @@
       "file": "01-entry.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1032831,
-      "sha256": "192ecef8b65de69d176527fcee6aebc808bdd6f6b70ac6f729038d8d52d7c6cd",
-      "capturedAt": "2026-10-13T22:51:09.815Z"
+      "bytes": 1027438,
+      "sha256": "4123519ad316d4fd8549ac2b22828f11faad7d0bc37467a0ec2293d0e6b1cb6e",
+      "capturedAt": "2026-10-14T02:36:02.808Z"
     },
     {
       "island": 1,
@@ -89,9 +89,9 @@
       "file": "01-hero.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1201673,
-      "sha256": "277d0374b30f96b77674b477369a7f234cfccfd1c4852f3e3037f829849f713b",
-      "capturedAt": "2026-10-13T22:51:11.873Z"
+      "bytes": 1201892,
+      "sha256": "273bcd31c048bf62ade25362d7876b013a2369cb871e7c2872bb4335a1d4e6e3",
+      "capturedAt": "2026-10-14T02:36:47.596Z"
     },
     {
       "island": 1,
@@ -99,9 +99,9 @@
       "file": "01-side.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1251142,
-      "sha256": "469210a7390a55bade3957b267127c42887c46169c22833ad5dfd5badecee6a2",
-      "capturedAt": "2026-10-13T22:51:14.612Z"
+      "bytes": 1251017,
+      "sha256": "2516ef09fd21cce8009d5581b704a15f1972462467b6eeef13e920fa3cfcc227",
+      "capturedAt": "2026-10-14T02:37:42.670Z"
     },
     {
       "island": 2,
@@ -325,9 +325,9 @@
       ],
       "width": 1280,
       "height": 720,
-      "bytes": 105107,
-      "sha256": "5c629078ceefd1f1a61c733cc0a5236fbb810dafdc3ec7c87574699a32a2a8df",
-      "capturedAt": "2026-10-14T00:44:36.622Z"
+      "bytes": 110105,
+      "sha256": "055b60e2ea249f8cd0d6d58cc3177e71ace9dd73de2903b4bbe104dee7978c47",
+      "capturedAt": "2026-10-14T02:41:12.899Z"
     },
     {
       "island": 1,
@@ -339,9 +339,9 @@
       ],
       "width": 667,
       "height": 375,
-      "bytes": 39061,
-      "sha256": "a8727dee57f25404c6900317562e4791fe8d332d2fa7168cee5e436ac8d74912",
-      "capturedAt": "2026-10-14T00:44:38.160Z"
+      "bytes": 38997,
+      "sha256": "cf40cb13e99f5e113c6246fe66c6b021a749c4ec40de4986b1323dd170e558ff",
+      "capturedAt": "2026-10-14T02:42:53.115Z"
     },
     {
       "island": 2,

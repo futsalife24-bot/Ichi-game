@@ -8,7 +8,7 @@
   "publishedMainConfirmed": "a5e8be2bb8a7c4a1e9825a4d51922e5aa9cb39b1",
   "finalSource": {
     "files": 188,
-    "sha256": "f79f989061b6ff5a072f9248e9f8cdadd860cc95275297e2b9a5fd6b847d61f2",
+    "sha256": "f138d06e5d9dfa68ce05fff727df24465635bdfeb03fb3041adabf6c95f26288",
     "method": "相対パス、NUL、実ファイルのバイト列をパス順にSHA-256へ加える",
     "paths": [
       ".github/workflows/pages.yml",
@@ -333,7 +333,7 @@
   },
   "images": {
     "manifest": "docs/concept-scene-proof/manifest.json",
-    "sha256": "31384b1632e28392ed90e148c98297bffd8bb680bb71c8fe865054aa06da085a",
+    "sha256": "cc99fde14866a75cfb65a95c9298ed11a26040bf3502e8094aa0f3e890934661",
     "originals": 8,
     "comparison": 24,
     "normalUi": 16,
@@ -392,7 +392,7 @@
     "pending": 85,
     "changed": false
   },
-  "serviceWorker": "kirakira-v56-concept-view",
+  "serviceWorker": "kirakira-v57-concept-view",
   "models": {
     "childrenRequested": "gpt-6-sol",
     "effortRequested": "medium",
@@ -506,5 +506,18 @@
     "userInstruction": "自己検証で公開して",
     "independentAudit": false,
     "authorized": true
+  },
+  "firstIslandVisibilityFix": {
+    "spawn": [
+      -2,
+      16
+    ],
+    "boatChanged": false,
+    "returnPositionUnified": true,
+    "tests": 24,
+    "passed": 24,
+    "failed": 0,
+    "sourceCheck": "tools/concept-camera.test.mjs の実船メッシュへの遮蔽検査",
+    "publicationPending": true
   }
 }

@@ -16,6 +16,12 @@
 
 ## 保存と後続
 
+## 第一島の出発位置の修正
+
+初回のPR #35を統合して `3e94280a7c0d85ec795d259cc151fb0bfe7b08d5` を公開。Pages処理とmainの325テストが成功し、公開113資材が原本と一致した。公開版で全８島に到着し、星１保持、第一から第二への直接渡航、第四〜第八の短い歩行、第六・第七の667×375表示を確認した。
+
+第一島への帰還で船の帆がウサギを隠す位置を発見したため、出発と帰還のx位置を道の左へ２m移した。船の形・乗船位置・判定は維持。実船メッシュへのRaycaster検査を追加し、カメラ・歩行・SWの24検査と配置正本の一致検査が成功。第一島の比較３画像と通常UIの大・小画面を更新し、修正後の公開画面を再確認する。公開の完了記録と署名は最終版の結果へそろえる。
+
 GitHubは https://github.com/futsalife24-bot/Ichi-game 、公開先は https://futsalife24-bot.github.io/Ichi-game/ 、ローカルは `C:/Users/futsa/Documents/Codex/2026-10-03/codex-ichi-game-futsalife24-bot-ichi/work/Ichi-game`。制作原本と比較資料はGitHubと既存Driveへ保存し、Pagesではゲーム本体を配信する。採用済みの[あそびのおさそい](learning-invitation-idea.md)は景観goal後の別タスクとして保持する。
 
 主担当が差分・PR統合・公開・実配信と実操作を確認し、既存の子１体が配信依存の読取り点検を補助した。子の指定は `gpt-6-sol / medium`、実行モデルID・推論設定の実値は未確認。独立監査としては扱わない。
