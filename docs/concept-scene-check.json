@@ -403,7 +403,6 @@
   "remaining": [
     "本人の最終視覚評価と必要な手直し",
     "実スマホの速度・温度・長時間プレイの確認",
-    "既に質問済みの今回の監査方針の回答",
     "main反映・公開と配信照合"
   ],
   "limitations": [
@@ -501,5 +500,11 @@
     "tests": 325,
     "failed": 0,
     "log": "artifacts/concept-finish-github-ci.log"
+  },
+  "releaseDecision": {
+    "date": "2026-10-14",
+    "userInstruction": "自己検証で公開して",
+    "independentAudit": false,
+    "authorized": true
   }
 }
