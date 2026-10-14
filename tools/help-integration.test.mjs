@@ -12,7 +12,7 @@ const hudElement = () => ({ classList: { toggle() {} }, querySelector() { return
 test('報酬の保存失敗を検知したフレームでは後続の島イベントへ進まない', () => {
   const frame = main.match(/function frame\(now\) \{[\s\S]*?\n\}\r?\nrequestAnimationFrame\(frame\);/)[0];
   let events = 0, scheduled = 0;
-  const context = {developerMenuOpen:()=>false,homePaused:false, last: 0, time: 0, saveBlocked: false, islandLoading:false, document: { hidden: false }, mode: 'play',
+  const context = {developerMenuOpen:()=>false,homePaused:false, last: 0, time: 0, saveBlocked: false, islandLoading:false,forestLoading:false, document: { hidden: false }, mode: 'play',
     $: hudElement, harborErrands: { modal: false, focused: false },
     playTimer: {tick:()=>true,paused:false},
     input: { pointer: null }, place: 'island', islandNumber: () => 1, islandRules: () => ({ name: 'ひろば' }), learning: { opened: false, close() {}, stopSpeech() {} },
@@ -44,7 +44,7 @@ test('お手伝いへの切替で釣りを解除し、自由遊びに戻って�
 test('贈り物の保存失敗後は動物・船・島の処理へ進まない', () => {
   const frame=main.match(/function frame\(now\) \{[\s\S]*?\n\}\r?\nrequestAnimationFrame\(frame\);/)[0];
   let later=0,scheduled=0;
-  const context={developerMenuOpen:()=>false,homePaused:false,last:0,time:0,saveBlocked:false,islandLoading:false,document:{hidden:false},mode:'play',place:'island',
+  const context={developerMenuOpen:()=>false,homePaused:false,last:0,time:0,saveBlocked:false,islandLoading:false,forestLoading:false,document:{hidden:false},mode:'play',place:'island',
     $:hudElement,harborErrands:{modal:false,focused:false},playTimer:{tick:()=>true,paused:false},input:{pointer:null},
     islandNumber: () => 1, islandRules: () => ({ name: 'ひろば' }), learning: { opened: false, close() {}, stopSpeech() {} }, help:{modal:false,focused:false},
     adventure:{modal:false,focused:true,update(){context.saveBlocked=true;}},ui:{panelOpen:false},transitioning:false,
@@ -56,7 +56,7 @@ test('贈り物の保存失敗後は動物・船・島の処理へ進まない',
 test('船の暗転中に休憩や案内が開いた場合は、到着で入力を有効にしない', () => {
   const code=main.match(/function transition\(fn\) \{[\s\S]*?\n\}/)[0];
   for(const reason of ['modal','harbor','paused','save']){
-    const timers=[],context={transitioning:false,mode:'play',saveBlocked:false,islandLoading:false,homePaused:false,input:{enabled:true,reset(){}},
+    const timers=[],context={transitioning:false,mode:'play',saveBlocked:false,islandLoading:false,forestLoading:false,homePaused:false,input:{enabled:true,reset(){}},
       $:hudElement,harborErrands:{modal:false,focused:false},learning:{opened:false,close(){}},ui:{panelOpen:false},fadeEl:{classList:{add(){},remove(){}}},playTimer:{paused:false},help:{modal:false},adventure:{modal:false},setTimeout:f=>timers.push(f)};
     context.arrive=()=>{if(reason==='modal')context.adventure.modal=true;if(reason==='harbor')context.harborErrands.modal=true;if(reason==='paused')context.playTimer.paused=true;if(reason==='save')context.saveBlocked=true;};
     vm.runInNewContext(activityInput+'\n'+code+'\ntransition(arrive);',context);while(timers.length)timers.shift()();
@@ -65,7 +65,7 @@ test('船の暗転中に休憩や案内が開いた場合は、到着で入力�
 });
 
 test('学習パネルを開いた間は入力を無効にする', () => {
-  const context={mode:'play',saveBlocked:false,islandLoading:false,homePaused:false,transitioning:false,
+  const context={mode:'play',saveBlocked:false,islandLoading:false,forestLoading:false,homePaused:false,transitioning:false,
     $:hudElement,input:{enabled:true},learning:{opened:true,close(){}},ui:{panelOpen:false},
     harborErrands:{focused:false,modal:false},adventure:{focused:false,modal:false},help:{modal:false},playTimer:{paused:false}};
   vm.runInNewContext(activityInput+'\nrefreshActivityInput();',context);
@@ -79,4 +79,7 @@ test('学習パネルを開いた間は入力を無効にする', () => {
   context.islandLoading=false;
   vm.runInNewContext('refreshActivityInput();',context);
   assert.equal(context.input.enabled,true);
+  context.forestLoading=true;
+  vm.runInNewContext('refreshActivityInput();',context);
+  assert.equal(context.input.enabled,false);
 });

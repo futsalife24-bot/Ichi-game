@@ -1,5 +1,5 @@
 // おてつだいの しさく。こすうは はったつの きじゅんでは ありません。
-export const HELP_SPOTS = [{ x: -4, z: -3 }, { x: -1, z: -6 }];
+export const HELP_SPOTS = [{ x: -4, z: -3 }, { x: -2, z: -6 }];
 export const HELP_HOST = { x: -3, z: 1 };
 export const HELP_NEED = HELP_SPOTS.length;
 export const newHelp = () => ({ version: 1, round: 1, stage: 'intro', collected: [], rewardedRound: 0 });

@@ -1,0 +1,590 @@
+{
+  "checkedAt": "2026-10-13T03:22:19.331Z",
+  "url": "https://futsalife24-bot.github.io/Ichi-game/",
+  "releaseSha": "a5e8be2bb8a7c4a1e9825a4d51922e5aa9cb39b1",
+  "previousMain": "f846ca5cd4d19198cc01340bcdb09db095911a57",
+  "approval": "チェックするから公開して。ボイスは引き続き生成を進めて",
+  "count": 82,
+  "allMatch": true,
+  "voice": {
+    "shipped": 726,
+    "pending": 85
+  },
+  "browser": "全島の実操作は未確認。本人が公開版で確認する方針。",
+  "files": [
+    {
+      "path": "assets/forest/woodland-kit.json",
+      "status": 200,
+      "expected": "99ec615138bc46801f359193efbc1ea168104e4415c1a90959e593ac23d6b633",
+      "actual": "99ec615138bc46801f359193efbc1ea168104e4415c1a90959e593ac23d6b633",
+      "match": true
+    },
+    {
+      "path": "assets/harbor/harbor-kit.json",
+      "status": 200,
+      "expected": "7e088a893ba81bec1b8349b32e2ffd1431f36251cee1e2fc4f30a20276830afc",
+      "actual": "7e088a893ba81bec1b8349b32e2ffd1431f36251cee1e2fc4f30a20276830afc",
+      "match": true
+    },
+    {
+      "path": "assets/islands/learning-kit-attachments.json",
+      "status": 200,
+      "expected": "b10e4ea8ad6995888b5c046f0d497e1d56a34e8f174eaf6e998637d7efb7df79",
+      "actual": "b10e4ea8ad6995888b5c046f0d497e1d56a34e8f174eaf6e998637d7efb7df79",
+      "match": true
+    },
+    {
+      "path": "assets/islands/learning-kit.json",
+      "status": 200,
+      "expected": "30f0763ae7c7e5354c3c15a78336414f7f93c6ae97b143e13d5641d93fdf3a0c",
+      "actual": "30f0763ae7c7e5354c3c15a78336414f7f93c6ae97b143e13d5641d93fdf3a0c",
+      "match": true
+    },
+    {
+      "path": "icons/apple-touch-icon.png",
+      "status": 200,
+      "expected": "d69cbb652df0e037970f29309d33359f8f25edaf0a98f0054cffe17ef1646890",
+      "actual": "d69cbb652df0e037970f29309d33359f8f25edaf0a98f0054cffe17ef1646890",
+      "match": true
+    },
+    {
+      "path": "icons/icon-192.png",
+      "status": 200,
+      "expected": "6d131fd16e69279cd9b44c32623470956ea716cd802c21e750cbae94cb513133",
+      "actual": "6d131fd16e69279cd9b44c32623470956ea716cd802c21e750cbae94cb513133",
+      "match": true
+    },
+    {
+      "path": "icons/icon-512.png",
+      "status": 200,
+      "expected": "3348b0a97bf4fd8c868434891d2dca08fa6b9941bf2c42348d026ed7e5442729",
+      "actual": "3348b0a97bf4fd8c868434891d2dca08fa6b9941bf2c42348d026ed7e5442729",
+      "match": true
+    },
+    {
+      "path": "icons/icon-maskable-512.png",
+      "status": 200,
+      "expected": "3348b0a97bf4fd8c868434891d2dca08fa6b9941bf2c42348d026ed7e5442729",
+      "actual": "3348b0a97bf4fd8c868434891d2dca08fa6b9941bf2c42348d026ed7e5442729",
+      "match": true
+    },
+    {
+      "path": "index.html",
+      "status": 200,
+      "expected": "3535a2ffb0a40a4fe3bab51b4d59bbdf6bd89a1038e6896921aed1c1c5ae53d2",
+      "actual": "3535a2ffb0a40a4fe3bab51b4d59bbdf6bd89a1038e6896921aed1c1c5ae53d2",
+      "match": true
+    },
+    {
+      "path": "manifest.webmanifest",
+      "status": 200,
+      "expected": "237ac368e739a0f399e44530172634b1a3b30a93ffa1dd528e31515a6dc260d7",
+      "actual": "237ac368e739a0f399e44530172634b1a3b30a93ffa1dd528e31515a6dc260d7",
+      "match": true
+    },
+    {
+      "path": "src/activity-voice-lines.js",
+      "status": 200,
+      "expected": "e991d61a782d9f45b37f05ab5a731d4d5e12d64dd90c223b32aac63b1620439b",
+      "actual": "e991d61a782d9f45b37f05ab5a731d4d5e12d64dd90c223b32aac63b1620439b",
+      "match": true
+    },
+    {
+      "path": "src/adaptive-play.js",
+      "status": 200,
+      "expected": "c6e5176e5301830fcebc3ac02ebaaf4de310f060ecec21dd20c4092399b96f79",
+      "actual": "c6e5176e5301830fcebc3ac02ebaaf4de310f060ecec21dd20c4092399b96f79",
+      "match": true
+    },
+    {
+      "path": "src/adventure-state.js",
+      "status": 200,
+      "expected": "7e541f5d44700a0b0a3f34ebc73f4bdd32b7c1c83763d1442d07d534c5481f31",
+      "actual": "7e541f5d44700a0b0a3f34ebc73f4bdd32b7c1c83763d1442d07d534c5481f31",
+      "match": true
+    },
+    {
+      "path": "src/adventure.js",
+      "status": 200,
+      "expected": "da9005da290a0077b3cb13794cd656cfe630ecb7d08d169d94dac2d3a82935cb",
+      "actual": "da9005da290a0077b3cb13794cd656cfe630ecb7d08d169d94dac2d3a82935cb",
+      "match": true
+    },
+    {
+      "path": "src/animals.js",
+      "status": 200,
+      "expected": "75616ae46d7a7fc35bd413136dd05567af16d7031dac845b876b730b0984f5bb",
+      "actual": "75616ae46d7a7fc35bd413136dd05567af16d7031dac845b876b730b0984f5bb",
+      "match": true
+    },
+    {
+      "path": "src/audio.js",
+      "status": 200,
+      "expected": "87ff3988f3267f4349fad90ace7b9d2069078b60c72f646d0acf9f138df5138d",
+      "actual": "87ff3988f3267f4349fad90ace7b9d2069078b60c72f646d0acf9f138df5138d",
+      "match": true
+    },
+    {
+      "path": "src/birthday-ui.js",
+      "status": 200,
+      "expected": "5dd8225ed4fb86199bc4b38a0594632fd9290eacd344ceb1cea3071d2e542433",
+      "actual": "5dd8225ed4fb86199bc4b38a0594632fd9290eacd344ceb1cea3071d2e542433",
+      "match": true
+    },
+    {
+      "path": "src/birthday.js",
+      "status": 200,
+      "expected": "ab77b59691595ffc6f037c7274e84639ca7c44129971979ac60e070ccaf652d4",
+      "actual": "ab77b59691595ffc6f037c7274e84639ca7c44129971979ac60e070ccaf652d4",
+      "match": true
+    },
+    {
+      "path": "src/canvas.js",
+      "status": 200,
+      "expected": "0dd6335e9513dc1ad72ef455c72181f0c5d258fc290616130a0fb911acd32171",
+      "actual": "0dd6335e9513dc1ad72ef455c72181f0c5d258fc290616130a0fb911acd32171",
+      "match": true
+    },
+    {
+      "path": "src/catalog.js",
+      "status": 200,
+      "expected": "b12f80524af81df0ed8609f93cfc7b2474069042e5fca96cd3fb969936451f9f",
+      "actual": "b12f80524af81df0ed8609f93cfc7b2474069042e5fca96cd3fb969936451f9f",
+      "match": true
+    },
+    {
+      "path": "src/characters.js",
+      "status": 200,
+      "expected": "1cfd535d39285a1c779e1cd74e1c21f07e7b7470bc2a34556bb81a608569daf5",
+      "actual": "1cfd535d39285a1c779e1cd74e1c21f07e7b7470bc2a34556bb81a608569daf5",
+      "match": true
+    },
+    {
+      "path": "src/climate.js",
+      "status": 200,
+      "expected": "199bbbe54d8f004174c525e1eda86d5bc0c4389da48581381fabdce0c8a78084",
+      "actual": "199bbbe54d8f004174c525e1eda86d5bc0c4389da48581381fabdce0c8a78084",
+      "match": true
+    },
+    {
+      "path": "src/closet-preview.js",
+      "status": 200,
+      "expected": "9ad191af15031231058042c5d30fa611bf63d8eed1b2ea2caf6f9893161401ba",
+      "actual": "9ad191af15031231058042c5d30fa611bf63d8eed1b2ea2caf6f9893161401ba",
+      "match": true
+    },
+    {
+      "path": "src/critters.js",
+      "status": 200,
+      "expected": "318d937cc35d4f2531fb9913ef30a7ae2c30a24251184b70cd21a5380149709e",
+      "actual": "318d937cc35d4f2531fb9913ef30a7ae2c30a24251184b70cd21a5380149709e",
+      "match": true
+    },
+    {
+      "path": "src/developer-mode.js",
+      "status": 200,
+      "expected": "5003965f613f7dac16d0e61d7c12040ee0474164bf7c41ef9cacb862bc2629d6",
+      "actual": "5003965f613f7dac16d0e61d7c12040ee0474164bf7c41ef9cacb862bc2629d6",
+      "match": true
+    },
+    {
+      "path": "src/effects.js",
+      "status": 200,
+      "expected": "9591378a92a8171ca14914033c49be32cf17e4df11596332a075f8c65effdac5",
+      "actual": "9591378a92a8171ca14914033c49be32cf17e4df11596332a075f8c65effdac5",
+      "match": true
+    },
+    {
+      "path": "src/eight-island-lines.js",
+      "status": 200,
+      "expected": "55df2fcf0599c47836b45684798210004539b8da5c10cb8d16d27390c36e7aaa",
+      "actual": "55df2fcf0599c47836b45684798210004539b8da5c10cb8d16d27390c36e7aaa",
+      "match": true
+    },
+    {
+      "path": "src/forest-layout.js",
+      "status": 200,
+      "expected": "2c6f5bc155c7b045c6500fd0fb11371278ab71354bcd907cc9d29922b4f10131",
+      "actual": "2c6f5bc155c7b045c6500fd0fb11371278ab71354bcd907cc9d29922b4f10131",
+      "match": true
+    },
+    {
+      "path": "src/forest-water.js",
+      "status": 200,
+      "expected": "c942691338a321df68c5c948e2b769a35e9d5823e288065e43a70976e44da391",
+      "actual": "c942691338a321df68c5c948e2b769a35e9d5823e288065e43a70976e44da391",
+      "match": true
+    },
+    {
+      "path": "src/forest.js",
+      "status": 200,
+      "expected": "869be4c2878f69cc4d651455deab35c785a581e0e0c1caf72f75170819d36b60",
+      "actual": "869be4c2878f69cc4d651455deab35c785a581e0e0c1caf72f75170819d36b60",
+      "match": true
+    },
+    {
+      "path": "src/furniture.js",
+      "status": 200,
+      "expected": "951d6fd4977ad0d5875fa28e0a0b1a759ecdc00e0780b8028e6c690d6d0b200d",
+      "actual": "951d6fd4977ad0d5875fa28e0a0b1a759ecdc00e0780b8028e6c690d6d0b200d",
+      "match": true
+    },
+    {
+      "path": "src/harbor-effects.js",
+      "status": 200,
+      "expected": "f313cb3f014a7f81c3b6b5c5b65c069e229d38f9377fbde618113d0819652ea1",
+      "actual": "f313cb3f014a7f81c3b6b5c5b65c069e229d38f9377fbde618113d0819652ea1",
+      "match": true
+    },
+    {
+      "path": "src/harbor-errands-art.js",
+      "status": 200,
+      "expected": "4a9b17fcdac184d76646580de460b76f09023f35625d05106500faf30ba27570",
+      "actual": "4a9b17fcdac184d76646580de460b76f09023f35625d05106500faf30ba27570",
+      "match": true
+    },
+    {
+      "path": "src/harbor-errands-lines.js",
+      "status": 200,
+      "expected": "160261c60c96a2eac3ae1a72ed35aa03be30da2dd5e1199f69c00be6b0f055fc",
+      "actual": "160261c60c96a2eac3ae1a72ed35aa03be30da2dd5e1199f69c00be6b0f055fc",
+      "match": true
+    },
+    {
+      "path": "src/harbor-errands-state.js",
+      "status": 200,
+      "expected": "8d564f7af6f5bfc01a7fa6ae3ad1c9c4c7a5d9f1274051351b76456d182b1960",
+      "actual": "8d564f7af6f5bfc01a7fa6ae3ad1c9c4c7a5d9f1274051351b76456d182b1960",
+      "match": true
+    },
+    {
+      "path": "src/harbor-errands.js",
+      "status": 200,
+      "expected": "789366f3a602f171a8a00449debc903dd5ebe0f420f72df95e7f825b5d356958",
+      "actual": "789366f3a602f171a8a00449debc903dd5ebe0f420f72df95e7f825b5d356958",
+      "match": true
+    },
+    {
+      "path": "src/harbor-gathering-scene.js",
+      "status": 200,
+      "expected": "8bdf9bdad679a5c5fbc05d1cbd12e1167a95a4a3c29bd7a407c21a4d28d17db7",
+      "actual": "8bdf9bdad679a5c5fbc05d1cbd12e1167a95a4a3c29bd7a407c21a4d28d17db7",
+      "match": true
+    },
+    {
+      "path": "src/harbor-gathering-state.js",
+      "status": 200,
+      "expected": "53c8369bf8c1b06e1ccf81312a9da0584b2105f3bebacc82dfbc5faceb71575f",
+      "actual": "53c8369bf8c1b06e1ccf81312a9da0584b2105f3bebacc82dfbc5faceb71575f",
+      "match": true
+    },
+    {
+      "path": "src/harbor-gathering.js",
+      "status": 200,
+      "expected": "b68666e4b3977196f1f2c2e0fba57e4dc6c1d4e9d5eb2de0bcb5c19c04305733",
+      "actual": "b68666e4b3977196f1f2c2e0fba57e4dc6c1d4e9d5eb2de0bcb5c19c04305733",
+      "match": true
+    },
+    {
+      "path": "src/harbor-layout.js",
+      "status": 200,
+      "expected": "f9d63d3242550281ffaf7d0a9057b7a6ccd9a9540ca679989a1bb75bcdb7fd00",
+      "actual": "f9d63d3242550281ffaf7d0a9057b7a6ccd9a9540ca679989a1bb75bcdb7fd00",
+      "match": true
+    },
+    {
+      "path": "src/harbor-play.js",
+      "status": 200,
+      "expected": "4aac4a2e35cd3cb8ebba912ad2e11a4d446d56acb6aed3e24279c88a6bf5a8cf",
+      "actual": "4aac4a2e35cd3cb8ebba912ad2e11a4d446d56acb6aed3e24279c88a6bf5a8cf",
+      "match": true
+    },
+    {
+      "path": "src/harbor-town.js",
+      "status": 200,
+      "expected": "0f69991b456d5e25516d521e1eb3ba028252e2971b8054cb982cf137d51ea4f3",
+      "actual": "0f69991b456d5e25516d521e1eb3ba028252e2971b8054cb982cf137d51ea4f3",
+      "match": true
+    },
+    {
+      "path": "src/harbor-visibility.js",
+      "status": 200,
+      "expected": "c4ab455fd07f63b543b8fc966e051cf3b86835705726949d9467f98496299436",
+      "actual": "c4ab455fd07f63b543b8fc966e051cf3b86835705726949d9467f98496299436",
+      "match": true
+    },
+    {
+      "path": "src/help-state.js",
+      "status": 200,
+      "expected": "b4a5bb8635a98367d4b85c388c3b4765d90db08dae18d9d98bd80e82c165256e",
+      "actual": "b4a5bb8635a98367d4b85c388c3b4765d90db08dae18d9d98bd80e82c165256e",
+      "match": true
+    },
+    {
+      "path": "src/help.js",
+      "status": 200,
+      "expected": "962c3da601fbbed92981bf47256892ac9c4c2c353660e513d4ae754c580c2f1e",
+      "actual": "962c3da601fbbed92981bf47256892ac9c4c2c353660e513d4ae754c580c2f1e",
+      "match": true
+    },
+    {
+      "path": "src/input.js",
+      "status": 200,
+      "expected": "5f0f6d8321125e6a050a78bcd1c1437c37c8e04fd4dbab6af6353730585cd925",
+      "actual": "5f0f6d8321125e6a050a78bcd1c1437c37c8e04fd4dbab6af6353730585cd925",
+      "match": true
+    },
+    {
+      "path": "src/island-activities.css",
+      "status": 200,
+      "expected": "7aa5f657d12bd84b8115076c94a891c6fc876d4eacd0abad554e1a9cd3ea8c49",
+      "actual": "7aa5f657d12bd84b8115076c94a891c6fc876d4eacd0abad554e1a9cd3ea8c49",
+      "match": true
+    },
+    {
+      "path": "src/island-activities.js",
+      "status": 200,
+      "expected": "171404d7f636a0be9fd1e8dcd4e69d15c4d07e296811020b29d05b065be30405",
+      "actual": "171404d7f636a0be9fd1e8dcd4e69d15c4d07e296811020b29d05b065be30405",
+      "match": true
+    },
+    {
+      "path": "src/island-guidance.js",
+      "status": 200,
+      "expected": "cada6783b284e9112a52f5cb029574e3bbc2f2a3f35eef8eac949de8037d9436",
+      "actual": "cada6783b284e9112a52f5cb029574e3bbc2f2a3f35eef8eac949de8037d9436",
+      "match": true
+    },
+    {
+      "path": "src/island-learning.css",
+      "status": 200,
+      "expected": "83fbaa747ca4786d8e1c51b14a8e38dcc7a333f36d4bb96e754d591531e5a107",
+      "actual": "83fbaa747ca4786d8e1c51b14a8e38dcc7a333f36d4bb96e754d591531e5a107",
+      "match": true
+    },
+    {
+      "path": "src/island-learning.js",
+      "status": 200,
+      "expected": "d087a765428b9b4f71ac1933bcdcef9a4019a1a5fa411fff0ccd3c8502d7990e",
+      "actual": "d087a765428b9b4f71ac1933bcdcef9a4019a1a5fa411fff0ccd3c8502d7990e",
+      "match": true
+    },
+    {
+      "path": "src/island-rules.js",
+      "status": 200,
+      "expected": "c4e885972f3933081ade2372fe058c702bbf5abff4ac36d99fdfb7ca5502f047",
+      "actual": "c4e885972f3933081ade2372fe058c702bbf5abff4ac36d99fdfb7ca5502f047",
+      "match": true
+    },
+    {
+      "path": "src/learning-island-layout.js",
+      "status": 200,
+      "expected": "7cd28383bea949dface5fdf027b8e3227623580db48f60e9f27f57d77a3c1d8d",
+      "actual": "7cd28383bea949dface5fdf027b8e3227623580db48f60e9f27f57d77a3c1d8d",
+      "match": true
+    },
+    {
+      "path": "src/learning-islands.js",
+      "status": 200,
+      "expected": "8a28d82fe1aaf1dc8d77b9f3555fd88ba28f55526590c5c3f4f798274fad8b4c",
+      "actual": "8a28d82fe1aaf1dc8d77b9f3555fd88ba28f55526590c5c3f4f798274fad8b4c",
+      "match": true
+    },
+    {
+      "path": "src/life.js",
+      "status": 200,
+      "expected": "89ed25a5bb705f97d7586dc84b34a44cff4b7efe491922fba0b948ab47455fd3",
+      "actual": "89ed25a5bb705f97d7586dc84b34a44cff4b7efe491922fba0b948ab47455fd3",
+      "match": true
+    },
+    {
+      "path": "src/lines.js",
+      "status": 200,
+      "expected": "8d290e1e0d23515f0fed2584d0ae166d70760483bc065ebf60a32b77d1b118b6",
+      "actual": "8d290e1e0d23515f0fed2584d0ae166d70760483bc065ebf60a32b77d1b118b6",
+      "match": true
+    },
+    {
+      "path": "src/main.js",
+      "status": 200,
+      "expected": "d36f73a75fa04aa1fc232e212be596b015c06ab62d71d2bfb0271adfc8f8576c",
+      "actual": "d36f73a75fa04aa1fc232e212be596b015c06ab62d71d2bfb0271adfc8f8576c",
+      "match": true
+    },
+    {
+      "path": "src/maker.js",
+      "status": 200,
+      "expected": "06b1c303f6b880ae8deb425f499de218d79743d4c492f97482c9d40be0e52e46",
+      "actual": "06b1c303f6b880ae8deb425f499de218d79743d4c492f97482c9d40be0e52e46",
+      "match": true
+    },
+    {
+      "path": "src/observations.js",
+      "status": 200,
+      "expected": "fa6a6681c714f504885de969bd5feeb5c308e2fce927d1497a215ebf2e9119e6",
+      "actual": "fa6a6681c714f504885de969bd5feeb5c308e2fce927d1497a215ebf2e9119e6",
+      "match": true
+    },
+    {
+      "path": "src/play-settings.js",
+      "status": 200,
+      "expected": "d30abf20be589a5c06d8781a5fe45132009f0d412a0aeee5a5e886efea17933c",
+      "actual": "d30abf20be589a5c06d8781a5fe45132009f0d412a0aeee5a5e886efea17933c",
+      "match": true
+    },
+    {
+      "path": "src/play-time.js",
+      "status": 200,
+      "expected": "c6e6f451890f542ff0ffe50739329bac4d30ae1972d49e0cd473d79052d78ae5",
+      "actual": "c6e6f451890f542ff0ffe50739329bac4d30ae1972d49e0cd473d79052d78ae5",
+      "match": true
+    },
+    {
+      "path": "src/player.js",
+      "status": 200,
+      "expected": "20fc8140a2b7375d6427b09eb0cd8610aeea9d14a3805ccc68da4ee855bd96c4",
+      "actual": "20fc8140a2b7375d6427b09eb0cd8610aeea9d14a3805ccc68da4ee855bd96c4",
+      "match": true
+    },
+    {
+      "path": "src/profile-ui.js",
+      "status": 200,
+      "expected": "a321ec77d948f397aaddb3e9c610030493c12ba7543c0dd41dea219f80ba334a",
+      "actual": "a321ec77d948f397aaddb3e9c610030493c12ba7543c0dd41dea219f80ba334a",
+      "match": true
+    },
+    {
+      "path": "src/profiles.js",
+      "status": 200,
+      "expected": "f67d204ef0f7f0cb11f0082458872cfebe3bebc74543d19dad7c3b77761e713e",
+      "actual": "f67d204ef0f7f0cb11f0082458872cfebe3bebc74543d19dad7c3b77761e713e",
+      "match": true
+    },
+    {
+      "path": "src/props.js",
+      "status": 200,
+      "expected": "8f8c50cd81deff664169969bb506bc9c13fc940c7266d0e938687de49330e46a",
+      "actual": "8f8c50cd81deff664169969bb506bc9c13fc940c7266d0e938687de49330e46a",
+      "match": true
+    },
+    {
+      "path": "src/quests.js",
+      "status": 200,
+      "expected": "c7a7eb0a6cf01d2362c8617496804e386b4a5d1976e3ccf1222193f32e037ef1",
+      "actual": "c7a7eb0a6cf01d2362c8617496804e386b4a5d1976e3ccf1222193f32e037ef1",
+      "match": true
+    },
+    {
+      "path": "src/records-ui.js",
+      "status": 200,
+      "expected": "8c058463212af07000b32f007510c70346a233335ee20a15cb4294e7e30a344b",
+      "actual": "8c058463212af07000b32f007510c70346a233335ee20a15cb4294e7e30a344b",
+      "match": true
+    },
+    {
+      "path": "src/room.js",
+      "status": 200,
+      "expected": "615fb75019f7a97af70d138404f40ce347f9cd80338fde51302afc2bcab6da62",
+      "actual": "615fb75019f7a97af70d138404f40ce347f9cd80338fde51302afc2bcab6da62",
+      "match": true
+    },
+    {
+      "path": "src/save-ui.js",
+      "status": 200,
+      "expected": "9630f0c7f4965f278874609d8ee5e0ffb021e8bf5c0b17a2c588f048ab92a476",
+      "actual": "9630f0c7f4965f278874609d8ee5e0ffb021e8bf5c0b17a2c588f048ab92a476",
+      "match": true
+    },
+    {
+      "path": "src/save.js",
+      "status": 200,
+      "expected": "eaa9c3db42dc06112a505a9acc2351ba2940b60d152ef3fb1707147affc9f078",
+      "actual": "eaa9c3db42dc06112a505a9acc2351ba2940b60d152ef3fb1707147affc9f078",
+      "match": true
+    },
+    {
+      "path": "src/school.js",
+      "status": 200,
+      "expected": "369a44be53c2b6da710e1053c5e056456b63ddf4f29a08c9ac5c604aaf68cb4a",
+      "actual": "369a44be53c2b6da710e1053c5e056456b63ddf4f29a08c9ac5c604aaf68cb4a",
+      "match": true
+    },
+    {
+      "path": "src/settings-ui.js",
+      "status": 200,
+      "expected": "fa53ca068ed4750c6fa274669d2183573042f5b2dda75832df0548ff17a7ef88",
+      "actual": "fa53ca068ed4750c6fa274669d2183573042f5b2dda75832df0548ff17a7ef88",
+      "match": true
+    },
+    {
+      "path": "src/suggestions.js",
+      "status": 200,
+      "expected": "c283953e2a17cebb95b72eb4dfdb76b31268ac94fd4bebd1af6058d576a331f6",
+      "actual": "c283953e2a17cebb95b72eb4dfdb76b31268ac94fd4bebd1af6058d576a331f6",
+      "match": true
+    },
+    {
+      "path": "src/time-ui.js",
+      "status": 200,
+      "expected": "9ea2274cb56f7d19b35f02c962242dc97f35ced4e296c6526fb1cca6b77b0c46",
+      "actual": "9ea2274cb56f7d19b35f02c962242dc97f35ced4e296c6526fb1cca6b77b0c46",
+      "match": true
+    },
+    {
+      "path": "src/ui.js",
+      "status": 200,
+      "expected": "4d99e1a52df12f8ffa2ff4b2f8bf225065be31ff3c5a832f5b40f1b4cde15565",
+      "actual": "4d99e1a52df12f8ffa2ff4b2f8bf225065be31ff3c5a832f5b40f1b4cde15565",
+      "match": true
+    },
+    {
+      "path": "src/voice.js",
+      "status": 200,
+      "expected": "31d86b823c069913564b53aa95a771c872c6faabfcc633b14195b6162d293b23",
+      "actual": "31d86b823c069913564b53aa95a771c872c6faabfcc633b14195b6162d293b23",
+      "match": true
+    },
+    {
+      "path": "src/world.js",
+      "status": 200,
+      "expected": "c492ed2fdc8d3b8e71be528aaf2b2610302807dcb439c1b821da4e0f703885cd",
+      "actual": "c492ed2fdc8d3b8e71be528aaf2b2610302807dcb439c1b821da4e0f703885cd",
+      "match": true
+    },
+    {
+      "path": "style.css",
+      "status": 200,
+      "expected": "e197ff294c991409cbad30099b02e080f95cff39860a72c092654111b915c0ba",
+      "actual": "e197ff294c991409cbad30099b02e080f95cff39860a72c092654111b915c0ba",
+      "match": true
+    },
+    {
+      "path": "sw.js",
+      "status": 200,
+      "expected": "42fccd93e3d2ea04c88dbd5722b7405255771402ebe9ec24e214e820de7ac80e",
+      "actual": "42fccd93e3d2ea04c88dbd5722b7405255771402ebe9ec24e214e820de7ac80e",
+      "match": true
+    },
+    {
+      "path": "vendor/three.core.js",
+      "status": 200,
+      "expected": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "actual": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "match": true
+    },
+    {
+      "path": "vendor/three.module.js",
+      "status": 200,
+      "expected": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "actual": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "match": true
+    },
+    {
+      "path": "voice/index.json",
+      "status": 200,
+      "expected": "9e59fa77c32380178cfa9e56ba71f9f195831aeb3187ae26ec1e06b6a8e75752",
+      "actual": "9e59fa77c32380178cfa9e56ba71f9f195831aeb3187ae26ec1e06b6a8e75752",
+      "match": true
+    }
+  ]
+}

@@ -1,0 +1,166 @@
+{
+  "version": 1,
+  "conceptArt": "assets-src/islands/concept-art/v1/06-pearl-seabed.png",
+  "parts": [
+    {
+      "id": "branchCoral",
+      "islands": [
+        6
+      ],
+      "targetSize": [
+        2.5,
+        3,
+        2.5
+      ],
+      "status": "制作・組み込み・実描画確認済み、本人の最終視覚評価待ち",
+      "sourceScript": "tools/build-concept-nature.py",
+      "detail": "連続曲線の自然な枝と丸い先端。単一材質で色を変える。",
+      "blend": "assets-src/islands/concept-nature/branchCoral.blend",
+      "preview": "assets-src/islands/concept-nature/branchCoral.png"
+    },
+    {
+      "id": "branchCoralFar",
+      "islands": [
+        6
+      ],
+      "targetSize": [
+        2.5,
+        3,
+        2.5
+      ],
+      "status": "制作・組み込み・実描画確認済み、本人の最終視覚評価待ち",
+      "sourceScript": "tools/build-concept-nature.py",
+      "detail": "branchCoralの枝数と広がりを保ち、遠景岩礁上130株だけに使う共有形状。近景用の原本は保持。",
+      "blend": "assets-src/islands/concept-nature/branchCoralFar.blend",
+      "preview": "assets-src/islands/concept-nature/branchCoralFar.png"
+    },
+    {
+      "id": "tubeSponge",
+      "islands": [
+        6
+      ],
+      "targetSize": [
+        1.8,
+        2.5,
+        1.8
+      ],
+      "status": "制作・組み込み・実描画確認済み、本人の最終視覚評価待ち",
+      "sourceScript": "tools/build-concept-nature.py",
+      "detail": "穴と厚い丸縁を持つ管スポンジ。",
+      "blend": "assets-src/islands/concept-nature/tubeSponge.blend",
+      "preview": "assets-src/islands/concept-nature/tubeSponge.png"
+    },
+    {
+      "id": "tubeSpongeFar",
+      "islands": [
+        6
+      ],
+      "targetSize": [
+        1.8,
+        2.5,
+        1.8
+      ],
+      "status": "制作・組み込み・実描画確認済み、本人の最終視覚評価待ち",
+      "sourceScript": "tools/build-concept-nature.py",
+      "detail": "五本の管・厚い口縁・暗い内壁を保ち、遠景用に断面と高さ方向の輪を減らした派生。近景用の原本は保持。",
+      "blend": "assets-src/islands/concept-nature/tubeSpongeFar.blend",
+      "preview": "assets-src/islands/concept-nature/tubeSpongeFar.png"
+    },
+    {
+      "id": "broadSeaweed",
+      "islands": [
+        6
+      ],
+      "targetSize": [
+        2.5,
+        4,
+        2.5
+      ],
+      "status": "制作・組み込み・実描画確認済み、本人の最終視覚評価待ち",
+      "sourceScript": "tools/build-concept-nature.py",
+      "detail": "幅広く湾曲する厚みのある葉。",
+      "blend": "assets-src/islands/concept-nature/broadSeaweed.blend",
+      "preview": "assets-src/islands/concept-nature/broadSeaweed.png"
+    },
+    {
+      "id": "tableCoral",
+      "islands": [
+        6
+      ],
+      "targetSize": [
+        3.5,
+        2,
+        3.5
+      ],
+      "status": "制作・組み込み・実描画確認済み、本人の最終視覚評価待ち",
+      "sourceScript": "tools/build-concept-nature.py",
+      "detail": "多段の珊瑚と波打つ柔らかな縁。",
+      "blend": "assets-src/islands/concept-nature/tableCoral.blend",
+      "preview": "assets-src/islands/concept-nature/tableCoral.png"
+    },
+    {
+      "id": "coralBoulder",
+      "islands": [
+        6
+      ],
+      "targetSize": [
+        3,
+        2.5,
+        3
+      ],
+      "status": "制作・組み込み・実描画確認済み、本人の最終視覚評価待ち",
+      "sourceScript": "tools/build-concept-nature.py",
+      "detail": "突起の反復がある珊瑚の岩。",
+      "blend": "assets-src/islands/concept-nature/coralBoulder.blend",
+      "preview": "assets-src/islands/concept-nature/coralBoulder.png"
+    },
+    {
+      "id": "coralBoulderFar",
+      "islands": [
+        6
+      ],
+      "targetSize": [
+        3,
+        2.5,
+        3
+      ],
+      "status": "制作・組み込み・実描画確認済み、本人の最終視覚評価待ち",
+      "sourceScript": "tools/build-concept-nature.py",
+      "detail": "珊瑚岩の大きな輪郭と小粒の散らばりを保ち、遠景用に分割を減らした派生。近景用の原本は保持。",
+      "blend": "assets-src/islands/concept-nature/coralBoulderFar.blend",
+      "preview": "assets-src/islands/concept-nature/coralBoulderFar.png"
+    },
+    {
+      "id": "reefRockArch",
+      "islands": [
+        6
+      ],
+      "targetSize": [
+        22,
+        24,
+        8
+      ],
+      "status": "制作・組み込み・実描画確認済み、本人の最終視覚評価待ち",
+      "sourceScript": "tools/build-concept-nature.py",
+      "detail": "太い柱、岩棚、通過する開口、自然な凹凸。",
+      "blend": "assets-src/islands/concept-nature/reefRockArch.blend",
+      "preview": "assets-src/islands/concept-nature/reefRockArch.png"
+    },
+    {
+      "id": "friendlyWhale",
+      "islands": [
+        6
+      ],
+      "targetSize": [
+        24,
+        6,
+        7
+      ],
+      "status": "制作・組み込み・実描画確認済み、本人の最終視覚評価待ち",
+      "sourceScript": "tools/build-concept-nature.py",
+      "detail": "原画の大きく優しい鯨。連続した胴、二枚の尾びれ、長い胸びれ、明るい腹と縦溝、丸い目と口。",
+      "blend": "assets-src/islands/concept-nature/friendlyWhale.blend",
+      "preview": "assets-src/islands/concept-nature/friendlyWhale.png"
+    }
+  ]
+}

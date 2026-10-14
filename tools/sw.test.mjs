@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
-import {readFileSync} from 'node:fs';
+import {readFileSync,existsSync,readdirSync} from 'node:fs';
 const source=readFileSync(new URL('../sw.js',import.meta.url),'utf8');
 function fixture(fail=false){
  const listeners={},added=[],deleted=[];let skipped=false,claimed=false;
@@ -14,6 +14,15 @@ function fixture(fail=false){
 test('install caches every Gemini voice in bounded batches before activating',async()=>{
  const f=fixture();await f.fire('install');assert.equal(f.skipped,true);assert.deepEqual(f.added.slice(1).map(x=>x.length),[16,16,2]);
  assert.equal(f.added.slice(1).flat().length,34);
+});
+test('採用景観の読み込み先がすべてオフライン版に入り、実ファイルもある',async()=>{
+ const f=fixture();await f.fire('install');const assets=f.added[0];
+ const required=readdirSync(new URL('../src/',import.meta.url)).filter(name=>/^concept-.*\.js$/.test(name)).map(name=>`./src/${name}`);
+ required.push('./src/harbor-gathering-layout.js',...Array.from({length:8},(_,i)=>`./assets/islands/concept-${i+1}.json`),'./assets/islands/concept-nature.json');
+ for(const path of required){assert.ok(assets.includes(path),path);assert.ok(existsSync(new URL(`../${path}`,import.meta.url)),path);}
+ assert.ok(!assets.includes('./assets/islands/concept-models-a.json'));
+ assert.ok(!assets.includes('./assets/islands/concept-models-b.json'));
+ assert.equal(new Set(assets).size,assets.length);
 });
 test('failed voice download does not activate an incomplete offline version',async()=>{
  const f=fixture(true);await assert.rejects(f.fire('install'),/offline/);assert.equal(f.skipped,false);

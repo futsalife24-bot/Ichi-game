@@ -1,7 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { newAdventure } from '../src/adventure-state.js';
-import { HARBOR_BUILDINGS, WATERMILL, buildingEntrance } from '../src/harbor-layout.js';
 import { HARBOR_JOBS, newHarborErrands, validHarborErrands, harborChallenge, harborErrandAction } from '../src/harbor-errands-state.js';
 
 const unlocked = () => {
@@ -14,13 +13,12 @@ const solve = (save, id) => {
 };
 const deliver = (save, id) => harborErrandAction(solve(save, id), id, 'deliver');
 
-test('おつかいの入口と届け先は港町の建物から決まり、家の中を指さない', () => {
-  const find = kind => buildingEntrance(HARBOR_BUILDINGS.find(b => b.kind === kind));
+test('おつかいの受取先と届け先は新しい港町にある', () => {
   const [flour, bread, flowers] = HARBOR_JOBS;
   assert.deepEqual(HARBOR_JOBS.map(job => job.id), ['flour', 'bread', 'flowers']);
-  assert.deepEqual(flour.source, buildingEntrance(WATERMILL)); assert.deepEqual(flour.destination, find('bakery'));
-  assert.deepEqual(bread.source, find('bakery')); assert.deepEqual(bread.destination, find('clockTower'));
-  assert.deepEqual(flowers.source, find('glasshouse')); assert.deepEqual(flowers.destination, find('clockTower'));
+  assert.deepEqual(flour.source, {x:5,z:35});assert.deepEqual(flour.destination,{x:28.5,z:15.5});
+  assert.deepEqual(bread.source,flour.destination);assert.deepEqual(bread.destination,{x:-8,z:-26});
+  assert.deepEqual(flowers.source,{x:29,z:-23});assert.deepEqual(flowers.destination,bread.destination);
 });
 
 test('古い保存に任意の記録だけを追加し、花の配送前には第二島の依頼を始めない', () => {

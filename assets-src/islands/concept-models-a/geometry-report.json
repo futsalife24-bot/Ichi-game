@@ -1,0 +1,179 @@
+{
+  "assets": {
+    "blossomTree": {
+      "size": [
+        15.936,
+        12.384,
+        10.746
+      ],
+      "triangles": 235924,
+      "meshGroups": 5
+    },
+    "forestArch": {
+      "size": [
+        22.139,
+        17.915,
+        9.95
+      ],
+      "triangles": 247928,
+      "meshGroups": 5,
+      "opening": {
+        "width": 7,
+        "height": 8,
+        "depth": 8,
+        "collision": "中央には設定しない"
+      }
+    },
+    "nordicSchool": {
+      "size": [
+        8.394,
+        7.235,
+        8.19
+      ],
+      "triangles": 6262,
+      "meshGroups": 8
+    },
+    "canalHouseA": {
+      "size": [
+        6.201,
+        10.325,
+        8.605
+      ],
+      "triangles": 17350,
+      "meshGroups": 11
+    },
+    "canalHouseB": {
+      "size": [
+        6.201,
+        12.225,
+        8.605
+      ],
+      "triangles": 19186,
+      "meshGroups": 10
+    },
+    "canalHouseC": {
+      "size": [
+        6.201,
+        9.225,
+        8.605
+      ],
+      "triangles": 14138,
+      "meshGroups": 11
+    },
+    "harborClock": {
+      "size": [
+        10.1,
+        24.05,
+        10.1
+      ],
+      "triangles": 18940,
+      "meshGroups": 10
+    },
+    "harborBakery": {
+      "size": [
+        9.601,
+        9.389,
+        9.917
+      ],
+      "triangles": 10716,
+      "meshGroups": 12
+    },
+    "harborGlasshouse": {
+      "size": [
+        10.0,
+        12.075,
+        12.01
+      ],
+      "triangles": 16048,
+      "meshGroups": 6
+    },
+    "lighthouse": {
+      "size": [
+        4.2,
+        14.85,
+        4.2
+      ],
+      "triangles": 2280,
+      "meshGroups": 6
+    },
+    "alpineWorkshop": {
+      "size": [
+        21.634,
+        14.788,
+        16.262
+      ],
+      "triangles": 13014,
+      "meshGroups": 13
+    },
+    "greatWaterwheel": {
+      "size": [
+        12.34,
+        12.34,
+        3.28
+      ],
+      "triangles": 6964,
+      "meshGroups": 4,
+      "pivots": {
+        "rotate_greatWaterwheel_woodLight": {
+          "position": [
+            0,
+            6.05,
+            0
+          ],
+          "axis": [
+            0,
+            0,
+            1
+          ]
+        },
+        "rotate_greatWaterwheel_wood": {
+          "position": [
+            0,
+            6.05,
+            0
+          ],
+          "axis": [
+            0,
+            0,
+            1
+          ]
+        },
+        "rotate_greatWaterwheel_metal": {
+          "position": [
+            0,
+            6.05,
+            0
+          ],
+          "axis": [
+            0,
+            0,
+            1
+          ]
+        },
+        "rotate_greatWaterwheel_woodDark": {
+          "position": [
+            0,
+            6.05,
+            0
+          ],
+          "axis": [
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      "orientation": "正面はThree.jsの+Z。回転軸は+Z。Blenderの輪中心(0,0,6.05)をThree.jsの(0,6.05,0)へ変換。"
+    },
+    "workshopAqueduct": {
+      "size": [
+        12.583,
+        6.605,
+        2.2
+      ],
+      "triangles": 948,
+      "meshGroups": 3
+    }
+  },
+  "blender": "5.2.1 LTS"
+}

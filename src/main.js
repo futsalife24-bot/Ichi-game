@@ -40,6 +40,10 @@ import { IslandLearning } from './island-learning.js';
 import { LearningIsland, loadLearningIslandKit } from './learning-islands.js';
 import { LEARNING_ISLAND_LAYOUTS } from './learning-island-layout.js';
 import { islandArrivalLine } from './eight-island-lines.js';
+import { loadConceptKit } from './concept-scenery.js';
+import { CONCEPT_CAMERA, CONCEPT_LAYOUTS } from './concept-island-layout.js';
+import { setConceptCameraGoal } from './concept-camera.js';
+import { applyConceptLight, createConceptEnvironment } from './concept-atmosphere.js';
 
 const $ = (id) => document.getElementById(id);
 const canvas = $('game');
@@ -53,6 +57,11 @@ let save;
 let profileUI;
 let profiles;
 let developerScenario = null;
+// かくにんモードでは、きどうの どこで まっているかを よめるようにする。
+function startupStage(stage) {
+  if(new URLSearchParams(location.search).has('dev')){ $('btnPlay').textContent='しまを よみこみちゅう';$('btnPlay').title=stage; }
+}
+startupStage('プロフィールの準備');
 try {
   ({ profiles, scenario: developerScenario } = await openPlayProfiles({
     search: location.search, getStorage: () => localStorage, claimSession: claimSaveSession, avatar: PRESETS.usagi,
@@ -73,18 +82,24 @@ catch (error) {
 }
 $('saveClose').addEventListener('click', () => { saveBlocked = false; });
 
+startupStage('描画の準備');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.15;
 
 const scene = new THREE.Scene();
+scene.environment = createConceptEnvironment(renderer);
+scene.environmentIntensity = .2;
 const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 700);
 const CAM_OFFSET = new THREE.Vector3(0, 9, 11);
 const HARBOR_CAM_OFFSET = new THREE.Vector3(0, 11, 17);
 const SEA_CAM_OFFSET = new THREE.Vector3(0, 7.8, 14);
 const SKY_CAM_OFFSET = new THREE.Vector3(0, 12, 17);
 const camTarget = new THREE.Vector3();
+const cameraSubject = new THREE.Vector3();
 const lookAt = new THREE.Vector3(0, 1, 0);
 const lookTarget = new THREE.Vector3();
 
@@ -98,12 +113,16 @@ const voice = new Voice({
 });
 voice.enabled = save.voice;
 
+startupStage('島の素材の読み込み');
+const conceptKitA = await loadConceptKit(1);
+startupStage('島の組み立て');
 const world = new World(scene, { island: 1 });
+world.installConcept(conceptKitA);
 const secondRoot = new THREE.Group(); secondRoot.visible = false; scene.add(secondRoot);
 const townRoot = new THREE.Group(); townRoot.visible = false; scene.add(townRoot);
 let secondArea = null, townArea = null;
 const learningAreas = new Map();
-let islandLoading = false, spotArmed = true;
+let islandLoading = false, forestLoading = false, spotArmed = true;
 const climate = new Climate(scene, world, audio);
 const effects = new Effects(scene);
 const animals = new Animals(scene, world);
@@ -138,7 +157,7 @@ const adventure = new Adventure({ scene, player, animals, forest, ui, audio, voi
   getPlace: () => place,
   onSail: () => visitSecond(),
   onReturn: () => leaveForest(),
-  canAct: () => mode === 'play' && !saveBlocked && !islandLoading && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !help.focused && !harborBusy(),
+  canAct: () => mode === 'play' && !saveBlocked && !islandLoading && !forestLoading && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !help.focused && !harborBusy(),
   onChange: () => {
     life.endFishing(); input.reset();
     refreshActivityInput();
@@ -153,7 +172,7 @@ const harborErrands = new HarborErrands({ forest, player, save, persist, ui, aud
 });
 const harborBusy = () => harborErrands.focused || harborErrands.modal;
 function refreshActivityInput() {
-  input.enabled = mode === 'play' && !islandLoading && !adventure.modal && !harborErrands.modal && !help.modal && !learning.opened && !ui.panelOpen && !saveBlocked && !playTimer.paused && !homePaused && !transitioning;
+  input.enabled = mode === 'play' && !islandLoading && !forestLoading && !adventure.modal && !harborErrands.modal && !help.modal && !learning.opened && !ui.panelOpen && !saveBlocked && !playTimer.paused && !homePaused && !transitioning;
   $('hud').classList.toggle('adventure-focus', adventure.focused || harborBusy());
   $('hud').classList.toggle('harbor-errand-focus', harborBusy());
   $('developerTools').classList.toggle('invisible', harborErrands.modal || adventure.modal);
@@ -188,11 +207,16 @@ let interiorFrom = 'second';
 const env = () => (place.startsWith('learning-') ? learningAreas.get(Number(place.slice(9))) : place === 'school' ? school : place === 'room' ? room : place === 'forest' ? forest : place === 'second' ? secondArea.world : place === 'town' ? townArea.world : world);
 const islandNumber = () => place.startsWith('learning-') ? Number(place.slice(9)) : place === 'island' ? 1 : (place === 'second' || (place === 'school' && interiorFrom === 'second')) ? 2 : 3;
 function endAllFishing() { life.endFishing(); secondArea?.life.endFishing(); townArea?.life.endFishing(); harborPlay.cancel(); }
-function prepareArea(number) {
+const areaPromises=new Map();
+async function prepareArea(number) {
   if (number === 2 && secondArea) return secondArea;
   if (number === 3 && townArea) return townArea;
+  if(areaPromises.has(number))return areaPromises.get(number);
+  const promise=(async()=>{
+  const kit=await loadConceptKit(number);
   const root = number === 2 ? secondRoot : townRoot;
   const areaWorld = new World(root, { island: number });
+  areaWorld.installConcept(kit);
   // ひかりは だいいちの しまの ものを きょうゆうする。
   root.remove(areaWorld.hemi, areaWorld.sunLight, areaWorld.sunLight.target);
   const areaLife = new Life({ scene: root, world: areaWorld, player, ui, audio, voice, effects, save, persist, quests, climate, island: number });
@@ -201,6 +225,8 @@ function prepareArea(number) {
   const area = { root, world: areaWorld, life: areaLife };
   if (number === 2) secondArea = area; else townArea = area;
   return area;
+  })().catch(error=>{areaPromises.delete(number);throw error;});
+  areaPromises.set(number,promise);return promise;
 }
 function openIslands() {
   if (mode !== 'play' || saveBlocked || islandLoading || transitioning || homePaused || playTimer.paused || help.modal || adventure.modal || harborErrands.modal || learning.opened || ui.panelOpen) return;
@@ -225,7 +251,7 @@ async function visitLearningIsland(number) {
   islandLoading=true;input.reset();player.setTarget(null);refreshActivityInput();
   try {
     let area=learningAreas.get(number);
-    if(!area){const kit=await loadLearningIslandKit();const root=new THREE.Group();root.visible=false;scene.add(root);area=new LearningIsland(root,number,kit);learningAreas.set(number,area);}
+    if(!area){const kit=await loadLearningIslandKit(number);const root=new THREE.Group();root.visible=false;scene.add(root);area=new LearningIsland(root,number,kit);learningAreas.set(number,area);}
     area.applyDecor(save.islandActivities?.decor);
     if(mode!=='play'||saveBlocked||homePaused||playTimer.paused||document.hidden)return;
     leaveArea();
@@ -240,18 +266,27 @@ function returnFirst(instant = false) {
   };
   if (instant) go(); else transition(go);
 }
-function visitSecond() {
-  if (mode !== 'play' || saveBlocked || transitioning || homePaused || playTimer.paused) return;
-  prepareArea(2); leaveArea(); if (saveBlocked) return;
+async function visitSecond() {
+  if (mode !== 'play' || saveBlocked || islandLoading || transitioning || homePaused || playTimer.paused) return;
+  islandLoading=true;input.reset();player.setTarget(null);refreshActivityInput();
+  try{await prepareArea(2);}catch{ui.subtitle('しまを よめなかったよ。もういちど ためしてね',6000);return;}finally{islandLoading=false;refreshActivityInput();}
+  if(mode!=='play'||saveBlocked||homePaused||playTimer.paused)return;
+  leaveArea(); if (saveBlocked) return;
   transition(() => {
-    setOutdoorVisible(false); place = 'second'; secondRoot.visible = true; player.teleport(0, secondArea.world.groundAt(0, 2), 2, 0);
+    setOutdoorVisible(false); place = 'second'; secondRoot.visible = true;
+    const [x,z]=CONCEPT_LAYOUTS[2].spawn;player.teleport(x, secondArea.world.groundAt(x,z), z, Math.PI);
     adventure.group.visible = false; ui.setQuest(null); ui.subtitle('だいにの しま。もじと ABCで あそぼう！', 6000); snapCamera();
   });
 }
-function visitTown() {
+async function visitTown() {
   if (place !== 'forest' || mode !== 'play' || saveBlocked || transitioning || adventure.modal || harborBusy() || ui.panelOpen || learning.opened || homePaused || playTimer.paused) return;
-  prepareArea(3); leaveArea();
-  transition(() => { place = 'town'; townRoot.visible = true; adventure.group.visible = false; player.reset(); ui.subtitle('くらしの ひろば。おみせと はたけと おうちだよ！', 6000); snapCamera(); });
+  if(islandLoading)return;islandLoading=true;input.reset();player.setTarget(null);refreshActivityInput();
+  try{await prepareArea(3);}catch{ui.subtitle('まちを よめなかったよ。もういちど ためしてね',6000);return;}finally{islandLoading=false;refreshActivityInput();}
+  if(place!=='forest'||mode!=='play'||saveBlocked||homePaused||playTimer.paused)return;
+  leaveArea();
+  transition(() => { place = 'town'; townRoot.visible = true; adventure.group.visible = false;
+    const [x,z]=CONCEPT_LAYOUTS[3].spawn;player.teleport(x,townArea.world.groundAt(x,z),z,Math.PI);
+    ui.subtitle('くらしの ひろば。おみせと はたけと おうちだよ！', 6000); snapCamera(); });
 }
 
 function refreshHud() {
@@ -300,9 +335,11 @@ function buildTitle() {
   if (save.bells > 0) bits.push(`🔔 × ${save.bells}`);
   if (life.found > 0) bits.push(`📖 ${life.found}`);
   $('titleStars').textContent = bits.join('　');
-  if (developerScenario) $('btnPlay').textContent = developerScenario.place === 'forest' ? '⛵ 第三島を確認する' : developerScenario.place === 'second' ? '🌳 第二島を確認する' : '🌼 第一島を確認する';
+  if (developerScenario) $('btnPlay').textContent = developerScenario.place.startsWith('learning-') ? `⛵ 第${developerScenario.place.slice(9)}島を確認する` : developerScenario.place === 'forest' ? '⛵ 第三島を確認する' : developerScenario.place === 'second' ? '🌳 第二島を確認する' : '🌼 第一島を確認する';
 }
 buildTitle();
+$('btnPlay').removeAttribute('title');
+$('btnPlay').disabled=false;
 profileUI.connect(() => {
   if (mode !== 'title' || saveBlocked || !persist()) return false;
   saveBlocked = true;
@@ -433,12 +470,14 @@ function startGame() {
   player.model.root.visible = true;
   egg.visible = false;
   player.reset();
+  snapCamera();
   $('title').classList.add('hidden');
   maker.hide();
   ui.showHUD(true);
   input.enabled = true;
   mode = 'play';
-  requestLandscape();
+  // かくにんようの がめんは、えらんだ おおきさの ままで みる
+  if (!developerScenario) requestLandscape();
   help.start();
   adventure.group.visible = true;
   adventure.render();
@@ -690,9 +729,14 @@ function cameraGoal() {
     lookTarget.copy(origin).add(cam.look).setX(origin.x + dx);
   } else {
     const harbor=place==='forest';
-    const number=islandNumber(),sea=number===6,sky=number===7;
-    camTarget.copy(player.pos).add(sea?SEA_CAM_OFFSET:sky?SKY_CAM_OFFSET:harbor?HARBOR_CAM_OFFSET:CAM_OFFSET);
-    lookTarget.set(player.pos.x, player.pos.y + (harbor?2:sea||sky?1.5:1), player.pos.z-(sky?5:sea||harbor?4:0));
+    const number=islandNumber();
+    const view=CONCEPT_LAYOUTS[number]?.camera??CONCEPT_CAMERA;
+    cameraSubject.copy(player.pos);
+    if(harbor)cameraSubject.x-=FOREST_ORIGIN.x;
+    const visibleHud=mode==='play'&&!$('islandActions').classList.contains('hidden');
+    const compactHud=visibleHud&&window.innerWidth>window.innerHeight&&window.innerHeight<=400;
+    setConceptCameraGoal(number,cameraSubject,view,camTarget,lookTarget,compactHud,visibleHud);
+    if(harbor){camTarget.x+=FOREST_ORIGIN.x;lookTarget.x+=FOREST_ORIGIN.x;}
   }
 }
 
@@ -753,16 +797,15 @@ function leavePlace(instant = false) {
 }
 
 const doorArmed = { school: true, room: true };
-let forestLoading = false;
 async function visitForest(preview = null) {
   if (mode !== 'play' || !adventure.unlocked || !adventure.canAct()) return;
   if (forestLoading) return;
   if (!forest.assetsLoaded) {
-    forestLoading = true;
+    forestLoading = true;input.reset();player.setTarget(null);refreshActivityInput();
     ui.subtitle('もりを じゅんびしているよ', 12000);
-    try { await forest.loadAssets(); }
-    catch { ui.subtitle('もりを よめなかったよ。もういちど ためしてね', 6000); return; }
-    finally { forestLoading = false; }
+    try {forest.installConcept(await loadConceptKit(3));await forest.loadAssets();}
+    catch(error) { console.error('みなとの よみこみに しっぱいしました',error);ui.subtitle('もりを よめなかったよ。もういちど ためしてね', 6000); return; }
+    finally { forestLoading = false;refreshActivityInput(); }
     if (mode !== 'play' || !adventure.canAct()) return;
   }
   quests.stop(); if (saveBlocked) return;
@@ -990,6 +1033,8 @@ function frame(now) {
   }
   if (saveBlocked) { requestAnimationFrame(frame); return; }
   climate.update(dt, { indoor: !outside, focus: mode === 'play' ? player.pos : lookAt, active: mode === 'play' });
+  if(outside){const activeEnv=env();applyConceptLight(world,scene,place.startsWith('learning-')?Number(place.slice(9)):place==='second'?2:['forest','town'].includes(place)?3:1,climate,activeEnv.conceptScenery??activeEnv.scenery);
+    if(place==='learning-6'){climate.rainLines.visible=climate.snowPoints.visible=false;}}
   if (place === 'forest' || place.startsWith('learning-')) climate.skyColor(scene.background ??= new THREE.Color());
   if(place.startsWith('learning-'))env().update(dt,time);
   if(place==='forest'){
@@ -1015,7 +1060,9 @@ requestAnimationFrame(frame);
 
 // ------------------------------------------------ PWA
 if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+  const registerOffline=()=>navigator.serviceWorker.register('./sw.js').catch(() => {});
+  if(document.readyState==='complete')registerOffline();
+  else window.addEventListener('load',registerOffline,{once:true});
 }
 
 // デバッグ用

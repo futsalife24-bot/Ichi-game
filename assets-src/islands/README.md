@@ -1,5 +1,7 @@
 # 八つの島のBlender素材依頼書
 
+2026-10-13の最新方針：公開版の景観は本人確認で不合格。先に[全８島のコンセプトアート](concept-art/v1/README.md)と[３Ｄ制作基準・必要パーツ](concept-art/v1/PRODUCTION.md)を作成した。今後の地形・主役・街並みはその画像を起点にする。以下の制作済み素材は既存実物の記録で、新しい景観の完成を意味しない。新しいBlender制作へ進む前に画像の版を確認し、下の台帳を必要パーツへ対応付ける。
+
 2026-10-12。採用済みの[８島カリキュラム](../../docs/island-curriculum.md)に対応する必要パーツを保管する。新規34素材の原本・配信データと細部の仕上げは完了。実ゲーム確認は接続復旧待ち。海・空の環境はゲーム側で構成する。既存の第一〜第三島を一括で作り直さず、問題とおてつだいを成立させる素材から依頼する。
 
 素材の正本は[parts.json](parts.json)。この文書の一覧は台帳と問題の対応から生成する。制作範囲の追加は台帳を更新してから行う。
@@ -326,3 +328,47 @@
 node tools/island-content-docs.mjs --write
 node tools/island-content-docs.mjs --check
 ```
+
+## 採用したコンセプトアートの景観パーツ
+
+2026-10-13、本人が８枚のコンセプトアートを正本として採用。地形・主役・建築・素材・光・道をその画像へ合わせる。上の旧学習素材の履歴を保持し、以下の新しい景観要求は[concept-scenes.json](concept-scenes.json)で区別する。原画は[景観正本](concept-art/v1/README.md)、造形と配置は[制作基準](concept-art/v1/PRODUCTION.md)を読む。
+
+| 景観パーツID | 島 | 初期寸法 幅 高さ 奥行 m | 状態 | 制作元 |
+| --- | --- | --- | --- | --- |
+| blossomTree | 1 | 14 × 10 × 12 | 制作済み、島内の景観確認中 | tools/build-concept-models-a.py |
+| forestArch | 2 | 22 × 18 × 8 | 制作済み、島内の景観確認中 | tools/build-concept-models-a.py |
+| nordicSchool | 2 | 8 × 7 × 7 | 制作済み、島内の景観確認中 | tools/build-concept-models-a.py |
+| canalHouseA | 3 | 6 × 9 × 7 | 制作済み、島内の景観確認中 | tools/build-concept-models-a.py |
+| canalHouseB | 3 | 6 × 11 × 7 | 制作済み、島内の景観確認中 | tools/build-concept-models-a.py |
+| canalHouseC | 3 | 6 × 13 × 7 | 制作済み、島内の景観確認中 | tools/build-concept-models-a.py |
+| harborClock | 3 | 9 × 22 × 9 | 制作済み、島内の景観確認中 | tools/build-concept-models-a.py |
+| harborBakery | 3 | 9 × 9 × 8 | 制作済み、島内の景観確認中 | tools/build-concept-models-a.py |
+| harborGlasshouse | 3 | 10 × 10 × 12 | 制作済み、島内の景観確認中 | tools/build-concept-models-a.py |
+| lighthouse | 3 | 4 × 13 × 4 | 制作済み、島内の景観確認中 | tools/build-concept-models-a.py |
+| alpineWorkshop | 4 | 20 × 15 × 12 | 制作済み、島内の景観確認中 | tools/build-concept-models-a.py |
+| greatWaterwheel | 4 | 12 × 12 × 2 | 制作済み、島内の景観確認中 | tools/build-concept-models-a.py |
+| workshopAqueduct | 4 | 12 × 6 × 4 | 制作済み、島内の景観確認中 | tools/build-concept-models-a.py |
+| greatFruitMarket | 5 | 24 × 17 × 18 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
+| moroccanStall | 5 | 6 × 5 × 4 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
+| moroccanHouse | 5 | 8 × 9 × 6 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
+| greatPearlShell | 6 | 15 × 11 × 8 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
+| coralArch | 6 | 10 × 8 × 4 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
+| spiralShellSeat | 6 | 4 × 3 × 4 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
+| windCity | 7 | 22 × 23 × 17 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
+| windSails | 7 | 14 × 14 × 2 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
+| blueDomePavilion | 7 | 7 × 8 × 7 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
+| skyAirship | 7 | 10 × 7 × 14 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
+| starCarousel | 8 | 17 × 15 × 17 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
+| festivalShellStage | 8 | 12 × 9 × 5 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
+| mexicanHouseA | 8 | 7 × 9 × 6 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
+| mexicanHouseB | 8 | 7 × 12 × 6 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
+| branchCoral | 6 | 2.5 × 3 × 2.5 | 制作・組み込み・実描画確認済み、本人の最終視覚評価待ち | tools/build-concept-nature.py |
+| branchCoralFar | 6 | 2.5 × 3 × 2.5 | 制作・組み込み・実描画確認済み、本人の最終視覚評価待ち | tools/build-concept-nature.py |
+| tubeSponge | 6 | 1.8 × 2.5 × 1.8 | 制作・組み込み・実描画確認済み、本人の最終視覚評価待ち | tools/build-concept-nature.py |
+| tubeSpongeFar | 6 | 1.8 × 2.5 × 1.8 | 制作・組み込み・実描画確認済み、本人の最終視覚評価待ち | tools/build-concept-nature.py |
+| broadSeaweed | 6 | 2.5 × 4 × 2.5 | 制作・組み込み・実描画確認済み、本人の最終視覚評価待ち | tools/build-concept-nature.py |
+| tableCoral | 6 | 3.5 × 2 × 3.5 | 制作・組み込み・実描画確認済み、本人の最終視覚評価待ち | tools/build-concept-nature.py |
+| coralBoulder | 6 | 3 × 2.5 × 3 | 制作・組み込み・実描画確認済み、本人の最終視覚評価待ち | tools/build-concept-nature.py |
+| coralBoulderFar | 6 | 3 × 2.5 × 3 | 制作・組み込み・実描画確認済み、本人の最終視覚評価待ち | tools/build-concept-nature.py |
+| reefRockArch | 6 | 22 × 24 × 8 | 制作・組み込み・実描画確認済み、本人の最終視覚評価待ち | tools/build-concept-nature.py |
+| friendlyWhale | 6 | 24 × 6 × 7 | 制作・組み込み・実描画確認済み、本人の最終視覚評価待ち | tools/build-concept-nature.py |

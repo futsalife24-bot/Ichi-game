@@ -2,7 +2,8 @@
 import * as THREE from 'three';
 import { makeAvatar, PRESETS, makeAccessory, makeFaceWear, dressBody } from './characters.js';
 import { makeTool, emojiSprite } from './critters.js';
-import { getHeight } from './world.js';
+import { getHeight, LANDMARKS } from './world.js';
+import { prepareAvatarVisibility, releaseAvatarVisibility } from './avatar-visibility.js';
 
 const SPEED = 6.2;
 const GRAVITY = 26;
@@ -19,7 +20,7 @@ const lerpAngle = (a, b, t) => {
 export class Player {
   constructor(scene, avatar) {
     this.scene = scene;
-    this.pos = new THREE.Vector3(0, getHeight(0, 2), 2);
+    this.pos = new THREE.Vector3(LANDMARKS.spawn.x, getHeight(LANDMARKS.spawn.x, LANDMARKS.spawn.z), LANDMARKS.spawn.z);
     this.vel = new THREE.Vector3();
     this.yaw = 0;
     this.onGround = true;
@@ -50,9 +51,10 @@ export class Player {
 
   /** キャラメイクの みため { color, ears, eyes, pattern, tail } */
   setAvatar(def) {
-    if (this.model) this.scene.remove(this.model.root);
+    if (this.model) { releaseAvatarVisibility(this.model.root); this.scene.remove(this.model.root); }
     this.avatar = def ?? PRESETS.usagi;
     this.model = makeAvatar(this.avatar);
+    prepareAvatarVisibility(this.model.root);
     this.held = null;
     this.emoteSp = null;
     this.scene.add(this.model.root);
@@ -132,7 +134,7 @@ export class Player {
     this.emoteDur = dur;
   }
 
-  reset() { this.teleport(0, getHeight(0, 2), 2, 0); }
+  reset() { this.teleport(LANDMARKS.spawn.x, getHeight(LANDMARKS.spawn.x, LANDMARKS.spawn.z), LANDMARKS.spawn.z, Math.PI); }
 
   teleport(x, y, z, yaw) {
     this.pos.set(x, y, z);

@@ -29,6 +29,7 @@ function voyage(){
   const events=[];
   const c={mode:'play',place:'island',saveBlocked:false,forestLoading:false,forest:{assetsLoaded:true},
     adventure:{unlocked:true,canAct:()=>true,markVisited(){events.push('save');return true;}},
+    input:{reset(){}},player:{setTarget(){}},refreshActivityInput(){},
     quests:{stop(){events.push('stop');}},leaveArea(){},endAllFishing(){},voice:{stop(){}},audio:{meet(){}},
     transition(){events.push('transition');},events};
   return c;
@@ -42,9 +43,22 @@ test('第三島への船は訪問の保存が成功してから遷移し、失�
   assert.deepEqual(ready.events,['stop','save','transition']);
 });
 test('島素材の読込中に休憩したら、読込後に訪問や遷移を保存しない',async()=>{
-  const c=voyage();let release;
-  c.ui={subtitle(){}};c.forest.assetsLoaded=false;c.forest.loadAssets=()=>new Promise(resolve=>release=resolve);
+  const c=voyage();let release,loads=0;
+  c.ui={subtitle(){}};c.forest.assetsLoaded=false;c.forest.installConcept=()=>{};c.forest.loadAssets=async()=>{};
+  c.loadConceptKit=()=>{loads++;return new Promise(resolve=>release=()=>resolve({assets:{}}));};
   const run=vm.runInNewContext(sail+'\nvisitForest();',c);
+  assert.equal(typeof release,'function');
+  await vm.runInNewContext('visitForest();',c);
+  assert.equal(loads,1);
   c.adventure.canAct=()=>false;release();await run;
   assert.deepEqual(c.events,[]);assert.equal(c.forestLoading,false);
+});
+test('島素材の読込が完了したら、訪問を保存して第三島へ遷移する',async()=>{
+  const c=voyage();
+  c.ui={subtitle(){}};c.forest.assetsLoaded=false;c.forest.installConcept=()=>{};
+  c.forest.loadAssets=async()=>{c.forest.assetsLoaded=true;};
+  c.loadConceptKit=async()=>({assets:{}});
+  await vm.runInNewContext(sail+'\nvisitForest();',c);
+  assert.deepEqual(c.events,['stop','save','transition']);
+  assert.equal(c.forestLoading,false);
 });

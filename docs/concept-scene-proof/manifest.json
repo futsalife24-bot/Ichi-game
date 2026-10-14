@@ -1,0 +1,543 @@
+{
+  "status": "原画との比較用・自己検証の記録",
+  "viewport": [
+    1280,
+    720
+  ],
+  "captureMethod": "同じ景観コードと実プレイヤーを描いたWebGL画面。画像の加工なし",
+  "uiCaptureMethod": "Cuaのブラウザー画面のJPEGをそのまま保存",
+  "originals": [
+    {
+      "island": 1,
+      "file": "assets-src/islands/concept-art/v1/01-sunlit-cove.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2810845,
+      "sha256": "2c1fd7af6b2dddf479c962d97c4a9128d9ad8b70afaf50e298ef54092973900c"
+    },
+    {
+      "island": 2,
+      "file": "assets-src/islands/concept-art/v1/02-rainbow-forest.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 3116144,
+      "sha256": "2c408bbeff3dfba06dcda1ef09573ba0dc11c91555f8e356f4f77fb12c7f22db"
+    },
+    {
+      "island": 3,
+      "file": "assets-src/islands/concept-art/v1/03-lantern-harbor.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2667757,
+      "sha256": "7db9ecc14c30f4934e689e15035931d4671398b9e1c9d74263a05501b4d2739e"
+    },
+    {
+      "island": 4,
+      "file": "assets-src/islands/concept-art/v1/04-waterwheel-workshop.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2922572,
+      "sha256": "f56638056237186eae84fd350fbc7ff5fa7907021f6d9759f0a5729a479c28f4"
+    },
+    {
+      "island": 5,
+      "file": "assets-src/islands/concept-art/v1/05-fruit-market.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2879439,
+      "sha256": "b03da11cfc4ce98e60ec9280683ce5ef580e431753b5b52fc69d4bad33d49b3a"
+    },
+    {
+      "island": 6,
+      "file": "assets-src/islands/concept-art/v1/06-pearl-seabed.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2745998,
+      "sha256": "18e5ae68e37e821c5f71adbf1f942a1916cd3169a9edbe523d666e9975fcc348"
+    },
+    {
+      "island": 7,
+      "file": "assets-src/islands/concept-art/v1/07-cloud-windcastle.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2445168,
+      "sha256": "93bee2ad4709915c99c436bac342565db502b07739ada1a5eef59ac41a7701af"
+    },
+    {
+      "island": 8,
+      "file": "assets-src/islands/concept-art/v1/08-starlight-festival.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2640862,
+      "sha256": "215c79a5279213bfd8826822e89b1873f06e5edfab70460ca494f06bb153c2ca"
+    }
+  ],
+  "captures": [
+    {
+      "island": 1,
+      "point": "entry",
+      "file": "01-entry.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1032831,
+      "sha256": "192ecef8b65de69d176527fcee6aebc808bdd6f6b70ac6f729038d8d52d7c6cd",
+      "capturedAt": "2026-10-13T22:51:09.815Z"
+    },
+    {
+      "island": 1,
+      "point": "hero",
+      "file": "01-hero.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1201673,
+      "sha256": "277d0374b30f96b77674b477369a7f234cfccfd1c4852f3e3037f829849f713b",
+      "capturedAt": "2026-10-13T22:51:11.873Z"
+    },
+    {
+      "island": 1,
+      "point": "side",
+      "file": "01-side.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1251142,
+      "sha256": "469210a7390a55bade3957b267127c42887c46169c22833ad5dfd5badecee6a2",
+      "capturedAt": "2026-10-13T22:51:14.612Z"
+    },
+    {
+      "island": 2,
+      "point": "entry",
+      "file": "02-entry.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1337955,
+      "sha256": "111a8ac6b18a9faf9afadef6a3c991aeaabcd8b3fbdb4f08f66b7e9ab93f6ea9",
+      "capturedAt": "2026-10-13T22:51:45.741Z"
+    },
+    {
+      "island": 2,
+      "point": "hero",
+      "file": "02-hero.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1371635,
+      "sha256": "42cc8963570ffcd870cb4c1643b12930e432ff59eb2fc8608633e2028d33c65d",
+      "capturedAt": "2026-10-13T22:51:47.660Z"
+    },
+    {
+      "island": 2,
+      "point": "side",
+      "file": "02-side.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1299692,
+      "sha256": "76c16733de5fc88526975da5ef7568f5d609d6bc25a82f92752d47b8921d93e5",
+      "capturedAt": "2026-10-13T22:51:49.660Z"
+    },
+    {
+      "island": 3,
+      "point": "entry",
+      "file": "03-entry.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1073274,
+      "sha256": "e0bd73d8fbafd4bdfca405d1929e09484876e49b4e32a8a188ea43714224bac9",
+      "capturedAt": "2026-10-13T22:52:23.474Z"
+    },
+    {
+      "island": 3,
+      "point": "hero",
+      "file": "03-hero.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1615801,
+      "sha256": "45fefc9cfd2aad70cc2ebba9beb10e600b19a7e370d7a019de5e258503d91ace",
+      "capturedAt": "2026-10-13T22:52:25.787Z"
+    },
+    {
+      "island": 3,
+      "point": "side",
+      "file": "03-side.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1169272,
+      "sha256": "4ae5909c0281be317eb32730f107d2f4e879b8f2197957200230a2fcde1f40b4",
+      "capturedAt": "2026-10-13T22:52:31.825Z"
+    },
+    {
+      "island": 4,
+      "point": "entry",
+      "file": "04-entry.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1147026,
+      "sha256": "f936e7ce0eb9e08de7e875aa7e8d4f900ab6e9da5e8806bb35953b9fd6aa348d",
+      "capturedAt": "2026-10-13T22:54:56.026Z"
+    },
+    {
+      "island": 4,
+      "point": "hero",
+      "file": "04-hero.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1242194,
+      "sha256": "5b63cccabf2ebcb3f88afb92f253538b3200a2344394cd7d0723c20e64597846",
+      "capturedAt": "2026-10-13T22:54:57.579Z"
+    },
+    {
+      "island": 4,
+      "point": "side",
+      "file": "04-side.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1367314,
+      "sha256": "341658ac6ede5ffe210bf3aae128471c18118ac4f2bc2b8224aeb106de0a709c",
+      "capturedAt": "2026-10-14T00:44:46.585Z"
+    },
+    {
+      "island": 5,
+      "point": "entry",
+      "file": "05-entry.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1141132,
+      "sha256": "a70cc154d633f9f3bea19ed4a3fadb3368a52cca38e300ae0cae3686b6fc0621",
+      "capturedAt": "2026-10-13T22:58:28.809Z"
+    },
+    {
+      "island": 5,
+      "point": "hero",
+      "file": "05-hero.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1161283,
+      "sha256": "8f57199b19158e8b598dce58797855ce3d275e702555985b311c6f7f21eccd1b",
+      "capturedAt": "2026-10-13T22:58:30.546Z"
+    },
+    {
+      "island": 5,
+      "point": "side",
+      "file": "05-side.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1157975,
+      "sha256": "686d1f6e5b25d6794df7adc38139b6573cdd5444ad2a449b51cea4b247bdf5d3",
+      "capturedAt": "2026-10-13T22:58:32.459Z"
+    },
+    {
+      "island": 6,
+      "point": "entry",
+      "file": "06-entry.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1192583,
+      "sha256": "2df36f735093f4bd2a21deb3ebcfdb901ddb7dac9c12087c21d6e3d683056ea4",
+      "capturedAt": "2026-10-13T23:00:19.422Z"
+    },
+    {
+      "island": 6,
+      "point": "hero",
+      "file": "06-hero.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1097145,
+      "sha256": "1248f86a87d487406c0d3ddb7a6b0e2aba81010ea86de858cd7bf915e62f718d",
+      "capturedAt": "2026-10-13T23:00:21.241Z"
+    },
+    {
+      "island": 6,
+      "point": "side",
+      "file": "06-side.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1108314,
+      "sha256": "e64aa22883ee6863ba152beda6ff3582bc824f6ba63ce158569340efea652f5f",
+      "capturedAt": "2026-10-13T23:00:23.124Z"
+    },
+    {
+      "island": 7,
+      "point": "entry",
+      "file": "07-entry.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1019132,
+      "sha256": "10a5478ef0288cfca7c8cb5e8d8e0a90d806d5a17310e71d20f6d5bf239ed3df",
+      "capturedAt": "2026-10-13T23:03:42.562Z"
+    },
+    {
+      "island": 7,
+      "point": "hero",
+      "file": "07-hero.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1346479,
+      "sha256": "5d6fe5b420ac4ae799cdf1a505494cd8603d6e73e48f648deb292bedf68326da",
+      "capturedAt": "2026-10-13T23:03:45.023Z"
+    },
+    {
+      "island": 7,
+      "point": "side",
+      "file": "07-side.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1071075,
+      "sha256": "e7b089a2073c046d52c025e03aa12ca70a74bb8219b174973abd851c31420249",
+      "capturedAt": "2026-10-13T23:03:48.550Z"
+    },
+    {
+      "island": 8,
+      "point": "entry",
+      "file": "08-entry.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1246688,
+      "sha256": "5eebb9a9ab35d3b90cae2ff4a988c1067c47d81935db877de2dae0894eaa123f",
+      "capturedAt": "2026-10-13T23:04:51.955Z"
+    },
+    {
+      "island": 8,
+      "point": "hero",
+      "file": "08-hero.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1260190,
+      "sha256": "6b888ef669cd58a4904a899e1ae61feefd8b72149a5ef39a1a017d8dbf689621",
+      "capturedAt": "2026-10-13T23:04:54.189Z"
+    },
+    {
+      "island": 8,
+      "point": "side",
+      "file": "08-side.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1233591,
+      "sha256": "12886f9bc760998790bfc25b1b23eed945bf7a4d6671dab56e1b170eee7f348d",
+      "capturedAt": "2026-10-13T23:04:56.521Z"
+    }
+  ],
+  "browserScreenshots": [
+    {
+      "island": 1,
+      "size": "wide",
+      "file": "ui/01-wide.jpg",
+      "viewport": [
+        1280,
+        720
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 105107,
+      "sha256": "5c629078ceefd1f1a61c733cc0a5236fbb810dafdc3ec7c87574699a32a2a8df",
+      "capturedAt": "2026-10-14T00:44:36.622Z"
+    },
+    {
+      "island": 1,
+      "size": "small",
+      "file": "ui/01-small.jpg",
+      "viewport": [
+        667,
+        375
+      ],
+      "width": 667,
+      "height": 375,
+      "bytes": 39061,
+      "sha256": "a8727dee57f25404c6900317562e4791fe8d332d2fa7168cee5e436ac8d74912",
+      "capturedAt": "2026-10-14T00:44:38.160Z"
+    },
+    {
+      "island": 2,
+      "size": "wide",
+      "file": "ui/02-wide.jpg",
+      "viewport": [
+        1280,
+        720
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 168728,
+      "sha256": "1ca333a2ca531cf5b1220ca44c81752b5fa0dbc7d93da04153787f8acf30652b",
+      "capturedAt": "2026-10-14T00:35:07.384Z"
+    },
+    {
+      "island": 2,
+      "size": "small",
+      "file": "ui/02-small.jpg",
+      "viewport": [
+        667,
+        375
+      ],
+      "width": 667,
+      "height": 375,
+      "bytes": 59301,
+      "sha256": "d684a1285fa708dff107b5bdac202997e1f69a353ca671ca8d57b5d922a94505",
+      "capturedAt": "2026-10-14T00:35:08.160Z"
+    },
+    {
+      "island": 3,
+      "size": "wide",
+      "file": "ui/03-wide.jpg",
+      "viewport": [
+        1280,
+        720
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 131808,
+      "sha256": "ea2ea4ebe2b365b58a4d54978643ac3a3f4d3023fccdf935609a01624795b8d4",
+      "capturedAt": "2026-10-14T00:30:37.309Z"
+    },
+    {
+      "island": 3,
+      "size": "small",
+      "file": "ui/03-small.jpg",
+      "viewport": [
+        667,
+        375
+      ],
+      "width": 667,
+      "height": 375,
+      "bytes": 50938,
+      "sha256": "30847bbbc6b5be6e699b5bc5247cdcd9ce8812a1d41ea749cc08f0d611c36ff2",
+      "capturedAt": "2026-10-14T00:30:37.968Z"
+    },
+    {
+      "island": 4,
+      "size": "wide",
+      "file": "ui/04-wide.jpg",
+      "viewport": [
+        1280,
+        720
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 138895,
+      "sha256": "4362a1aee2f6fb58e77baebf588d640236ff510ad15f5b42f495c8c6ef5c1b2c",
+      "capturedAt": "2026-10-14T00:19:29.834Z"
+    },
+    {
+      "island": 4,
+      "size": "small",
+      "file": "ui/04-small.jpg",
+      "viewport": [
+        667,
+        375
+      ],
+      "width": 667,
+      "height": 375,
+      "bytes": 53167,
+      "sha256": "45ea0b261ca05a6d5fbda94fe040c8aca5c5062511118e41bd36b7c78978fdfa",
+      "capturedAt": "2026-10-14T00:19:30.648Z"
+    },
+    {
+      "island": 5,
+      "size": "wide",
+      "file": "ui/05-wide.jpg",
+      "viewport": [
+        1280,
+        720
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 131105,
+      "sha256": "c7169a4846918eb11f85c302a3b0fda512821c99f5959f2d76a4f6ce91e44cd6",
+      "capturedAt": "2026-10-14T00:16:40.007Z"
+    },
+    {
+      "island": 5,
+      "size": "small",
+      "file": "ui/05-small.jpg",
+      "viewport": [
+        667,
+        375
+      ],
+      "width": 667,
+      "height": 375,
+      "bytes": 51435,
+      "sha256": "2694f849dd058a63f2c466482c972e0e5398fa3e4fc7206e0502bb2119d6a2ee",
+      "capturedAt": "2026-10-14T00:16:40.906Z"
+    },
+    {
+      "island": 6,
+      "size": "wide",
+      "file": "ui/06-wide.jpg",
+      "viewport": [
+        1280,
+        720
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 120057,
+      "sha256": "7b1edbffd7101ce038b5f738f525cbb1009047d2297ebee98d44b3edc9aeb740",
+      "capturedAt": "2026-10-14T00:11:38.433Z"
+    },
+    {
+      "island": 6,
+      "size": "small",
+      "file": "ui/06-small.jpg",
+      "viewport": [
+        667,
+        375
+      ],
+      "width": 667,
+      "height": 375,
+      "bytes": 49648,
+      "sha256": "a72e773ba7e59dc3a0223952c6c817b60c10007f0c6acaa4654062447dec51d0",
+      "capturedAt": "2026-10-14T00:11:39.153Z"
+    },
+    {
+      "island": 7,
+      "size": "wide",
+      "file": "ui/07-wide.jpg",
+      "viewport": [
+        1280,
+        720
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 120377,
+      "sha256": "a3f9cb2f5e7657cba94faad6feb00383f0bd71d74d24f3724757c3d4c271dafd",
+      "capturedAt": "2026-10-14T00:08:36.812Z"
+    },
+    {
+      "island": 7,
+      "size": "small",
+      "file": "ui/07-small.jpg",
+      "viewport": [
+        667,
+        375
+      ],
+      "width": 667,
+      "height": 375,
+      "bytes": 46550,
+      "sha256": "542217d8d12eb92240fbb66e3a6d0f2a794a6d137d24f622de9a14923a36d27c",
+      "capturedAt": "2026-10-14T00:08:37.497Z"
+    },
+    {
+      "island": 8,
+      "size": "wide",
+      "file": "ui/08-wide.jpg",
+      "viewport": [
+        1280,
+        720
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 135898,
+      "sha256": "5775795292299ca03c20d5d0de1cdc9ebf1d531f3ca09850cd92b4c149e4e758",
+      "capturedAt": "2026-10-14T00:04:06.582Z"
+    },
+    {
+      "island": 8,
+      "size": "small",
+      "file": "ui/08-small.jpg",
+      "viewport": [
+        667,
+        375
+      ],
+      "width": 667,
+      "height": 375,
+      "bytes": 53592,
+      "sha256": "d134694ec0d8047c49d717b202efb8af32dc76cc4ec8d5c54a81e6dfe5ef1a66",
+      "capturedAt": "2026-10-14T00:01:00.454Z"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "islands": {
+    "1": {
+      "file": "concept-1.json",
+      "models": [
+        "blossomTree"
+      ],
+      "bytes": 15974828
+    },
+    "2": {
+      "file": "concept-2.json",
+      "models": [
+        "forestArch",
+        "nordicSchool"
+      ],
+      "bytes": 14279597
+    },
+    "3": {
+      "file": "concept-3.json",
+      "models": [
+        "harborClock",
+        "canalHouseA",
+        "canalHouseB",
+        "canalHouseC",
+        "harborBakery",
+        "harborGlasshouse",
+        "lighthouse"
+      ],
+      "bytes": 3537401
+    },
+    "4": {
+      "file": "concept-4.json",
+      "models": [
+        "alpineWorkshop",
+        "greatWaterwheel",
+        "workshopAqueduct"
+      ],
+      "bytes": 763634
+    },
+    "5": {
+      "file": "concept-5.json",
+      "models": [
+        "greatFruitMarket",
+        "moroccanStall",
+        "moroccanHouse"
+      ],
+      "bytes": 6256258
+    },
+    "6": {
+      "file": "concept-6.json",
+      "models": [
+        "greatPearlShell",
+        "coralArch",
+        "spiralShellSeat"
+      ],
+      "bytes": 5360698
+    },
+    "7": {
+      "file": "concept-7.json",
+      "models": [
+        "windCity",
+        "windSails",
+        "blueDomePavilion",
+        "skyAirship"
+      ],
+      "bytes": 4725357
+    },
+    "8": {
+      "file": "concept-8.json",
+      "models": [
+        "starCarousel",
+        "festivalShellStage",
+        "mexicanHouseA",
+        "mexicanHouseB"
+      ],
+      "bytes": 1940152
+    }
+  }
+}

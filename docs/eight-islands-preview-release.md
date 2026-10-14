@@ -16,4 +16,8 @@ Chrome拡張の操作接続は再確認でもタイムアウト。アプリ内�
 
 ## 結果
 
-公開処理と配信照合の完了後に更新する。
+[PR #34](https://github.com/futsalife24-bot/Ichi-game/pull/34)を統合し、公開mainは `a5e8be2bb8a7c4a1e9825a4d51922e5aa9cb39b1`。承認対象の先行公開準備は `3647b76c8cfaa74b729fb727d46164a93b78d375`。PRの必須チェックを確認して統合し、[mainの検査](https://github.com/futsalife24-bot/Ichi-game/actions/runs/38341275660)は284件すべて成功、[Pages公開](https://github.com/futsalife24-bot/Ichi-game/actions/runs/38341275670)も成功した。
+
+[公開先](https://futsalife24-bot.github.io/Ichi-game/)の82資材を公開コミットの原本とSHA-256で照合し、すべて一致。新島のコード・素材と出荷済み726音声の一覧を含む。[配信照合結果](eight-islands-preview-release-check.json)。公開タイトル画面の表示をアプリ内ブラウザーで取得し、本人確認用タブとして保持した。各島の実操作が完了したという意味ではない。第二島の「しま」から第四〜第八島へ渡航できる。
+
+追加音声は未生成85個、旧726個の出荷を継続。AI Studioの入力操作が反映されない状態のため、Chromeの再接続を本人へ依頼した。収録タブは再開用に保持。確認用5225サーバーは終了した。今回の検査実装は学習担当の子１体へ委任し、主担当が差分・実データ検査・GitHub CIと配信照合を担当した。子の既存指定は `gpt-6-sol / medium`、実際のモデルIDと推論設定は未確認。
