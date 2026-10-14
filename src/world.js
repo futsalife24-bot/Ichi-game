@@ -45,7 +45,7 @@ export function mulberry32(seed) {
 }
 
 export const LANDMARKS = {
-  spawn: { x: 0, z: 16 },
+  spawn: { x: -2, z: 16 },
   owl: { x: 3, z: -2.5 },
   school: { x: 16, z: -10 },
   rainbow: { x: 10, z: 8, radius: 6 },

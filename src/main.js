@@ -830,7 +830,7 @@ function leaveForest(instant = false) {
     adventure.stop(); forest.group.visible = false; setOutdoorVisible(true); place = 'island';
     boatArmed = false;
     document.body.classList.remove('forest-place');
-    player.teleport(DOCK.x, getHeight(DOCK.x, DOCK.z), DOCK.z, Math.PI);
+    player.teleport(LANDMARKS.spawn.x, getHeight(LANDMARKS.spawn.x, LANDMARKS.spawn.z), LANDMARKS.spawn.z, Math.PI);
     help.start(); adventure.group.visible = true;
     adventure.render(); snapCamera();
   };

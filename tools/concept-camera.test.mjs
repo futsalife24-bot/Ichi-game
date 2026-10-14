@@ -10,6 +10,8 @@ import { ConceptScenery } from '../src/concept-scenery.js';
 import { buildForestDetail } from '../src/concept-forest-detail.js';
 import { conceptBridgeCameraWeight, setConceptCameraGoal } from '../src/concept-camera.js';
 import { makeAvatar, PRESETS } from '../src/characters.js';
+import { makeBoat, DOCK } from '../src/forest.js';
+import { getHeight, LANDMARKS } from '../src/world.js';
 
 const rabbit = makeAvatar(PRESETS.usagi);
 const rabbitBounds = new THREE.Box3().setFromObject(rabbit.root);
@@ -24,6 +26,36 @@ function goals(number, position, compactHud = false, visibleHud = false) {
   const weight = setConceptCameraGoal(number, position, view, eye, target, compactHud, visibleHud);
   return { view, eye, target, weight };
 }
+
+test('第一島の出発画面では船の帆がうさぎを隠さない', () => {
+  assert.deepEqual([LANDMARKS.spawn.x, LANDMARKS.spawn.z], CONCEPT_LAYOUTS[1].spawn);
+  const [x, z] = CONCEPT_LAYOUTS[1].spawn;
+  const position = new THREE.Vector3(x, conceptWalkHeight(1, x, z), z);
+  const { eye, target } = goals(1, position, false, true);
+  const camera = new THREE.PerspectiveCamera(48, 1280 / 720, .1, 700);
+  camera.position.copy(eye); camera.lookAt(target); camera.updateMatrixWorld(true);
+  const boat = makeBoat();
+  boat.position.set(DOCK.x, getHeight(DOCK.x, DOCK.z), DOCK.z + 2);
+  boat.updateMatrixWorld(true);
+  const raycaster = new THREE.Raycaster();
+  for (let y = .2; y <= 2.4; y += .2) {
+    for (let dx = -.6; dx <= .6; dx += .15) {
+      const point = position.clone().add(new THREE.Vector3(dx, y, 0));
+      const direction = point.clone().sub(eye), distance = direction.length();
+      raycaster.set(eye, direction.normalize());
+      assert.ok(!raycaster.intersectObject(boat, true).some(hit => hit.distance < distance - .02), '船がうさぎのからだを隠す');
+    }
+  }
+  const toPixels = point => (point.clone().project(camera).x + 1) * 640;
+  const sail = boat.children.find(object => object.geometry?.type === 'PlaneGeometry');
+  assert.ok(sail);
+  const sailBounds = new THREE.Box3().setFromObject(sail);
+  const sailLeft = Math.min(...[sailBounds.min.x, sailBounds.max.x].flatMap(px =>
+    [sailBounds.min.y, sailBounds.max.y].map(py => toPixels(new THREE.Vector3(px, py, sailBounds.min.z)))));
+  const rabbitRight = Math.max(...[rabbitBounds.min.x, rabbitBounds.max.x].flatMap(px =>
+    [rabbitBounds.min.y, rabbitBounds.max.y].map(py => toPixels(position.clone().add(new THREE.Vector3(px, py, 0))))));
+  assert.ok(sailLeft > rabbitRight + 30, '帆とうさぎの間に見える空間がある');
+});
 
 function bridgeMeshes(number) {
   const scenery = { number, group: new THREE.Group(), solids: [], animated: [] };

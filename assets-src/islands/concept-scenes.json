@@ -26,7 +26,7 @@
       "kind": "cove",
       "radius": 25,
       "spawn": [
-        0,
+        -2,
         16
       ],
       "hero": [
