@@ -6,7 +6,7 @@ import { Life } from '../src/life.js';
 
 // 実際の接続コードを模擬環境で実行し、監査で見つかった切替の反例を守る。
 const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
-const activityInput = main.match(/const harborBusy = [^\n]+\nfunction refreshActivityInput\(\) \{[\s\S]*?\n\}/)[0];
+const activityInput = 'const invitation = {dialogOpen:false};\n' + main.match(/const harborBusy = [^\n]+\nfunction refreshActivityInput\(\) \{[\s\S]*?\n\}/)[0];
 const hudElement = () => ({ classList: { toggle() {} }, querySelector() { return { textContent: '' }; }, setAttribute() {} });
 
 test('報酬の保存失敗を検知したフレームでは後続の島イベントへ進まない', () => {
@@ -20,7 +20,7 @@ test('報酬の保存失敗を検知したフレームでは後続の島イベ�
     ui: { panelOpen: false }, transitioning: false, player: { update() {} }, env() {}, audio: {},
     animals: { update() {} }, quests: { update() { context.saveBlocked = true; } },
     worldEvents() { events++; }, requestAnimationFrame() { scheduled++; },
-    boatCheck() {},
+    boatCheck() {}, syncInvitationDialog() {}, updateInvitation() {}, pauseInvitation() {},
   };
   vm.runInNewContext(activityInput + '\n' + frame + '\nframe(20);', context);
   assert.equal(events, 0); assert.equal(scheduled, 2);
@@ -49,7 +49,7 @@ test('贈り物の保存失敗後は動物・船・島の処理へ進まない',
     islandNumber: () => 1, islandRules: () => ({ name: 'ひろば' }), learning: { opened: false, close() {}, stopSpeech() {} }, help:{modal:false,focused:false},
     adventure:{modal:false,focused:true,update(){context.saveBlocked=true;}},ui:{panelOpen:false},transitioning:false,
     player:{update(){}},env(){},audio:{},boatCheck(){later++;},animals:{update(){later++;}},worldEvents(){later++;},
-    quests:{state:'idle'},requestAnimationFrame(){scheduled++;}};
+    quests:{state:'idle'},syncInvitationDialog() {},updateInvitation() {},pauseInvitation() {},requestAnimationFrame(){scheduled++;}};
   vm.runInNewContext(activityInput+'\n'+frame+'\nframe(20);',context);assert.equal(later,0);assert.equal(scheduled,2);
 });
 

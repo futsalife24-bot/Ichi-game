@@ -1,0 +1,165 @@
+{
+  "checkedAt": "2026-10-14T12:03:19.351Z",
+  "oldIndexSha256": "9e59fa77c32380178cfa9e56ba71f9f195831aeb3187ae26ec1e06b6a8e75752",
+  "oldIndexUnchanged": false,
+  "oldReportEntries": 31,
+  "oldReportUnchanged": true,
+  "oldMp3Count": 726,
+  "oldMp3Mismatches": [],
+  "originalNewClipCount": 117,
+  "newUniqueCount": 117,
+  "newOverlapWithOld": [],
+  "newMp3Mismatches": [],
+  "latestImportCount": 46,
+  "newSourceCount": 15,
+  "newSourceMismatches": [],
+  "newSources": [
+    {
+      "batchId": 31,
+      "sourceSha256": "f79b88a52f72c28eedf9a31638ebb4dc7b1d7fb3d18d5563243480483c958830",
+      "reportShaMatches": true,
+      "riffComplete": true,
+      "dataComplete": true,
+      "clipCount": 10,
+      "saturated": 0
+    },
+    {
+      "batchId": 32,
+      "sourceSha256": "172292f517f440be2d7de81b348744bb23b2058dc5804faad4b04b6e884515bc",
+      "reportShaMatches": true,
+      "riffComplete": true,
+      "dataComplete": true,
+      "clipCount": 10,
+      "saturated": 0
+    },
+    {
+      "batchId": 33,
+      "sourceSha256": "b54833377a890afdc4097dcc238abe8e1b881c53bd2778a39cbb5009d8a37276",
+      "reportShaMatches": true,
+      "riffComplete": true,
+      "dataComplete": true,
+      "clipCount": 10,
+      "saturated": 0
+    },
+    {
+      "batchId": 34,
+      "sourceSha256": "b52564ef876f48be12253205e74040b273e0673ec7523cb9edc00a2f5c0f8341",
+      "reportShaMatches": true,
+      "riffComplete": true,
+      "dataComplete": true,
+      "clipCount": 10,
+      "saturated": 0
+    },
+    {
+      "batchId": 35,
+      "sourceSha256": "50d67288f940773102f1cb9092b10e7203aa68b9fcb7cb4010b10a275367e5af",
+      "reportShaMatches": true,
+      "riffComplete": true,
+      "dataComplete": true,
+      "clipCount": 10,
+      "saturated": 0
+    },
+    {
+      "batchId": 36,
+      "sourceSha256": "9129ae797a4eda4ca32f32eac90a2b002e221dc55ee989dc754fcfcf96c79279",
+      "reportShaMatches": true,
+      "riffComplete": true,
+      "dataComplete": true,
+      "clipCount": 10,
+      "saturated": 0
+    },
+    {
+      "batchId": 37,
+      "sourceSha256": "57d467aaf92dac15a1571d43d68215c537ba08003a68fda5f9aa0ad131a28c7a",
+      "reportShaMatches": true,
+      "riffComplete": true,
+      "dataComplete": true,
+      "clipCount": 5,
+      "saturated": 0
+    },
+    {
+      "batchId": 38,
+      "sourceSha256": "810ce683181910f360380bd4414533c5668f3ab33bc49510b5b650d5d2a17ec6",
+      "reportShaMatches": true,
+      "riffComplete": true,
+      "dataComplete": true,
+      "clipCount": 10,
+      "saturated": 0
+    },
+    {
+      "batchId": 39,
+      "sourceSha256": "0e150b611582ffe4f5b8c5f8518b45bd0ac4a2c65629d49622e0272a0e1deb37",
+      "reportShaMatches": true,
+      "riffComplete": true,
+      "dataComplete": true,
+      "clipCount": 10,
+      "saturated": 0
+    },
+    {
+      "batchId": 40,
+      "sourceSha256": "fba78abdb2c9edbc5313c7fcff1799e5054505a4e72fda38a9069872ff10914b",
+      "reportShaMatches": true,
+      "riffComplete": true,
+      "dataComplete": true,
+      "clipCount": 10,
+      "saturated": 0
+    },
+    {
+      "batchId": 41,
+      "sourceSha256": "19ccc8cae603ffff310d009e1f8754b9eeaa0bb170405f45500c7ec61280dac9",
+      "reportShaMatches": true,
+      "riffComplete": true,
+      "dataComplete": true,
+      "clipCount": 10,
+      "saturated": 0
+    },
+    {
+      "batchId": 42,
+      "sourceSha256": "adca4890e9e963879d66cb611358d54d2338daa1cc52a6f98f2d757359ec2432",
+      "reportShaMatches": true,
+      "riffComplete": true,
+      "dataComplete": true,
+      "clipCount": 10,
+      "saturated": 0
+    },
+    {
+      "batchId": 43,
+      "sourceSha256": "a60a017b4752c02442ae7db2c8280fc1aaff6450392acffb7b29cc631275e7a2",
+      "reportShaMatches": true,
+      "riffComplete": true,
+      "dataComplete": true,
+      "clipCount": 2,
+      "saturated": 0
+    },
+    {
+      "batchId": 44,
+      "sourceSha256": "8670c1ddae52124eed352002d3e1c073510f966782408975d1dc97c6d9d0bae0",
+      "reportShaMatches": true,
+      "riffComplete": true,
+      "dataComplete": true,
+      "clipCount": 2,
+      "saturated": 0
+    },
+    {
+      "batchId": 45,
+      "sourceSha256": "879f2828e91bd13ff2751b0c4fc3479eee7ede25a226814b730ba5f4993dbf02",
+      "reportShaMatches": true,
+      "riffComplete": true,
+      "dataComplete": true,
+      "clipCount": 5,
+      "saturated": 0
+    }
+  ],
+  "batch45": {
+    "sourceSha256": "879f2828e91bd13ff2751b0c4fc3479eee7ede25a226814b730ba5f4993dbf02",
+    "riffByteCount": 1303724,
+    "fileByteCount": 1303724,
+    "status": "imported",
+    "clipCount": 5,
+    "saturated": 0,
+    "minClipDuration": 2.32
+  },
+  "backupMismatches": [],
+  "physicalMp3Count": 843,
+  "oldIndexEntriesUnchanged": true
+}

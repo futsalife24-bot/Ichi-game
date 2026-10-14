@@ -5,8 +5,13 @@ import { newAdventure } from './adventure-state.js';
 import { beginObservation, noteObservation, finishObservation } from './observations.js';
 import { addAdaptiveEvidence } from './adaptive-play.js';
 import { newHarborErrands } from './harbor-errands-state.js';
+import { newIslandGuidance } from './island-guidance.js';
+import { CLOTHES } from './characters.js';
+import { FURNITURE } from './furniture.js';
+import { ITEMS } from './catalog.js';
 
 export const DEVELOPER_SCENARIOS = Object.freeze({
+  all: Object.freeze({ id:'all',label:'全開放・第一島',place:'island',autoStart:true }),
   workshop: Object.freeze({ id:'workshop',label:'第四島・ものづくり',place:'learning-4' }),
   market: Object.freeze({ id:'market',label:'第五島・おかいもの',place:'learning-5' }),
   nature: Object.freeze({ id:'nature',label:'第六島・観察と実験',place:'learning-6' }),
@@ -54,6 +59,22 @@ export async function openPlayProfiles({ search, getStorage, claimSession, avata
     save.avatar = { ...avatar, name: '' };
     save.help = { ...newHelp(), stage: 'free' };
     save.adventure = newAdventure();
+    if (scenario.id === 'all') {
+      // しま、きせかえ、くらしの かくにんように、いちじてきな きろくを そろえる。
+      save.stars = 20;
+      save.adventure.flower = { stage: 'done', collected: [0, 1, 2] };
+      save.adventure.leaf = { stage: 'done', collected: [0, 1, 2] };
+      save.harborErrands = newHarborErrands();
+      for (const job of Object.values(save.harborErrands.jobs)) Object.assign(job, { stage: 'done', round: 1, rewarded: true });
+      save.harborGathering = { version: 1, stage: 'done' };
+      save.islandGuidance = { ...newIslandGuidance(), visited: true };
+      save.bells = 999;
+      save.seeds = 99;
+      save.closet = Object.values(CLOTHES).filter(item => item.price).map(item => item.id);
+      save.inventory = Object.fromEntries(Object.keys(FURNITURE).map(id => [id, 1]));
+      save.zukan = Object.fromEntries(Object.keys(ITEMS).map(id => [id, 1]));
+      save.bag = Object.fromEntries(Object.values(ITEMS).filter(item => !item.keep).map(item => [item.id, 1]));
+    }
     if (scenario.place === 'forest') {
       save.adventure.flower = { stage: 'done', collected: [0, 1, 2] };
       save.stars = 1;

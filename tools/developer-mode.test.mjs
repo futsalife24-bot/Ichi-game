@@ -6,10 +6,13 @@ import { DEVELOPER_SCENARIOS, openPlayProfiles, developerScenario, developerURL 
 import { createProfileStore } from '../src/profiles.js';
 import { validateGameSave } from '../src/save.js';
 import { adventureAction } from '../src/adventure-state.js';
-import { PRESETS } from '../src/characters.js';
+import { PRESETS, CLOTHES } from '../src/characters.js';
 import { adaptiveLevel } from '../src/adaptive-play.js';
 import { nextIslandGuidance, completedFindActivities } from '../src/island-guidance.js';
 import { resolvePlaySettings } from '../src/play-settings.js';
+import { FURNITURE } from '../src/furniture.js';
+import { ITEMS } from '../src/catalog.js';
+import { gatheringUnlocked } from '../src/harbor-gathering-state.js';
 
 const avatar = PRESETS.usagi;
 const scenarios = ['workshop','market','nature','expedition','festival','second', 'forest', 'forest-done', 'harbor-ready', 'harbor-party', 'harbor-grown', 'island', 'island-guide', 'island-sail'];
@@ -21,14 +24,50 @@ const finish = (save, task) => {
   return adventureAction(save, task, 'deliver');
 };
 
-test('指定した十四場面だけを開発者モードとして受け付け、各島の行き先を固定する', () => {
-  assert.deepEqual(Object.keys(DEVELOPER_SCENARIOS), scenarios);
+test('従来の十四場面と全開放の入口を受け付け、各島の行き先を固定する', () => {
+  assert.deepEqual(Object.keys(DEVELOPER_SCENARIOS), ['all', ...scenarios]);
   for (const id of scenarios) assert.equal(developerScenario(`?dev=${id}`).id, id);
+  assert.deepEqual(developerScenario('?dev=all'), { id:'all',label:'全開放・第一島',place:'island',autoStart:true });
+  for (const id of scenarios) assert.equal(DEVELOPER_SCENARIOS[id].autoStart, undefined);
   assert.deepEqual(DEVELOPER_SCENARIOS.second, { id: 'second', label: '第二島・文字と木ゆらし', place: 'second' });
   assert.deepEqual(DEVELOPER_SCENARIOS.forest, { id: 'forest', label: '第三島・みなと', place: 'forest' });
   assert.deepEqual(DEVELOPER_SCENARIOS['forest-done'], { id: 'forest-done', label: '第三島・お手伝い完了後', place: 'forest' });
   assert.deepEqual(DEVELOPER_SCENARIOS.island, { id: 'island', label: '第一島・花のお手伝い前', place: 'island' });
   for (const search of ['', '?dev', '?dev=true', '?dev=toString', '?dev=__proto__', '?dev=forest&dev=island', '?dev=forest&dev=forest', '?developer=forest', '?dev=island-guide&dev=island-sail', '?dev=island-other']) assert.equal(developerScenario(search), null);
+});
+
+test('全開放の一時データで渡航・衣装・暮らし・港町を使える', async () => {
+  const { profiles, scenario } = await preview('all'), save = profiles.load();
+  assert.equal(scenario.place, 'island');
+  assert.doesNotThrow(() => validateGameSave(save));
+  assert.equal(save.help.stage, 'free');
+  assert.equal(save.adventure.flower.stage, 'done');
+  assert.equal(save.adventure.leaf.stage, 'done');
+  assert.ok(save.stars >= Math.max(...Object.values(CLOTHES).map(item => item.stars ?? 0)));
+  assert.deepEqual(save.closet, Object.values(CLOTHES).filter(item => item.price).map(item => item.id));
+  assert.ok(Object.keys(FURNITURE).every(id => save.inventory[id] > 0));
+  assert.ok(Object.keys(ITEMS).every(id => save.zukan[id] > 0));
+  assert.ok(save.bells > 0 && save.seeds > 0);
+  assert.ok(gatheringUnlocked(save));
+  assert.equal(save.harborGathering.stage, 'done');
+  assert.equal(save.islandGuidance.visited, true);
+  const changed = profiles.load(); changed.stars = 0; profiles.write(changed);
+  assert.equal((await preview('all')).profiles.load().stars, 20);
+});
+
+test('タイトルの単一入口は全開放を選び、読み込み後だけ第一島へ自動で入る', () => {
+  const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const titleEntry = html.match(/<details class="developer-entry">[\s\S]*?<\/details>/)[0];
+  assert.deepEqual([...titleEntry.matchAll(/href="\?dev=([^"]+)"/g)].map(match => match[1]), ['all']);
+  const main = readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  const start = main.match(/^if \(developerScenario\?\.autoStart\) startGame\(\);$/m)?.[0];
+  assert.ok(start, '起動の準備後に開発用の自動開始がある');
+  assert.ok(main.indexOf(start) > main.indexOf('window.__game = {'), '画面と操作の準備後に開始する');
+  for (const [id, expected] of [['all',1],['second',0],['forest',0]]) {
+    let calls=0;
+    vm.runInNewContext(start,{developerScenario:DEVELOPER_SCENARIOS[id],startGame:()=>{calls++;}});
+    assert.equal(calls, expected, `${id} の自動開始`);
+  }
 });
 
 test('十四場面を有効な一時プロフィールで開き、通常の保存先とロックに触れない', async () => {
@@ -99,7 +138,7 @@ test('通常の複数プロフィールと未知の記録を確認前後でそ�
   const save = normal.load(); save.stars = 47; save.future = { keep: true }; normal.write(save);
   normal.create({ label: '通常確認２', icon: '🐱' });
   const before = [...data];
-  for (const id of scenarios) {
+  for (const id of [...scenarios, 'all']) {
     const dev = await openPlayProfiles({ search: `?dev=${id}`, getStorage: () => { throw Error('通常の記録を読み出した'); }, claimSession: forbidden, avatar });
     const changed = dev.profiles.load(); changed.stars = 99; dev.profiles.write(changed);
     assert.deepEqual([...data], before);
@@ -134,7 +173,7 @@ test('開発者メニュー中は時間を進めず、島の収集処理にも�
   let scheduled = 0;
   const ticks = [];
   const context = { developerMenuOpen: () => true, homePaused: false, playTimer: { tick: active => { ticks.push(active); return true; }, paused: false },
-    mode: 'play', place: 'forest', saveBlocked: false, islandLoading:false, document: { hidden: false }, help: { focused: false }, adventure: { focused: false },
+    mode: 'play', place: 'forest', saveBlocked: false, islandLoading:false, document: { hidden: false }, help: { focused: false }, adventure: { focused: false }, invitation: {dialogOpen:false}, syncInvitationDialog(){}, pauseInvitation(){},
     islandNumber: () => 3, islandRules: () => ({ name: 'みなと' }), input: {}, learning: { opened: false, close() {}, stopSpeech() {} },
     ui: { panelOpen: false }, transitioning: false, harborBusy: () => false, quests: { state: 'idle' }, $: () => ({ classList: { toggle() {} }, querySelector: () => ({}), setAttribute() {} }),
     last: 0, time: 0, requestAnimationFrame() { scheduled++; } };

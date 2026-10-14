@@ -9,6 +9,7 @@ import { ITEMS, PERIODS, SEASONS, NAMES } from './catalog.js';
 import { FURNITURE } from './furniture.js';
 import { harborLines } from './harbor-errands-lines.js';
 import { eightIslandPendingLines } from './eight-island-lines.js';
+import { INVITATION_VOICE_LINES } from './learning-invitation-state.js';
 
 export const NUM_WORDS = ['いち', 'に', 'さん', 'よん', 'ご', 'ろく', 'なな', 'はち', 'きゅう', 'じゅう'];
 export const PRAISE = ['すごい！', 'やったね！', 'じょうず！', 'できたね！', 'ばっちり！', 'さすが！'];
@@ -244,6 +245,8 @@ export function allLines() {
   out.push(...helpLines());
   out.push(...adventureLines());
   out.push(...harborLines());
+  out.push(...eightIslandPendingLines());
+  out.push(...INVITATION_VOICE_LINES.map(line => line.text));
   return out;
 }
 
@@ -264,4 +267,4 @@ export function helpLines() {
 
 /** はなの おてつだいと、もりの しまの せりふ */
 export function adventureLines() { return [L.flowerIntro(), L.flowerDeliver(), L.flowerDone(), L.forestWelcome(), L.leafIntro(), L.leafDeliver(), L.leafDone()].map(l => l.say); }
-export function pendingLines() { return eightIslandPendingLines(); }
+export function pendingLines() { return []; }

@@ -1,0 +1,82 @@
+[
+  {
+    "batchId": 31,
+    "hash": "80c5cdd9",
+    "expected": "まず、みほんを みてね。",
+    "language": "ja",
+    "sha256": "e398937dc3c75c77615f60aa8c8b59113f78f173fa1a37b4aae93b427022b85d",
+    "recognized": "まず、日本を見てね。"
+  },
+  {
+    "batchId": 31,
+    "hash": "c3a2fb83",
+    "expected": "いっしょに やってみよう。",
+    "language": "ja",
+    "sha256": "a20bff7b04d378fb6b014e6950f079f907d518028280961d92dd39832fb9a8cd",
+    "recognized": "一緒にやってみよう"
+  },
+  {
+    "batchId": 31,
+    "hash": "062a0e8b",
+    "expected": "こんどは じぶんで やってみよう。",
+    "language": "ja",
+    "sha256": "c8b9f0072fd13389f8bc9a3c2e199f810f9af64002f929a8122a9517fffd0b8f",
+    "recognized": "今度は自分でやってみよう。"
+  },
+  {
+    "batchId": 31,
+    "hash": "afab5722",
+    "expected": "みほんを みて、もういちど ためしてね。",
+    "language": "ja",
+    "sha256": "90f70c592c1718e8827572c57b874d1213794bafdeb159ca27dcb65a55091e0f",
+    "recognized": "日本を見て、もう一度試してね"
+  },
+  {
+    "batchId": 31,
+    "hash": "29899dce",
+    "expected": "どうなるかな。",
+    "language": "ja",
+    "sha256": "fe43e39fdcb344f2e69877613de633151114d5ce5402392a304c6fec06b6df90",
+    "recognized": "どうなるかな?"
+  },
+  {
+    "batchId": 31,
+    "hash": "492534cb",
+    "expected": "よそうして、ためして、よく みてね。",
+    "language": "ja",
+    "sha256": "eb687327c2bc089c81bb16f8e232cfc38fa50615923645d08381f3283f65fde9",
+    "recognized": "予想して試してよく見てね"
+  },
+  {
+    "batchId": 31,
+    "hash": "ac65180f",
+    "expected": "えらんだ ものを とどけよう。",
+    "language": "ja",
+    "sha256": "7761a6d85ed2d60260207f2e34972f2e54fb14b3e55f396bd4a78a1f6d4b5504",
+    "recognized": "エランダモノを届けよう"
+  },
+  {
+    "batchId": 31,
+    "hash": "55c22009",
+    "expected": "どんな おまつりに する？",
+    "language": "ja",
+    "sha256": "7701e3c87dd4b6383f022bbfe1d0500e9bc8bf67bb4c14be504f3e92cf5c1ec3",
+    "recognized": "どんなお祭りにする?"
+  },
+  {
+    "batchId": 31,
+    "hash": "f6bc74c9",
+    "expected": "えを えらんでね。",
+    "language": "ja",
+    "sha256": "f387c12747fd3fc403b2f9173f7113ca0aac8da1ef9ef9b26a16ba4ca29dc12b",
+    "recognized": "絵を選んでね"
+  },
+  {
+    "batchId": 31,
+    "hash": "60d16f36",
+    "expected": "あかい ふうせんは どれ？",
+    "language": "ja",
+    "sha256": "7ab608e3c9ef3fe2745c31ac280a2d044069b90d2bd0f13fb276ca8cf2234a88",
+    "recognized": "赤い風船はどれ?"
+  }
+]

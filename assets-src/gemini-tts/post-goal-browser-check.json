@@ -1,0 +1,17 @@
+{
+  "checkedAt": "2026-10-14T12:13:21.638Z",
+  "decode": {
+    "checked": 843,
+    "expected": 843,
+    "errors": [],
+    "totalSeconds": 1233
+  },
+  "offline": {
+    "cached": 843,
+    "expected": 843,
+    "missing": []
+  },
+  "englishStatus": "再生終了（clip、0.82秒）",
+  "japaneseCall": "再生終了（clip、1.37秒）",
+  "humanListening": "未確認"
+}

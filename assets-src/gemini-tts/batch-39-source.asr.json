@@ -1,0 +1,178 @@
+{
+  "batchId": 39,
+  "sourceSha256": "0e150b611582ffe4f5b8c5f8518b45bd0ac4a2c65629d49622e0272a0e1deb37",
+  "model": "small",
+  "language": "en",
+  "expected": [
+    "fish",
+    "bird",
+    "red",
+    "blue",
+    "triangle",
+    "red, blue",
+    "red apple",
+    "water the flower",
+    "heavy and light",
+    "Go to the bridge"
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 0.88,
+      "text": " fish",
+      "words": [
+        {
+          "start": 0.0,
+          "end": 0.88,
+          "text": " fish"
+        }
+      ]
+    },
+    {
+      "start": 3.02,
+      "end": 4.42,
+      "text": " bird",
+      "words": [
+        {
+          "start": 3.02,
+          "end": 4.42,
+          "text": " bird"
+        }
+      ]
+    },
+    {
+      "start": 6.5,
+      "end": 7.9,
+      "text": " red",
+      "words": [
+        {
+          "start": 6.5,
+          "end": 7.9,
+          "text": " red"
+        }
+      ]
+    },
+    {
+      "start": 9.86,
+      "end": 11.26,
+      "text": " blue",
+      "words": [
+        {
+          "start": 9.86,
+          "end": 11.26,
+          "text": " blue"
+        }
+      ]
+    },
+    {
+      "start": 13.94,
+      "end": 15.34,
+      "text": " triangle",
+      "words": [
+        {
+          "start": 13.94,
+          "end": 15.34,
+          "text": " triangle"
+        }
+      ]
+    },
+    {
+      "start": 17.520000000000003,
+      "end": 19.54,
+      "text": " red blue",
+      "words": [
+        {
+          "start": 17.520000000000003,
+          "end": 18.92,
+          "text": " red"
+        },
+        {
+          "start": 18.92,
+          "end": 19.54,
+          "text": " blue"
+        }
+      ]
+    },
+    {
+      "start": 21.580000000000002,
+      "end": 23.52,
+      "text": " red apple",
+      "words": [
+        {
+          "start": 21.580000000000002,
+          "end": 22.98,
+          "text": " red"
+        },
+        {
+          "start": 22.98,
+          "end": 23.52,
+          "text": " apple"
+        }
+      ]
+    },
+    {
+      "start": 26.16,
+      "end": 32.06,
+      "text": " Water the flower Heavy and light",
+      "words": [
+        {
+          "start": 26.16,
+          "end": 26.96,
+          "text": " Water"
+        },
+        {
+          "start": 26.96,
+          "end": 27.2,
+          "text": " the"
+        },
+        {
+          "start": 27.2,
+          "end": 27.58,
+          "text": " flower"
+        },
+        {
+          "start": 27.58,
+          "end": 31.1,
+          "text": " Heavy"
+        },
+        {
+          "start": 31.1,
+          "end": 31.64,
+          "text": " and"
+        },
+        {
+          "start": 31.64,
+          "end": 32.06,
+          "text": " light"
+        }
+      ]
+    },
+    {
+      "start": 35.44,
+      "end": 36.2,
+      "text": " Go to the bridge",
+      "words": [
+        {
+          "start": 35.14,
+          "end": 35.54,
+          "text": " Go"
+        },
+        {
+          "start": 35.54,
+          "end": 35.78,
+          "text": " to"
+        },
+        {
+          "start": 35.78,
+          "end": 35.9,
+          "text": " the"
+        },
+        {
+          "start": 35.9,
+          "end": 36.2,
+          "text": " bridge"
+        }
+      ]
+    }
+  ]
+}

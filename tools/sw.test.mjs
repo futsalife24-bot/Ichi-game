@@ -18,7 +18,7 @@ test('install caches every Gemini voice in bounded batches before activating',as
 test('採用景観の読み込み先がすべてオフライン版に入り、実ファイルもある',async()=>{
  const f=fixture();await f.fire('install');const assets=f.added[0];
  const required=readdirSync(new URL('../src/',import.meta.url)).filter(name=>/^concept-.*\.js$/.test(name)).map(name=>`./src/${name}`);
- required.push('./src/harbor-gathering-layout.js',...Array.from({length:8},(_,i)=>`./assets/islands/concept-${i+1}.json`),'./assets/islands/concept-nature.json');
+ required.push('./src/harbor-gathering-layout.js', './src/learning-invitation.js', './src/learning-invitation-state.js', './src/learning-invitation-world.js', './src/learning-invitation.css', ...Array.from({length:8},(_,i)=>`./assets/islands/concept-${i+1}.json`),'./assets/islands/concept-nature.json');
  for(const path of required){assert.ok(assets.includes(path),path);assert.ok(existsSync(new URL(`../${path}`,import.meta.url)),path);}
  assert.ok(!assets.includes('./assets/islands/concept-models-a.json'));
  assert.ok(!assets.includes('./assets/islands/concept-models-b.json'));

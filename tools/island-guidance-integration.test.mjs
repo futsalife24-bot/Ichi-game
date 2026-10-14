@@ -27,7 +27,7 @@ const sail=main.match(/async function visitForest\(preview = null\) \{[\s\S]*?\n
 const islandNumberCode=main.match(/const islandNumber = [^\n]+/)[0];
 function voyage(){
   const events=[];
-  const c={mode:'play',place:'island',saveBlocked:false,forestLoading:false,forest:{assetsLoaded:true},
+  const c={mode:'play',place:'island',saveBlocked:false,forestLoading:false,forest:{assetsLoaded:true},invitation:{dialogOpen:false},
     adventure:{unlocked:true,canAct:()=>true,markVisited(){events.push('save');return true;}},
     input:{reset(){}},player:{setTarget(){}},refreshActivityInput(){},
     quests:{stop(){events.push('stop');}},leaveArea(){},endAllFishing(){},voice:{stop(){}},audio:{meet(){}},
@@ -41,6 +41,13 @@ test('第三島への船は訪問の保存が成功してから遷移し、失�
   assert.deepEqual(failed.events,['stop','failed']);assert.equal(failed.place,'island');
   const ready=voyage();await vm.runInNewContext(sail+'\nvisitForest();',ready);
   assert.deepEqual(ready.events,['stop','save','transition']);
+});
+
+test('住民との会話中は第三島への渡航と訪問保存を始めない',async()=>{
+  const c=voyage();c.invitation.dialogOpen=true;
+  await vm.runInNewContext(sail+'\nvisitForest();',c);
+  assert.deepEqual(c.events,[]);
+  assert.equal(c.place,'island');
 });
 test('島素材の読込中に休憩したら、読込後に訪問や遷移を保存しない',async()=>{
   const c=voyage();let release,loads=0;

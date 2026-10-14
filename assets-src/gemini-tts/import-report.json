@@ -7064,5 +7064,1398 @@
         "sha256": "99edc2af43fe5ee46ded134b80c4130cbe7a150e41b27ad60094be382b44b44a"
       }
     ]
+  },
+  {
+    "batchId": 31,
+    "status": "imported",
+    "filename": "batch-31-source.wav",
+    "sourceSha256": "f79b88a52f72c28eedf9a31638ebb4dc7b1d7fb3d18d5563243480483c958830",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 40.32,
+    "peak": 28604,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "80c5cdd9",
+        "text": "まず、みほんをみてね。",
+        "reading": "まず、みほんを みてね。",
+        "lang": "ja",
+        "from": 0.25,
+        "to": 2.14,
+        "duration": 1.89,
+        "sha256": "e398937dc3c75c77615f60aa8c8b59113f78f173fa1a37b4aae93b427022b85d"
+      },
+      {
+        "hash": "c3a2fb83",
+        "text": "いっしょにやってみよう。",
+        "reading": "いっしょに やってみよう。",
+        "lang": "ja",
+        "from": 4.55,
+        "to": 5.72,
+        "duration": 1.17,
+        "sha256": "a20bff7b04d378fb6b014e6950f079f907d518028280961d92dd39832fb9a8cd"
+      },
+      {
+        "hash": "062a0e8b",
+        "text": "こんどはじぶんでやってみよう。",
+        "reading": "こんどは じぶんで やってみよう。",
+        "lang": "ja",
+        "from": 8.28,
+        "to": 10.05,
+        "duration": 1.77,
+        "sha256": "c8b9f0072fd13389f8bc9a3c2e199f810f9af64002f929a8122a9517fffd0b8f"
+      },
+      {
+        "hash": "afab5722",
+        "text": "みほんをみて、もういちどためしてね。",
+        "reading": "みほんを みて、もういちど ためしてね。",
+        "lang": "ja",
+        "from": 12.79,
+        "to": 15.3,
+        "duration": 2.51,
+        "sha256": "90f70c592c1718e8827572c57b874d1213794bafdeb159ca27dcb65a55091e0f"
+      },
+      {
+        "hash": "29899dce",
+        "text": "どうなるかな。",
+        "reading": "どうなるかな。",
+        "lang": "ja",
+        "from": 18.25,
+        "to": 19.34,
+        "duration": 1.09,
+        "sha256": "fe43e39fdcb344f2e69877613de633151114d5ce5402392a304c6fec06b6df90"
+      },
+      {
+        "hash": "492534cb",
+        "text": "よそうして、ためして、よくみてね。",
+        "reading": "よそうして、ためして、よく みてね。",
+        "lang": "ja",
+        "from": 22.12,
+        "to": 24.29,
+        "duration": 2.17,
+        "sha256": "eb687327c2bc089c81bb16f8e232cfc38fa50615923645d08381f3283f65fde9"
+      },
+      {
+        "hash": "ac65180f",
+        "text": "えらんだものをとどけよう。",
+        "reading": "えらんだ ものを とどけよう。",
+        "lang": "ja",
+        "from": 26.73,
+        "to": 28.49,
+        "duration": 1.76,
+        "sha256": "7761a6d85ed2d60260207f2e34972f2e54fb14b3e55f396bd4a78a1f6d4b5504"
+      },
+      {
+        "hash": "55c22009",
+        "text": "どんなおまつりにする？",
+        "reading": "どんな おまつりに する？",
+        "lang": "ja",
+        "from": 30.93,
+        "to": 32.49,
+        "duration": 1.56,
+        "sha256": "7701e3c87dd4b6383f022bbfe1d0500e9bc8bf67bb4c14be504f3e92cf5c1ec3"
+      },
+      {
+        "hash": "f6bc74c9",
+        "text": "えをえらんでね。",
+        "reading": "えを えらんでね。",
+        "lang": "ja",
+        "from": 35.02,
+        "to": 36.12,
+        "duration": 1.1,
+        "sha256": "f387c12747fd3fc403b2f9173f7113ca0aac8da1ef9ef9b26a16ba4ca29dc12b"
+      },
+      {
+        "hash": "60d16f36",
+        "text": "あかいふうせんはどれ？",
+        "reading": "あかい ふうせんは どれ？",
+        "lang": "ja",
+        "from": 38.56,
+        "to": 40.12,
+        "duration": 1.56,
+        "sha256": "7ab608e3c9ef3fe2745c31ac280a2d044069b90d2bd0f13fb276ca8cf2234a88"
+      }
+    ]
+  },
+  {
+    "batchId": 32,
+    "status": "imported",
+    "filename": "batch-32-source.wav",
+    "sourceSha256": "172292f517f440be2d7de81b348744bb23b2058dc5804faad4b04b6e884515bc",
+    "recipe": "bc5059abe0439072c167eff88d8bdff9939c62c1cdd7bef14a1a8a3cbab0dbb1",
+    "duration": 72.36,
+    "peak": 27808,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "4f11f81d",
+        "text": "りんごを３こあつめよう",
+        "reading": "りんごを さんこ あつめよう",
+        "lang": "ja",
+        "from": 0.23,
+        "to": 2.92,
+        "duration": 2.69,
+        "sha256": "9ed4bca591fb0f9c883f9de34c10c6f8d5bbd2059bb9fe3596a935c837d1d613"
+      },
+      {
+        "hash": "2943751e",
+        "text": "まるとおなじかたちはどれ？",
+        "reading": "まると おなじ かたちは どれ？",
+        "lang": "ja",
+        "from": 7.42,
+        "to": 10.23,
+        "duration": 2.81,
+        "sha256": "f969661497f7aa2b708e4d5cc611c20f60cad76f6e59baecb478e13c99df8138"
+      },
+      {
+        "hash": "dc3f1a69",
+        "text": "もーもーはだあれ？",
+        "reading": "もーもーは だあれ？",
+        "lang": "ja",
+        "from": 15.05,
+        "to": 17.74,
+        "duration": 2.69,
+        "sha256": "2bb7469322d5d8a2d19bb74a7bbd0f7ee39529908d2e7063fc6be446a346985c"
+      },
+      {
+        "hash": "ab65f934",
+        "text": "ひよこにりんごを２ことどける",
+        "reading": "ひよこに りんごを にこ とどける",
+        "lang": "ja",
+        "from": 23.39,
+        "to": 26.8,
+        "duration": 3.41,
+        "sha256": "e0eefee98aa80628177abdb3dc68aa49915689f84da7fd7cabc3abffd28e9757"
+      },
+      {
+        "hash": "f2b77eeb",
+        "text": "かいがらをおさらへはこぶ",
+        "reading": "かいがらを おさらへ はこぶ",
+        "lang": "ja",
+        "from": 32.13,
+        "to": 35.01,
+        "duration": 2.88,
+        "sha256": "f46829c0e59854391e33f15e35aee2b59410f539e965282cadb953236e04a52a"
+      },
+      {
+        "hash": "dab67015",
+        "text": "３とおなじりんごのおさら",
+        "reading": "さんと おなじ りんごの おさら",
+        "lang": "ja",
+        "from": 40.18,
+        "to": 43.37,
+        "duration": 3.19,
+        "sha256": "7e20dfe825daba2b8081eda66f3ae809306045820c42ab57d26504dea73ba417"
+      },
+      {
+        "hash": "81ab5d53",
+        "text": "あかいものをあつめよう",
+        "reading": "あかい ものを あつめよう",
+        "lang": "ja",
+        "from": 48.13,
+        "to": 50.11,
+        "duration": 1.98,
+        "sha256": "f4954a14f2cdbba0f6b140f5fe8c6505f6b047ff7fb4e0d981f0dc3f5c6047a6"
+      },
+      {
+        "hash": "98d8532a",
+        "text": "Aとおなじカード",
+        "reading": "Aと おなじ カード",
+        "lang": "ja",
+        "from": 55.16,
+        "to": 56.93,
+        "duration": 1.77,
+        "sha256": "e3ab744b18db18c6969d78f7c9e7638e4450349ba5749778a370f24e78a3ffb4"
+      },
+      {
+        "hash": "82b8edb7",
+        "text": "みほんどおりにおさらをならべる",
+        "reading": "みほんどおりに おさらを ならべる",
+        "lang": "ja",
+        "from": 62.38,
+        "to": 64.89,
+        "duration": 2.51,
+        "sha256": "94724fca2b7ff75bb3ebaae05291765ebcba8c08883952a5c9003f8330497b44"
+      },
+      {
+        "hash": "2cb43471",
+        "text": "おちたりんごをかごへ",
+        "reading": "おちたりんごを かごへ",
+        "lang": "ja",
+        "from": 69.97,
+        "to": 72.12,
+        "duration": 2.15,
+        "sha256": "20c41c0813139119b8401835c6cb4745192a4939a6d0faced53d2eb22b3d1afc"
+      }
+    ]
+  },
+  {
+    "batchId": 33,
+    "status": "imported",
+    "filename": "batch-33-source.wav",
+    "sourceSha256": "b54833377a890afdc4097dcc238abe8e1b881c53bd2778a39cbb5009d8a37276",
+    "recipe": "d50debbdc83a98bea7c7ccca71289a2a18c28c45dfcbddf1cd8f140323b45a8d",
+    "duration": 44.64,
+    "peak": 27862,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "810dbb34",
+        "text": "４こと２こ、どちらがおおい？",
+        "reading": "よんこと にこ、どちらが おおい？",
+        "lang": "ja",
+        "from": 0.18,
+        "to": 3.25,
+        "duration": 3.07,
+        "sha256": "002767a54837f3df9d30b64e663e6b1c9395dde18b91f7d8c73001afab073e2f"
+      },
+      {
+        "hash": "2e1231de",
+        "text": "１・２・□・４",
+        "reading": "いち・に・□・よん",
+        "lang": "ja",
+        "from": 6.04,
+        "to": 8.87,
+        "duration": 2.83,
+        "sha256": "5f788eef82fcc1cc7a9869da50652875c5df2346ca2a1f945c3b110622e78814"
+      },
+      {
+        "hash": "af1f3332",
+        "text": "りんごとapple",
+        "reading": "りんごと apple",
+        "lang": "ja",
+        "from": 11.65,
+        "to": 12.59,
+        "duration": 0.94,
+        "sha256": "78ffd510dd6cf1213e5dc9df9c156ba06d51f5383cc3c87bfbec98f76973ccab"
+      },
+      {
+        "hash": "3d461412",
+        "text": "あかいはなを３ぼんとどける",
+        "reading": "あかい はなを さんぼん とどける",
+        "lang": "ja",
+        "from": 15.8,
+        "to": 17.9,
+        "duration": 2.1,
+        "sha256": "ccd4b0b8c86965dcd68a954f2eccc8ee1ca580f93ac31ba9b2e4a35b4138ac68"
+      },
+      {
+        "hash": "a5de1496",
+        "text": "おさらを３こと３こに",
+        "reading": "おさらを さんこと さんこに",
+        "lang": "ja",
+        "from": 20.9,
+        "to": 22.76,
+        "duration": 1.86,
+        "sha256": "9a478c9b699e53e688f0a8c4c09a0e53b3c64dfec893ee8072340b86abe4594a"
+      },
+      {
+        "hash": "101c5878",
+        "text": "かえるさんにはっぱを３まい",
+        "reading": "かえるさんに はっぱを さんまい",
+        "lang": "ja",
+        "from": 25.33,
+        "to": 27.27,
+        "duration": 1.94,
+        "sha256": "92746c75fab3287e3d9a0ab7814df5681899d1485e51a64c9399c4c89ffb3f66"
+      },
+      {
+        "hash": "e91428b9",
+        "text": "さんかく２まいでしかく",
+        "reading": "さんかく にまいで しかく",
+        "lang": "ja",
+        "from": 29.79,
+        "to": 31.59,
+        "duration": 1.8,
+        "sha256": "8d94db1ceb659e47f0ca28cf134b6271289cddc4aad9f554ecb21ef01e4d98e8"
+      },
+      {
+        "hash": "c2b77728",
+        "text": "あか・あお・あか・あお",
+        "reading": "あか・あお・あか・あお",
+        "lang": "ja",
+        "from": 34.19,
+        "to": 36.11,
+        "duration": 1.92,
+        "sha256": "b8fa22a0b50b79fdcb34722870cd7e7b1199ef79cf0385b6255c5e79bd03926a"
+      },
+      {
+        "hash": "d144786d",
+        "text": "はしにとどくいた",
+        "reading": "はしに とどく いた",
+        "lang": "ja",
+        "from": 38.58,
+        "to": 39.89,
+        "duration": 1.31,
+        "sha256": "94642439722285e6bc4badbea2fda37e6e88ed723abca50c89c4f97761772a0f"
+      },
+      {
+        "hash": "c49b3053",
+        "text": "12このみほんとおなじかず",
+        "reading": "じゅうにこの みほんと おなじ かず",
+        "lang": "ja",
+        "from": 42.43,
+        "to": 44.52,
+        "duration": 2.09,
+        "sha256": "4e6310663607e83bfd72dff4405508c7a9dda4d14ddf21267203c03e14d4fc04"
+      }
+    ]
+  },
+  {
+    "batchId": 34,
+    "status": "imported",
+    "filename": "batch-34-source.wav",
+    "sourceSha256": "b52564ef876f48be12253205e74040b273e0673ec7523cb9edc00a2f5c0f8341",
+    "recipe": "d239245c26f6ceb257c9a9c8512271ad499d8081ed7367b8b03d5bd0c93053b9",
+    "duration": 46.12,
+    "peak": 29143,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "acc351b7",
+        "text": "おうちのやねとかべ",
+        "reading": "おうちの やねと かべ",
+        "lang": "ja",
+        "from": 0.17,
+        "to": 3.04,
+        "duration": 2.87,
+        "sha256": "72262f19e1496c52e0088458285e024e7c7f9fd785a81c11bfb5999858656949"
+      },
+      {
+        "hash": "1ad1e295",
+        "text": "ながいいたとみじかいいた",
+        "reading": "ながい いたと みじかい いた",
+        "lang": "ja",
+        "from": 5.42,
+        "to": 8.13,
+        "duration": 2.71,
+        "sha256": "f2e2b5ae23d7f2e7a803f87307cd8a12e0fad2f18a45b3a062d9ca77910844ef"
+      },
+      {
+        "hash": "d21fa1ad",
+        "text": "３こと２こをあわせる",
+        "reading": "さんこと にこを あわせる",
+        "lang": "ja",
+        "from": 10.78,
+        "to": 12.79,
+        "duration": 2.01,
+        "sha256": "ea0f6564940fabe1b5e6eed3f23b984ff191fb3ecc0e11ee1cf334c48529aef6"
+      },
+      {
+        "hash": "d6dc0af6",
+        "text": "４こをふたりにわける",
+        "reading": "よんこを ふたりに わける",
+        "lang": "ja",
+        "from": 15.9,
+        "to": 17.71,
+        "duration": 1.81,
+        "sha256": "f23c73597e6ed8bfb47922b21603e136ad9b588fa71eac69af0cdbdee513f8db"
+      },
+      {
+        "hash": "7824c5f0",
+        "text": "えのリストでおかいもの",
+        "reading": "えの リストで おかいもの",
+        "lang": "ja",
+        "from": 20.59,
+        "to": 22.29,
+        "duration": 1.7,
+        "sha256": "2703d92dba93e84c67706ba1dc489623e06e09d2bc08dd30c9c3dd26e4458164"
+      },
+      {
+        "hash": "c345db26",
+        "text": "おやつを５こそろえる",
+        "reading": "おやつを ごこ そろえる",
+        "lang": "ja",
+        "from": 25.29,
+        "to": 27.09,
+        "duration": 1.8,
+        "sha256": "c6cd8dba0593413e46b4f9615a9033ba5298e7d13e78647bb274b27f93204e11"
+      },
+      {
+        "hash": "3fc62709",
+        "text": "おきゃくさんにひとつずつ",
+        "reading": "おきゃくさんに ひとつずつ",
+        "lang": "ja",
+        "from": 29.56,
+        "to": 31.45,
+        "duration": 1.89,
+        "sha256": "fe9ddeab55da75df6168333398b649ab60bd1cd2b31b74ac23d66583ef9e06f1"
+      },
+      {
+        "hash": "7b1b6bab",
+        "text": "５こから２こわたす",
+        "reading": "ごこから にこ わたす",
+        "lang": "ja",
+        "from": 34.25,
+        "to": 36.4,
+        "duration": 2.15,
+        "sha256": "a548b12b2d69e922e7862c6fa8f8debe7536a5cb40a2719cb54617eab3afda4a"
+      },
+      {
+        "hash": "ac20257a",
+        "text": "みずをあげたはな",
+        "reading": "みずを あげた はな",
+        "lang": "ja",
+        "from": 38.9,
+        "to": 40.36,
+        "duration": 1.46,
+        "sha256": "3b8fe87e6e9e5c5bcf41898642f8a7149fd9ed31faad89610e61cc459f80c09d"
+      },
+      {
+        "hash": "dc1bfda9",
+        "text": "おもり３こと１こ",
+        "reading": "おもり さんこと いっこ",
+        "lang": "ja",
+        "from": 41.97,
+        "to": 44.98,
+        "duration": 3.01,
+        "sha256": "9e580c19eabbe3f30906146d619b93ecd4158221b7cd3a07106391823f14d2f4"
+      }
+    ]
+  },
+  {
+    "batchId": 35,
+    "status": "imported",
+    "filename": "batch-35-source.wav",
+    "sourceSha256": "50d67288f940773102f1cb9092b10e7203aa68b9fcb7cb4010b10a275367e5af",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 39.08,
+    "peak": 27262,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "3046caaa",
+        "text": "かぜとはね",
+        "reading": "かぜと はね",
+        "lang": "ja",
+        "from": 0.24,
+        "to": 1.45,
+        "duration": 1.21,
+        "sha256": "ba13febad13cb008f9573a847fb112f79ab32e1c06fc52875d0f7314d30be530"
+      },
+      {
+        "hash": "c559c7b8",
+        "text": "ふたつのはなをくらべる",
+        "reading": "ふたつの はなを くらべる",
+        "lang": "ja",
+        "from": 3.89,
+        "to": 5.98,
+        "duration": 2.09,
+        "sha256": "71b48e99c4b12b4603be47ce901f5de402d283df62e6b9eff664a1242f6e7a08"
+      },
+      {
+        "hash": "c1d2aa15",
+        "text": "しゅうかくしてとどける",
+        "reading": "しゅうかくして とどける",
+        "lang": "ja",
+        "from": 8.11,
+        "to": 10.24,
+        "duration": 2.13,
+        "sha256": "2b668127d3c1d536887c40138102a9f6a1e05a08bf075ec4317f514d26e2b3af"
+      },
+      {
+        "hash": "94b96461",
+        "text": "10こを３ことのこりに",
+        "reading": "じゅっこを さんこと のこりに",
+        "lang": "ja",
+        "from": 12.14,
+        "to": 14.82,
+        "duration": 2.68,
+        "sha256": "d424e77d97fd975f84be00b99d99a9d039fbb1356a2814b0bdf83c6a9a84f52c"
+      },
+      {
+        "hash": "92edd1de",
+        "text": "えのちずのみち",
+        "reading": "えの ちずの みち",
+        "lang": "ja",
+        "from": 16.88,
+        "to": 18.44,
+        "duration": 1.56,
+        "sha256": "e6198b5f5f8a1b4fe4c1e936b650c8572d0122bbed09afecd40fd242b224ed3e"
+      },
+      {
+        "hash": "b63d9e5c",
+        "text": "おてつだいのえをならべる",
+        "reading": "おてつだいの えを ならべる",
+        "lang": "ja",
+        "from": 20.55,
+        "to": 22.55,
+        "duration": 2,
+        "sha256": "1cae3cbb575aaeb340380159471d18c5f74af7b60986717ff3e997ad3c23ddd9"
+      },
+      {
+        "hash": "c508c353",
+        "text": "じゅんび→はし→テント",
+        "reading": "じゅんび→はし→テント",
+        "lang": "ja",
+        "from": 24.45,
+        "to": 26.99,
+        "duration": 2.54,
+        "sha256": "1319527b2a88c9ff4cbbdeb2e6f7274efbbdccf2d1fa542f984334ac42be66e9"
+      },
+      {
+        "hash": "c9fb9e52",
+        "text": "２かしょへわけてはこぶ",
+        "reading": "にかしょへ わけて はこぶ",
+        "lang": "ja",
+        "from": 29.02,
+        "to": 30.96,
+        "duration": 1.94,
+        "sha256": "380a835cbdedf3f7d109cab2f396bb7a89d20399ebfef15aa04a18afd4e019f8"
+      },
+      {
+        "hash": "e450d514",
+        "text": "５にんとパン３こ",
+        "reading": "ごにんと パンさんこ",
+        "lang": "ja",
+        "from": 32.83,
+        "to": 34.86,
+        "duration": 2.03,
+        "sha256": "379098ea66196bbb8370d365bc268437683124f3fb639a3ad97244b8bfae801c"
+      },
+      {
+        "hash": "5d8ade50",
+        "text": "みんながとおれるならべかた",
+        "reading": "みんなが とおれる ならべかた",
+        "lang": "ja",
+        "from": 36.73,
+        "to": 38.84,
+        "duration": 2.11,
+        "sha256": "cc3988170b368a8650c2d3ddc9dfcdb7500e44e7df0789809db8fbeb287f5089"
+      }
+    ]
+  },
+  {
+    "batchId": 36,
+    "status": "imported",
+    "filename": "batch-36-source.wav",
+    "sourceSha256": "9129ae797a4eda4ca32f32eac90a2b002e221dc55ee989dc754fcfcf96c79279",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 35.96,
+    "peak": 26187,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "8a44c1f0",
+        "text": "にんずうとおなじいす",
+        "reading": "にんずうと おなじ いす",
+        "lang": "ja",
+        "from": 0.15,
+        "to": 2.27,
+        "duration": 2.12,
+        "sha256": "283ca5481a8d689bcccec64c363aea868253f2a955f8c3d086410026a9c05228"
+      },
+      {
+        "hash": "14764dc0",
+        "text": "じぶんのおまつり",
+        "reading": "じぶんの おまつり",
+        "lang": "ja",
+        "from": 4.78,
+        "to": 6.45,
+        "duration": 1.67,
+        "sha256": "07b932bb2582881c7ead99145ed4a2a08c4cc2d73a0d2ec348b5005a9cbaa5be"
+      },
+      {
+        "hash": "271f092d",
+        "text": "みんなでかたづける",
+        "reading": "みんなで かたづける",
+        "lang": "ja",
+        "from": 8.83,
+        "to": 10.46,
+        "duration": 1.63,
+        "sha256": "8c1fc3e740d6f700221b0e0cc473c58e05b884508b4b73a952acd6d1b3670965"
+      },
+      {
+        "hash": "6877c463",
+        "text": "だいよんのしま。",
+        "reading": "だいよんの しま。",
+        "lang": "ja",
+        "from": 12.59,
+        "to": 13.96,
+        "duration": 1.37,
+        "sha256": "b7d3c21e3d9237e1c7ef996c9620ffc367fbaf30d3cb3a7f182e31e86154155b"
+      },
+      {
+        "hash": "7c1bc642",
+        "text": "かたちをあわせて、つくってみよう。",
+        "reading": "かたちを あわせて、つくって みよう。",
+        "lang": "ja",
+        "from": 15.95,
+        "to": 18.11,
+        "duration": 2.16,
+        "sha256": "a46de32114dfd31f7e72a21508aa286204ba684d75464b8227e6d27c699575a3"
+      },
+      {
+        "hash": "0567205c",
+        "text": "だいごのしま。",
+        "reading": "だいごの しま。",
+        "lang": "ja",
+        "from": 19.79,
+        "to": 21.08,
+        "duration": 1.29,
+        "sha256": "a5d38167d0d4d2d2516f3479b833caa5717afd9c2f91b4854f80bb7afe4c8b3d"
+      },
+      {
+        "hash": "22bbc9c7",
+        "text": "おかいものと、わけるおてつだいをしよう。",
+        "reading": "おかいものと、わける おてつだいを しよう。",
+        "lang": "ja",
+        "from": 22.92,
+        "to": 25.88,
+        "duration": 2.96,
+        "sha256": "44145d7c238f45714545161e829f9dc2f4e63ebbb3642e53b0db2ef18e38b0af"
+      },
+      {
+        "hash": "b8317f96",
+        "text": "だいろくのしま。",
+        "reading": "だいろくの しま。",
+        "lang": "ja",
+        "from": 27.39,
+        "to": 28.71,
+        "duration": 1.32,
+        "sha256": "b8ddb8a05f79a4eb6fad7eff90858ab67efd9e97e5e3501012bb4c4b80897039"
+      },
+      {
+        "hash": "f45d8cb3",
+        "text": "うみのそこにきたよ。",
+        "reading": "うみの そこに きたよ。",
+        "lang": "ja",
+        "from": 30.51,
+        "to": 32,
+        "duration": 1.49,
+        "sha256": "f8da47b7011e796ef30835ab263c537743955cd7cdeac593f3f043236004dce7"
+      },
+      {
+        "hash": "0aa4761f",
+        "text": "さかなやさんごをみつけよう。",
+        "reading": "さかなや さんごを みつけよう。",
+        "lang": "ja",
+        "from": 33.71,
+        "to": 35.73,
+        "duration": 2.02,
+        "sha256": "1b65e84294102680f5dbc06dc4347943f21a16f5cbea0039d7ce594cfb72644e"
+      }
+    ]
+  },
+  {
+    "batchId": 37,
+    "status": "imported",
+    "filename": "batch-37-source.wav",
+    "sourceSha256": "57d467aaf92dac15a1571d43d68215c537ba08003a68fda5f9aa0ad131a28c7a",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 17.84,
+    "peak": 26726,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "436ea966",
+        "text": "だいななのしま。",
+        "reading": "だいななの しま。",
+        "lang": "ja",
+        "from": 0.28,
+        "to": 1.79,
+        "duration": 1.51,
+        "sha256": "ac3aff0dcf171861c9340103842b9f429d9ceba6fe3be8c8a714b953f1ccbe6e"
+      },
+      {
+        "hash": "530b011b",
+        "text": "くものうえをたんけんしよう。",
+        "reading": "くもの うえを たんけんしよう。",
+        "lang": "ja",
+        "from": 4.02,
+        "to": 6.01,
+        "duration": 1.99,
+        "sha256": "5f22cc1d3a2c4bf42968218fb03b7235d791e95761f1541a2741641ee13e3fe3"
+      },
+      {
+        "hash": "4cfbf1b3",
+        "text": "みちとはしをたどってね。",
+        "reading": "みちと はしを たどってね。",
+        "lang": "ja",
+        "from": 7.77,
+        "to": 9.59,
+        "duration": 1.82,
+        "sha256": "b855935b3827bfa1f7fd25c125daae7676a6e8ad29972e48c2e8282ebd4838d4"
+      },
+      {
+        "hash": "985f85f6",
+        "text": "だいはちのしま。",
+        "reading": "だいはちの しま。",
+        "lang": "ja",
+        "from": 11.31,
+        "to": 12.66,
+        "duration": 1.35,
+        "sha256": "23139c81d95dc87528f44eb53d42db028dfc3f7ba176553fb4e8fd25ed8fc830"
+      },
+      {
+        "hash": "8950ef26",
+        "text": "みんなのおまつりを、じぶんでじゅんびしよう。",
+        "reading": "みんなの おまつりを、じぶんで じゅんびしよう。",
+        "lang": "ja",
+        "from": 14.51,
+        "to": 17.67,
+        "duration": 3.16,
+        "sha256": "d97f6d2e5628b6c6737355252c9f684cc1700fb9e85460d9601f60384be3e98a"
+      }
+    ]
+  },
+  {
+    "batchId": 38,
+    "status": "imported",
+    "filename": "batch-38-source.wav",
+    "sourceSha256": "810ce683181910f360380bd4414533c5668f3ab33bc49510b5b650d5d2a17ec6",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 45.28,
+    "peak": 26818,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "10bc2abf",
+        "text": "apple",
+        "reading": "apple",
+        "lang": "en",
+        "from": 0.18,
+        "to": 0.87,
+        "duration": 0.69,
+        "sha256": "34fff09e1289a807cb8e93fbe65305faaa69b894211843a184a631fb597ffc71"
+      },
+      {
+        "hash": "7ff24232",
+        "text": "Thankyou",
+        "reading": "Thank you",
+        "lang": "en",
+        "from": 5.8,
+        "to": 6.67,
+        "duration": 0.87,
+        "sha256": "d10a1491a60ab18dc70192f7a90b1d14b1b4a253aab4054bf03ee3af1633fca3"
+      },
+      {
+        "hash": "cf77833a",
+        "text": "Ilikeit",
+        "reading": "I like it",
+        "lang": "en",
+        "from": 10.75,
+        "to": 11.71,
+        "duration": 0.96,
+        "sha256": "b2d89d4d7188d8c8479050d4abd346053cdddd804f082263ccc56e358948cd24"
+      },
+      {
+        "hash": "c40bf6cc",
+        "text": "A",
+        "reading": "A",
+        "lang": "en",
+        "from": 15.93,
+        "to": 16.63,
+        "duration": 0.7,
+        "sha256": "74aeee8e56ce7a70f66afa921031fe619fa00f483ea532045dcd60659ad12f06"
+      },
+      {
+        "hash": "c70bfb85",
+        "text": "B",
+        "reading": "B",
+        "lang": "en",
+        "from": 20.61,
+        "to": 21.43,
+        "duration": 0.82,
+        "sha256": "35ec19c77b77f92da284260ab224da3f95097c8fe6a43f4175ddc186bab442f9"
+      },
+      {
+        "hash": "c60bf9f2",
+        "text": "C",
+        "reading": "C",
+        "lang": "en",
+        "from": 25.25,
+        "to": 26.04,
+        "duration": 0.79,
+        "sha256": "b81bf8607aeb384fe1b238818cdafd663fc63e494d8cfa5620f1c9814bf60359"
+      },
+      {
+        "hash": "c10bf213",
+        "text": "D",
+        "reading": "D",
+        "lang": "en",
+        "from": 29.84,
+        "to": 30.57,
+        "duration": 0.73,
+        "sha256": "6b41b5b9f3b61f554be00290411125e18f5955e7b08089f7294995608a53456f"
+      },
+      {
+        "hash": "c00bf080",
+        "text": "E",
+        "reading": "E",
+        "lang": "en",
+        "from": 34.73,
+        "to": 35.34,
+        "duration": 0.61,
+        "sha256": "b302d158b5951fb6868d0ea85e08b1599392d6e3d4da9bb0ea8f90ec57e1fa7d"
+      },
+      {
+        "hash": "06745c07",
+        "text": "cat",
+        "reading": "cat",
+        "lang": "en",
+        "from": 39.33,
+        "to": 39.94,
+        "duration": 0.61,
+        "sha256": "0303d84322597f326235e2b905be5adbf800d721338e7a202285b7e73e1e53a2"
+      },
+      {
+        "hash": "e668bd09",
+        "text": "dog",
+        "reading": "dog",
+        "lang": "en",
+        "from": 44.19,
+        "to": 45.03,
+        "duration": 0.84,
+        "sha256": "e4421995585a75e1d55d0b092f7cf015bdf78952a05a3003ea232b19cf1d638f"
+      }
+    ]
+  },
+  {
+    "batchId": 39,
+    "status": "imported",
+    "filename": "batch-39-source.wav",
+    "sourceSha256": "0e150b611582ffe4f5b8c5f8518b45bd0ac4a2c65629d49622e0272a0e1deb37",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 36.72,
+    "peak": 28157,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "afad8963",
+        "text": "fish",
+        "reading": "fish",
+        "lang": "en",
+        "from": 0.35,
+        "to": 1.07,
+        "duration": 0.72,
+        "sha256": "d5e8918238fad7ea46de691a28f67cef1853be263c259fce7baeef1cba0d164a"
+      },
+      {
+        "hash": "977128b2",
+        "text": "bird",
+        "reading": "bird",
+        "lang": "en",
+        "from": 3.94,
+        "to": 4.79,
+        "duration": 0.85,
+        "sha256": "51040cd1d3a9bfc29f559f0136824b3760a879ad573aedf8e5addfac61951b9e"
+      },
+      {
+        "hash": "40f480dc",
+        "text": "red",
+        "reading": "red",
+        "lang": "en",
+        "from": 7.44,
+        "to": 8.22,
+        "duration": 0.78,
+        "sha256": "84c0e870662f697858b8ace8cb479b23da1c248bfdafc4964dfc1f339746e258"
+      },
+      {
+        "hash": "82fbf5cd",
+        "text": "blue",
+        "reading": "blue",
+        "lang": "en",
+        "from": 10.82,
+        "to": 11.73,
+        "duration": 0.91,
+        "sha256": "7f768aec2e8f03d0a2615eb782a217187b78b90380af2036fbe04ebdb5783b74"
+      },
+      {
+        "hash": "05025085",
+        "text": "triangle",
+        "reading": "triangle",
+        "lang": "en",
+        "from": 14.65,
+        "to": 15.73,
+        "duration": 1.08,
+        "sha256": "7d5f2ba440c8969d41de24ac90e6f58db7538aa53bb8f68484405fa92fffd363"
+      },
+      {
+        "hash": "0b41f02c",
+        "text": "red,blue",
+        "reading": "red, blue",
+        "lang": "en",
+        "from": 18.55,
+        "to": 19.75,
+        "duration": 1.2,
+        "sha256": "2ce31f492a0b1881a7b212b27da3a218209479b1640956547b7801bd5f2c1712"
+      },
+      {
+        "hash": "56893ba4",
+        "text": "redapple",
+        "reading": "red apple",
+        "lang": "en",
+        "from": 22.65,
+        "to": 23.65,
+        "duration": 1,
+        "sha256": "b4242fbdf787bf3c3ce9d4e0deed2490a361092c78ef9270494df30c344bc36e"
+      },
+      {
+        "hash": "bd6788dc",
+        "text": "watertheflower",
+        "reading": "water the flower",
+        "lang": "en",
+        "from": 26.57,
+        "to": 27.86,
+        "duration": 1.29,
+        "sha256": "7fd21d9e0d1b35a656d97f66b14e820af67b43b3bbc5cd875d991bee6ce0bb3f"
+      },
+      {
+        "hash": "81417a23",
+        "text": "heavyandlight",
+        "reading": "heavy and light",
+        "lang": "en",
+        "from": 30.71,
+        "to": 32.34,
+        "duration": 1.63,
+        "sha256": "a6d326f386ea235986098e806b7b69a8b9c93ba8407d1a83dc7d2a0d0d106c64"
+      },
+      {
+        "hash": "089d11a8",
+        "text": "Gotothebridge",
+        "reading": "Go to the bridge",
+        "lang": "en",
+        "from": 35.23,
+        "to": 36.53,
+        "duration": 1.3,
+        "sha256": "d6846141027f4824688ec576da9be4ac3183bbc90072e75a22b532317791244d"
+      }
+    ]
+  },
+  {
+    "batchId": 40,
+    "status": "imported",
+    "filename": "batch-40-source.wav",
+    "sourceSha256": "fba78abdb2c9edbc5313c7fcff1799e5054505a4e72fda38a9069872ff10914b",
+    "recipe": "45dbd928e30a229b11463d1162eb5c45f23656f140b02d442e6a0b63c3a04985",
+    "duration": 49.56,
+    "peak": 27770,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "865030cb",
+        "text": "いっしょにあそぼう！",
+        "reading": "いっしょに あそぼう！",
+        "from": 0.21,
+        "to": 1.45,
+        "duration": 1.24,
+        "sha256": "57afb8dde31f805a4a28950b7c88f9214368a95be95acdf360f85ab5b21b4995"
+      },
+      {
+        "hash": "69c44c98",
+        "text": "ひよこにりんごをふたつとどけたいんだ。",
+        "reading": "ひよこに りんごを ふたつ とどけたいんだ。",
+        "from": 4.89,
+        "to": 8.19,
+        "duration": 3.3,
+        "sha256": "9a0b8f7a09604d295d2d971568127b5648ffde47063f802931f472a0fe9290de"
+      },
+      {
+        "hash": "722606aa",
+        "text": "いっしょにかぞえておしえてね。",
+        "reading": "いっしょに かぞえて おしえてね。",
+        "from": 11.41,
+        "to": 13.83,
+        "duration": 2.42,
+        "sha256": "1c3e034e21587608339915d820d1a7291cf4aedf7ff5d1940c320a22bba5d99c"
+      },
+      {
+        "hash": "3bf85c24",
+        "text": "ふうせんがまっているよ。",
+        "reading": "ふうせんが まっているよ。",
+        "from": 17.26,
+        "to": 19.13,
+        "duration": 1.87,
+        "sha256": "d759c07ca30c4a02f426e871895ccc3ab936d8546c826ccf44a980f9fb4bc768"
+      },
+      {
+        "hash": "fdf7a1a8",
+        "text": "あかいふうせんをみつけてね。",
+        "reading": "あかい ふうせんを みつけてね。",
+        "from": 21.68,
+        "to": 23.81,
+        "duration": 2.13,
+        "sha256": "828cc79dbead6167f6d4d88b9c68f9f38846b53201540a602125cebb068d1509"
+      },
+      {
+        "hash": "ad663e20",
+        "text": "まるいものをいっしょにさがそう。",
+        "reading": "まるい ものを いっしょに さがそう。",
+        "from": 26.9,
+        "to": 29.32,
+        "duration": 2.42,
+        "sha256": "8b80f9c810954605574e55205494d09183842be1be1043dc03fc4cd8db1dc8c0"
+      },
+      {
+        "hash": "91f72109",
+        "text": "どうぶつのこえをきいてだれかおしえてね。",
+        "reading": "どうぶつの こえを きいて だれか おしえてね。",
+        "from": 32.6,
+        "to": 35.92,
+        "duration": 3.32,
+        "sha256": "0512acccb7f19bb8c0f12b56d1c72357538bf7e5da3f08c054d251fff05985ce"
+      },
+      {
+        "hash": "8f4ef9d2",
+        "text": "おおきなきのりんごがおちたよ。",
+        "reading": "おおきな きの りんごが おちたよ。",
+        "from": 38.67,
+        "to": 40.82,
+        "duration": 2.15,
+        "sha256": "b1eb256ce1a88c27b4745f0626fa70a59c3dae8c72ad14d22b14eb1d1b9fc285"
+      },
+      {
+        "hash": "ee628e07",
+        "text": "かごへいれてね。",
+        "reading": "かごへ いれてね。",
+        "from": 44.11,
+        "to": 45.33,
+        "duration": 1.22,
+        "sha256": "49aaf7db43d728c24b208a08c3e2f1401fd2eef92c720a31a7032d2b86b7ef31"
+      },
+      {
+        "hash": "5f74fd28",
+        "text": "きのりんごがすき？",
+        "reading": "きの りんごが すき？",
+        "from": 47.89,
+        "to": 49.26,
+        "duration": 1.37,
+        "sha256": "3fe84f29224ac0b74efbedaff8bdf27cd620adaf75dd3dae49229581281746e3"
+      }
+    ]
+  },
+  {
+    "batchId": 41,
+    "status": "imported",
+    "filename": "batch-41-source.wav",
+    "sourceSha256": "19ccc8cae603ffff310d009e1f8754b9eeaa0bb170405f45500c7ec61280dac9",
+    "recipe": "0712233e0264506b612fa5bd7f60c1c29e496d293aef6a13aa03e206148437fd",
+    "duration": 64.72,
+    "peak": 26436,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "214842e5",
+        "text": "がっこうのかごにあかいものをあつめよう。",
+        "reading": "がっこうの かごに あかい ものを あつめよう。",
+        "from": 0.12,
+        "to": 3.4,
+        "duration": 3.28,
+        "sha256": "05981b1172935cacbd38289e5bb1a14e4c2d195e65f6de29718e9ac736847225"
+      },
+      {
+        "hash": "b28733c8",
+        "text": "がっこうのカードをみておなじもじをさがそう。",
+        "reading": "がっこうの カードを みて おなじ もじを さがそう。",
+        "from": 7.03,
+        "to": 10.87,
+        "duration": 3.84,
+        "sha256": "fa6b41ac5220562a4ff8771e09692ba4245cdd984d84564e4388bb4e6d55ee7f"
+      },
+      {
+        "hash": "17c56e55",
+        "text": "かえるさんにはっぱをみっつとどけたいんだ。",
+        "reading": "かえるさんに はっぱを みっつ とどけたいんだ。",
+        "from": 14.95,
+        "to": 18.8,
+        "duration": 3.85,
+        "sha256": "9efc57aacbdfb952b9c5da693aa3407eb789d4cba33fa871528fa3ee3ccf4c74"
+      },
+      {
+        "hash": "ac63d470",
+        "text": "あかいはなをえらんでおうちへとどけてね。",
+        "reading": "あかい はなを えらんで おうちへ とどけてね。",
+        "from": 22.32,
+        "to": 25.54,
+        "duration": 3.22,
+        "sha256": "b92a236740b931c099c6d20a834a878f537d1964167374921d6de24e132ea9e7"
+      },
+      {
+        "hash": "87353861",
+        "text": "パンやさんのりんご、えいごではなんていうかな。",
+        "reading": "パンやさんの りんご、えいごでは なんて いうかな。",
+        "from": 28.91,
+        "to": 32.71,
+        "duration": 3.8,
+        "sha256": "3df4dd3efe7a11ebf4383105bf5a8a4c1170a5ad792a2b98891046e29e0868a6"
+      },
+      {
+        "hash": "3d8aaa00",
+        "text": "おうちのやねとかべをくみたてておしえてね。",
+        "reading": "おうちの やねと かべを くみたてて おしえてね。",
+        "from": 36.01,
+        "to": 39.24,
+        "duration": 3.23,
+        "sha256": "7d70f6e58665c85a8b748c75305a661cdb47638891440e5a46ed4956bd940965"
+      },
+      {
+        "hash": "e305fb73",
+        "text": "こうさくのつくえであかとあおをならべよう。",
+        "reading": "こうさくの つくえで あかと あおを ならべよう。",
+        "from": 42.31,
+        "to": 46.13,
+        "duration": 3.82,
+        "sha256": "9e1eef49a3bacddc9fa4725dcbc97164a9f8e2ae8eac202273ec3abe971ca986"
+      },
+      {
+        "hash": "bf74953d",
+        "text": "こうさくのみほんとおなじかずをそろえてね。",
+        "reading": "こうさくの みほんと おなじ かずを そろえてね。",
+        "from": 48.91,
+        "to": 52.29,
+        "duration": 3.38,
+        "sha256": "61b05b9715ea5b386838044f37077b58f77fbab542bdcebf69eaafb66cb1574a"
+      },
+      {
+        "hash": "6540dfa8",
+        "text": "おみせのおやつをふたりにわけるしかたをおしえてね。",
+        "reading": "おみせの おやつを ふたりに わける しかたを おしえてね。",
+        "from": 54.77,
+        "to": 58.54,
+        "duration": 3.77,
+        "sha256": "0766980fc04d5349f14dd77ae8bad4e5c139e0b8f6ee7752f0dd865f170b8d4f"
+      },
+      {
+        "hash": "97810e71",
+        "text": "おみせのえのリストをみておかいものをしよう。",
+        "reading": "おみせの えの リストを みて おかいものを しよう。",
+        "from": 61.17,
+        "to": 64.57,
+        "duration": 3.4,
+        "sha256": "bad19bad2949afe9a8d88946078001f4425fcd995cbdc3de21f862249287b885"
+      }
+    ]
+  },
+  {
+    "batchId": 42,
+    "status": "imported",
+    "filename": "batch-42-source.wav",
+    "sourceSha256": "adca4890e9e963879d66cb611358d54d2338daa1cc52a6f98f2d757359ec2432",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 68.04,
+    "peak": 26882,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "27f29ffe",
+        "text": "おきゃくさんへひとつずつとどけたいんだ。",
+        "reading": "おきゃくさんへ ひとつずつ とどけたいんだ。",
+        "from": 0.11,
+        "to": 2.95,
+        "duration": 2.84,
+        "sha256": "407d17858197295f3e0da1663fe084d60e674a2f4e273f3011141cb6e669594f"
+      },
+      {
+        "hash": "b932e5b2",
+        "text": "かだんのはなにみずをあげて、かわるようすをみよう。",
+        "reading": "かだんの はなに みずを あげて、かわる ようすを みよう。",
+        "from": 6.89,
+        "to": 10.31,
+        "duration": 3.42,
+        "sha256": "7547769e5a153791dcc0a7a724645b770a82315318e15087637a135d2e310534"
+      },
+      {
+        "hash": "0504fa7f",
+        "text": "じっけんのおもりをくらべておしえてね。",
+        "reading": "じっけんの おもりを くらべて おしえてね。",
+        "from": 14.45,
+        "to": 17.22,
+        "duration": 2.77,
+        "sha256": "db91beaac1ec4631a5e2172aa6b8ebb3b07da22c258bcbe1afbf45b7224b8f14"
+      },
+      {
+        "hash": "11f552f8",
+        "text": "はたけのやさいをとってとどけよう。",
+        "reading": "はたけの やさいを とって とどけよう。",
+        "from": 21.25,
+        "to": 23.79,
+        "duration": 2.54,
+        "sha256": "614e1eab924535866231f0f7027cbcaea1041bd269f4f8841a1f86fead432ea1"
+      },
+      {
+        "hash": "e5bbe7bc",
+        "text": "そらのはしをとおるみちをえのちずでさがそう。",
+        "reading": "そらの はしを とおる みちを えの ちずで さがそう。",
+        "from": 27.97,
+        "to": 31.33,
+        "duration": 3.36,
+        "sha256": "68d3086648d2e1b476901489b34200d69f7e89abbcfcffb9657bb004c024238f"
+      },
+      {
+        "hash": "9c901961",
+        "text": "テントへはこぶにもつをふたつにわけてね。",
+        "reading": "テントへ はこぶ にもつを ふたつに わけてね。",
+        "from": 35.45,
+        "to": 38.58,
+        "duration": 3.13,
+        "sha256": "4ea230cde26d7425a0aaf9fc312646a10849c59063533b97d78c436ecccafc49"
+      },
+      {
+        "hash": "1d0a9787",
+        "text": "そらのぼうけんをえのじゅんばんでおしえてね。",
+        "reading": "そらの ぼうけんを えの じゅんばんで おしえてね。",
+        "from": 43.3,
+        "to": 46.47,
+        "duration": 3.17,
+        "sha256": "c4fbc3c355ef318a87e972521f9746dac7a1657254d57769d7e1cf3d42e1e1e0"
+      },
+      {
+        "hash": "11a24eab",
+        "text": "おまつりのじゅんびをして、みんなにきもちをはなそう。",
+        "reading": "おまつりの じゅんびを して、みんなに きもちを はなそう。",
+        "from": 51.15,
+        "to": 54.63,
+        "duration": 3.48,
+        "sha256": "fe9942fee793ae2fd965157de17ebab5b65c1b09d791a13c95c976a78b34a62f"
+      },
+      {
+        "hash": "1a785da8",
+        "text": "あとでかざりをみにこられるよ。",
+        "reading": "あとで かざりを みに こられるよ。",
+        "from": 58.64,
+        "to": 60.79,
+        "duration": 2.15,
+        "sha256": "0c2213a40d2c4db0f20154a632faa9eedac001071b82a2d82bf598bebe1b0253"
+      },
+      {
+        "hash": "a73f0fff",
+        "text": "みんながとおれるいすのならべかたをおしえてね。",
+        "reading": "みんなが とおれる いすの ならべかたを おしえてね。",
+        "from": 64.86,
+        "to": 67.86,
+        "duration": 3,
+        "sha256": "2c78462213d61434a75924f89a25b75619fb9334ef920a51b1548bfa9fd5c1e4"
+      }
+    ]
+  },
+  {
+    "batchId": 43,
+    "status": "imported",
+    "filename": "batch-43-source.wav",
+    "sourceSha256": "a60a017b4752c02442ae7db2c8280fc1aaff6450392acffb7b29cc631275e7a2",
+    "recipe": "732322c128ed67841ef5aa42c7cd04ffcd74a61b2d17d710cd502b713d62930d",
+    "duration": 9.76,
+    "peak": 25051,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "8154178d",
+        "text": "あとでならべたいすをみにこられるよ。",
+        "reading": "あとで ならべた いすを みに こられるよ。",
+        "from": 0.13,
+        "to": 3.26,
+        "duration": 3.13,
+        "sha256": "553a7e9e6a22632cc045d8f7f29df57af04580bc3d9d07b39691a50ac003a40c"
+      },
+      {
+        "hash": "938012e6",
+        "text": "おまつりのみんなとおなじかずのいすをあつめよう。",
+        "reading": "おまつりの みんなと おなじ かずの いすを あつめよう。",
+        "from": 5.65,
+        "to": 9.55,
+        "duration": 3.9,
+        "sha256": "3f337e08a3fed2f1bafbd5789586749c93056737d757ecbe030cf21ba306cbcf"
+      }
+    ]
+  },
+  {
+    "batchId": 44,
+    "status": "imported",
+    "filename": "batch-44-source.wav",
+    "sourceSha256": "8670c1ddae52124eed352002d3e1c073510f966782408975d1dc97c6d9d0bae0",
+    "recipe": "74ad3dd9791d24b72c7f0ac67fdb4cad57320606bbed28d3875b43ed1931d46d",
+    "duration": 16.04,
+    "peak": 26449,
+    "saturated": 0,
+    "clips": [
+      {
+        "text": "まず、みほんをみてね。",
+        "reading": "まず、ミホンを みてね。",
+        "reason": "原本と個別音声をsmallとbaseで補助認識し、ともに日本と認識したため、読みをカタカナで明示して録り直す。ゲームの文面と音声キーは保持する。",
+        "hash": "80c5cdd9",
+        "from": 0.15,
+        "to": 2.3,
+        "duration": 2.15,
+        "sha256": "7effd478a97f7b8c1b2a8a9c354cd383d621fc096877d60ca1dde1bbe393bd6e"
+      },
+      {
+        "text": "みほんをみて、もういちどためしてね。",
+        "reading": "ミホンを みて、もういちど ためしてね。",
+        "reason": "原本と個別音声をsmallとbaseで補助認識し、ともに日本と認識したため、読みをカタカナで明示して録り直す。ゲームの文面と音声キーは保持する。",
+        "hash": "afab5722",
+        "from": 12.81,
+        "to": 15.85,
+        "duration": 3.04,
+        "sha256": "122e6957e819e6a3b472dbda919a11177b1dee3e5f9816235bd45c8cc7a4a182"
+      }
+    ]
+  },
+  {
+    "batchId": 45,
+    "status": "imported",
+    "filename": "batch-45-source.wav",
+    "sourceSha256": "879f2828e91bd13ff2751b0c4fc3479eee7ede25a226814b730ba5f4993dbf02",
+    "recipe": "7dea6b39eeb0abe80a974ff8c499035f73c984ce43d637197c9d64b3421d6a83",
+    "duration": 27.16,
+    "peak": 26562,
+    "saturated": 0,
+    "clips": [
+      {
+        "hash": "80c5cdd9",
+        "text": "まず、みほんをみてね。",
+        "reading": "まず、見本を、見てね。",
+        "lang": "ja",
+        "reason": "補助認識の原本と別モデル比較で読みの疑義があり、漢字と間の指定で再生成する。ゲームの文面とキーは保持。",
+        "from": 0.23,
+        "to": 2.55,
+        "duration": 2.32,
+        "sha256": "83c33d502349b3da9e9ca29e154d69307ac922d4794417de668056dc08b3443e"
+      },
+      {
+        "hash": "afab5722",
+        "text": "みほんをみて、もういちどためしてね。",
+        "reading": "見本を見て、もう一度ためしてね。",
+        "lang": "ja",
+        "reason": "補助認識の原本と別モデル比較で読みの疑義があり、漢字と間の指定で再生成する。ゲームの文面とキーは保持。",
+        "from": 5.91,
+        "to": 9.07,
+        "duration": 3.16,
+        "sha256": "eebaebdb33b4b22980adb1e8d6da621e83ed9a0612ab0b3b47054ad2546c896f"
+      },
+      {
+        "hash": "82b8edb7",
+        "text": "みほんどおりにおさらをならべる",
+        "reading": "見本どおりに、おさらをならべる。",
+        "lang": "ja",
+        "reason": "補助認識の原本と別モデル比較で読みの疑義があり、漢字と間の指定で再生成する。ゲームの文面とキーは保持。",
+        "from": 12.4,
+        "to": 15.21,
+        "duration": 2.81,
+        "sha256": "f0a36fe4add6703b2dd9a894a0ef6c894129db6858c63376a0dceeea53272061"
+      },
+      {
+        "hash": "af1f3332",
+        "text": "りんごとapple",
+        "reading": "りんご と アップル",
+        "lang": "ja",
+        "reason": "補助認識の原本と別モデル比較で読みの疑義があり、漢字と間の指定で再生成する。ゲームの文面とキーは保持。",
+        "from": 18.79,
+        "to": 21.46,
+        "duration": 2.67,
+        "sha256": "a12597eae75b365c7ac0c939e1310976d0903adc5e7adc25ce116ebd2b1a16df"
+      },
+      {
+        "hash": "3d461412",
+        "text": "あかいはなを３ぼんとどける",
+        "reading": "あかい はなを、さんぼん、とどける。",
+        "lang": "ja",
+        "reason": "補助認識の原本と別モデル比較で読みの疑義があり、漢字と間の指定で再生成する。ゲームの文面とキーは保持。",
+        "from": 24.45,
+        "to": 26.9,
+        "duration": 2.45,
+        "sha256": "a0b5f820c55fbd74be083490bb0fc599b0f6aea7846c4fd4f35b35ddcfe7261f"
+      }
+    ]
   }
 ]

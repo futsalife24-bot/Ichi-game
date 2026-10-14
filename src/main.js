@@ -37,6 +37,8 @@ import { FOREST_ORIGIN, LEAF_HOST } from './adventure-state.js';
 import { setupSaveUI } from './save-ui.js';
 import { islandRules } from './island-rules.js';
 import { IslandLearning } from './island-learning.js';
+import { LearningInvitation } from './learning-invitation.js';
+import { LearningInvitationWorld } from './learning-invitation-world.js';
 import { LearningIsland, loadLearningIslandKit } from './learning-islands.js';
 import { LEARNING_ISLAND_LAYOUTS } from './learning-island-layout.js';
 import { islandArrivalLine } from './eight-island-lines.js';
@@ -157,22 +159,24 @@ const adventure = new Adventure({ scene, player, animals, forest, ui, audio, voi
   getPlace: () => place,
   onSail: () => visitSecond(),
   onReturn: () => leaveForest(),
-  canAct: () => mode === 'play' && !saveBlocked && !islandLoading && !forestLoading && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !help.focused && !harborBusy(),
+  canAct: () => mode === 'play' && !saveBlocked && !islandLoading && !forestLoading && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !invitation?.dialogOpen && !help.focused && !harborBusy(),
   onChange: () => {
     life.endFishing(); input.reset();
     refreshActivityInput();
   },
 });
 const harborErrands = new HarborErrands({ forest, player, save, persist, ui, audio, voice, effects,
-  canAct: () => mode === 'play' && place === 'forest' && !saveBlocked && !islandLoading && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !help.focused,
+  canAct: () => mode === 'play' && place === 'forest' && !saveBlocked && !islandLoading && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !invitation?.dialogOpen && !help.focused,
   beforeOpen: () => { adventure.stop(); harborPlay.cancel(); life.endFishing(); },
   onChange: () => { input.reset(); refreshActivityInput(); },
   onLeaf: () => { adventure.choose('leaf'); },
   onReturn: () => leaveForest(),
 });
+let invitation = null;
+let invitationOpening = false;
 const harborBusy = () => harborErrands.focused || harborErrands.modal;
 function refreshActivityInput() {
-  input.enabled = mode === 'play' && !islandLoading && !forestLoading && !adventure.modal && !harborErrands.modal && !help.modal && !learning.opened && !ui.panelOpen && !saveBlocked && !playTimer.paused && !homePaused && !transitioning;
+  input.enabled = mode === 'play' && !islandLoading && !forestLoading && !adventure.modal && !harborErrands.modal && !help.modal && !learning.opened && !invitation?.dialogOpen && !ui.panelOpen && !saveBlocked && !playTimer.paused && !homePaused && !transitioning;
   $('hud').classList.toggle('adventure-focus', adventure.focused || harborBusy());
   $('hud').classList.toggle('harbor-errand-focus', harborBusy());
   $('developerTools').classList.toggle('invisible', harborErrands.modal || adventure.modal);
@@ -181,18 +185,32 @@ $('btnAdventure').onclick = () => { if (place === 'forest') harborErrands.open()
 $('adventureHarbor').onclick = () => harborErrands.open();
 life.onWear = (id) => wear(CLOTHES[id].slot, id, false);
 const learning = new IslandLearning({ ui, audio, voice, voiceEnabled: () => save.voice,
-  canOpen: number => mode === 'play' && number === islandNumber() && !saveBlocked && !islandLoading && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !help.focused && !help.modal && !adventure.focused && !adventure.modal && !harborBusy(),
+  canOpen: number => mode === 'play' && number === islandNumber() && !saveBlocked && !islandLoading && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !help.focused && !help.modal && !adventure.focused && !adventure.modal && !harborBusy() && (!invitation?.dialogOpen || invitationOpening),
   onOpen: () => { quests.stop();help.stop();endAllFishing();voice.stop();player.setTarget(null);input.reset();refreshActivityInput(); },
-  onClose: () => {if(place==='island'&&mode==='play'&&!transitioning&&!saveBlocked)help.start();refreshActivityInput();},
+  onClose: () => {invitation?.learningClosed();if(place==='island'&&mode==='play'&&!transitioning&&!saveBlocked)help.start();refreshActivityInput();},
+  onCompleted: result => invitation?.activityCompleted(result),
   getProgress: () => save.islandActivities,
   saveProgress: next => { const previous=save.islandActivities;save.islandActivities=next;if(!persist()){save.islandActivities=previous;return false;}return true; },
   onActivityState: activity => learningAreas.get(islandNumber())?.activityState(activity),
 });
+const invitationWorld = new LearningInvitationWorld({ scene, save: () => save });
+invitation = new LearningInvitation({ save, persist, learning: {
+  open: (...args) => { invitationOpening = true; try { return learning.open(...args); } finally { invitationOpening = false; } },
+  startActivity: (...args) => learning.startActivity(...args),
+  close: () => learning.close(),
+}, voice, voiceEnabled: () => save.voice, onFree: () => refreshActivityInput() });
 document.body.insertAdjacentHTML('beforeend', '<div id="islandActions"><button id="btnIslands" aria-label="しまを えらぶ">⛵<span>しま</span></button><button id="btnLearning" aria-label="ことばと かずで あそぶ">🔤<span>まなぶ</span></button><button id="btnTown" aria-label="くらしの ひろばへ いく">🏡<span>くらし</span></button></div>');
 $('btnIslands').onclick = () => { if (place === 'island') visitSecond(); else openIslands(); };
 $('btnLearning').onclick = () => learning.open(islandNumber());
 $('btnTown').onclick = () => place === 'town' ? visitForest() : visitTown();
 document.getElementById('islandActions').insertAdjacentHTML('beforeend','<button id="btnIslandHelp" aria-label="しまの おてつだい">🧺<span>おてつだい</span></button>');
+document.getElementById('islandActions').insertAdjacentHTML('beforeend','<button id="btnResidentTalk" class="hidden" aria-label="じゅうみんと はなす">🐤<span>はなす</span></button>');
+function talkToResident() {
+  if (!invitation.talk(Boolean(invitationWorld.nearResident(player.pos)))) return;
+  input.reset(); player.setTarget(null); voice.stop(); refreshActivityInput();
+}
+$('btnResidentTalk').onclick = talkToResident;
+invitation.bubble.onclick = talkToResident;
 $('btnIslandHelp').onclick = () => learning.open(islandNumber(),{help:true});
 $('helpReturn').onclick = () => learning.open(1,{help:true});
 $('helpReturn').textContent = '🧺 おてつだい';
@@ -206,6 +224,59 @@ let place = 'island'; // はちつの しま／がっこう／おうち
 let interiorFrom = 'second';
 const env = () => (place.startsWith('learning-') ? learningAreas.get(Number(place.slice(9))) : place === 'school' ? school : place === 'room' ? room : place === 'forest' ? forest : place === 'second' ? secondArea.world : place === 'town' ? townArea.world : world);
 const islandNumber = () => place.startsWith('learning-') ? Number(place.slice(9)) : place === 'island' ? 1 : (place === 'second' || (place === 'school' && interiorFrom === 'second')) ? 2 : 3;
+let invitationEnv = null;
+let invitationNumber = 0;
+let invitationDialogKnown = false;
+const invitationHead = new THREE.Vector3();
+function positionInvitationBubble() {
+  if (!invitation.visible || !invitationWorld.resident || invitation.dialogOpen) return;
+  const point = invitationHead.copy(invitationWorld.resident.position);
+  point.y += 1.35;
+  camera.updateMatrixWorld();
+  point.project(camera);
+  const width = window.innerWidth, height = window.innerHeight;
+  const anchor = { x: (point.x + 1) * width / 2, y: (1 - point.y) * height / 2,
+    visible: point.z > -1 && point.z < 1 && Math.abs(point.x) <= 1 && Math.abs(point.y) <= 1 };
+  const obstacles = ['pills','settings','questCard','placeLabel','sideBtns','joyZone','btnJump','islandActions']
+    .map(id => document.getElementById(id))
+    .filter(element => element && !element.hidden && !element.classList.contains('hidden') && element.getClientRects().length)
+    .map(element => element.getBoundingClientRect());
+  invitation.positionBubble(anchor, { width, height }, obstacles);
+}
+function syncInvitationDialog() {
+  if (invitationDialogKnown === invitation.dialogOpen) return;
+  invitationDialogKnown = invitation.dialogOpen;
+  input.reset(); player.setTarget(null); refreshActivityInput();
+}
+function pauseInvitation() {
+  invitation.stopOwnVoice();
+  invitation.update({ island: islandNumber(), ready: false, canShow: false, canSpeak: false, nearResident: false, now: 0 });
+  if (invitationEnv) invitationWorld.show(null, null);
+  invitationEnv = null; invitationNumber = 0;
+  $('btnResidentTalk').classList.add('hidden');
+}
+function updateInvitation(dt, now) {
+  const outdoor = ['island', 'second', 'town', 'forest'].includes(place) || place.startsWith('learning-');
+  const visual = mode === 'play' && outdoor && !saveBlocked && !islandLoading && !forestLoading && !transitioning && !playTimer.paused && !homePaused && !document.hidden && !developerMenuOpen();
+  if (!visual) { pauseInvitation(); return; }
+  const number = islandNumber(), area = env();
+  if (!area) { pauseInvitation(); return; }
+  if (invitationEnv !== area || invitationNumber !== number) {
+    invitationWorld.show(number, area);
+    invitationEnv = area; invitationNumber = number;
+  }
+  const near = invitationWorld.update(dt, now / 1000, player.pos);
+  invitation.residentName = invitationWorld.resident?.name;
+  invitation.residentIcon = invitationWorld.resident?.icon;
+  const ready = !help.focused && !help.modal && !adventure.focused && !adventure.modal && !harborBusy() && !learning.opened && !ui.panelOpen;
+  if (!ready) invitation.stopOwnVoice();
+  invitation.update({ island: number, ready, canShow: ready, canSpeak: ready && !invitation.dialogOpen && !voice.busy, nearResident: Boolean(near), now });
+  if (saveBlocked) { pauseInvitation(); return; }
+  positionInvitationBubble();
+  const button = $('btnResidentTalk');
+  button.classList.toggle('hidden', !near || !invitation.visible || invitation.dialogOpen);
+  if (near) button.firstChild.textContent = near.icon;
+}
 function endAllFishing() { life.endFishing(); secondArea?.life.endFishing(); townArea?.life.endFishing(); harborPlay.cancel(); }
 const areaPromises=new Map();
 async function prepareArea(number) {
@@ -229,7 +300,7 @@ async function prepareArea(number) {
   areaPromises.set(number,promise);return promise;
 }
 function openIslands() {
-  if (mode !== 'play' || saveBlocked || islandLoading || transitioning || homePaused || playTimer.paused || help.modal || adventure.modal || harborErrands.modal || learning.opened || ui.panelOpen) return;
+  if (mode !== 'play' || saveBlocked || islandLoading || transitioning || homePaused || playTimer.paused || help.modal || adventure.modal || harborErrands.modal || learning.opened || invitation.dialogOpen || ui.panelOpen) return;
   quests.stop(); help.stop(); adventure.stop(); harborErrands.stop(); endAllFishing(); voice.stop(); player.setTarget(null);
   openPanel({ title: 'どの しまへ いく？', onClose: () => { if (place === 'island' && mode === 'play' && !transitioning) help.start(); }, tabs: [{ id: 'islands', label: 'しまを えらぶ' }], grid: () => [
     { emoji: '🌼', name: 'だいいちの しま', note: 'あるく・あつめる・はじめの れんしゅう', state: 'on', onClick: () => { ui.closePanel(); returnFirst(); } },
@@ -242,12 +313,13 @@ function openIslands() {
 }
 function leaveArea() {
   quests.stop(); help.stop(); adventure.stop(); harborErrands.stop(); learning.close(); endAllFishing(); voice.stop();
+  pauseInvitation();
   school.exit(); room.exit(); secondRoot.visible = false; townRoot.visible = false; forest.group.visible = false;
   for(const area of learningAreas.values())area.group.visible=false;
   document.body.classList.remove('forest-place');
 }
 async function visitLearningIsland(number) {
-  if(!LEARNING_ISLAND_LAYOUTS[number] || mode!=='play' || saveBlocked || islandLoading || transitioning || homePaused || playTimer.paused || learning.opened || ui.panelOpen)return;
+  if(!LEARNING_ISLAND_LAYOUTS[number] || mode!=='play' || saveBlocked || islandLoading || transitioning || homePaused || playTimer.paused || learning.opened || invitation.dialogOpen || ui.panelOpen)return;
   islandLoading=true;input.reset();player.setTarget(null);refreshActivityInput();
   try {
     let area=learningAreas.get(number);
@@ -267,7 +339,7 @@ function returnFirst(instant = false) {
   if (instant) go(); else transition(go);
 }
 async function visitSecond() {
-  if (mode !== 'play' || saveBlocked || islandLoading || transitioning || homePaused || playTimer.paused) return;
+  if (mode !== 'play' || saveBlocked || islandLoading || transitioning || homePaused || playTimer.paused || invitation.dialogOpen) return;
   islandLoading=true;input.reset();player.setTarget(null);refreshActivityInput();
   try{await prepareArea(2);}catch{ui.subtitle('しまを よめなかったよ。もういちど ためしてね',6000);return;}finally{islandLoading=false;refreshActivityInput();}
   if(mode!=='play'||saveBlocked||homePaused||playTimer.paused)return;
@@ -279,7 +351,7 @@ async function visitSecond() {
   });
 }
 async function visitTown() {
-  if (place !== 'forest' || mode !== 'play' || saveBlocked || transitioning || adventure.modal || harborBusy() || ui.panelOpen || learning.opened || homePaused || playTimer.paused) return;
+  if (place !== 'forest' || mode !== 'play' || saveBlocked || transitioning || adventure.modal || harborBusy() || ui.panelOpen || learning.opened || invitation.dialogOpen || homePaused || playTimer.paused) return;
   if(islandLoading)return;islandLoading=true;input.reset();player.setTarget(null);refreshActivityInput();
   try{await prepareArea(3);}catch{ui.subtitle('まちを よめなかったよ。もういちど ためしてね',6000);return;}finally{islandLoading=false;refreshActivityInput();}
   if(place!=='forest'||mode!=='play'||saveBlocked||homePaused||playTimer.paused)return;
@@ -368,7 +440,7 @@ const playTimer=new PlayTimer(save,persist,{
   onDue:()=>{learning.close();input.reset();input.enabled=false;player.setTarget(null);voice.stop();timeUI.show(true);},
 });
 $('btnQuestHint').onclick=()=>{
-  if (!saveBlocked && mode==='play' && place==='island' && !help.focused && quests.state==='active') quests.showHint();
+  if (!saveBlocked && !invitation.dialogOpen && mode==='play' && place==='island' && !help.focused && quests.state==='active') quests.showHint();
 };
 
 function unlockSound() {
@@ -476,6 +548,7 @@ function startGame() {
   ui.showHUD(true);
   input.enabled = true;
   mode = 'play';
+  invitation.beginSession();
   // かくにんようの がめんは、えらんだ おおきさの ままで みる
   if (!developerScenario) requestLandscape();
   help.start();
@@ -501,6 +574,7 @@ function backToTitle() {
   if(saveBlocked || !playTimer.pause())return;
   audio.tap();
   ui.closePanel();
+  invitation.endSession();
   if (place !== 'island') returnFirst(true);
   learning.close();
   quests.stop();
@@ -551,12 +625,13 @@ $('btnVoice').addEventListener('click', () => {
   updateToggles();
 });
 $('btnHome').addEventListener('click', openHomeSummary);
-$('questCard').addEventListener('click', () => (harborErrands.focused ? harborErrands.repeat() : adventure.focused ? adventure.repeat() : place === 'school' ? school.repeat() : place === 'island' ? (help.focused ? help.repeat() : quests.repeat()) : null));
+$('questCard').addEventListener('click', () => !invitation.dialogOpen && (harborErrands.focused ? harborErrands.repeat() : adventure.focused ? adventure.repeat() : place === 'school' ? school.repeat() : place === 'island' ? (help.focused ? help.repeat() : quests.repeat()) : null));
 $('btnZukan').addEventListener('click', () => openZukan());
 $('btnCloset').addEventListener('click', () => openCloset());
 
 // ------------------------------------------------ ずかん・きせかえ
 function openPanel(opts) {
+  if (invitation.dialogOpen) return;
   audio.tap();
   input.enabled = false;
   input.reset();
@@ -567,6 +642,7 @@ function openPanel(opts) {
 }
 
 function openZukan() {
+  if (invitation.dialogOpen) return;
   ui.zukanBadge.classList.add('hidden');
   voice.say(L.zukan(life.found));
   openPanel({
@@ -583,6 +659,7 @@ function openZukan() {
 
 const owns = (c) => (c.stars ? save.stars >= c.stars : save.closet.includes(c.id));
 function openCloset() {
+  if (invitation.dialogOpen) return;
   if (ui.panelOpen) return;
   closetPreview.open(player);
   document.body.classList.add('closet-open');
@@ -626,7 +703,7 @@ function setRay(x, y) {
 // おうちでは マットを タップして えらべる
 input.onTap = (x, y) => {
   if (mode !== 'play') return false;
-  if (islandLoading || learning.opened || ui.panelOpen || transitioning || saveBlocked) return false;
+  if (islandLoading || learning.opened || invitation.dialogOpen || ui.panelOpen || transitioning || saveBlocked) return false;
   if (place.startsWith('learning-')) {setRay(x,y);const spot=env().tap(raycaster);if(spot){learning.open(islandNumber(),{help:spot.help});return true;}}
   if (place !== 'school' && tapPlayer(x, y)) return true;
   if (!['school','room'].includes(place)) return false;
@@ -733,7 +810,8 @@ function cameraGoal() {
     const view=CONCEPT_LAYOUTS[number]?.camera??CONCEPT_CAMERA;
     cameraSubject.copy(player.pos);
     if(harbor)cameraSubject.x-=FOREST_ORIGIN.x;
-    const visibleHud=mode==='play'&&!$('islandActions').classList.contains('hidden');
+    // しまの かくどは、あんないや ボタンの ひょうじで かえない。
+    const visibleHud=mode==='play';
     const compactHud=visibleHud&&window.innerWidth>window.innerHeight&&window.innerHeight<=400;
     setConceptCameraGoal(number,cameraSubject,view,camTarget,lookTarget,compactHud,visibleHud);
     if(harbor){camTarget.x+=FOREST_ORIGIN.x;lookTarget.x+=FOREST_ORIGIN.x;}
@@ -798,7 +876,7 @@ function leavePlace(instant = false) {
 
 const doorArmed = { school: true, room: true };
 async function visitForest(preview = null) {
-  if (mode !== 'play' || !adventure.unlocked || !adventure.canAct()) return;
+  if (mode !== 'play' || invitation.dialogOpen || !adventure.unlocked || !adventure.canAct()) return;
   if (forestLoading) return;
   if (!forest.assetsLoaded) {
     forestLoading = true;input.reset();player.setTarget(null);refreshActivityInput();
@@ -843,7 +921,7 @@ function islandGuideCheck() {
   adventure.offerGuidance();
 }
 function boatCheck() {
-  if (!adventure.canAct() || adventure.focused || adventure.modal || !adventure.unlocked || !['island','forest'].includes(place)) return;
+  if (invitation.dialogOpen || !adventure.canAct() || adventure.focused || adventure.modal || !adventure.unlocked || !['island','forest'].includes(place)) return;
   const boat = place === 'forest' ? {x:FOREST_ORIGIN.x+FOREST_DOCK.x,z:FOREST_DOCK.z+2} : {x:DOCK.x,z:DOCK.z+2};
   const d = Math.hypot(player.pos.x-boat.x,player.pos.z-boat.z);
   if(d>5)boatArmed=true;
@@ -851,7 +929,7 @@ function boatCheck() {
 }
 function doorCheck() {
   if (!['second', 'town'].includes(place)) return;
-  if (help.focused || adventure.focused || adventure.modal) return;
+  if (invitation.dialogOpen || help.focused || adventure.focused || adventure.modal) return;
   for (const [key, pl] of Object.entries(PLACES)) {
     const d = key === 'school' ? env().schoolDoor : env().roomDoor;
     if (!d || !env().rules[key]) continue;
@@ -866,14 +944,14 @@ function doorCheck() {
 
 // ------------------------------------------------ てんき
 climate.onRainStart = (snow) => {
-  if (mode !== 'play' || help.focused || adventure.focused || adventure.modal || harborBusy()) return;
+  if (mode !== 'play' || invitation.dialogOpen || help.focused || adventure.focused || adventure.modal || harborBusy()) return;
   player.emote(snow ? '⛄' : '☔', 3);
   voice.say(L.rainStart(snow));
   refreshHud();
 };
 climate.onRainEnd = (snow) => {
   refreshHud();
-  if (mode !== 'play' || help.focused || adventure.focused || adventure.modal || harborBusy()) return;
+  if (mode !== 'play' || invitation.dialogOpen || help.focused || adventure.focused || adventure.modal || harborBusy()) return;
   voice.say(L.rainEnd(snow));
   if (!snow) {
     audio.sparkle();
@@ -913,10 +991,11 @@ let time = 0;
 let hudClock = 0;
 
 function frame(now) {
+  syncInvitationDialog();
   const island = islandNumber();
   input.jumpEnabled = island > 1;
   $('btnJump').classList.toggle('hidden', island === 1);
-  $('islandActions').classList.toggle('hidden', mode !== 'play' || saveBlocked || islandLoading || homePaused || playTimer.paused || developerMenuOpen() || transitioning || help.focused || help.modal || adventure.focused || adventure.modal || harborBusy() || learning.opened || ui.panelOpen);
+  $('islandActions').classList.toggle('hidden', mode !== 'play' || saveBlocked || islandLoading || homePaused || playTimer.paused || developerMenuOpen() || transitioning || help.focused || help.modal || adventure.focused || adventure.modal || harborBusy() || learning.opened || invitation.dialogOpen || ui.panelOpen);
   $('btnLearning').classList.toggle('hidden', island === 1 || ['school','room'].includes(place));
   $('btnIslandHelp').classList.toggle('hidden', island === 1 || ['school','room'].includes(place));
   $('btnTown').classList.toggle('hidden', !['forest', 'town'].includes(place));
@@ -931,14 +1010,17 @@ function frame(now) {
   $('btnAdventure').setAttribute('aria-label', place === 'forest' ? 'みなとの おつかい' : 'ぼうけん');
   $('placeLabel').textContent = `だい${['', 'いち', 'に', 'さん', 'よん', 'ご', 'ろく', 'なな', 'はち'][island]}の しま・${islandRules(island).name}`;
   $('placeLabel').classList.toggle('hidden', mode !== 'play' || adventure.focused || harborBusy() || learning.opened || ['school', 'room'].includes(place) || (place === 'island' && quests.state !== 'idle'));
-  if(!playTimer.tick(mode==='play'&&!saveBlocked&&!document.hidden&&!homePaused&&!developerMenuOpen())) { requestAnimationFrame(frame); return; }
-  if(islandLoading){last=now;renderer.render(scene,camera);requestAnimationFrame(frame);return;}
+  if(!playTimer.tick(mode==='play'&&!saveBlocked&&!document.hidden&&!homePaused&&!developerMenuOpen())) { pauseInvitation(); requestAnimationFrame(frame); return; }
+  if(islandLoading){pauseInvitation();last=now;renderer.render(scene,camera);requestAnimationFrame(frame);return;}
   $('btnQuestHint').classList.toggle('hidden', !(mode==='play' && place==='island' && !help.focused && !ui.panelOpen && !transitioning && quests.state==='active' && !saveBlocked && !playTimer.paused && !homePaused));
   const presentationDt = Math.max(0, (now - last) / 1000);
   const dt = Math.min(0.05, presentationDt);
   last = now;
   time += dt;
-  if (saveBlocked || document.hidden || playTimer.paused || homePaused || developerMenuOpen()) { if (saveBlocked || playTimer.paused || homePaused) learning.close(); else learning.stopSpeech(); last = now; requestAnimationFrame(frame); return; }
+  if (saveBlocked || document.hidden || playTimer.paused || homePaused || developerMenuOpen()) { pauseInvitation(); if (saveBlocked || playTimer.paused || homePaused) learning.close(); else learning.stopSpeech(); last = now; requestAnimationFrame(frame); return; }
+
+  updateInvitation(dt, now);
+  if (saveBlocked) { pauseInvitation(); requestAnimationFrame(frame); return; }
 
   if (mode === 'play') {
     const ptr = input.pointer;
@@ -949,40 +1031,40 @@ function frame(now) {
         room.dragTo(raycaster, ptr.x, ptr.y);
       } else {
         room.endDrag();
-        if (saveBlocked) { requestAnimationFrame(frame); return; }
+        if (saveBlocked) { pauseInvitation(); requestAnimationFrame(frame); return; }
       }
     }
-    if (ptr) {
+    if (ptr && !invitation.dialogOpen) {
       if (!ptr.tapped) {
         const g = screenToGround(ptr.x, ptr.y);
         if (g) player.setTarget(g);
       }
     }
-    if (!help.modal && !adventure.modal && !harborErrands.modal && !learning.opened && !ui.panelOpen && !transitioning) player.update(dt, input, env(), audio);
-    if (['island', 'forest'].includes(place) && !learning.opened && !ui.panelOpen && !transitioning) adventure.update(dt, time);
-    if (place === 'forest' && !learning.opened && !ui.panelOpen && !transitioning) harborErrands.update(dt, time, presentationDt);
-    if (saveBlocked) { requestAnimationFrame(frame); return; }
-    if (!ui.panelOpen && !transitioning) boatCheck();
-    if (place === 'island' && !learning.opened) {
+    if (!help.modal && !adventure.modal && !harborErrands.modal && !learning.opened && !invitation.dialogOpen && !ui.panelOpen && !transitioning) player.update(dt, input, env(), audio);
+    if (['island', 'forest'].includes(place) && !learning.opened && !invitation.dialogOpen && !ui.panelOpen && !transitioning) adventure.update(dt, time);
+    if (place === 'forest' && !learning.opened && !invitation.dialogOpen && !ui.panelOpen && !transitioning) harborErrands.update(dt, time, presentationDt);
+    if (saveBlocked) { pauseInvitation(); requestAnimationFrame(frame); return; }
+    if (!ui.panelOpen && !invitation.dialogOpen && !transitioning) boatCheck();
+    if (place === 'island' && !learning.opened && !invitation.dialogOpen) {
       animals.update(dt, time, player);
-      if (saveBlocked) { requestAnimationFrame(frame); return; }
+      if (saveBlocked) { pauseInvitation(); requestAnimationFrame(frame); return; }
       if (!ui.panelOpen && !transitioning && !adventure.focused && !adventure.modal) help.update(dt, time);
-      if (saveBlocked) { requestAnimationFrame(frame); return; }
+      if (saveBlocked) { pauseInvitation(); requestAnimationFrame(frame); return; }
       if (!help.focused && !adventure.focused && !adventure.modal) {
         quests.update(dt, time);
-        if (saveBlocked) { requestAnimationFrame(frame); return; }
+        if (saveBlocked) { pauseInvitation(); requestAnimationFrame(frame); return; }
         worldEvents(dt);
-        if (saveBlocked) { requestAnimationFrame(frame); return; }
+        if (saveBlocked) { pauseInvitation(); requestAnimationFrame(frame); return; }
       }
       islandGuideCheck();
-      if (saveBlocked) { requestAnimationFrame(frame); return; }
+      if (saveBlocked) { pauseInvitation(); requestAnimationFrame(frame); return; }
       doorCheck();
     } else if (['second', 'town'].includes(place)) {
-      if (!learning.opened && !ui.panelOpen && !transitioning) doorCheck();
+      if (!learning.opened && !invitation.dialogOpen && !ui.panelOpen && !transitioning) doorCheck();
     } else if (place.startsWith('learning-')) {
       const nearby=env().nearby(player.pos);
       if(!nearby)spotArmed=true;
-      if(nearby && spotArmed && !learning.opened && !ui.panelOpen && !transitioning){spotArmed=false;learning.open(island,{help:nearby.help});}
+      if(nearby && spotArmed && !learning.opened && !invitation.dialogOpen && !ui.panelOpen && !transitioning){spotArmed=false;learning.open(island,{help:nearby.help});}
     } else if (['school','room'].includes(place) && env().update(dt, time) === 'exit' && !transitioning) {
       leavePlace();
     }
@@ -1022,16 +1104,16 @@ function frame(now) {
   player.marker.visible = mode === 'play';
   player.sleepy = climate.night > 0.6 && place === 'island';
   const outside = ['island', 'forest', 'second', 'town'].includes(place) || place.startsWith('learning-');
-  if (place === 'island' && !learning.opened && !help.focused && !adventure.focused && !adventure.modal) life.update(dt, time, mode === 'play' && !transitioning && !ui.panelOpen);
+  if (place === 'island' && !learning.opened && !invitation.dialogOpen && !help.focused && !adventure.focused && !adventure.modal) life.update(dt, time, mode === 'play' && !transitioning && !ui.panelOpen);
   if (['second', 'town'].includes(place)) {
     const area = place === 'second' ? secondArea : townArea;
-    if (!learning.opened && !ui.panelOpen) area.life.update(dt, time, mode === 'play' && !transitioning);
+    if (!learning.opened && !invitation.dialogOpen && !ui.panelOpen) area.life.update(dt, time, mode === 'play' && !transitioning);
     area.world.skyUniforms.top.value.copy(world.skyUniforms.top.value);
     area.world.skyUniforms.bottom.value.copy(world.skyUniforms.bottom.value);
     area.world.setNight(climate.night);
     area.world.update(dt, mode === 'play' ? player.pos : lookAt);
   }
-  if (saveBlocked) { requestAnimationFrame(frame); return; }
+  if (saveBlocked) { pauseInvitation(); requestAnimationFrame(frame); return; }
   climate.update(dt, { indoor: !outside, focus: mode === 'play' ? player.pos : lookAt, active: mode === 'play' });
   if(outside){const activeEnv=env();applyConceptLight(world,scene,place.startsWith('learning-')?Number(place.slice(9)):place==='second'?2:['forest','town'].includes(place)?3:1,climate,activeEnv.conceptScenery??activeEnv.scenery);
     if(place==='learning-6'){climate.rainLines.visible=climate.snowPoints.visible=false;}}
@@ -1039,7 +1121,7 @@ function frame(now) {
   if(place.startsWith('learning-'))env().update(dt,time);
   if(place==='forest'){
     forest.updateView(closetPreview.active?closetPreview.camera:camera,player,dt,climate.night);
-    harborPlay.update(dt,time,mode==='play'&&!transitioning&&!learning.opened&&!ui.panelOpen&&!adventure.focused&&!adventure.modal&&!harborBusy());
+    harborPlay.update(dt,time,mode==='play'&&!transitioning&&!learning.opened&&!invitation.dialogOpen&&!ui.panelOpen&&!adventure.focused&&!adventure.modal&&!harborBusy());
   }
   hudClock -= dt;
   if (hudClock <= 0) {
@@ -1071,3 +1153,4 @@ window.__game = {
   warp(x, z) { player.teleport(x, env().groundAt(x, z), z, 0); snapCamera(); },
   get place() { return place; },
 };
+if (developerScenario?.autoStart) startGame();

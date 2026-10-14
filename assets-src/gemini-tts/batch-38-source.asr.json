@@ -1,0 +1,155 @@
+{
+  "batchId": 38,
+  "sourceSha256": "810ce683181910f360380bd4414533c5668f3ab33bc49510b5b650d5d2a17ec6",
+  "model": "small",
+  "language": "en",
+  "expected": [
+    "apple",
+    "Thank you",
+    "I like it",
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "cat",
+    "dog"
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 0.74,
+      "text": " Apple",
+      "words": [
+        {
+          "start": 0.0,
+          "end": 0.74,
+          "text": " Apple"
+        }
+      ]
+    },
+    {
+      "start": 5.5600000000000005,
+      "end": 6.5,
+      "text": " Thank you",
+      "words": [
+        {
+          "start": 5.319999999999999,
+          "end": 6.02,
+          "text": " Thank"
+        },
+        {
+          "start": 6.02,
+          "end": 6.5,
+          "text": " you"
+        }
+      ]
+    },
+    {
+      "start": 10.72,
+      "end": 11.72,
+      "text": " I like it",
+      "words": [
+        {
+          "start": 10.22,
+          "end": 10.92,
+          "text": " I"
+        },
+        {
+          "start": 10.92,
+          "end": 11.24,
+          "text": " like"
+        },
+        {
+          "start": 11.24,
+          "end": 11.72,
+          "text": " it"
+        }
+      ]
+    },
+    {
+      "start": 15.6,
+      "end": 16.28,
+      "text": " A",
+      "words": [
+        {
+          "start": 15.580000000000002,
+          "end": 16.28,
+          "text": " A"
+        }
+      ]
+    },
+    {
+      "start": 20.48,
+      "end": 21.04,
+      "text": " B",
+      "words": [
+        {
+          "start": 20.34,
+          "end": 21.04,
+          "text": " B"
+        }
+      ]
+    },
+    {
+      "start": 25.12,
+      "end": 25.72,
+      "text": " C",
+      "words": [
+        {
+          "start": 25.02,
+          "end": 25.72,
+          "text": " C"
+        }
+      ]
+    },
+    {
+      "start": 25.72,
+      "end": 27.2,
+      "text": " D",
+      "words": [
+        {
+          "start": 25.72,
+          "end": 27.2,
+          "text": " D"
+        }
+      ]
+    },
+    {
+      "start": 33.64,
+      "end": 35.04,
+      "text": " E",
+      "words": [
+        {
+          "start": 33.64,
+          "end": 35.04,
+          "text": " E"
+        }
+      ]
+    },
+    {
+      "start": 39.72,
+      "end": 39.82,
+      "text": " Cat",
+      "words": [
+        {
+          "start": 39.12,
+          "end": 39.82,
+          "text": " Cat"
+        }
+      ]
+    },
+    {
+      "start": 43.22,
+      "end": 44.62,
+      "text": " Dog",
+      "words": [
+        {
+          "start": 43.22,
+          "end": 44.62,
+          "text": " Dog"
+        }
+      ]
+    }
+  ]
+}

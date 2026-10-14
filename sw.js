@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v58-concept-finish';
+const VERSION = 'kirakira-v60-learning-invitation-voices';
 const ASSETS = [
   './',
   './index.html',
@@ -13,6 +13,10 @@ const ASSETS = [
   './src/island-learning.css',
   './src/island-activities.js',
   './src/island-activities.css',
+  './src/learning-invitation.js',
+  './src/learning-invitation-state.js',
+  './src/learning-invitation-world.js',
+  './src/learning-invitation.css',
   './src/activity-voice-lines.js',
   './src/eight-island-lines.js',
   './src/learning-islands.js',
