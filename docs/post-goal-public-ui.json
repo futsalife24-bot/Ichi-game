@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-10-14T12:36:02.418Z",
+  "releaseSha": "273c8c26b046c1b4d5d1d31e0b88497058846165",
+  "url": "https://futsalife24-bot.github.io/Ichi-game/?dev=all&month=4",
+  "checks": [
+    "第一島へ全開放で自動開始",
+    "第一島にジャンプなし",
+    "住民に近づいて会話",
+    "物語と遊び２択",
+    "りんご２個のお届け完了",
+    "自由行動へ戻る",
+    "第二島で全８島の渡航選択",
+    "第八島も同じ俯瞰",
+    "完了後の再呼びかけなし"
+  ],
+  "screenshots": [
+    "public-first.jpg",
+    "public-invitation.jpg",
+    "public-invitation-completed.jpg",
+    "public-eighth.jpg"
+  ],
+  "console": []
+}
