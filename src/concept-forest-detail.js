@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { conceptMaterial } from './concept-materials.js';
-import { conceptPathDistance } from './concept-terrain.js';
+import { conceptPathDistance, conceptWorkshopBridgeHeight } from './concept-terrain.js';
 import { petalGeometry } from './concept-gardens.js';
 
 // げんがの たき・しらかば・こうぼうの まわりを、みちを あけて つくる。
@@ -195,28 +195,31 @@ function schoolCorner(s) {
 }
 function woodRailings(s) {
   const posts=[],rails=[];
+  const centre=z=>{for(let i=1;i<s.layout.path.length;i++){const a=s.layout.path[i-1],b=s.layout.path[i];if(z>=Math.min(a[1],b[1])&&z<=Math.max(a[1],b[1]))return a[0]+(b[0]-a[0])*(z-a[1])/(b[1]-a[1]);}return 0;};
   for(const side of [-1,1])for(let i=0;i<7;i++) {
-    const x=side*5.4,z=7+i*2.15,y=ground(s,x,z);
+    const z=7+i*2.15,x=centre(z)+side*5.4,y=ground(s,x,z);
     posts.push({at:[x,y+.55,z],scale:[.3,1.18,.3]});
-    if(i)rails.push([[x,ground(s,x,z-2.15)+.92,z-2.15],[x,y+.92,z],.12,.12]);
+    if(i){const previousX=centre(z-2.15)+side*5.4;rails.push([[previousX,ground(s,previousX,z-2.15)+.92,z-2.15],[x,y+.92,z],.12,.12]);}
   }
   batch(s.group,new THREE.BoxGeometry(1,1,1),material(0x9c6d42,'wood'),posts);
   segmentBatch(s.group,rails,material(0x765034,'wood'),8);
 }
 function workBridge(s) {
+  const group=new THREE.Group();group.name='こうぼうの はし';s.group.add(group);
   const decks=[],posts=[],rails=[];
   for(let i=0;i<11;i++) {
-    const x=9+i*.9,z=4.0,y=Math.max(.65,ground(s,x,z));
-    decks.push({at:[x,y+.12,z],scale:[.84,.2,4.3]});
+    const x=9+i*.9,z=4.0,y=conceptWorkshopBridgeHeight(x);
+    decks.push({at:[x,y-.1,z],scale:[.84,.2,4.3]});
   }
   for(const side of [-1,1])for(let i=0;i<5;i++) {
     const x=9+i*2.25,z=4+side*2.1,y=Math.max(.65,ground(s,x,z));
     posts.push({at:[x,y+.66,z],scale:[.22,1.32,.22]});
     if(i)rails.push([[x-2.25,y+1.08,z],[x,y+1.08,z],.1,.1]);
   }
-  batch(s.group,new THREE.BoxGeometry(1,1,1),material(0xc8995b,'wood'),decks);
-  batch(s.group,new THREE.BoxGeometry(1,1,1),material(0x805834,'wood'),posts);
-  segmentBatch(s.group,rails,material(0x8a623c,'wood'),8);
+  const deck=batch(group,new THREE.BoxGeometry(1,1,1),material(0xc8995b,'wood'),decks);deck.name='こうぼうの はしの ゆか';
+  batch(group,new THREE.BoxGeometry(1,1,1),material(0x805834,'wood'),posts);
+  segmentBatch(group,rails,material(0x8a623c,'wood'),8);
+  for(const side of [-1,1])s.solids.push({x:13.5,z:4+side*2.1,width:9.6,depth:.28,yaw:0});
 }
 function wheelWaterEdge(s) {
   const stones=[[],[]],moss=[];

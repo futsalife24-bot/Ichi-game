@@ -733,8 +733,9 @@ function cameraGoal() {
     const view=CONCEPT_LAYOUTS[number]?.camera??CONCEPT_CAMERA;
     cameraSubject.copy(player.pos);
     if(harbor)cameraSubject.x-=FOREST_ORIGIN.x;
-    const compactHud=mode==='play'&&window.innerWidth>window.innerHeight&&window.innerHeight<=400&&!$('islandActions').classList.contains('hidden');
-    setConceptCameraGoal(number,cameraSubject,view,camTarget,lookTarget,compactHud);
+    const visibleHud=mode==='play'&&!$('islandActions').classList.contains('hidden');
+    const compactHud=visibleHud&&window.innerWidth>window.innerHeight&&window.innerHeight<=400;
+    setConceptCameraGoal(number,cameraSubject,view,camTarget,lookTarget,compactHud,visibleHud);
     if(harbor){camTarget.x+=FOREST_ORIGIN.x;lookTarget.x+=FOREST_ORIGIN.x;}
   }
 }
@@ -1033,7 +1034,7 @@ function frame(now) {
   if (saveBlocked) { requestAnimationFrame(frame); return; }
   climate.update(dt, { indoor: !outside, focus: mode === 'play' ? player.pos : lookAt, active: mode === 'play' });
   if(outside){const activeEnv=env();applyConceptLight(world,scene,place.startsWith('learning-')?Number(place.slice(9)):place==='second'?2:['forest','town'].includes(place)?3:1,climate,activeEnv.conceptScenery??activeEnv.scenery);
-    if(place==='learning-6'){climate.rainLines.visible=climate.snowPoints.visible=false;world.sun.visible=world.moon.visible=world.stars.visible=false;}}
+    if(place==='learning-6'){climate.rainLines.visible=climate.snowPoints.visible=false;}}
   if (place === 'forest' || place.startsWith('learning-')) climate.skyColor(scene.background ??= new THREE.Color());
   if(place.startsWith('learning-'))env().update(dt,time);
   if(place==='forest'){

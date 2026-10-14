@@ -31,7 +31,7 @@ jobs:
         run: node tools/pack-concept-islands.mjs --check
       - run: node --import ./tools/register.mjs --test tools/island-balance.test.mjs tools/island-learning.test.mjs tools/tutorial-island.test.mjs
       - name: 八島の活動と景観素材を確認
-        run: node --import ./tools/register.mjs --test tools/island-activities.test.mjs tools/learning-island-scene.test.mjs tools/island-assets.test.mjs tools/concept-assets.test.mjs tools/concept-camera.test.mjs tools/concept-route.test.mjs tools/concept-world.test.mjs tools/concept-walk.test.mjs
+        run: node --import ./tools/register.mjs --test tools/island-activities.test.mjs tools/learning-island-scene.test.mjs tools/island-assets.test.mjs tools/concept-assets.test.mjs tools/concept-camera.test.mjs tools/concept-route.test.mjs tools/concept-world.test.mjs tools/concept-walk.test.mjs tools/concept-avatar-visibility.test.mjs tools/concept-sky-clouds.test.mjs tools/concept-festival-detail.test.mjs
       - name: 第三島の読込と訪問導線を確認
         run: node --import ./tools/register.mjs --test tools/forest-concept-load.test.mjs tools/island-guidance-integration.test.mjs
       - name: 出荷済み音声と承認済みの収録待ちを検査

@@ -3,7 +3,7 @@
   "adoptedOn": "2026-10-13",
   "authority": "本人の「これのコンセプトアートを正本として島を作り上げて」",
   "conceptArt": "assets-src/islands/concept-art/v1/catalog.json",
-  "status": "本人採用済み、３Ｄ制作中",
+  "status": "本人採用済み、３Ｄ実装と自己検証済み、本人の視覚評価・公開判断待ち",
   "nature_parts": "assets-src/islands/concept-nature-parts.json",
   "camera": {
     "offset": [
@@ -320,11 +320,11 @@
       "kind": "valley",
       "radius": 40,
       "spawn": [
-        0,
-        8
+        -6,
+        17
       ],
       "hero": [
-        0,
+        -3,
         -10
       ],
       "models": [
@@ -352,15 +352,15 @@
       ],
       "path": [
         [
-          0,
+          -6,
           24
         ],
         [
-          0,
+          -6,
           13
         ],
         [
-          0,
+          -2,
           3
         ],
         [

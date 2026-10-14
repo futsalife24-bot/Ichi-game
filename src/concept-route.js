@@ -1,4 +1,4 @@
-import { conceptHeight, conceptLandDistance } from './concept-terrain.js';
+import { conceptWalkHeight, conceptLandDistance } from './concept-terrain.js';
 
 const STEP=1.5,MIN=-48,MAX=48,COUNT=Math.round((MAX-MIN)/STEP)+1;
 const directions=[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]];
@@ -11,7 +11,7 @@ function blockedBySolid(x,z,b,margin=.5) {
 
 export function conceptRoutePointValid(p,solids=[],obstacle=null,number=3) {
   if(!Number.isFinite(p?.x)||!Number.isFinite(p?.z))return false;
-  if(conceptLandDistance(number,p.x,p.z)>-1||conceptHeight(number,p.x,p.z)<.05)return false;
+  if(conceptLandDistance(number,p.x,p.z)>-1||conceptWalkHeight(number,p.x,p.z)<.05)return false;
   return ![...solids,...(obstacle?[obstacle]:[])].some(b=>blockedBySolid(p.x,p.z,b));
 }
 

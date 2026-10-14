@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { makeAvatar, PRESETS, makeAccessory, makeFaceWear, dressBody } from './characters.js';
 import { makeTool, emojiSprite } from './critters.js';
 import { getHeight, LANDMARKS } from './world.js';
+import { prepareAvatarVisibility, releaseAvatarVisibility } from './avatar-visibility.js';
 
 const SPEED = 6.2;
 const GRAVITY = 26;
@@ -50,9 +51,10 @@ export class Player {
 
   /** キャラメイクの みため { color, ears, eyes, pattern, tail } */
   setAvatar(def) {
-    if (this.model) this.scene.remove(this.model.root);
+    if (this.model) { releaseAvatarVisibility(this.model.root); this.scene.remove(this.model.root); }
     this.avatar = def ?? PRESETS.usagi;
     this.model = makeAvatar(this.avatar);
+    prepareAvatarVisibility(this.model.root);
     this.held = null;
     this.emoteSp = null;
     this.scene.add(this.model.root);

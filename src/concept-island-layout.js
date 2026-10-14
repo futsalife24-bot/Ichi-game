@@ -301,11 +301,11 @@ export const CONCEPT_LAYOUTS = Object.freeze({
     "kind": "valley",
     "radius": 40,
     "spawn": [
-      0,
-      8
+      -6,
+      17
     ],
     "hero": [
-      0,
+      -3,
       -10
     ],
     "models": [
@@ -333,15 +333,15 @@ export const CONCEPT_LAYOUTS = Object.freeze({
     ],
     "path": [
       [
-        0,
+        -6,
         24
       ],
       [
-        0,
+        -6,
         13
       ],
       [
-        0,
+        -2,
         3
       ],
       [

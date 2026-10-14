@@ -79,6 +79,17 @@ test('通常画面の昼の太陽は八島すべて採用レイアウトの色�
   }
 });
 
+test('海底と夕暮れの祭りは旧空の太陽や月を重ねず、ほかの島の天体表示を保つ',()=>{
+  const scene=new THREE.Scene(),world=new World(scene,{island:3});
+  for(const number of [1,2,3,4,5,6,7,8]){
+    world.sun.visible=true;world.moon.visible=false;world.stars.visible=true;
+    applyConceptLight(world,scene,number,{night:.7,rain:.2});
+    assert.equal(world.sun.visible,number!==6&&number!==8,`第${number}島の太陽`);
+    assert.equal(world.moon.visible,false,`第${number}島の月`);
+    assert.equal(world.stars.visible,number!==6&&number!==8,`第${number}島の星空`);
+  }
+});
+
 test('夜と雨の減衰・夜空を保ち、昼に戻したとき強さを積み重ねない',()=>{
   const world={hemi:new THREE.HemisphereLight(),sunLight:new THREE.DirectionalLight(),sunOffset:new THREE.Vector3()},scene=new THREE.Scene();
   const skyDay={top:new THREE.Color(0x7bbcf2),bottom:new THREE.Color(0xdaf0fc)};

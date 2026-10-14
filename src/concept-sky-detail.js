@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { conceptMaterial } from './concept-materials.js';
+import { buildSkyClouds } from './concept-sky-clouds.js';
 
 // しろい まちを かぜぐるまの りょうがわへ ひろげる。
 const pose=new THREE.Object3D();
@@ -111,20 +112,13 @@ function terracedHill(scenery,parts) {
   }
   for(const side of [-1,1])scenery.solids.push({x:side*4.28,z:-17.9,width:.48,depth:12.2,yaw:0});
 
-  // だんの そとがわに くもの かさなりと おくゆきを つくる。
-  for(const side of [-1,1])for(let i=0;i<38;i++)for(let layer=0;layer<3;layer++){
-    const z=-11-i*.72+Math.sin(i*2.7+layer)*.35;
-    const x=side*(12.7+(i%5)*1.65+layer*1.7+Math.sin(i*1.9)*.7);
-    const ground=scenery.groundAt(x,z),y=ground-1.7-layer*1.55-(i%4)*.16;
-    const scale=1.65+(i%7)*.21+layer*.3;
-    add((i+layer)%3?parts.cloudWarm:parts.cloudCool,x,y,z,scale*1.4,scale*.78,scale*1.05);
-  }
 }
 
 export function buildSkyDetail(scenery) {
   if(!scenery||scenery.number!==7)return;
-  const parts={white:[],blue:[],glass:[],wood:[],gold:[],dome:[],pot:[],plant:[],flower:[],shadow:[],door:[],cloudWarm:[],cloudCool:[]};
+  const parts={white:[],blue:[],glass:[],wood:[],gold:[],dome:[],pot:[],plant:[],flower:[],shadow:[],door:[]};
   terracedHill(scenery,parts);
+  buildSkyClouds(scenery);
   for(let i=0;i<houseRows.length;i++){
     const [x,z,w,h,d,kind]=houseRows[i],y=scenery.groundAt(x,z);
     terrace(parts,x,y,z,w,d);
@@ -149,6 +143,4 @@ export function buildSkyDetail(scenery) {
   put(group,new THREE.IcosahedronGeometry(1,0),conceptMaterial({color:0xffe8af,type:'foliage'}),parts.flower);
   put(group,archGeometry(),conceptMaterial({color:0x29455b,type:'plaster'}),parts.shadow);
   put(group,archGeometry(),conceptMaterial({color:0x2765a4,type:'wood'}),parts.door);
-  put(group,new THREE.SphereGeometry(1,20,12),conceptMaterial({color:0xfff9f0,type:'plaster'}),parts.cloudWarm);
-  put(group,new THREE.SphereGeometry(1,20,12),conceptMaterial({color:0xdceef3,type:'plaster'}),parts.cloudCool);
 }

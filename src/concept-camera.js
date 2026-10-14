@@ -18,6 +18,7 @@ function spanWeight(x, z, span) {
 
 // はしの はしから ゆっくり たかく みる。ほかの ばしょの がかくは そのまま。
 export function conceptBridgeCameraWeight(number, x, z) {
+  if(number===4)return smooth(7.3,10.5,x)*(1-smooth(17,20.8,x))*(1-smooth(1.6,6.2,Math.abs(z-4)));
   if (number === 3) {
     const bridge = CONCEPT_LAYOUTS[3].bridge;
     const exit = 1 - smooth(2, 7, Math.hypot(x - bridge.b[0], z - bridge.b[1]));
@@ -41,10 +42,10 @@ export function conceptBridgeCameraWeight(number, x, z) {
 
 // offset と lookOffset を たもったまま、はしの うえだけ うさぎを みやすくする。
 // outPosition と outTarget は さいりようできる Vector3。fov は かえない。
-export function setConceptCameraGoal(number, playerPosition, view, outPosition, outTarget, compactHud = false) {
+export function setConceptCameraGoal(number, playerPosition, view, outPosition, outTarget, compactHud = false, visibleHud = false) {
   const weight = conceptBridgeCameraWeight(number, playerPosition.x, playerPosition.z);
-  const lift = number === 3 ? 6 : 4.5;
-  const lowerAim = number === 3 ? 7.5 : 5;
+  const lift = number === 4 ? 8 : number === 3 ? 6 : 4.5;
+  const lowerAim = number === 4 ? 9 : number === 3 ? 7.5 : 5;
   const stepBack = number === 3 ? -4 : 0;
   outPosition.set(
     playerPosition.x + view.offset[0],
@@ -61,6 +62,9 @@ export function setConceptCameraGoal(number, playerPosition, view, outPosition, 
     if (number === 3) outTarget.y -= 7;
     else if (number === 7) { outPosition.z += 12 * (1 - weight); outTarget.y -= 4 + 2 * weight; }
     else { outPosition.z += 12; outTarget.y -= 4; }
+  }else if(visibleHud){
+    if(number===3)outTarget.y-=3.5;
+    else{outPosition.z+=6;outTarget.y-=2.5;}
   }
   return weight;
 }

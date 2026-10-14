@@ -3,6 +3,7 @@ import { conceptMaterial } from './concept-materials.js';
 import { instanceParts, petalGeometry } from './concept-gardens.js';
 import { conceptHeight, segmentDistance } from './concept-terrain.js';
 import { CONCEPT_LAYOUTS } from './concept-island-layout.js';
+import { buildFestivalDetail } from './concept-festival-detail.js';
 
 const rng=seed=>()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
 function vineGarden(scenery,points,color) {
@@ -71,7 +72,7 @@ export function buildCityDetail(scenery,kit) {
     if(kit){const asset=kit.assets.moroccanHouse,locations=[[-21,-21],[-12,-27],[0,-32],[12,-27],[22,-21]],poses=locations.map(([x,z])=>({p:[x,conceptHeight(5,x,z),z],s:[.85,.85,.85]}));for(const p of asset.meshes)instanceParts(scenery.group,p.geometry,p.materialObject,poses);for(const [x,z] of locations)scenery.solids.push({x,z,width:asset.size[0]*.85,depth:asset.size[2]*.85});}
   }
   if(n===7)vineGarden(scenery,[[-24,0,2,5],[24,-1,2,5],[-8,-14,3,5],[8,-14,3,5]],0xf7e8c2);
-  if(n===8){vineGarden(scenery,[[-26,-12.8,6,5],[-16,-23.8,7,5],[26,-20.8,6,5],[20,-3,3,8]],0xf79cab);ringBeds(scenery);palms(scenery);}
+  if(n===8){vineGarden(scenery,[[-26,-12.8,6,5],[-16,-23.8,7,5],[26,-20.8,6,5],[20,-3,3,8]],0xf79cab);ringBeds(scenery);palms(scenery);buildFestivalDetail(scenery);}
 }
 export function papelGeometry() {
   const shape=new THREE.Shape();shape.moveTo(-.75,.55);shape.lineTo(.75,.55);shape.lineTo(.75,-.4);

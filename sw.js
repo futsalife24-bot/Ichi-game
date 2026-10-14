@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v52-concept-view';
+const VERSION = 'kirakira-v56-concept-view';
 const ASSETS = [
   './',
   './index.html',
@@ -30,6 +30,8 @@ const ASSETS = [
   './src/concept-seasons.js',
   './src/concept-seabed.js',
   './src/concept-sky-detail.js',
+  './src/concept-sky-clouds.js',
+  './src/concept-festival-detail.js',
   './src/concept-sky-accents.js',
   './src/concept-workshop-detail.js',
   './src/concept-structures.js',
@@ -48,6 +50,7 @@ const ASSETS = [
   './src/developer-mode.js',
   './src/world.js',
   './src/player.js',
+  './src/avatar-visibility.js',
   './src/closet-preview.js',
   './src/input.js',
   './src/audio.js',

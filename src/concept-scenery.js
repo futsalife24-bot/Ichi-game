@@ -108,7 +108,18 @@ export class ConceptScenery {
     const mat=conceptMaterial({color:0xffffff,type:n===7?'whiteStone':n===3||n===5||n===8?'paving':'plaster',roughness:.94});mat.vertexColors=true;
     if(n===6)addCaustics(mat,this.time);
     this.terrain=new THREE.Mesh(geometry,mat);this.terrain.receiveShadow=true;this.group.add(this.terrain);
-    if(n===4)for(let z=-14;z<24;z+=.8){const o=mesh(new THREE.BoxGeometry(5.4,.12,.74),z%2?0xb58b55:0xc39762,'wood');o.position.set(0,this.groundAt(0,z)+.035,z);this.group.add(o);}
+    if(n===4){
+      // こうさくにわから こうぼうへ、まがる いたみちを つなげる。
+      const boards=[[],[]],path=this.layout.path;
+      for(let segment=1;segment<path.length;segment++){
+        const a=path[segment-1],b=path[segment],length=Math.hypot(b[0]-a[0],b[1]-a[1]),steps=Math.ceil(length/.78);
+        for(let i=0;i<steps;i++){
+          const t=(i+.5)/steps,x=a[0]+(b[0]-a[0])*t,z=a[1]+(b[1]-a[1])*t;
+          boards[(i+segment)%2].push({p:[x,this.groundAt(x,z)-.035,z],s:[1,1,length/steps/.74],r:[0,Math.atan2(b[0]-a[0],b[1]-a[1]),0]});
+        }
+      }
+      for(let i=0;i<2;i++)instanceParts(this.group,new THREE.BoxGeometry(5.4,.12,.74),material(i?0xb58b55:0xc39762,'wood'),boards[i]);
+    }
     if(n===7)this.buildCloudLand();
   }
   buildSky() { buildConceptSky(this); }

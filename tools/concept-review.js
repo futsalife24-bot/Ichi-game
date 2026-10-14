@@ -12,7 +12,7 @@ const note=document.getElementById('note');
 note.textContent='描画の準備をしています';
 if(search.has('clean'))document.body.classList.add('clean');
 const scene=new THREE.Scene(),renderer=new THREE.WebGLRenderer({canvas:document.getElementById('game'),antialias:true,preserveDrawingBuffer:true,powerPreference:'high-performance'});
-renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFShadowMap;
+renderer.setPixelRatio(search.has('capture')?1:Math.min(devicePixelRatio,1.5));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFShadowMap;
 renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;renderer.outputColorSpace=THREE.SRGBColorSpace;
 const cameraView=layout.camera??CONCEPT_CAMERA,camera=new THREE.PerspectiveCamera(cameraView.fov,1,.1,450);
 const cameraFocus=new THREE.Vector3();

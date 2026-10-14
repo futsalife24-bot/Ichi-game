@@ -4,9 +4,10 @@ import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import * as THREE from 'three';
 import { CONCEPT_LAYOUTS, CONCEPT_CAMERA } from '../src/concept-island-layout.js';
-import { conceptWalkHeight } from '../src/concept-terrain.js';
+import { conceptHeight, conceptWalkHeight } from '../src/concept-terrain.js';
 import { buildConceptBridges } from '../src/concept-structures.js';
 import { ConceptScenery } from '../src/concept-scenery.js';
+import { buildForestDetail } from '../src/concept-forest-detail.js';
 import { conceptBridgeCameraWeight, setConceptCameraGoal } from '../src/concept-camera.js';
 import { makeAvatar, PRESETS } from '../src/characters.js';
 
@@ -17,10 +18,10 @@ const feet = [rabbit.footL.position.clone(), rabbit.footR.position.clone()];
 assert.equal(bodyCentre.y, .62);
 assert.deepEqual(feet.map(foot => foot.y), [.12, .12]);
 
-function goals(number, position, compactHud = false) {
+function goals(number, position, compactHud = false, visibleHud = false) {
   const view = CONCEPT_LAYOUTS[number].camera ?? CONCEPT_CAMERA;
   const eye = new THREE.Vector3(), target = new THREE.Vector3();
-  const weight = setConceptCameraGoal(number, position, view, eye, target, compactHud);
+  const weight = setConceptCameraGoal(number, position, view, eye, target, compactHud, visibleHud);
   return { view, eye, target, weight };
 }
 
@@ -81,6 +82,18 @@ test('第三・第七島の橋と出口を滑らかに補正する', () => {
     assert.ok(conceptBridgeCameraWeight(number, b[0], b[1]) > .9);
     if (number === 3 || a[0] === 0)
       assert.equal(conceptBridgeCameraWeight(number, a[0], a[1]), 0);
+  }
+});
+
+test('第四島の木橋と対岸でも、実際の手すりがウサギの足と胴体を隠さない',()=>{
+  const scenery={number:4,layout:CONCEPT_LAYOUTS[4],group:new THREE.Group(),solids:[],groundAt:(x,z)=>conceptHeight(4,x,z)};
+  buildForestDetail(scenery);scenery.group.updateMatrixWorld(true);
+  const bridge=scenery.group.getObjectByName('こうぼうの はし');
+  for(const [x,z] of [[11,4],[14,4],[17,4],[18,0]]){
+    const position=new THREE.Vector3(x,conceptWalkHeight(4,x,z),z),{eye,target,view}=goals(4,position);
+    for(const part of [...feet,bodyCentre])assert.equal(bridgeHits([bridge],eye,position.clone().add(part)),0,`${x},${z}: 橋が身体を隠す`);
+    const camera=new THREE.PerspectiveCamera(view.fov,16/9,.1,450);camera.position.copy(eye);camera.lookAt(target);camera.updateMatrixWorld();
+    for(const part of [...feet,bodyCentre])assert.ok(Math.abs(position.clone().add(part).project(camera).y)<.9,`${x},${z}: 身体が画面外`);
   }
 });
 
@@ -177,6 +190,19 @@ test('小さい横画面では全八島のウサギ全身が下部メニュー�
     }
     const normal = goals(number, position);
     assert.ok(!eye.equals(normal.eye) || !target.equals(normal.target));
+  }
+});
+
+test('通常の横画面でも全八島のウサギ全身を下部ボタンより上へ写す',()=>{
+  for(const [id,layout] of Object.entries(CONCEPT_LAYOUTS)){
+    const number=Number(id),[x,z]=layout.spawn,position=new THREE.Vector3(x,conceptWalkHeight(number,x,z),z);
+    const {eye,target}=goals(number,position,false,true),camera=new THREE.PerspectiveCamera(48,1280/720,.1,450);
+    camera.position.copy(eye);camera.lookAt(target);camera.updateMatrixWorld();
+    const pixel=point=>{const p=point.project(camera);return [(1+p.x)*640,(1-p.y)*360];};
+    const [hx,hy]=pixel(position.clone().add(new THREE.Vector3(0,rabbitBounds.max.y,0)));
+    const [fx,fy]=pixel(position.clone().add(new THREE.Vector3(0,rabbitBounds.min.y,0)));
+    assert.ok(hx>180&&hx<1100&&fx>180&&fx<1100,`第${number}島の身体が横に外れる`);
+    assert.ok(hy>160&&hy<fy&&fy<610,`第${number}島の身体がボタンへ重なる ${hy},${fy}`);
   }
 });
 

@@ -174,5 +174,49 @@
     "opening": "該当なし",
     "blend": "branchCoralFar.blend",
     "render": "branchCoralFar.png"
+  },
+  {
+    "id": "tubeSpongeFar",
+    "requestedSize": [
+      1.8,
+      2.5,
+      1.8
+    ],
+    "bounds": [
+      -0.9,
+      -0.677,
+      -0.09,
+      0.88,
+      0.794,
+      2.57
+    ],
+    "triangles": 2708,
+    "excludedDegenerateTriangles": 0,
+    "meshCount": 2,
+    "opening": "該当なし",
+    "blend": "tubeSpongeFar.blend",
+    "render": "tubeSpongeFar.png"
+  },
+  {
+    "id": "coralBoulderFar",
+    "requestedSize": [
+      3,
+      2.5,
+      3
+    ],
+    "bounds": [
+      -1.539,
+      -1.366,
+      -0.061,
+      1.458,
+      1.41,
+      2.268
+    ],
+    "triangles": 3880,
+    "excludedDegenerateTriangles": 0,
+    "meshCount": 1,
+    "opening": "該当なし",
+    "blend": "coralBoulderFar.blend",
+    "render": "coralBoulderFar.png"
   }
 ]

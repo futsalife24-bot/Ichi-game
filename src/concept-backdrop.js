@@ -26,11 +26,37 @@ function coastalVillage(scenery,x,z,seed,festival=false,terrain=[29,18,20,40]) {
   instanceParts(scenery.group,new THREE.SphereGeometry(1,16,10),conceptMaterial({color:festival?0xbc785f:0x458aa1,type:'roof'}),roofs,false);
   instanceParts(scenery.group,new THREE.BoxGeometry(1,1,1),new THREE.MeshStandardMaterial({color:festival?0xffdea0:0x669897,emissive:festival?0xffbb55:0x000000,emissiveIntensity:festival?.6:0,roughness:.8}),windows,false);
 }
+function alpineRidge(peaks,depth,span,segments,near){
+  const geometry=new THREE.PlaneGeometry(250,span*2,100,segments);geometry.rotateX(-Math.PI/2);
+  const p=geometry.attributes.position,colors=[],green=new THREE.Color(near?0x496958:0x617c7c),rock=new THREE.Color(near?0x788683:0x9aa8aa),snow=new THREE.Color(0xeeeee7),color=new THREE.Color();
+  for(let i=0;i<p.count;i++){
+    const x=p.getX(i),z=p.getZ(i)+depth;
+    let crest=7;
+    for(const [center,left,right,height] of peaks){
+      const spread=x<center?left:right,edge=Math.max(0,1-Math.abs(x-center)/spread);
+      crest=Math.max(crest,7+height*Math.pow(edge,1.12));
+    }
+    const slope=Math.max(0,1-Math.abs(z-depth)/span),h=-6+(crest+6)*Math.pow(slope,.88);
+    p.setXYZ(i,x,h,z);
+    color.copy(green).lerp(rock,Math.min(1,Math.max(0,(h-3)/17)));
+    const snowLine=crest*(near?.79:.64)+1.8*Math.sin(x*.23+z*.09)+1.2*Math.sin(x*.49-z*.13);
+    if(crest>22&&h>snowLine)color.lerp(snow,Math.min(1,(h-snowLine)/3.2));
+    color.multiplyScalar(.9+.1*Math.sin(x*.26+z*.07));
+    colors.push(color.r,color.g,color.b);
+  }
+  geometry.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));geometry.computeVertexNormals();
+  return geometry;
+}
 export function buildBackdrop(scenery) {
   const n=scenery.number,group=scenery.group,rnd=rng(602+n);
   if(n===6||n===7)return;
-  if(n===4){const geo=new THREE.PlaneGeometry(250,100,110,45);geo.rotateX(-Math.PI/2);const p=geo.attributes.position,col=[];
-    for(let i=0;i<p.count;i++){const x=p.getX(i),z=p.getZ(i)-110,h=6+Math.pow(Math.abs(Math.sin(x*.04)+Math.sin(x*.079)*.55),1.3)*39*(.55+.45*Math.sin((z+160)*.035)**2);p.setXYZ(i,x,h,z);const c=new THREE.Color(h>33?0xeef0e9:h>25?0x9dacaa:0x769a7a);col.push(c.r,c.g,c.b);}geo.setAttribute('color',new THREE.Float32BufferAttribute(col,3));geo.computeVertexNormals();const mountain=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({vertexColors:true,roughness:1,side:THREE.DoubleSide}));group.add(mountain);return;
+  if(n===4){
+    // おくの ゆきやまと てまえの いわおを ずらし、こうぼうの うしろへ おさめる。
+    const material=new THREE.MeshStandardMaterial({vertexColors:true,roughness:1,side:THREE.DoubleSide});
+    const far=alpineRidge([[-102,29,20,23],[-63,23,29,30],[-19,26,25,22],[34,25,28,31],[77,26,22,26],[114,23,20,19]],-153,47,24,false);
+    const close=alpineRidge([[-91,30,22,18],[-49,24,30,22],[-8,24,27,15],[53,29,26,21],[102,30,25,16]],-104,42,20,true);
+    for(const geometry of [far,close]){const mountain=new THREE.Mesh(geometry,material);mountain.name='こうぼうの いわね';mountain.receiveShadow=true;group.add(mountain);}
+    return;
   }
   const islands=n===1?[[-75,-69,18,13,17],[-35,-78,14,9,9],[48,-74,16,12,14],[88,-107,20,10,11],[-2,-128,23,11,8]]:n===2?[[-70,-86,30,18,8],[68,-92,36,23,8],[-10,-129,35,18,6]]:n===3?[[-72,-88,24,17,10],[73,-101,32,18,12]]:[[-78,-98,29,18,20],[79,-105,31,20,24],[-2,-155,25,13,14]];
   for(let i=0;i<islands.length;i++){const [x,z,rx,rz,h]=islands[i],geo=islandShape(rx,rz,h,40+i,n===5||n===8),mat=conceptMaterial({color:0xffffff,type:'rock'});mat.vertexColors=true;const m=new THREE.Mesh(geo,mat);m.position.set(x,0,z);group.add(m);}

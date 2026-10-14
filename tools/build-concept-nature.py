@@ -12,6 +12,7 @@ bpy.context.preferences.filepaths.save_version=0
 FIRST='--first' in sys.argv
 PREVIEW=next((arg.split('=',1)[1] for arg in sys.argv if arg.startswith('--preview=')),None)
 ADD_FAR='--add-far' in sys.argv
+ADD_REEF_FAR='--add-reef-far' in sys.argv
 R=random.Random(602)
 M={}
 def linear(x): return x/12.92 if x<=.04045 else ((x+.055)/1.055)**2.4
@@ -105,9 +106,9 @@ def branchCoral(far=False):
 def branchCoralFar():
     # 遠景用だけ輪の数を減らし、枝の本数と伸びる方向は原本を保つ。
     branchCoral(far=True)
-def hollow_sponge(x,y,h,r,tilt):
+def hollow_sponge(x,y,h,r,tilt,far=False):
     # 外壁から厚い口縁を経て深い内壁まで一体の管にする。
-    vs=[]; fs=[]; sides=32; steps=16
+    vs=[]; fs=[]; sides=16 if far else 32; steps=9 if far else 16
     rings=[]
     for j in range(steps+1):
         t=j/steps; z=h*t
@@ -129,13 +130,16 @@ def hollow_sponge(x,y,h,r,tilt):
     fs.append(tuple((len(rings)-1)*sides+i for i in range(sides)))
     ob=mesh('口の深い管状スポンジ',vs,fs,'yellowSponge')
     ob.data.materials.append(M['spongeInside'][0])
-    for j in range(19,len(rings)-1):
+    for j in range(steps+3,len(rings)-1):
         for i in range(sides): ob.data.polygons[j*sides+i].material_index=1
     ob.data.polygons[-1].material_index=1
-def tubeSponge():
+def tubeSponge(far=False):
     for x,y,h,r,tilt in [(-.52,-.30,2.05,.28,-.10),(.03,-.32,2.5,.31,.12),(.49,-.08,1.8,.29,.10),(-.37,.38,1.46,.25,-.15),(.30,.39,2.12,.27,-.02)]:
-        hollow_sponge(x,y,h,r,tilt)
-    sphere('根元の海綿', (0,0,.22),(.84,.72,.31),'yellowSponge',24,14,noise=.08)
+        hollow_sponge(x,y,h,r,tilt,far)
+    sphere('根元の海綿', (0,0,.22),(.84,.72,.31),'yellowSponge',12 if far else 24,8 if far else 14,noise=.08)
+def tubeSpongeFar():
+    # 五本の管と口の深さを保ち、遠景だけ断面と高さ方向の輪を減らす。
+    tubeSponge(far=True)
 def broadSeaweed():
     for k in range(6):
         a=2*pi*k/6+.2; height=2.8+.21*k; width=.57+.045*(k%3)
@@ -190,15 +194,18 @@ def tableCoral():
                  [.29,.28,.23,.19,.14],'tableBlue',16)
     for x,y,z,r,p in [(-.35,0,.85,1.10,.2),(.4,.05,1.28,1.43,1.2),(0,0,1.78,1.75,2.3)]:
         coral_disc('波形のテーブル珊瑚',x,y,z,r,'tableBlue',p)
-def coralBoulder():
-    sphere('不規則な珊瑚岩',(0,0,1.08),(1.43,1.31,1.15),'boulderLavender',48,28,.13)
-    for i in range(52):
+def coralBoulder(far=False):
+    sphere('不規則な珊瑚岩',(0,0,1.08),(1.43,1.31,1.15),'boulderLavender',28 if far else 48,16 if far else 28,.13)
+    for i in range(38 if far else 52):
         a=2*pi*(i*.61803398875%1)
         z=-.75+1.5*((i*.41421356237)%1)
         q=math.sqrt(max(.05,1-z*z))
         x=1.39*q*cos(a); y=1.27*q*sin(a); zz=1.08+1.10*z
         s=.09+.065*((i*7)%5)/4
-        sphere('岩肌の小さな珊瑚粒',(x,y,zz),(s,s*.9,s*1.35),'boulderLavender',12,8)
+        sphere('岩肌の小さな珊瑚粒',(x,y,zz),(s,s*.9,s*1.35),'boulderLavender',8 if far else 12,6 if far else 8)
+def coralBoulderFar():
+    # 大きな岩の外形と小粒の散らばりを残して、遠景用に分割を減らす。
+    coralBoulder(far=True)
 def reefRockArch():
     # 二層の自然な岩の帯で幅広い棚と奥行のある中央開口を作る。
     for yy,shift in [(-2.2,0),(1.8,.35)]:
@@ -304,10 +311,10 @@ def friendlyWhale():
     organic_tube('背の低い小さな背びれ',[( -4,0,4.55),(-3.4,0,5.10),(-2.9,0,5.22),(-2.55,0,4.86)],
                  [.21,.20,.13,.07],'whaleBlue',12)
 
-BUILDS={k:v for k,v in list(globals().items()) if k in ('branchCoral','branchCoralFar','tubeSponge','broadSeaweed','tableCoral','coralBoulder','reefRockArch','friendlyWhale')}
+BUILDS={k:v for k,v in list(globals().items()) if k in ('branchCoral','branchCoralFar','tubeSponge','tubeSpongeFar','broadSeaweed','tableCoral','coralBoulder','coralBoulderFar','reefRockArch','friendlyWhale')}
 SIZES={'branchCoral':[2.5,3,2.5],'tubeSponge':[1.8,2.5,1.8],'broadSeaweed':[2.5,4,2.5],
        'tableCoral':[3.5,2,3.5],'coralBoulder':[3,2.5,3],'reefRockArch':[22,24,8],'friendlyWhale':[24,6,7],
-       'branchCoralFar':[2.5,3,2.5]}
+       'branchCoralFar':[2.5,3,2.5],'tubeSpongeFar':[1.8,2.5,1.8],'coralBoulderFar':[3,2.5,3]}
 def render(id):
     sc=bpy.context.scene
     sc.world=bpy.data.worlds.new('深い海の背景'); sc.world.use_nodes=True
@@ -370,15 +377,16 @@ def signature(data):
     return hashlib.sha256(json.dumps(data,sort_keys=True,separators=(',',':'),allow_nan=False).encode('utf-8')).hexdigest()
 
 previous=None; original_signatures={}
-if ADD_FAR:
+if ADD_FAR or ADD_REEF_FAR:
     with open(DEST,encoding='utf-8') as f: previous=json.load(f,parse_constant=lambda value: (_ for _ in ()).throw(ValueError(value)))
-    expected=set(SIZES)-{'branchCoralFar'}
-    if set(previous['assets']) not in (expected,expected|{'branchCoralFar'}): raise ValueError('既存の自然素材７点が一致しません')
+    core=set(SIZES)-{'branchCoralFar','tubeSpongeFar','coralBoulderFar'}
+    if not core.issubset(previous['assets']) or not set(previous['assets']).issubset(SIZES): raise ValueError('既存の自然素材７点が一致しません')
+    generated={'branchCoralFar'} if ADD_FAR else {'tubeSpongeFar','coralBoulderFar'}
     original_signatures={id:signature(asset) for id,asset in previous['assets'].items()}
-    original_signatures.pop('branchCoralFar',None)
+    for id in generated: original_signatures.pop(id,None)
     material_signature=signature(previous['materials'])
 assets={}; reports=[]
-for id in ([PREVIEW] if PREVIEW else (['branchCoralFar'] if ADD_FAR else (['branchCoral','tubeSponge'] if FIRST else SIZES))):
+for id in ([PREVIEW] if PREVIEW else (['branchCoralFar'] if ADD_FAR else (['tubeSpongeFar','coralBoulderFar'] if ADD_REEF_FAR else (['branchCoral','tubeSponge'] if FIRST else SIZES)))):
     bpy.ops.object.select_all(action='SELECT'); bpy.ops.object.delete(use_global=False)
     BUILDS[id]()
     asset,report=export(id); assets[id]=asset; reports.append(report)
@@ -386,11 +394,11 @@ for id in ([PREVIEW] if PREVIEW else (['branchCoralFar'] if ADD_FAR else (['bran
     bpy.ops.wm.save_as_mainfile(filepath=os.path.join(OUT,id+'.blend'))
     print('生成:',id,'三角形:',report['triangles'])
 if PREVIEW: sys.exit(0)
-if ADD_FAR:
+if ADD_FAR or ADD_REEF_FAR:
     with open(os.path.join(OUT,'geometry-report.json'),encoding='utf-8') as f: old_reports=json.load(f)
-    if {r['id'] for r in old_reports} not in (set(original_signatures),set(original_signatures)|{'branchCoralFar'}): raise ValueError('既存の寸法報告７点が一致しません')
+    if {r['id'] for r in old_reports}!={*original_signatures,*({id for id in generated if id in previous['assets']})}: raise ValueError('既存の寸法報告が一致しません')
     assets={**previous['assets'],**assets}
-    reports=[*(r for r in old_reports if r['id']!='branchCoralFar'),*reports]
+    reports=[*(r for r in old_reports if r['id'] not in generated),*reports]
     if any(signature(assets[id])!=old for id,old in original_signatures.items()): raise ValueError('既存の形状が変わりました')
     materials=previous['materials']
     if signature(materials)!=material_signature: raise ValueError('既存の材質が変わりました')

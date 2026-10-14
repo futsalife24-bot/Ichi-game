@@ -83,7 +83,7 @@ export function conceptHeight(number,x,z) {
   return h*coast-2.5*(1-coast);
 }
 export function clampConceptPosition(number,p) {
-  const constraint=(x,z)=>Math.max(conceptLandDistance(number,x,z)+1.1,(.08-conceptHeight(number,x,z))*2.5);
+  const constraint=(x,z)=>Math.max(conceptLandDistance(number,x,z)+1.1,(.08-conceptWalkHeight(number,x,z))*2.5);
   if(constraint(p.x,p.z)<=0)return false;
   // きしの すぐそばへ もどす。とおくの みちへ とばさない。
   for(let i=0;i<35;i++) {
@@ -111,8 +111,10 @@ export function clampConceptSolids(solids,p) {
     p.x=b.x+c*x+s*z;p.z=b.z-s*x+c*z;changed=true;
   }return changed;
 }
+export function conceptWorkshopBridgeHeight(x) { return Math.max(.65,conceptHeight(4,x,4))+.22; }
 export function conceptWalkHeight(number,x,z) {
   let h=conceptHeight(number,x,z);
+  if(number===4&&x>=8.58&&x<=18.42&&Math.abs(z-4)<=2.15)h=conceptWorkshopBridgeHeight(x);
   if(number===5)h+=.6*(1-smooth(.86,1.03,Math.hypot(x/11.8,(z+13)/8.8)));
   return h;
 }

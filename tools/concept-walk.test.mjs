@@ -86,6 +86,23 @@ for(const [number,targets] of [
   if(number===7)assert.ok(area.groundAt(-24,-4)>area.groundAt(-24,0)+.3);
 });
 
+test('第四島の川の木橋を実際の主人公で渡り、板の上へ接地する',async()=>{
+  const kit=await loadLearningIslandKit(4),scene=new THREE.Scene(),area=new LearningIsland(scene,4,kit),player=new Player(scene);
+  const deck=area.scenery.group.getObjectByName('こうぼうの はしの ゆか');scene.updateMatrixWorld(true);
+  assert.ok(deck,'見える木橋の床');
+  for(let x=9;x<=18;x+=.9){
+    const ray=new THREE.Raycaster(new THREE.Vector3(x,8,4),new THREE.Vector3(0,-1,0));
+    const hit=ray.intersectObject(deck)[0];assert.ok(hit,`木橋の板 ${x}`);
+    assert.ok(Math.abs(hit.point.y-area.groundAt(x,4))<.015,`見える板と歩行床 ${x}`);
+  }
+  player.teleport(8,area.groundAt(8,4),4,0);walkTo(player,area,4,[19,4]);
+  assert.ok(player.pos.x>18.5,'川の向こう側に到達');
+  player.teleport(14,area.groundAt(14,4),4,0);
+  const side={getMove:()=>({x:0,y:1}),consumeJump:()=>false};
+  for(let i=0;i<120;i++)player.update(1/60,side,area,{});
+  assert.ok(player.pos.z>2.45,'橋の手すりで川へ落ちない');
+});
+
 test('第七島の中央橋は横の柵で落下を防ぎ、開口から側橋へ曲がれる',async()=>{
   const kit=await loadLearningIslandKit(7),scene=new THREE.Scene(),area=new LearningIsland(scene,7,kit),player=new Player(scene);
   const right={getMove:()=>({x:1,y:0}),consumeJump:()=>false};

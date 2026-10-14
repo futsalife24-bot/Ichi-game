@@ -25,6 +25,40 @@ function contactShadows(parent,poses) {
   });
   shadows.castShadow=false;shadows.receiveShadow=false;shadows.renderOrder=1;shadows.computeBoundingSphere();parent.add(shadows);
 }
+function reefGarden(group,scenery,rnd) {
+  const pose=new THREE.Object3D(),rocks=[],plates=[],stems=[],tips=[];
+  const anchors=[[-18,27,5.5],[-25,20,5.8],[-15,13,4.8],[-25,8,5.3],[-20,-5,5.5],[-28,-13,5.3],
+                 [18,28,5.5],[26,20,5.8],[15,13,4.8],[25,7,5.3],[20,-5,5.5],[29,-13,5.3]];
+  const add=(list,x,y,z,sx,sy,sz,yaw=0)=>list.push({x,y,z,sx,sy,sz,yaw});
+  const clear=(x,z)=>conceptPathDistance(6,x,z)>5.65&&conceptLandDistance(6,x,z)<-1.8&&
+    !scenery.layout.models.some(([,mx,mz])=>Math.hypot(x-mx,z-mz)<3.4);
+  for(const [ax,az,radius] of anchors)for(let i=0;i<23;i++){
+    const angle=i*2.39996+rnd()*.25,d=Math.sqrt((i+.6)/23)*radius;
+    const x=ax+Math.cos(angle)*d,z=az+Math.sin(angle)*d*.68;
+    if(!clear(x,z))continue;
+    const h=conceptHeight(6,x,z),s=.75+rnd()*1.15;
+    add(rocks,x,h+.18*s,z,s*1.45,s*.49,s*1.1,angle);
+    if(i%3===0){
+      const top=h+.38*s;
+      add(stems,x,top+.47*s,z,.17*s,.5*s,.17*s);
+      add(plates,x,top+.75*s,z,1.1*s,.15*s,.77*s,angle);
+    }
+    if(i%2===0){
+      const fx=x+(rnd()-.5)*1.2,fz=z+(rnd()-.5)*1.2;
+      if(clear(fx,fz))add(tips,fx,conceptHeight(6,fx,fz)+.35,fz,.2+rnd()*.12,.55+rnd()*.38,.2+rnd()*.12,angle);
+    }
+  }
+  const shared=(geometry,material,items,name)=>{
+    const mesh=new THREE.InstancedMesh(geometry,material,items.length);mesh.name=name;
+    items.forEach((p,i)=>{pose.position.set(p.x,p.y,p.z);pose.rotation.set(0,p.yaw,0);pose.scale.set(p.sx,p.sy,p.sz);pose.updateMatrix();mesh.setMatrixAt(i,pose.matrix);});
+    mesh.receiveShadow=true;mesh.castShadow=false;mesh.computeBoundingSphere();group.add(mesh);
+  };
+  shared(new THREE.SphereGeometry(1,8,5),conceptMaterial({color:0x829c9f,type:'rock',roughness:1}),rocks,'にわの がんせき');
+  shared(new THREE.CylinderGeometry(1,.78,.9,9,1),conceptMaterial({color:0x5c969f,type:'stone',roughness:.95}),plates,'ひらたい さんご');
+  shared(new THREE.CylinderGeometry(.7,1,1,6,1),conceptMaterial({color:0x947bb1,type:'rock',roughness:1}),stems,'さんごの くき');
+  shared(new THREE.ConeGeometry(1,1,5,1),conceptMaterial({color:0xed9aa6,type:'stone',roughness:1}),tips,'ちいさい さんご');
+  group.userData.seabedReefGarden={rocks:rocks.length,plates:plates.length,stems:stems.length,tips:tips.length};
+}
 function seaTerraces(scenery) {
   const group=scenery.group,sand=new THREE.Color(0xd8d4b1),road=new THREE.Color(0xefdfb6),stone=new THREE.Color(0xb9c6c0),color=new THREE.Color();
   // ちかくの かいだんと さんごの にわは、あるく たかさと おなじ こまかい じめんで みせる。
@@ -48,7 +82,9 @@ function seaTerraces(scenery) {
     const inner=5.3+i*.55,outer=inner+.55,x=side*(inner+outer)/2;
     if(step===0&&side<0&&inner>7.5&&inner<14)continue;
     if(step===1&&side>0&&inner>5.5&&inner<12.5)continue;
-    const zz=z+.35*Math.sin(x*.18+step),xa=side*inner,xb=side*outer;
+    const zz=z+1.35*Math.sin(inner*.22+step*.65)+.45*Math.sin(inner*.57-step);
+    const xa=side*inner,xb=side*outer;
+    if(conceptPathDistance(6,xa,zz)<5.2||conceptPathDistance(6,xb,zz)<5.2)continue;
     const topA=conceptHeight(6,xa,zz-1)+.19,topB=conceptHeight(6,xb,zz-1)+.19;
     const bottomA=conceptHeight(6,xa,zz+1)-.42,bottomB=conceptHeight(6,xb,zz+1)-.42;
     faces.push([xa,bottomA,zz,xb,bottomB,zz,xa,topA,zz,xb,topB,zz]);
@@ -69,9 +105,25 @@ function seaTerraces(scenery) {
   steps.forEach((z,i)=>{pose.position.set(0,conceptHeight(6,0,z)+.045,z);pose.rotation.set(0,0,0);pose.scale.set(1,1,1);pose.updateMatrix();sill.setMatrixAt(i,pose.matrix);});
   sill.receiveShadow=true;sill.computeBoundingSphere();group.add(sill);
 }
+function pearlLight(shell) {
+  const pearl=shell.getObjectByName('static_pearl');
+  if(!pearl)throw new Error('まんなかの しんじゅが たりません');
+  pearl.geometry.computeBoundingBox();
+  const center=pearl.geometry.boundingBox.getCenter(new THREE.Vector3());
+  // ひかりも しんじゅと おなじ ばしょと おおきさで、かいの なかを てらす。
+  const glow=new THREE.PointLight(0xffe2a2,110,32,2);glow.name='しんじゅの ひかり';glow.position.copy(center);shell.add(glow);
+  const size=64,data=new Uint8Array(size*size*4);
+  for(let y=0;y<size;y++)for(let x=0;x<size;x++){
+    const d=Math.hypot((x+.5-size/2)/(size/2),(y+.5-size/2)/(size/2)),i=(y*size+x)*4;
+    data[i]=255;data[i+1]=225;data[i+2]=158;data[i+3]=Math.round(100*Math.pow(Math.max(0,1-d),2));
+  }
+  const map=new THREE.DataTexture(data,size,size,THREE.RGBAFormat);map.needsUpdate=true;
+  const halo=new THREE.Sprite(new THREE.SpriteMaterial({map,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false}));
+  halo.name='しんじゅの やわらかい ひかり';halo.position.copy(center);halo.scale.set(9.8,9.8,1);shell.add(halo);
+}
 export function buildSeabed(scenery,kit) {
   if(!kit)throw new Error('うみの しぜんの かたちが たりません');
-  const rnd=rng(1906),group=scenery.group,points={branchCoral:[],tubeSponge:[],broadSeaweed:[],tableCoral:[],coralBoulder:[]},farCorals=[];
+  const rnd=rng(1906),group=scenery.group,points={branchCoral:[],tubeSponge:[],broadSeaweed:[],tableCoral:[],coralBoulder:[],tubeSpongeFar:[],coralBoulderFar:[]},farCorals=[];
   seaTerraces(scenery);
   // およぐ魚の動的な影は省き、魚の色と動きはそのままにする。
   scenery.fish?.forEach(fish=>fish.traverse(part=>{if(part.isMesh)part.castShadow=false;}));
@@ -80,7 +132,11 @@ export function buildSeabed(scenery,kit) {
     if(road<4.3||Math.hypot(x,z+18)<10||scenery.layout.models.some(([,mx,mz])=>Math.hypot(x-mx,z-mz)<4))continue;
     const kind=['branchCoral','tubeSponge','broadSeaweed','tableCoral','coralBoulder'][i%5];
     const s=kind==='broadSeaweed'?.5+rnd()*.55:kind==='branchCoral'?.35+rnd()*.75:.3+rnd()*.6;
-    points[kind].push({p:[x,conceptHeight(6,x,z),z],s:[s,s*(.85+rnd()*.35),s],r:[0,rnd()*6.28,0]});
+    const entry={p:[x,conceptHeight(6,x,z),z],s:[s,s*(.85+rnd()*.35),s],r:[0,rnd()*6.28,0]};
+    // みちから はなれた こものは、りんかくを のこした かるい もけいにする。
+    const distant=z<-16||Math.abs(x)>22||z>23||(road>10&&z<4);
+    if(distant&&kind==='branchCoral')farCorals.push(entry);
+    else points[distant&&['tubeSponge','coralBoulder'].includes(kind)?`${kind}Far`:kind].push(entry);
   }
   // おくの おおきな がんしょうを かさねて、うみの おくゆきを つくる。
   for(const [x,z,s,yaw] of [[-38,-52,1.3,.12],[39,-56,1.35,-.2],[-61,-98,1.8,.32],[64,-102,1.95,-.3],[-20,-121,1.7,.05]]){
@@ -106,8 +162,9 @@ export function buildSeabed(scenery,kit) {
     }
   }
   scenery.group.userData.seabedGardenAdded=gardenAdded;
+  reefGarden(group,scenery,rnd);
   const shadowPoses=[];
-  for(const id of ['tubeSponge','tableCoral','coralBoulder'])for(const pose of points[id])shadowPoses.push({p:pose.p,radius:pose.s[0]*(id==='tableCoral'?1.45:1.05)});
+  for(const id of ['tubeSponge','tableCoral','coralBoulder','tubeSpongeFar','coralBoulderFar'])for(const pose of points[id])shadowPoses.push({p:pose.p,radius:pose.s[0]*(id==='tableCoral'?1.45:1.05)});
   for(const [id,poses] of Object.entries(points))for(const p of kit.assets[id].meshes){
     const mat=p.materialObject.clone();addCaustics(mat,scenery.time);
     instanceParts(group,p.geometry,mat,poses,false);
@@ -130,7 +187,7 @@ export function buildSeabed(scenery,kit) {
   instanceParts(group,new THREE.SphereGeometry(1,14,10),conceptMaterial({color:0xb7c0b1,type:'rock'}),pebbles,false);
   for(const pebble of pebbles)shadowPoses.push({p:[pebble.p[0],pebble.p[1]-.18,pebble.p[2]],radius:.42});
   contactShadows(group,shadowPoses);
-  const shell=scenery.models.get('greatPearlShell'),glow=new THREE.PointLight(0xffe7b0,110,30,2);glow.position.set(shell.position.x,shell.position.y+4.55,shell.position.z+2);group.add(glow);
+  pearlLight(scenery.models.get('greatPearlShell'));
   if(kit.assets.friendlyWhale){scenery.whale?.removeFromParent();scenery.whale=model(group,kit.assets.friendlyWhale,11,22,-46,1,Math.PI-.18);scenery.whale.scale.y=1.35;scenery.whale.userData.rest=scenery.whale.position.clone();}
   const rays=new THREE.Group();group.add(rays);
   for(let i=0;i<10;i++){

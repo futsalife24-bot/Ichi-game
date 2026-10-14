@@ -5,6 +5,7 @@
     720
   ],
   "captureMethod": "同じ景観コードと実プレイヤーを描いたWebGL画面。画像の加工なし",
+  "uiCaptureMethod": "Cuaのブラウザー画面のJPEGをそのまま保存",
   "originals": [
     {
       "island": 1,
@@ -78,9 +79,9 @@
       "file": "01-entry.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1029234,
-      "sha256": "b024efaa93d61cd1286820a4cb5749f943a453f62af4391fdcb7efffe37b7b49",
-      "capturedAt": "2026-10-13T14:37:53.022Z"
+      "bytes": 1032831,
+      "sha256": "192ecef8b65de69d176527fcee6aebc808bdd6f6b70ac6f729038d8d52d7c6cd",
+      "capturedAt": "2026-10-13T22:51:09.815Z"
     },
     {
       "island": 1,
@@ -88,9 +89,9 @@
       "file": "01-hero.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1198185,
-      "sha256": "ef412de1f0d73dca405eecff03ad15223b4a94b72fc4f9ae752069279e1b00c3",
-      "capturedAt": "2026-10-13T14:37:54.932Z"
+      "bytes": 1201673,
+      "sha256": "277d0374b30f96b77674b477369a7f234cfccfd1c4852f3e3037f829849f713b",
+      "capturedAt": "2026-10-13T22:51:11.873Z"
     },
     {
       "island": 1,
@@ -98,9 +99,9 @@
       "file": "01-side.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1248242,
-      "sha256": "e17919558269c4cee2cc635281a2c307c1ec6b2567d1f8984c7cd883de3c1b84",
-      "capturedAt": "2026-10-13T14:42:37.179Z"
+      "bytes": 1251142,
+      "sha256": "469210a7390a55bade3957b267127c42887c46169c22833ad5dfd5badecee6a2",
+      "capturedAt": "2026-10-13T22:51:14.612Z"
     },
     {
       "island": 2,
@@ -108,9 +109,9 @@
       "file": "02-entry.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1334720,
-      "sha256": "8f41ef0c7e09c3eca46423e609a42dbda25367f34998702261ed8c0145afc46e",
-      "capturedAt": "2026-10-13T14:39:57.389Z"
+      "bytes": 1337955,
+      "sha256": "111a8ac6b18a9faf9afadef6a3c991aeaabcd8b3fbdb4f08f66b7e9ab93f6ea9",
+      "capturedAt": "2026-10-13T22:51:45.741Z"
     },
     {
       "island": 2,
@@ -118,9 +119,9 @@
       "file": "02-hero.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1368313,
-      "sha256": "f73eb0ddb27bc750483e5c491370aef9df4f5a3f9bcc4dc46bb7184ac6df773b",
-      "capturedAt": "2026-10-13T14:39:59.384Z"
+      "bytes": 1371635,
+      "sha256": "42cc8963570ffcd870cb4c1643b12930e432ff59eb2fc8608633e2028d33c65d",
+      "capturedAt": "2026-10-13T22:51:47.660Z"
     },
     {
       "island": 2,
@@ -128,9 +129,9 @@
       "file": "02-side.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1296353,
-      "sha256": "b0161ff4e4f4513b6a7fa4e59e9419d746e467cbf4f601033273ceb06f67e363",
-      "capturedAt": "2026-10-13T14:40:01.244Z"
+      "bytes": 1299692,
+      "sha256": "76c16733de5fc88526975da5ef7568f5d609d6bc25a82f92752d47b8921d93e5",
+      "capturedAt": "2026-10-13T22:51:49.660Z"
     },
     {
       "island": 3,
@@ -138,9 +139,9 @@
       "file": "03-entry.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1070379,
-      "sha256": "477763b8f7428c068e0d9a1f1a6000cd9b4558701be0b1a54b2ee1d644ed7032",
-      "capturedAt": "2026-10-13T14:42:41.296Z"
+      "bytes": 1073274,
+      "sha256": "e0bd73d8fbafd4bdfca405d1929e09484876e49b4e32a8a188ea43714224bac9",
+      "capturedAt": "2026-10-13T22:52:23.474Z"
     },
     {
       "island": 3,
@@ -148,9 +149,9 @@
       "file": "03-hero.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1613220,
-      "sha256": "959f4f610a212f6ff3a2c67cd72d7b930846801b7c3100de18244fda12f7a29e",
-      "capturedAt": "2026-10-13T14:43:52.039Z"
+      "bytes": 1615801,
+      "sha256": "45fefc9cfd2aad70cc2ebba9beb10e600b19a7e370d7a019de5e258503d91ace",
+      "capturedAt": "2026-10-13T22:52:25.787Z"
     },
     {
       "island": 3,
@@ -158,9 +159,9 @@
       "file": "03-side.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1166513,
-      "sha256": "a5803b7b55c1d4529ac169f17a9a4b1bd3774f502942243bbd7c09397c57b6b9",
-      "capturedAt": "2026-10-13T14:45:16.351Z"
+      "bytes": 1169272,
+      "sha256": "4ae5909c0281be317eb32730f107d2f4e879b8f2197957200230a2fcde1f40b4",
+      "capturedAt": "2026-10-13T22:52:31.825Z"
     },
     {
       "island": 4,
@@ -168,9 +169,9 @@
       "file": "04-entry.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1218484,
-      "sha256": "c3e9268882efb95ac5e42de98d3eb73b60cc6bbb27578066b487adeb4aa42c9b",
-      "capturedAt": "2026-10-13T14:49:16.898Z"
+      "bytes": 1147026,
+      "sha256": "f936e7ce0eb9e08de7e875aa7e8d4f900ab6e9da5e8806bb35953b9fd6aa348d",
+      "capturedAt": "2026-10-13T22:54:56.026Z"
     },
     {
       "island": 4,
@@ -178,9 +179,9 @@
       "file": "04-hero.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1279530,
-      "sha256": "76f33880216711172328b8cd3e27b14427ed866d1a3636410c3e6dd3c9dd3421",
-      "capturedAt": "2026-10-13T14:54:22.985Z"
+      "bytes": 1242194,
+      "sha256": "5b63cccabf2ebcb3f88afb92f253538b3200a2344394cd7d0723c20e64597846",
+      "capturedAt": "2026-10-13T22:54:57.579Z"
     },
     {
       "island": 4,
@@ -188,9 +189,9 @@
       "file": "04-side.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1213323,
-      "sha256": "b849151f94042dcae86878a6d0a381bab6cded7051c898f91677e40da229a873",
-      "capturedAt": "2026-10-13T14:54:44.208Z"
+      "bytes": 1367314,
+      "sha256": "341658ac6ede5ffe210bf3aae128471c18118ac4f2bc2b8224aeb106de0a709c",
+      "capturedAt": "2026-10-14T00:44:46.585Z"
     },
     {
       "island": 5,
@@ -198,9 +199,9 @@
       "file": "05-entry.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1137561,
-      "sha256": "d08f41c6b56446c6cdb4cd25f50379fe470f9b1531748584e69500760332acd6",
-      "capturedAt": "2026-10-13T14:54:45.539Z"
+      "bytes": 1141132,
+      "sha256": "a70cc154d633f9f3bea19ed4a3fadb3368a52cca38e300ae0cae3686b6fc0621",
+      "capturedAt": "2026-10-13T22:58:28.809Z"
     },
     {
       "island": 5,
@@ -208,9 +209,9 @@
       "file": "05-hero.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1157902,
-      "sha256": "c9b07796d8c63a1f4ada1d79cf6c3ad8c65f56298c974c087f89ee3413b9bf15",
-      "capturedAt": "2026-10-13T14:54:46.920Z"
+      "bytes": 1161283,
+      "sha256": "8f57199b19158e8b598dce58797855ce3d275e702555985b311c6f7f21eccd1b",
+      "capturedAt": "2026-10-13T22:58:30.546Z"
     },
     {
       "island": 5,
@@ -218,9 +219,9 @@
       "file": "05-side.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1154897,
-      "sha256": "8facf070cc52ec2b1cd3fed7cd25ac60d378700daa02d79a6eaf61a712da1744",
-      "capturedAt": "2026-10-13T14:56:50.081Z"
+      "bytes": 1157975,
+      "sha256": "686d1f6e5b25d6794df7adc38139b6573cdd5444ad2a449b51cea4b247bdf5d3",
+      "capturedAt": "2026-10-13T22:58:32.459Z"
     },
     {
       "island": 6,
@@ -228,9 +229,9 @@
       "file": "06-entry.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1161714,
-      "sha256": "c4f556e4c89fa9f4d7b9beb049d65c35ca9219c015345465f6fbc3374a012b05",
-      "capturedAt": "2026-10-13T14:58:29.230Z"
+      "bytes": 1192583,
+      "sha256": "2df36f735093f4bd2a21deb3ebcfdb901ddb7dac9c12087c21d6e3d683056ea4",
+      "capturedAt": "2026-10-13T23:00:19.422Z"
     },
     {
       "island": 6,
@@ -238,9 +239,9 @@
       "file": "06-hero.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1093941,
-      "sha256": "6b0595056a50d8e6cfe411f3b4730c1f657ad62a282015532caeb7e72fc73d20",
-      "capturedAt": "2026-10-13T14:58:30.807Z"
+      "bytes": 1097145,
+      "sha256": "1248f86a87d487406c0d3ddb7a6b0e2aba81010ea86de858cd7bf915e62f718d",
+      "capturedAt": "2026-10-13T23:00:21.241Z"
     },
     {
       "island": 6,
@@ -248,9 +249,9 @@
       "file": "06-side.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1106869,
-      "sha256": "dc857a90b454b11dc8f3b5e315e9e454a4752be9e4aa151636de7997a1726907",
-      "capturedAt": "2026-10-13T14:58:32.241Z"
+      "bytes": 1108314,
+      "sha256": "e64aa22883ee6863ba152beda6ff3582bc824f6ba63ce158569340efea652f5f",
+      "capturedAt": "2026-10-13T23:00:23.124Z"
     },
     {
       "island": 7,
@@ -258,9 +259,9 @@
       "file": "07-entry.png",
       "width": 1280,
       "height": 720,
-      "bytes": 984422,
-      "sha256": "c7e5815d78dbacfca17433e58ffc3051b96e42ab5b20f40389014ed67d9dc02f",
-      "capturedAt": "2026-10-13T14:56:52.702Z"
+      "bytes": 1019132,
+      "sha256": "10a5478ef0288cfca7c8cb5e8d8e0a90d806d5a17310e71d20f6d5bf239ed3df",
+      "capturedAt": "2026-10-13T23:03:42.562Z"
     },
     {
       "island": 7,
@@ -268,9 +269,9 @@
       "file": "07-hero.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1244656,
-      "sha256": "b2ac36367887f05fbd54cb0b2538ef2195741e459d1bfb47e45ebce5cf2d6222",
-      "capturedAt": "2026-10-13T14:56:54.437Z"
+      "bytes": 1346479,
+      "sha256": "5d6fe5b420ac4ae799cdf1a505494cd8603d6e73e48f648deb292bedf68326da",
+      "capturedAt": "2026-10-13T23:03:45.023Z"
     },
     {
       "island": 7,
@@ -278,9 +279,9 @@
       "file": "07-side.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1006938,
-      "sha256": "bf4ef707eb0a2d29ebc2600a69270b1fb5874bd483f84ff3ed3cbeee5b1863c3",
-      "capturedAt": "2026-10-13T14:56:56.118Z"
+      "bytes": 1071075,
+      "sha256": "e7b089a2073c046d52c025e03aa12ca70a74bb8219b174973abd851c31420249",
+      "capturedAt": "2026-10-13T23:03:48.550Z"
     },
     {
       "island": 8,
@@ -288,9 +289,9 @@
       "file": "08-entry.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1112880,
-      "sha256": "369a21bd096daaa7f0378932e1e56ef25f27eadfbe05b47bd8568eb30ed99879",
-      "capturedAt": "2026-10-13T14:57:47.167Z"
+      "bytes": 1246688,
+      "sha256": "5eebb9a9ab35d3b90cae2ff4a988c1067c47d81935db877de2dae0894eaa123f",
+      "capturedAt": "2026-10-13T23:04:51.955Z"
     },
     {
       "island": 8,
@@ -298,9 +299,9 @@
       "file": "08-hero.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1130301,
-      "sha256": "1e6c88f85b0f7f93635e23201739922d325461796b1475d3f01db8b3da13ac38",
-      "capturedAt": "2026-10-13T14:57:49.252Z"
+      "bytes": 1260190,
+      "sha256": "6b888ef669cd58a4904a899e1ae61feefd8b72149a5ef39a1a017d8dbf689621",
+      "capturedAt": "2026-10-13T23:04:54.189Z"
     },
     {
       "island": 8,
@@ -308,9 +309,235 @@
       "file": "08-side.png",
       "width": 1280,
       "height": 720,
-      "bytes": 1103950,
-      "sha256": "d18d39266d593d9a188756892a8c4bed77fb6b9133053699d6417f1b67e5a7e6",
-      "capturedAt": "2026-10-13T14:57:51.234Z"
+      "bytes": 1233591,
+      "sha256": "12886f9bc760998790bfc25b1b23eed945bf7a4d6671dab56e1b170eee7f348d",
+      "capturedAt": "2026-10-13T23:04:56.521Z"
+    }
+  ],
+  "browserScreenshots": [
+    {
+      "island": 1,
+      "size": "wide",
+      "file": "ui/01-wide.jpg",
+      "viewport": [
+        1280,
+        720
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 105107,
+      "sha256": "5c629078ceefd1f1a61c733cc0a5236fbb810dafdc3ec7c87574699a32a2a8df",
+      "capturedAt": "2026-10-14T00:44:36.622Z"
+    },
+    {
+      "island": 1,
+      "size": "small",
+      "file": "ui/01-small.jpg",
+      "viewport": [
+        667,
+        375
+      ],
+      "width": 667,
+      "height": 375,
+      "bytes": 39061,
+      "sha256": "a8727dee57f25404c6900317562e4791fe8d332d2fa7168cee5e436ac8d74912",
+      "capturedAt": "2026-10-14T00:44:38.160Z"
+    },
+    {
+      "island": 2,
+      "size": "wide",
+      "file": "ui/02-wide.jpg",
+      "viewport": [
+        1280,
+        720
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 168728,
+      "sha256": "1ca333a2ca531cf5b1220ca44c81752b5fa0dbc7d93da04153787f8acf30652b",
+      "capturedAt": "2026-10-14T00:35:07.384Z"
+    },
+    {
+      "island": 2,
+      "size": "small",
+      "file": "ui/02-small.jpg",
+      "viewport": [
+        667,
+        375
+      ],
+      "width": 667,
+      "height": 375,
+      "bytes": 59301,
+      "sha256": "d684a1285fa708dff107b5bdac202997e1f69a353ca671ca8d57b5d922a94505",
+      "capturedAt": "2026-10-14T00:35:08.160Z"
+    },
+    {
+      "island": 3,
+      "size": "wide",
+      "file": "ui/03-wide.jpg",
+      "viewport": [
+        1280,
+        720
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 131808,
+      "sha256": "ea2ea4ebe2b365b58a4d54978643ac3a3f4d3023fccdf935609a01624795b8d4",
+      "capturedAt": "2026-10-14T00:30:37.309Z"
+    },
+    {
+      "island": 3,
+      "size": "small",
+      "file": "ui/03-small.jpg",
+      "viewport": [
+        667,
+        375
+      ],
+      "width": 667,
+      "height": 375,
+      "bytes": 50938,
+      "sha256": "30847bbbc6b5be6e699b5bc5247cdcd9ce8812a1d41ea749cc08f0d611c36ff2",
+      "capturedAt": "2026-10-14T00:30:37.968Z"
+    },
+    {
+      "island": 4,
+      "size": "wide",
+      "file": "ui/04-wide.jpg",
+      "viewport": [
+        1280,
+        720
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 138895,
+      "sha256": "4362a1aee2f6fb58e77baebf588d640236ff510ad15f5b42f495c8c6ef5c1b2c",
+      "capturedAt": "2026-10-14T00:19:29.834Z"
+    },
+    {
+      "island": 4,
+      "size": "small",
+      "file": "ui/04-small.jpg",
+      "viewport": [
+        667,
+        375
+      ],
+      "width": 667,
+      "height": 375,
+      "bytes": 53167,
+      "sha256": "45ea0b261ca05a6d5fbda94fe040c8aca5c5062511118e41bd36b7c78978fdfa",
+      "capturedAt": "2026-10-14T00:19:30.648Z"
+    },
+    {
+      "island": 5,
+      "size": "wide",
+      "file": "ui/05-wide.jpg",
+      "viewport": [
+        1280,
+        720
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 131105,
+      "sha256": "c7169a4846918eb11f85c302a3b0fda512821c99f5959f2d76a4f6ce91e44cd6",
+      "capturedAt": "2026-10-14T00:16:40.007Z"
+    },
+    {
+      "island": 5,
+      "size": "small",
+      "file": "ui/05-small.jpg",
+      "viewport": [
+        667,
+        375
+      ],
+      "width": 667,
+      "height": 375,
+      "bytes": 51435,
+      "sha256": "2694f849dd058a63f2c466482c972e0e5398fa3e4fc7206e0502bb2119d6a2ee",
+      "capturedAt": "2026-10-14T00:16:40.906Z"
+    },
+    {
+      "island": 6,
+      "size": "wide",
+      "file": "ui/06-wide.jpg",
+      "viewport": [
+        1280,
+        720
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 120057,
+      "sha256": "7b1edbffd7101ce038b5f738f525cbb1009047d2297ebee98d44b3edc9aeb740",
+      "capturedAt": "2026-10-14T00:11:38.433Z"
+    },
+    {
+      "island": 6,
+      "size": "small",
+      "file": "ui/06-small.jpg",
+      "viewport": [
+        667,
+        375
+      ],
+      "width": 667,
+      "height": 375,
+      "bytes": 49648,
+      "sha256": "a72e773ba7e59dc3a0223952c6c817b60c10007f0c6acaa4654062447dec51d0",
+      "capturedAt": "2026-10-14T00:11:39.153Z"
+    },
+    {
+      "island": 7,
+      "size": "wide",
+      "file": "ui/07-wide.jpg",
+      "viewport": [
+        1280,
+        720
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 120377,
+      "sha256": "a3f9cb2f5e7657cba94faad6feb00383f0bd71d74d24f3724757c3d4c271dafd",
+      "capturedAt": "2026-10-14T00:08:36.812Z"
+    },
+    {
+      "island": 7,
+      "size": "small",
+      "file": "ui/07-small.jpg",
+      "viewport": [
+        667,
+        375
+      ],
+      "width": 667,
+      "height": 375,
+      "bytes": 46550,
+      "sha256": "542217d8d12eb92240fbb66e3a6d0f2a794a6d137d24f622de9a14923a36d27c",
+      "capturedAt": "2026-10-14T00:08:37.497Z"
+    },
+    {
+      "island": 8,
+      "size": "wide",
+      "file": "ui/08-wide.jpg",
+      "viewport": [
+        1280,
+        720
+      ],
+      "width": 1280,
+      "height": 720,
+      "bytes": 135898,
+      "sha256": "5775795292299ca03c20d5d0de1cdc9ebf1d531f3ca09850cd92b4c149e4e758",
+      "capturedAt": "2026-10-14T00:04:06.582Z"
+    },
+    {
+      "island": 8,
+      "size": "small",
+      "file": "ui/08-small.jpg",
+      "viewport": [
+        667,
+        375
+      ],
+      "width": 667,
+      "height": 375,
+      "bytes": 53592,
+      "sha256": "d134694ec0d8047c49d717b202efb8af32dc76cc4ec8d5c54a81e6dfe5ef1a66",
+      "capturedAt": "2026-10-14T00:01:00.454Z"
     }
   ]
 }

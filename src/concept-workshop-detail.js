@@ -103,11 +103,86 @@ function stairsAndToy(parts){
   add(parts,'toyRed',-9.94,2.34,8.97,.44,.56,.43);
   add(parts,'woodDark',-9.21,2.02,9.1,.68,.12,.14);
 }
+function outdoorYard(parts,scenery,origin){
+  const place=(key,x,y,z,w,h,d,ry=0)=>add(parts,key,x+3,y-origin,z+27,w,h,d,ry);
+  const ground=(x,z)=>scenery.groundAt(x,z+13);
+  // ひだりの にわに、しごとを みせる ひらいた やねと つくえを おく。
+  for(const x of [-20.4,-13.9])for(const z of [-8.25,-3.8]){
+    const floor=ground(x,z);
+    place('woodDark',x,floor+2.38,z,.28,4.76,.28);
+    place('metal',x,floor+4.68,z,.36,.12,.36);
+  }
+  for(const z of [-8.25,-3.8])place('woodLight',-17.15,ground(-17.15,z)+4.57,z,6.85,.22,.26);
+  const tableY=ground(-17,-3.5);
+  place('woodLight',-17,tableY+1.42,-3.5,4.8,.29,2.35);
+  for(const x of [-19,-15])for(const z of [-4.3,-2.7])place('woodDark',x,tableY+.72,z,.3,1.37,.3);
+  for(const x of [-18.4,-15.7])place('woodDark',x,tableY+.39,-3.5,.22,.15,2.1);
+  for(let i=0;i<7;i++){
+    const x=-18.8+i*.54;
+    place(i%3===0?'toyRed':i%3===1?'toyBlue':'woodLight',x,tableY+1.81,-3.65+(i%2)*.5,.38,.45+(i%3)*.16,.39);
+  }
+  for(const x of [-20.1,-13.8]){
+    const h=ground(x,-2.6);
+    place('woodLight',x,h+.53,-2.6,1.05,.19,.68);
+    for(const dx of [-.35,.35])place('woodDark',x+dx,h+.24,-2.6,.17,.48,.56);
+  }
+  // くるまの おもちゃは かたまりにせず、からだと しゃりんを わける。
+  const toyGround=ground(-13.1,.7);
+  place('woodLight',-13.1,toyGround+.47,.7,1.25,.55,.58);
+  place('woodLight',-12.57,toyGround+.86,.7,.37,.42,.39);
+  place('toyRed',-12.47,toyGround+1.16,.7,.55,.22,.42);
+  for(const x of [-13.56,-12.64])for(const z of [.33,1.07])place('toyWheel',x,toyGround+.23,z,.21,.21,.12);
+  for(let i=0;i<5;i++)place('woodLight',-21+i*.29,ground(-21,-1.3)+.13,-1.3,.25,.24,1.25);
+}
+function wheelChannel(parts,scenery,origin){
+  const place=(key,x,y,z,w,h,d,ry=0)=>add(parts,key,x+3,y-origin,z+14,w,h,d,ry);
+  const wheel=scenery.models.get('greatWaterwheel'),aqueduct=scenery.models.get('workshopAqueduct');
+  if(!wheel||!aqueduct)return;
+  const y=Math.max(aqueduct.position.y+7.9,wheel.position.y+10.25),ax=21.2,az=-17.7,bx=12.7,bz=-12.1;
+  const dx=bx-ax,dz=bz-az,length=Math.hypot(dx,dz),ry=-Math.atan2(dz,dx),px=-dz/length,pz=dx/length;
+  for(const side of [-1,1])place('woodDark',(ax+bx)/2+side*px*.57,y,(az+bz)/2+side*pz*.57,length,.35,.22,ry);
+  place('woodLight',(ax+bx)/2,y-.22,(az+bz)/2,length,.18,1.37,ry);
+  place('channelWater',(ax+bx)/2,y+.03,(az+bz)/2,length-.5,.035,1.02,ry);
+  for(const [x,z] of [[20.2,-17.05],[15.6,-14]]){
+    const base=scenery.groundAt(x,z),top=y-.15;
+    place('woodDark',x,(base+top)/2,z,.43,top-base,.43);
+    place('woodLight',x,top-.08,z,1.4,.27,1.32);
+  }
+  const lipY=wheel.position.y+9.25;
+  place('channelWater',12.7,(y+lipY)/2,-12.1,.54,y-lipY,.08);
+  // くるまの しんと どめがねを、まえから わかる おおきさに する。
+  const hubY=wheel.position.y+6.05;
+  place('woodDark',10,hubY,-9.14,1.25,1.25,.51);
+  place('metal',10,hubY,-8.86,.63,.63,.13);
+}
+function yardCanvas(scenery){
+  const geometry=new THREE.PlaneGeometry(7.45,4.9,6,3),p=geometry.attributes.position;
+  for(let i=0;i<p.count;i++)p.setZ(i,.31*(1-Math.abs(p.getX(i))/3.725)-.1*Math.cos(p.getY(i)*1.2));
+  geometry.computeVertexNormals();geometry.rotateX(-Math.PI/2);
+  const cloth=new THREE.Mesh(geometry,conceptMaterial({color:0xe7d4a7,type:'cloth',roughness:1}));
+  cloth.name='ひだりの こうさくにわの ひよけ';cloth.position.set(-17.15,scenery.groundAt(-17.15,7)+4.7,7);
+  cloth.castShadow=true;cloth.receiveShadow=true;scenery.group.add(cloth);
+}
+function wheelRimBolts(scenery){
+  const wheel=scenery.models.get('greatWaterwheel'),pivot=wheel?.children.find(child=>child.isGroup&&child.position.y>5);
+  if(!pivot)return;
+  const bolts=new THREE.InstancedMesh(new THREE.CylinderGeometry(1,1,1,8),conceptMaterial({color:0xd5ab5c,type:'metal',metalness:.55}),12);
+  bolts.name='すいしゃの わの どめがね';
+  for(let i=0;i<12;i++){
+    const angle=i*Math.PI/6;
+    pose.position.set(Math.cos(angle)*5.72,Math.sin(angle)*5.72,1.68);
+    pose.rotation.set(Math.PI/2,0,0);pose.scale.set(.13,.12,.13);pose.updateMatrix();bolts.setMatrixAt(i,pose.matrix);
+  }
+  bolts.castShadow=false;bolts.receiveShadow=true;bolts.computeBoundingSphere();pivot.add(bolts);
+}
 
 export function buildWorkshopDetail(scenery){
   if(!scenery||scenery.number!==4)return;
-  const origin=scenery.groundAt(-3,-14),parts={interior:[],woodDark:[],woodLight:[],redRoof:[],toyRed:[],toyBlue:[],metal:[],foliage:[],flower:[],archDark:[],archGlass:[],archRim:[],toyWheel:[]};
+  const origin=scenery.groundAt(-3,-14),parts={interior:[],woodDark:[],woodLight:[],redRoof:[],toyRed:[],toyBlue:[],metal:[],foliage:[],flower:[],archDark:[],archGlass:[],archRim:[],toyWheel:[],channelWater:[]};
   shopBays(parts);balcony(parts);windows(parts);stairsAndToy(parts);
+  const before=Object.fromEntries(Object.entries(parts).map(([key,list])=>[key,list.length]));
+  outdoorYard(parts,scenery,origin);wheelChannel(parts,scenery,origin);yardCanvas(scenery);wheelRimBolts(scenery);
+  scenery.group.userData.workshopAdded={...Object.fromEntries(Object.entries(parts).map(([key,list])=>[key,list.length-before[key]])),rimBolts:12};
   const group=scenery.group,box=beveledBox();
   draw(group,box,conceptMaterial({color:0x463a2b,type:'wood',roughness:.96}),parts.interior,origin);
   draw(group,box,conceptMaterial({color:0x76502e,type:'wood'}),parts.woodDark,origin);
@@ -123,4 +198,5 @@ export function buildWorkshopDetail(scenery){
   draw(group,arch,conceptMaterial({color:0x92a9ae,type:'glass',opacity:.65}),parts.archGlass,origin);
   draw(group,new THREE.TorusGeometry(1,.11,7,20,Math.PI),conceptMaterial({color:0x9b6836,type:'wood'}),parts.archRim,origin);
   draw(group,new THREE.CylinderGeometry(1,1,1,12),conceptMaterial({color:0x6b4b2f,type:'wood'}),parts.toyWheel,origin);
+  draw(group,new THREE.BoxGeometry(1,1,1),conceptMaterial({color:0x8bdbec,type:'water',roughness:.3,transparent:true,opacity:.78}),parts.channelWater,origin);
 }

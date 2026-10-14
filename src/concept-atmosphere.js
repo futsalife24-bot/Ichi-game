@@ -4,7 +4,22 @@ import { CONCEPT_LAYOUTS } from './concept-island-layout.js';
 const pose=new THREE.Object3D();
 export function buildConceptSky(scenery) {
   const n=scenery.number,top=new THREE.Color(n===6?0x168fae:n===8?0x737bab:0x7bbcf2),bottom=new THREE.Color(n===6?0x74d3d3:n===8?0xf1b79a:0xdaf0fc);
-  const mat=new THREE.ShaderMaterial({side:THREE.BackSide,depthWrite:false,toneMapped:false,uniforms:{top:{value:top},bottom:{value:bottom}},vertexShader:'varying vec3 vLocal;void main(){vLocal=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',fragmentShader:'varying vec3 vLocal;uniform vec3 top,bottom;void main(){float h=smoothstep(-.08,.7,normalize(vLocal).y);gl_FragColor=vec4(mix(bottom,top,h),1.0);\n#include <colorspace_fragment>\n}' });
+  const festivalSky=`
+    float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+    float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+1.),f.x),f.y);}
+    float clouds(vec2 p){return .52*noise(p)+.28*noise(p*2.1)+.14*noise(p*4.3)+.06*noise(p*8.1);}
+  `;
+  const festivalColor=`
+    float dusk=exp(-pow((direction.y-.06)*9.,2.));
+    col+=vec3(.16,.025,0.)*dusk;
+    vec2 cloudUv=vec2(atan(direction.x,-direction.z)*5.,direction.y*19.);
+    float wisps=smoothstep(.48,.7,clouds(cloudUv+vec2(3.,0.)))*smoothstep(.02,.13,direction.y)*(1.-smoothstep(.3,.58,direction.y));
+    col=mix(col,vec3(.43,.36,.58),wisps*.58);
+    float sunDistance=length(direction-normalize(vec3(.24,.10,-1.)));
+    col+=vec3(.27,.12,.03)*exp(-sunDistance*sunDistance*35.);
+    col=mix(col,vec3(1.,.80,.40),1.-smoothstep(.013,.016,sunDistance));
+  `;
+  const mat=new THREE.ShaderMaterial({side:THREE.BackSide,depthWrite:false,toneMapped:false,uniforms:{top:{value:top},bottom:{value:bottom}},vertexShader:'varying vec3 vLocal;void main(){vLocal=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',fragmentShader:`varying vec3 vLocal;uniform vec3 top,bottom;${n===8?festivalSky:''}void main(){vec3 direction=normalize(vLocal);float h=smoothstep(-.08,${n===8?'.48':'.7'},direction.y);vec3 col=mix(bottom,top,h);${n===8?festivalColor:''}gl_FragColor=vec4(col,1.0);\n#include <colorspace_fragment>\n}` });
   const sky=new THREE.Mesh(new THREE.SphereGeometry(260,32,20),mat);sky.renderOrder=-10;scenery.group.add(sky);
   scenery.skyMaterial=mat;scenery.skyDay={top:top.clone(),bottom:bottom.clone()};
   if(n===6)return;
@@ -13,7 +28,7 @@ export function buildConceptSky(scenery) {
     const a=(cluster/15)*Math.PI*2,d=135+(cluster%3)*26,x=Math.cos(a)*d,z=Math.sin(a)*d,y=19+(cluster%4)*5;
     for(let j=0;j<15;j++){const angle=j*2.399,r=Math.sqrt((j+1)/15);data.push({x:x+Math.cos(angle)*19*r,y:y+Math.sin(j*1.77)*2+(j%3)*2,z:z+Math.sin(angle)*9*r,s:4+(j%4)*1.6});}
   }
-  const cloud=new THREE.InstancedMesh(new THREE.SphereGeometry(1,20,12),new THREE.MeshStandardMaterial({color:n===8?0xf0c7be:0xffffff,roughness:1}),data.length);
+  const cloud=new THREE.InstancedMesh(new THREE.SphereGeometry(1,20,12),new THREE.MeshStandardMaterial({color:n===8?0xb6a7cf:0xffffff,emissive:n===8?0x9875a5:0x000000,emissiveIntensity:n===8?.12:0,roughness:1}),data.length);
   data.forEach((p,i)=>{pose.position.set(p.x,p.y,p.z);pose.scale.set(p.s,p.s*.8,p.s*.9);pose.rotation.set(0,0,0);pose.updateMatrix();cloud.setMatrixAt(i,pose.matrix);});cloud.receiveShadow=true;scenery.group.add(cloud);
 }
 export function buildConceptWater(scenery) {
@@ -44,6 +59,8 @@ const nightTop=new THREE.Color(0x10233f),nightBottom=new THREE.Color(0x445676),m
 export function applyConceptLight(world,scene,number,climate=null,scenery=null) {
   if(!number)return;
   const n=number,light=CONCEPT_LAYOUTS[n].light;
+  // うみの なかと ゆうやけの まつりは、しまの そらだけを みせる。
+  if(n===6||n===8)for(const body of [world.sun,world.moon,world.stars])if(body)body.visible=false;
   world.hemi.color.set(n===6?0xd9f7ff:0xe9f4ff);world.hemi.groundColor.set(n===8?0x988693:0xbbbba9);world.hemi.intensity=n===8?.75:1.1;
   world.sunLight.color.set(light.sun);world.sunLight.intensity=light.intensity;
   const night=n===6||n===8?0:(climate?.night??0),rain=n===6?0:(climate?.rain??0);
