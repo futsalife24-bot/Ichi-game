@@ -16,7 +16,7 @@ function spanWeight(x, z, span) {
   return ends * sides;
 }
 
-// はしの はしから ゆっくり たかく みる。ほかの ばしょの がかくは そのまま。
+// はしの はしから ゆっくり ちかづく ための おもみ。
 export function conceptBridgeCameraWeight(number, x, z) {
   if(number===4)return smooth(7.3,10.5,x)*(1-smooth(17,20.8,x))*(1-smooth(1.6,6.2,Math.abs(z-4)));
   if (number === 3) {
@@ -44,6 +44,33 @@ export function conceptBridgeCameraWeight(number, x, z) {
 // outPosition と outTarget は さいりようできる Vector3。fov は かえない。
 export function setConceptCameraGoal(number, playerPosition, view, outPosition, outTarget, compactHud = false, visibleHud = false) {
   const weight = conceptBridgeCameraWeight(number, playerPosition.x, playerPosition.z);
+  if (visibleHud || compactHud) {
+    // だいななの ちゅうおうばしを もとに、はしでも あしが みえる かくどを どの しまでも つかう。
+    // ちいさい がめんも おなじ むきを たもち、うさぎを したの ぼたんより うえに おく。
+    // だいさんの ななめばしでは、むきを かえずに よこへ すべらせて てすりを よける。
+    let sideStep = number === 3 ? 9.6 * weight : 0;
+    if (number === 7) {
+      const [, left, right] = CONCEPT_LAYOUTS[7].bridges;
+      const bridgeWeight = bridge => Math.max(
+        spanWeight(playerPosition.x, playerPosition.z, bridge),
+        1 - smooth(1, 4, Math.hypot(playerPosition.x - bridge.a[0], playerPosition.z - bridge.a[1])),
+        1 - smooth(1, 4, Math.hypot(playerPosition.x - bridge.b[0], playerPosition.z - bridge.b[1])),
+      );
+      sideStep -= 10.4 * bridgeWeight(left);
+      sideStep += 5.6 * bridgeWeight(right);
+    }
+    // だいよんの はしでは てすりを よけるため、むきを かえずに ちかづく。
+    const fourthWeight = number === 4 ? Math.max(
+      weight,
+      1 - smooth(0, 3, Math.hypot(playerPosition.x - 9, playerPosition.z - 4)),
+      1 - smooth(4, 6.5, Math.hypot(playerPosition.x - 18, playerPosition.z)),
+    ) : 0;
+    const eyeY = 9.7 - 3.2 * fourthWeight;
+    const eyeZ = 24 - 12 * fourthWeight;
+    outPosition.set(playerPosition.x + 2.4 + sideStep, playerPosition.y + eyeY, playerPosition.z + eyeZ);
+    outTarget.set(playerPosition.x + .6 + sideStep, playerPosition.y + eyeY - 11.2, playerPosition.z + eyeZ - 38);
+    return weight;
+  }
   const lift = number === 4 ? 8 : number === 3 ? 6 : 4.5;
   const lowerAim = number === 4 ? 9 : number === 3 ? 7.5 : 5;
   const stepBack = number === 3 ? -4 : 0;

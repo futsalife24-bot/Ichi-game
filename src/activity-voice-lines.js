@@ -1,4 +1,4 @@
-// まだ ろくおんへ つないでいない こていの だいほん。
+// はちつの しまの ろくおんへ つなぐ こていの だいほん。
 import { ISLAND_ACTIVITIES } from './island-activities.js';
 
 export const ACTIVITY_VOICE_LINES = [

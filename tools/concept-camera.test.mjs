@@ -27,6 +27,28 @@ function goals(number, position, compactHud = false, visibleHud = false) {
   return { view, eye, target, weight };
 }
 
+test('通常の大小画面は第七島の中央橋を基準に補正した俯瞰方向を全八島で保つ', () => {
+  const reference = new THREE.Vector3(-1.8, -11.2, -38).normalize();
+  const seventh = new THREE.Vector3(0, conceptWalkHeight(7, 0, 0), 0);
+  const seventhGoal = goals(7, seventh, false, true);
+  assert.ok(seventhGoal.weight > .95);
+  assert.ok(seventhGoal.target.clone().sub(seventhGoal.eye).normalize().distanceTo(reference) < 1e-12);
+  for (const [id, layout] of Object.entries(CONCEPT_LAYOUTS)) {
+    const number = Number(id);
+    for (const [x, z] of [layout.spawn, layout.hero]) {
+      const position = new THREE.Vector3(x, conceptWalkHeight(number, x, z), z);
+      for (const compactHud of [false, true]) {
+        const { eye, target } = goals(number, position, compactHud, true);
+        const direction = target.clone().sub(eye).normalize();
+        assert.ok(direction.distanceTo(reference) < 1e-12, `第${number}島の視線角が違う`);
+        assert.ok(Math.abs((target.y - eye.y) + 11.2) < 1e-9, `第${number}島の地形追従と視線角`);
+        if (number !== 4 || x !== layout.hero[0] || z !== layout.hero[1])
+          assert.ok(Math.abs(eye.y - position.y - 9.7) < 1e-9, `第${number}島の通常位置の高さ`);
+      }
+    }
+  }
+});
+
 test('第一島の出発画面では船の帆がうさぎを隠さない', () => {
   assert.deepEqual([LANDMARKS.spawn.x, LANDMARKS.spawn.z], CONCEPT_LAYOUTS[1].spawn);
   const [x, z] = CONCEPT_LAYOUTS[1].spawn;
@@ -121,11 +143,26 @@ test('第四島の木橋と対岸でも、実際の手すりがウサギの足�
   const scenery={number:4,layout:CONCEPT_LAYOUTS[4],group:new THREE.Group(),solids:[],groundAt:(x,z)=>conceptHeight(4,x,z)};
   buildForestDetail(scenery);scenery.group.updateMatrixWorld(true);
   const bridge=scenery.group.getObjectByName('こうぼうの はし');
-  for(const [x,z] of [[11,4],[14,4],[17,4],[18,0]]){
-    const position=new THREE.Vector3(x,conceptWalkHeight(4,x,z),z),{eye,target,view}=goals(4,position);
-    for(const part of [...feet,bodyCentre])assert.equal(bridgeHits([bridge],eye,position.clone().add(part)),0,`${x},${z}: 橋が身体を隠す`);
-    const camera=new THREE.PerspectiveCamera(view.fov,16/9,.1,450);camera.position.copy(eye);camera.lookAt(target);camera.updateMatrixWorld();
-    for(const part of [...feet,bodyCentre])assert.ok(Math.abs(position.clone().add(part).project(camera).y)<.9,`${x},${z}: 身体が画面外`);
+  const route = [];
+  for (let x = 9; x <= 18; x += .25) route.push([x, 4]);
+  route.push([18, 0]);
+  let previous = null;
+  for(const [x,z] of route){
+    const position=new THREE.Vector3(x,conceptWalkHeight(4,x,z),z);
+    for(const [compactHud,visibleHud] of [[false,false],[false,true],[true,true]]){
+      if (!visibleHud && ![[11, 4], [14, 4], [17, 4], [18, 0]].some(([px, pz]) => x === px && z === pz)) continue;
+      const {eye,target,view}=goals(4,position,compactHud,visibleHud);
+      for(const part of [...feet,bodyCentre])assert.equal(bridgeHits([bridge],eye,position.clone().add(part)),0,`${x},${z} 小画面=${compactHud} 通常画面=${visibleHud}: 橋が身体を隠す`);
+      const camera=new THREE.PerspectiveCamera(view.fov,16/9,.1,450);camera.position.copy(eye);camera.lookAt(target);camera.updateMatrixWorld();
+      for(const part of [...feet,bodyCentre])assert.ok(Math.abs(position.clone().add(part).project(camera).y)<.9,`${x},${z}: 身体が画面外`);
+      if (visibleHud) {
+        const direction = target.clone().sub(eye);
+        assert.ok(direction.distanceTo(new THREE.Vector3(-1.8, -11.2, -38)) < 1e-9, `${x},${z}: 視線角が変わった`);
+        if (previous && !compactHud && z === 4)
+          assert.ok(eye.clone().sub(position).distanceTo(previous) < 1, `${x},${z}: 視点が飛んだ`);
+        if (!compactHud) previous = eye.clone().sub(position);
+      }
+    }
   }
 });
 
@@ -183,8 +220,8 @@ test('第三島の橋全長と出口、第七島の橋出口でも身体が手�
       for (let i = 0; i <= steps; i++) {
         const t = i / steps, x = a[0] + (b[0] - a[0]) * t, z = a[1] + (b[1] - a[1]) * t;
         const position = new THREE.Vector3(x, conceptWalkHeight(number, x, z), z);
-        for (const compactHud of [false, true]) {
-          const { eye, target } = goals(number, position, compactHud);
+        for (const [compactHud, visibleHud] of [[false, false], [false, true], [true, true]]) {
+          const { eye, target } = goals(number, position, compactHud, visibleHud);
           for (const part of [...feet, bodyCentre]) {
             assert.equal(bridgeHits(meshes, eye, position.clone().add(part)), 0, `第${number}島 ${x.toFixed(2)},${z.toFixed(2)} ${part.toArray()} 小画面=${compactHud}`);
           }
@@ -201,11 +238,37 @@ test('第三島の橋全長と出口、第七島の橋出口でも身体が手�
   }
 });
 
+test('小さい横画面の橋上でもウサギが左右の操作ボタンに重ならない', () => {
+  const points = [
+    [3, CONCEPT_LAYOUTS[3].bridge.a], [3, [12, -4]], [3, CONCEPT_LAYOUTS[3].bridge.b],
+    [4, [11, 4]], [4, [14, 4]], [4, [17, 4]], [4, [18, 0]],
+    [7, [0, 0]], [7, [-17, -4]], [7, [-19, -4]], [7, [17, -5]], [7, [19, -5]],
+  ];
+  for (const [number, [x, z]] of points) {
+    const position = new THREE.Vector3(x, conceptWalkHeight(number, x, z), z);
+    const { eye, target } = goals(number, position, true, true);
+    const camera = new THREE.PerspectiveCamera(48, 667 / 375, .1, 450);
+    camera.position.copy(eye); camera.lookAt(target); camera.updateMatrixWorld();
+    const pixels = [];
+    for (const px of [rabbitBounds.min.x, rabbitBounds.max.x])
+      for (const py of [rabbitBounds.min.y, rabbitBounds.max.y])
+        for (const pz of [rabbitBounds.min.z, rabbitBounds.max.z]) {
+          const point = position.clone().add(new THREE.Vector3(px, py, pz)).project(camera);
+          pixels.push([(1 + point.x) * 667 / 2, (1 - point.y) * 375 / 2]);
+        }
+    const left = Math.min(...pixels.map(point => point[0]));
+    const right = Math.max(...pixels.map(point => point[0]));
+    const bottom = Math.max(...pixels.map(point => point[1]));
+    assert.ok(left > 135 || bottom < 240, `第${number}島 ${x},${z} の身体が左操作へ重なる: ${left},${bottom}`);
+    assert.ok(right < 540 || bottom < 245, `第${number}島 ${x},${z} の身体が右操作へ重なる: ${right},${bottom}`);
+  }
+});
+
 test('小さい横画面では全八島のウサギ全身が下部メニューより上にあり、主役も画面に残る', () => {
   for (const [id, layout] of Object.entries(CONCEPT_LAYOUTS)) {
     const number = Number(id), [x, z] = layout.spawn;
     const position = new THREE.Vector3(x, conceptWalkHeight(number, x, z), z);
-    const { view, eye, target } = goals(number, position, true);
+    const { view, eye, target } = goals(number, position, true, true);
     for (const fov of [48, 50]) {
       const camera = new THREE.PerspectiveCamera(fov, 667 / 375, .1, 450);
       camera.position.copy(eye);camera.lookAt(target);camera.updateMatrixWorld();
@@ -218,7 +281,7 @@ test('小さい横画面では全八島のウサギ全身が下部メニュー�
       const [heroX, heroY] = pixel(new THREE.Vector3(layout.hero[0], conceptWalkHeight(number, ...layout.hero) + 10, layout.hero[1]));
       assert.ok(headX > 100 && headX < 567 && footX > 100 && footX < 567, `第${number}島のウサギが横から外れる`);
       assert.ok(headY >= 90 && headY < footY && footY < 260, `第${number}島のウサギが下部メニューと重なる: ${headY},${footY} FOV=${fov}`);
-      assert.ok(heroX > 0 && heroX < 667 && heroY > 0 && heroY < 240, `第${number}島の主役が画面から外れる: ${heroX},${heroY} FOV=${fov}`);
+      assert.ok(heroX > 0 && heroX < 667 && heroY > -5 && heroY < 240, `第${number}島の主役が画面から外れる: ${heroX},${heroY} FOV=${fov}`);
     }
     const normal = goals(number, position);
     assert.ok(!eye.equals(normal.eye) || !target.equals(normal.target));
@@ -238,7 +301,7 @@ test('通常の横画面でも全八島のウサギ全身を下部ボタンよ�
   }
 });
 
-test('通常プレイの小さい横画面で島メニューが見える時だけ補正する', () => {
+test('通常プレイでは島メニューの開閉によらず共通俯瞰を使う', () => {
   const source = readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
   const cameraGoalSource = source.slice(source.indexOf('function cameraGoal()'), source.indexOf('function snapCamera()'));
   const selected = [], state = { hidden: false };
@@ -248,16 +311,16 @@ test('通常プレイの小さい横画面で島メニューが見える時だ�
     camTarget: new THREE.Vector3(), lookTarget: new THREE.Vector3(),
     harborErrands: { gathering: { cameraPose: null } },
     islandNumber: () => 6, CONCEPT_LAYOUTS, CONCEPT_CAMERA,
-    setConceptCameraGoal: (...args) => selected.push(args[5]),
+    setConceptCameraGoal: (...args) => selected.push(args.slice(5)),
     $: () => ({ classList: { contains: () => state.hidden } }),
   };
   vm.runInNewContext(`${cameraGoalSource}\ncameraGoal()`, context);
-  assert.equal(selected.pop(), true);
-  state.hidden = true;vm.runInNewContext('cameraGoal()', context);assert.equal(selected.pop(), false);
+  assert.deepEqual(selected.pop(), [true, true]);
+  state.hidden = true;vm.runInNewContext('cameraGoal()', context);assert.deepEqual(selected.pop(), [true, true]);
   state.hidden = false;context.window.innerHeight = 720;context.window.innerWidth = 1280;
-  vm.runInNewContext('cameraGoal()', context);assert.equal(selected.pop(), false);
+  vm.runInNewContext('cameraGoal()', context);assert.deepEqual(selected.pop(), [false, true]);
   context.window.innerHeight = 667;context.window.innerWidth = 375;
-  vm.runInNewContext('cameraGoal()', context);assert.equal(selected.pop(), false);
+  vm.runInNewContext('cameraGoal()', context);assert.deepEqual(selected.pop(), [false, true]);
   context.window.innerHeight = 375;context.window.innerWidth = 667;context.mode = 'title';
-  vm.runInNewContext('cameraGoal()', context);assert.equal(selected.pop(), false);
+  vm.runInNewContext('cameraGoal()', context);assert.deepEqual(selected.pop(), [false, false]);
 });

@@ -83,6 +83,11 @@
       "text": "にじゅうごベル",
       "duration": 1.98
     },
+    "87353861": {
+      "file": "gemini/87353861.mp3",
+      "text": "パンやさんのりんご、えいごではなんていうかな。",
+      "duration": 3.8
+    },
     "ab15260c": {
       "file": "gemini/ab15260c.mp3",
       "text": "こえをだすよ！",
@@ -3632,6 +3637,586 @@
       "file": "gemini/3d3a5c63.mp3",
       "text": "いちかちゃん！",
       "duration": 1.18
+    },
+    "80c5cdd9": {
+      "file": "gemini/80c5cdd9.mp3",
+      "text": "まず、みほんをみてね。",
+      "duration": 2.32
+    },
+    "c3a2fb83": {
+      "file": "gemini/c3a2fb83.mp3",
+      "text": "いっしょにやってみよう。",
+      "duration": 1.17
+    },
+    "062a0e8b": {
+      "file": "gemini/062a0e8b.mp3",
+      "text": "こんどはじぶんでやってみよう。",
+      "duration": 1.77
+    },
+    "afab5722": {
+      "file": "gemini/afab5722.mp3",
+      "text": "みほんをみて、もういちどためしてね。",
+      "duration": 3.16
+    },
+    "29899dce": {
+      "file": "gemini/29899dce.mp3",
+      "text": "どうなるかな。",
+      "duration": 1.09
+    },
+    "492534cb": {
+      "file": "gemini/492534cb.mp3",
+      "text": "よそうして、ためして、よくみてね。",
+      "duration": 2.17
+    },
+    "ac65180f": {
+      "file": "gemini/ac65180f.mp3",
+      "text": "えらんだものをとどけよう。",
+      "duration": 1.76
+    },
+    "55c22009": {
+      "file": "gemini/55c22009.mp3",
+      "text": "どんなおまつりにする？",
+      "duration": 1.56
+    },
+    "f6bc74c9": {
+      "file": "gemini/f6bc74c9.mp3",
+      "text": "えをえらんでね。",
+      "duration": 1.1
+    },
+    "60d16f36": {
+      "file": "gemini/60d16f36.mp3",
+      "text": "あかいふうせんはどれ？",
+      "duration": 1.56
+    },
+    "4f11f81d": {
+      "file": "gemini/4f11f81d.mp3",
+      "text": "りんごを３こあつめよう",
+      "duration": 2.69
+    },
+    "2943751e": {
+      "file": "gemini/2943751e.mp3",
+      "text": "まるとおなじかたちはどれ？",
+      "duration": 2.81
+    },
+    "dc3f1a69": {
+      "file": "gemini/dc3f1a69.mp3",
+      "text": "もーもーはだあれ？",
+      "duration": 2.69
+    },
+    "ab65f934": {
+      "file": "gemini/ab65f934.mp3",
+      "text": "ひよこにりんごを２ことどける",
+      "duration": 3.41
+    },
+    "f2b77eeb": {
+      "file": "gemini/f2b77eeb.mp3",
+      "text": "かいがらをおさらへはこぶ",
+      "duration": 2.88
+    },
+    "dab67015": {
+      "file": "gemini/dab67015.mp3",
+      "text": "３とおなじりんごのおさら",
+      "duration": 3.19
+    },
+    "81ab5d53": {
+      "file": "gemini/81ab5d53.mp3",
+      "text": "あかいものをあつめよう",
+      "duration": 1.98
+    },
+    "98d8532a": {
+      "file": "gemini/98d8532a.mp3",
+      "text": "Aとおなじカード",
+      "duration": 1.77
+    },
+    "82b8edb7": {
+      "file": "gemini/82b8edb7.mp3",
+      "text": "みほんどおりにおさらをならべる",
+      "duration": 2.81
+    },
+    "2cb43471": {
+      "file": "gemini/2cb43471.mp3",
+      "text": "おちたりんごをかごへ",
+      "duration": 2.15
+    },
+    "810dbb34": {
+      "file": "gemini/810dbb34.mp3",
+      "text": "４こと２こ、どちらがおおい？",
+      "duration": 3.07
+    },
+    "2e1231de": {
+      "file": "gemini/2e1231de.mp3",
+      "text": "１・２・□・４",
+      "duration": 2.83
+    },
+    "af1f3332": {
+      "file": "gemini/af1f3332.mp3",
+      "text": "りんごとapple",
+      "duration": 2.67
+    },
+    "3d461412": {
+      "file": "gemini/3d461412.mp3",
+      "text": "あかいはなを３ぼんとどける",
+      "duration": 2.45
+    },
+    "a5de1496": {
+      "file": "gemini/a5de1496.mp3",
+      "text": "おさらを３こと３こに",
+      "duration": 1.86
+    },
+    "101c5878": {
+      "file": "gemini/101c5878.mp3",
+      "text": "かえるさんにはっぱを３まい",
+      "duration": 1.94
+    },
+    "e91428b9": {
+      "file": "gemini/e91428b9.mp3",
+      "text": "さんかく２まいでしかく",
+      "duration": 1.8
+    },
+    "c2b77728": {
+      "file": "gemini/c2b77728.mp3",
+      "text": "あか・あお・あか・あお",
+      "duration": 1.92
+    },
+    "d144786d": {
+      "file": "gemini/d144786d.mp3",
+      "text": "はしにとどくいた",
+      "duration": 1.31
+    },
+    "c49b3053": {
+      "file": "gemini/c49b3053.mp3",
+      "text": "12このみほんとおなじかず",
+      "duration": 2.09
+    },
+    "acc351b7": {
+      "file": "gemini/acc351b7.mp3",
+      "text": "おうちのやねとかべ",
+      "duration": 2.87
+    },
+    "1ad1e295": {
+      "file": "gemini/1ad1e295.mp3",
+      "text": "ながいいたとみじかいいた",
+      "duration": 2.71
+    },
+    "d21fa1ad": {
+      "file": "gemini/d21fa1ad.mp3",
+      "text": "３こと２こをあわせる",
+      "duration": 2.01
+    },
+    "d6dc0af6": {
+      "file": "gemini/d6dc0af6.mp3",
+      "text": "４こをふたりにわける",
+      "duration": 1.81
+    },
+    "7824c5f0": {
+      "file": "gemini/7824c5f0.mp3",
+      "text": "えのリストでおかいもの",
+      "duration": 1.7
+    },
+    "c345db26": {
+      "file": "gemini/c345db26.mp3",
+      "text": "おやつを５こそろえる",
+      "duration": 1.8
+    },
+    "3fc62709": {
+      "file": "gemini/3fc62709.mp3",
+      "text": "おきゃくさんにひとつずつ",
+      "duration": 1.89
+    },
+    "7b1b6bab": {
+      "file": "gemini/7b1b6bab.mp3",
+      "text": "５こから２こわたす",
+      "duration": 2.15
+    },
+    "ac20257a": {
+      "file": "gemini/ac20257a.mp3",
+      "text": "みずをあげたはな",
+      "duration": 1.46
+    },
+    "dc1bfda9": {
+      "file": "gemini/dc1bfda9.mp3",
+      "text": "おもり３こと１こ",
+      "duration": 3.01
+    },
+    "3046caaa": {
+      "file": "gemini/3046caaa.mp3",
+      "text": "かぜとはね",
+      "duration": 1.21
+    },
+    "c559c7b8": {
+      "file": "gemini/c559c7b8.mp3",
+      "text": "ふたつのはなをくらべる",
+      "duration": 2.09
+    },
+    "c1d2aa15": {
+      "file": "gemini/c1d2aa15.mp3",
+      "text": "しゅうかくしてとどける",
+      "duration": 2.13
+    },
+    "94b96461": {
+      "file": "gemini/94b96461.mp3",
+      "text": "10こを３ことのこりに",
+      "duration": 2.68
+    },
+    "92edd1de": {
+      "file": "gemini/92edd1de.mp3",
+      "text": "えのちずのみち",
+      "duration": 1.56
+    },
+    "b63d9e5c": {
+      "file": "gemini/b63d9e5c.mp3",
+      "text": "おてつだいのえをならべる",
+      "duration": 2
+    },
+    "c508c353": {
+      "file": "gemini/c508c353.mp3",
+      "text": "じゅんび→はし→テント",
+      "duration": 2.54
+    },
+    "c9fb9e52": {
+      "file": "gemini/c9fb9e52.mp3",
+      "text": "２かしょへわけてはこぶ",
+      "duration": 1.94
+    },
+    "e450d514": {
+      "file": "gemini/e450d514.mp3",
+      "text": "５にんとパン３こ",
+      "duration": 2.03
+    },
+    "5d8ade50": {
+      "file": "gemini/5d8ade50.mp3",
+      "text": "みんながとおれるならべかた",
+      "duration": 2.11
+    },
+    "8a44c1f0": {
+      "file": "gemini/8a44c1f0.mp3",
+      "text": "にんずうとおなじいす",
+      "duration": 2.12
+    },
+    "14764dc0": {
+      "file": "gemini/14764dc0.mp3",
+      "text": "じぶんのおまつり",
+      "duration": 1.67
+    },
+    "271f092d": {
+      "file": "gemini/271f092d.mp3",
+      "text": "みんなでかたづける",
+      "duration": 1.63
+    },
+    "6877c463": {
+      "file": "gemini/6877c463.mp3",
+      "text": "だいよんのしま。",
+      "duration": 1.37
+    },
+    "7c1bc642": {
+      "file": "gemini/7c1bc642.mp3",
+      "text": "かたちをあわせて、つくってみよう。",
+      "duration": 2.16
+    },
+    "0567205c": {
+      "file": "gemini/0567205c.mp3",
+      "text": "だいごのしま。",
+      "duration": 1.29
+    },
+    "22bbc9c7": {
+      "file": "gemini/22bbc9c7.mp3",
+      "text": "おかいものと、わけるおてつだいをしよう。",
+      "duration": 2.96
+    },
+    "b8317f96": {
+      "file": "gemini/b8317f96.mp3",
+      "text": "だいろくのしま。",
+      "duration": 1.32
+    },
+    "f45d8cb3": {
+      "file": "gemini/f45d8cb3.mp3",
+      "text": "うみのそこにきたよ。",
+      "duration": 1.49
+    },
+    "0aa4761f": {
+      "file": "gemini/0aa4761f.mp3",
+      "text": "さかなやさんごをみつけよう。",
+      "duration": 2.02
+    },
+    "436ea966": {
+      "file": "gemini/436ea966.mp3",
+      "text": "だいななのしま。",
+      "duration": 1.51
+    },
+    "530b011b": {
+      "file": "gemini/530b011b.mp3",
+      "text": "くものうえをたんけんしよう。",
+      "duration": 1.99
+    },
+    "4cfbf1b3": {
+      "file": "gemini/4cfbf1b3.mp3",
+      "text": "みちとはしをたどってね。",
+      "duration": 1.82
+    },
+    "985f85f6": {
+      "file": "gemini/985f85f6.mp3",
+      "text": "だいはちのしま。",
+      "duration": 1.35
+    },
+    "8950ef26": {
+      "file": "gemini/8950ef26.mp3",
+      "text": "みんなのおまつりを、じぶんでじゅんびしよう。",
+      "duration": 3.16
+    },
+    "10bc2abf": {
+      "file": "gemini/10bc2abf.mp3",
+      "text": "apple",
+      "duration": 0.69
+    },
+    "7ff24232": {
+      "file": "gemini/7ff24232.mp3",
+      "text": "Thankyou",
+      "duration": 0.87
+    },
+    "cf77833a": {
+      "file": "gemini/cf77833a.mp3",
+      "text": "Ilikeit",
+      "duration": 0.96
+    },
+    "c40bf6cc": {
+      "file": "gemini/c40bf6cc.mp3",
+      "text": "A",
+      "duration": 0.7
+    },
+    "c70bfb85": {
+      "file": "gemini/c70bfb85.mp3",
+      "text": "B",
+      "duration": 0.82
+    },
+    "c60bf9f2": {
+      "file": "gemini/c60bf9f2.mp3",
+      "text": "C",
+      "duration": 0.79
+    },
+    "c10bf213": {
+      "file": "gemini/c10bf213.mp3",
+      "text": "D",
+      "duration": 0.73
+    },
+    "c00bf080": {
+      "file": "gemini/c00bf080.mp3",
+      "text": "E",
+      "duration": 0.61
+    },
+    "06745c07": {
+      "file": "gemini/06745c07.mp3",
+      "text": "cat",
+      "duration": 0.61
+    },
+    "e668bd09": {
+      "file": "gemini/e668bd09.mp3",
+      "text": "dog",
+      "duration": 0.84
+    },
+    "afad8963": {
+      "file": "gemini/afad8963.mp3",
+      "text": "fish",
+      "duration": 0.72
+    },
+    "977128b2": {
+      "file": "gemini/977128b2.mp3",
+      "text": "bird",
+      "duration": 0.85
+    },
+    "40f480dc": {
+      "file": "gemini/40f480dc.mp3",
+      "text": "red",
+      "duration": 0.78
+    },
+    "82fbf5cd": {
+      "file": "gemini/82fbf5cd.mp3",
+      "text": "blue",
+      "duration": 0.91
+    },
+    "05025085": {
+      "file": "gemini/05025085.mp3",
+      "text": "triangle",
+      "duration": 1.08
+    },
+    "0b41f02c": {
+      "file": "gemini/0b41f02c.mp3",
+      "text": "red,blue",
+      "duration": 1.2
+    },
+    "56893ba4": {
+      "file": "gemini/56893ba4.mp3",
+      "text": "redapple",
+      "duration": 1
+    },
+    "bd6788dc": {
+      "file": "gemini/bd6788dc.mp3",
+      "text": "watertheflower",
+      "duration": 1.29
+    },
+    "81417a23": {
+      "file": "gemini/81417a23.mp3",
+      "text": "heavyandlight",
+      "duration": 1.63
+    },
+    "089d11a8": {
+      "file": "gemini/089d11a8.mp3",
+      "text": "Gotothebridge",
+      "duration": 1.3
+    },
+    "865030cb": {
+      "file": "gemini/865030cb.mp3",
+      "text": "いっしょにあそぼう！",
+      "duration": 1.24
+    },
+    "69c44c98": {
+      "file": "gemini/69c44c98.mp3",
+      "text": "ひよこにりんごをふたつとどけたいんだ。",
+      "duration": 3.3
+    },
+    "722606aa": {
+      "file": "gemini/722606aa.mp3",
+      "text": "いっしょにかぞえておしえてね。",
+      "duration": 2.42
+    },
+    "3bf85c24": {
+      "file": "gemini/3bf85c24.mp3",
+      "text": "ふうせんがまっているよ。",
+      "duration": 1.87
+    },
+    "fdf7a1a8": {
+      "file": "gemini/fdf7a1a8.mp3",
+      "text": "あかいふうせんをみつけてね。",
+      "duration": 2.13
+    },
+    "ad663e20": {
+      "file": "gemini/ad663e20.mp3",
+      "text": "まるいものをいっしょにさがそう。",
+      "duration": 2.42
+    },
+    "91f72109": {
+      "file": "gemini/91f72109.mp3",
+      "text": "どうぶつのこえをきいてだれかおしえてね。",
+      "duration": 3.32
+    },
+    "8f4ef9d2": {
+      "file": "gemini/8f4ef9d2.mp3",
+      "text": "おおきなきのりんごがおちたよ。",
+      "duration": 2.15
+    },
+    "ee628e07": {
+      "file": "gemini/ee628e07.mp3",
+      "text": "かごへいれてね。",
+      "duration": 1.22
+    },
+    "5f74fd28": {
+      "file": "gemini/5f74fd28.mp3",
+      "text": "きのりんごがすき？",
+      "duration": 1.37
+    },
+    "214842e5": {
+      "file": "gemini/214842e5.mp3",
+      "text": "がっこうのかごにあかいものをあつめよう。",
+      "duration": 3.28
+    },
+    "b28733c8": {
+      "file": "gemini/b28733c8.mp3",
+      "text": "がっこうのカードをみておなじもじをさがそう。",
+      "duration": 3.84
+    },
+    "17c56e55": {
+      "file": "gemini/17c56e55.mp3",
+      "text": "かえるさんにはっぱをみっつとどけたいんだ。",
+      "duration": 3.85
+    },
+    "ac63d470": {
+      "file": "gemini/ac63d470.mp3",
+      "text": "あかいはなをえらんでおうちへとどけてね。",
+      "duration": 3.22
+    },
+    "3d8aaa00": {
+      "file": "gemini/3d8aaa00.mp3",
+      "text": "おうちのやねとかべをくみたてておしえてね。",
+      "duration": 3.23
+    },
+    "e305fb73": {
+      "file": "gemini/e305fb73.mp3",
+      "text": "こうさくのつくえであかとあおをならべよう。",
+      "duration": 3.82
+    },
+    "bf74953d": {
+      "file": "gemini/bf74953d.mp3",
+      "text": "こうさくのみほんとおなじかずをそろえてね。",
+      "duration": 3.38
+    },
+    "6540dfa8": {
+      "file": "gemini/6540dfa8.mp3",
+      "text": "おみせのおやつをふたりにわけるしかたをおしえてね。",
+      "duration": 3.77
+    },
+    "97810e71": {
+      "file": "gemini/97810e71.mp3",
+      "text": "おみせのえのリストをみておかいものをしよう。",
+      "duration": 3.4
+    },
+    "27f29ffe": {
+      "file": "gemini/27f29ffe.mp3",
+      "text": "おきゃくさんへひとつずつとどけたいんだ。",
+      "duration": 2.84
+    },
+    "b932e5b2": {
+      "file": "gemini/b932e5b2.mp3",
+      "text": "かだんのはなにみずをあげて、かわるようすをみよう。",
+      "duration": 3.42
+    },
+    "0504fa7f": {
+      "file": "gemini/0504fa7f.mp3",
+      "text": "じっけんのおもりをくらべておしえてね。",
+      "duration": 2.77
+    },
+    "11f552f8": {
+      "file": "gemini/11f552f8.mp3",
+      "text": "はたけのやさいをとってとどけよう。",
+      "duration": 2.54
+    },
+    "e5bbe7bc": {
+      "file": "gemini/e5bbe7bc.mp3",
+      "text": "そらのはしをとおるみちをえのちずでさがそう。",
+      "duration": 3.36
+    },
+    "9c901961": {
+      "file": "gemini/9c901961.mp3",
+      "text": "テントへはこぶにもつをふたつにわけてね。",
+      "duration": 3.13
+    },
+    "1d0a9787": {
+      "file": "gemini/1d0a9787.mp3",
+      "text": "そらのぼうけんをえのじゅんばんでおしえてね。",
+      "duration": 3.17
+    },
+    "11a24eab": {
+      "file": "gemini/11a24eab.mp3",
+      "text": "おまつりのじゅんびをして、みんなにきもちをはなそう。",
+      "duration": 3.48
+    },
+    "1a785da8": {
+      "file": "gemini/1a785da8.mp3",
+      "text": "あとでかざりをみにこられるよ。",
+      "duration": 2.15
+    },
+    "a73f0fff": {
+      "file": "gemini/a73f0fff.mp3",
+      "text": "みんながとおれるいすのならべかたをおしえてね。",
+      "duration": 3
+    },
+    "8154178d": {
+      "file": "gemini/8154178d.mp3",
+      "text": "あとでならべたいすをみにこられるよ。",
+      "duration": 3.13
+    },
+    "938012e6": {
+      "file": "gemini/938012e6.mp3",
+      "text": "おまつりのみんなとおなじかずのいすをあつめよう。",
+      "duration": 3.9
     }
   }
 }

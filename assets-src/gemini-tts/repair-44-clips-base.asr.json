@@ -1,0 +1,18 @@
+[
+  {
+    "batchId": 44,
+    "hash": "80c5cdd9",
+    "expected": "まず、ミホンを みてね。",
+    "language": "ja",
+    "sha256": "7effd478a97f7b8c1b2a8a9c354cd383d621fc096877d60ca1dde1bbe393bd6e",
+    "recognized": "まず、日本を見てね。"
+  },
+  {
+    "batchId": 44,
+    "hash": "afab5722",
+    "expected": "ミホンを みて、もういちど ためしてね。",
+    "language": "ja",
+    "sha256": "122e6957e819e6a3b472dbda919a11177b1dee3e5f9816235bd45c8cc7a4a182",
+    "recognized": "日本を見て、もう一度試してね"
+  }
+]

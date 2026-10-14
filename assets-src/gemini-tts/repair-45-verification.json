@@ -1,0 +1,66 @@
+{
+  "sourceSha256": "879f2828e91bd13ff2751b0c4fc3479eee7ede25a226814b730ba5f4993dbf02",
+  "note": "補助認識は聴感合格の証拠ではない。見本3片は原本smallが「美本」、原本baseと短片2モデルが「日本」で、読みを最終試聴で確認する。",
+  "clips": [
+    {
+      "hash": "80c5cdd9",
+      "from": 0.23,
+      "to": 2.55,
+      "duration": 2.32,
+      "adoptedMp3Sha256": "83c33d502349b3da9e9ca29e154d69307ac922d4794417de668056dc08b3443e",
+      "sourceSmall": "まず、美本を見てね。",
+      "sourceBase": "まず、日本を見てね。",
+      "clipSmall": "まず、日本を見てね",
+      "clipBase": "まず、日本を見てね",
+      "focusedAuditoryCheck": "見本の冒頭がマ行のミか"
+    },
+    {
+      "hash": "afab5722",
+      "from": 5.91,
+      "to": 9.07,
+      "duration": 3.16,
+      "adoptedMp3Sha256": "eebaebdb33b4b22980adb1e8d6da621e83ed9a0612ab0b3b47054ad2546c896f",
+      "sourceSmall": "美本を見て、もう一度試してね。",
+      "sourceBase": "日本を見て、もう一度試してね。",
+      "clipSmall": "日本を見てもう一度試してね",
+      "clipBase": "日本を見て、もう一度試してね。",
+      "focusedAuditoryCheck": "見本の冒頭がマ行のミか"
+    },
+    {
+      "hash": "82b8edb7",
+      "from": 12.4,
+      "to": 15.21,
+      "duration": 2.81,
+      "adoptedMp3Sha256": "f0a36fe4add6703b2dd9a894a0ef6c894129db6858c63376a0dceeea53272061",
+      "sourceSmall": "美本通りにお皿を並べる。",
+      "sourceBase": "日本通りにお皿を並べる。",
+      "clipSmall": "日本通りにお皿を並べる",
+      "clipBase": "日本通りにお皿を並べる",
+      "focusedAuditoryCheck": "見本の冒頭がマ行のミか"
+    },
+    {
+      "hash": "af1f3332",
+      "from": 18.79,
+      "to": 21.46,
+      "duration": 2.67,
+      "adoptedMp3Sha256": "a12597eae75b365c7ac0c939e1310976d0903adc5e7adc25ce116ebd2b1a16df",
+      "sourceSmall": "リンゴとアップル。",
+      "sourceBase": "リンゴとアップル",
+      "clipSmall": "りんごとアップル",
+      "clipBase": "リンゴとアップル",
+      "focusedAuditoryCheck": null
+    },
+    {
+      "hash": "3d461412",
+      "from": 24.45,
+      "to": 26.9,
+      "duration": 2.45,
+      "adoptedMp3Sha256": "a0b5f820c55fbd74be083490bb0fc599b0f6aea7846c4fd4f35b35ddcfe7261f",
+      "sourceSmall": "赤い花を3本届ける。",
+      "sourceBase": "赤い花を3本届ける",
+      "clipSmall": "赤い花を3本届ける",
+      "clipBase": "赤い花を3本届ける",
+      "focusedAuditoryCheck": null
+    }
+  ]
+}

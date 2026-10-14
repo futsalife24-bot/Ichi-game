@@ -532,5 +532,12 @@
       "tests": 326,
       "failed": 0
     }
+  },
+  "history": "この記録の検査・公開SHAは以前の時点。最新の景観goal完了記録はconcept-goal-check.jsonを参照",
+  "latestGoal": {
+    "document": "concept-goal-completion.md",
+    "check": "concept-goal-check.json",
+    "main": "2cf2ab982d9d6520472db83fd0442b1af08ff51d",
+    "completed": true
   }
 }

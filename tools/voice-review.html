@@ -2,7 +2,7 @@
 <title>キラキラアイランド 音声試聴</title>
 <script type="importmap">{"imports":{"three":"../vendor/three.module.js"}}</script>
 <style>body{font-family:system-ui,sans-serif;background:#fff9ed;color:#233d39;max-width:850px;margin:30px auto;padding:20px}h1{font-size:28px}button,select{font:inherit;border:1px solid #aac5b7;border-radius:12px;padding:12px;margin:6px;background:#fff}button{cursor:pointer;background:#d9f5e7}#subtitle{padding:24px;background:#fff;border-radius:18px;font-size:22px;min-height:60px}pre{white-space:pre-wrap;font-size:14px}small{color:#52665e}</style>
-<h1>🏝️ キラキラアイランドの新しい声</h1><p>Gemini 3.8 Flash TTS · Cleo · 日本語</p><p id="mode"></p>
+<h1>🏝️ キラキラアイランドの新しい声</h1><p>Gemini 3.8 Flash TTS · Cleo · 日本語・英語</p><p id="mode"></p>
 <label>試聴するセリフ <select id="sample"></select></label><button id="play">再生</button><button id="stop">停止</button>
 <p id="subtitle">セリフを選んで再生できます。</p><p id="status" role="status">音声一覧を読み込み中</p>
 <button id="check">全音声を検査</button><pre id="result"></pre>
@@ -14,6 +14,8 @@ import { Voice } from '../src/voice.js';
 import { L, withPraise, THINGS } from '../src/lines.js';
 import { PERIODS, SEASONS, NAMES } from '../src/catalog.js';
 import { FRUITS } from '../src/props.js';
+import { INVITATION_VOICE_LINES } from '../src/learning-invitation-state.js';
+import { eightIslandVoiceLines } from '../src/eight-island-lines.js';
 import { HARBOR_LINES } from '../src/harbor-errands-lines.js';
 const samples=[['ごあいさつ',L.welcome('ももちゃん',PERIODS.asa,SEASONS.aki)],['ほめ言葉',withPraise({say:'せいかい！',sub:'せいかい！'},'じょうず！')],['色',L.rainbow()],['集める数',L.countAsk(Object.values(FRUITS)[0],3)],['学校',L.schoolCountRight(8,THINGS[0])],['学校の案内',L.schoolWelcome()],['お買い物',L.buy({name:'くまの ぬいぐるみ'})],['売る',L.sell(99)],['図鑑',L.zukan(0)],['図鑑が増えた',L.zukan(30)]];
 samples.push(['お手伝いのお願い',L.helpIntro()],['りんごを集める',L.helpCollect()],['ひよこへお届け',L.helpDeliver()],['お手伝いのお礼',L.helpDone()]);
@@ -23,6 +25,8 @@ for (const [id, line] of Object.entries(HARBOR_LINES)) samples.push([harborNames
 for(let i=0;i<5;i++)samples.push(['キャラメイク '+(i+1),L.makerStep(i)]);
 samples.push(['たまごから誕生',L.hatch()],['名前つきのあいさつ',L.born('ももちゃん')]);
 for(const n of NAMES)samples.push(['呼びかけ '+n.name,L.call(n.name+'ちゃん')]);
+for(const line of INVITATION_VOICE_LINES)samples.push(['おさそい '+line.id,{say:line.text,sub:line.text,lang:line.lang??'ja'}]);
+for(const line of eightIslandVoiceLines())samples.push(['八島 '+line.id,{say:line.text,sub:line.text,lang:line.lang}]);
 const select=document.querySelector('#sample');for(const [i,[name]]of samples.entries())select.add(new Option(name,i));
 const audio={ctx:null,voiceOut:null};let started=0, finishedClip=null;
 // しちょうページでも ゲームと おなじ おんせいを よむ。

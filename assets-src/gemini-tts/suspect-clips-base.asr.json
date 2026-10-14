@@ -1,0 +1,38 @@
+[
+  {
+    "hash": "82b8edb7",
+    "expected": "みほんどおりに おさらを ならべる",
+    "language": "ja",
+    "recognized": "日本通りにお皿を並べる"
+  },
+  {
+    "hash": "af1f3332",
+    "expected": "りんごと apple",
+    "language": "ja",
+    "recognized": "リンゴと"
+  },
+  {
+    "hash": "afad8963",
+    "expected": "fish",
+    "language": "en",
+    "recognized": " Bish!"
+  },
+  {
+    "hash": "4f11f81d",
+    "expected": "りんごを さんこ あつめよう",
+    "language": "ja",
+    "recognized": "りんごを、3個、集めよ。"
+  },
+  {
+    "hash": "3d461412",
+    "expected": "あかい はなを さんぼん とどける",
+    "language": "ja",
+    "recognized": "赤い花を3本届け"
+  },
+  {
+    "hash": "0aa4761f",
+    "expected": "さかなや さんごを みつけよう。",
+    "language": "ja",
+    "recognized": "魚や酸語を見つけよ"
+  }
+]

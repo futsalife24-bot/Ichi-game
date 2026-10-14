@@ -5,12 +5,15 @@ import { allLines, pendingLines, segments, clipKey, clipHash } from '../src/line
 import { verifyReleaseVoice } from './voice-release-check.mjs';
 
 const read=name=>JSON.parse(readFileSync(new URL(name,import.meta.url)));
-const plan=read('../assets-src/gemini-tts/plan.json');
-const report=read('../assets-src/gemini-tts/import-report.json');
-const index=read('../voice/index.json');
+// だんかいこうかいの ほごを、かんりょうごも もとの きろくで けんさする。
+const currentPlan=read('../assets-src/gemini-tts/plan.json');
+const plan={...currentPlan,lines:1060,clips:811,batches:currentPlan.batches.slice(0,40)};
+const report=read('../assets-src/gemini-tts/import-report.json').filter(batch=>batch.batchId<31);
+const oldClips=new Map(report.flatMap(batch=>batch.clips.map(clip=>[clip.hash,clip])));
+const index={schemaVersion:2,model:plan.model,voice:plan.voice,clips:Object.fromEntries([...oldClips].map(([hash,clip])=>[hash,{file:`gemini/${hash}.mp3`,text:clip.text,duration:clip.duration}]))};
 const allowlist=read('../assets-src/gemini-tts/release-allowlist.json');
 const hashes=lines=>lines.flatMap(segments).map(part=>clipHash(clipKey(part)));
-const spokenHashes=hashes(allLines()),pendingHashes=hashes(pendingLines());
+const spokenHashes=Object.keys(index.clips),pendingHashes=allowlist.pending.map(clip=>clip.hash);
 const digests=new Map(report.flatMap(batch=>batch.clips.map(clip=>[clip.hash,clip.sha256])));
 const base=()=>({plan,report,index,allowlist,spokenHashes,pendingHashes,clipDigest:hash=>digests.get(hash)});
 

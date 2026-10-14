@@ -1,3 +1,7 @@
+# 八島景観goalの最終公開
+
+2026-10-14。[PR #37](https://github.com/futsalife24-bot/Ichi-game/pull/37)を統合し、公開main `2cf2ab982d9d6520472db83fd0442b1af08ff51d` の328テストとPages公開が成功。公開113資材がGit blobとHTTP応答のSHA-256で全件一致した。全８島の通常渡航・大／小画面16枚・星１保持、第四〜第八の短い歩行も確認し、警告・エラー０件。[goal完了の内容と検証](concept-goal-completion.md)、[公開版の通常UI](concept-goal-public-ui.json)、[配信照合](concept-scenes-release-check.json)が現在の正本。SWは `kirakira-v58-concept-finish`。以下はPR #35・#36時点の公開履歴。
+
 # 採用した八島景観の自己検証による公開
 
 2026-10-14。本人の「自己検証で公開して」に従い、今回の全八島の景観を公開した。主担当が差分・検査・実操作・配信を確認し、独立監査は追加していない。[公開ゲーム](https://futsalife24-bot.github.io/Ichi-game/)、[制作と自己検証](concept-scenes-implementation.md)、[配信と実画面の記録](concept-scenes-release-check.json)を参照する。

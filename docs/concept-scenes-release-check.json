@@ -1,7 +1,7 @@
 {
-  "checkedAt": "2026-10-14T02:55:01.804Z",
+  "checkedAt": "2026-10-14T05:12:06.518Z",
   "url": "https://futsalife24-bot.github.io/Ichi-game/",
-  "releaseSha": "ffb0b18c12fe8747d47d331ea3424b90c1433593",
+  "releaseSha": "2cf2ab982d9d6520472db83fd0442b1af08ff51d",
   "approval": "自己検証で公開して",
   "count": 113,
   "allMatch": true,
@@ -11,59 +11,155 @@
     "pending": 85
   },
   "browser": {
-    "checkedAt": "2026-10-14T02:30:19.743Z",
-    "method": "Cuaによる公開ゲームの実操作",
-    "initialReleaseSha": "3e94280a7c0d85ec795d259cc151fb0bfe7b08d5",
-    "islandsVisited": [
-      3,
+    "checkedAt": "2026-10-14T05:28:54.647Z",
+    "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d",
+    "url": "https://futsalife24-bot.github.io/Ichi-game/?dev=forest&month=4&release=2cf2ab9",
+    "surface": "PCブラウザーの公開版。確認用の非永続データ",
+    "viewports": [
+      [
+        1280,
+        720
+      ],
+      [
+        667,
+        375
+      ]
+    ],
+    "islands": [
       1,
       2,
+      3,
       4,
       5,
       6,
       7,
       8
     ],
-    "shortWalks": [
-      4,
-      5,
-      6,
-      7,
-      8
+    "checks": [
+      "全８島に通常の渡航操作で到着",
+      "渡航・帰還中の星１保持",
+      "第一島のジャンプ非表示",
+      "第一島から第二島への直接渡航",
+      "第二島のABC案内",
+      "第四〜第八島で方向キーによる短い歩行",
+      "全８島の大・小画面を加工なしで保存"
     ],
-    "starsRetained": 1,
-    "firstIslandNoJump": true,
-    "firstToSecondDirect": true,
-    "smallLandscapeVerified": [
-      6,
-      7
+    "screenshots": [
+      {
+        "island": 3,
+        "size": "wide",
+        "file": "docs/concept-scene-proof/ui/03-wide.jpg",
+        "at": "2026-10-14T05:18:29.750Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 3,
+        "size": "small",
+        "file": "docs/concept-scene-proof/ui/03-small.jpg",
+        "at": "2026-10-14T05:23:29.398Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 1,
+        "size": "wide",
+        "file": "docs/concept-scene-proof/ui/01-wide.jpg",
+        "at": "2026-10-14T05:24:16.045Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 1,
+        "size": "small",
+        "file": "docs/concept-scene-proof/ui/01-small.jpg",
+        "at": "2026-10-14T05:24:19.875Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 2,
+        "size": "wide",
+        "file": "docs/concept-scene-proof/ui/02-wide.jpg",
+        "at": "2026-10-14T05:24:56.037Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 2,
+        "size": "small",
+        "file": "docs/concept-scene-proof/ui/02-small.jpg",
+        "at": "2026-10-14T05:24:56.708Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 4,
+        "size": "wide",
+        "file": "docs/concept-scene-proof/ui/04-wide.jpg",
+        "at": "2026-10-14T05:25:45.131Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 4,
+        "size": "small",
+        "file": "docs/concept-scene-proof/ui/04-small.jpg",
+        "at": "2026-10-14T05:25:45.603Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 5,
+        "size": "wide",
+        "file": "docs/concept-scene-proof/ui/05-wide.jpg",
+        "at": "2026-10-14T05:26:30.423Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 5,
+        "size": "small",
+        "file": "docs/concept-scene-proof/ui/05-small.jpg",
+        "at": "2026-10-14T05:26:30.874Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 6,
+        "size": "wide",
+        "file": "docs/concept-scene-proof/ui/06-wide.jpg",
+        "at": "2026-10-14T05:27:13.327Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 6,
+        "size": "small",
+        "file": "docs/concept-scene-proof/ui/06-small.jpg",
+        "at": "2026-10-14T05:27:13.912Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 7,
+        "size": "wide",
+        "file": "docs/concept-scene-proof/ui/07-wide.jpg",
+        "at": "2026-10-14T05:28:09.283Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 7,
+        "size": "small",
+        "file": "docs/concept-scene-proof/ui/07-small.jpg",
+        "at": "2026-10-14T05:28:09.685Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 8,
+        "size": "wide",
+        "file": "docs/concept-scene-proof/ui/08-wide.jpg",
+        "at": "2026-10-14T05:28:52.876Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 8,
+        "size": "small",
+        "file": "docs/concept-scene-proof/ui/08-small.jpg",
+        "at": "2026-10-14T05:28:53.562Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      }
     ],
-    "smallViewport": [
-      667,
-      375
-    ],
-    "consoleErrorsAndWarnings": [],
-    "initialLoading": "初回はモジュール読込待ちが続き、一度ページを更新した後に起動。原因未確定",
-    "firstIslandVisibility": {
-      "observedBoatOverlap": true,
-      "fixed": true,
-      "releaseSha": "ffb0b18c12fe8747d47d331ea3424b90c1433593",
-      "checkedAt": "2026-10-14T03:05:16.936Z",
-      "viewports": [
-        [
-          1280,
-          720
-        ],
-        [
-          667,
-          375
-        ]
-      ],
-      "starsRetained": 1,
-      "boatAndRabbitSeparate": true
-    },
-    "normalSaveChanged": false,
-    "finalConsoleErrorsAndWarnings": []
+    "logs": [],
+    "phonePerformance": "実スマホは未測定"
   },
   "files": [
     {
@@ -117,9 +213,9 @@
     {
       "path": "assets/islands/concept-5.json",
       "status": 200,
-      "bytes": 6256258,
-      "expected": "d62a153cfcd07e772f07692eed2f74292d67f11bfa20c72defb740cd4d0b1ff4",
-      "actual": "d62a153cfcd07e772f07692eed2f74292d67f11bfa20c72defb740cd4d0b1ff4",
+      "bytes": 6512556,
+      "expected": "11b726eb2071d9c39667b74793763a0961defd578fbcdc76f544056c825dffbb",
+      "actual": "11b726eb2071d9c39667b74793763a0961defd578fbcdc76f544056c825dffbb",
       "match": true
     },
     {
@@ -141,9 +237,9 @@
     {
       "path": "assets/islands/concept-8.json",
       "status": 200,
-      "bytes": 1940152,
-      "expected": "016c1f94f7f61d6869907d7c2752e491768a3ada30f54cfc431598b2f0ae076b",
-      "actual": "016c1f94f7f61d6869907d7c2752e491768a3ada30f54cfc431598b2f0ae076b",
+      "bytes": 2554427,
+      "expected": "0d39e27c6d2aae949015f639ec7c30c688e779f25e958bb1dc5c39ad95f95b82",
+      "actual": "0d39e27c6d2aae949015f639ec7c30c688e779f25e958bb1dc5c39ad95f95b82",
       "match": true
     },
     {
@@ -333,9 +429,9 @@
     {
       "path": "src/concept-atmosphere.js",
       "status": 200,
-      "bytes": 7006,
-      "expected": "a78760ec338de89005c36c1bc33e885c88d269411ea47d6ab86fb8a96c675449",
-      "actual": "a78760ec338de89005c36c1bc33e885c88d269411ea47d6ab86fb8a96c675449",
+      "bytes": 7064,
+      "expected": "15deba7ed8a142a11ed34a7a44fe11a4381f11b85a08fb243d22c793ee69ae15",
+      "actual": "15deba7ed8a142a11ed34a7a44fe11a4381f11b85a08fb243d22c793ee69ae15",
       "match": true
     },
     {
@@ -365,33 +461,33 @@
     {
       "path": "src/concept-festival-detail.js",
       "status": 200,
-      "bytes": 5215,
-      "expected": "bcf161bafc2cf26d87beb20d0b3bc66e45d0b0638a1b69612bdd11a5c3fd254f",
-      "actual": "bcf161bafc2cf26d87beb20d0b3bc66e45d0b0638a1b69612bdd11a5c3fd254f",
+      "bytes": 5233,
+      "expected": "d4f76162a29fdcd62e7a07c4174a8c7e70f6d1a01e7c2b79f532c588eadaf451",
+      "actual": "d4f76162a29fdcd62e7a07c4174a8c7e70f6d1a01e7c2b79f532c588eadaf451",
       "match": true
     },
     {
       "path": "src/concept-forest-detail.js",
       "status": 200,
-      "bytes": 14917,
-      "expected": "6eedd4102a9e323a2845affb19a3baa10087ea22c61ea539a900b6623db94c2c",
-      "actual": "6eedd4102a9e323a2845affb19a3baa10087ea22c61ea539a900b6623db94c2c",
+      "bytes": 17793,
+      "expected": "c8117b2dd1b995ec4a89c0c400b10a604aad8e8d0f9b2f86287f2ba52d03fda6",
+      "actual": "c8117b2dd1b995ec4a89c0c400b10a604aad8e8d0f9b2f86287f2ba52d03fda6",
       "match": true
     },
     {
       "path": "src/concept-gardens.js",
       "status": 200,
-      "bytes": 7699,
-      "expected": "53c51a8964af3f10246a9009c587957a73a9045fa141995d9106f2f2071486da",
-      "actual": "53c51a8964af3f10246a9009c587957a73a9045fa141995d9106f2f2071486da",
+      "bytes": 8104,
+      "expected": "8e77badfa42df7d1c84d24bf151369b625b4dd59d88fac1e926794ab866b0f05",
+      "actual": "8e77badfa42df7d1c84d24bf151369b625b4dd59d88fac1e926794ab866b0f05",
       "match": true
     },
     {
       "path": "src/concept-island-layout.js",
       "status": 200,
-      "bytes": 10742,
-      "expected": "efd847fe128c001e60b69c0dacfc81990dbb8e929d27515526973be747361ff0",
-      "actual": "efd847fe128c001e60b69c0dacfc81990dbb8e929d27515526973be747361ff0",
+      "bytes": 13205,
+      "expected": "06152f87770f5c0f21b3c750f4044ffaf3e67aa3455756e3dbd89f3f7dc8f627",
+      "actual": "06152f87770f5c0f21b3c750f4044ffaf3e67aa3455756e3dbd89f3f7dc8f627",
       "match": true
     },
     {
@@ -413,9 +509,9 @@
     {
       "path": "src/concept-scenery.js",
       "status": 200,
-      "bytes": 16769,
-      "expected": "325068cda777febe4624bcbfc7a5670327611e140d869365cc4ab1bb773d74f1",
-      "actual": "325068cda777febe4624bcbfc7a5670327611e140d869365cc4ab1bb773d74f1",
+      "bytes": 17259,
+      "expected": "dc722e7b4f28ba051e2a670bf34a269952cfa7d6b86ac13636bb2801a304767a",
+      "actual": "dc722e7b4f28ba051e2a670bf34a269952cfa7d6b86ac13636bb2801a304767a",
       "match": true
     },
     {
@@ -469,17 +565,17 @@
     {
       "path": "src/concept-terrain.js",
       "status": 200,
-      "bytes": 6873,
-      "expected": "59c0af18ef61ef8bda03eda899cbb065d70816d67f492bcdaa794cf8bc934645",
-      "actual": "59c0af18ef61ef8bda03eda899cbb065d70816d67f492bcdaa794cf8bc934645",
+      "bytes": 8278,
+      "expected": "31fc9c4d30c3b768847845e3ca39c566e4e783d17ea18607108943d12b0bb574",
+      "actual": "31fc9c4d30c3b768847845e3ca39c566e4e783d17ea18607108943d12b0bb574",
       "match": true
     },
     {
       "path": "src/concept-workshop-detail.js",
       "status": 200,
-      "bytes": 12089,
-      "expected": "8ab70d974b31a6a9519c207a2d03e5f13fa51dfbe8c19ea786a7dac1f8a08637",
-      "actual": "8ab70d974b31a6a9519c207a2d03e5f13fa51dfbe8c19ea786a7dac1f8a08637",
+      "bytes": 13111,
+      "expected": "63643b5c6a6251072e7bfe3bf903c15fd1bd0c56addbdd8cb4b244d987cf4d1a",
+      "actual": "63643b5c6a6251072e7bfe3bf903c15fd1bd0c56addbdd8cb4b244d987cf4d1a",
       "match": true
     },
     {
@@ -917,9 +1013,9 @@
     {
       "path": "src/world.js",
       "status": 200,
-      "bytes": 41838,
-      "expected": "d9bce92b371c1f7b5db860aaa31ce17ec145a3ba720d587af989f3a2db1edc53",
-      "actual": "d9bce92b371c1f7b5db860aaa31ce17ec145a3ba720d587af989f3a2db1edc53",
+      "bytes": 41910,
+      "expected": "74bd653d1298a99f6ebf3651a0206a72feafc0c54ec29eb436bb7df4e2346e83",
+      "actual": "74bd653d1298a99f6ebf3651a0206a72feafc0c54ec29eb436bb7df4e2346e83",
       "match": true
     },
     {
@@ -933,9 +1029,9 @@
     {
       "path": "sw.js",
       "status": 200,
-      "bytes": 5092,
-      "expected": "8620d4f93ae2780da2c6600f748e3ca79066ab041e4592fa819471ce19d2ba70",
-      "actual": "8620d4f93ae2780da2c6600f748e3ca79066ab041e4592fa819471ce19d2ba70",
+      "bytes": 5094,
+      "expected": "25b9e8f3a95093caef2f97ca16e6bd2362c28de85cc0ca666cf580b03ccb4698",
+      "actual": "25b9e8f3a95093caef2f97ca16e6bd2362c28de85cc0ca666cf580b03ccb4698",
       "match": true
     },
     {
@@ -971,92 +1067,33 @@
       "match": true
     }
   ],
-  "previousMain": "a5e8be2bb8a7c4a1e9825a4d51922e5aa9cb39b1",
-  "initialRelease": {
-    "main": "3e94280a7c0d85ec795d259cc151fb0bfe7b08d5",
-    "pullRequest": "https://github.com/futsalife24-bot/Ichi-game/pull/35"
-  },
-  "preparedHead": "8c880c22a90851b153844774aa2161e23fe8cbf6",
-  "goalBase": "fd2e87a2b93fdcd941653860677addb6a69a483d",
-  "branch": "codex/island-learning-balance",
-  "pullRequest": "https://github.com/futsalife24-bot/Ichi-game/pull/36",
-  "deployment": {
-    "conclusion": "success",
-    "databaseId": 38503112977,
-    "headSha": "ffb0b18c12fe8747d47d331ea3424b90c1433593",
-    "status": "completed",
-    "url": "https://github.com/futsalife24-bot/Ichi-game/actions/runs/38503112977",
-    "workflowName": "Deploy to GitHub Pages"
-  },
   "ci": {
     "conclusion": "success",
-    "headSha": "ffb0b18c12fe8747d47d331ea3424b90c1433593",
-    "url": "https://github.com/futsalife24-bot/Ichi-game/actions/runs/38503112969",
-    "tests": 326,
-    "failed": 0
+    "headSha": "2cf2ab982d9d6520472db83fd0442b1af08ff51d",
+    "status": "completed",
+    "url": "https://github.com/futsalife24-bot/Ichi-game/actions/runs/38514923896",
+    "groups": [
+      29,
+      68,
+      18,
+      13,
+      12,
+      32,
+      17,
+      26,
+      109,
+      4
+    ],
+    "tests": 328
   },
-  "screenshots": [
-    {
-      "file": "docs/concept-scenes-release-proof/01-public-small.jpg",
-      "bytes": 38869,
-      "sha256": "29459731d3afbb3f49bb36a8abcc091814271590fe1a47fb1f5c412c383beb5f"
-    },
-    {
-      "file": "docs/concept-scenes-release-proof/01-public-wide.jpg",
-      "bytes": 109069,
-      "sha256": "2b6ae838b8603d57146fc5fc4152645db2d54e4bf5597637d01dc6e4b581ea91"
-    },
-    {
-      "file": "docs/concept-scenes-release-proof/02-public-wide.jpg",
-      "bytes": 183722,
-      "sha256": "ba221ef6bca5b3b92edc7a882461239beffd04845a9a4751bfe132e29d2d1755"
-    },
-    {
-      "file": "docs/concept-scenes-release-proof/03-public-wide.jpg",
-      "bytes": 142557,
-      "sha256": "bd923eced82f47799239d6ab56465d9c2ea00cac81f4c496c535ea576e53ceed"
-    },
-    {
-      "file": "docs/concept-scenes-release-proof/04-public-wide.jpg",
-      "bytes": 149853,
-      "sha256": "6cfa2595329e51e1b69263a33c0a55e4ca3878347595afb715c9102eb0d9ca0a"
-    },
-    {
-      "file": "docs/concept-scenes-release-proof/05-public-wide.jpg",
-      "bytes": 139045,
-      "sha256": "9af9c39330bba3133c6473eea1879d3e125fd987c7829ddd7209e38259fc31e7"
-    },
-    {
-      "file": "docs/concept-scenes-release-proof/06-public-small.jpg",
-      "bytes": 50106,
-      "sha256": "6c7db8f689acf12fa5e523fd410d73c35b7299da1ac93b8905b47bb741616d44"
-    },
-    {
-      "file": "docs/concept-scenes-release-proof/06-public-wide.jpg",
-      "bytes": 123876,
-      "sha256": "6c9244121fbd45755f739e778b736e9496cf9153acf12b1ed8bffba7a8de0493"
-    },
-    {
-      "file": "docs/concept-scenes-release-proof/07-public-small.jpg",
-      "bytes": 47605,
-      "sha256": "cfa6c084fa191a0189c61c167259f0c2fef2bf59bc80346204f08a8495b6d381"
-    },
-    {
-      "file": "docs/concept-scenes-release-proof/07-public-wide.jpg",
-      "bytes": 131200,
-      "sha256": "3c004a20ff9d31770b97dfc8aaf25e35d3557bb114f46177cad07def29a6824a"
-    },
-    {
-      "file": "docs/concept-scenes-release-proof/08-public-wide.jpg",
-      "bytes": 145025,
-      "sha256": "47c70c0ef74b137d35d69c2e3583ce741da6bea9c7650e255fd6bff00cd0eb07"
-    }
-  ],
-  "models": {
-    "childRequested": "gpt-6-sol",
-    "effortRequested": "medium",
-    "rootActual": "未確認",
-    "childActual": "未確認",
-    "independentAudit": false
-  }
+  "pages": {
+    "conclusion": "success",
+    "headSha": "2cf2ab982d9d6520472db83fd0442b1af08ff51d",
+    "status": "completed",
+    "url": "https://github.com/futsalife24-bot/Ichi-game/actions/runs/38514924028"
+  },
+  "pullRequest": "https://github.com/futsalife24-bot/Ichi-game/pull/37",
+  "comparisonManifest": "concept-scene-proof/manifest.json",
+  "goal": "concept-goal-completion.md",
+  "publicUiCompletedAt": "2026-10-14T05:28:54.647Z"
 }

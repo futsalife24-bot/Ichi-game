@@ -1,0 +1,266 @@
+{
+  "checkedAt": "2026-10-14T12:15:39.098Z",
+  "state": "実装・自己検証済み、公開準備",
+  "branch": "codex/island-learning-balance",
+  "base": "380d46a9c70e2a9d9f9e8cf79330e744fb0d56b2",
+  "previousPublic": "2cf2ab982d9d6520472db83fd0442b1af08ff51d",
+  "sourceHash": "bcdf8b461e43dc1e792bc9f8077bfd5006bfe3eebaf5d096d22c49d323430be6",
+  "tests": {
+    "files": 52,
+    "total": 359,
+    "pass": 359,
+    "fail": 0,
+    "log": "artifacts/post-goal-full-final.log"
+  },
+  "requiredChecks": {
+    "islandContentDocs": true,
+    "packedIslands": true,
+    "forestModels": true,
+    "harborModels": true,
+    "strictVoiceManifest": true,
+    "diffCheck": true
+  },
+  "ui": {
+    "sizes": [
+      [
+        1280,
+        720
+      ],
+      [
+        667,
+        375
+      ]
+    ],
+    "islands": 8,
+    "firstWithoutJump": true,
+    "developerEntry": "おうちの方への一本のリンクから全開放の第一島へ自動開始",
+    "islandTravelAfterInvitation": "完了・辞退後に新しい誘いなし",
+    "firstInvitation": [
+      "近接で会話",
+      "あそぶ",
+      "二択",
+      "りんご２個を届ける",
+      "自由行動へ戻る",
+      "別の開始で辞退"
+    ],
+    "fourthBridge": "方向キーで渡り、対岸へ曲がる地点で足元を確認",
+    "warnings": 0,
+    "errors": 0,
+    "photoDimensionsMatch": 16
+  },
+  "voices": {
+    "checkedAt": "2026-10-14T12:13:21.638Z",
+    "decode": {
+      "checked": 843,
+      "expected": 843,
+      "errors": [],
+      "totalSeconds": 1233
+    },
+    "offline": {
+      "cached": 843,
+      "expected": 843,
+      "missing": []
+    },
+    "englishStatus": "再生終了（clip、0.82秒）",
+    "japaneseCall": "再生終了（clip、1.37秒）",
+    "humanListening": "未確認"
+  },
+  "integrity": "assets-src/gemini-tts/post-goal-integrity.json",
+  "screenshots": [
+    {
+      "file": "01-small.jpg",
+      "sha256": "4663137e3ea2f0384692c06e526156b9fbb85432c4e4345ddb480c7d1e0f4cf7",
+      "size": [
+        667,
+        375
+      ]
+    },
+    {
+      "file": "01-wide.jpg",
+      "sha256": "94917e60adea916f6bfc08a10ea3dabcd791d8facb78e096fbe0d7b66076fb4f",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "02-small.jpg",
+      "sha256": "cbb3723525682c3f77315b0942b3468277af32b996717237f006c0972a441db0",
+      "size": [
+        667,
+        375
+      ]
+    },
+    {
+      "file": "02-wide.jpg",
+      "sha256": "71389c17b31fc49670d1303b7e80e8f0d4e2ac7eb9c7adab4072c0de11778597",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "03-small.jpg",
+      "sha256": "8fb1496d4dffa53f3e69ace9b3bb3640462e9edcfb070acbd6d952a2372d2c28",
+      "size": [
+        667,
+        375
+      ]
+    },
+    {
+      "file": "03-wide.jpg",
+      "sha256": "1465de4a2f6f2ce92664f9b4686cc45734e793a2f2893042ae1e7e4489d08f12",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "04-bridge-bank.jpg",
+      "sha256": "cdb9fd8b9184061be55ce04934ff0ea2bcea2d9a3f1045edc90db4ee789103e1",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "04-small.jpg",
+      "sha256": "05c61d45bf77cf646d7dc5aea68c7d4469854c7ee0eb4f9577d34735d20b4e9d",
+      "size": [
+        667,
+        375
+      ]
+    },
+    {
+      "file": "04-wide.jpg",
+      "sha256": "491a74f8b8056506ea203e9dc445e5da0f94018602f2931d9d35f741163bac79",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "05-small.jpg",
+      "sha256": "844dd9c5e671a1188affbaf64707e7053202e9fe4359f8acf68c1062aa91464a",
+      "size": [
+        667,
+        375
+      ]
+    },
+    {
+      "file": "05-wide.jpg",
+      "sha256": "5013969b922e5a6f7981f5323acf2d19a5f1d7668c78768e1058c8d2bca4cd33",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "06-small.jpg",
+      "sha256": "9cce34abe06193ec0361d05610faf5f24fd674fdd7ea85228fa9af6c499f3db0",
+      "size": [
+        667,
+        375
+      ]
+    },
+    {
+      "file": "06-wide.jpg",
+      "sha256": "9ee52ebd435e57427b82783874e08a1b9353938782660162b4bdb1285c104b2a",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "07-small.jpg",
+      "sha256": "af6e43dde2efea8f13e89c776d0b2af892293003b930b3e17393b75a1ee4992f",
+      "size": [
+        667,
+        375
+      ]
+    },
+    {
+      "file": "07-wide.jpg",
+      "sha256": "cc3c4cc6a50d54ad571cfde9387c277092b9aeb23e2952e231caa8895a0b586f",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "08-small.jpg",
+      "sha256": "db5e797394308cdc0d3a825468ab8ce0c2b85e1c16d296284e2091b39e36a2f2",
+      "size": [
+        667,
+        375
+      ]
+    },
+    {
+      "file": "08-wide.jpg",
+      "sha256": "94198b912c5498a0efca968fe6614d79abef644ff7c38be277d3fca9b780fb03",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "developer-entry.jpg",
+      "sha256": "3f1e82af7db80056386d204513ec789dd6b512ecf4ed01293002f548f8a80d7f",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "invitation-completed-free.jpg",
+      "sha256": "26c423191d96538365b8efc34de0419634ef51df6d93431d15d809e1ebde179a",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "invitation-declined-free.jpg",
+      "sha256": "5a5d0d8d0b864ecd0cce7d5ae544ab21739f8c774311e4e2fd14912e1738554e",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "invitation-greeting.jpg",
+      "sha256": "fd5ecde505fad7d5717502a33c15c294961008a314fc5635bf1d99bcbc9d96c4",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "invitation-two-choices.jpg",
+      "sha256": "28cb9dd0e9b1382d0cbbeff67af28418c8f574570ac349de5e6139933be0209b",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "voice-browser-check.jpg",
+      "sha256": "06b8c85f3f0b9b128b4797c7994fc7617c8d2cb1c200d3d4996f4059ea71c672",
+      "size": [
+        1265,
+        712
+      ]
+    }
+  ],
+  "limitations": [
+    "実スマートフォンの性能は未測定",
+    "人による全件の聴感は未確認。見本３片と短いfishの補助認識は揺れる。",
+    "子どもの選好・教育効果は未測定"
+  ],
+  "agents": {
+    "requested": "gpt-6-sol / medium",
+    "actual": "未確認",
+    "scope": "子２体による制作・自己検証補助、独立監査ではない"
+  },
+  "untrackedPreserved": "output/concept-ci-check.log"
+}

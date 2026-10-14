@@ -1,0 +1,42 @@
+[
+  {
+    "batchId": 45,
+    "hash": "80c5cdd9",
+    "expected": "まず、見本を、見てね。",
+    "language": "ja",
+    "sha256": "83c33d502349b3da9e9ca29e154d69307ac922d4794417de668056dc08b3443e",
+    "recognized": "まず、日本を見てね"
+  },
+  {
+    "batchId": 45,
+    "hash": "afab5722",
+    "expected": "見本を見て、もう一度ためしてね。",
+    "language": "ja",
+    "sha256": "eebaebdb33b4b22980adb1e8d6da621e83ed9a0612ab0b3b47054ad2546c896f",
+    "recognized": "日本を見て、もう一度試してね。"
+  },
+  {
+    "batchId": 45,
+    "hash": "82b8edb7",
+    "expected": "見本どおりに、おさらをならべる。",
+    "language": "ja",
+    "sha256": "f0a36fe4add6703b2dd9a894a0ef6c894129db6858c63376a0dceeea53272061",
+    "recognized": "日本通りにお皿を並べる"
+  },
+  {
+    "batchId": 45,
+    "hash": "af1f3332",
+    "expected": "りんご と アップル",
+    "language": "ja",
+    "sha256": "a12597eae75b365c7ac0c939e1310976d0903adc5e7adc25ce116ebd2b1a16df",
+    "recognized": "リンゴとアップル"
+  },
+  {
+    "batchId": 45,
+    "hash": "3d461412",
+    "expected": "あかい はなを、さんぼん、とどける。",
+    "language": "ja",
+    "sha256": "a0b5f820c55fbd74be083490bb0fc599b0f6aea7846c4fd4f35b35ddcfe7261f",
+    "recognized": "赤い花を3本届ける"
+  }
+]
