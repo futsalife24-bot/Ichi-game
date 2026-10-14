@@ -153,6 +153,19 @@ def build_greatFruitMarket():
                 a=pi*i/84; tw=19*a+strand*2*pi/3
                 pts.append(((11.3+.42*cos(tw))*cos(a),yy+.43*sin(tw),5.2+(11.3+.42*cos(tw))*sin(a)))
             tube('取っ手の編み帯',pts,.075,'basket')
+    # ういた はしを のこさず、かごの あみぶちへ つなぐ。
+    for side in [-1,1]:
+        joins=[(side*11.3,-5,5.2),(side*10.6,-5,5.5),
+               (side*9.4,-5,6.45),(side*8.45,-5,6.98)]
+        tube('取っ手から編み軒へつながる首',joins,.36,'basketLight')
+        for strand in range(3):
+            points=[]
+            for j in range(49):
+                t=j/48; section=min(2,int(t*3)); k=t*3-section
+                p=joins[section]; q=joins[section+1]; twist=t*5*pi+strand*2*pi/3
+                points.append((p[0]+(q[0]-p[0])*k,p[1]+.42*sin(twist),
+                               p[2]+(q[2]-p[2])*k+.42*cos(twist)))
+            tube('首のつながる編み帯',points,.075,'basket')
     for k in range(12):
         a=2*pi*k/12; cloth_petal('花びらの布屋根',a,a+2*pi/12,['pinkCloth','roseCloth','yellowCloth'][k%3])
         tube('布の縫い目',[(10.9*t*cos(a),.75*10.9*t*sin(a),10.35-3.45*t*t) for t in [i/20 for i in range(21)]],.035,'cream')
@@ -568,7 +581,7 @@ def build_starCarousel():
         star('rotate_屋根の星',7.53*cos(a),7.53*sin(a),9.16,.30,'gold')
         sphere('rotate_縁の灯り',(7.5*cos(a),7.5*sin(a),8.88),(.13,.13,.13),'light',12,8)
     cyl('rotate_冠の台',(0,0,12.92),.78,.40,'gold',32,.08)
-    star('rotate_大きな星',0,-.38,14.0,1.1,'gold')
+    star('固定の大きな星',0,-.38,14.0,1.1,'gold')
     for i in range(8):
         a=2*pi*i/8; x,y=5.55*cos(a),5.55*sin(a)
         cyl('rotate_乗り物の棒',(x,y,4.5),.06,5.3,'gold',12,.02)
@@ -591,6 +604,56 @@ def build_festivalShellStage():
     for i in range(15):
         a=pi*i/14; x=5.5*cos(a)
         sphere('舞台の灯り',(x,-.25,3.45+4.9*sin(a)),(.13,.13,.13),'light',12,8)
+def build_festivalCelebrationCanopy():
+    # 祝いの席は回転木馬の左。中央への通路をふさがない開いた天幕にする。
+    radius=6.05
+    for i in range(12):
+        a=2*pi*i/12
+        roof_sector('赤とクリームの縞屋根',radius,5.65,8.05,a,a+2*pi/12,'red' if i%2 else 'fabric')
+        roof_sector('天幕の内側',radius-.15,5.55,7.92,a,a+2*pi/12,'fabric' if i%2 else 'redLight')
+        if i%2==0:
+            x,y=radius*cos(a),radius*sin(a)
+            cyl('金色の支柱',(x,y,2.76),.095,5.52,'gold',12,.02)
+            sphere('支柱の灯り',(x,y,5.54),(.20,.20,.20),'light',12,8)
+        a1=a+2*pi/12
+        for j in range(3):
+            t=j/3; b=a+(a1-a)*t; c=a+(a1-a)*(t+1/3)
+            panel('赤布の垂れ飾り',[(radius*cos(b),radius*sin(b),5.67),
+                  (radius*cos(c),radius*sin(c),5.67),
+                  (radius*cos(c),radius*sin(c),4.65),
+                  (radius*cos((b+c)/2),radius*sin((b+c)/2),4.38),
+                  (radius*cos(b),radius*sin(b),4.65)],'redLight',.06)
+    oval_ring('金色の軒',radius,radius,5.65,.085,'gold')
+    for i in range(36):
+        a=2*pi*i/36
+        sphere('軒下の灯り',(radius*cos(a),radius*sin(a),5.48),(.12,.12,.12),'light',10,6)
+    for i in range(18):
+        a=2*pi*i/18
+        x,y=(radius-.08)*cos(a),(radius-.08)*sin(a)
+        sphere('花の束',(x,y,5.76),(.27,.24,.19),'coralPink',12,8)
+        sphere('花の葉',(x+.16,y,5.72),(.20,.21,.13),'leaf',10,6)
+    sphere('天幕の金の頂',(0,0,8.12),(.34,.34,.29),'gold',16,8)
+def build_festivalCelebrationTable():
+    cyl('食卓の台脚',(0,0,.39),.22,.78,'basket',16,.04)
+    cyl('食卓の天板',(0,0,.79),1.18,.15,'basketLight',32,.05)
+    cyl('白いクロスの上面',(0,0,.90),1.28,.045,'fabric',32,.015)
+    for i in range(12):
+        a=2*pi*i/12; b=2*pi*(i+1)/12
+        panel('白いクロスの垂れ',[(1.26*cos(a),1.26*sin(a),.90),
+              (1.26*cos(b),1.26*sin(b),.90),(1.28*cos(b),1.28*sin(b),.48),
+              (1.28*cos(a),1.28*sin(a),.48)],'fabric',.025)
+    for i in range(4):
+        a=2*pi*i/4
+        sphere('花の飾り',(.20*cos(a),.20*sin(a),.97),(.14,.14,.14),'coralPink',10,6)
+    sphere('飾りの葉',(0,0,.99),(.18,.18,.12),'leaf',10,6)
+def build_festivalCelebrationChair():
+    for x in [-.34,.34]:
+        for y in [-.32,.32]:
+            cube('いすの脚',(x,y,.27),(.10,.10,.54),'basket',.025)
+    cube('木の座面',(0,0,.57),(.90,.78,.13),'basketLight',.06)
+    for x in [-.34,.34]:
+        cube('背もたれの柱',(x,.32,1.02),(.09,.10,.83),'gold',.02)
+    cube('背もたれの赤い布',(0,.33,1.22),(.76,.09,.36),'red',.04)
 def house(col,height):
     cube('色しっくいの家',(0,0,height/2),(6.7,5.8,height),col,.25)
     cube('屋上の縁',(0,0,height+.18),(7.0,6.1,.38),'cream',.10)
@@ -612,6 +675,8 @@ SIZES={'greatFruitMarket':[24,17,18],'moroccanStall':[6,5,5],'moroccanHouse':[8,
  'greatPearlShell':[15,11,8],'coralArch':[10,8,3],'spiralShellSeat':[4,3,3],
  'windCity':[22,23,17],'windSails':[14,14,1.5],'blueDomePavilion':[7,8,7],
  'skyAirship':[10,7,14],'starCarousel':[17,15,17],'festivalShellStage':[12,9,7],
+ 'festivalCelebrationCanopy':[13,9,13],'festivalCelebrationTable':[2.7,1.1,2.7],
+ 'festivalCelebrationChair':[1,1.5,1],
  'mexicanHouseA':[7,9,6],'mexicanHouseB':[7,12,6]}
 
 def render_preview(id):
@@ -696,9 +761,9 @@ def signature(value):
     return hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode('utf-8')).hexdigest()
 
 protected=None
-if UPDATE in ('windCity','spiralShellSeat'):
+if UPDATE in ('windCity','spiralShellSeat','greatFruitMarket','starCarousel'):
     with open(DEST,encoding='utf-8') as f: protected=json.load(f,parse_constant=lambda x: (_ for _ in ()).throw(ValueError(x)))
-    if len(protected['assets'])!=14 or UPDATE not in protected['assets']: raise ValueError('既存14素材が揃っていません')
+    if not set(SIZES).issubset(protected['assets']) or UPDATE not in protected['assets']: raise ValueError('既存素材が揃っていません')
     protected_hash={id:signature(asset) for id,asset in protected['assets'].items() if id!=UPDATE}
     material_hash=signature(protected['materials'])
     with open(os.path.join(OUT,'geometry-report.json'),encoding='utf-8') as f: old_report_ids={row['id'] for row in json.load(f)}
@@ -727,8 +792,9 @@ if UPDATE:
     with open(os.path.join(OUT,'geometry-report.json'),encoding='utf-8') as f: old_reports=json.load(f)
     changed={r['id']:r for r in reports}
     reports=[changed.get(r['id'],r) for r in old_reports]
+    reports.extend(r for r in changed.values() if r['id'] not in {old['id'] for old in old_reports})
     if protected:
-        if any(signature(assets[id])!=old_hash for id,old_hash in protected_hash.items()): raise ValueError('他13素材の形状が変わりました')
+        if any(signature(assets[id])!=old_hash for id,old_hash in protected_hash.items()): raise ValueError('対象外の素材の形状が変わりました')
         if signature(old['materials'])!=material_hash: raise ValueError('既存材質が変わりました')
 with open(DEST+'.tmp','w',encoding='utf-8') as f:
     json.dump(dict(version=1,materials=old['materials'] if protected else {k:v[1] for k,v in M.items()},assets=assets),f,separators=(',',':'),allow_nan=False)

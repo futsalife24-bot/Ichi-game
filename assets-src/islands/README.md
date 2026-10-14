@@ -360,6 +360,9 @@ node tools/island-content-docs.mjs --check
 | skyAirship | 7 | 10 × 7 × 14 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
 | starCarousel | 8 | 17 × 15 × 17 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
 | festivalShellStage | 8 | 12 × 9 × 5 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
+| festivalCelebrationCanopy | 8 | 13 × 9 × 13 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
+| festivalCelebrationTable | 8 | 2.7 × 1.1 × 2.7 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
+| festivalCelebrationChair | 8 | 1 × 1.5 × 1 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
 | mexicanHouseA | 8 | 7 × 9 × 6 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
 | mexicanHouseB | 8 | 7 × 12 × 6 | 制作済み、島内の景観確認中 | tools/build-concept-models-b.py |
 | branchCoral | 6 | 2.5 × 3 × 2.5 | 制作・組み込み・実描画確認済み、本人の最終視覚評価待ち | tools/build-concept-nature.py |

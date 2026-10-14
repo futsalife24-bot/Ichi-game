@@ -13,6 +13,11 @@ test('第八島の星と灯りは道を空けて共有部品で広場を囲む',
   assert.equal(scenery.solids.length,0);
   assert.equal(carousel.children.filter(o=>o.isLight).length,1);
   assert.equal(stage.children.filter(o=>o.isLight).length,1);
+  const crown=carousel.getObjectByName('てっぺんの ほし');
+  assert.ok(crown,'どの回転時点でも見える星の冠');
+  const before=new THREE.Vector3();crown.getWorldPosition(before);
+  pivot.rotation.y=Math.PI/2;carousel.updateMatrixWorld(true);
+  assert.ok(crown.getWorldPosition(new THREE.Vector3()).distanceTo(before)<.0001,'木馬が回っても冠の正面と位置を保つ');
   const objects=[];group.traverse(o=>objects.push(o));carousel.traverse(o=>objects.push(o));stage.traverse(o=>objects.push(o));
   const meshes=objects.filter(o=>o.isMesh||o.isInstancedMesh),instances=meshes.filter(o=>o.isInstancedMesh);
   const triangles=meshes.reduce((sum,o)=>sum+(o.geometry.index?.count??o.geometry.attributes.position.count)/3*(o.count??1),0);

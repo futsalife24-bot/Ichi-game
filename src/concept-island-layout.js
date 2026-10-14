@@ -63,8 +63,18 @@ export const CONCEPT_LAYOUTS = Object.freeze({
     "season": "spring",
     "reviewSide": [
       8,
-      0
-    ]
+      9
+    ],
+    "sceneryDetails": {
+      "name": "海へ開いた岩の潮だまり",
+      "source": "src/concept-gardens.js",
+      "center": [
+        15,
+        3
+      ],
+      "radius": 4.4,
+      "depth": -0.55
+    }
   },
   "2": {
     "n": 2,
@@ -141,7 +151,67 @@ export const CONCEPT_LAYOUTS = Object.freeze({
         -6
       ]
     },
-    "season": "summer"
+    "season": "summer",
+    "schoolPath": [
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        4
+      ],
+      [
+        10,
+        1
+      ],
+      [
+        14,
+        -3.5
+      ],
+      [
+        15.35,
+        -4.4
+      ]
+    ],
+    "creekBridge": {
+      "a": [
+        -20,
+        -4
+      ],
+      "b": [
+        -10,
+        -4
+      ],
+      "width": 3.5
+    },
+    "creekApproach": [
+      [
+        0,
+        6
+      ],
+      [
+        -8,
+        2
+      ],
+      [
+        -10,
+        -4
+      ]
+    ],
+    "sceneryDetails": {
+      "name": "段状の滝と小川の木橋、学校への枝道",
+      "source": "src/concept-forest-detail.js",
+      "fallsCenter": [
+        -20,
+        -13
+      ],
+      "terraceHeights": [
+        8.4,
+        5.4,
+        2.6
+      ]
+    }
   },
   "3": {
     "n": 3,
@@ -372,7 +442,15 @@ export const CONCEPT_LAYOUTS = Object.freeze({
     "reviewSide": [
       18,
       0
-    ]
+    ],
+    "sceneryDetails": {
+      "name": "高い樋から水車上部へ注ぐ流水",
+      "source": "src/concept-workshop-detail.js",
+      "outlet": [
+        10.9,
+        -10.05
+      ]
+    }
   },
   "5": {
     "n": 5,
@@ -462,7 +540,11 @@ export const CONCEPT_LAYOUTS = Object.freeze({
     "reviewSide": [
       18,
       5
-    ]
+    ],
+    "sceneryDetails": {
+      "name": "編み軒と両端がつながる大かごの取っ手",
+      "source": "tools/build-concept-models-b.py"
+    }
   },
   "6": {
     "n": 6,
@@ -697,7 +779,11 @@ export const CONCEPT_LAYOUTS = Object.freeze({
         -14
       ],
       "fov": 50
-    }
+    },
+    "reviewSide": [
+      20,
+      -1
+    ]
   },
   "8": {
     "n": 8,
@@ -729,9 +815,79 @@ export const CONCEPT_LAYOUTS = Object.freeze({
         -0.2
       ],
       [
+        "festivalCelebrationCanopy",
+        -18.5,
+        -10.5,
+        1,
+        0.5235987755982988
+      ],
+      [
+        "festivalCelebrationTable",
+        -21.2,
+        -12.4,
+        1,
+        0
+      ],
+      [
+        "festivalCelebrationTable",
+        -15.9,
+        -12.4,
+        1,
+        0
+      ],
+      [
+        "festivalCelebrationTable",
+        -18.5,
+        -7.1,
+        1,
+        0
+      ],
+      [
+        "festivalCelebrationChair",
+        -23,
+        -12.4,
+        1,
+        0
+      ],
+      [
+        "festivalCelebrationChair",
+        -19.4,
+        -12.4,
+        1,
+        3.14
+      ],
+      [
+        "festivalCelebrationChair",
+        -17.7,
+        -12.4,
+        1,
+        0
+      ],
+      [
+        "festivalCelebrationChair",
+        -14.1,
+        -12.4,
+        1,
+        3.14
+      ],
+      [
+        "festivalCelebrationChair",
+        -20.3,
+        -7.1,
+        1,
+        0
+      ],
+      [
+        "festivalCelebrationChair",
+        -16.7,
+        -7.1,
+        1,
+        3.14
+      ],
+      [
         "mexicanHouseA",
-        -26,
-        -16,
+        -28,
+        -22,
         1,
         0
       ],

@@ -82,8 +82,18 @@
       "season": "spring",
       "reviewSide": [
         8,
-        0
-      ]
+        9
+      ],
+      "sceneryDetails": {
+        "name": "海へ開いた岩の潮だまり",
+        "source": "src/concept-gardens.js",
+        "center": [
+          15,
+          3
+        ],
+        "radius": 4.4,
+        "depth": -0.55
+      }
     },
     {
       "n": 2,
@@ -160,7 +170,67 @@
           -6
         ]
       },
-      "season": "summer"
+      "season": "summer",
+      "schoolPath": [
+        [
+          0,
+          5
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          10,
+          1
+        ],
+        [
+          14,
+          -3.5
+        ],
+        [
+          15.35,
+          -4.4
+        ]
+      ],
+      "creekBridge": {
+        "a": [
+          -20,
+          -4
+        ],
+        "b": [
+          -10,
+          -4
+        ],
+        "width": 3.5
+      },
+      "creekApproach": [
+        [
+          0,
+          6
+        ],
+        [
+          -8,
+          2
+        ],
+        [
+          -10,
+          -4
+        ]
+      ],
+      "sceneryDetails": {
+        "name": "段状の滝と小川の木橋、学校への枝道",
+        "source": "src/concept-forest-detail.js",
+        "fallsCenter": [
+          -20,
+          -13
+        ],
+        "terraceHeights": [
+          8.4,
+          5.4,
+          2.6
+        ]
+      }
     },
     {
       "n": 3,
@@ -391,7 +461,15 @@
       "reviewSide": [
         18,
         0
-      ]
+      ],
+      "sceneryDetails": {
+        "name": "高い樋から水車上部へ注ぐ流水",
+        "source": "src/concept-workshop-detail.js",
+        "outlet": [
+          10.9,
+          -10.05
+        ]
+      }
     },
     {
       "n": 5,
@@ -481,7 +559,11 @@
       "reviewSide": [
         18,
         5
-      ]
+      ],
+      "sceneryDetails": {
+        "name": "編み軒と両端がつながる大かごの取っ手",
+        "source": "tools/build-concept-models-b.py"
+      }
     },
     {
       "n": 6,
@@ -716,7 +798,11 @@
           -14
         ],
         "fov": 50
-      }
+      },
+      "reviewSide": [
+        20,
+        -1
+      ]
     },
     {
       "n": 8,
@@ -748,9 +834,79 @@
           -0.2
         ],
         [
+          "festivalCelebrationCanopy",
+          -18.5,
+          -10.5,
+          1,
+          0.5235987755982988
+        ],
+        [
+          "festivalCelebrationTable",
+          -21.2,
+          -12.4,
+          1,
+          0
+        ],
+        [
+          "festivalCelebrationTable",
+          -15.9,
+          -12.4,
+          1,
+          0
+        ],
+        [
+          "festivalCelebrationTable",
+          -18.5,
+          -7.1,
+          1,
+          0
+        ],
+        [
+          "festivalCelebrationChair",
+          -23,
+          -12.4,
+          1,
+          0
+        ],
+        [
+          "festivalCelebrationChair",
+          -19.4,
+          -12.4,
+          1,
+          3.14
+        ],
+        [
+          "festivalCelebrationChair",
+          -17.7,
+          -12.4,
+          1,
+          0
+        ],
+        [
+          "festivalCelebrationChair",
+          -14.1,
+          -12.4,
+          1,
+          3.14
+        ],
+        [
+          "festivalCelebrationChair",
+          -20.3,
+          -7.1,
+          1,
+          0
+        ],
+        [
+          "festivalCelebrationChair",
+          -16.7,
+          -7.1,
+          1,
+          3.14
+        ],
+        [
           "mexicanHouseA",
-          -26,
-          -16,
+          -28,
+          -22,
           1,
           0
         ],
@@ -1378,6 +1534,72 @@
       ],
       "blend": "assets-src/islands/concept-models-b/festivalShellStage.blend",
       "preview": "assets-src/islands/concept-models-b/festivalShellStage.png"
+    },
+    {
+      "id": "festivalCelebrationCanopy",
+      "islands": [
+        8
+      ],
+      "pack": "b",
+      "targetSize": [
+        13,
+        9,
+        13
+      ],
+      "status": "制作済み、島内の景観確認中",
+      "sourceScript": "tools/build-concept-models-b.py",
+      "detail": "回転木馬の左に開く赤とクリームの縞天幕。金色の支柱、赤布の垂れ飾り、花と灯りを分離して造形。",
+      "measuredSize": [
+        12.57,
+        8.41,
+        12.34
+      ],
+      "blend": "assets-src/islands/concept-models-b/festivalCelebrationCanopy.blend",
+      "preview": "assets-src/islands/concept-models-b/festivalCelebrationCanopy.png"
+    },
+    {
+      "id": "festivalCelebrationTable",
+      "islands": [
+        8
+      ],
+      "pack": "b",
+      "targetSize": [
+        2.7,
+        1.1,
+        2.7
+      ],
+      "status": "制作済み、島内の景観確認中",
+      "sourceScript": "tools/build-concept-models-b.py",
+      "detail": "白いクロスの円卓。天幕と椅子から分離し、３卓を配置。",
+      "measuredSize": [
+        2.56,
+        1.11,
+        2.585
+      ],
+      "blend": "assets-src/islands/concept-models-b/festivalCelebrationTable.blend",
+      "preview": "assets-src/islands/concept-models-b/festivalCelebrationTable.png"
+    },
+    {
+      "id": "festivalCelebrationChair",
+      "islands": [
+        8
+      ],
+      "pack": "b",
+      "targetSize": [
+        1,
+        1.5,
+        1
+      ],
+      "status": "制作済み、島内の景観確認中",
+      "sourceScript": "tools/build-concept-models-b.py",
+      "detail": "食卓ごとに近づける独立した椅子。既存の学習用椅子を保持。",
+      "measuredSize": [
+        0.9,
+        1.435,
+        0.78
+      ],
+      "blend": "assets-src/islands/concept-models-b/festivalCelebrationChair.blend",
+      "preview": "assets-src/islands/concept-models-b/festivalCelebrationChair.png"
     },
     {
       "id": "mexicanHouseA",

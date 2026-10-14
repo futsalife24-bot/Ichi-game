@@ -14,7 +14,7 @@
       9.6,
       16.979
     ],
-    "triangles": 126028,
+    "triangles": 131908,
     "meshCount": 16,
     "opening": "通過口あり",
     "pivots": {},
@@ -296,7 +296,7 @@
       15.1
     ],
     "triangles": 31936,
-    "meshCount": 11,
+    "meshCount": 12,
     "opening": "該当なし",
     "pivots": {
       "rotate_basketLight": {
@@ -476,5 +476,71 @@
     "pivots": {},
     "preview": "mexicanHouseB.png",
     "blend": "mexicanHouseB.blend"
+  },
+  {
+    "id": "festivalCelebrationCanopy",
+    "requestedSize": [
+      13,
+      9,
+      13
+    ],
+    "staticBounds": [
+      -6.25,
+      -6.17,
+      0.0,
+      6.32,
+      6.17,
+      8.41
+    ],
+    "triangles": 13664,
+    "meshCount": 7,
+    "opening": "該当なし",
+    "pivots": {},
+    "preview": "festivalCelebrationCanopy.png",
+    "blend": "festivalCelebrationCanopy.blend"
+  },
+  {
+    "id": "festivalCelebrationTable",
+    "requestedSize": [
+      2.7,
+      1.1,
+      2.7
+    ],
+    "staticBounds": [
+      -1.28,
+      -1.28,
+      0.0,
+      1.28,
+      1.305,
+      1.11
+    ],
+    "triangles": 1912,
+    "meshCount": 5,
+    "opening": "該当なし",
+    "pivots": {},
+    "preview": "festivalCelebrationTable.png",
+    "blend": "festivalCelebrationTable.blend"
+  },
+  {
+    "id": "festivalCelebrationChair",
+    "requestedSize": [
+      1,
+      1.5,
+      1
+    ],
+    "staticBounds": [
+      -0.45,
+      -0.39,
+      0.0,
+      0.45,
+      0.39,
+      1.435
+    ],
+    "triangles": 1504,
+    "meshCount": 4,
+    "opening": "該当なし",
+    "pivots": {},
+    "preview": "festivalCelebrationChair.png",
+    "blend": "festivalCelebrationChair.blend"
   }
 ]

@@ -138,7 +138,8 @@ function wheelChannel(parts,scenery,origin){
   const place=(key,x,y,z,w,h,d,ry=0)=>add(parts,key,x+3,y-origin,z+14,w,h,d,ry);
   const wheel=scenery.models.get('greatWaterwheel'),aqueduct=scenery.models.get('workshopAqueduct');
   if(!wheel||!aqueduct)return;
-  const y=Math.max(aqueduct.position.y+7.9,wheel.position.y+10.25),ax=21.2,az=-17.7,bx=12.7,bz=-12.1;
+  const y=Math.max(aqueduct.position.y+7.9,wheel.position.y+13),ax=21.2,az=-17.7,bx=10.9,bz=-10.05;
+  aqueduct.scale.y=(y-aqueduct.position.y)/5.94;
   const dx=bx-ax,dz=bz-az,length=Math.hypot(dx,dz),ry=-Math.atan2(dz,dx),px=-dz/length,pz=dx/length;
   for(const side of [-1,1])place('woodDark',(ax+bx)/2+side*px*.57,y,(az+bz)/2+side*pz*.57,length,.35,.22,ry);
   place('woodLight',(ax+bx)/2,y-.22,(az+bz)/2,length,.18,1.37,ry);
@@ -148,8 +149,21 @@ function wheelChannel(parts,scenery,origin){
     place('woodDark',x,(base+top)/2,z,.43,top-base,.43);
     place('woodLight',x,top-.08,z,1.4,.27,1.32);
   }
-  const lipY=wheel.position.y+9.25;
-  place('channelWater',12.7,(y+lipY)/2,-12.1,.54,y-lipY,.08);
+  // すいしゃの うえへ そそぐ みずを、わの まえからも みせる。
+  const lipY=wheel.position.y+11.55;
+  place('channelWater',bx,(y+lipY)/2,bz,.82,y-lipY,.3);
+  const foam=[];
+  for(let i=0;i<13;i++)foam.push({p:[bx+3+(i%4-1.5)*.25,lipY+.08+(i%3)*.08,bz+14+.2+(i%3)*.11],s:[.21,.12,.19],ry:0});
+  draw(scenery.group,new THREE.SphereGeometry(1,10,6),conceptMaterial({color:0xf1ffff,type:'water',roughness:.25}),foam,0);
+  const jetMaterial=conceptMaterial({color:0xd6f9ff,type:'water',roughness:.25,opacity:.92});
+  jetMaterial.emissive.setHex(0x8cbccb);jetMaterial.emissiveIntensity=.22;
+  for(let i=0;i<3;i++){
+    const x=bx+(i-1)*.23;
+    const curve=new THREE.CatmullRomCurve3([new THREE.Vector3(x,y+.1,bz),new THREE.Vector3(x+.15,y-.5,bz+.3),new THREE.Vector3(x+.25,lipY,bz+.45)]);
+    const jet=new THREE.Mesh(new THREE.TubeGeometry(curve,12,.14,6,false),jetMaterial);
+    jet.name='すいしゃへ そそぐ みず';jet.castShadow=false;scenery.group.add(jet);
+  }
+  scenery.group.userData.wheelWater={from:[bx,y,bz],to:[bx+.25,lipY,bz+.45]};
   // くるまの しんと どめがねを、まえから わかる おおきさに する。
   const hubY=wheel.position.y+6.05;
   place('woodDark',10,hubY,-9.14,1.25,1.25,.51);

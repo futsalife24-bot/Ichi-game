@@ -66,14 +66,19 @@ function buildCoastGarden(scenery,rnd) {
     if(z>11&&Math.abs(x)<7)continue;
     const y=conceptHeight(1,x,z),s=.5+rnd()*1.5;stones.push({p:[x,y+.25*s,z],s:[s,s*.65,s*.8],r:[rnd()*.4,rnd()*6.28,rnd()*.3]});
     const cx=x*.88,cz=-3+(z+3)*.87,cy=conceptHeight(1,cx,cz);
-    if(i%3===0)shrubs.push({p:[cx,cy+.25,cz],s:[1.6,.5,1.15]});
+    if(i%3===0&&Math.hypot(cx-15,cz-3)>6)shrubs.push({p:[cx,cy+.25,cz],s:[1.6,.5,1.15]});
     for(let j=0;j<16;j++) {
       const xx=cx+(rnd()-.5)*2.8,zz=cz+(rnd()-.5)*2.4,yy=conceptHeight(1,xx,zz),h=.35+rnd()*.35;
-      if(yy<.1)continue;
+      if(yy<.1||Math.hypot(xx-15,zz-3)<5.4)continue;
       for(let k=0;k<5;k++)petals.push({p:[xx,yy+h,zz],r:[0,k*1.256+rnd()*.1,0],s:[1,1,1]});
       centres.push({p:[xx,yy+h+.035,zz],s:[1,.5,1]});
       for(let k=0;k<4;k++)leaves.push({p:[xx,yy,zz],r:[-.7,k*1.57,0],s:[2,2,2]});
     }
+  }
+  // うみへ ひらいた いわの わで、ちいさな しおだまりを みせる。
+  for(let i=0;i<22;i++){
+    const a=Math.PI*.30+i/21*Math.PI*1.40,x=15+Math.cos(a)*4.6,z=3+Math.sin(a)*4.6,y=Math.max(-.12,conceptHeight(1,x,z));
+    const size=.65+(i%3)*.18;stones.push({p:[x,y+.18,z],s:[size,.55+(i%2)*.2,size*.85],r:[.08,i*.71,.05]});
   }
   instanceParts(scenery.group,rockGeometry(31),conceptMaterial({color:0xa7aaa0,type:'rock'}),stones);
   instanceParts(scenery.group,rockGeometry(19),conceptMaterial({color:0x749349,type:'foliage'}),shrubs);

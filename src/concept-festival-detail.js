@@ -29,10 +29,10 @@ function carousel(scenery) {
   const root=scenery.models.get('starCarousel');if(!root)return;
   const rotating=root.children.find(o=>o.isGroup&&o.children.some(c=>c.name==='rotate_gold'))??root;
   // てっぺんの ほしを ふちどり、やねの まえから ひかりが みえるようにする。
-  const star=starGeometry(),crown=new THREE.Mesh(star,gold);crown.position.set(0,13.5,1.15);crown.scale.set(2.2,2.2,1);crown.material.side=THREE.DoubleSide;rotating.add(crown);
-  const heart=new THREE.Mesh(star,starLight);heart.position.set(0,13.5,1.19);heart.scale.set(1.55,1.55,1);rotating.add(heart);
+  const star=starGeometry(),crown=new THREE.Mesh(star,gold);crown.name='てっぺんの ほし';crown.position.set(0,14,1.15);crown.scale.set(2.2,2.2,1);crown.material.side=THREE.DoubleSide;root.add(crown);
+  const heart=new THREE.Mesh(star,starLight);heart.position.set(0,14,1.19);heart.scale.set(1.55,1.55,1);root.add(heart);
   const halo=new THREE.Mesh(new THREE.PlaneGeometry(1,1),new THREE.ShaderMaterial({transparent:true,depthWrite:false,side:THREE.DoubleSide,toneMapped:false,vertexShader:'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',fragmentShader:'varying vec2 vUv;void main(){float d=length(vUv-.5)*2.;gl_FragColor=vec4(1.,.73,.27,.3*pow(max(0.,1.-d),2.));\n#include <colorspace_fragment>\n}' }));
-  halo.position.set(0,13.5,1.1);halo.scale.set(6,6,1);rotating.add(halo);
+  halo.position.set(0,14,1.1);halo.scale.set(6,6,1);root.add(halo);
   const roofStars=[],roofBulbs=[],lowerBulbs=[],goldBeads=[];
   for(let i=0;i<16;i++){
     const a=i*Math.PI/8,s=Math.sin(a),c=Math.cos(a);
