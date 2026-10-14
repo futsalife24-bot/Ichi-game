@@ -1,6 +1,6 @@
 {
-  "checkedAt": "2026-10-14T05:01:30.247Z",
-  "state": "制作・自己検証完了、公開準備",
+  "checkedAt": "2026-10-14T05:30:18.015Z",
+  "state": "景観goal完了・自己検証して公開済み",
   "base": "fd2e87a2b93fdcd941653860677addb6a69a483d",
   "previousPublicMain": "ffb0b18c12fe8747d47d331ea3424b90c1433593",
   "sourceFiles": 188,
@@ -637,9 +637,9 @@
         ],
         "width": 1280,
         "height": 720,
-        "bytes": 110105,
-        "sha256": "055b60e2ea249f8cd0d6d58cc3177e71ace9dd73de2903b4bbe104dee7978c47",
-        "capturedAt": "2026-10-14T02:41:12.899Z"
+        "bytes": 108580,
+        "sha256": "8074c8051d2c5ec58c3850883f6f6467640f9ec6ee22a193e7a784403dae013f",
+        "capturedAt": "2026-10-14T05:24:16.004Z"
       },
       {
         "island": 1,
@@ -651,9 +651,9 @@
         ],
         "width": 667,
         "height": 375,
-        "bytes": 38997,
-        "sha256": "cf40cb13e99f5e113c6246fe66c6b021a749c4ec40de4986b1323dd170e558ff",
-        "capturedAt": "2026-10-14T02:42:53.115Z"
+        "bytes": 38742,
+        "sha256": "795396a9bb7d007f01e651e72665e970cbd6bf862fcb687b8c5223df177fe9e0",
+        "capturedAt": "2026-10-14T05:24:19.700Z"
       },
       {
         "island": 2,
@@ -665,9 +665,9 @@
         ],
         "width": 1280,
         "height": 720,
-        "bytes": 168728,
-        "sha256": "1ca333a2ca531cf5b1220ca44c81752b5fa0dbc7d93da04153787f8acf30652b",
-        "capturedAt": "2026-10-14T00:35:07.384Z"
+        "bytes": 175771,
+        "sha256": "dc9a2d635be7167d14d5f8b7db9465b23eafd0cd0b6541f452610e072396b790",
+        "capturedAt": "2026-10-14T05:24:56.036Z"
       },
       {
         "island": 2,
@@ -679,9 +679,9 @@
         ],
         "width": 667,
         "height": 375,
-        "bytes": 59301,
-        "sha256": "d684a1285fa708dff107b5bdac202997e1f69a353ca671ca8d57b5d922a94505",
-        "capturedAt": "2026-10-14T00:35:08.160Z"
+        "bytes": 58655,
+        "sha256": "59505fec07a7fbe8608a9992ad2582dcbb2809fe16d341301d8d861475f7710a",
+        "capturedAt": "2026-10-14T05:24:56.704Z"
       },
       {
         "island": 3,
@@ -693,9 +693,9 @@
         ],
         "width": 1280,
         "height": 720,
-        "bytes": 131808,
-        "sha256": "ea2ea4ebe2b365b58a4d54978643ac3a3f4d3023fccdf935609a01624795b8d4",
-        "capturedAt": "2026-10-14T00:30:37.309Z"
+        "bytes": 143536,
+        "sha256": "d92ac30220a54af1cb9fef08279e2f5ddf1d39540618602c305315e060006c7f",
+        "capturedAt": "2026-10-14T05:18:29.733Z"
       },
       {
         "island": 3,
@@ -707,9 +707,9 @@
         ],
         "width": 667,
         "height": 375,
-        "bytes": 50938,
-        "sha256": "30847bbbc6b5be6e699b5bc5247cdcd9ce8812a1d41ea749cc08f0d611c36ff2",
-        "capturedAt": "2026-10-14T00:30:37.968Z"
+        "bytes": 51829,
+        "sha256": "e7c58d3b5dc16b3c6dc6e1a7d8a82add0c80dddfde05a1c5693381a25b4d79b3",
+        "capturedAt": "2026-10-14T05:23:29.392Z"
       },
       {
         "island": 4,
@@ -721,9 +721,9 @@
         ],
         "width": 1280,
         "height": 720,
-        "bytes": 138895,
-        "sha256": "4362a1aee2f6fb58e77baebf588d640236ff510ad15f5b42f495c8c6ef5c1b2c",
-        "capturedAt": "2026-10-14T00:19:29.834Z"
+        "bytes": 148891,
+        "sha256": "e5e06e9e474dd5a4536b1b9902f80000a8e74afb5ee8aa7fb18c4f1368ecd0ee",
+        "capturedAt": "2026-10-14T05:25:45.128Z"
       },
       {
         "island": 4,
@@ -735,9 +735,9 @@
         ],
         "width": 667,
         "height": 375,
-        "bytes": 53167,
-        "sha256": "45ea0b261ca05a6d5fbda94fe040c8aca5c5062511118e41bd36b7c78978fdfa",
-        "capturedAt": "2026-10-14T00:19:30.648Z"
+        "bytes": 53960,
+        "sha256": "0008de60b7b14cdf4421971fbbf8662a87bc73db1a8f82f1223dcc5be29b404e",
+        "capturedAt": "2026-10-14T05:25:45.602Z"
       },
       {
         "island": 5,
@@ -749,9 +749,9 @@
         ],
         "width": 1280,
         "height": 720,
-        "bytes": 131105,
-        "sha256": "c7169a4846918eb11f85c302a3b0fda512821c99f5959f2d76a4f6ce91e44cd6",
-        "capturedAt": "2026-10-14T00:16:40.007Z"
+        "bytes": 143634,
+        "sha256": "866d2f4568c1e36f7e09379a0db2e8acf8774a287e00de2bf33944e1ed41b22d",
+        "capturedAt": "2026-10-14T05:26:30.407Z"
       },
       {
         "island": 5,
@@ -763,9 +763,9 @@
         ],
         "width": 667,
         "height": 375,
-        "bytes": 51435,
-        "sha256": "2694f849dd058a63f2c466482c972e0e5398fa3e4fc7206e0502bb2119d6a2ee",
-        "capturedAt": "2026-10-14T00:16:40.906Z"
+        "bytes": 52716,
+        "sha256": "fd37ff82e452f2d070f19c5cebe50ee27d2aa43d9780dd9366b17dfc5526a245",
+        "capturedAt": "2026-10-14T05:26:30.873Z"
       },
       {
         "island": 6,
@@ -777,9 +777,9 @@
         ],
         "width": 1280,
         "height": 720,
-        "bytes": 120057,
-        "sha256": "7b1edbffd7101ce038b5f738f525cbb1009047d2297ebee98d44b3edc9aeb740",
-        "capturedAt": "2026-10-14T00:11:38.433Z"
+        "bytes": 126916,
+        "sha256": "e7a341b346c8e5a727ec269e94c5cda01d499a4777301b1f0a778e2a54b8cd50",
+        "capturedAt": "2026-10-14T05:27:13.328Z"
       },
       {
         "island": 6,
@@ -791,9 +791,9 @@
         ],
         "width": 667,
         "height": 375,
-        "bytes": 49648,
-        "sha256": "a72e773ba7e59dc3a0223952c6c817b60c10007f0c6acaa4654062447dec51d0",
-        "capturedAt": "2026-10-14T00:11:39.153Z"
+        "bytes": 49918,
+        "sha256": "e933ca8406d624d1be1ad72d701764e665cc6c21f58645606e1a013851346c6a",
+        "capturedAt": "2026-10-14T05:27:13.902Z"
       },
       {
         "island": 7,
@@ -805,9 +805,9 @@
         ],
         "width": 1280,
         "height": 720,
-        "bytes": 120377,
-        "sha256": "a3f9cb2f5e7657cba94faad6feb00383f0bd71d74d24f3724757c3d4c271dafd",
-        "capturedAt": "2026-10-14T00:08:36.812Z"
+        "bytes": 128527,
+        "sha256": "41bb38287a0bed353ed46075b516bb8c15863b241b0b9f45a5a788c439080cb7",
+        "capturedAt": "2026-10-14T05:28:09.269Z"
       },
       {
         "island": 7,
@@ -819,9 +819,9 @@
         ],
         "width": 667,
         "height": 375,
-        "bytes": 46550,
-        "sha256": "542217d8d12eb92240fbb66e3a6d0f2a794a6d137d24f622de9a14923a36d27c",
-        "capturedAt": "2026-10-14T00:08:37.497Z"
+        "bytes": 46870,
+        "sha256": "346c749fb4820aa8a6c21d23ac6b78a5e258a4e1209e9d712d41e2599a1f26a0",
+        "capturedAt": "2026-10-14T05:28:09.685Z"
       },
       {
         "island": 8,
@@ -833,9 +833,9 @@
         ],
         "width": 1280,
         "height": 720,
-        "bytes": 135898,
-        "sha256": "5775795292299ca03c20d5d0de1cdc9ebf1d531f3ca09850cd92b4c149e4e758",
-        "capturedAt": "2026-10-14T00:04:06.582Z"
+        "bytes": 144496,
+        "sha256": "4df70523e97f2479013edbfc1feaf9af9714774d06c750328d4a283c9c483ea3",
+        "capturedAt": "2026-10-14T05:28:52.861Z"
       },
       {
         "island": 8,
@@ -847,9 +847,9 @@
         ],
         "width": 667,
         "height": 375,
-        "bytes": 53592,
-        "sha256": "d134694ec0d8047c49d717b202efb8af32dc76cc4ec8d5c54a81e6dfe5ef1a66",
-        "capturedAt": "2026-10-14T00:01:00.454Z"
+        "bytes": 51770,
+        "sha256": "120c49c4b200e45ce0107fd3861a6edf445ce10b5c667289ee9cd8ca29cbdb00",
+        "capturedAt": "2026-10-14T05:28:53.561Z"
       }
     ]
   },
@@ -860,5 +860,190 @@
   "models": {
     "requested": "gpt-6-sol / medium、子２体",
     "actual": "主・子とも未確認"
+  },
+  "publication": {
+    "main": "2cf2ab982d9d6520472db83fd0442b1af08ff51d",
+    "sourceHead": "d64a988ab906ee4d0a2bfb97499f9d4ab375de02",
+    "pullRequest": "https://github.com/futsalife24-bot/Ichi-game/pull/37",
+    "ci": {
+      "conclusion": "success",
+      "headSha": "2cf2ab982d9d6520472db83fd0442b1af08ff51d",
+      "status": "completed",
+      "url": "https://github.com/futsalife24-bot/Ichi-game/actions/runs/38514923896",
+      "groups": [
+        29,
+        68,
+        18,
+        13,
+        12,
+        32,
+        17,
+        26,
+        109,
+        4
+      ],
+      "tests": 328
+    },
+    "pages": {
+      "conclusion": "success",
+      "headSha": "2cf2ab982d9d6520472db83fd0442b1af08ff51d",
+      "status": "completed",
+      "url": "https://github.com/futsalife24-bot/Ichi-game/actions/runs/38514924028"
+    },
+    "httpFiles": 113,
+    "allMatch": true,
+    "check": "concept-scenes-release-check.json",
+    "serviceWorker": "kirakira-v58-concept-finish"
+  },
+  "publicBrowser": {
+    "checkedAt": "2026-10-14T05:28:54.647Z",
+    "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d",
+    "url": "https://futsalife24-bot.github.io/Ichi-game/?dev=forest&month=4&release=2cf2ab9",
+    "surface": "PCブラウザーの公開版。確認用の非永続データ",
+    "viewports": [
+      [
+        1280,
+        720
+      ],
+      [
+        667,
+        375
+      ]
+    ],
+    "islands": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "checks": [
+      "全８島に通常の渡航操作で到着",
+      "渡航・帰還中の星１保持",
+      "第一島のジャンプ非表示",
+      "第一島から第二島への直接渡航",
+      "第二島のABC案内",
+      "第四〜第八島で方向キーによる短い歩行",
+      "全８島の大・小画面を加工なしで保存"
+    ],
+    "screenshots": [
+      {
+        "island": 3,
+        "size": "wide",
+        "file": "docs/concept-scene-proof/ui/03-wide.jpg",
+        "at": "2026-10-14T05:18:29.750Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 3,
+        "size": "small",
+        "file": "docs/concept-scene-proof/ui/03-small.jpg",
+        "at": "2026-10-14T05:23:29.398Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 1,
+        "size": "wide",
+        "file": "docs/concept-scene-proof/ui/01-wide.jpg",
+        "at": "2026-10-14T05:24:16.045Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 1,
+        "size": "small",
+        "file": "docs/concept-scene-proof/ui/01-small.jpg",
+        "at": "2026-10-14T05:24:19.875Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 2,
+        "size": "wide",
+        "file": "docs/concept-scene-proof/ui/02-wide.jpg",
+        "at": "2026-10-14T05:24:56.037Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 2,
+        "size": "small",
+        "file": "docs/concept-scene-proof/ui/02-small.jpg",
+        "at": "2026-10-14T05:24:56.708Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 4,
+        "size": "wide",
+        "file": "docs/concept-scene-proof/ui/04-wide.jpg",
+        "at": "2026-10-14T05:25:45.131Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 4,
+        "size": "small",
+        "file": "docs/concept-scene-proof/ui/04-small.jpg",
+        "at": "2026-10-14T05:25:45.603Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 5,
+        "size": "wide",
+        "file": "docs/concept-scene-proof/ui/05-wide.jpg",
+        "at": "2026-10-14T05:26:30.423Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 5,
+        "size": "small",
+        "file": "docs/concept-scene-proof/ui/05-small.jpg",
+        "at": "2026-10-14T05:26:30.874Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 6,
+        "size": "wide",
+        "file": "docs/concept-scene-proof/ui/06-wide.jpg",
+        "at": "2026-10-14T05:27:13.327Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 6,
+        "size": "small",
+        "file": "docs/concept-scene-proof/ui/06-small.jpg",
+        "at": "2026-10-14T05:27:13.912Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 7,
+        "size": "wide",
+        "file": "docs/concept-scene-proof/ui/07-wide.jpg",
+        "at": "2026-10-14T05:28:09.283Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 7,
+        "size": "small",
+        "file": "docs/concept-scene-proof/ui/07-small.jpg",
+        "at": "2026-10-14T05:28:09.685Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 8,
+        "size": "wide",
+        "file": "docs/concept-scene-proof/ui/08-wide.jpg",
+        "at": "2026-10-14T05:28:52.876Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      },
+      {
+        "island": 8,
+        "size": "small",
+        "file": "docs/concept-scene-proof/ui/08-small.jpg",
+        "at": "2026-10-14T05:28:53.562Z",
+        "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+      }
+    ],
+    "logs": [],
+    "phonePerformance": "実スマホは未測定"
   }
 }

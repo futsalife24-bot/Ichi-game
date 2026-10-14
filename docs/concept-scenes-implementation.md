@@ -1,3 +1,5 @@
+最新：2026-10-14、八島の景観goalを自己検証で完了し、main `2cf2ab982d9d6520472db83fd0442b1af08ff51d` へ公開した。[完了・公開記録](concept-goal-completion.md)と[最終の検証記録](concept-goal-check.json)を参照。以下は制作中の履歴。
+
 # 本人採用のコンセプトアートに従う全８島３Ｄ制作
 
 2026-10-14の最新状態は[景観goalの仕上げと公開](concept-goal-completion.md)を参照。以下は、この最終照合より前の制作・自己検証・公開の履歴。

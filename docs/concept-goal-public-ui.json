@@ -1,0 +1,151 @@
+{
+  "checkedAt": "2026-10-14T05:28:54.647Z",
+  "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d",
+  "url": "https://futsalife24-bot.github.io/Ichi-game/?dev=forest&month=4&release=2cf2ab9",
+  "surface": "PCブラウザーの公開版。確認用の非永続データ",
+  "viewports": [
+    [
+      1280,
+      720
+    ],
+    [
+      667,
+      375
+    ]
+  ],
+  "islands": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "checks": [
+    "全８島に通常の渡航操作で到着",
+    "渡航・帰還中の星１保持",
+    "第一島のジャンプ非表示",
+    "第一島から第二島への直接渡航",
+    "第二島のABC案内",
+    "第四〜第八島で方向キーによる短い歩行",
+    "全８島の大・小画面を加工なしで保存"
+  ],
+  "screenshots": [
+    {
+      "island": 3,
+      "size": "wide",
+      "file": "docs/concept-scene-proof/ui/03-wide.jpg",
+      "at": "2026-10-14T05:18:29.750Z",
+      "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+    },
+    {
+      "island": 3,
+      "size": "small",
+      "file": "docs/concept-scene-proof/ui/03-small.jpg",
+      "at": "2026-10-14T05:23:29.398Z",
+      "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+    },
+    {
+      "island": 1,
+      "size": "wide",
+      "file": "docs/concept-scene-proof/ui/01-wide.jpg",
+      "at": "2026-10-14T05:24:16.045Z",
+      "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+    },
+    {
+      "island": 1,
+      "size": "small",
+      "file": "docs/concept-scene-proof/ui/01-small.jpg",
+      "at": "2026-10-14T05:24:19.875Z",
+      "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+    },
+    {
+      "island": 2,
+      "size": "wide",
+      "file": "docs/concept-scene-proof/ui/02-wide.jpg",
+      "at": "2026-10-14T05:24:56.037Z",
+      "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+    },
+    {
+      "island": 2,
+      "size": "small",
+      "file": "docs/concept-scene-proof/ui/02-small.jpg",
+      "at": "2026-10-14T05:24:56.708Z",
+      "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+    },
+    {
+      "island": 4,
+      "size": "wide",
+      "file": "docs/concept-scene-proof/ui/04-wide.jpg",
+      "at": "2026-10-14T05:25:45.131Z",
+      "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+    },
+    {
+      "island": 4,
+      "size": "small",
+      "file": "docs/concept-scene-proof/ui/04-small.jpg",
+      "at": "2026-10-14T05:25:45.603Z",
+      "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+    },
+    {
+      "island": 5,
+      "size": "wide",
+      "file": "docs/concept-scene-proof/ui/05-wide.jpg",
+      "at": "2026-10-14T05:26:30.423Z",
+      "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+    },
+    {
+      "island": 5,
+      "size": "small",
+      "file": "docs/concept-scene-proof/ui/05-small.jpg",
+      "at": "2026-10-14T05:26:30.874Z",
+      "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+    },
+    {
+      "island": 6,
+      "size": "wide",
+      "file": "docs/concept-scene-proof/ui/06-wide.jpg",
+      "at": "2026-10-14T05:27:13.327Z",
+      "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+    },
+    {
+      "island": 6,
+      "size": "small",
+      "file": "docs/concept-scene-proof/ui/06-small.jpg",
+      "at": "2026-10-14T05:27:13.912Z",
+      "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+    },
+    {
+      "island": 7,
+      "size": "wide",
+      "file": "docs/concept-scene-proof/ui/07-wide.jpg",
+      "at": "2026-10-14T05:28:09.283Z",
+      "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+    },
+    {
+      "island": 7,
+      "size": "small",
+      "file": "docs/concept-scene-proof/ui/07-small.jpg",
+      "at": "2026-10-14T05:28:09.685Z",
+      "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+    },
+    {
+      "island": 8,
+      "size": "wide",
+      "file": "docs/concept-scene-proof/ui/08-wide.jpg",
+      "at": "2026-10-14T05:28:52.876Z",
+      "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+    },
+    {
+      "island": 8,
+      "size": "small",
+      "file": "docs/concept-scene-proof/ui/08-small.jpg",
+      "at": "2026-10-14T05:28:53.562Z",
+      "release": "2cf2ab982d9d6520472db83fd0442b1af08ff51d"
+    }
+  ],
+  "logs": [],
+  "phonePerformance": "実スマホは未測定"
+}
