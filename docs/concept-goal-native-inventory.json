@@ -1,0 +1,945 @@
+{
+  "checkedAtUtc": "2026-10-14T04:04:00.017546+00:00",
+  "status": "ok",
+  "conceptArt": {
+    "count": 8,
+    "allManifestHashesMatch": true,
+    "files": [
+      {
+        "island": 1,
+        "file": "assets-src/islands/concept-art/v1/01-sunlit-cove.png",
+        "bytes": 2810845,
+        "sha256": "2c1fd7af6b2dddf479c962d97c4a9128d9ad8b70afaf50e298ef54092973900c",
+        "dimensions": [
+          1672,
+          941
+        ],
+        "manifestMatch": true
+      },
+      {
+        "island": 2,
+        "file": "assets-src/islands/concept-art/v1/02-rainbow-forest.png",
+        "bytes": 3116144,
+        "sha256": "2c408bbeff3dfba06dcda1ef09573ba0dc11c91555f8e356f4f77fb12c7f22db",
+        "dimensions": [
+          1672,
+          941
+        ],
+        "manifestMatch": true
+      },
+      {
+        "island": 3,
+        "file": "assets-src/islands/concept-art/v1/03-lantern-harbor.png",
+        "bytes": 2667757,
+        "sha256": "7db9ecc14c30f4934e689e15035931d4671398b9e1c9d74263a05501b4d2739e",
+        "dimensions": [
+          1672,
+          941
+        ],
+        "manifestMatch": true
+      },
+      {
+        "island": 4,
+        "file": "assets-src/islands/concept-art/v1/04-waterwheel-workshop.png",
+        "bytes": 2922572,
+        "sha256": "f56638056237186eae84fd350fbc7ff5fa7907021f6d9759f0a5729a479c28f4",
+        "dimensions": [
+          1672,
+          941
+        ],
+        "manifestMatch": true
+      },
+      {
+        "island": 5,
+        "file": "assets-src/islands/concept-art/v1/05-fruit-market.png",
+        "bytes": 2879439,
+        "sha256": "b03da11cfc4ce98e60ec9280683ce5ef580e431753b5b52fc69d4bad33d49b3a",
+        "dimensions": [
+          1672,
+          941
+        ],
+        "manifestMatch": true
+      },
+      {
+        "island": 6,
+        "file": "assets-src/islands/concept-art/v1/06-pearl-seabed.png",
+        "bytes": 2745998,
+        "sha256": "18e5ae68e37e821c5f71adbf1f942a1916cd3169a9edbe523d666e9975fcc348",
+        "dimensions": [
+          1672,
+          941
+        ],
+        "manifestMatch": true
+      },
+      {
+        "island": 7,
+        "file": "assets-src/islands/concept-art/v1/07-cloud-windcastle.png",
+        "bytes": 2445168,
+        "sha256": "93bee2ad4709915c99c436bac342565db502b07739ada1a5eef59ac41a7701af",
+        "dimensions": [
+          1672,
+          941
+        ],
+        "manifestMatch": true
+      },
+      {
+        "island": 8,
+        "file": "assets-src/islands/concept-art/v1/08-starlight-festival.png",
+        "bytes": 2640862,
+        "sha256": "215c79a5279213bfd8826822e89b1873f06e5edfab70460ca494f06bb153c2ca",
+        "dimensions": [
+          1672,
+          941
+        ],
+        "manifestMatch": true
+      }
+    ]
+  },
+  "scenery": {
+    "modelCounts": {
+      "a": 13,
+      "b": 17,
+      "nature": 10,
+      "total": 40
+    },
+    "editableBlendFiles": {
+      "count": 29,
+      "files": [
+        {
+          "path": "assets-src/islands/concept-models-a/concept-models-a.blend",
+          "exists": true,
+          "bytes": 11259617
+        },
+        {
+          "path": "assets-src/islands/concept-models-a/harbor-six.blend",
+          "exists": true,
+          "bytes": 599605
+        },
+        {
+          "path": "assets-src/islands/concept-models-b/blueDomePavilion.blend",
+          "exists": true,
+          "bytes": 170927
+        },
+        {
+          "path": "assets-src/islands/concept-models-b/coralArch.blend",
+          "exists": true,
+          "bytes": 683065
+        },
+        {
+          "path": "assets-src/islands/concept-models-b/festivalCelebrationCanopy.blend",
+          "exists": true,
+          "bytes": 208211
+        },
+        {
+          "path": "assets-src/islands/concept-models-b/festivalCelebrationChair.blend",
+          "exists": true,
+          "bytes": 109740
+        },
+        {
+          "path": "assets-src/islands/concept-models-b/festivalCelebrationTable.blend",
+          "exists": true,
+          "bytes": 120223
+        },
+        {
+          "path": "assets-src/islands/concept-models-b/festivalShellStage.blend",
+          "exists": true,
+          "bytes": 178114
+        },
+        {
+          "path": "assets-src/islands/concept-models-b/greatFruitMarket.blend",
+          "exists": true,
+          "bytes": 625435
+        },
+        {
+          "path": "assets-src/islands/concept-models-b/greatPearlShell.blend",
+          "exists": true,
+          "bytes": 272172
+        },
+        {
+          "path": "assets-src/islands/concept-models-b/mexicanHouseA.blend",
+          "exists": true,
+          "bytes": 160583
+        },
+        {
+          "path": "assets-src/islands/concept-models-b/mexicanHouseB.blend",
+          "exists": true,
+          "bytes": 162164
+        },
+        {
+          "path": "assets-src/islands/concept-models-b/moroccanHouse.blend",
+          "exists": true,
+          "bytes": 173531
+        },
+        {
+          "path": "assets-src/islands/concept-models-b/moroccanStall.blend",
+          "exists": true,
+          "bytes": 229588
+        },
+        {
+          "path": "assets-src/islands/concept-models-b/skyAirship.blend",
+          "exists": true,
+          "bytes": 163822
+        },
+        {
+          "path": "assets-src/islands/concept-models-b/spiralShellSeat.blend",
+          "exists": true,
+          "bytes": 299425
+        },
+        {
+          "path": "assets-src/islands/concept-models-b/starCarousel.blend",
+          "exists": true,
+          "bytes": 255598
+        },
+        {
+          "path": "assets-src/islands/concept-models-b/windCity.blend",
+          "exists": true,
+          "bytes": 443024
+        },
+        {
+          "path": "assets-src/islands/concept-models-b/windSails.blend",
+          "exists": true,
+          "bytes": 165572
+        },
+        {
+          "path": "assets-src/islands/concept-nature/branchCoral.blend",
+          "exists": true,
+          "bytes": 157476
+        },
+        {
+          "path": "assets-src/islands/concept-nature/branchCoralFar.blend",
+          "exists": true,
+          "bytes": 128025
+        },
+        {
+          "path": "assets-src/islands/concept-nature/broadSeaweed.blend",
+          "exists": true,
+          "bytes": 123752
+        },
+        {
+          "path": "assets-src/islands/concept-nature/coralBoulder.blend",
+          "exists": true,
+          "bytes": 194231
+        },
+        {
+          "path": "assets-src/islands/concept-nature/coralBoulderFar.blend",
+          "exists": true,
+          "bytes": 142984
+        },
+        {
+          "path": "assets-src/islands/concept-nature/friendlyWhale.blend",
+          "exists": true,
+          "bytes": 280137
+        },
+        {
+          "path": "assets-src/islands/concept-nature/reefRockArch.blend",
+          "exists": true,
+          "bytes": 249182
+        },
+        {
+          "path": "assets-src/islands/concept-nature/tableCoral.blend",
+          "exists": true,
+          "bytes": 124443
+        },
+        {
+          "path": "assets-src/islands/concept-nature/tubeSponge.blend",
+          "exists": true,
+          "bytes": 151200
+        },
+        {
+          "path": "assets-src/islands/concept-nature/tubeSpongeFar.blend",
+          "exists": true,
+          "bytes": 117141
+        }
+      ]
+    },
+    "models": [
+      {
+        "id": "blossomTree",
+        "pack": "a",
+        "source": "tools/build-concept-models-a.py",
+        "blend": "assets-src/islands/concept-models-a/concept-models-a.blend",
+        "preview": "assets-src/islands/concept-models-a/blossomTree.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 235924,
+        "reportedTriangles": 235924,
+        "ok": true
+      },
+      {
+        "id": "forestArch",
+        "pack": "a",
+        "source": "tools/build-concept-models-a.py",
+        "blend": "assets-src/islands/concept-models-a/concept-models-a.blend",
+        "preview": "assets-src/islands/concept-models-a/forestArch.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 247928,
+        "reportedTriangles": 247928,
+        "ok": true
+      },
+      {
+        "id": "nordicSchool",
+        "pack": "a",
+        "source": "tools/build-concept-models-a.py",
+        "blend": "assets-src/islands/concept-models-a/concept-models-a.blend",
+        "preview": "assets-src/islands/concept-models-a/nordicSchool.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 6262,
+        "reportedTriangles": 6262,
+        "ok": true
+      },
+      {
+        "id": "canalHouseA",
+        "pack": "a",
+        "source": "tools/build-concept-models-a.py",
+        "blend": "assets-src/islands/concept-models-a/harbor-six.blend",
+        "preview": "assets-src/islands/concept-models-a/canalHouseA.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 17350,
+        "reportedTriangles": 17350,
+        "ok": true
+      },
+      {
+        "id": "canalHouseB",
+        "pack": "a",
+        "source": "tools/build-concept-models-a.py",
+        "blend": "assets-src/islands/concept-models-a/harbor-six.blend",
+        "preview": "assets-src/islands/concept-models-a/canalHouseB.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 19186,
+        "reportedTriangles": 19186,
+        "ok": true
+      },
+      {
+        "id": "canalHouseC",
+        "pack": "a",
+        "source": "tools/build-concept-models-a.py",
+        "blend": "assets-src/islands/concept-models-a/harbor-six.blend",
+        "preview": "assets-src/islands/concept-models-a/canalHouseC.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 14138,
+        "reportedTriangles": 14138,
+        "ok": true
+      },
+      {
+        "id": "harborClock",
+        "pack": "a",
+        "source": "tools/build-concept-models-a.py",
+        "blend": "assets-src/islands/concept-models-a/harbor-six.blend",
+        "preview": "assets-src/islands/concept-models-a/harborClock.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 18940,
+        "reportedTriangles": 18940,
+        "ok": true
+      },
+      {
+        "id": "harborBakery",
+        "pack": "a",
+        "source": "tools/build-concept-models-a.py",
+        "blend": "assets-src/islands/concept-models-a/harbor-six.blend",
+        "preview": "assets-src/islands/concept-models-a/harborBakery.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 10716,
+        "reportedTriangles": 10716,
+        "ok": true
+      },
+      {
+        "id": "harborGlasshouse",
+        "pack": "a",
+        "source": "tools/build-concept-models-a.py",
+        "blend": "assets-src/islands/concept-models-a/harbor-six.blend",
+        "preview": "assets-src/islands/concept-models-a/harborGlasshouse.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 16048,
+        "reportedTriangles": 16048,
+        "ok": true
+      },
+      {
+        "id": "lighthouse",
+        "pack": "a",
+        "source": "tools/build-concept-models-a.py",
+        "blend": "assets-src/islands/concept-models-a/concept-models-a.blend",
+        "preview": "assets-src/islands/concept-models-a/lighthouse.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 2280,
+        "reportedTriangles": 2280,
+        "ok": true
+      },
+      {
+        "id": "alpineWorkshop",
+        "pack": "a",
+        "source": "tools/build-concept-models-a.py",
+        "blend": "assets-src/islands/concept-models-a/concept-models-a.blend",
+        "preview": "assets-src/islands/concept-models-a/alpineWorkshop.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 13014,
+        "reportedTriangles": 13014,
+        "ok": true
+      },
+      {
+        "id": "greatWaterwheel",
+        "pack": "a",
+        "source": "tools/build-concept-models-a.py",
+        "blend": "assets-src/islands/concept-models-a/concept-models-a.blend",
+        "preview": "assets-src/islands/concept-models-a/greatWaterwheel.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 6964,
+        "reportedTriangles": 6964,
+        "ok": true
+      },
+      {
+        "id": "workshopAqueduct",
+        "pack": "a",
+        "source": "tools/build-concept-models-a.py",
+        "blend": "assets-src/islands/concept-models-a/concept-models-a.blend",
+        "preview": "assets-src/islands/concept-models-a/workshopAqueduct.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 948,
+        "reportedTriangles": 948,
+        "ok": true
+      },
+      {
+        "id": "greatFruitMarket",
+        "pack": "b",
+        "source": "tools/build-concept-models-b.py",
+        "blend": "assets-src/islands/concept-models-b/greatFruitMarket.blend",
+        "preview": "assets-src/islands/concept-models-b/greatFruitMarket.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 131908,
+        "reportedTriangles": 131908,
+        "ok": true
+      },
+      {
+        "id": "moroccanStall",
+        "pack": "b",
+        "source": "tools/build-concept-models-b.py",
+        "blend": "assets-src/islands/concept-models-b/moroccanStall.blend",
+        "preview": "assets-src/islands/concept-models-b/moroccanStall.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 23144,
+        "reportedTriangles": 23144,
+        "ok": true
+      },
+      {
+        "id": "moroccanHouse",
+        "pack": "b",
+        "source": "tools/build-concept-models-b.py",
+        "blend": "assets-src/islands/concept-models-b/moroccanHouse.blend",
+        "preview": "assets-src/islands/concept-models-b/moroccanHouse.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 13704,
+        "reportedTriangles": 13704,
+        "ok": true
+      },
+      {
+        "id": "greatPearlShell",
+        "pack": "b",
+        "source": "tools/build-concept-models-b.py",
+        "blend": "assets-src/islands/concept-models-b/greatPearlShell.blend",
+        "preview": "assets-src/islands/concept-models-b/greatPearlShell.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 19025,
+        "reportedTriangles": 19025,
+        "ok": true
+      },
+      {
+        "id": "coralArch",
+        "pack": "b",
+        "source": "tools/build-concept-models-b.py",
+        "blend": "assets-src/islands/concept-models-b/coralArch.blend",
+        "preview": "assets-src/islands/concept-models-b/coralArch.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 98136,
+        "reportedTriangles": 98136,
+        "ok": true
+      },
+      {
+        "id": "spiralShellSeat",
+        "pack": "b",
+        "source": "tools/build-concept-models-b.py",
+        "blend": "assets-src/islands/concept-models-b/spiralShellSeat.blend",
+        "preview": "assets-src/islands/concept-models-b/spiralShellSeat.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 13867,
+        "reportedTriangles": 13867,
+        "ok": true
+      },
+      {
+        "id": "windCity",
+        "pack": "b",
+        "source": "tools/build-concept-models-b.py",
+        "blend": "assets-src/islands/concept-models-b/windCity.blend",
+        "preview": "assets-src/islands/concept-models-b/windCity.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 102292,
+        "reportedTriangles": 102292,
+        "ok": true
+      },
+      {
+        "id": "windSails",
+        "pack": "b",
+        "source": "tools/build-concept-models-b.py",
+        "blend": "assets-src/islands/concept-models-b/windSails.blend",
+        "preview": "assets-src/islands/concept-models-b/windSails.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 6204,
+        "reportedTriangles": 6204,
+        "ok": true
+      },
+      {
+        "id": "blueDomePavilion",
+        "pack": "b",
+        "source": "tools/build-concept-models-b.py",
+        "blend": "assets-src/islands/concept-models-b/blueDomePavilion.blend",
+        "preview": "assets-src/islands/concept-models-b/blueDomePavilion.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 8376,
+        "reportedTriangles": 8376,
+        "ok": true
+      },
+      {
+        "id": "skyAirship",
+        "pack": "b",
+        "source": "tools/build-concept-models-b.py",
+        "blend": "assets-src/islands/concept-models-b/skyAirship.blend",
+        "preview": "assets-src/islands/concept-models-b/skyAirship.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 5508,
+        "reportedTriangles": 5508,
+        "ok": true
+      },
+      {
+        "id": "starCarousel",
+        "pack": "b",
+        "source": "tools/build-concept-models-b.py",
+        "blend": "assets-src/islands/concept-models-b/starCarousel.blend",
+        "preview": "assets-src/islands/concept-models-b/starCarousel.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 31936,
+        "reportedTriangles": 31936,
+        "ok": true
+      },
+      {
+        "id": "festivalShellStage",
+        "pack": "b",
+        "source": "tools/build-concept-models-b.py",
+        "blend": "assets-src/islands/concept-models-b/festivalShellStage.blend",
+        "preview": "assets-src/islands/concept-models-b/festivalShellStage.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 9465,
+        "reportedTriangles": 9465,
+        "ok": true
+      },
+      {
+        "id": "festivalCelebrationCanopy",
+        "pack": "b",
+        "source": "tools/build-concept-models-b.py",
+        "blend": "assets-src/islands/concept-models-b/festivalCelebrationCanopy.blend",
+        "preview": "assets-src/islands/concept-models-b/festivalCelebrationCanopy.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 13664,
+        "reportedTriangles": 13664,
+        "ok": true
+      },
+      {
+        "id": "festivalCelebrationTable",
+        "pack": "b",
+        "source": "tools/build-concept-models-b.py",
+        "blend": "assets-src/islands/concept-models-b/festivalCelebrationTable.blend",
+        "preview": "assets-src/islands/concept-models-b/festivalCelebrationTable.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 1912,
+        "reportedTriangles": 1912,
+        "ok": true
+      },
+      {
+        "id": "festivalCelebrationChair",
+        "pack": "b",
+        "source": "tools/build-concept-models-b.py",
+        "blend": "assets-src/islands/concept-models-b/festivalCelebrationChair.blend",
+        "preview": "assets-src/islands/concept-models-b/festivalCelebrationChair.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 1504,
+        "reportedTriangles": 1504,
+        "ok": true
+      },
+      {
+        "id": "mexicanHouseA",
+        "pack": "b",
+        "source": "tools/build-concept-models-b.py",
+        "blend": "assets-src/islands/concept-models-b/mexicanHouseA.blend",
+        "preview": "assets-src/islands/concept-models-b/mexicanHouseA.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 5420,
+        "reportedTriangles": 5420,
+        "ok": true
+      },
+      {
+        "id": "mexicanHouseB",
+        "pack": "b",
+        "source": "tools/build-concept-models-b.py",
+        "blend": "assets-src/islands/concept-models-b/mexicanHouseB.blend",
+        "preview": "assets-src/islands/concept-models-b/mexicanHouseB.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 5420,
+        "reportedTriangles": 5420,
+        "ok": true
+      },
+      {
+        "id": "branchCoral",
+        "pack": "nature",
+        "source": "tools/build-concept-nature.py",
+        "blend": "assets-src/islands/concept-nature/branchCoral.blend",
+        "preview": "assets-src/islands/concept-nature/branchCoral.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 7968,
+        "reportedTriangles": 7968,
+        "ok": true
+      },
+      {
+        "id": "branchCoralFar",
+        "pack": "nature",
+        "source": "tools/build-concept-nature.py",
+        "blend": "assets-src/islands/concept-nature/branchCoralFar.blend",
+        "preview": "assets-src/islands/concept-nature/branchCoralFar.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 2980,
+        "reportedTriangles": 2980,
+        "ok": true
+      },
+      {
+        "id": "tubeSponge",
+        "pack": "nature",
+        "source": "tools/build-concept-nature.py",
+        "blend": "assets-src/islands/concept-nature/tubeSponge.blend",
+        "preview": "assets-src/islands/concept-nature/tubeSponge.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 7964,
+        "reportedTriangles": 7964,
+        "ok": true
+      },
+      {
+        "id": "tubeSpongeFar",
+        "pack": "nature",
+        "source": "tools/build-concept-nature.py",
+        "blend": "assets-src/islands/concept-nature/tubeSpongeFar.blend",
+        "preview": "assets-src/islands/concept-nature/tubeSpongeFar.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 2708,
+        "reportedTriangles": 2708,
+        "ok": true
+      },
+      {
+        "id": "broadSeaweed",
+        "pack": "nature",
+        "source": "tools/build-concept-nature.py",
+        "blend": "assets-src/islands/concept-nature/broadSeaweed.blend",
+        "preview": "assets-src/islands/concept-nature/broadSeaweed.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 4032,
+        "reportedTriangles": 4032,
+        "ok": true
+      },
+      {
+        "id": "tableCoral",
+        "pack": "nature",
+        "source": "tools/build-concept-nature.py",
+        "blend": "assets-src/islands/concept-nature/tableCoral.blend",
+        "preview": "assets-src/islands/concept-nature/tableCoral.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 2748,
+        "reportedTriangles": 2748,
+        "ok": true
+      },
+      {
+        "id": "coralBoulder",
+        "pack": "nature",
+        "source": "tools/build-concept-nature.py",
+        "blend": "assets-src/islands/concept-nature/coralBoulder.blend",
+        "preview": "assets-src/islands/concept-nature/coralBoulder.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 11328,
+        "reportedTriangles": 11328,
+        "ok": true
+      },
+      {
+        "id": "coralBoulderFar",
+        "pack": "nature",
+        "source": "tools/build-concept-nature.py",
+        "blend": "assets-src/islands/concept-nature/coralBoulderFar.blend",
+        "preview": "assets-src/islands/concept-nature/coralBoulderFar.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 3880,
+        "reportedTriangles": 3880,
+        "ok": true
+      },
+      {
+        "id": "reefRockArch",
+        "pack": "nature",
+        "source": "tools/build-concept-nature.py",
+        "blend": "assets-src/islands/concept-nature/reefRockArch.blend",
+        "preview": "assets-src/islands/concept-nature/reefRockArch.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 13832,
+        "reportedTriangles": 13832,
+        "ok": true
+      },
+      {
+        "id": "friendlyWhale",
+        "pack": "nature",
+        "source": "tools/build-concept-nature.py",
+        "blend": "assets-src/islands/concept-nature/friendlyWhale.blend",
+        "preview": "assets-src/islands/concept-nature/friendlyWhale.png",
+        "reportPresent": true,
+        "packPresent": true,
+        "triangles": 17500,
+        "reportedTriangles": 17500,
+        "ok": true
+      }
+    ],
+    "islandPacks": [
+      {
+        "island": 1,
+        "pack": "assets/islands/concept-1.json",
+        "modelIds": [
+          "blossomTree"
+        ],
+        "modelCount": 1,
+        "bytes": 15974828,
+        "sourceAssetsMatch": true,
+        "materialsMatch": true,
+        "manifestMatch": true
+      },
+      {
+        "island": 2,
+        "pack": "assets/islands/concept-2.json",
+        "modelIds": [
+          "forestArch",
+          "nordicSchool"
+        ],
+        "modelCount": 2,
+        "bytes": 14279597,
+        "sourceAssetsMatch": true,
+        "materialsMatch": true,
+        "manifestMatch": true
+      },
+      {
+        "island": 3,
+        "pack": "assets/islands/concept-3.json",
+        "modelIds": [
+          "harborClock",
+          "canalHouseA",
+          "canalHouseB",
+          "canalHouseC",
+          "harborBakery",
+          "harborGlasshouse",
+          "lighthouse"
+        ],
+        "modelCount": 7,
+        "bytes": 3537401,
+        "sourceAssetsMatch": true,
+        "materialsMatch": true,
+        "manifestMatch": true
+      },
+      {
+        "island": 4,
+        "pack": "assets/islands/concept-4.json",
+        "modelIds": [
+          "alpineWorkshop",
+          "greatWaterwheel",
+          "workshopAqueduct"
+        ],
+        "modelCount": 3,
+        "bytes": 763634,
+        "sourceAssetsMatch": true,
+        "materialsMatch": true,
+        "manifestMatch": true
+      },
+      {
+        "island": 5,
+        "pack": "assets/islands/concept-5.json",
+        "modelIds": [
+          "greatFruitMarket",
+          "moroccanStall",
+          "moroccanHouse"
+        ],
+        "modelCount": 3,
+        "bytes": 6512556,
+        "sourceAssetsMatch": true,
+        "materialsMatch": true,
+        "manifestMatch": true
+      },
+      {
+        "island": 6,
+        "pack": "assets/islands/concept-6.json",
+        "modelIds": [
+          "greatPearlShell",
+          "coralArch",
+          "spiralShellSeat"
+        ],
+        "modelCount": 3,
+        "bytes": 5360698,
+        "sourceAssetsMatch": true,
+        "materialsMatch": true,
+        "manifestMatch": true
+      },
+      {
+        "island": 7,
+        "pack": "assets/islands/concept-7.json",
+        "modelIds": [
+          "windCity",
+          "windSails",
+          "blueDomePavilion",
+          "skyAirship"
+        ],
+        "modelCount": 4,
+        "bytes": 4725357,
+        "sourceAssetsMatch": true,
+        "materialsMatch": true,
+        "manifestMatch": true
+      },
+      {
+        "island": 8,
+        "pack": "assets/islands/concept-8.json",
+        "modelIds": [
+          "starCarousel",
+          "festivalShellStage",
+          "festivalCelebrationCanopy",
+          "festivalCelebrationTable",
+          "festivalCelebrationChair",
+          "mexicanHouseA",
+          "mexicanHouseB"
+        ],
+        "modelCount": 7,
+        "bytes": 2554427,
+        "sourceAssetsMatch": true,
+        "materialsMatch": true,
+        "manifestMatch": true
+      }
+    ],
+    "rawPackCounts": {
+      "a": 13,
+      "b": 17,
+      "nature": 10
+    },
+    "learningPartCount": 76,
+    "celebration": {
+      "learningPartIds": [],
+      "scenePartIds": [
+        "festivalCelebrationCanopy",
+        "festivalCelebrationTable",
+        "festivalCelebrationChair"
+      ],
+      "placement": [
+        [
+          "festivalCelebrationCanopy",
+          -18.5,
+          -10.5,
+          1,
+          0.5235987755982988
+        ],
+        [
+          "festivalCelebrationTable",
+          -21.2,
+          -12.4,
+          1,
+          0
+        ],
+        [
+          "festivalCelebrationTable",
+          -15.9,
+          -12.4,
+          1,
+          0
+        ],
+        [
+          "festivalCelebrationTable",
+          -18.5,
+          -7.1,
+          1,
+          0
+        ],
+        [
+          "festivalCelebrationChair",
+          -23,
+          -12.4,
+          1,
+          0
+        ],
+        [
+          "festivalCelebrationChair",
+          -19.4,
+          -12.4,
+          1,
+          3.14
+        ],
+        [
+          "festivalCelebrationChair",
+          -17.7,
+          -12.4,
+          1,
+          0
+        ],
+        [
+          "festivalCelebrationChair",
+          -14.1,
+          -12.4,
+          1,
+          3.14
+        ],
+        [
+          "festivalCelebrationChair",
+          -20.3,
+          -7.1,
+          1,
+          0
+        ],
+        [
+          "festivalCelebrationChair",
+          -16.7,
+          -7.1,
+          1,
+          3.14
+        ]
+      ]
+    }
+  },
+  "errors": []
+}

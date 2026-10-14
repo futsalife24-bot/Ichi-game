@@ -6,6 +6,7 @@ import { Player } from '../src/player.js';
 import { PRESETS } from '../src/characters.js';
 import { createConceptEnvironment } from '../src/concept-atmosphere.js';
 import { setConceptCameraGoal } from '../src/concept-camera.js';
+import { conceptRoute } from '../src/concept-route.js';
 
 const search=new URLSearchParams(location.search),number=Number(search.get('island')??1),layout=CONCEPT_LAYOUTS[number];
 const note=document.getElementById('note');
@@ -32,12 +33,28 @@ scene.fog=new THREE.Fog(layout.palette.sky,number===6?55:105,number===6?140:240)
 const bar=document.getElementById('tools');
 note.textContent=`第${number}島・${layout.name}　矢印キーで歩く`;
 for(const [id,s] of Object.entries(CONCEPT_LAYOUTS)){const button=document.createElement('button');button.textContent=`${id} ${s.country}`;button.onclick=()=>location.href=`?island=${id}`;bar.append(button);}
-let fixed=false;
-for(const [label,point] of [['入口',layout.spawn],['主役の前',[layout.hero[0],layout.hero[1]+10]],['横から',sidePoint]]){const b=document.createElement('button');b.textContent=label;b.onclick=()=>{player.teleport(point[0],conceptWalkHeight(number,...point),point[1],Math.PI);fixed=false;};bar.append(b);}
+let fixed=false,walk=null;
+const walkStatus=document.createElement('output');walkStatus.id='walkStatus';
+for(const [label,point] of [['入口',layout.spawn],['主役の前',[layout.hero[0],layout.hero[1]+10]],['横から',sidePoint]]){const b=document.createElement('button');b.textContent=label;b.onclick=()=>{walk=null;player.teleport(point[0],conceptWalkHeight(number,...point),point[1],Math.PI);fixed=false;walkStatus.textContent='撮影位置へ移動しました（歩行の記録には含めません）';};bar.append(b);}
+const walkDestinations=[['主役まで歩く',[layout.hero[0],layout.hero[1]+10]],['脇道まで歩く',sidePoint]];
+if(number===2)walkDestinations.push(['木橋を渡る',[layout.creekBridge.a[0]-1,layout.creekBridge.a[1]]]);
+if(number===8)walkDestinations.push(['祝い席まで歩く',[-16,-6]]);
+for(const [label,point] of walkDestinations){
+  const b=document.createElement('button');b.textContent=label;
+  b.onclick=()=>{
+    const goal={x:point[0],z:point[1]};clampConceptSolids(scenery.solids,goal);clampConceptPosition(number,goal);
+    const route=conceptRoute({x:player.pos.x,z:player.pos.z},goal,scenery.solids,null,number);
+    if(!route.length){walk=null;walkStatus.textContent=`${label}：歩ける経路がありません`;return;}
+    walk={label,route,index:0,steps:0,start:[player.pos.x,player.pos.z],goal:[goal.x,goal.z]};fixed=false;
+    walkStatus.textContent=`${label}：歩行中（Playerを1/60秒刻みで検証）`;
+  };bar.append(b);
+}
+bar.append(walkStatus);
 const compare=document.createElement('button');compare.textContent='操作表示を隠す';compare.onclick=()=>document.body.classList.toggle('clean');bar.append(compare);
 const capture=document.createElement('button');capture.textContent='画面を保存';capture.onclick=()=>renderer.domElement.toBlob(blob=>{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`island-${number}-${Date.now()}.png`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);});bar.append(capture);
 const status=document.createElement('output');status.id='status';bar.append(status);
 const keys=new Set();window.addEventListener('keydown',e=>{keys.add(e.code);if(e.code.startsWith('Arrow'))e.preventDefault();});window.addEventListener('keyup',e=>keys.delete(e.code));
+window.addEventListener('blur',()=>keys.clear());
 const input={getMove:()=>({x:(keys.has('ArrowRight')?1:0)-(keys.has('ArrowLeft')?1:0),y:(keys.has('ArrowUp')?1:0)-(keys.has('ArrowDown')?1:0)}),consumeJump:()=>keys.delete('Space'),reset(){}};
 const environment={colliders:scenery.solids.filter(s=>s.r),bouncers:[],groundAt:(x,z)=>conceptWalkHeight(number,x,z),clampPos:p=>{const changed=clampConceptSolids(scenery.solids,p);return clampConceptPosition(number,p)||changed;}};
 let previousTime=performance.now(),elapsed=0,frameCount=0,captureStarted=false;
@@ -52,7 +69,21 @@ async function saveCanvas(){
   }catch(error){note.textContent=`描画の保存に失敗しました: ${error.message}`;}
   finally{requestAnimationFrame(frame);}
 }
-function frame(){const now=performance.now(),interval=now-previousTime,dt=Math.min(interval/1000,.04);previousTime=now;elapsed+=dt;player.update(dt,input,environment,{step(){},jump(){},land(){}});scenery.update(dt,elapsed);
+function frame(){const now=performance.now(),interval=now-previousTime,dt=Math.min(interval/1000,.04);previousTime=now;elapsed+=dt;
+  if(walk&&keys.size){walk=null;walkStatus.textContent='キー操作で検証歩行を中止しました';}
+  if(walk){
+    // おそい びょうがでも、げんじつの Playerを こまかい じかんで すすめる。
+    // つうじょうの ゲームの そくどけいそくとは わける。
+    const count=Math.max(1,Math.min(15,Math.floor(interval/(1000/60))));
+    for(let i=0;i<count&&walk;i++){
+      const point=walk.route[walk.index],dx=point.x-player.pos.x,dz=point.z-player.pos.z,d=Math.hypot(dx,dz);
+      if(d<.42){walk.index++;if(walk.index===walk.route.length){walkStatus.textContent=`${walk.label}：到着 ${player.pos.x.toFixed(2)}, ${player.pos.z.toFixed(2)}・${walk.steps}歩・入口 ${walk.start.map(v=>v.toFixed(2)).join(', ')}`;walk=null;continue;}continue;}
+      const k=Math.min(1,d/1.2),walking={getMove:()=>({x:dx/d*k,y:-dz/d*k}),consumeJump:()=>false};
+      player.update(1/60,walking,environment,{step(){},jump(){},land(){}});walk.steps++;
+      if(walk.steps>7200){walkStatus.textContent=`${walk.label}：到着できませんでした`;walk=null;}
+    }
+  }else player.update(dt,input,environment,{step(){},jump(){},land(){}});
+  scenery.update(dt,elapsed);
   if(!fixed){setConceptCameraGoal(number,player.pos,cameraView,camera.position,cameraFocus);camera.lookAt(cameraFocus);}
   renderer.render(scene,camera);
   frameIntervals.push(interval);frameCosts.push(performance.now()-now);

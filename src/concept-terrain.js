@@ -6,6 +6,12 @@ export const SEA_SIDE_PATHS = Object.freeze([
   [[-1,-5],[-9,-4],[-12,-1]],
   [[1,-7],[9,-7],[12,-4]],
 ]);
+// がっこうへ むかう えだみちと、たきの まえの ひくい はし。
+export const FOREST_SCHOOL_PATH = CONCEPT_LAYOUTS[2].schoolPath;
+export const FOREST_CREEK_BRIDGE = CONCEPT_LAYOUTS[2].creekBridge;
+export const FOREST_CREEK_APPROACH = CONCEPT_LAYOUTS[2].creekApproach;
+const FOREST_CREEK_FAR_PATH = [[FOREST_CREEK_BRIDGE.a[0],FOREST_CREEK_BRIDGE.a[1]+6],FOREST_CREEK_BRIDGE.a];
+export const conceptForestCreekCenter=z=>-20+5.5*smooth(-11,-4,z);
 export function segmentDistance(x,z,a,b) {
   const dx=b[0]-a[0],dz=b[1]-a[1],t=Math.max(0,Math.min(1,((x-a[0])*dx+(z-a[1])*dz)/(dx*dx+dz*dz||1)));
   return Math.hypot(x-a[0]-dx*t,z-a[1]-dz*t);
@@ -13,6 +19,12 @@ export function segmentDistance(x,z,a,b) {
 export function conceptPathDistance(number,x,z) {
   const path=CONCEPT_LAYOUTS[number].path;
   const main=Math.min(...path.slice(1).map((p,i)=>segmentDistance(x,z,path[i],p)));
+  if(number===2){
+    let distance=main;
+    for(let i=1;i<FOREST_SCHOOL_PATH.length;i++)distance=Math.min(distance,segmentDistance(x,z,FOREST_SCHOOL_PATH[i-1],FOREST_SCHOOL_PATH[i]));
+    for(let i=1;i<FOREST_CREEK_APPROACH.length;i++)distance=Math.min(distance,segmentDistance(x,z,FOREST_CREEK_APPROACH[i-1],FOREST_CREEK_APPROACH[i]));
+    return Math.min(distance,segmentDistance(x,z,FOREST_CREEK_FAR_PATH[0],FOREST_CREEK_FAR_PATH[1]),segmentDistance(x,z,FOREST_CREEK_BRIDGE.a,FOREST_CREEK_BRIDGE.b));
+  }
   if(number!==6)return main;
   let distance=main;
   for(const side of SEA_SIDE_PATHS)for(let i=1;i<side.length;i++)distance=Math.min(distance,segmentDistance(x,z,side[i-1],side[i]));
@@ -40,7 +52,7 @@ export function conceptLandDistance(number,x,z) {
 }
 export function conceptWaterDistance(number,x,z) {
   if(number===1)return Math.min(-conceptLandDistance(number,x,z),Math.hypot(x-15,z-3)-4.4);
-  if(number===2)return Math.min(Math.abs(x+19+Math.sin(z*.09)*2)-2.1,-conceptLandDistance(number,x,z));
+  if(number===2)return Math.min(Math.abs(x-conceptForestCreekCenter(z))-2.1,-conceptLandDistance(number,x,z));
   if(number===3)return Math.min(ellipse(x,z,-7,10,27,16),-conceptLandDistance(number,x,z));
   if(number===4)return Math.min(Math.abs(x-14-Math.sin(z*.1)*1.7)-2.1,-conceptLandDistance(number,x,z));
   return -conceptLandDistance(number,x,z);
@@ -78,8 +90,9 @@ export function conceptHeight(number,x,z) {
     else if(bridge<span.width/2+.25&&t>0&&t<1)h=.9+span.rise*Math.sin(t*Math.PI);
     else h=.9+1.4*(1-smooth(-35,-13,z))*Math.exp(-x*x/850);
   }
-  if(number===1&&Math.hypot(x-15,z-3)<4.4)h=-.3;
-  if([2,4].includes(number)&&conceptWaterDistance(number,x,z)<0&&path>4)h=-.8;
+  if(number===1&&Math.hypot(x-15,z-3)<4.4)h=-.55;
+  if(number===2&&conceptWaterDistance(number,x,z)<0)h=-.8;
+  if(number===4&&conceptWaterDistance(number,x,z)<0&&path>4)h=-.8;
   return h*coast-2.5*(1-coast);
 }
 export function clampConceptPosition(number,p) {
@@ -112,8 +125,13 @@ export function clampConceptSolids(solids,p) {
   }return changed;
 }
 export function conceptWorkshopBridgeHeight(x) { return Math.max(.65,conceptHeight(4,x,4))+.22; }
+export function conceptForestBridgeHeight(x){
+  const t=Math.max(0,Math.min(1,(x-FOREST_CREEK_BRIDGE.a[0])/(FOREST_CREEK_BRIDGE.b[0]-FOREST_CREEK_BRIDGE.a[0])));
+  return .82+.24*Math.sin(Math.PI*t);
+}
 export function conceptWalkHeight(number,x,z) {
   let h=conceptHeight(number,x,z);
+  if(number===2&&x>=FOREST_CREEK_BRIDGE.a[0]&&x<=FOREST_CREEK_BRIDGE.b[0]&&Math.abs(z-FOREST_CREEK_BRIDGE.b[1])<=FOREST_CREEK_BRIDGE.width/2)h=conceptForestBridgeHeight(x);
   if(number===4&&x>=8.58&&x<=18.42&&Math.abs(z-4)<=2.15)h=conceptWorkshopBridgeHeight(x);
   if(number===5)h+=.6*(1-smooth(.86,1.03,Math.hypot(x/11.8,(z+13)/8.8)));
   return h;

@@ -1,5 +1,5 @@
 {
-  "status": "景観の実装とPC自己検証の記録。本人の最終視覚評価と公開は未完了",
+  "status": "景観の実装・PC自己検証・公開済み。本人の最終視覚評価と実スマホ評価は未完了",
   "recordedAt": "2026-10-14T00:53:41.098Z",
   "repository": "https://github.com/futsalife24-bot/Ichi-game",
   "branch": "codex/island-learning-balance",
@@ -402,8 +402,7 @@
   },
   "remaining": [
     "本人の最終視覚評価と必要な手直し",
-    "実スマホの速度・温度・長時間プレイの確認",
-    "main反映・公開と配信照合"
+    "実スマホの速度・温度・長時間プレイの確認"
   ],
   "limitations": [
     "近づいた主役の上部が小さい横画面などで画面外へ出る位置がある",
@@ -518,6 +517,20 @@
     "passed": 24,
     "failed": 0,
     "sourceCheck": "tools/concept-camera.test.mjs の実船メッシュへの遮蔽検査",
-    "publicationPending": true
+    "publicationPending": false,
+    "publishedHead": "ffb0b18c12fe8747d47d331ea3424b90c1433593"
+  },
+  "release": {
+    "main": "ffb0b18c12fe8747d47d331ea3424b90c1433593",
+    "document": "docs/concept-scenes-release.md",
+    "check": "docs/concept-scenes-release-check.json",
+    "published": true,
+    "ci": {
+      "conclusion": "success",
+      "headSha": "ffb0b18c12fe8747d47d331ea3424b90c1433593",
+      "url": "https://github.com/futsalife24-bot/Ichi-game/actions/runs/38503112969",
+      "tests": 326,
+      "failed": 0
+    }
   }
 }

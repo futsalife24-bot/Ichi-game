@@ -6,7 +6,7 @@ import { seasonOf } from './catalog.js';
 import { islandRules } from './island-rules.js';
 import { ConceptScenery } from './concept-scenery.js';
 import { CONCEPT_LAYOUTS } from './concept-island-layout.js';
-import { conceptHeight, conceptLandDistance, conceptPathDistance, clampConceptPosition, clampConceptSolids } from './concept-terrain.js';
+import { conceptHeight, conceptWalkHeight, conceptLandDistance, conceptPathDistance, clampConceptPosition, clampConceptSolids } from './concept-terrain.js';
 
 export const ISLAND_R = 36;
 export const TUTORIAL_R = 24;
@@ -22,6 +22,7 @@ const hill = (x, z, cx, cz, h, s) => {
 };
 
 export function getHeight(x, z, island = 1) {
+  if (island === 2) return conceptWalkHeight(2,x,z);
   if (island >= 1 && island <= 3) return conceptHeight(island, x, z);
   const r = Math.hypot(x, z);
   if (island === 1) {
@@ -191,7 +192,7 @@ export class World {
         marker.position.set(x,this.groundAt(x,z)+2.1,z-.45);this.scene.add(marker);
       }
     }
-    const jumpSpots=this.island===2?[[-14,14],[14,14],[-22,-19],[25,4],[-9,-25]]:this.island===3?[[35,-16],[-34,21],[34,23],[-35,-22],[-18,32]]:[];
+    const jumpSpots=this.island===2?[[-10,14],[14,14],[-26,-19],[25,4],[-9,-25]]:this.island===3?[[35,-16],[-34,21],[34,23],[-35,-22],[-18,32]]:[];
     this.bouncers.forEach((b,i)=>{const spot=jumpSpots[i],group=b.cap.parent;if(!spot){group.visible=false;return;}
       const [x,z]=spot,y=this.groundAt(x,z);group.position.set(x,y,z);group.visible=true;b.x=x;b.z=z;b.top=y+1.45;
     });

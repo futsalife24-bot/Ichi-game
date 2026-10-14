@@ -80,7 +80,7 @@ export class ConceptScenery {
         }else root.add(m);
       }
       this.group.add(root);this.models.set(id,root);
-      if(!['forestArch','greatFruitMarket','coralArch','windCity','windSails','blueDomePavilion','workshopAqueduct','skyAirship'].includes(id)) {
+      if(!['forestArch','greatFruitMarket','coralArch','windCity','windSails','blueDomePavilion','workshopAqueduct','skyAirship','festivalCelebrationCanopy'].includes(id)) {
         if(id==='blossomTree')this.solids.push({x,z,r:1.05});
         else this.solids.push({x,z,width:asset.size[0]*scale,depth:asset.size[2]*scale,yaw});
       }
@@ -89,6 +89,7 @@ export class ConceptScenery {
       if(id==='windCity')for(const [sx,sz,r] of [[0,0,2.85],[-6,0,2.8],[6,0,2.8],[-5,-5,2.2],[5,-5,2.2],[0,-5.8,3]])this.solids.push({x:x+sx,z:z+sz,r});
       if(id==='windCity')for(const [sx,sz,r] of asset.colliderCircles??[])this.solids.push({x:x+(Math.cos(yaw)*sx+Math.sin(yaw)*sz)*scale,z:z+(-Math.sin(yaw)*sx+Math.cos(yaw)*sz)*scale,r:r*scale});
       if(id==='blueDomePavilion')for(let i=0;i<8;i++){const a=i*Math.PI/4;this.solids.push({x:x+Math.cos(a)*2.65,z:z+Math.sin(a)*2.65,r:.23});}
+      if(id==='festivalCelebrationCanopy')for(let i=0;i<6;i++){const a=i*Math.PI/3,sx=Math.cos(a)*6.05,sz=-Math.sin(a)*6.05;this.solids.push({x:x+(Math.cos(yaw)*sx+Math.sin(yaw)*sz)*scale,z:z+(-Math.sin(yaw)*sx+Math.cos(yaw)*sz)*scale,r:.3*scale});}
     }
   }
   buildTerrain() {
@@ -97,7 +98,7 @@ export class ConceptScenery {
     const p=geometry.attributes.position,uv=geometry.attributes.uv,colors=[];
     const grass=new THREE.Color(this.layout.palette.ground),sand=new THREE.Color(0xe6d2af),path=new THREE.Color(this.layout.palette.path),c=new THREE.Color();
     for(let i=0;i<p.count;i++) {
-      const x=p.getX(i),z=p.getZ(i),d=conceptLandDistance(n,x,z),road=conceptPathDistance(n,x,z),h=this.groundAt(x,z);
+      const x=p.getX(i),z=p.getZ(i),d=conceptLandDistance(n,x,z),road=conceptPathDistance(n,x,z),h=n===2?conceptHeight(2,x,z):this.groundAt(x,z);
       p.setY(i,n===3&&d<0&&conceptWaterDistance(n,x,z)<-.1?-1.6:h);uv.setXY(i,x*.55,z*.55);c.copy(grass).lerp(sand,smooth(-5,-1,d));
       c.lerp(path,1-smooth(n===1?1.2:2.1,n===1?2.1:3.7,road));
       c.multiplyScalar(.96+.05*Math.sin(x*2.1+z*1.7)*Math.cos(z*2.6));colors.push(c.r,c.g,c.b);
@@ -127,10 +128,12 @@ export class ConceptScenery {
   buildFalls() {
     const n=this.number;if(![2,4].includes(n))return;
     const x=n===2?-20:14,top=n===2?10:7,z=n===2?-13:-22;
-    const fall=mesh(new THREE.PlaneGeometry(3,top,12,12),0xc9faff);fall.position.set(x,top/2,z);fall.material.transparent=true;fall.material.opacity=.62;fall.material.side=THREE.DoubleSide;this.group.add(fall);
-    this.animated.push({object:fall,fall:true});
-    const foam=[];for(let i=0;i<26;i++)foam.push([x+Math.sin(i*2.4)*(1+i%3*.25),.15,z+Math.cos(i*2.4),.2+i%3*.1]);
-    this.addInstances(new THREE.SphereGeometry(1,12,8),material(0xecfffa),foam,p=>({position:p.slice(0,3),scale:[p[3],p[3]*.25,p[3]]}));
+    if(n===4){
+      const fall=mesh(new THREE.PlaneGeometry(3,top,12,12),0xc9faff);fall.position.set(x,top/2,z);fall.material.transparent=true;fall.material.opacity=.62;fall.material.side=THREE.DoubleSide;this.group.add(fall);
+      this.animated.push({object:fall,fall:true});
+      const foam=[];for(let i=0;i<26;i++)foam.push([x+Math.sin(i*2.4)*(1+i%3*.25),.15,z+Math.cos(i*2.4),.2+i%3*.1]);
+      this.addInstances(new THREE.SphereGeometry(1,12,8),material(0xecfffa),foam,p=>({position:p.slice(0,3),scale:[p[3],p[3]*.25,p[3]]}));
+    }
     if(n===2){const rainbow=new THREE.Group();rainbow.position.set(-18,2,-11);rainbow.rotation.z=-.2;const cols=[0xe88787,0xedb37a,0xedd783,0x9bd899,0x83bddd,0xaf9fda];for(let i=0;i<6;i++){const o=mesh(new THREE.TorusGeometry(4+i*.14,.085,6,64,Math.PI),cols[i]);o.material.transparent=true;o.material.opacity=.38;rainbow.add(o);}this.group.add(rainbow);}
   }
   buildCloudLand() {
@@ -194,7 +197,11 @@ export class ConceptScenery {
         const light=new THREE.PointLight(0xffc780,4,9,2);light.position.copy(lantern.position);if(i%3===0)this.group.add(light);
       }
     }
-    for(let row=0;row<3;row++)for(let i=0;i<16;i++)flags[i%4].push({p:[-23+i*3,9.7+Math.sin(i/15*Math.PI)*1.4,20-row*18],r:[0,(rnd()-.5)*.3,0]});
+    // てっぺんの ほしと まんなかの やねを かくさず、左右に かざる。
+    for(let row=0;row<3;row++)for(let i=0;i<16;i++){
+      const x=-23+i*3;if(Math.abs(x)<7.5)continue;
+      flags[i%4].push({p:[x,9.7+Math.sin(i/15*Math.PI)*1.4,20-row*18],r:[0,(rnd()-.5)*.3,0]});
+    }
     for(let i=0;i<4;i++)instanceParts(this.group,papelGeometry(),material(cols[i],'cloth'),flags[i]);
     for(const [x,z] of [[-20,8],[20,8],[-10,-19],[10,-19]]){const light=new THREE.PointLight(0xffdcaa,18,20,2);light.position.set(x,4,z);this.group.add(light);}
   }

@@ -8,7 +8,7 @@ import { Forest } from '../src/forest.js';
 import { FOREST_ORIGIN } from '../src/adventure-state.js';
 import { LearningIsland, loadLearningIslandKit } from '../src/learning-islands.js';
 import { CONCEPT_LAYOUTS } from '../src/concept-island-layout.js';
-import { conceptLandDistance, conceptWalkHeight } from '../src/concept-terrain.js';
+import { conceptLandDistance, conceptWalkHeight, FOREST_CREEK_BRIDGE, FOREST_SCHOOL_PATH } from '../src/concept-terrain.js';
 import { conceptRoute } from '../src/concept-route.js';
 
 const drawing=new Proxy({}, {get:(_target,key)=>key==='measureText'?()=>({width:100}):key==='createRadialGradient'?()=>({addColorStop(){}}):()=>{},set:()=>true});
@@ -55,6 +55,24 @@ test('第二島の大樹から青い学校まで、主人公が主路と側道�
   const scene=new THREE.Scene(),area=new World(scene,{island:2});area.installConcept(kitFor(2));
   const player=new Player(scene),[x,z]=CONCEPT_LAYOUTS[2].spawn;player.teleport(x,area.groundAt(x,z),z,0);
   for(const point of [[0,0],[0,-9],[0,-23],[area.schoolDoor.x,area.schoolDoor.z]])walkTo(player,area,2,point);
+  player.teleport(0,area.groundAt(0,5),5,0);
+  for(const point of FOREST_SCHOOL_PATH.slice(1))walkTo(player,area,2,point);
+});
+
+test('第二島の小川の木橋は見える板と歩行床が一致し、主人公が渡れる',()=>{
+  const scene=new THREE.Scene(),area=new World(scene,{island:2});area.installConcept(kitFor(2));
+  const deck=area.conceptScenery.group.getObjectByName('もりの こばしの ゆか');scene.updateMatrixWorld(true);
+  assert.ok(deck,'見える木橋の床');
+  const [left,z]=FOREST_CREEK_BRIDGE.a,[right]=FOREST_CREEK_BRIDGE.b;
+  for(let x=left+.25;x<=right-.25;x+=.5){
+    const hit=new THREE.Raycaster(new THREE.Vector3(x,4,z),new THREE.Vector3(0,-1,0)).intersectObject(deck)[0];
+    assert.ok(hit,`木橋の板 ${x}`);
+    assert.ok(Math.abs(hit.point.y-area.groundAt(x,z))<.015,`見える板と歩行床 ${x}`);
+  }
+  for(const x of [left,right])assert.ok(Math.abs(area.groundAt(x,z)-area.groundAt(x+(x===left?-1:1),z))<.25,`橋端から岸へなめらかにつながる ${x}`);
+  const player=new Player(scene);player.teleport(left-1,area.groundAt(left-1,z),z,0);
+  walkTo(player,area,2,[right+1,z]);
+  assert.ok(player.pos.x>right+.5,'小川の向こう側に到達');
 });
 
 test('第三島の岸道と橋を越え、時計塔・パン屋・温室の前まで歩ける',()=>{
@@ -84,6 +102,17 @@ for(const [number,targets] of [
   }
   assert.deepEqual(highSteps,[],`第${number}島: １歩で急に持ち上がる ${highSteps.join('、')}`);
   if(number===7)assert.ok(area.groundAt(-24,-4)>area.groundAt(-24,0)+.3);
+});
+
+test('第八島の祝い席は支柱の間から入り、常設の卓と椅子へ歩ける',async()=>{
+  const kit=await loadLearningIslandKit(8),scene=new THREE.Scene(),area=new LearningIsland(scene,8,kit),player=new Player(scene);
+  const canopy=area.scenery.models.get('festivalCelebrationCanopy');
+  assert.ok(canopy,'原画の左の天幕');
+  const [x,z]=CONCEPT_LAYOUTS[8].spawn;player.teleport(x,area.groundAt(x,z),z,0);
+  walkTo(player,area,8,[-16,-6]);
+  assert.ok(Math.hypot(player.pos.x-canopy.position.x,player.pos.z-canopy.position.z)<6.05,'天幕の下に入れる');
+  walkTo(player,area,8,[-12,-8]);
+  assert.ok(player.pos.x>-12.5,'席から広場へ戻れる');
 });
 
 test('第四島の川の木橋を実際の主人公で渡り、板の上へ接地する',async()=>{

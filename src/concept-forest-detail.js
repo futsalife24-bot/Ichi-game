@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { conceptMaterial } from './concept-materials.js';
-import { conceptPathDistance, conceptWorkshopBridgeHeight } from './concept-terrain.js';
+import { conceptPathDistance, conceptForestBridgeHeight, conceptForestCreekCenter, conceptWorkshopBridgeHeight, FOREST_CREEK_BRIDGE } from './concept-terrain.js';
 import { petalGeometry } from './concept-gardens.js';
 
 // げんがの たき・しらかば・こうぼうの まわりを、みちを あけて つくる。
@@ -41,9 +41,51 @@ function segmentBatch(group,segments,mat,rings=10) {
 function ground(s,x,z){return s.groundAt(x,z);}
 function safePlant(s,x,z,buffer=4.2){
   if(conceptPathDistance(s.number,x,z)<buffer)return false;
+  if(s.number===2&&Math.abs(x-conceptForestCreekCenter(z))<4.4&&z>-16&&z<19)return false;
   if(s.number===2&&(Math.hypot(x,z+9)<12||Math.hypot(x-16,z+10)<7))return false;
   if(s.number===4&&(Math.hypot(x+3,z+14)<11||Math.hypot(x-10,z+11)<7))return false;
   return true;
+}
+function forestFallsAndBridge(s){
+  const group=new THREE.Group();group.name='もりの だんだんだきと こばし';s.group.add(group);
+  const ledges=[[],[],[]],foam=[],water=[];
+  const tiers=[[-14.2,8.4,5.7,3.7],[-10.8,5.4,2.9,4.2],[-7.2,2.6,-.15,4.7]];
+  for(let k=0;k<tiers.length;k++){
+    const [z,top,bottom,width]=tiers[k],x=conceptForestCreekCenter(z);
+    for(const side of [-1,1])for(let row=0;row<4;row++){
+      const xx=x+side*(width*.52+.38+row*.24),zz=z+(row-1.5)*.86;
+      const base=ground(s,xx,zz),y=Math.max(base+.4,(top+bottom)/2+(row%2)*.35);
+      ledges[(row+k)%3].push({at:[xx,y,zz],scale:[.9+row*.13,.7+row*.12,1.2]});
+    }
+    for(let i=0;i<8;i++){
+      const xx=x+(i-3.5)*width/8;
+      ledges[(i+k)%3].push({at:[xx,bottom-.2,z+1.4],scale:[width/7,.34,.75]});
+      foam.push({at:[xx,bottom+.08,z+1.75],scale:[.29+(i%3)*.08,.13,.31]});
+      foam.push({at:[xx,top+.06,z-.35],scale:[.22,.08,.25]});
+    }
+    water.push({at:[x,(top+bottom)/2,z+.58],scale:[width,top-bottom,.54]});
+    water.push({at:[x,top-.12,z-.85],scale:[width,.13,2.2]});
+  }
+  for(let k=0;k<3;k++)batch(group,rockShape(141+k),material([0x7b887e,0xa8aaa0,0x626f67][k],'rock'),ledges[k]);
+  const stream=new THREE.MeshStandardMaterial({color:0x9bdef0,emissive:0x346e81,emissiveIntensity:.16,roughness:.23,transparent:true,opacity:.85,side:THREE.DoubleSide});
+  batch(group,new THREE.BoxGeometry(1,1,1),stream,water,{shadow:false});
+  batch(group,new THREE.IcosahedronGeometry(1,0),material(0xedffff,'water'),foam,{shadow:false});
+  const deck=[],posts=[],rails=[];
+  const bridgeZ=FOREST_CREEK_BRIDGE.b[1],bridgeStart=FOREST_CREEK_BRIDGE.a[0];
+  for(let i=0;i<20;i++){
+    const x=bridgeStart+.25+i*.5,y=conceptForestBridgeHeight(x);
+    deck.push({at:[x,y-.105,bridgeZ],scale:[.49,.21,FOREST_CREEK_BRIDGE.width]});
+  }
+  for(const side of [-1,1])for(let i=0;i<=5;i++){
+    const x=bridgeStart+i*2,z=bridgeZ+side*FOREST_CREEK_BRIDGE.width/2,y=conceptForestBridgeHeight(x);
+    posts.push({at:[x,y+.57,z],scale:[.19,1.14,.19]});
+    if(i){const px=x-2,py=conceptForestBridgeHeight(px);rails.push([[px,py+1.02,z],[x,y+1.02,z],.08,.08]);}
+  }
+  const visibleDeck=batch(group,new THREE.BoxGeometry(1,1,1),material(0xb58d59,'wood'),deck);
+  visibleDeck.name='もりの こばしの ゆか';
+  batch(group,new THREE.BoxGeometry(1,1,1),material(0x85633e,'wood'),posts);
+  segmentBatch(group,rails,material(0x977249,'wood'),8);
+  for(const side of [-1,1])s.solids.push({x:(FOREST_CREEK_BRIDGE.a[0]+FOREST_CREEK_BRIDGE.b[0])/2,z:bridgeZ+side*FOREST_CREEK_BRIDGE.width/2,width:10.1,depth:.16,yaw:0});
 }
 function cliffRocks(s,center,top,seed) {
   const [cx,cz]=center,rocks=[[],[],[]],moss=[];
@@ -67,8 +109,9 @@ function cliffRocks(s,center,top,seed) {
 function roundedBanks(s,cx,fromZ,toZ) {
   const rocks=[[],[]],moss=[];
   for(let side of [-1,1])for(let i=0;i<27;i++) {
-    const z=fromZ+(toZ-fromZ)*i/26,x=cx+side*(2.8+.25*Math.sin(z*.3))+(rnd()-.5)*.45;
-    if(!safePlant(s,x,z,3.8))continue;
+    const z=fromZ+(toZ-fromZ)*i/26,center=s.number===2?conceptForestCreekCenter(z):cx,
+      x=center+side*(2.8+.25*Math.sin(z*.3))+(rnd()-.5)*.45;
+    if(conceptPathDistance(s.number,x,z)<3.8)continue;
     const y=ground(s,x,z),size=.38+rnd()*.58;
     rocks[i%2].push({at:[x,y+size*.23,z],scale:[size*1.25,size*.55,size],rot:[rnd()*.15,rnd()*6.28,rnd()*.15]});
     if(i%3===0)moss.push({at:[x,y+size*.47,z],scale:[size*.62,.12,size*.54]});
@@ -259,6 +302,7 @@ export function buildForestDetail(scenery) {
   if(scenery.number===2) {
     cliffRocks(scenery,[-20,-13],10,14);
     roundedBanks(scenery,-19,-7,18);
+    forestFallsAndBridge(scenery);
     archCrown(scenery);
     forestBirches(scenery);
     undergrowth(scenery,2);
