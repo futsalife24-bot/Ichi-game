@@ -1,6 +1,6 @@
-# 現在地：名物遊び・音量補正・小物24点を自己検証（2026-10-15）
+# 現在地：名物遊び・音量補正を公開済み（2026-10-15）
 
-本人の追加依頼と「今回も自己検証で進める」に沿い、第四・第六・第七・第八の名物遊び、操作の復帰、おさそいの間隔と前回選択、再生時の音量補正、小画面の描画負荷を改善した。各島３点の3D小物は編集原本・画像・GLB・軽量形状を保管し、ゲーム配置は未実装。[今回の正本](docs/play-polish.md)、[検証](docs/play-polish-check.json)、[実画面](docs/play-polish-proof/index.html)、[素材24点](assets-src/islands/bonus/index.html)を参照。ブランチ `codex/island-play-polish`、開始HEAD `b0d6afb02ae79e63a906bdbde54ec1ebf2b48c8d`。今回の変更は公開前で、本番はPR #38のまま。景観goalは完了済み。以下は以前の記録。
+本人の追加依頼と「今回も自己検証で進める」に沿い、第四・第六・第七・第八の名物遊び、操作の復帰、おさそいの間隔と前回選択、再生時の音量補正、小画面の描画負荷を改善した。各島３点の3D小物は編集原本・画像・GLB・軽量形状を保管し、ゲーム配置は未実装。[今回の正本](docs/play-polish.md)、[検証](docs/play-polish-check.json)、[実画面](docs/play-polish-proof/index.html)、[素材24点](assets-src/islands/bonus/index.html)を参照。ブランチ `codex/island-play-polish`、開始HEAD `b0d6afb02ae79e63a906bdbde54ec1ebf2b48c8d`。本人の「公開して」に従いPR #39でmain `d7e7bf26c89967b7eacc05aba48aef7a0a7aeee4`へ公開済み。mainの検査とPagesが成功し、964配信資材がGit原本と一致。公開版で第八島の開始・島選択・歩行・木馬の開始・自動終了・途中下車を確認、警告・エラー０。[配信照合](docs/play-polish-release-check.json)。景観goalは完了済み。以下は以前の記録。
 
 # 共通俯瞰・全開放入口・あそびのおさそいを公開済み（2026-10-14）
 
