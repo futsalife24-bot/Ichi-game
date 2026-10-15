@@ -6,7 +6,7 @@ import { Life } from '../src/life.js';
 
 // 実際の接続コードを模擬環境で実行し、監査で見つかった切替の反例を守る。
 const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
-const activityInput = 'const invitation = {dialogOpen:false};\n' + main.match(/const harborBusy = [^\n]+\nfunction refreshActivityInput\(\) \{[\s\S]*?\n\}/)[0];
+const activityInput = 'const invitation = {dialogOpen:false};\nconst landmark = null;\n' + main.match(/const harborBusy = [^\n]+\nfunction refreshActivityInput\(\) \{[\s\S]*?\n\}/)[0];
 const hudElement = () => ({ classList: { toggle() {} }, querySelector() { return { textContent: '' }; }, setAttribute() {} });
 
 test('報酬の保存失敗を検知したフレームでは後続の島イベントへ進まない', () => {

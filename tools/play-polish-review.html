@@ -1,0 +1,37 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><title>島の遊び・実画面確認</title>
+<style>body{margin:0;background:#edf2ec;font:15px sans-serif;color:#24463b}nav{display:flex;gap:6px;padding:8px;flex-wrap:wrap}button{min-height:38px;border:1px solid #769889;border-radius:8px;background:white;padding:6px 12px}iframe{display:block;width:100%;height:390px;border:0}pre{white-space:pre-wrap;margin:8px;font-size:12px}h1{font-size:18px;margin:10px}</style>
+<h1>島の遊び・実画面確認（一時データ）</h1><nav id="islands"></nav><nav><button id="near">遊びの入口へ</button><button id="record">8秒の動作を計測</button><button id="cancel">遊びを中止</button></nav>
+<iframe id="game" title="確認用のゲーム" src="../?dev=all&month=4"></iframe><pre id="state">読み込み中</pre><pre id="recorded"></pre><pre id="cameraTrace"></pre>
+<script type="importmap">{"imports":{"three":"../vendor/three.module.js"}}</script>
+<script type="module">
+import {getLandmarkSpot} from '../src/landmark-play.js';
+import {Box3,Vector3} from 'three';
+const frame=document.querySelector('#game'),state=document.querySelector('#state'),recorded=document.querySelector('#recorded');
+const scenarios=['all','second','forest','workshop','market','nature','expedition','festival'];
+for(let n=1;n<=8;n++){
+ const button=document.createElement('button');button.textContent=`第${n}島`;button.onclick=()=>{frame.src=`../?dev=${scenarios[n-1]}&month=4`;};document.querySelector('#islands').append(button);
+}
+document.querySelector('#near').onclick=()=>{
+ const g=frame.contentWindow.__game;if(!g)return;
+ const {island,scenery}=g.landmark.current(),spot=getLandmarkSpot(island,scenery);if(spot)g.warp(spot.x,spot.z);
+};
+document.querySelector('#cancel').onclick=()=>frame.contentWindow.__game?.landmark.stop();
+let recording=false;
+document.querySelector('#record').onclick=()=>{
+ if(recording)return;const g=frame.contentWindow.__game;if(!g)return;recording=true;
+ const samples=[],begin=performance.now();let last=begin;const before=g.world.time;
+ const sample=now=>{samples.push(now-last);last=now;if(now-begin<8000){requestAnimationFrame(sample);return;}
+ const sorted=[...samples].sort((a,b)=>a-b);recorded.textContent=JSON.stringify({place:g.place,render:g.renderInfo,frames:samples.length,p50Ms:sorted[Math.floor(sorted.length*.5)],p95Ms:sorted[Math.floor(sorted.length*.95)],homeWorldAdvanced:g.world.time-before,landmarkActive:g.landmark.active},null,2);recording=false;};requestAnimationFrame(sample);
+};
+let cameraFrames=[],cameraActive=false;
+setInterval(()=>{
+ const g=frame.contentWindow.__game;if(!g){state.textContent='ゲームの準備中';return;}
+ const title=frame.contentDocument.querySelector('#title');
+ if(title&&!title.classList.contains('hidden'))frame.contentDocument.querySelector('#btnPlay')?.click();
+ const {island,scenery}=g.landmark.current();
+ const wind=scenery?.models?.get('windSails'),bounds=wind?new Box3().setFromObject(wind):null;
+ const camera=island===7?{position:g.camera.position.toArray(),direction:g.camera.getWorldDirection(new Vector3()).toArray(),subject:g.landmark.play.cameraSubject?.toArray(),windCenter:bounds?.getCenter(new Vector3()).toArray(),windNdc:bounds?.getCenter(new Vector3()).project(g.camera).toArray()}:undefined;
+ if(camera&&g.landmark.active){if(!cameraActive)cameraFrames=[];cameraFrames.push({elapsed:g.landmark.play.session.elapsed,...camera});document.querySelector('#cameraTrace').textContent=JSON.stringify(cameraFrames,null,2);}cameraActive=g.landmark.active;
+ state.textContent=JSON.stringify({place:g.place,position:g.player.pos.toArray(),render:g.renderInfo,active:g.landmark.active,canPlay:g.landmark.canPlay(),near:g.landmark.near(island,scenery),ready:g.landmark.play.canStart(island,scenery),camera},null,2);
+},500);
+</script></html>

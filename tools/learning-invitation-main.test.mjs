@@ -70,7 +70,7 @@ function setup({ failOn = Infinity, initialSave } = {}) {
     env: () => area, document: globalThis.document, $: element,
     invitationEnv: null, invitationNumber: 0, invitationDialogKnown: false,
   };
-  vm.runInNewContext(`let invitation = null; let invitationOpening = false;\n${connection}\n${presentation}\nthis.learning = learning; this.invitation = invitation; this.invitationWorld = invitationWorld; this.updateInvitation = updateInvitation; this.pauseInvitation = pauseInvitation; this.syncInvitationDialog = syncInvitationDialog;`, context);
+  vm.runInNewContext(`let landmark = null; let invitation = null; let invitationOpening = false;\n${connection}\n${presentation}\nthis.learning = learning; this.invitation = invitation; this.invitationWorld = invitationWorld; this.updateInvitation = updateInvitation; this.pauseInvitation = pauseInvitation; this.syncInvitationDialog = syncInvitationDialog;`, context);
   return { context, save, scene, area, player, input, voice, setFail: value => { blocked = value; }, get writes() { return writes; }, get refreshes() { return refreshes; }, get stopped() { return stopped; } };
 }
 

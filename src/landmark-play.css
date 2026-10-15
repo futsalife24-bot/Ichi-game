@@ -1,0 +1,10 @@
+#landmarkPlay { position:fixed; z-index:115; bottom:calc(86px + var(--safe-b, 0px)); left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:12px; max-width:60vw; }
+#landmarkPlay[hidden] { display:none; }
+#landmarkPlay button { min-height:48px; border:3px solid #fff; border-radius:22px; padding:10px 20px; background:#fff2b8; color:#365c49; box-shadow:0 4px 0 #bda66e; font-size:clamp(16px,2.3vw,22px); font-weight:800; white-space:nowrap; cursor:pointer; touch-action:manipulation; }
+#landmarkPlay button:focus-visible { outline:3px solid #276aa7; outline-offset:3px; }
+#landmarkPlay.playing { bottom:calc(20px + var(--safe-b, 0px)); padding:12px 18px; border:3px solid #fff; border-radius:24px; background:#fff9e8ee; color:#365c49; font-weight:800; }
+#landmarkPlay span:empty { display:none; }
+.developer-mode #landmarkPlay { bottom:calc(133px + var(--safe-b, 0px)); }
+.developer-mode #landmarkPlay.playing { bottom:calc(62px + var(--safe-b, 0px)); }
+.landmark-playing #learningInvitation, .landmark-playing #joyZone, .landmark-playing #btnJump, .landmark-playing #sideBtns, .landmark-playing #islandActions, .landmark-playing #subtitle { visibility:hidden; }
+@media(max-height:400px) { #landmarkPlay.playing { max-width:74vw; gap:8px; padding:6px 12px; } #landmarkPlay button { padding:6px 12px; } }

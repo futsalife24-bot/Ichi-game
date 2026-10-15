@@ -51,10 +51,12 @@ export function validLearningInvitation(value) {
   if (!['awaiting','choice','playing','done'].includes(value.phase)) return false;
   if (!Array.isArray(value.options) || value.options.length !== 2 || new Set(value.options).size !== 2) return false;
   if (!value.options.every(id => typeof id === 'string' && activityById(id)?.island === value.island && INVITATION_CHOICES[value.island].some(choice => choice.id === id))) return false;
+  if (value.lastChoice !== undefined && value.lastChoice !== null && !value.options.includes(value.lastChoice)) return false;
+  if (value.declined !== undefined && typeof value.declined !== 'boolean') return false;
   return value.phase === 'playing' ? value.selected !== null && value.options.includes(value.selected) : value.selected === null;
 }
 
-export function chooseLearningInvitations(island, observations, progress) {
+export function chooseLearningInvitations(island, observations, progress, previous) {
   const pool = INVITATION_CHOICES[island];
   if (!pool) throw new RangeError('しまが ありません');
   const counts = observations?.domains ?? {};
@@ -66,11 +68,21 @@ export function chooseLearningInvitations(island, observations, progress) {
   const sorted = [...pool].sort((a,b) => score(a) - score(b) || pool.indexOf(a) - pool.indexOf(b));
   const first = sorted[0];
   const second = sorted.find(item => item.domain !== first.domain) ?? sorted[1];
+  if (previous?.island === island && Array.isArray(previous.options)
+      && previous.options.length === 2 && previous.options.includes(first.id) && previous.options.includes(second.id)) {
+    for (const candidate of sorted) {
+      for (const partner of sorted) {
+        if (candidate.id !== partner.id && candidate.domain !== partner.domain
+            && (!previous.options.includes(candidate.id) || !previous.options.includes(partner.id))) return [candidate, partner];
+      }
+    }
+  }
   return [first, second];
 }
 
-export const freshLearningInvitation = (island, observations, progress) => ({
-  version:1, island, phase:'awaiting', options:chooseLearningInvitations(island, observations, progress).map(choice => choice.id), selected:null,
+export const freshLearningInvitation = (island, observations, progress, previous) => ({
+  version:1, island, phase:'awaiting', options:chooseLearningInvitations(island, observations, progress, previous).map(choice => choice.id), selected:null,
+  lastChoice:null, declined:false,
 });
 
 export const invitationChoice = id => Object.values(INVITATION_CHOICES).flat().find(choice => choice.id === id) ?? null;

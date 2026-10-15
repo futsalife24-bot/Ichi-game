@@ -27,7 +27,7 @@ const sail=main.match(/async function visitForest\(preview = null\) \{[\s\S]*?\n
 const islandNumberCode=main.match(/const islandNumber = [^\n]+/)[0];
 function voyage(){
   const events=[];
-  const c={mode:'play',place:'island',saveBlocked:false,forestLoading:false,forest:{assetsLoaded:true},invitation:{dialogOpen:false},
+  const c={mode:'play',place:'island',saveBlocked:false,forestLoading:false,forest:{assetsLoaded:true},invitation:{dialogOpen:false},landmark:null,
     adventure:{unlocked:true,canAct:()=>true,markVisited(){events.push('save');return true;}},
     input:{reset(){}},player:{setTarget(){}},refreshActivityInput(){},
     quests:{stop(){events.push('stop');}},leaveArea(){},endAllFishing(){},voice:{stop(){}},audio:{meet(){}},

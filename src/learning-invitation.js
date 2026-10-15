@@ -2,7 +2,7 @@ import { freshLearningInvitation, invitationChoice, validLearningInvitation } fr
 import { activityById } from './island-activities.js';
 
 const CALL_LINE = 'いっしょに あそぼう！';
-const REPEAT_MS = 30000;
+const REPEAT_MS = [30000,45000,60000,90000];
 
 export function invitationBubblePosition(anchor, size, viewport, obstacles = []) {
   const gap = 12, edge = 10;
@@ -39,7 +39,7 @@ export function invitationBubblePosition(anchor, size, viewport, obstacles = [])
 export class LearningInvitation {
   constructor({ save, persist, learning, voice, voiceEnabled = () => true, onFree = () => {} }) {
     this.save=save; this.persist=persist; this.learning=learning; this.voice=voice; this.voiceEnabled=voiceEnabled; this.onFree=onFree;
-    this.active=false; this.offered=false; this.nearResident=false; this.lastVoice=-Infinity; this.dialogOpen=false;
+    this.active=false; this.offered=false; this.nearResident=false; this.lastVoice=-Infinity; this.callCount=0; this.dialogOpen=false;
     if (typeof document !== 'undefined') this.mount();
   }
 
@@ -68,7 +68,7 @@ export class LearningInvitation {
   }
 
   beginSession() {
-    this.stopOwnVoice();this.active=true;this.offered=false;this.dialogOpen=false;this.lastVoice=-Infinity;
+    this.stopOwnVoice();this.active=true;this.offered=false;this.dialogOpen=false;this.lastVoice=-Infinity;this.callCount=0;
     this.completeSavedActivity();
     this.render();
   }
@@ -84,7 +84,7 @@ export class LearningInvitation {
     if (!this.offered && ready && Number.isInteger(island) && island>=1 && island<=8) {
       const saved=this.state;
       if (saved && saved.phase!=='done' && saved.island===island) this.offered=true;
-      else this.offered=this.saveState(freshLearningInvitation(island,this.save.observations,this.save.islandActivities));
+      else this.offered=this.saveState(freshLearningInvitation(island,this.save.observations,this.save.islandActivities,saved));
     }
     if (ready) this.completeSavedActivity();
     let state=this.state;
@@ -92,12 +92,14 @@ export class LearningInvitation {
     // いちど へんじを した あとは、しまを かえても あらためて よばない。
     if (this.offered && ready && state?.phase === 'awaiting' && state.island !== island
         && Number.isInteger(island) && island >= 1 && island <= 8) {
-      if (this.saveState(freshLearningInvitation(island,this.save.observations,this.save.islandActivities))) state=this.state;
+      if (this.saveState(freshLearningInvitation(island,this.save.observations,this.save.islandActivities,state))) state=this.state;
     }
     const visible=Boolean(this.offered && ready && canShow && state && state.island===island && state.phase!=='done');
     this.render(visible);
-    if (visible && !this.dialogOpen && state.phase==='awaiting' && canSpeak && this.voiceEnabled() && Number.isFinite(now) && now-this.lastVoice>=REPEAT_MS) {
+    const interval=REPEAT_MS[Math.min(Math.max(this.callCount-1,0),REPEAT_MS.length-1)];
+    if (visible && !this.dialogOpen && state.phase==='awaiting' && canSpeak && this.voiceEnabled() && Number.isFinite(now) && now-this.lastVoice>=interval) {
       this.lastVoice=now;
+      this.callCount++;
       this.say({say:CALL_LINE,sub:CALL_LINE,lang:'ja'});
     }
   }
@@ -162,7 +164,7 @@ export class LearningInvitation {
   finish() {
     const state=this.state;
     if (!this.active || !state || state.phase==='done') return false;
-    if (!this.saveState({...state,phase:'done',selected:null})) return false;
+    if (!this.saveState({...state,phase:'done',selected:null,lastChoice:state.selected ?? null,declined:state.selected === null})) return false;
     this.dialogOpen=false;this.render(false);this.onFree();return true;
   }
 

@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v60-learning-invitation-voices';
+const VERSION = 'kirakira-v61-island-play-polish';
 const ASSETS = [
   './',
   './index.html',
@@ -8,6 +8,10 @@ const ASSETS = [
   './vendor/three.module.js',
   './vendor/three.core.js',
   './src/main.js',
+  './src/landmark-play.js',
+  './src/landmark-play-ui.js',
+  './src/landmark-play.css',
+  './src/render-budget.js',
   './src/island-rules.js',
   './src/island-learning.js',
   './src/island-learning.css',

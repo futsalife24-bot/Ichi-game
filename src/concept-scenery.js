@@ -76,7 +76,7 @@ export class ConceptScenery {
         const m=new THREE.Mesh(part.geometry,part.materialObject);m.name=part.name;m.castShadow=m.receiveShadow=true;
         if(asset.pivots?.[part.name]) {
           const p=asset.pivots[part.name],pivot=new THREE.Group();pivot.position.fromArray(p.position);pivot.add(m);root.add(pivot);
-          this.animated.push({object:pivot,axis:new THREE.Vector3(...p.axis),speed:id==='starCarousel'?.09:.18});
+          this.animated.push({object:pivot,axis:new THREE.Vector3(...p.axis),speed:id==='starCarousel'?.09:.18,modelId:id});
         }else root.add(m);
       }
       this.group.add(root);this.models.set(id,root);
@@ -208,7 +208,7 @@ export class ConceptScenery {
   update(dt,time) {
     this.time.value=time;
     for(const a of this.animated)if(a.axis)a.object.rotateOnAxis(a.axis,dt*a.speed);else if(a.fall)a.object.material.opacity=.6+Math.sin(time*1.2)*.06;else if(a.boat){a.object.position.y=a.rest.y+Math.sin(time*.6)*.06;a.object.rotation.z=Math.sin(time*.5)*.018;}
-    this.fish?.forEach((f,i)=>{f.position.x=f.userData.rest.x+Math.sin(time*.12+i)*3;f.position.y=f.userData.rest.y+Math.sin(time*.7+i)*.16;f.rotation.y=Math.sin(time*.12+i)*.25;});
+    this.fish?.forEach((f,i)=>{f.position.x=f.userData.rest.x+Math.sin(time*.12+i)*3;f.position.z=f.userData.rest.z;f.position.y=f.userData.rest.y+Math.sin(time*.7+i)*.16;f.rotation.y=Math.sin(time*.12+i)*.25;});
     if(this.whale){const rest=this.whale.userData.rest;this.whale.position.x=rest.x+Math.sin(time*.045)*3;this.whale.position.y=rest.y+Math.sin(time*.16)*.3;}
   }
 }
