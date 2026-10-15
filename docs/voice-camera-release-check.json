@@ -1,0 +1,56 @@
+{
+  "checkedAt": "2026-10-15T23:07:46.991Z",
+  "releaseSha": "f4938b950ac5d81839ccdce3a8e25ba8a139d581",
+  "allMatch": true,
+  "records": [
+    {
+      "path": "src/main.js",
+      "status": 200,
+      "expected": "9c88c9b887affb811265b5b4279b237243fa0a7af16f24ba1929d3b91c87b149",
+      "actual": "9c88c9b887affb811265b5b4279b237243fa0a7af16f24ba1929d3b91c87b149",
+      "match": true
+    },
+    {
+      "path": "src/voice.js",
+      "status": 200,
+      "expected": "2bfa08032dbe5ad645259456897cf8bac579b331a3c60e4ec2ae035fd24b916c",
+      "actual": "2bfa08032dbe5ad645259456897cf8bac579b331a3c60e4ec2ae035fd24b916c",
+      "match": true
+    },
+    {
+      "path": "src/concept-camera.js",
+      "status": 200,
+      "expected": "e2f6a9d77dff944bb4877288f60c8bb8944ab9217e99f3c93dbc85382e02ffe2",
+      "actual": "e2f6a9d77dff944bb4877288f60c8bb8944ab9217e99f3c93dbc85382e02ffe2",
+      "match": true
+    },
+    {
+      "path": "sw.js",
+      "status": 200,
+      "expected": "15e16cc15b7cc7c2b1c1b68ea7d46ac66627ccdd654cff097befcd0061b8f184",
+      "actual": "15e16cc15b7cc7c2b1c1b68ea7d46ac66627ccdd654cff097befcd0061b8f184",
+      "match": true
+    },
+    {
+      "path": "voice/index.json",
+      "status": 200,
+      "expected": "b4b619ab35dc9131dbda3dfddbfb80e7f3714174203ac232ea0afe8117dd8fcf",
+      "actual": "b4b619ab35dc9131dbda3dfddbfb80e7f3714174203ac232ea0afe8117dd8fcf",
+      "match": true
+    },
+    {
+      "path": "voice/gemini/21578cf6.mp3",
+      "status": 200,
+      "expected": "dc4fe208ee1d410a785518acd5ef7009779b6e2bc5feba44626a0d278c6be25b",
+      "actual": "dc4fe208ee1d410a785518acd5ef7009779b6e2bc5feba44626a0d278c6be25b",
+      "match": true
+    },
+    {
+      "path": "voice/gemini/45d62c57.mp3",
+      "status": 200,
+      "expected": "cb5c6f10ca0e515c002918bef751bd818636a2bd463b6aaf430168637f5e429c",
+      "actual": "cb5c6f10ca0e515c002918bef751bd818636a2bd463b6aaf430168637f5e429c",
+      "match": true
+    }
+  ]
+}
