@@ -45,7 +45,7 @@ export function conceptBridgeCameraWeight(number, x, z) {
 export function setConceptCameraGoal(number, playerPosition, view, outPosition, outTarget, compactHud = false, visibleHud = false) {
   const weight = conceptBridgeCameraWeight(number, playerPosition.x, playerPosition.z);
   if (visibleHud || compactHud) {
-    // だいななの ちゅうおうばしを もとに、はしでも あしが みえる かくどを どの しまでも つかう。
+    // これまでより ひとだん うえの やく25どで、どの しまも みおろす。
     // ちいさい がめんも おなじ むきを たもち、うさぎを したの ぼたんより うえに おく。
     // だいさんの ななめばしでは、むきを かえずに よこへ すべらせて てすりを よける。
     let sideStep = number === 3 ? 9.6 * weight : 0;
@@ -65,10 +65,10 @@ export function setConceptCameraGoal(number, playerPosition, view, outPosition, 
       1 - smooth(0, 3, Math.hypot(playerPosition.x - 9, playerPosition.z - 4)),
       1 - smooth(4, 6.5, Math.hypot(playerPosition.x - 18, playerPosition.z)),
     ) : 0;
-    const eyeY = 9.7 - 3.2 * fourthWeight;
-    const eyeZ = 24 - 12 * fourthWeight;
+    const eyeY = 18.7 - 5 * fourthWeight;
+    const eyeZ = 28 - 10 * fourthWeight;
     outPosition.set(playerPosition.x + 2.4 + sideStep, playerPosition.y + eyeY, playerPosition.z + eyeZ);
-    outTarget.set(playerPosition.x + .6 + sideStep, playerPosition.y + eyeY - 11.2, playerPosition.z + eyeZ - 38);
+    outTarget.set(playerPosition.x + .6 + sideStep, playerPosition.y + eyeY - 17.75, playerPosition.z + eyeZ - 38);
     return weight;
   }
   const lift = number === 4 ? 8 : number === 3 ? 6 : 4.5;
