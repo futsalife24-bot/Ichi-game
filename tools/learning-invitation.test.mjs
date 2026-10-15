@@ -98,10 +98,41 @@ test('開始案内・非表示・他会話・学習中・保存停止の間は�
   s.update({canShow:true,canSpeak:false,now:80000});assert.equal(s.spoken.length,1);
   s.update({now:80001});assert.equal(s.spoken.length,2);
   s.update({now:80002});assert.equal(s.spoken.length,2);
-  s.update({now:110002});assert.equal(s.spoken.length,3);
-  s.update({nearResident:false,now:110003});assert.equal(s.invitation.talk(),false);
-  s.update({nearResident:true,now:110004});s.invitation.talk();
-  s.update({now:160000});assert.equal(s.spoken.length,3);
+  s.update({now:125000});assert.equal(s.spoken.length,2);
+  s.update({now:125001});assert.equal(s.spoken.length,3);
+  s.update({now:185001});assert.equal(s.spoken.length,4);
+  s.update({now:275000});assert.equal(s.spoken.length,4);
+  s.update({now:275001});assert.equal(s.spoken.length,5);
+  s.update({nearResident:false,now:275002});assert.equal(s.invitation.talk(),false);
+  s.update({nearResident:true,now:275003});s.invitation.talk();
+  s.update({now:365001});assert.equal(s.spoken.length,5);
+});
+
+test('辞退の２択を次の開始で繰り返さず、古い記録も読める',()=>{
+  const s=setup();s.invitation.beginSession();s.update();
+  const first=[...s.invitation.state.options];
+  s.invitation.talk();s.invitation.respond('accept');s.invitation.finish();
+  assert.equal(s.stored.learningInvitation.declined,true);
+  assert.equal(s.stored.learningInvitation.lastChoice,null);
+  s.invitation.endSession();s.invitation.beginSession();s.update({now:1000});
+  assert.notDeepEqual(new Set(s.invitation.state.options),new Set(first));
+  assert.equal(new Set(s.invitation.state.options).size,2);
+  const old=freshLearningInvitation(5);delete old.lastChoice;delete old.declined;
+  assert.equal(validLearningInvitation(old),true);
+  assert.notDeepEqual(new Set(freshLearningInvitation(5,undefined,undefined,old).options),new Set(old.options));
+});
+
+test('選んだ遊びを保存し、失敗した終了は履歴を増やさない',()=>{
+  const s=setup();s.invitation.beginSession();s.update();s.invitation.talk();s.invitation.respond('accept');
+  const id=s.invitation.state.options[0];s.invitation.choose(id);
+  s.setFail(true);assert.equal(s.invitation.finish(),false);
+  assert.equal(s.invitation.state.phase,'playing');
+  assert.equal(s.invitation.state.lastChoice,null);
+  s.setFail(false);assert.equal(s.invitation.finish(),true);
+  assert.equal(s.stored.learningInvitation.lastChoice,id);
+  assert.equal(s.stored.learningInvitation.declined,false);
+  const bad=clone(s.stored);bad.learningInvitation.lastChoice='I08-H01';
+  assert.throws(()=>validateGameSave(bad));
 });
 
 test('保存失敗時は状態を戻し、活動を開かない',()=>{

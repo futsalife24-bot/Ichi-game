@@ -1,0 +1,446 @@
+{
+  "説明": "出荷MP3原本を復号した補正前の機械計測。再生時の音量補正は反映しない。発音・意味・聴感の合否は判定しない。",
+  "対象": 843,
+  "基準": {
+    "activeRms中央値Db": -18.4,
+    "音量差Db": 4.5,
+    "高いピーク試料数": 24,
+    "端の判定Db": "max(-28, activeRms-12)"
+  },
+  "集計": {
+    "activeRmsDb範囲": [
+      -24.1,
+      -12.1
+    ],
+    "peakDb最大": -1.6,
+    "要確認": 23,
+    "理由別": {
+      "音量差": 23,
+      "高いピーク": 0,
+      "語頭の余白": 0,
+      "語尾の余白": 0
+    }
+  },
+  "要確認音声": [
+    {
+      "hash": "4abc226b",
+      "file": "gemini/4abc226b.mp3",
+      "text": "すうじであそぼう！",
+      "duration": 1.18,
+      "peakDb": -4.1,
+      "activeRmsDb": -17.9,
+      "head40msDb": -67.7,
+      "tail40msDb": -69.1,
+      "nearClipSamples": 0,
+      "理由": [
+        "案内音声の試聴"
+      ]
+    },
+    {
+      "hash": "8a1c637e",
+      "file": "gemini/8a1c637e.mp3",
+      "text": "はしをわたってあそぼう！",
+      "duration": 1.97,
+      "peakDb": -4.9,
+      "activeRmsDb": -17.6,
+      "head40msDb": -72.3,
+      "tail40msDb": -72.5,
+      "nearClipSamples": 0,
+      "理由": [
+        "案内音声の試聴"
+      ]
+    },
+    {
+      "hash": "80c5cdd9",
+      "file": "gemini/80c5cdd9.mp3",
+      "text": "まず、みほんをみてね。",
+      "duration": 2.32,
+      "peakDb": -2.5,
+      "activeRmsDb": -14.6,
+      "head40msDb": -78.6,
+      "tail40msDb": -74.0,
+      "nearClipSamples": 0,
+      "理由": [
+        "発音の聴感確認"
+      ]
+    },
+    {
+      "hash": "afab5722",
+      "file": "gemini/afab5722.mp3",
+      "text": "みほんをみて、もういちどためしてね。",
+      "duration": 3.16,
+      "peakDb": -3.8,
+      "activeRmsDb": -15.7,
+      "head40msDb": -80.0,
+      "tail40msDb": -69.4,
+      "nearClipSamples": 0,
+      "理由": [
+        "発音の聴感確認"
+      ]
+    },
+    {
+      "hash": "82b8edb7",
+      "file": "gemini/82b8edb7.mp3",
+      "text": "みほんどおりにおさらをならべる",
+      "duration": 2.81,
+      "peakDb": -2.1,
+      "activeRmsDb": -15.5,
+      "head40msDb": -75.5,
+      "tail40msDb": -73.4,
+      "nearClipSamples": 0,
+      "理由": [
+        "発音の聴感確認"
+      ]
+    },
+    {
+      "hash": "afad8963",
+      "file": "gemini/afad8963.mp3",
+      "text": "fish",
+      "duration": 0.72,
+      "peakDb": -4.2,
+      "activeRmsDb": -17.8,
+      "head40msDb": -57.7,
+      "tail40msDb": -74.1,
+      "nearClipSamples": 0,
+      "理由": [
+        "発音の聴感確認"
+      ]
+    },
+    {
+      "hash": "865030cb",
+      "file": "gemini/865030cb.mp3",
+      "text": "いっしょにあそぼう！",
+      "duration": 1.24,
+      "peakDb": -2.1,
+      "activeRmsDb": -14.1,
+      "head40msDb": -78.5,
+      "tail40msDb": -72.5,
+      "nearClipSamples": 0,
+      "理由": [
+        "案内音声の試聴"
+      ]
+    },
+    {
+      "hash": "ef0d2135",
+      "file": "gemini/ef0d2135.mp3",
+      "text": "ほーほー。",
+      "duration": 1.03,
+      "peakDb": -3.8,
+      "activeRmsDb": -13.6,
+      "head40msDb": -76.3,
+      "tail40msDb": -73.2,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "492e4cc8",
+      "file": "gemini/492e4cc8.mp3",
+      "text": "さん！",
+      "duration": 0.59,
+      "peakDb": -7.7,
+      "activeRmsDb": -23.4,
+      "head40msDb": -71.0,
+      "tail40msDb": -74.5,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "515e3204",
+      "file": "gemini/515e3204.mp3",
+      "text": "はち！",
+      "duration": 0.54,
+      "peakDb": -9.2,
+      "activeRmsDb": -23.1,
+      "head40msDb": -69.2,
+      "tail40msDb": -75.0,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "ee2fc489",
+      "file": "gemini/ee2fc489.mp3",
+      "text": "「あ」！",
+      "duration": 0.37,
+      "peakDb": -4.1,
+      "activeRmsDb": -12.9,
+      "head40msDb": -70.6,
+      "tail40msDb": -74.5,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "b9938257",
+      "file": "gemini/b9938257.mp3",
+      "text": "かさの「か」だね！",
+      "duration": 1.23,
+      "peakDb": -7.7,
+      "activeRmsDb": -24.1,
+      "head40msDb": -47.7,
+      "tail40msDb": -52.8,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "cbee1a94",
+      "file": "gemini/cbee1a94.mp3",
+      "text": "あり！",
+      "duration": 0.53,
+      "peakDb": -9.0,
+      "activeRmsDb": -23.7,
+      "head40msDb": -72.0,
+      "tail40msDb": -78.4,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "6b9a2eb7",
+      "file": "gemini/6b9a2eb7.mp3",
+      "text": "えび！",
+      "duration": 0.49,
+      "peakDb": -11.5,
+      "activeRmsDb": -23.2,
+      "head40msDb": -69.5,
+      "tail40msDb": -73.0,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "45b77297",
+      "file": "gemini/45b77297.mp3",
+      "text": "ほんだなが",
+      "duration": 0.93,
+      "peakDb": -2.3,
+      "activeRmsDb": -12.8,
+      "head40msDb": -60.7,
+      "tail40msDb": -63.2,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "88621f3a",
+      "file": "gemini/88621f3a.mp3",
+      "text": "きんのおうかん！",
+      "duration": 1.08,
+      "peakDb": -4.1,
+      "activeRmsDb": -13.1,
+      "head40msDb": -68.6,
+      "tail40msDb": -74.1,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "674904eb",
+      "file": "gemini/674904eb.mp3",
+      "text": "いいね！",
+      "duration": 1.45,
+      "peakDb": -4.9,
+      "activeRmsDb": -13.0,
+      "head40msDb": -70.6,
+      "tail40msDb": -73.9,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "af497887",
+      "file": "gemini/af497887.mp3",
+      "text": "うまれたよ！",
+      "duration": 1.1,
+      "peakDb": -4.9,
+      "activeRmsDb": -13.5,
+      "head40msDb": -70.7,
+      "tail40msDb": -58.8,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "2c818631",
+      "file": "gemini/2c818631.mp3",
+      "text": "ももちゃん！",
+      "duration": 0.79,
+      "peakDb": -2.2,
+      "activeRmsDb": -13.3,
+      "head40msDb": -71.1,
+      "tail40msDb": -72.1,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "bba869ab",
+      "file": "gemini/bba869ab.mp3",
+      "text": "ぽぽちゃん！",
+      "duration": 0.88,
+      "peakDb": -2.1,
+      "activeRmsDb": -13.4,
+      "head40msDb": -61.7,
+      "tail40msDb": -69.2,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "21197a34",
+      "file": "gemini/21197a34.mp3",
+      "text": "あめちゃん！",
+      "duration": 0.88,
+      "peakDb": -2.0,
+      "activeRmsDb": -13.7,
+      "head40msDb": -64.1,
+      "tail40msDb": -70.1,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "be7afb20",
+      "file": "gemini/be7afb20.mp3",
+      "text": "みなとのおやつかいをじゅんびしよう！",
+      "duration": 2.26,
+      "peakDb": -2.1,
+      "activeRmsDb": -13.3,
+      "head40msDb": -73.9,
+      "tail40msDb": -77.3,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "867f1566",
+      "file": "gemini/867f1566.mp3",
+      "text": "とどけにいこう！",
+      "duration": 1.03,
+      "peakDb": -3.3,
+      "activeRmsDb": -13.8,
+      "head40msDb": -71.3,
+      "tail40msDb": -76.2,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "0f1b5632",
+      "file": "gemini/0f1b5632.mp3",
+      "text": "もういちどみてみよう！",
+      "duration": 1.27,
+      "peakDb": -2.1,
+      "activeRmsDb": -13.0,
+      "head40msDb": -70.0,
+      "tail40msDb": -75.4,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "3d3a5c63",
+      "file": "gemini/3d3a5c63.mp3",
+      "text": "いちかちゃん！",
+      "duration": 1.18,
+      "peakDb": -2.4,
+      "activeRmsDb": -12.8,
+      "head40msDb": -75.0,
+      "tail40msDb": -76.4,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "c3a2fb83",
+      "file": "gemini/c3a2fb83.mp3",
+      "text": "いっしょにやってみよう。",
+      "duration": 1.17,
+      "peakDb": -2.1,
+      "activeRmsDb": -12.1,
+      "head40msDb": -72.2,
+      "tail40msDb": -73.3,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "062a0e8b",
+      "file": "gemini/062a0e8b.mp3",
+      "text": "こんどはじぶんでやってみよう。",
+      "duration": 1.77,
+      "peakDb": -2.2,
+      "activeRmsDb": -12.1,
+      "head40msDb": -75.1,
+      "tail40msDb": -74.0,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "f6bc74c9",
+      "file": "gemini/f6bc74c9.mp3",
+      "text": "えをえらんでね。",
+      "duration": 1.1,
+      "peakDb": -2.1,
+      "activeRmsDb": -12.2,
+      "head40msDb": -74.1,
+      "tail40msDb": -73.9,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "530b011b",
+      "file": "gemini/530b011b.mp3",
+      "text": "くものうえをたんけんしよう。",
+      "duration": 1.99,
+      "peakDb": -2.8,
+      "activeRmsDb": -13.4,
+      "head40msDb": -78.4,
+      "tail40msDb": -77.2,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    },
+    {
+      "hash": "214842e5",
+      "file": "gemini/214842e5.mp3",
+      "text": "がっこうのかごにあかいものをあつめよう。",
+      "duration": 3.28,
+      "peakDb": -2.1,
+      "activeRmsDb": -12.9,
+      "head40msDb": -73.3,
+      "tail40msDb": -76.1,
+      "nearClipSamples": 0,
+      "理由": [
+        "音量差"
+      ]
+    }
+  ]
+}

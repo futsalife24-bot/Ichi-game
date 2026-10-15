@@ -7,6 +7,32 @@ const PREFERRED = ['Kyoko', 'O-ren', 'Nanami', 'Haruka', 'Ayumi', 'Google 日本
 const CLIP_GAP = 0.05;
 const DECODED_MAX = 40;
 const BYTES_MAX = 80;
+const TARGET_RMS = 10 ** (-18.4 / 20);
+const MAX_BOOST = 10 ** (3 / 20);
+const MAX_CUT = 10 ** (-6 / 20);
+
+export function clipPlaybackGain(buffer) {
+  if (!buffer?.getChannelData || !buffer.sampleRate || buffer.duration < .1) return 1;
+  const width = Math.max(1, Math.round(buffer.sampleRate * .02));
+  let peak = 0, activeSquares = 0, activeFrames = 0;
+  for (let channel = 0; channel < buffer.numberOfChannels; channel++) {
+    const data = buffer.getChannelData(channel);
+    for (let offset = 0; offset < data.length; offset += width) {
+      let squares = 0;
+      for (let i = offset; i < Math.min(offset + width, data.length); i++) {
+        const value = data[i];
+        squares += value * value;
+        peak = Math.max(peak, Math.abs(value));
+      }
+      const level = Math.sqrt(squares / width);
+      if (level >= .01) { activeSquares += level * level; activeFrames++; }
+    }
+  }
+  if (activeFrames < 3) return Math.min(1, peak > 0 ? .82 / peak : 1);
+  const rms = Math.sqrt(activeSquares / activeFrames);
+  const target = Math.min(MAX_BOOST, Math.max(MAX_CUT, TARGET_RMS / rms));
+  return Math.min(target, peak > 0 ? .82 / peak : 1);
+}
 
 export class Voice {
   constructor({ onSubtitle, onSpeaking, audio } = {}) {
@@ -22,7 +48,9 @@ export class Voice {
     this.clipIndex = null; // Map<hash, relative MP3 path>
     this.bytes = new Map(); // hash -> Promise<ArrayBuffer>
     this.decoded = new Map(); // hash -> AudioBuffer（さいきん つかった ぶんだけ）
+    this.gains = new Map(); // hash -> さいせいの おんりょう
     this.sources = [];
+    this.gainNodes = new Map();
     this.token = 0;
     if (this.synth) {
       this.pick();
@@ -138,7 +166,12 @@ export class Voice {
     const ctx = this.audio.ctx;
     const buf = await new Promise((res, rej) => ctx.decodeAudioData(bytes.slice(0), res, rej));
     this.decoded.set(hash, buf);
-    while (this.decoded.size > DECODED_MAX) this.decoded.delete(this.decoded.keys().next().value);
+    this.gains.set(hash, clipPlaybackGain(buf));
+    while (this.decoded.size > DECODED_MAX) {
+      const oldest = this.decoded.keys().next().value;
+      this.decoded.delete(oldest);
+      this.gains.delete(oldest);
+    }
     return buf;
   }
 
@@ -157,15 +190,20 @@ export class Voice {
     this.setSpeaking(true);
     buffers.forEach((buf, i) => {
       const src = ctx.createBufferSource();
+      const gain = ctx.createGain();
       src.buffer = buf;
-      src.connect(this.audio.voiceOut);
+      gain.gain.value = this.gains.get(hashes[i]) ?? clipPlaybackGain(buf);
+      src.connect(gain);
+      gain.connect(this.audio.voiceOut);
       src.start(t);
       t += buf.duration + CLIP_GAP;
       src.onended = () => {
         this.sources = this.sources.filter((s) => s !== src);
+        src.disconnect();gain.disconnect();this.gainNodes.delete(src);
         if (i === buffers.length - 1 && token === this.token) this.setSpeaking(false);
       };
       this.sources.push(src);
+      this.gainNodes.set(src, gain);
     });
   }
 
@@ -199,6 +237,7 @@ export class Voice {
     clearTimeout(this.safety);
     for (const s of this.sources) {
       try { s.onended = null; s.stop(); } catch { /* まだ はじまっていない など */ }
+      s.disconnect();this.gainNodes.get(s)?.disconnect();this.gainNodes.delete(s);
     }
     this.sources = [];
     try { this.synth?.cancel(); } catch { /* noop */ }

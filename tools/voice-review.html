@@ -7,6 +7,9 @@
 <p id="subtitle">セリフを選んで再生できます。</p><p id="status" role="status">音声一覧を読み込み中</p>
 <button id="check">全音声を検査</button><pre id="result"></pre>
 <button id="harborSequence">港町14案内を順番に確認</button><pre id="harbor-result"></pre>
+<h2>音量差・発音の要確認</h2><p>この一覧は補正前の原音です。上の通常試聴はゲームと同じ再生時の音量補正を使います。発音や語頭・語尾は耳で確認してください。</p>
+<button id="reviewSequence">要確認音声を順番に再生</button><button id="reviewStop">連続再生を停止</button>
+<p id="review-status" role="status"></p><ol id="review-list"></ol>
 <button id="offline">オフライン用保存を検査</button><pre id="offline-result"></pre>
 <p><small>これは開発用の試聴ページです。ゲームのセーブデータは変更しません。</small></p>
 <script type="module">
@@ -40,6 +43,42 @@ document.querySelector('#mode').textContent=preview?'未完成の試聴版：準
 document.querySelector('#status').textContent=voice.clipIndex ? `${preview?'未完成の試聴版：':''}${voice.clipIndex.size}本の音声を読み込みました`:'音声一覧が未完成です';
 document.querySelector('#play').onclick=async()=>{await unlock();voice.say(samples[Number(select.value)][1]);};
 document.querySelector('#stop').onclick=()=>voice.stop();
+let reviewAudio=null,reviewRun=0,reviewDone=null;
+const reviewStatus=document.querySelector('#review-status');
+const reviewData=await fetch('docs/voice-quality-check.json').then(response=>response.ok?response.json():null).catch(()=>null);
+const reviewItems=reviewData?.要確認音声??[];
+reviewStatus.textContent=reviewData?`全${reviewData.対象}本の計測から${reviewItems.length}本を表示`:'計測一覧は未作成です';
+for(const [i,item] of reviewItems.entries()){
+ const li=document.createElement('li'),button=document.createElement('button');
+ button.textContent='再生';button.onclick=()=>playReview(i);
+ li.append(button,document.createTextNode(`${item.text}（${item.理由.join('・')}、音量 ${item.activeRmsDb} dB）`));
+ document.querySelector('#review-list').append(li);
+}
+function stopReview(){reviewRun++;reviewAudio?.pause();reviewAudio=null;reviewDone?.();reviewDone=null;}
+async function playReviewAudio(item){
+ reviewAudio=new Audio('voice/'+item.file);
+ await reviewAudio.play();
+ await new Promise((resolve,reject)=>{
+  reviewDone=resolve;
+  reviewAudio.onended=()=>{reviewDone=null;resolve();};
+  reviewAudio.onerror=()=>{reviewDone=null;reject(Error('再生できません'));};
+ });
+}
+async function playReview(i){
+ stopReview();const run=reviewRun,item=reviewItems[i];if(!item)return;
+ reviewStatus.textContent=`${i+1}/${reviewItems.length}：${item.text}`;
+ try{await playReviewAudio(item);}catch(error){if(run===reviewRun)reviewStatus.textContent=`${item.text}：${error}`;}
+}
+document.querySelector('#reviewSequence').onclick=async()=>{
+ stopReview();const run=reviewRun;
+ for(let i=0;i<reviewItems.length&&run===reviewRun;i++){
+  const item=reviewItems[i];
+  reviewStatus.textContent=`${i+1}/${reviewItems.length}：${item.text}`;
+  try{await playReviewAudio(item);}catch(error){if(run===reviewRun)reviewStatus.textContent=`${item.text}：${error}`;break;}
+ }
+ if(run===reviewRun)reviewStatus.textContent=`${reviewItems.length}本の再生が終了しました`;
+};
+document.querySelector('#reviewStop').onclick=()=>{stopReview();reviewStatus.textContent='連続再生を停止しました';};
 document.querySelector('#check').onclick=async()=>{await unlock();voice.stop();const errors=[];let checked=0,seconds=0;for(const hash of voice.clipIndex?.keys()??[]){try{const b=await voice.decode(hash);if(b.numberOfChannels!==1||b.duration<=.1)throw Error('invalid audio');seconds+=b.duration;checked++;}catch(e){errors.push({hash,error:String(e)});}if(checked%25===0)document.querySelector('#result').textContent=JSON.stringify({checked,errors});}document.querySelector('#result').textContent=JSON.stringify({checked,expected:voice.clipIndex?.size,errors,totalSeconds:Math.round(seconds)},null,2);};
 document.querySelector('#harborSequence').onclick=async()=>{
  const output=document.querySelector('#harbor-result'),results=[];

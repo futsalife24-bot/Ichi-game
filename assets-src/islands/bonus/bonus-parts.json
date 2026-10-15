@@ -1,0 +1,630 @@
+{
+  "schema_version": 1,
+  "source": "tools/build-island-gifts.py",
+  "parts": [
+    {
+      "id": "japan-shell-gift",
+      "island": 1,
+      "name": "桜貝の贈り物箱",
+      "kind": "贈り物",
+      "use": "ふたと貝を分けて開く",
+      "bounds_m": {
+        "min": [
+          -0.5911,
+          0.025,
+          -0.4016
+        ],
+        "max": [
+          0.5911,
+          0.7328,
+          0.4529
+        ]
+      },
+      "triangles": 1208,
+      "objects": 19,
+      "source": "assets-src/islands/bonus/japan-shell-gift.blend",
+      "preview": "assets-src/islands/bonus/japan-shell-gift.png",
+      "glb": "assets/islands/bonus/japan-shell-gift.glb",
+      "game_key": "japan-shell-gift",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "japan-tidepool-light",
+      "island": 1,
+      "name": "潮だまりの小灯り",
+      "kind": "建築小物",
+      "use": "貝と水面を分ける",
+      "bounds_m": {
+        "min": [
+          -0.46,
+          0.01,
+          -0.46
+        ],
+        "max": [
+          0.46,
+          1.0593,
+          0.46
+        ]
+      },
+      "triangles": 1628,
+      "objects": 8,
+      "source": "assets-src/islands/bonus/japan-tidepool-light.blend",
+      "preview": "assets-src/islands/bonus/japan-tidepool-light.png",
+      "glb": "assets/islands/bonus/japan-tidepool-light.glb",
+      "game_key": "japan-tidepool-light",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "japan-sakura-wreath",
+      "island": 1,
+      "name": "桜枝の輪飾り",
+      "kind": "飾り",
+      "use": "季節の花を差し替える",
+      "bounds_m": {
+        "min": [
+          -0.66,
+          0.5,
+          -0.597
+        ],
+        "max": [
+          0.66,
+          1.295,
+          0.597
+        ]
+      },
+      "triangles": 3104,
+      "objects": 14,
+      "source": "assets-src/islands/bonus/japan-sakura-wreath.blend",
+      "preview": "assets-src/islands/bonus/japan-sakura-wreath.png",
+      "glb": "assets/islands/bonus/japan-sakura-wreath.glb",
+      "game_key": "japan-sakura-wreath",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "finland-birch-lamp",
+      "island": 2,
+      "name": "白樺と苔の灯り",
+      "kind": "贈り物",
+      "use": "灯り窓を分ける",
+      "bounds_m": {
+        "min": [
+          -0.47,
+          0.0,
+          -0.38
+        ],
+        "max": [
+          0.44,
+          1.27,
+          0.43
+        ]
+      },
+      "triangles": 1442,
+      "objects": 13,
+      "source": "assets-src/islands/bonus/finland-birch-lamp.blend",
+      "preview": "assets-src/islands/bonus/finland-birch-lamp.png",
+      "glb": "assets/islands/bonus/finland-birch-lamp.glb",
+      "game_key": "finland-birch-lamp",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "finland-pine-bell",
+      "island": 2,
+      "name": "松ぼっくりの鈴",
+      "kind": "建築小物",
+      "use": "吊り輪を分ける",
+      "bounds_m": {
+        "min": [
+          -0.35,
+          0.115,
+          -0.35
+        ],
+        "max": [
+          0.35,
+          1.056,
+          0.35
+        ]
+      },
+      "triangles": 1580,
+      "objects": 5,
+      "source": "assets-src/islands/bonus/finland-pine-bell.blend",
+      "preview": "assets-src/islands/bonus/finland-pine-bell.png",
+      "glb": "assets/islands/bonus/finland-pine-bell.glb",
+      "game_key": "finland-pine-bell",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "finland-forest-boat",
+      "island": 2,
+      "name": "森の小舟",
+      "kind": "飾り",
+      "use": "帆を分ける",
+      "bounds_m": {
+        "min": [
+          -0.5923,
+          0.055,
+          -0.4
+        ],
+        "max": [
+          0.5923,
+          1.185,
+          0.275
+        ]
+      },
+      "triangles": 596,
+      "objects": 9,
+      "source": "assets-src/islands/bonus/finland-forest-boat.blend",
+      "preview": "assets-src/islands/bonus/finland-forest-boat.png",
+      "glb": "assets/islands/bonus/finland-forest-boat.glb",
+      "game_key": "finland-forest-boat",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "netherlands-canal-windmill",
+      "island": 3,
+      "name": "運河の小風車",
+      "kind": "贈り物",
+      "use": "羽根を回せる",
+      "bounds_m": {
+        "min": [
+          -0.58,
+          0.0,
+          -0.3323
+        ],
+        "max": [
+          0.58,
+          1.76,
+          0.44
+        ]
+      },
+      "triangles": 862,
+      "objects": 8,
+      "source": "assets-src/islands/bonus/netherlands-canal-windmill.blend",
+      "preview": "assets-src/islands/bonus/netherlands-canal-windmill.png",
+      "glb": "assets/islands/bonus/netherlands-canal-windmill.glb",
+      "game_key": "netherlands-canal-windmill",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "netherlands-clock-house",
+      "island": 3,
+      "name": "切妻の時計小屋",
+      "kind": "建築小物",
+      "use": "時計面を分ける",
+      "bounds_m": {
+        "min": [
+          -0.4,
+          0.03,
+          -0.32
+        ],
+        "max": [
+          0.4,
+          1.18,
+          0.344
+        ]
+      },
+      "triangles": 1440,
+      "objects": 19,
+      "source": "assets-src/islands/bonus/netherlands-clock-house.blend",
+      "preview": "assets-src/islands/bonus/netherlands-clock-house.png",
+      "glb": "assets/islands/bonus/netherlands-clock-house.glb",
+      "game_key": "netherlands-clock-house",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "netherlands-tulip-cart",
+      "island": 3,
+      "name": "チューリップの手押し車",
+      "kind": "飾り",
+      "use": "花を交換できる",
+      "bounds_m": {
+        "min": [
+          -0.46,
+          0.0,
+          -0.335
+        ],
+        "max": [
+          0.46,
+          0.89,
+          0.335
+        ]
+      },
+      "triangles": 3884,
+      "objects": 23,
+      "source": "assets-src/islands/bonus/netherlands-tulip-cart.blend",
+      "preview": "assets-src/islands/bonus/netherlands-tulip-cart.png",
+      "glb": "assets/islands/bonus/netherlands-tulip-cart.glb",
+      "game_key": "netherlands-tulip-cart",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "switzerland-gear-ornament",
+      "island": 4,
+      "name": "工房の歯車飾り",
+      "kind": "贈り物",
+      "use": "歯車を回せる",
+      "bounds_m": {
+        "min": [
+          -0.5,
+          0.04,
+          -0.5
+        ],
+        "max": [
+          0.5,
+          0.35,
+          0.5
+        ]
+      },
+      "triangles": 1772,
+      "objects": 14,
+      "source": "assets-src/islands/bonus/switzerland-gear-ornament.blend",
+      "preview": "assets-src/islands/bonus/switzerland-gear-ornament.png",
+      "glb": "assets/islands/bonus/switzerland-gear-ornament.glb",
+      "game_key": "switzerland-gear-ornament",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "switzerland-waterwheel-toy",
+      "island": 4,
+      "name": "水車の卓上玩具",
+      "kind": "建築小物",
+      "use": "水車を回せる",
+      "bounds_m": {
+        "min": [
+          -0.46,
+          0.065,
+          -0.52
+        ],
+        "max": [
+          0.45,
+          0.86,
+          0.255
+        ]
+      },
+      "triangles": 1096,
+      "objects": 11,
+      "source": "assets-src/islands/bonus/switzerland-waterwheel-toy.blend",
+      "preview": "assets-src/islands/bonus/switzerland-waterwheel-toy.png",
+      "glb": "assets/islands/bonus/switzerland-waterwheel-toy.glb",
+      "game_key": "switzerland-waterwheel-toy",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "switzerland-toolbox",
+      "island": 4,
+      "name": "アルプスの道具箱",
+      "kind": "飾り",
+      "use": "ふたと取手を分ける",
+      "bounds_m": {
+        "min": [
+          -0.49,
+          0.055,
+          -0.295
+        ],
+        "max": [
+          0.49,
+          0.7603,
+          0.3025
+        ]
+      },
+      "triangles": 624,
+      "objects": 5,
+      "source": "assets-src/islands/bonus/switzerland-toolbox.blend",
+      "preview": "assets-src/islands/bonus/switzerland-toolbox.png",
+      "glb": "assets/islands/bonus/switzerland-toolbox.glb",
+      "game_key": "switzerland-toolbox",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "morocco-tile-box",
+      "island": 5,
+      "name": "模様タイルの小箱",
+      "kind": "贈り物",
+      "use": "ふたと模様を分ける",
+      "bounds_m": {
+        "min": [
+          -0.465,
+          0.05,
+          -0.405
+        ],
+        "max": [
+          0.465,
+          0.65,
+          0.405
+        ]
+      },
+      "triangles": 544,
+      "objects": 17,
+      "source": "assets-src/islands/bonus/morocco-tile-box.blend",
+      "preview": "assets-src/islands/bonus/morocco-tile-box.png",
+      "glb": "assets/islands/bonus/morocco-tile-box.glb",
+      "game_key": "morocco-tile-box",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "morocco-arch-lantern",
+      "island": 5,
+      "name": "市場のアーチ灯り",
+      "kind": "建築小物",
+      "use": "灯りと骨を分ける",
+      "bounds_m": {
+        "min": [
+          -0.42,
+          0.06,
+          -0.42
+        ],
+        "max": [
+          0.42,
+          1.3273,
+          0.42
+        ]
+      },
+      "triangles": 582,
+      "objects": 12,
+      "source": "assets-src/islands/bonus/morocco-arch-lantern.blend",
+      "preview": "assets-src/islands/bonus/morocco-arch-lantern.png",
+      "glb": "assets/islands/bonus/morocco-arch-lantern.glb",
+      "game_key": "morocco-arch-lantern",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "morocco-tea-tray",
+      "island": 5,
+      "name": "茶器のお盆",
+      "kind": "飾り",
+      "use": "器を個別に分ける",
+      "bounds_m": {
+        "min": [
+          -0.54,
+          0.06,
+          -0.54
+        ],
+        "max": [
+          0.54,
+          0.685,
+          0.54
+        ]
+      },
+      "triangles": 640,
+      "objects": 6,
+      "source": "assets-src/islands/bonus/morocco-tea-tray.blend",
+      "preview": "assets-src/islands/bonus/morocco-tea-tray.png",
+      "glb": "assets/islands/bonus/morocco-tea-tray.glb",
+      "game_key": "morocco-tea-tray",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "palau-pearl-gift",
+      "island": 6,
+      "name": "真珠の貝の贈り物",
+      "kind": "贈り物",
+      "use": "貝のふたを開ける",
+      "bounds_m": {
+        "min": [
+          -0.58,
+          0.06,
+          -0.4702
+        ],
+        "max": [
+          0.58,
+          0.7429,
+          0.42
+        ]
+      },
+      "triangles": 1056,
+      "objects": 4,
+      "source": "assets-src/islands/bonus/palau-pearl-gift.blend",
+      "preview": "assets-src/islands/bonus/palau-pearl-gift.png",
+      "glb": "assets/islands/bonus/palau-pearl-gift.glb",
+      "game_key": "palau-pearl-gift",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "palau-coral-lamp",
+      "island": 6,
+      "name": "珊瑚の灯り",
+      "kind": "建築小物",
+      "use": "珊瑚枝と光を分ける",
+      "bounds_m": {
+        "min": [
+          -0.5904,
+          0.03,
+          -0.5923
+        ],
+        "max": [
+          0.5419,
+          1.014,
+          0.5923
+        ]
+      },
+      "triangles": 2732,
+      "objects": 31,
+      "source": "assets-src/islands/bonus/palau-coral-lamp.blend",
+      "preview": "assets-src/islands/bonus/palau-coral-lamp.png",
+      "glb": "assets/islands/bonus/palau-coral-lamp.glb",
+      "game_key": "palau-coral-lamp",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "palau-turtle-charm",
+      "island": 6,
+      "name": "海亀の小飾り",
+      "kind": "飾り",
+      "use": "甲羅とひれを分ける",
+      "bounds_m": {
+        "min": [
+          -0.5328,
+          0.125,
+          -0.476
+        ],
+        "max": [
+          0.7,
+          0.668,
+          0.476
+        ]
+      },
+      "triangles": 3008,
+      "objects": 15,
+      "source": "assets-src/islands/bonus/palau-turtle-charm.blend",
+      "preview": "assets-src/islands/bonus/palau-turtle-charm.png",
+      "glb": "assets/islands/bonus/palau-turtle-charm.glb",
+      "game_key": "palau-turtle-charm",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "greece-cloud-chime",
+      "island": 7,
+      "name": "雲の風鈴",
+      "kind": "贈り物",
+      "use": "鈴を個別に揺らす",
+      "bounds_m": {
+        "min": [
+          -0.45,
+          0.295,
+          -0.385
+        ],
+        "max": [
+          0.45,
+          1.17,
+          0.385
+        ]
+      },
+      "triangles": 1212,
+      "objects": 10,
+      "source": "assets-src/islands/bonus/greece-cloud-chime.blend",
+      "preview": "assets-src/islands/bonus/greece-cloud-chime.png",
+      "glb": "assets/islands/bonus/greece-cloud-chime.glb",
+      "game_key": "greece-cloud-chime",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "greece-blue-dome-box",
+      "island": 7,
+      "name": "青ドームの小箱",
+      "kind": "建築小物",
+      "use": "ドームを分ける",
+      "bounds_m": {
+        "min": [
+          -0.45,
+          0.04,
+          -0.45
+        ],
+        "max": [
+          0.45,
+          0.9873,
+          0.45
+        ]
+      },
+      "triangles": 804,
+      "objects": 5,
+      "source": "assets-src/islands/bonus/greece-blue-dome-box.blend",
+      "preview": "assets-src/islands/bonus/greece-blue-dome-box.png",
+      "glb": "assets/islands/bonus/greece-blue-dome-box.glb",
+      "game_key": "greece-blue-dome-box",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "greece-airship-kite",
+      "island": 7,
+      "name": "空船の凧飾り",
+      "kind": "飾り",
+      "use": "風船と籠を分ける",
+      "bounds_m": {
+        "min": [
+          -0.47,
+          0.25,
+          -0.35
+        ],
+        "max": [
+          0.47,
+          1.53,
+          0.35
+        ]
+      },
+      "triangles": 472,
+      "objects": 5,
+      "source": "assets-src/islands/bonus/greece-airship-kite.blend",
+      "preview": "assets-src/islands/bonus/greece-airship-kite.png",
+      "glb": "assets/islands/bonus/greece-airship-kite.glb",
+      "game_key": "greece-airship-kite",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "mexico-paper-garland",
+      "island": 8,
+      "name": "切り紙の祝い飾り",
+      "kind": "贈り物",
+      "use": "紙片を個別に揺らす",
+      "bounds_m": {
+        "min": [
+          -0.6818,
+          0.49,
+          -0.018
+        ],
+        "max": [
+          0.6818,
+          1.0179,
+          0.033
+        ]
+      },
+      "triangles": 1052,
+      "objects": 16,
+      "source": "assets-src/islands/bonus/mexico-paper-garland.blend",
+      "preview": "assets-src/islands/bonus/mexico-paper-garland.png",
+      "glb": "assets/islands/bonus/mexico-paper-garland.glb",
+      "game_key": "mexico-paper-garland",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "mexico-star-pinata",
+      "island": 8,
+      "name": "星の贈り物",
+      "kind": "建築小物",
+      "use": "吊り紐と垂れ飾りを分ける",
+      "bounds_m": {
+        "min": [
+          -0.7038,
+          0.0513,
+          -0.125
+        ],
+        "max": [
+          0.7038,
+          1.39,
+          0.125
+        ]
+      },
+      "triangles": 1160,
+      "objects": 22,
+      "source": "assets-src/islands/bonus/mexico-star-pinata.blend",
+      "preview": "assets-src/islands/bonus/mexico-star-pinata.png",
+      "glb": "assets/islands/bonus/mexico-star-pinata.glb",
+      "game_key": "mexico-star-pinata",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    },
+    {
+      "id": "mexico-carousel-mini",
+      "island": 8,
+      "name": "回転木馬の小置物",
+      "kind": "飾り",
+      "use": "屋根と木馬を分ける",
+      "bounds_m": {
+        "min": [
+          -0.6271,
+          0.02,
+          -0.56
+        ],
+        "max": [
+          0.675,
+          1.38,
+          0.56
+        ]
+      },
+      "triangles": 3634,
+      "objects": 65,
+      "source": "assets-src/islands/bonus/mexico-carousel-mini.blend",
+      "preview": "assets-src/islands/bonus/mexico-carousel-mini.png",
+      "glb": "assets/islands/bonus/mexico-carousel-mini.glb",
+      "game_key": "mexico-carousel-mini",
+      "state": "原本・個別形状・軽量形状を生成済み。ゲーム未配置"
+    }
+  ]
+}

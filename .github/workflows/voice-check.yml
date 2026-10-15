@@ -18,7 +18,7 @@ jobs:
       - name: 八島の活動と景観素材を確認
         run: node --import ./tools/register.mjs --test tools/island-activities.test.mjs tools/learning-island-scene.test.mjs tools/island-assets.test.mjs tools/concept-assets.test.mjs tools/concept-camera.test.mjs tools/concept-route.test.mjs tools/concept-world.test.mjs tools/concept-walk.test.mjs tools/concept-avatar-visibility.test.mjs tools/concept-sky-clouds.test.mjs tools/concept-festival-detail.test.mjs
       - name: あそびのおさそいと開発者モードを確認
-        run: node --import ./tools/register.mjs --test tools/learning-invitation.test.mjs tools/learning-invitation-world.test.mjs tools/learning-invitation-main.test.mjs tools/adventure.test.mjs tools/developer-mode.test.mjs
+        run: node --import ./tools/register.mjs --test tools/learning-invitation.test.mjs tools/learning-invitation-world.test.mjs tools/learning-invitation-main.test.mjs tools/landmark-play.test.mjs tools/landmark-play-integration.test.mjs tools/landmark-play-ui.test.mjs tools/render-budget.test.mjs tools/adventure.test.mjs tools/developer-mode.test.mjs
       - run: node --import ./tools/register.mjs --test tools/harbor-errands-state.test.mjs tools/harbor-errands.test.mjs
       - run: node --import ./tools/register.mjs --test tools/harbor-gathering-state.test.mjs tools/harbor-gathering.test.mjs
       - run: node --import ./tools/register.mjs --test tools/adaptive-play.test.mjs tools/adaptive-integration.test.mjs tools/island-guidance.test.mjs tools/island-guidance-integration.test.mjs
@@ -26,6 +26,7 @@ jobs:
       - run: node --import ./tools/register.mjs --test tools/harbor-layout.test.mjs tools/harbor-effects.test.mjs tools/harbor-play.test.mjs tools/harbor-visibility.test.mjs tools/harbor-integration.test.mjs tools/harbor-paving.test.mjs
       - run: node assets-src/forest/validate-assets.mjs
       - run: node assets-src/harbor/validate-assets.mjs
+      - run: python3 tools/verify-island-gifts.py
       - run: node --import ./tools/register.mjs --test tools/help-picnic.test.mjs tools/closet-preview.test.mjs tools/birthday.test.mjs tools/suggestions.test.mjs tools/play-time.test.mjs tools/play-settings.test.mjs tools/observations.test.mjs tools/observation-integration.test.mjs tools/profiles.test.mjs tools/profile-ui.test.mjs tools/help-save.test.mjs tools/help-integration.test.mjs tools/plan-voice.test.mjs tools/voice.test.mjs tools/sw.test.mjs
       - run: node --import ./tools/register.mjs --test tools/voice-release-check.test.mjs
       - run: node --import ./tools/register.mjs tools/finalize-voice.mjs --check

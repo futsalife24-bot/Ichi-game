@@ -1,6 +1,6 @@
 # 景観goal後の改修と公開
 
-2026-10-14、本人の「残タスクにも取り組んじゃっていいよ」に続き、開発者モードとカメラを変更。「あそびのおさそい」の開始・選択・活動・保存をまたぐ範囲について１回確認し、「自己検証で公開まで進める」を受領した。景観goalは完了済みのまま保持する。今回の実装・自己検証は完了、公開の結果は下へ追記する。
+2026-10-14、本人の「残タスクにも取り組んじゃっていいよ」に続き、開発者モードとカメラを変更。「あそびのおさそい」の開始・選択・活動・保存をまたぐ範囲について１回確認し、「自己検証で公開まで進める」を受領した。景観goalは完了済みのまま保持する。今回の実装・自己検証・公開を完了した。
 
 ## 開発者モード
 
@@ -37,3 +37,7 @@
 GitHubは https://github.com/futsalife24-bot/Ichi-game 、公開は https://futsalife24-bot.github.io/Ichi-game/ 。作業場所は `C:/Users/futsa/Documents/Codex/2026-10-03/codex-ichi-game-futsalife24-bot-ichi/work/Ichi-game`、ブランチ `codex/island-learning-balance`、基点 `380d46a9c70e2a9d9f9e8cf79330e744fb0d56b2`。公開前mainは `2cf2ab982d9d6520472db83fd0442b1af08ff51d`。
 
 主担当が統合・実UI・生成・公開、子２体が開発者モード／おさそい／音声取り込みと、カメラ／住民・成果／主画面接続を分担した。指定は `gpt-6-sol / medium`、主・子の実設定は未確認。子の検査は自己検証の補助であり独立監査ではない。既存未追跡 `output/concept-ci-check.log` は保持し、登録しない。
+
+## 公開の結果
+
+[PR #38](https://github.com/futsalife24-bot/Ichi-game/pull/38)でmain `273c8c26b046c1b4d5d1d31e0b88497058846165`へ公開。公開mainの[全359検査](https://github.com/futsalife24-bot/Ichi-game/actions/runs/38563928777)と[Pages](https://github.com/futsalife24-bot/Ichi-game/actions/runs/38563928796)は成功。コード・素材117ファイルと音声843ファイル、計960配信資材はGit原本と全件一致した。[配信照合](post-goal-release-check.json)。SWは`kirakira-v60-learning-invitation-voices`。公開版でも全開放の第一島への自動開始、住民の２択、お届け完了と自由行動、第二の全島選択と第八の共通俯瞰を確認し、警告・エラー０。[公開実画面](post-goal-public-ui.json)。人の聴感と実スマートフォン性能の未確認は保持する。

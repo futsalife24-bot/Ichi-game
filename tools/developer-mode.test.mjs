@@ -173,7 +173,7 @@ test('開発者メニュー中は時間を進めず、島の収集処理にも�
   let scheduled = 0;
   const ticks = [];
   const context = { developerMenuOpen: () => true, homePaused: false, playTimer: { tick: active => { ticks.push(active); return true; }, paused: false },
-    mode: 'play', place: 'forest', saveBlocked: false, islandLoading:false, document: { hidden: false }, help: { focused: false }, adventure: { focused: false }, invitation: {dialogOpen:false}, syncInvitationDialog(){}, pauseInvitation(){},
+    mode: 'play', place: 'forest', saveBlocked: false, islandLoading:false, document: { hidden: false }, help: { focused: false }, adventure: { focused: false }, invitation: {dialogOpen:false}, landmark:null, syncInvitationDialog(){}, pauseInvitation(){},
     islandNumber: () => 3, islandRules: () => ({ name: 'みなと' }), input: {}, learning: { opened: false, close() {}, stopSpeech() {} },
     ui: { panelOpen: false }, transitioning: false, harborBusy: () => false, quests: { state: 'idle' }, $: () => ({ classList: { toggle() {} }, querySelector: () => ({}), setAttribute() {} }),
     last: 0, time: 0, requestAnimationFrame() { scheduled++; } };

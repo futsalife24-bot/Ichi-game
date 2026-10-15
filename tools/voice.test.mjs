@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { allLines, characterLines, helpLines, adventureLines, pendingLines, L, segments, clipKey, clipHash } from '../src/lines.js';
 import { NAMES, PERIODS, SEASONS } from '../src/catalog.js';
 import { readFileSync } from 'node:fs';
-import { Voice } from '../src/voice.js';
+import { Voice, clipPlaybackGain } from '../src/voice.js';
 import { harborLines } from '../src/harbor-errands-lines.js';
 import { eightIslandPendingLines } from '../src/eight-island-lines.js';
 import { INVITATION_VOICE_LINES } from '../src/learning-invitation-state.js';
@@ -46,15 +46,31 @@ test('quantity phrases and money reuse meaningful phrases',()=>{
 function deferred(){let resolve,reject;const promise=new Promise((a,b)=>{resolve=a;reject=b});return {promise,resolve,reject};}
 const tick=()=>new Promise(r=>setImmediate(r));
 function fixture(indexWait) {
-  const starts=[], requests=[], synth=[];
+  const starts=[], requests=[], synth=[],gainNodes=[],sources=[];
   globalThis.window={speechSynthesis:{getVoices:()=>[],addEventListener(){},speak:u=>synth.push(u),cancel(){}}};
   globalThis.SpeechSynthesisUtterance=class{constructor(text){this.text=text;}};
   const hash=clipHash(clipKey('すごい！'));
   globalThis.fetch=async url=>{requests.push(url); if(url==='voice/index.json')return indexWait?.promise ?? {ok:true,json:async()=>({schemaVersion:2,clips:{[hash]:{file:`gemini/${hash}.mp3`}}})}; return {ok:true,arrayBuffer:async()=>new ArrayBuffer(4)};};
-  const audio={voiceOut:{},ctx:{currentTime:0,decodeAudioData:(_b,ok)=>ok({duration:1}),createBufferSource:()=>({connect(){},start(t){starts.push(t);},stop(){this.stopped=true;}})}};
+  const samples=new Float32Array(24000);samples.fill(.12,2400,21600);
+  const buffer={duration:1,sampleRate:24000,numberOfChannels:1,getChannelData:()=>samples};
+  const audio={voiceOut:{},ctx:{currentTime:0,decodeAudioData:(_b,ok)=>ok(buffer),
+    createGain:()=>{const gain={gain:{value:1},connect(target){this.target=target;},disconnect(){this.disconnected=true;}};gainNodes.push(gain);return gain;},
+    createBufferSource:()=>{const source={connect(target){this.target=target;},disconnect(){this.disconnected=true;},start(t){starts.push(t);},stop(){this.stopped=true;}};sources.push(source);return source;}}};
   const voice=new Voice({audio});
-  return {voice,starts,requests,synth,hash,audio};
+  return {voice,starts,requests,synth,hash,audio,gainNodes,sources,buffer};
 }
+
+test('活動音量をそろえ、増減とピークを制限する',()=>{
+  const make=(level,duration=1)=>({duration,sampleRate:24000,numberOfChannels:1,
+    getChannelData:()=>{const samples=new Float32Array(Math.round(duration*24000));samples.fill(level,2400);return samples;}});
+  assert.ok(Math.abs(clipPlaybackGain(make(.12))-1)<.2);
+  assert.ok(Math.abs(clipPlaybackGain(make(.03))-10**(3/20))<1e-6);
+  assert.ok(Math.abs(clipPlaybackGain(make(.8))-10**(-6/20))<1e-6);
+  const spike=make(.12),data=spike.getChannelData();data[3000]=.95;spike.getChannelData=()=>data;
+  assert.ok(Math.abs(clipPlaybackGain(spike)-.82/.95)<1e-6);
+  assert.equal(clipPlaybackGain(make(.0001)),1);
+  assert.equal(clipPlaybackGain(make(.8,.05)),1);
+});
 
 test('英語の端末音声がなくても英語録音を優先して再生する',async()=>{
   const wait=deferred(),f=fixture(wait),hash=clipHash(clipKey('apple'));
@@ -84,8 +100,13 @@ test('stop and mute cancel manifest/decode work without late playback',async()=>
 });
 test('repeating a clip reuses its fetched bytes; finish releases sources',async()=>{
   const f=fixture();await f.voice.indexReady;f.voice.say('すごい！');await tick();assert.equal(f.voice.speaking,true);
-  const source=f.voice.sources[0];source.onended();assert.equal(f.voice.sources.length,0);assert.equal(f.voice.speaking,false);
+  const source=f.voice.sources[0];assert.equal(source.target,f.gainNodes[0]);assert.equal(f.gainNodes[0].target,f.audio.voiceOut);
+  assert.ok(f.gainNodes[0].gain.value>0);
+  source.onended();assert.equal(f.voice.sources.length,0);assert.equal(f.voice.speaking,false);
+  assert.equal(source.disconnected,true);assert.equal(f.gainNodes[0].disconnected,true);
   f.voice.say('すごい！');await tick();assert.equal(f.requests.filter(x=>x.endsWith('.mp3')).length,1);f.voice.stop();
+  assert.equal(f.sources[1].disconnected,true);assert.equal(f.gainNodes[1].disconnected,true);
+  assert.equal(f.gainNodes[0].gain.value,f.gainNodes[1].gain.value);
 });
 test('unavailable clip falls back safely and stale synth events cannot mute new speech',async()=>{
   const f=fixture();await f.voice.indexReady;f.voice.say('みとうろく');await tick();const old=f.synth[0];assert.ok(old);

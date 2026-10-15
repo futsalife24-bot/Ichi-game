@@ -37,6 +37,8 @@ import { FOREST_ORIGIN, LEAF_HOST } from './adventure-state.js';
 import { setupSaveUI } from './save-ui.js';
 import { islandRules } from './island-rules.js';
 import { IslandLearning } from './island-learning.js';
+import { LandmarkPlayUI } from './landmark-play-ui.js';
+import { renderPixelRatio, updateHomeWorld } from './render-budget.js';
 import { LearningInvitation } from './learning-invitation.js';
 import { LearningInvitationWorld } from './learning-invitation-world.js';
 import { LearningIsland, loadLearningIslandKit } from './learning-islands.js';
@@ -86,7 +88,7 @@ $('saveClose').addEventListener('click', () => { saveBlocked = false; });
 
 startupStage('描画の準備');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+renderer.setPixelRatio(renderPixelRatio(window.innerWidth,window.innerHeight,window.devicePixelRatio));
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFShadowMap;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -159,24 +161,25 @@ const adventure = new Adventure({ scene, player, animals, forest, ui, audio, voi
   getPlace: () => place,
   onSail: () => visitSecond(),
   onReturn: () => leaveForest(),
-  canAct: () => mode === 'play' && !saveBlocked && !islandLoading && !forestLoading && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !invitation?.dialogOpen && !help.focused && !harborBusy(),
+  canAct: () => mode === 'play' && !saveBlocked && !islandLoading && !forestLoading && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !invitation?.dialogOpen && !landmark?.active && !help.focused && !harborBusy(),
   onChange: () => {
     life.endFishing(); input.reset();
     refreshActivityInput();
   },
 });
 const harborErrands = new HarborErrands({ forest, player, save, persist, ui, audio, voice, effects,
-  canAct: () => mode === 'play' && place === 'forest' && !saveBlocked && !islandLoading && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !invitation?.dialogOpen && !help.focused,
+  canAct: () => mode === 'play' && place === 'forest' && !saveBlocked && !islandLoading && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !invitation?.dialogOpen && !landmark?.active && !help.focused,
   beforeOpen: () => { adventure.stop(); harborPlay.cancel(); life.endFishing(); },
   onChange: () => { input.reset(); refreshActivityInput(); },
   onLeaf: () => { adventure.choose('leaf'); },
   onReturn: () => leaveForest(),
 });
+let landmark = null;
 let invitation = null;
 let invitationOpening = false;
 const harborBusy = () => harborErrands.focused || harborErrands.modal;
 function refreshActivityInput() {
-  input.enabled = mode === 'play' && !islandLoading && !forestLoading && !adventure.modal && !harborErrands.modal && !help.modal && !learning.opened && !invitation?.dialogOpen && !ui.panelOpen && !saveBlocked && !playTimer.paused && !homePaused && !transitioning;
+  input.enabled = mode === 'play' && !islandLoading && !forestLoading && !adventure.modal && !harborErrands.modal && !help.modal && !learning.opened && !invitation?.dialogOpen && !landmark?.active && !ui.panelOpen && !saveBlocked && !playTimer.paused && !homePaused && !transitioning;
   $('hud').classList.toggle('adventure-focus', adventure.focused || harborBusy());
   $('hud').classList.toggle('harbor-errand-focus', harborBusy());
   $('developerTools').classList.toggle('invisible', harborErrands.modal || adventure.modal);
@@ -185,7 +188,7 @@ $('btnAdventure').onclick = () => { if (place === 'forest') harborErrands.open()
 $('adventureHarbor').onclick = () => harborErrands.open();
 life.onWear = (id) => wear(CLOTHES[id].slot, id, false);
 const learning = new IslandLearning({ ui, audio, voice, voiceEnabled: () => save.voice,
-  canOpen: number => mode === 'play' && number === islandNumber() && !saveBlocked && !islandLoading && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !help.focused && !help.modal && !adventure.focused && !adventure.modal && !harborBusy() && (!invitation?.dialogOpen || invitationOpening),
+  canOpen: number => mode === 'play' && number === islandNumber() && !saveBlocked && !islandLoading && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !help.focused && !help.modal && !adventure.focused && !adventure.modal && !harborBusy() && (!invitation?.dialogOpen && !landmark?.active || invitationOpening),
   onOpen: () => { quests.stop();help.stop();endAllFishing();voice.stop();player.setTarget(null);input.reset();refreshActivityInput(); },
   onClose: () => {invitation?.learningClosed();if(place==='island'&&mode==='play'&&!transitioning&&!saveBlocked)help.start();refreshActivityInput();},
   onCompleted: result => invitation?.activityCompleted(result),
@@ -224,12 +227,18 @@ let place = 'island'; // はちつの しま／がっこう／おうち
 let interiorFrom = 'second';
 const env = () => (place.startsWith('learning-') ? learningAreas.get(Number(place.slice(9))) : place === 'school' ? school : place === 'room' ? room : place === 'forest' ? forest : place === 'second' ? secondArea.world : place === 'town' ? townArea.world : world);
 const islandNumber = () => place.startsWith('learning-') ? Number(place.slice(9)) : place === 'island' ? 1 : (place === 'second' || (place === 'school' && interiorFrom === 'second')) ? 2 : 3;
+landmark = new LandmarkPlayUI({player,
+  current:()=>({island:islandNumber(),scenery:env()?.scenery??env()?.conceptScenery}),
+  canPlay:()=>mode==='play'&&place.startsWith('learning-')&&!saveBlocked&&!islandLoading&&!forestLoading&&!transitioning&&!homePaused&&!playTimer.paused&&!document.hidden&&!developerMenuOpen()&&!learning.opened&&!invitation.dialogOpen&&!ui.panelOpen,
+  onStart:()=>{endAllFishing();voice.stop();input.reset();player.setTarget(null);refreshActivityInput();audio.sparkle();},
+  onEnd:()=>{input.reset();player.setTarget(null);refreshActivityInput();},
+});
 let invitationEnv = null;
 let invitationNumber = 0;
 let invitationDialogKnown = false;
 const invitationHead = new THREE.Vector3();
 function positionInvitationBubble() {
-  if (!invitation.visible || !invitationWorld.resident || invitation.dialogOpen) return;
+  if (!invitation.visible || !invitationWorld.resident || invitation.dialogOpen || Boolean(landmark?.active)) return;
   const point = invitationHead.copy(invitationWorld.resident.position);
   point.y += 1.35;
   camera.updateMatrixWorld();
@@ -268,13 +277,13 @@ function updateInvitation(dt, now) {
   const near = invitationWorld.update(dt, now / 1000, player.pos);
   invitation.residentName = invitationWorld.resident?.name;
   invitation.residentIcon = invitationWorld.resident?.icon;
-  const ready = !help.focused && !help.modal && !adventure.focused && !adventure.modal && !harborBusy() && !learning.opened && !ui.panelOpen;
+  const ready = !landmark?.active && !help.focused && !help.modal && !adventure.focused && !adventure.modal && !harborBusy() && !learning.opened && !ui.panelOpen;
   if (!ready) invitation.stopOwnVoice();
-  invitation.update({ island: number, ready, canShow: ready, canSpeak: ready && !invitation.dialogOpen && !voice.busy, nearResident: Boolean(near), now });
+  invitation.update({ island: number, ready, canShow: ready, canSpeak: ready && !invitation.dialogOpen && !landmark?.active && !voice.busy, nearResident: Boolean(near), now });
   if (saveBlocked) { pauseInvitation(); return; }
   positionInvitationBubble();
   const button = $('btnResidentTalk');
-  button.classList.toggle('hidden', !near || !invitation.visible || invitation.dialogOpen);
+  button.classList.toggle('hidden', !near || !invitation.visible || invitation.dialogOpen || Boolean(landmark?.active));
   if (near) button.firstChild.textContent = near.icon;
 }
 function endAllFishing() { life.endFishing(); secondArea?.life.endFishing(); townArea?.life.endFishing(); harborPlay.cancel(); }
@@ -300,7 +309,7 @@ async function prepareArea(number) {
   areaPromises.set(number,promise);return promise;
 }
 function openIslands() {
-  if (mode !== 'play' || saveBlocked || islandLoading || transitioning || homePaused || playTimer.paused || help.modal || adventure.modal || harborErrands.modal || learning.opened || invitation.dialogOpen || ui.panelOpen) return;
+  if (mode !== 'play' || saveBlocked || islandLoading || transitioning || homePaused || playTimer.paused || help.modal || adventure.modal || harborErrands.modal || learning.opened || invitation.dialogOpen || Boolean(landmark?.active) || ui.panelOpen) return;
   quests.stop(); help.stop(); adventure.stop(); harborErrands.stop(); endAllFishing(); voice.stop(); player.setTarget(null);
   openPanel({ title: 'どの しまへ いく？', onClose: () => { if (place === 'island' && mode === 'play' && !transitioning) help.start(); }, tabs: [{ id: 'islands', label: 'しまを えらぶ' }], grid: () => [
     { emoji: '🌼', name: 'だいいちの しま', note: 'あるく・あつめる・はじめの れんしゅう', state: 'on', onClick: () => { ui.closePanel(); returnFirst(); } },
@@ -319,7 +328,7 @@ function leaveArea() {
   document.body.classList.remove('forest-place');
 }
 async function visitLearningIsland(number) {
-  if(!LEARNING_ISLAND_LAYOUTS[number] || mode!=='play' || saveBlocked || islandLoading || transitioning || homePaused || playTimer.paused || learning.opened || invitation.dialogOpen || ui.panelOpen)return;
+  if(!LEARNING_ISLAND_LAYOUTS[number] || mode!=='play' || saveBlocked || islandLoading || transitioning || homePaused || playTimer.paused || learning.opened || invitation.dialogOpen || Boolean(landmark?.active) || ui.panelOpen)return;
   islandLoading=true;input.reset();player.setTarget(null);refreshActivityInput();
   try {
     let area=learningAreas.get(number);
@@ -339,7 +348,7 @@ function returnFirst(instant = false) {
   if (instant) go(); else transition(go);
 }
 async function visitSecond() {
-  if (mode !== 'play' || saveBlocked || islandLoading || transitioning || homePaused || playTimer.paused || invitation.dialogOpen) return;
+  if (mode !== 'play' || saveBlocked || islandLoading || transitioning || homePaused || playTimer.paused || invitation.dialogOpen || Boolean(landmark?.active)) return;
   islandLoading=true;input.reset();player.setTarget(null);refreshActivityInput();
   try{await prepareArea(2);}catch{ui.subtitle('しまを よめなかったよ。もういちど ためしてね',6000);return;}finally{islandLoading=false;refreshActivityInput();}
   if(mode!=='play'||saveBlocked||homePaused||playTimer.paused)return;
@@ -351,7 +360,7 @@ async function visitSecond() {
   });
 }
 async function visitTown() {
-  if (place !== 'forest' || mode !== 'play' || saveBlocked || transitioning || adventure.modal || harborBusy() || ui.panelOpen || learning.opened || invitation.dialogOpen || homePaused || playTimer.paused) return;
+  if (place !== 'forest' || mode !== 'play' || saveBlocked || transitioning || adventure.modal || harborBusy() || ui.panelOpen || learning.opened || invitation.dialogOpen || Boolean(landmark?.active) || homePaused || playTimer.paused) return;
   if(islandLoading)return;islandLoading=true;input.reset();player.setTarget(null);refreshActivityInput();
   try{await prepareArea(3);}catch{ui.subtitle('まちを よめなかったよ。もういちど ためしてね',6000);return;}finally{islandLoading=false;refreshActivityInput();}
   if(place!=='forest'||mode!=='play'||saveBlocked||homePaused||playTimer.paused)return;
@@ -440,7 +449,7 @@ const playTimer=new PlayTimer(save,persist,{
   onDue:()=>{learning.close();input.reset();input.enabled=false;player.setTarget(null);voice.stop();timeUI.show(true);},
 });
 $('btnQuestHint').onclick=()=>{
-  if (!saveBlocked && !invitation.dialogOpen && mode==='play' && place==='island' && !help.focused && quests.state==='active') quests.showHint();
+  if (!saveBlocked && !invitation.dialogOpen && !landmark?.active && mode==='play' && place==='island' && !help.focused && quests.state==='active') quests.showHint();
 };
 
 function unlockSound() {
@@ -625,7 +634,7 @@ $('btnVoice').addEventListener('click', () => {
   updateToggles();
 });
 $('btnHome').addEventListener('click', openHomeSummary);
-$('questCard').addEventListener('click', () => !invitation.dialogOpen && (harborErrands.focused ? harborErrands.repeat() : adventure.focused ? adventure.repeat() : place === 'school' ? school.repeat() : place === 'island' ? (help.focused ? help.repeat() : quests.repeat()) : null));
+$('questCard').addEventListener('click', () => !invitation.dialogOpen && !landmark?.active && (harborErrands.focused ? harborErrands.repeat() : adventure.focused ? adventure.repeat() : place === 'school' ? school.repeat() : place === 'island' ? (help.focused ? help.repeat() : quests.repeat()) : null));
 $('btnZukan').addEventListener('click', () => openZukan());
 $('btnCloset').addEventListener('click', () => openCloset());
 
@@ -703,7 +712,7 @@ function setRay(x, y) {
 // おうちでは マットを タップして えらべる
 input.onTap = (x, y) => {
   if (mode !== 'play') return false;
-  if (islandLoading || learning.opened || invitation.dialogOpen || ui.panelOpen || transitioning || saveBlocked) return false;
+  if (islandLoading || learning.opened || invitation.dialogOpen || Boolean(landmark?.active) || ui.panelOpen || transitioning || saveBlocked) return false;
   if (place.startsWith('learning-')) {setRay(x,y);const spot=env().tap(raycaster);if(spot){learning.open(islandNumber(),{help:spot.help});return true;}}
   if (place !== 'school' && tapPlayer(x, y)) return true;
   if (!['school','room'].includes(place)) return false;
@@ -760,6 +769,7 @@ const fadeEl = $('fade');
 let transitioning = false;
 function transition(fn) {
   if (transitioning) return;
+  landmark?.stop();
   transitioning = true;
   input.enabled = false;
   input.reset();
@@ -808,7 +818,7 @@ function cameraGoal() {
     const harbor=place==='forest';
     const number=islandNumber();
     const view=CONCEPT_LAYOUTS[number]?.camera??CONCEPT_CAMERA;
-    cameraSubject.copy(player.pos);
+    cameraSubject.copy(landmark?.play.cameraSubject??player.pos);
     if(harbor)cameraSubject.x-=FOREST_ORIGIN.x;
     // しまの かくどは、あんないや ボタンの ひょうじで かえない。
     const visibleHud=mode==='play';
@@ -876,7 +886,7 @@ function leavePlace(instant = false) {
 
 const doorArmed = { school: true, room: true };
 async function visitForest(preview = null) {
-  if (mode !== 'play' || invitation.dialogOpen || !adventure.unlocked || !adventure.canAct()) return;
+  if (mode !== 'play' || invitation.dialogOpen || Boolean(landmark?.active) || !adventure.unlocked || !adventure.canAct()) return;
   if (forestLoading) return;
   if (!forest.assetsLoaded) {
     forestLoading = true;input.reset();player.setTarget(null);refreshActivityInput();
@@ -944,14 +954,14 @@ function doorCheck() {
 
 // ------------------------------------------------ てんき
 climate.onRainStart = (snow) => {
-  if (mode !== 'play' || invitation.dialogOpen || help.focused || adventure.focused || adventure.modal || harborBusy()) return;
+  if (mode !== 'play' || invitation.dialogOpen || Boolean(landmark?.active) || help.focused || adventure.focused || adventure.modal || harborBusy()) return;
   player.emote(snow ? '⛄' : '☔', 3);
   voice.say(L.rainStart(snow));
   refreshHud();
 };
 climate.onRainEnd = (snow) => {
   refreshHud();
-  if (mode !== 'play' || invitation.dialogOpen || help.focused || adventure.focused || adventure.modal || harborBusy()) return;
+  if (mode !== 'play' || invitation.dialogOpen || Boolean(landmark?.active) || help.focused || adventure.focused || adventure.modal || harborBusy()) return;
   voice.say(L.rainEnd(snow));
   if (!snow) {
     audio.sparkle();
@@ -963,6 +973,7 @@ climate.onRainEnd = (snow) => {
 // ------------------------------------------------ リサイズ・向き
 function resize() {
   const w = window.innerWidth, h = window.innerHeight;
+  renderer.setPixelRatio(renderPixelRatio(w,h,window.devicePixelRatio));
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
   camera.fov = camera.aspect < 1.5 ? 56 : 48;
@@ -977,7 +988,7 @@ document.addEventListener('visibilitychange', () => {
   last = performance.now();
   if(document.hidden)playTimer.pause();
   else playTimer.tick(mode==='play'&&!saveBlocked&&!homePaused);
-  if (document.hidden) { audio.suspend(); voice.stop(); input.reset(); player.setTarget(null); }
+  if (document.hidden) { landmark?.stop(); audio.suspend(); voice.stop(); input.reset(); player.setTarget(null); }
   else if (mode === 'play') audio.resume();
 });
 window.addEventListener('pagehide',()=>playTimer.pause());
@@ -991,11 +1002,12 @@ let time = 0;
 let hudClock = 0;
 
 function frame(now) {
+  if(landmark?.active && (mode!=='play'||saveBlocked||islandLoading||homePaused||playTimer.paused||developerMenuOpen()||ui.panelOpen||transitioning))landmark.stop();
   syncInvitationDialog();
   const island = islandNumber();
   input.jumpEnabled = island > 1;
   $('btnJump').classList.toggle('hidden', island === 1);
-  $('islandActions').classList.toggle('hidden', mode !== 'play' || saveBlocked || islandLoading || homePaused || playTimer.paused || developerMenuOpen() || transitioning || help.focused || help.modal || adventure.focused || adventure.modal || harborBusy() || learning.opened || invitation.dialogOpen || ui.panelOpen);
+  $('islandActions').classList.toggle('hidden', mode !== 'play' || saveBlocked || islandLoading || homePaused || playTimer.paused || developerMenuOpen() || transitioning || help.focused || help.modal || adventure.focused || adventure.modal || harborBusy() || learning.opened || invitation.dialogOpen || Boolean(landmark?.active) || ui.panelOpen);
   $('btnLearning').classList.toggle('hidden', island === 1 || ['school','room'].includes(place));
   $('btnIslandHelp').classList.toggle('hidden', island === 1 || ['school','room'].includes(place));
   $('btnTown').classList.toggle('hidden', !['forest', 'town'].includes(place));
@@ -1034,18 +1046,18 @@ function frame(now) {
         if (saveBlocked) { pauseInvitation(); requestAnimationFrame(frame); return; }
       }
     }
-    if (ptr && !invitation.dialogOpen) {
+    if (ptr && !invitation.dialogOpen && !landmark?.active) {
       if (!ptr.tapped) {
         const g = screenToGround(ptr.x, ptr.y);
         if (g) player.setTarget(g);
       }
     }
-    if (!help.modal && !adventure.modal && !harborErrands.modal && !learning.opened && !invitation.dialogOpen && !ui.panelOpen && !transitioning) player.update(dt, input, env(), audio);
-    if (['island', 'forest'].includes(place) && !learning.opened && !invitation.dialogOpen && !ui.panelOpen && !transitioning) adventure.update(dt, time);
-    if (place === 'forest' && !learning.opened && !invitation.dialogOpen && !ui.panelOpen && !transitioning) harborErrands.update(dt, time, presentationDt);
+    if (!help.modal && !adventure.modal && !harborErrands.modal && !learning.opened && !invitation.dialogOpen && !landmark?.active && !ui.panelOpen && !transitioning) player.update(dt, input, env(), audio);
+    if (['island', 'forest'].includes(place) && !learning.opened && !invitation.dialogOpen && !landmark?.active && !ui.panelOpen && !transitioning) adventure.update(dt, time);
+    if (place === 'forest' && !learning.opened && !invitation.dialogOpen && !landmark?.active && !ui.panelOpen && !transitioning) harborErrands.update(dt, time, presentationDt);
     if (saveBlocked) { pauseInvitation(); requestAnimationFrame(frame); return; }
-    if (!ui.panelOpen && !invitation.dialogOpen && !transitioning) boatCheck();
-    if (place === 'island' && !learning.opened && !invitation.dialogOpen) {
+    if (!ui.panelOpen && !invitation.dialogOpen && !landmark?.active && !transitioning) boatCheck();
+    if (place === 'island' && !learning.opened && !invitation.dialogOpen && !landmark?.active) {
       animals.update(dt, time, player);
       if (saveBlocked) { pauseInvitation(); requestAnimationFrame(frame); return; }
       if (!ui.panelOpen && !transitioning && !adventure.focused && !adventure.modal) help.update(dt, time);
@@ -1060,19 +1072,20 @@ function frame(now) {
       if (saveBlocked) { pauseInvitation(); requestAnimationFrame(frame); return; }
       doorCheck();
     } else if (['second', 'town'].includes(place)) {
-      if (!learning.opened && !invitation.dialogOpen && !ui.panelOpen && !transitioning) doorCheck();
+      if (!learning.opened && !invitation.dialogOpen && !landmark?.active && !ui.panelOpen && !transitioning) doorCheck();
     } else if (place.startsWith('learning-')) {
       const nearby=env().nearby(player.pos);
       if(!nearby)spotArmed=true;
-      if(nearby && spotArmed && !learning.opened && !invitation.dialogOpen && !ui.panelOpen && !transitioning){spotArmed=false;learning.open(island,{help:nearby.help});}
+      if(nearby && spotArmed && !learning.opened && !invitation.dialogOpen && !landmark?.active && !ui.panelOpen && !transitioning){spotArmed=false;learning.open(island,{help:nearby.help});}
     } else if (['school','room'].includes(place) && env().update(dt, time) === 'exit' && !transitioning) {
       leavePlace();
     }
     cameraGoal();
-    const cameraDt = place === 'forest' && harborErrands.gathering.active && harborErrands.view === 'party' ? presentationDt : dt;
+    const cameraDt = landmark?.active || (place === 'forest' && harborErrands.gathering.active && harborErrands.view === 'party') ? presentationDt : dt;
     const k = 1 - Math.exp(-4 * cameraDt);
     camera.position.lerp(camTarget, k);
-    lookAt.lerp(lookTarget, k * 1.5);
+    // あそびの ながめは、むきを たもって すべらせる。おそい びょうがでも いきすぎない。
+    lookAt.lerp(lookTarget, landmark?.active ? k : Math.min(1,k * 1.5));
     camera.lookAt(lookAt);
   } else {
     // タイトル・たまご・キャラメイク：じぶんの キャラを おおきく うつす
@@ -1104,10 +1117,10 @@ function frame(now) {
   player.marker.visible = mode === 'play';
   player.sleepy = climate.night > 0.6 && place === 'island';
   const outside = ['island', 'forest', 'second', 'town'].includes(place) || place.startsWith('learning-');
-  if (place === 'island' && !learning.opened && !invitation.dialogOpen && !help.focused && !adventure.focused && !adventure.modal) life.update(dt, time, mode === 'play' && !transitioning && !ui.panelOpen);
+  if (place === 'island' && !learning.opened && !invitation.dialogOpen && !landmark?.active && !help.focused && !adventure.focused && !adventure.modal) life.update(dt, time, mode === 'play' && !transitioning && !ui.panelOpen);
   if (['second', 'town'].includes(place)) {
     const area = place === 'second' ? secondArea : townArea;
-    if (!learning.opened && !invitation.dialogOpen && !ui.panelOpen) area.life.update(dt, time, mode === 'play' && !transitioning);
+    if (!learning.opened && !invitation.dialogOpen && !landmark?.active && !ui.panelOpen) area.life.update(dt, time, mode === 'play' && !transitioning);
     area.world.skyUniforms.top.value.copy(world.skyUniforms.top.value);
     area.world.skyUniforms.bottom.value.copy(world.skyUniforms.bottom.value);
     area.world.setNight(climate.night);
@@ -1121,7 +1134,7 @@ function frame(now) {
   if(place.startsWith('learning-'))env().update(dt,time);
   if(place==='forest'){
     forest.updateView(closetPreview.active?closetPreview.camera:camera,player,dt,climate.night);
-    harborPlay.update(dt,time,mode==='play'&&!transitioning&&!learning.opened&&!invitation.dialogOpen&&!ui.panelOpen&&!adventure.focused&&!adventure.modal&&!harborBusy());
+    harborPlay.update(dt,time,mode==='play'&&!transitioning&&!learning.opened&&!invitation.dialogOpen && !landmark?.active&&!ui.panelOpen&&!adventure.focused&&!adventure.modal&&!harborBusy());
   }
   hudClock -= dt;
   if (hudClock <= 0) {
@@ -1129,7 +1142,8 @@ function frame(now) {
     refreshHud();
     audio.setSong(climate.period);
   }
-  world.update(dt, mode === 'play' ? player.pos : lookAt);
+  updateHomeWorld(world,dt,mode==='play'?player.pos:lookAt,place==='island');
+  landmark?.update(presentationDt);
   effects.update(dt, time, player.pos);
   if (closetPreview.active) {
     const width = window.innerWidth, height = window.innerHeight;
@@ -1149,7 +1163,8 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
 
 // デバッグ用
 window.__game = {
-  voice, camera, scene, player, quests, animals, world, school, room, life, climate, save, help, startGame, enterPlace, openZukan, openCloset, maker, openMaker,
+  voice, camera, scene, player, landmark,
+  get renderInfo(){return {ratio:renderer.getPixelRatio(),width:canvas.width,height:canvas.height,calls:renderer.info.render.calls,triangles:renderer.info.render.triangles};}, quests, animals, world, school, room, life, climate, save, help, startGame, enterPlace, openZukan, openCloset, maker, openMaker,
   warp(x, z) { player.teleport(x, env().groundAt(x, z), z, 0); snapCamera(); },
   get place() { return place; },
 };

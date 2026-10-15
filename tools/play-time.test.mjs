@@ -8,7 +8,7 @@ import {setupTimeUI} from '../src/time-ui.js';
 import fs from 'node:fs';
 import vm from 'node:vm';
 const main=fs.readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
-const activityInput='const invitation = {dialogOpen:false};\n'+main.match(/const harborBusy = [^\n]+\nfunction refreshActivityInput\(\) \{[\s\S]*?\n\}/)[0];
+const activityInput='const invitation = {dialogOpen:false};\nconst landmark = null;\n'+main.match(/const harborBusy = [^\n]+\nfunction refreshActivityInput\(\) \{[\s\S]*?\n\}/)[0];
 const hudElement=()=>({classList:{toggle(){}},querySelector(){return {textContent:''};},setAttribute(){}});
 
 test('ホームの振り返りは活動を終了せず、戻ると同じ回の計測を再開する',()=>{

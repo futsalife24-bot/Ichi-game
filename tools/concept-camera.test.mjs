@@ -307,7 +307,7 @@ test('通常プレイでは島メニューの開閉によらず共通俯瞰を�
   const selected = [], state = { hidden: false };
   const context = {
     mode: 'play', place: 'learning-6', window: { innerWidth: 667, innerHeight: 375 },
-    player: { pos: new THREE.Vector3(0, 1, 4) }, cameraSubject: new THREE.Vector3(),
+    player: { pos: new THREE.Vector3(0, 1, 4) }, cameraSubject: new THREE.Vector3(), landmark: null,
     camTarget: new THREE.Vector3(), lookTarget: new THREE.Vector3(),
     harborErrands: { gathering: { cameraPose: null } },
     islandNumber: () => 6, CONCEPT_LAYOUTS, CONCEPT_CAMERA,
@@ -323,4 +323,22 @@ test('通常プレイでは島メニューの開閉によらず共通俯瞰を�
   vm.runInNewContext('cameraGoal()', context);assert.deepEqual(selected.pop(), [false, true]);
   context.window.innerHeight = 375;context.window.innerWidth = 667;context.mode = 'title';
   vm.runInNewContext('cameraGoal()', context);assert.deepEqual(selected.pop(), [false, false]);
+});
+
+test('名物を眺める平行移動は低い描画頻度でも向きを保ち、行き過ぎない',()=>{
+  const source=readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
+  const start=source.indexOf('    const cameraDt ='),end=source.indexOf('    camera.lookAt(lookAt);',start);
+  const step=source.slice(start,end+'    camera.lookAt(lookAt);'.length);
+  const camera=new THREE.PerspectiveCamera(),lookAt=new THREE.Vector3(.6,-1.5,-38);
+  camera.position.set(2.4,9.7,0);
+  const offset=camera.position.clone().sub(lookAt);
+  const camTarget=camera.position.clone().add(new THREE.Vector3(0,24,18));
+  const lookTarget=lookAt.clone().add(new THREE.Vector3(0,24,18));
+  for(const elapsed of [1/60,1/15,1,3]){
+    const before=camera.position.distanceTo(camTarget);
+    vm.runInNewContext(step,{landmark:{active:true},presentationDt:elapsed,dt:Math.min(.05,elapsed),camera,lookAt,camTarget,lookTarget});
+    assert.ok(camera.position.clone().sub(lookAt).distanceTo(offset)<1e-8,'共通の俯瞰方向と距離を保つ');
+    assert.ok(camera.position.distanceTo(camTarget)<=before,'目標へ近づく');
+    assert.ok(camera.position.y<=camTarget.y&&lookAt.y<=lookTarget.y,'目標を越えて揺れない');
+  }
 });
