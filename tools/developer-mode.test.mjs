@@ -60,12 +60,12 @@ test('タイトルの単一入口は全開放を選び、読み込み後だけ�
   const titleEntry = html.match(/<details class="developer-entry">[\s\S]*?<\/details>/)[0];
   assert.deepEqual([...titleEntry.matchAll(/href="\?dev=([^"]+)"/g)].map(match => match[1]), ['all']);
   const main = readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
-  const start = main.match(/^if \(developerScenario\?\.autoStart\) startGame\(\);$/m)?.[0];
+  const start = main.match(/^if \(developerScenario\?\.autoStart\) \{[\s\S]*?^\}/m)?.[0];
   assert.ok(start, '起動の準備後に開発用の自動開始がある');
   assert.ok(main.indexOf(start) > main.indexOf('window.__game = {'), '画面と操作の準備後に開始する');
   for (const [id, expected] of [['all',1],['second',0],['forest',0]]) {
     let calls=0;
-    vm.runInNewContext(start,{developerScenario:DEVELOPER_SCENARIOS[id],startGame:()=>{calls++;}});
+    vm.runInNewContext(start,{developerScenario:DEVELOPER_SCENARIOS[id],startGame:()=>{calls++;},voice:{},waitForFirstSound:()=>Promise.resolve()});
     assert.equal(calls, expected, `${id} の自動開始`);
   }
 });
@@ -180,4 +180,20 @@ test('開発者メニュー中は時間を進めず、島の収集処理にも�
   vm.runInNewContext(frame + '\nframe(20);', context);
   assert.deepEqual(ticks, [false]);
   assert.equal(scheduled, 2);
+});
+
+test('自動入島の音声準備は最初の入力で一度だけ行い、待ちを解除する', async()=>{
+  const main=readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
+  const fn=main.match(/function waitForFirstSound\(\) \{[\s\S]*?\n\}/)[0];
+  for(const type of ['pointerdown','keydown','click']){
+    const target=new EventTarget();let unlocked=0,started=0;
+    const context={window:target,unlockSound:()=>unlocked++,developerScenario:{autoStart:true},voice:{},startGame:()=>started++};
+    const entry=main.slice(main.indexOf('if (developerScenario?.autoStart) {'));
+    vm.runInNewContext(fn+'\n'+entry,context);
+    assert.equal(started,1);assert.equal(unlocked,0);
+    target.dispatchEvent(new Event(type));await context.voice.audioReady;
+    assert.equal(unlocked,1);
+    for(const next of ['pointerdown','keydown','click'])target.dispatchEvent(new Event(next));
+    assert.equal(unlocked,1);
+  }
 });

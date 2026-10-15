@@ -130,3 +130,24 @@ test('案内は音声の一覧待ち・デコード待ち・動物の声・字�
   assert.equal(h.voice.speaking,false);assert.equal(h.voice.pending,true);assert.equal(h.voice.busy,true);h.voice.stop();
   h.voice.enabled=false;h.voice.say('すごい！');assert.equal(h.voice.pending,false);assert.equal(h.voice.busy,true);h.voice.stop();
 });
+
+test('自動入島は最初の操作まで端末読み上げに代用せず、準備後に録音を再生する',async()=>{
+  const f=fixture(), ready=deferred(),ctx=f.audio.ctx;
+  f.audio.ctx=null;f.voice.audioReady=ready.promise;
+  f.voice.say('すごい！');await tick();
+  assert.equal(f.synth.length,0);assert.equal(f.starts.length,0);assert.equal(f.voice.pending,true);
+  f.audio.ctx=ctx;ready.resolve();await tick();await tick();
+  assert.equal(f.voice.lastMode,'clip');assert.equal(f.synth.length,0);assert.equal(f.starts.length,1);f.voice.stop();
+});
+
+test('操作待ちの古い案内は停止・ミュート・新しい案内で取り消される',async()=>{
+  for(const action of ['stop','mute','replace']){
+    const f=fixture(),ready=deferred();f.voice.audioReady=ready.promise;
+    f.voice.say('すごい！');await tick();
+    if(action==='mute')f.voice.enabled=false;
+    else if(action==='replace')f.voice.say('すごい！');
+    else f.voice.stop();
+    ready.resolve();await tick();await tick();
+    assert.equal(f.starts.length,action==='replace'?1:0);assert.equal(f.synth.length,0);f.voice.stop();
+  }
+});

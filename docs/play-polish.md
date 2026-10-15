@@ -28,6 +28,10 @@ GitHub: https://github.com/futsalife24-bot/Ichi-game
 
 作業場所: `C:/Users/futsa/Documents/Codex/2026-10-03/codex-ichi-game-futsalife24-bot-ichi/work/Ichi-game`
 
-ブランチ: `codex/island-play-polish`。作業開始HEAD: `b0d6afb02ae79e63a906bdbde54ec1ebf2b48c8d`。直前公開main: `273c8c26b046c1b4d5d1d31e0b88497058846165`。今回の変更は公開前。
+ブランチ: `codex/island-play-polish`。作業開始HEAD: `b0d6afb02ae79e63a906bdbde54ec1ebf2b48c8d`。直前公開main: `273c8c26b046c1b4d5d1d31e0b88497058846165`。本人の「公開して」を受け、[PR #39](https://github.com/futsalife24-bot/Ichi-game/pull/39)でmain `d7e7bf26c89967b7eacc05aba48aef7a0a7aeee4`へ公開済み。
 
 主担当が統合・実UI・検証を担当。子２体が音声／おさそいと名物遊び／小物制作を分担した。子の指定は `gpt-6-sol / medium`、主担当と子の実設定は未確認。既存未追跡 `output/concept-ci-check.log` は保持し、登録しない。
+
+## 公開確認
+
+mainの[検査](https://github.com/futsalife24-bot/Ichi-game/actions/runs/38730469585)と[Pages](https://github.com/futsalife24-bot/Ichi-game/actions/runs/38730469651)が成功。[964配信資材](play-polish-release-check.json)はGit原本と全件一致。公開版の第八島で開始、島選択、地面の指定による歩行、木馬の開始・自動終了・途中下車を確認し、警告・エラーは０。画像は[公開版の乗り場](play-polish-proof/public-carousel.png)。小物24点は素材庫に保管したままでゲーム配置は未実装。

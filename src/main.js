@@ -1168,4 +1168,19 @@ window.__game = {
   warp(x, z) { player.teleport(x, env().groundAt(x, z), z, 0); snapCamera(); },
   get place() { return place; },
 };
-if (developerScenario?.autoStart) startGame();
+function waitForFirstSound() {
+  return new Promise(resolve => {
+    const events = ['pointerdown', 'keydown', 'click'];
+    const activate = () => {
+      unlockSound();
+      for (const event of events) window.removeEventListener(event, activate, { capture: true });
+      resolve();
+    };
+    for (const event of events) window.addEventListener(event, activate, { capture: true });
+  });
+}
+if (developerScenario?.autoStart) {
+  // はじめる ボタンを とばしても、さいしょの そうさで ろくおんを ならせるようにする。
+  voice.audioReady = waitForFirstSound();
+  startGame();
+}

@@ -125,6 +125,8 @@ export class Voice {
   async speak(text,lang='ja') {
     const token = this.token;
     await this.indexReady;
+    // じどうで しまに はいった ときは、さいしょの そうさで おとが つかえるまで まつ。
+    if (this.audioReady) await this.audioReady;
     if (token !== this.token || !this.enabled) return;
     const hashes = segments(text).map((s) => clipHash(clipKey(s)));
     const ctx = this.audio?.ctx;

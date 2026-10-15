@@ -27,8 +27,10 @@ function goals(number, position, compactHud = false, visibleHud = false) {
   return { view, eye, target, weight };
 }
 
-test('通常の大小画面は第七島の中央橋を基準に補正した俯瞰方向を全八島で保つ', () => {
-  const reference = new THREE.Vector3(-1.8, -11.2, -38).normalize();
+test('通常の大小画面は一段高い約25度の俯瞰方向を全八島で保つ', () => {
+  const reference = new THREE.Vector3(-1.8, -17.75, -38).normalize();
+  const pitch = Math.atan2(-reference.y, Math.hypot(reference.x, reference.z)) * 180 / Math.PI;
+  assert.ok(pitch > 24.9 && pitch < 25.1, '従来の約16度より一段高い俯角にする');
   const seventh = new THREE.Vector3(0, conceptWalkHeight(7, 0, 0), 0);
   const seventhGoal = goals(7, seventh, false, true);
   assert.ok(seventhGoal.weight > .95);
@@ -41,9 +43,9 @@ test('通常の大小画面は第七島の中央橋を基準に補正した俯�
         const { eye, target } = goals(number, position, compactHud, true);
         const direction = target.clone().sub(eye).normalize();
         assert.ok(direction.distanceTo(reference) < 1e-12, `第${number}島の視線角が違う`);
-        assert.ok(Math.abs((target.y - eye.y) + 11.2) < 1e-9, `第${number}島の地形追従と視線角`);
+        assert.ok(Math.abs((target.y - eye.y) + 17.75) < 1e-9, `第${number}島の地形追従と視線角`);
         if (number !== 4 || x !== layout.hero[0] || z !== layout.hero[1])
-          assert.ok(Math.abs(eye.y - position.y - 9.7) < 1e-9, `第${number}島の通常位置の高さ`);
+          assert.ok(Math.abs(eye.y - position.y - 18.7) < 1e-9, `第${number}島の通常位置の高さ`);
       }
     }
   }
@@ -76,7 +78,9 @@ test('第一島の出発画面では船の帆がうさぎを隠さない', () =>
     [sailBounds.min.y, sailBounds.max.y].map(py => toPixels(new THREE.Vector3(px, py, sailBounds.min.z)))));
   const rabbitRight = Math.max(...[rabbitBounds.min.x, rabbitBounds.max.x].flatMap(px =>
     [rabbitBounds.min.y, rabbitBounds.max.y].map(py => toPixels(position.clone().add(new THREE.Vector3(px, py, 0))))));
-  assert.ok(sailLeft > rabbitRight + 30, '帆とうさぎの間に見える空間がある');
+  // ひいて みる ぶんだけ、これまでの30pxの すきまも おなじ ひりつで ちぢむ。
+  const clearGap = 30 * Math.hypot(2.4, 9.7, 24) / eye.distanceTo(position);
+  assert.ok(sailLeft > rabbitRight + clearGap, `帆とうさぎの間に見える空間がある: ${sailLeft - rabbitRight}`);
 });
 
 function bridgeMeshes(number) {
@@ -157,7 +161,7 @@ test('第四島の木橋と対岸でも、実際の手すりがウサギの足�
       for(const part of [...feet,bodyCentre])assert.ok(Math.abs(position.clone().add(part).project(camera).y)<.9,`${x},${z}: 身体が画面外`);
       if (visibleHud) {
         const direction = target.clone().sub(eye);
-        assert.ok(direction.distanceTo(new THREE.Vector3(-1.8, -11.2, -38)) < 1e-9, `${x},${z}: 視線角が変わった`);
+        assert.ok(direction.distanceTo(new THREE.Vector3(-1.8, -17.75, -38)) < 1e-9, `${x},${z}: 視線角が変わった`);
         if (previous && !compactHud && z === 4)
           assert.ok(eye.clone().sub(position).distanceTo(previous) < 1, `${x},${z}: 視点が飛んだ`);
         if (!compactHud) previous = eye.clone().sub(position);
@@ -329,8 +333,8 @@ test('名物を眺める平行移動は低い描画頻度でも向きを保ち�
   const source=readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
   const start=source.indexOf('    const cameraDt ='),end=source.indexOf('    camera.lookAt(lookAt);',start);
   const step=source.slice(start,end+'    camera.lookAt(lookAt);'.length);
-  const camera=new THREE.PerspectiveCamera(),lookAt=new THREE.Vector3(.6,-1.5,-38);
-  camera.position.set(2.4,9.7,0);
+  const camera=new THREE.PerspectiveCamera(),lookAt=new THREE.Vector3(.6,.95,-10);
+  camera.position.set(2.4,18.7,28);
   const offset=camera.position.clone().sub(lookAt);
   const camTarget=camera.position.clone().add(new THREE.Vector3(0,24,18));
   const lookTarget=lookAt.clone().add(new THREE.Vector3(0,24,18));

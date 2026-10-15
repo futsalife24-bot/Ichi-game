@@ -32,6 +32,6 @@ setInterval(()=>{
  const wind=scenery?.models?.get('windSails'),bounds=wind?new Box3().setFromObject(wind):null;
  const camera=island===7?{position:g.camera.position.toArray(),direction:g.camera.getWorldDirection(new Vector3()).toArray(),subject:g.landmark.play.cameraSubject?.toArray(),windCenter:bounds?.getCenter(new Vector3()).toArray(),windNdc:bounds?.getCenter(new Vector3()).project(g.camera).toArray()}:undefined;
  if(camera&&g.landmark.active){if(!cameraActive)cameraFrames=[];cameraFrames.push({elapsed:g.landmark.play.session.elapsed,...camera});document.querySelector('#cameraTrace').textContent=JSON.stringify(cameraFrames,null,2);}cameraActive=g.landmark.active;
- state.textContent=JSON.stringify({place:g.place,position:g.player.pos.toArray(),render:g.renderInfo,active:g.landmark.active,canPlay:g.landmark.canPlay(),near:g.landmark.near(island,scenery),ready:g.landmark.play.canStart(island,scenery),camera},null,2);
+ state.textContent=JSON.stringify({voice:{mode:g.voice.lastMode??null,pending:g.voice.pending,speaking:g.voice.speaking,context:g.voice.audio.ctx?.state??null,clips:g.voice.clipIndex?.size??0},place:g.place,position:g.player.pos.toArray(),render:g.renderInfo,active:g.landmark.active,canPlay:g.landmark.canPlay(),near:g.landmark.near(island,scenery),ready:g.landmark.play.canStart(island,scenery),camera},null,2);
 },500);
 </script></html>

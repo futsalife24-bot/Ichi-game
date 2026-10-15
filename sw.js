@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v61-island-play-polish';
+const VERSION = 'kirakira-v62-voice-camera';
 const ASSETS = [
   './',
   './index.html',
