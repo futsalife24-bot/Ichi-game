@@ -45,12 +45,21 @@ export const INVITATION_CHOICES = Object.freeze({
   ],
 });
 
+// あそびの なまえから、どの しまの おさそいかを すぐ ひける ように する。
+const CHOICE_ISLAND = new Map(Object.entries(INVITATION_CHOICES).flatMap(([island, pool]) => pool.map(choice => [choice.id, Number(island)])));
+const CHOICE_BY_ID = new Map(Object.values(INVITATION_CHOICES).flat().map(choice => [choice.id, choice]));
+const PHASES = Object.freeze(['awaiting','choice','playing','done']);
+// おなじ ものを つかう あそびどうしを「すきな もの つながり」と みる。
+const MEANINGFUL_ASSETS = new Set(['cmFruit','cmPlants','cmShape','cmBread','cmChair','cmCard']);
+
+export const isInvitationIsland = island => Number.isInteger(island) && Object.hasOwn(INVITATION_CHOICES, island);
+
 const isObject = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 export function validLearningInvitation(value) {
-  if (!isObject(value) || value.version !== 1 || !Number.isInteger(value.island) || value.island < 1 || value.island > 8) return false;
-  if (!['awaiting','choice','playing','done'].includes(value.phase)) return false;
+  if (!isObject(value) || value.version !== 1 || !isInvitationIsland(value.island)) return false;
+  if (!PHASES.includes(value.phase)) return false;
   if (!Array.isArray(value.options) || value.options.length !== 2 || new Set(value.options).size !== 2) return false;
-  if (!value.options.every(id => typeof id === 'string' && activityById(id)?.island === value.island && INVITATION_CHOICES[value.island].some(choice => choice.id === id))) return false;
+  if (!value.options.every(id => typeof id === 'string' && activityById(id)?.island === value.island && CHOICE_ISLAND.get(id) === value.island)) return false;
   if (value.lastChoice !== undefined && value.lastChoice !== null && !value.options.includes(value.lastChoice)) return false;
   if (value.declined !== undefined && typeof value.declined !== 'boolean') return false;
   return value.phase === 'playing' ? value.selected !== null && value.options.includes(value.selected) : value.selected === null;
@@ -62,8 +71,8 @@ export function chooseLearningInvitations(island, observations, progress, previo
   const counts = observations?.domains ?? {};
   const completed = new Set(progress?.completed ?? []);
   const recent=pool.find(candidate=>candidate.id===progress?.completed?.at(-1));
-  const meaningful=new Set(['cmFruit','cmPlants','cmShape','cmBread','cmChair','cmCard']);
-  const sharedInterest=candidate=>recent && candidate.domain!==recent.domain && activityById(candidate.id).assets.some(asset=>meaningful.has(asset)&&activityById(recent.id).assets.includes(asset));
+  const recentAssets=recent ? activityById(recent.id).assets : [];
+  const sharedInterest=candidate=>recent && candidate.domain!==recent.domain && activityById(candidate.id).assets.some(asset=>MEANINGFUL_ASSETS.has(asset)&&recentAssets.includes(asset));
   const score = candidate => (counts[candidate.domain]?.started ?? 0) * 10 + (completed.has(candidate.id) ? 4 : 0) - (sharedInterest(candidate) ? 6 : 0);
   const sorted = [...pool].sort((a,b) => score(a) - score(b) || pool.indexOf(a) - pool.indexOf(b));
   const first = sorted[0];
@@ -85,9 +94,11 @@ export const freshLearningInvitation = (island, observations, progress, previous
   lastChoice:null, declined:false,
 });
 
-export const invitationChoice = id => Object.values(INVITATION_CHOICES).flat().find(choice => choice.id === id) ?? null;
+export const invitationChoice = id => CHOICE_BY_ID.get(id) ?? null;
+
+export const INVITATION_CALL_LINE = 'いっしょに あそぼう！';
 
 export const INVITATION_VOICE_LINES = Object.freeze([
-  { id:'invitation-call', lang:'ja', text:'いっしょに あそぼう！' },
-  ...Object.values(INVITATION_CHOICES).flat().map(choice=>({id:`invitation-${choice.id}`,lang:'ja',text:choice.story})),
+  { id:'invitation-call', lang:'ja', text:INVITATION_CALL_LINE },
+  ...[...CHOICE_BY_ID.values()].map(choice=>({id:`invitation-${choice.id}`,lang:'ja',text:choice.story})),
 ]);
