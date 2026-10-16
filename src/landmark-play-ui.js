@@ -1,10 +1,10 @@
 import { LandmarkPlay, getLandmarkSpot, createLandmarkMarker } from './landmark-play.js';
 
 export const LANDMARK_LABELS = Object.freeze({
-  4:{icon:'💧',action:'みずを ながす',playing:'すいしゃが まわった！'},
-  6:{icon:'🐠',action:'さかなと あそぶ',playing:'さかなたちが やってきた！'},
-  7:{icon:'🌬️',action:'かぜを おこす',playing:'かぜで くるくる！'},
-  8:{icon:'🎠',action:'もくばに のる',playing:'くるくる おさんぽ！'},
+  4:{icon:'💧',action:'みずを ながす',playing:'すいしゃが まわった！',stop:'おしまい'},
+  6:{icon:'🐠',action:'さかなと あそぶ',playing:'さかなたちが やってきた！',stop:'おしまい'},
+  7:{icon:'🌬️',action:'かぜを おこす',playing:'かぜで くるくる！',stop:'おしまい'},
+  8:{icon:'🎠',action:'もくばに のる',playing:'くるくる おさんぽ！',stop:'おりる'},
 });
 
 export class LandmarkPlayUI {
@@ -26,10 +26,11 @@ export class LandmarkPlayUI {
   start(){
     const {island,scenery}=this.current();
     if(!this.canPlay()||!this.near(island,scenery))return false;
-    const started=this.play.start({island,scenery,player:this.player,onClose:()=>{document.body.classList.remove('landmark-playing');this.onEnd?.();this.render();}});
+    const started=this.play.start({island,scenery,player:this.player,onClose:()=>this.closed()});
     if(started){document.body.classList.add('landmark-playing');this.onStart?.();this.render();}
     return started;
   }
+  closed(){document.body.classList.remove('landmark-playing');this.onEnd?.();this.render();}
   stop(){return this.play.stop();}
   update(dt){
     const {island,scenery}=this.current();
@@ -46,7 +47,6 @@ export class LandmarkPlayUI {
     const key=`${island}:${this.active}`;if(key===this.renderKey)return;this.renderKey=key;
     this.root.classList.toggle('playing',this.active);
     this.label.textContent=this.active?`${labels.icon} ${labels.playing}`:'';
-    this.button.textContent=this.active?'おりる':`${labels.icon} ${labels.action}`;
-    if(this.active&&island!==8)this.button.textContent='おしまい';
+    this.button.textContent=this.active?labels.stop:`${labels.icon} ${labels.action}`;
   }
 }
