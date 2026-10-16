@@ -1,0 +1,49 @@
+{
+  "checkedAt": "2026-10-16T01:08:32.284Z",
+  "releaseSha": "77004c67fc7af8dd85d9afc3f0ff4f71714b8209",
+  "allMatch": true,
+  "records": [
+    {
+      "path": "src/main.js",
+      "status": 200,
+      "expected": "7828f0b74d8bf6b579efa4577c7ca9dfb3f43b7f0c451875d8d47735c9bab6f0",
+      "actual": "7828f0b74d8bf6b579efa4577c7ca9dfb3f43b7f0c451875d8d47735c9bab6f0",
+      "match": true
+    },
+    {
+      "path": "src/concept-camera.js",
+      "status": 200,
+      "expected": "9fbb2a9521c6523d7542de20583f08d163e50499894bac48505bca35538bc8d5",
+      "actual": "9fbb2a9521c6523d7542de20583f08d163e50499894bac48505bca35538bc8d5",
+      "match": true
+    },
+    {
+      "path": "src/learning-invitation.js",
+      "status": 200,
+      "expected": "978aca2403a3e65f082336eabe1d5be4fb68f15f56a9c8835601953583274000",
+      "actual": "978aca2403a3e65f082336eabe1d5be4fb68f15f56a9c8835601953583274000",
+      "match": true
+    },
+    {
+      "path": "src/learning-invitation.css",
+      "status": 200,
+      "expected": "e2fe65797c13caa7ee69c187bb51c15a77a7db6769bab1634b87e3da1e238445",
+      "actual": "e2fe65797c13caa7ee69c187bb51c15a77a7db6769bab1634b87e3da1e238445",
+      "match": true
+    },
+    {
+      "path": "style.css",
+      "status": 200,
+      "expected": "c4a25d1aece87fcee403da75e750502e1a8892aa99bbff896e093b3d64dfd754",
+      "actual": "c4a25d1aece87fcee403da75e750502e1a8892aa99bbff896e093b3d64dfd754",
+      "match": true
+    },
+    {
+      "path": "sw.js",
+      "status": 200,
+      "expected": "ebe8e8ef2eda827a57254af20e866df4edd3c06ec0815dca56ca5dba13c939a6",
+      "actual": "ebe8e8ef2eda827a57254af20e866df4edd3c06ec0815dca56ca5dba13c939a6",
+      "match": true
+    }
+  ]
+}
