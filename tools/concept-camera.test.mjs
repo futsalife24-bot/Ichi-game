@@ -45,8 +45,20 @@ test('通常の大小画面は一段高い約25度の俯瞰方向を全八島で
         assert.ok(direction.distanceTo(reference) < 1e-12, `第${number}島の視線角が違う`);
         assert.ok(Math.abs((target.y - eye.y) + 17.75) < 1e-9, `第${number}島の地形追従と視線角`);
         if (number !== 4 || x !== layout.hero[0] || z !== layout.hero[1])
-          assert.ok(Math.abs(eye.y - position.y - 18.7) < 1e-9, `第${number}島の通常位置の高さ`);
+          assert.ok(Math.abs(eye.y - position.y - 18.7 * .88) < 1e-9, `第${number}島の通常位置の高さ`);
       }
+    }
+  }
+});
+
+test('全八島の到着時は従来より12%近づき、俯角と画面の大小による距離を変えない', () => {
+  const previousDistance = Math.hypot(2.4, 18.7, 28);
+  for (const [id, layout] of Object.entries(CONCEPT_LAYOUTS)) {
+    const number = Number(id), [x, z] = layout.spawn;
+    const position = new THREE.Vector3(x, conceptWalkHeight(number, x, z), z);
+    for (const compactHud of [false, true]) {
+      const { eye } = goals(number, position, compactHud, true);
+      assert.ok(Math.abs(eye.distanceTo(position) / previousDistance - .88) < 1e-9, `第${number}島の寄り具合が違う`);
     }
   }
 });
@@ -282,7 +294,9 @@ test('小さい横画面では全八島のウサギ全身が下部メニュー�
       };
       const [headX, headY] = pixel(position.clone().add(new THREE.Vector3(0, rabbitBounds.max.y, 0)));
       const [footX, footY] = pixel(position.clone().add(new THREE.Vector3(0, rabbitBounds.min.y, 0)));
-      const [heroX, heroY] = pixel(new THREE.Vector3(layout.hero[0], conceptWalkHeight(number, ...layout.hero) + 10, layout.hero[1]));
+      // そらの たかい たてものは、ちかづくと てっぺんが みきれる。まちなみの なかほどを のこす。
+      const heroHeight = number === 7 ? 7 : 10;
+      const [heroX, heroY] = pixel(new THREE.Vector3(layout.hero[0], conceptWalkHeight(number, ...layout.hero) + heroHeight, layout.hero[1]));
       assert.ok(headX > 100 && headX < 567 && footX > 100 && footX < 567, `第${number}島のウサギが横から外れる`);
       assert.ok(headY >= 90 && headY < footY && footY < 260, `第${number}島のウサギが下部メニューと重なる: ${headY},${footY} FOV=${fov}`);
       assert.ok(heroX > 0 && heroX < 667 && heroY > -5 && heroY < 240, `第${number}島の主役が画面から外れる: ${heroX},${heroY} FOV=${fov}`);

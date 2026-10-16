@@ -212,7 +212,8 @@ test('主画面は住民の投影位置へふきだしを置き、別画面の�
   const bubble = context.invitation.bubble;
   assert.equal(bubble.dataset.guide, 'false');
   assert.equal(bubble.style.left.endsWith('px'), true);
-  assert.match(bubble.textContent, /ひよこさん/);
+  assert.equal(bubble.textContent, '🐤 あそぼう');
+  assert.match(bubble['aria-label'], /ひよこさん/);
   const joystick = new FakeElement('div');
   joystick.rect = { left: 0, top: 0, right: 1280, bottom: 460, width: 1280, height: 460 };
   elements.set('joyZone', joystick);
