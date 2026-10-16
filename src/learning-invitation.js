@@ -206,7 +206,8 @@ export class LearningInvitation {
     if (this.root.hidden) return;
     this.bubble.hidden=this.dialogOpen;
     const caller=this.residentName?`${this.residentIcon ?? '🌼'} ${this.residentName}：`:'';
-    this.bubble.textContent=caller+(state.phase==='awaiting'?'いっしょに あそぼう！':'あそびの つづきが あるよ。');
+    this.bubble.textContent=`${this.residentIcon ?? '🌼'} ${state.phase==='awaiting'?'あそぼう':'つづき'}`;
+    this.bubble.setAttribute('aria-label',caller+(state.phase==='awaiting'?'いっしょに あそぼう！':'あそびの つづきが あるよ。'));
     this.bubble.disabled=!this.nearResident;
     this.bubble.title=this.nearResident?'はなしかける':'じゅうみんの ちかくで はなしかけてね';
     this.card.hidden=!this.dialogOpen;

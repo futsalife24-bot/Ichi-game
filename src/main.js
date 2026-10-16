@@ -246,9 +246,9 @@ function positionInvitationBubble() {
   const width = window.innerWidth, height = window.innerHeight;
   const anchor = { x: (point.x + 1) * width / 2, y: (1 - point.y) * height / 2,
     visible: point.z > -1 && point.z < 1 && Math.abs(point.x) <= 1 && Math.abs(point.y) <= 1 };
-  const obstacles = ['pills','settings','questCard','placeLabel','sideBtns','joyZone','btnJump','islandActions']
+  const obstacles = ['pills','settings','questCard','placeLabel','sideBtns','joyZone','btnJump','islandActions','subtitle']
     .map(id => document.getElementById(id))
-    .filter(element => element && !element.hidden && !element.classList.contains('hidden') && element.getClientRects().length)
+    .filter(element => element && (element.id !== 'subtitle' || element.classList.contains('show')) && !element.hidden && !element.classList.contains('hidden') && element.getClientRects().length)
     .map(element => element.getBoundingClientRect());
   invitation.positionBubble(anchor, { width, height }, obstacles);
 }
@@ -1007,7 +1007,9 @@ function frame(now) {
   const island = islandNumber();
   input.jumpEnabled = island > 1;
   $('btnJump').classList.toggle('hidden', island === 1);
-  $('islandActions').classList.toggle('hidden', mode !== 'play' || saveBlocked || islandLoading || homePaused || playTimer.paused || developerMenuOpen() || transitioning || help.focused || help.modal || adventure.focused || adventure.modal || harborBusy() || learning.opened || invitation.dialogOpen || Boolean(landmark?.active) || ui.panelOpen);
+  const hideIslandActions = mode !== 'play' || saveBlocked || islandLoading || homePaused || playTimer.paused || developerMenuOpen() || transitioning || help.focused || help.modal || adventure.focused || adventure.modal || harborBusy() || learning.opened || invitation.dialogOpen || Boolean(landmark?.active) || ui.panelOpen;
+  $('islandActions').classList.toggle('hidden', hideIslandActions);
+  $('subtitle').classList.toggle('above-island-actions', !hideIslandActions);
   $('btnLearning').classList.toggle('hidden', island === 1 || ['school','room'].includes(place));
   $('btnIslandHelp').classList.toggle('hidden', island === 1 || ['school','room'].includes(place));
   $('btnTown').classList.toggle('hidden', !['forest', 'town'].includes(place));

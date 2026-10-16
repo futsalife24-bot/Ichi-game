@@ -65,10 +65,13 @@ export function setConceptCameraGoal(number, playerPosition, view, outPosition, 
       1 - smooth(0, 3, Math.hypot(playerPosition.x - 9, playerPosition.z - 4)),
       1 - smooth(4, 6.5, Math.hypot(playerPosition.x - 18, playerPosition.z)),
     ) : 0;
-    const eyeY = 18.7 - 5 * fourthWeight;
-    const eyeZ = 28 - 10 * fourthWeight;
-    outPosition.set(playerPosition.x + 2.4 + sideStep, playerPosition.y + eyeY, playerPosition.z + eyeZ);
-    outTarget.set(playerPosition.x + .6 + sideStep, playerPosition.y + eyeY - 17.75, playerPosition.z + eyeZ - 38);
+    // みおろす むきを たもち、うさぎへ 12% ちかづく。
+    const distanceScale = .88;
+    const eyeX = 2.4 * distanceScale;
+    const eyeY = (18.7 - 5 * fourthWeight) * distanceScale;
+    const eyeZ = (28 - 10 * fourthWeight) * distanceScale;
+    outPosition.set(playerPosition.x + eyeX + sideStep, playerPosition.y + eyeY, playerPosition.z + eyeZ);
+    outTarget.set(playerPosition.x + eyeX + sideStep - 1.8, playerPosition.y + eyeY - 17.75, playerPosition.z + eyeZ - 38);
     return weight;
   }
   const lift = number === 4 ? 8 : number === 3 ? 6 : 4.5;

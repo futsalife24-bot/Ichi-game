@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v62-voice-camera';
+const VERSION = 'kirakira-v63-camera-hud';
 const ASSETS = [
   './',
   './index.html',
