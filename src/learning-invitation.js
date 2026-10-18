@@ -1,8 +1,8 @@
-import { freshLearningInvitation, invitationChoice, validLearningInvitation } from './learning-invitation-state.js';
+import { INVITATION_CALL_LINE, freshLearningInvitation, invitationChoice, isInvitationIsland, validLearningInvitation } from './learning-invitation-state.js';
 import { activityById } from './island-activities.js';
 
-const CALL_LINE = 'いっしょに あそぼう！';
 const REPEAT_MS = [30000,45000,60000,90000];
+const CARD_HEADINGS = Object.freeze({ awaiting:INVITATION_CALL_LINE, choice:'どちらで あそぶ？', playing:'つづきから あそぼう！' });
 
 export function invitationBubblePosition(anchor, size, viewport, obstacles = []) {
   const gap = 12, edge = 10;
@@ -49,7 +49,7 @@ export class LearningInvitation {
       const link=document.createElement('link');link.id='learningInvitationStyle';link.rel='stylesheet';link.href='./src/learning-invitation.css';document.head.append(link);
     }
     this.root=document.createElement('div');this.root.id='learningInvitation';this.root.hidden=true;
-    this.bubble=document.createElement('button');this.bubble.type='button';this.bubble.className='learning-invitation-bubble';this.bubble.textContent='いっしょに あそぼう！ はなしかけてね';
+    this.bubble=document.createElement('button');this.bubble.type='button';this.bubble.className='learning-invitation-bubble';this.bubble.textContent=`${INVITATION_CALL_LINE} はなしかけてね`;
     this.bubble.onclick=()=>this.talk();
     this.card=document.createElement('section');this.card.className='learning-invitation-card';this.card.hidden=true;
     this.card.setAttribute('role','dialog');this.card.setAttribute('aria-modal','true');this.card.setAttribute('aria-label','あそびのおさそい');
@@ -57,6 +57,17 @@ export class LearningInvitation {
   }
 
   get state() { return validLearningInvitation(this.save.learningInvitation) ? this.save.learningInvitation : null; }
+
+  // いまの きろくを もとに、この しまの あたらしい おさそいを つくる。
+  freshFor(island, previous) {
+    return this.saveState(freshLearningInvitation(island,this.save.observations,this.save.islandActivities,previous));
+  }
+
+  // おさそいの つごうで しめる ときは、learningClosed で おわりに しない。
+  closeLearningQuietly() {
+    this.suppressClose=true;
+    try { this.learning.close(); } finally { this.suppressClose=false; }
+  }
 
   saveState(next) {
     if (!validLearningInvitation(next)) return false;
@@ -82,18 +93,17 @@ export class LearningInvitation {
   update({ island, ready, canShow, canSpeak, nearResident, now }) {
     this.nearResident=Boolean(nearResident);
     if (!this.active) return this.render(false);
-    if (!this.offered && ready && Number.isInteger(island) && island>=1 && island<=8) {
+    if (!this.offered && ready && isInvitationIsland(island)) {
       const saved=this.state;
       if (saved && saved.phase!=='done' && saved.island===island) this.offered=true;
-      else this.offered=this.saveState(freshLearningInvitation(island,this.save.observations,this.save.islandActivities,saved));
+      else this.offered=this.freshFor(island,saved);
     }
     if (ready) this.completeSavedActivity();
     let state=this.state;
     // へんじを するまでは、いま いる しまの じゅうみんが おさそいを ひきつぐ。
     // いちど へんじを した あとは、しまを かえても あらためて よばない。
-    if (this.offered && ready && state?.phase === 'awaiting' && state.island !== island
-        && Number.isInteger(island) && island >= 1 && island <= 8) {
-      if (this.saveState(freshLearningInvitation(island,this.save.observations,this.save.islandActivities,state))) state=this.state;
+    if (this.offered && ready && state?.phase === 'awaiting' && state.island !== island && isInvitationIsland(island)) {
+      if (this.freshFor(island,state)) state=this.state;
     }
     const visible=Boolean(this.offered && ready && canShow && state && state.island===island && state.phase!=='done');
     this.render(visible);
@@ -101,7 +111,7 @@ export class LearningInvitation {
     if (visible && !this.dialogOpen && state.phase==='awaiting' && canSpeak && this.voiceEnabled() && Number.isFinite(now) && now-this.lastVoice>=interval) {
       this.lastVoice=now;
       this.callCount++;
-      this.say({say:CALL_LINE,sub:CALL_LINE,lang:'ja'});
+      this.say({say:INVITATION_CALL_LINE,sub:INVITATION_CALL_LINE,lang:'ja'});
     }
   }
 
@@ -139,16 +149,10 @@ export class LearningInvitation {
       this.onFree();return true;
     }
     if (this.hasSavedCompletion()) return this.completeSavedActivity();
-    if (!this.learning?.open?.(state.island)) {
-      return false;
-    }
-    const current=this.save.islandActivities?.current;
-    if (!this.learning.startActivity(id,current?.id===id && !current.done)) {
-      this.suppressClose=true;this.learning.close();this.suppressClose=false;
-      return false;
-    }
-    if (state.phase==='choice' && !this.saveState({...state,phase:'playing',selected:id})) {
-      this.suppressClose=true;this.learning.close();this.suppressClose=false;
+    if (!this.learning?.open?.(state.island)) return false;
+    if (!this.learning.startActivity(id,this.resumable(id))
+        || (state.phase==='choice' && !this.saveState({...state,phase:'playing',selected:id}))) {
+      this.closeLearningQuietly();
       return false;
     }
     this.dialogOpen=false;this.render(false);return true;
@@ -162,6 +166,12 @@ export class LearningInvitation {
     if (!this.active || this.state?.phase!=='playing' || this.state.selected!==kind) return false;
     if (!this.finish()) return false;
     this.learning?.close?.();return true;
+  }
+
+  // とちゅうまで あそんだ ものは、つづきから はじめる。
+  resumable(id) {
+    const current=this.save.islandActivities?.current;
+    return current?.id===id && !current.done;
   }
 
   hasSavedCompletion() {
@@ -223,13 +233,13 @@ export class LearningInvitation {
     this.bubble.hidden=this.dialogOpen;
     const caller=this.residentName?`${this.residentIcon ?? '🌼'} ${this.residentName}：`:'';
     this.bubble.textContent=`${this.residentIcon ?? '🌼'} ${state.phase==='awaiting'?'あそぼう':'つづき'}`;
-    this.bubble.setAttribute('aria-label',caller+(state.phase==='awaiting'?'いっしょに あそぼう！':'あそびの つづきが あるよ。'));
+    this.bubble.setAttribute('aria-label',caller+(state.phase==='awaiting'?INVITATION_CALL_LINE:'あそびの つづきが あるよ。'));
     this.bubble.disabled=!this.nearResident;
     this.bubble.title=this.nearResident?'はなしかける':'じゅうみんの ちかくで はなしかけてね';
     this.card.hidden=!this.dialogOpen;
     if (!this.dialogOpen) return;
     this.card.replaceChildren();
-    const p=document.createElement('p');p.textContent=state.phase==='awaiting'?'いっしょに あそぼう！':state.phase==='choice'?'どちらで あそぶ？':'つづきから あそぼう！';this.card.append(p);
+    const p=document.createElement('p');p.textContent=CARD_HEADINGS[state.phase];this.card.append(p);
     const button=(label,click)=>{const item=document.createElement('button');item.type='button';item.textContent=label;item.onclick=click;this.card.append(item);};
     if (state.phase==='awaiting') {
       button('あそぶ',()=>this.respond('accept'));
@@ -238,10 +248,10 @@ export class LearningInvitation {
     }
     const ids=state.phase==='playing'?[state.selected]:state.options;
     for (const id of ids) {
-      const choice=invitationChoice(id);
+      const choice=invitationChoice(id), activity=activityById(id);
       const line=document.createElement('p');line.className='learning-invitation-story';line.textContent=choice.story;this.card.append(line);
       button('🔊 おはなしを きく',()=>this.speakStory(id));
-      button(`${choice.id===this.save.islandActivities?.current?.id && !this.save.islandActivities.current.done?'▶ つづきから　':''}${activityById(id).icon} ${activityById(id).title}`,()=>this.choose(id));
+      button(`${this.resumable(id)?'▶ つづきから　':''}${activity.icon} ${activity.title}`,()=>this.choose(id));
     }
     button('あとで あるく',()=>this.finish());
   }

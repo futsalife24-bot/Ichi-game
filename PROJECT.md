@@ -4,7 +4,10 @@
 
 初回の独立監査12件と、その修正時に見つかった旧保存のパン表示1件を修正。実装HEAD `d6470d6253cb3b3a8c31219be7e2f0aa24525f18`、全441テスト・843音声の完全性・GitHub必須検査が成功。[別Chat再監査2](https://chatgpt.com/c/6ad4ad3c-f338-83ec-8797-7cd83cd7c77b)は「実装上は合格。実機・本人・子どもの評価は別途」。新たな必須修正なし。
 
-[変更と検証](docs/world-play-restoration.md)、[検証概要](docs/world-play-check.json)、[実画面](docs/world-play-proof/index.html)、[最終監査原文](docs/world-play-audit-reaudit2.md)が今回の正本。作業ブランチ `codex/restore-world-play`、開始HEAD `3ae5ff6edadc9efc31f6d672d738fb6ee8bcd6a9`、[ドラフトPR #43](https://github.com/futsalife24-bot/Ichi-game/pull/43)に保存。main反映・公開は未承認・未実施。実スマートフォンの性能、本人・子どもの体験評価、全44活動を人がブラウザーで完走する確認は未実施。以下は以前の記録。
+[変更と検証](docs/world-play-restoration.md)、[検証概要](docs/world-play-check.json)、[実画面](docs/world-play-proof/index.html)、[最終監査原文](docs/world-play-audit-reaudit2.md)が今回の正本。作業ブランチ `codex/restore-world-play`、開始HEAD `3ae5ff6edadc9efc31f6d672d738fb6ee8bcd6a9`、[ドラフトPR #43](https://github.com/futsalife24-bot/Ichi-game/pull/43)に保存。2026-10-19に本人が公開を承認し、統合・公開確認を進行中。実スマートフォンの性能、本人・子どもの体験評価、全44活動を人がブラウザーで完走する確認は未実施。以下は以前の記録。
+# 現在地：おさそいと名物遊びのリファクタリング（2026-10-16）
+
+動きを変えずに、最近追加した５モジュールを整理した。名物遊びは島ごとの時間・模型・場所・速さを一つの表へまとめ、強弱の計算と終了処理を関数にした。おさそいは島番号の判定・遊びの検索・新しいおさそいの作成・学習画面を静かに閉じる処理・続きから遊べるかの判定を共通化し、呼びかけの文言を一か所にした。`main.js` はテストが本文を切り出して実行するため対象外。全383テスト、台帳・配信pack・843音声・贈り物の検査が成功。実ブラウザーで第四島と第八島の名物遊びの開始・終了表示を確認し、エラー０。開始HEAD `77004c6`。公開は未承認・未実施。以下は以前の記録。
 
 # 現在地：カメラの寄りと会話配置を修正（2026-10-16）
 

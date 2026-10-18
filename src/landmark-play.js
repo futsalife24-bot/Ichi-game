@@ -1,11 +1,15 @@
 import * as THREE from 'three';
 
-const DURATION={4:7,6:9,7:7,8:9};
-const MODEL={4:'greatWaterwheel',7:'windSails',8:'starCarousel'};
-const SPOTS={4:[10,-2],6:[0,-8],7:[0,-8],8:[0,0]};
+// しまごとの めいぶつ：あそぶ じかん・うごかす もけい・たつ ばしょ・まわる はやさ。
+const LANDMARKS={
+  4:{duration:7,model:'greatWaterwheel',spot:[10,-2],boost:1.35},
+  6:{duration:9,spot:[0,-8]},
+  7:{duration:7,model:'windSails',spot:[0,-8],boost:1.8},
+  8:{duration:9,model:'starCarousel',spot:[0,0],boost:.42},
+};
 
 export function getLandmarkSpot(island,scenery){
-  const spot=SPOTS[island];
+  const spot=LANDMARKS[island]?.spot;
   if(!spot||!scenery?.groundAt)return null;
   return {x:spot[0],y:scenery.groundAt(...spot),z:spot[1]};
 }
@@ -25,6 +29,8 @@ export function createLandmarkMarker(island,scenery){
 }
 
 function ease(t){const x=Math.max(0,Math.min(1,t));return x*x*(3-2*x);}
+// はじめと おわりの 1.1びょうで、ゆっくり つよまり ゆっくり もどる。
+function swell(elapsed,duration){return ease(Math.min(elapsed/1.1,(duration-elapsed)/1.1));}
 
 export class LandmarkPlay {
   constructor(){this.active=false;this.session=null;this.viewSubject=new THREE.Vector3();}
@@ -34,19 +40,21 @@ export class LandmarkPlay {
     if(!s||s.island!==7||!s.player?.pos)return null;
     const p=s.player.pos;
     // かざぐるまを みる あいだだけ、いつもの むきの まま そらへ すべらせる。
-    const pan=ease(Math.min(s.elapsed/1.1,(DURATION[7]-s.elapsed)/1.1));
+    const pan=swell(s.elapsed,LANDMARKS[7].duration);
     return this.viewSubject.set(p.x,p.y+24*pan,p.z+18*pan);
   }
 
   canStart(island,scenery){
-    if(!DURATION[island]||scenery?.number!==island)return false;
-    return island===6?Array.isArray(scenery.fish)&&scenery.fish.length>0:scenery.models?.has(MODEL[island])&&scenery.animated?.some(a=>a.modelId===MODEL[island]);
+    const landmark=LANDMARKS[island];
+    if(!landmark||scenery?.number!==island)return false;
+    return island===6?Array.isArray(scenery.fish)&&scenery.fish.length>0:scenery.models?.has(landmark.model)&&scenery.animated?.some(a=>a.modelId===landmark.model);
   }
 
   start({island,scenery,player,onClose}={}){
     if(this.active||!this.canStart(island,scenery))return false;
-    const model=scenery.models?.get(MODEL[island]);
-    const animated=scenery.animated?.filter(a=>a.modelId===MODEL[island])??[];
+    const {model:modelId}=LANDMARKS[island];
+    const model=scenery.models?.get(modelId);
+    const animated=scenery.animated?.filter(a=>a.modelId===modelId)??[];
     const originalSpeeds=animated.map(a=>a.speed);
     const water=island===4?scenery.group.children.filter(o=>o.name==='すいしゃへ そそぐ みず'):[];
     const waterScales=water.map(o=>o.scale.y);
@@ -55,8 +63,7 @@ export class LandmarkPlay {
     const origin=player?.pos?.clone?.();
     if(island===8&&!origin)return false;
     const originYaw=player?.yaw;
-    this.session={island,scenery,player,onClose,model,animated,originalSpeeds,water,waterScales,fish,fishRests,origin,elapsed:0};
-    this.session.originYaw=originYaw;
+    this.session={island,scenery,player,onClose,model,animated,originalSpeeds,water,waterScales,fish,fishRests,origin,originYaw,elapsed:0};
     this.active=true;
     if(island===8)this.placeRider();
     return true;
@@ -65,10 +72,10 @@ export class LandmarkPlay {
   update(dt){
     const s=this.session;if(!s)return;
     s.elapsed+=Number.isFinite(dt)?Math.max(0,dt):0;
-    const t=s.elapsed,phase=ease(Math.min(t/1.1,(DURATION[s.island]-t)/1.1));
+    const {duration,boost}=LANDMARKS[s.island];
+    const t=s.elapsed,phase=swell(t,duration);
     if(s.island===4||s.island===7){
-      const speed=s.island===4?1.35:1.8;
-      s.animated.forEach((a,i)=>{a.speed=s.originalSpeeds[i]+speed*phase;});
+      s.animated.forEach((a,i)=>{a.speed=s.originalSpeeds[i]+boost*phase;});
       s.water.forEach((o,i)=>{o.scale.y=s.waterScales[i]*(.65+.35*phase);});
     }else if(s.island===6){
       const center=s.player?.pos??{x:0,y:0,z:-20};
@@ -79,10 +86,10 @@ export class LandmarkPlay {
         f.userData.rest.set(rest.x+(target.x-rest.x)*phase,rest.y+(target.y-rest.y)*phase,rest.z+(target.z-rest.z)*phase);
       });
     }else if(s.island===8){
-      s.animated.forEach((a,i)=>{a.speed=s.originalSpeeds[i]+.42*phase;});
+      s.animated.forEach((a,i)=>{a.speed=s.originalSpeeds[i]+boost*phase;});
       this.placeRider();
     }
-    if(t>=DURATION[s.island])this.stop();
+    if(t>=duration)this.stop();
   }
 
   placeRider(){

@@ -58,6 +58,11 @@ function addPiece(group, owned, kind, color, size, position, rotation = 0) {
   return mesh;
 }
 
+function disposeOwned(owned) {
+  for (const mesh of owned) { mesh.geometry.dispose(); mesh.material.dispose(); }
+  owned.length = 0;
+}
+
 function makeResult(id, owned) {
   const [kind, color, name] = INVITATION_RESULTS[id];
   const root = new THREE.Group(); root.name = name; root.userData.activityId = id;
@@ -156,8 +161,7 @@ export class LearningInvitationWorld {
     const ids = INVITATION_CHOICES[entry.number].map(choice => choice.id).filter(id => completed.has(id));
     const key = ids.join('|');
     if (entry.key === key) return;
-    for (const mesh of entry.owned) { mesh.geometry.dispose(); mesh.material.dispose(); }
-    entry.owned.length = 0; entry.display.clear(); entry.key = key;
+    disposeOwned(entry.owned); entry.display.clear(); entry.key = key;
     ids.forEach((id, index) => {
       const result = makeResult(id, entry.owned);
       const x = (index - (ids.length - 1) / 2) * .92;
@@ -184,7 +188,7 @@ export class LearningInvitationWorld {
 
   dispose() {
     for (const entry of this.entries.values()) {
-      for (const mesh of entry.owned) { mesh.geometry.dispose(); mesh.material.dispose(); }
+      disposeOwned(entry.owned);
       entry.root.removeFromParent();
     }
     this.entries.clear(); this.current = null; this.resident = null;
