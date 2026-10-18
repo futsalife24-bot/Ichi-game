@@ -35,6 +35,10 @@
 
 ## 保存先と担当
 
+実装HEAD `45eefa0e440b536fbdf4f108765e75f8924197cc` をpush済み。[ドラフトPR #43](https://github.com/futsalife24-bot/Ichi-game/pull/43)を作成し、GitHubの必須検査 `voice` が成功。main統合と公開はしていない。
+
+独立監査資料 `output/world-play-audit.zip`（1,781,282バイト、SHA256 `81f0e82fdfa45b385fc47ae267b4674ce1e0204197095475a3d835a94b914921`）を作成。headのソース・差分・検証ログ・画面・監査依頼を収録。別ChatのUIでProを確認したが、実モデルIDは未確認。ChatGPTへの添付は自動承認審査で拒否された。理由は、非公開コード等の具体的な資料とChatGPTへの開示承認を、独立監査の承認のみから確認できないため。本人へ資料・送信先を明記して送信可否を質問済み。送信・監査判定はまだ行えていない。
+
 GitHub: https://github.com/futsalife24-bot/Ichi-game
 
 ローカル: `C:/Users/futsa/Documents/Codex/2026-10-03/codex-ichi-game-futsalife24-bot-ichi/work/Ichi-game`
