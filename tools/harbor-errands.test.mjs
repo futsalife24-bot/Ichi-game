@@ -11,6 +11,10 @@ import { Player } from '../src/player.js';
 import { PRESETS } from '../src/characters.js';
 import { freshSave, validateGameSave } from '../src/save.js';
 import { createProfileStore } from '../src/profiles.js';
+import { readFileSync } from 'node:fs';
+import vm from 'node:vm';
+
+const main = readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
 
 const finishFlowers = save => {
   save = adventureAction(save, 'flower', 'accept');
@@ -62,6 +66,30 @@ function harness(save = finishFlowers(freshSave()), persist) {
 }
 
 const input = { getMove: () => ({ x: 0, y: 0 }), consumeJump: () => false };
+test('実物遊び中は港のおつかいを重ねて開けず、終了後に再び開ける', () => {
+  const h = harness();
+  try {
+    const learning = { opened: true };
+    const connection = main.slice(main.indexOf('const harborErrands = new HarborErrands('), main.indexOf('let landmark = null;'));
+    const predicate = connection.match(/canAct: (\(\) =>[^\n]+),/)[1];
+    h.errands.canAct = vm.runInNewContext(predicate, {
+      mode: 'play', place: 'forest', saveBlocked: false, islandLoading: false, transitioning: false,
+      playTimer: { paused: false }, homePaused: false, developerMenuOpen: () => false,
+      ui: h.ui, invitation: null, landmark: null, help: { focused: false }, learning,
+    });
+    let opened = 0;
+    h.errands.beforeOpen = () => opened++;
+    const saved = JSON.stringify(h.save);
+    h.errands.open();
+    assert.equal(h.errands.modal, false);
+    assert.equal(opened, 0);
+    assert.equal(JSON.stringify(h.save), saved);
+    learning.opened = false;
+    h.errands.open();
+    assert.equal(h.errands.modal, true);
+    assert.equal(opened, 1);
+  } finally { h.dom.restore(); }
+});
 function walk(h, activity, arrived, onTick = () => {}) {
   activity.go();
   for (let tick = 0; tick < 3600; tick++) {

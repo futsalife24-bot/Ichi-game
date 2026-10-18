@@ -72,6 +72,25 @@ for(const number of [1,2,3,4,5,6,7,8]) {
   });
 }
 
+test('第四島の実地形でも長い板が左右の柱に乗る',async()=>{
+  const {world}=await setup(4);
+  const activity=ISLAND_ACTIVITIES.find((item)=>item.id==='I04-Q03');
+  const state=initialActivityState(activity.id);
+  state.placed=[activity.choices.indexOf(activity.answer)];
+  world.show(activity,state);
+  world.scene.updateMatrixWorld(true);
+  const bounds=(entry)=>new THREE.Box3().setFromObject(entry.root.children[0]);
+  const supports=world.entries.filter((entry)=>entry.kind==='support').map(bounds).sort((a,b)=>a.min.x-b.min.x);
+  const board=bounds(world.entries.find((entry)=>entry.kind==='placed'));
+  assert.equal(supports.length,2);
+  for(const support of supports){
+    assert.ok(board.min.x<support.max.x&&board.max.x>support.min.x);
+    assert.ok(board.min.z<support.max.z&&board.max.z>support.min.z);
+    assert.ok(Math.abs(board.min.y-support.max.y)<.03);
+  }
+  world.clear();
+});
+
 test('実際の歩行で手動移動・一時停止・終了後に経路が再開しない',async()=>{
   const {world,player,area}=await setup(5);
   let active=true;

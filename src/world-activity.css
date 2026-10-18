@@ -25,6 +25,7 @@
 .world-activity-heading span { flex: none; white-space: nowrap; }
 .world-activity-feedback { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; }
 .world-activity-controls { display: flex; align-items: stretch; justify-content: center; flex-wrap: wrap; gap: 4px; margin-top: 3px; }
+.world-activity-level { display: flex; gap: 4px; }
 .world-activity-controls button, .world-activity-help summary {
   min-height: 44px;
   padding: 4px 7px;
@@ -37,6 +38,7 @@
   cursor: pointer;
 }
 .world-activity-controls button:disabled { opacity: .5; cursor: default; }
+.world-activity-level button[aria-pressed="true"] { background: #396a89; border-color: #396a89; color: #fff; }
 .world-activity-controls button:focus-visible, .world-activity-help summary:focus-visible { outline: 3px solid #517fc7; outline-offset: 2px; }
 .world-activity-nearby { flex: 1 1 150px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .world-activity-help { position: relative; flex: none; }

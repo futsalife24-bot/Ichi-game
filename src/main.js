@@ -164,14 +164,14 @@ const adventure = new Adventure({ scene, player, animals, forest, ui, audio, voi
   getPlace: () => place,
   onSail: () => visitSecond(),
   onReturn: () => leaveForest(),
-  canAct: () => mode === 'play' && !saveBlocked && !islandLoading && !forestLoading && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !invitation?.dialogOpen && !landmark?.active && !help.focused && !harborBusy(),
+  canAct: () => mode === 'play' && !saveBlocked && !islandLoading && !forestLoading && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !invitation?.dialogOpen && !landmark?.active && !help.focused && !harborBusy() && !learning.opened,
   onChange: () => {
     life.endFishing(); input.reset();
     refreshActivityInput();
   },
 });
 const harborErrands = new HarborErrands({ forest, player, save, persist, ui, audio, voice, effects,
-  canAct: () => mode === 'play' && place === 'forest' && !saveBlocked && !islandLoading && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !invitation?.dialogOpen && !landmark?.active && !help.focused,
+  canAct: () => mode === 'play' && place === 'forest' && !saveBlocked && !islandLoading && !transitioning && !playTimer.paused && !homePaused && !developerMenuOpen() && !ui.panelOpen && !invitation?.dialogOpen && !landmark?.active && !help.focused && !learning.opened,
   beforeOpen: () => { adventure.stop(); harborPlay.cancel(); life.endFishing(); },
   onChange: () => { input.reset(); refreshActivityInput(); },
   onLeaf: () => { adventure.choose('leaf'); },
@@ -1096,7 +1096,7 @@ function frame(now) {
   $('btnIslands').setAttribute('aria-label', place === 'island' ? 'だいにの しまへ いく' : 'しまを えらぶ');
   if (place !== 'forest') $('adventureBack').classList.toggle('hidden', true);
   $('bells').classList.toggle('hidden', island < 3);
-  $('btnAdventure').classList.toggle('hidden', mode !== 'play' || place !== 'forest' || help.focused || adventure.focused || harborBusy());
+  $('btnAdventure').classList.toggle('hidden', mode !== 'play' || place !== 'forest' || help.focused || adventure.focused || harborBusy() || learning.opened);
   $('btnAdventure').querySelector('.side-label').textContent = place === 'forest' ? 'おつかい' : 'ぼうけん';
   $('btnAdventure').setAttribute('aria-label', place === 'forest' ? 'みなとの おつかい' : 'ぼうけん');
   $('placeLabel').textContent = `だい${['', 'いち', 'に', 'さん', 'よん', 'ご', 'ろく', 'なな', 'はち'][island]}の しま・${islandRules(island).name}`;

@@ -581,12 +581,21 @@ export class IslandLearning {
     return true;
   }
 
+  setLevel(level) {
+    if (!this.opened || !this.kind || ![1, 2].includes(level)) return false;
+    this.level = level;
+    this.step = 0;
+    this.showQuestion();
+    return true;
+  }
+
   showQuestion() {
     if (!this.opened || !this.kind) return;
     this.stopSpeech();
     this.question = makeIslandQuestion(this.kind, this.step, this.level, this.island);
     this.solved = false;
     if (this.worldPresenter) {
+      this.worldPresenter.onLevel = level => this.setLevel(level);
       this.feedback = {textContent:''};
       this.next = {classList:{remove(){}}};
       this.worldPresenter.showQuestion(this.question, {
@@ -604,7 +613,7 @@ export class IslandLearning {
     for (const n of [1, 2]) {
       const button = element('button', n === this.level ? 'active' : '', n === 1 ? 'やさしい' : 'ちょうせん');
       button.type = 'button'; button.setAttribute('aria-pressed', String(n === this.level));
-      button.onclick = () => { this.level = n; this.step = 0; this.showQuestion(); };
+      button.onclick = () => this.setLevel(n);
       level.append(button);
     }
     toolbar.append(back, level);

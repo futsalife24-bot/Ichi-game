@@ -62,7 +62,11 @@ function objectFor(value, hint = '') {
   }
   if (hint.includes('Balloon') && ['🔴','🔵'].includes(mark)) return makeBalloon(mark === '🔴' ? 0xe96765 : 0x5b9dd8);
   if (mark === '🍎') return grounded(makeFruit('ringo'),.55);
-  if (mark === '🍐') { const pear = makeFruit('ringo'); pear.traverse((part) => { if (part.material?.color) part.material.color.setHex(0xc5d669); }); return grounded(pear,.55); }
+  if (mark === '🍐') {
+    const pear=makeFruit('ringo'),body=pear.userData.inner.children[0];
+    body.material=body.material.clone();body.material.color.setHex(0xc5d669);body.userData.ownedMaterial=true;
+    return grounded(pear,.55);
+  }
   if (mark === '🎈') return makeBalloon(0xe96765);
   if (mark === '🔴' || word === 'あか') return makeShape('maru', 0xe96155);
   if (mark === '🔵' || word === 'あお') return makeShape('maru', 0x5d96d9);
@@ -135,6 +139,7 @@ function disposeTree(root) {
   root.traverse((node) => {
     if (node.userData.ownedTexture) node.userData.ownedTexture.dispose();
     if (node.userData.ownedGeometry) { node.geometry.dispose(); node.material?.dispose?.(); }
+    else if (node.userData.ownedMaterial) node.material?.dispose?.();
     node.userData.dispose?.();
   });
 }
@@ -317,15 +322,25 @@ export class WorldActivity {
       return;
     }
     if (type === 'compare-place') {
-      for (const col of [1, 2]) this.add(box(.13, 1, .13, 0x886c58), '', col, -1, null);
+      const supports=[1, 2].map((col)=>this.add(box(.13, 1, .13, 0x886c58), '', col, -1, null, {kind:'support',spread:1.2}));
       a.choices.forEach((value, i) => this.add(objectFor(value), value, i + 1, 1, () => this.pickUp(i, value), { kind:'piece' }));
-      if (s.placed.length) this.add(objectFor(a.choices[s.placed[0]]), '', 1.5, -1, null, { kind:'placed' });
-      this.add(tray(s.placed.length ? 'はしを くらべる' : 'いたを おく', '✓'), '', 1.5, -1, () => {
+      const placed=s.placed.length ? this.add(objectFor(a.choices[s.placed[0]]), '', 1.5, -1, null, {kind:'placed'}) : null;
+      const stage=new THREE.Group(),ring=mesh(new THREE.TorusGeometry(.5,.04,6,18),0xd49a55);
+      ring.rotation.x=-Math.PI/2;ring.position.y=.06;stage.add(ring);
+      const stageLabel=label(s.placed.length ? 'はしを くらべる' : 'いたを おく',1.55,.38);
+      stageLabel.position.y=1.5;stage.add(stageLabel);
+      const target=this.add(stage, '', 1.5, -1, () => {
         if (this.carry) {
           if (this.action({ type:'place', index:this.carry.index })) { this.dropCarry(); this.rebuild(); }
         } else if (s.placed.length) this.action({ type:'check' });
         else this.feedback('いたを はこんでね');
       }, { kind:'target' });
+      const top=Math.max(target.root.position.y,...supports.map((entry)=>entry.root.position.y))+1;
+      for(const support of supports){
+        const leg=support.root.children[0],height=top-support.root.position.y;
+        leg.scale.y=height;leg.position.y=height/2;
+      }
+      if(placed)placed.root.position.y=top+.09;
       return;
     }
     if (['collect','deliver','combine','subtract'].includes(type)) return this.buildGather();
@@ -459,11 +474,16 @@ export class WorldActivity {
     const base = box(1.75, .18, 1.05, wood); base.position.y = .27; apparatus.add(base);
     if (a.assets.includes('i06Balance')) {
       const stand=mesh(new THREE.CylinderGeometry(.08,.12,.8,8),0x8d8881);stand.position.y=.71;apparatus.add(stand);
-      const beam=box(1.42,.07,.09,0xbca676);beam.position.y=s.observed?1.03:1.12;beam.rotation.z=s.observed?-.13:0;apparatus.add(beam);
+      const tilt=s.observed ? .16 : 0;
+      const beam=box(1.42,.07,.09,0xbca676);beam.position.y=1.12;beam.rotation.z=tilt;beam.userData.balanceRole='beam';apparatus.add(beam);
       for(const side of [-1,1]) {
-        const pan=disk(.37,.08,0xd6c9a6);pan.position.set(side*.57,(side<0&&s.observed) ? .71 : .83,0);apparatus.add(pan);
+        const panX=side*.57*Math.cos(tilt),panY=.73+side*.57*Math.sin(tilt);
+        const pan=disk(.37,.08,0xd6c9a6);pan.position.set(panX,panY,0);pan.userData.balanceRole='pan';pan.userData.side=side;apparatus.add(pan);
+        const string=mesh(new THREE.CylinderGeometry(.014,.014,.35,6),0x806f5b);
+        string.position.set(panX,(1.12+side*.57*Math.sin(tilt)+panY+.04)/2,0);
+        string.userData.balanceRole='string';string.userData.side=side;apparatus.add(string);
         const count=side<0?3:1;
-        for(let i=0;i<count;i++){const weight=ball(.12,0x98a9b2);weight.position.set(side*.57+(i-1)*.16,pan.position.y+.16,0);apparatus.add(weight);}
+        for(let i=0;i<count;i++){const weight=ball(.12,0x98a9b2);weight.position.set(panX+(i-1)*.16,panY+.16,0);apparatus.add(weight);}
       }
     } else if (a.assets.includes('i06Windmill')) {
       const tower=mesh(new THREE.CylinderGeometry(.08,.16,1.15,9),0xd4b888);tower.position.y=.85;apparatus.add(tower);
@@ -670,6 +690,15 @@ export class WorldActivity {
     text.textContent = this.feedbackText || (this.carry ? `${itemName(this.carry.value)}を はこんでいるよ` : distance > 6 ? `🔻 ${this.guidanceName||'あそびの めじるし'}まで あと ${Math.round(distance)}m` : '');
     text.hidden = !text.textContent;
     const controls = document.createElement('div'); controls.className = 'world-activity-controls';
+    if (this.question && this.onLevel) {
+      const levels = document.createElement('div'); levels.className = 'world-activity-level';
+      for (const level of [1, 2]) {
+        const button = this.button(level === 1 ? 'やさしい' : 'ちょうせん', () => this.onLevel(level));
+        button.setAttribute('aria-pressed', String(this.question.level === level));
+        levels.append(button);
+      }
+      controls.append(levels);
+    }
     if (this.closest?.action) {
       const nearest = this.closest;
       const nearbyButton = this.button(this.actionText(nearest), () => this.activate(nearest), !this.canAct());

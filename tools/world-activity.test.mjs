@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import { WorldActivity } from '../src/world-activity.js';
+import { makeFruit } from '../src/props.js';
 import { ISLAND_ACTIVITIES, initialActivityState, playIslandActivity } from '../src/island-activities.js';
 import { makeIslandQuestion } from '../src/island-learning.js';
 import { LEARNING_ISLAND_LAYOUTS, clampLearningIsland, learningIslandHeight } from '../src/learning-island-layout.js';
@@ -53,6 +54,20 @@ test('すべての島の活動に歩いて触れる3D物と作業場所がある
   world.clear();
   assert.equal(world.hud.hidden,true);
   assert.equal(player.target,null);
+}));
+
+test('実物の問題にも段階ボタンがあり、活動中は表示しない',()=>browser(()=>{
+  const {world}=fixture(),chosen=[];
+  world.onLevel=level=>chosen.push(level);
+  world.showQuestion(makeIslandQuestion('count',0,1,4));
+  const levels=world.hud.children.flatMap(child=>child.children).find(child=>child.className==='world-activity-level');
+  assert.ok(levels);
+  assert.deepEqual(levels.children.map(button=>button.textContent),['やさしい','ちょうせん']);
+  levels.children[1].click();
+  assert.deepEqual(chosen,[2]);
+  world.show(ISLAND_ACTIVITIES.find(activity=>activity.id==='I04-Q04'),initialActivityState('I04-Q04'));
+  assert.equal(world.hud.children.flatMap(child=>child.children).some(child=>child.className==='world-activity-level'),false);
+  world.clear();
 }));
 
 test('素材と近くの操作は物の名前と動きを示し、内部番号だけを見せない',()=>browser(()=>{
@@ -319,6 +334,75 @@ test('第四島の直角三角形二枚は台の同じ正方形を半分ずつ�
   const board=world.entries.find((entry)=>entry.kind==='target').root.children[0];
   assert.equal(board.children.filter((child)=>child.geometry?.type==='ExtrudeGeometry').length,2);
   assert.equal(world.state.done,true);
+}));
+
+test('長い板だけが二本の柱にかかり、板の下面が柱の上に乗る',()=>browser(()=>{
+  const {world,player}=fixture(),activity=ISLAND_ACTIVITIES.find((item)=>item.id==='I04-Q03');
+  world.show(activity,initialActivityState(activity.id));
+  const bounds=(entry)=>{world.scene.updateMatrixWorld(true);return new THREE.Box3().setFromObject(entry.root.children[0]);};
+  const supports=world.entries.filter((entry)=>entry.kind==='support').sort((a,b)=>a.spot.x-b.spot.x);
+  assert.equal(supports.length,2);
+  const left=bounds(supports[0]),right=bounds(supports[1]);
+  const place=(value)=>{
+    const piece=world.entries.find((entry)=>entry.kind==='piece'&&entry.name===value);
+    player.pos.set(piece.spot.x,0,piece.spot.z);world.activate(piece);
+    const target=world.entries.find((entry)=>entry.kind==='target');
+    player.pos.set(target.spot.x,0,target.spot.z);world.activate(target);
+    return bounds(world.entries.find((entry)=>entry.kind==='placed'));
+  };
+  const long=place(activity.answer);
+  assert.ok(long.min.x<left.max.x&&long.max.x>right.min.x);
+  assert.ok(Math.abs(long.min.y-left.max.y)<.03);
+  assert.ok(Math.abs(long.min.y-right.max.y)<.03);
+  world.show(activity,initialActivityState(activity.id));
+  const short=place(activity.choices.find((value)=>value!==activity.answer));
+  assert.ok(short.min.x>left.max.x&&short.max.x<right.min.x);
+}));
+
+test('天秤は重り三つの左皿と梁の左端がともに下がる',()=>browser(()=>{
+  const {world}=fixture(),activity=ISLAND_ACTIVITIES.find((item)=>item.id==='I06-Q03');
+  const parts=()=>{
+    const apparatus=world.entries.find((entry)=>entry.kind==='target').root.children[0];
+    const beam=apparatus.children.find((part)=>part.userData.balanceRole==='beam');
+    const pans=apparatus.children.filter((part)=>part.userData.balanceRole==='pan').sort((a,b)=>a.userData.side-b.userData.side);
+    const strings=apparatus.children.filter((part)=>part.userData.balanceRole==='string').sort((a,b)=>a.userData.side-b.userData.side);
+    return {apparatus,beam,pans,strings};
+  };
+  world.show(activity,initialActivityState(activity.id));
+  const before=parts();
+  assert.equal(before.beam.rotation.z,0);
+  assert.equal(before.pans[0].position.y,before.pans[1].position.y);
+  world.entries.find((entry)=>entry.kind==='choice'&&entry.name==='よそう ひだり').action();
+  world.entries.find((entry)=>entry.kind==='target').action();
+  const after=parts();
+  assert.ok(after.beam.rotation.z>0);
+  assert.ok(after.pans[0].position.y<after.pans[1].position.y);
+  for(let i=0;i<2;i++){
+    const side=after.pans[i].userData.side,tip=after.beam.position.y+side*.57*Math.sin(after.beam.rotation.z);
+    const string=after.strings[i],half=string.geometry.parameters.height/2;
+    assert.ok(Math.abs(string.position.y+half-tip)<.001);
+    assert.ok(Math.abs(string.position.y-half-(after.pans[i].position.y+.04))<.001);
+  }
+  const weights=after.apparatus.children.filter((part)=>part.geometry?.type==='SphereGeometry');
+  assert.equal(weights.filter((part)=>part.position.x<0).length,3);
+  assert.equal(weights.filter((part)=>part.position.x>0).length,1);
+}));
+
+test('梨の色だけを変え、共有のりんごや白い光は変えず、専用材質を片づける',()=>browser(()=>{
+  const shared=makeFruit('ringo').userData.inner.children[0].material;
+  const original=shared.color.getHex();
+  const {world}=fixture(),activity=ISLAND_ACTIVITIES.find((item)=>item.id==='I02-H01');
+  world.show(activity,initialActivityState(activity.id));
+  const pear=world.entries.find((entry)=>entry.kind==='source'&&entry.name==='なし').root.children[0].children[0];
+  const body=pear.userData.inner.children[0],shine=pear.userData.inner.children[1];
+  assert.notEqual(body.material,shared);
+  assert.equal(body.material.color.getHex(),0xc5d669);
+  assert.equal(shared.color.getHex(),original);
+  assert.equal(shine.material.color.getHex(),0xffffff);
+  let disposed=false;body.material.addEventListener('dispose',()=>{disposed=true;});
+  world.clear();
+  assert.equal(disposed,true);
+  assert.equal(shared.color.getHex(),original);
 }));
 
 test('第七島の旅は実際の橋を渡った南に判定場所とテントがある',()=>browser(()=>{

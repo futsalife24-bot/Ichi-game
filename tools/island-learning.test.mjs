@@ -102,6 +102,30 @@ test('第二島と第三島の数は学校へ案内し、後の島は実物の�
   assert.equal(school,2);assert.equal(questions,1);assert.equal(learning.modal,false);
 }));
 
+test('世界の実物表示でも第四島の段階を切り替え、11〜20へ進める',()=>withFakeBrowser(()=>{
+  const learning=new IslandLearning();
+  let actions;
+  learning.worldPresenter={clear(){},showQuestion(_question,next){actions=next;}};
+  for(const island of [4,5,6,7,8]){
+    learning.open(island);
+    assert.equal(learning.start('count'),true);
+    assert.equal(learning.question.target,'1');
+    assert.equal(learning.worldPresenter.onLevel(2),true);
+    assert.equal(learning.question.target,'11',`第${island}島の挑戦`);
+    assert.equal(learning.question.sample.split(' ').length,11);
+    if(island===4)for(let target=11;target<=20;target++){
+      assert.equal(learning.question.target,String(target));
+      assert.equal(learning.answer(String(target)),true);
+      if(target<20)actions.onNext();
+    }
+    assert.equal(learning.worldPresenter.onLevel(1),true);
+    assert.equal(learning.question.target,'1');
+    learning.renderMenu();
+    assert.equal(learning.setLevel(2),false);
+  }
+  learning.close();
+}));
+
 test('各分野の答えは表示した見本・絵・数に対応する', () => {
   for (const kind of ['hira', 'upper', 'count', 'word', 'lower', 'compare', 'missing', 'pattern', 'color', 'shape', 'animal']) {
     for (const level of [1, 2]) {
