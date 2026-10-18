@@ -64,13 +64,13 @@ test('船の暗転中に休憩や案内が開いた場合は、到着で入力�
   }
 });
 
-test('学習パネルを開いた間は入力を無効にする', () => {
+test('学習の選択画面は入力を止め、実物で遊ぶ間は歩ける', () => {
   const context={mode:'play',saveBlocked:false,islandLoading:false,forestLoading:false,homePaused:false,transitioning:false,
-    $:hudElement,input:{enabled:true},learning:{opened:true,close(){}},ui:{panelOpen:false},
+    $:hudElement,input:{enabled:true},learning:{opened:true,modal:true,close(){}},ui:{panelOpen:false},
     harborErrands:{focused:false,modal:false},adventure:{focused:false,modal:false},help:{modal:false},playTimer:{paused:false}};
   vm.runInNewContext(activityInput+'\nrefreshActivityInput();',context);
   assert.equal(context.input.enabled,false);
-  context.learning.opened=false;
+  context.learning.modal=false;
   vm.runInNewContext('refreshActivityInput();',context);
   assert.equal(context.input.enabled,true);
   context.islandLoading=true;

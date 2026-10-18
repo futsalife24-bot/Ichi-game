@@ -3,6 +3,39 @@ import assert from 'node:assert/strict';
 import { IslandLearning, makeIslandQuestion, isIslandAnswerCorrect } from '../src/island-learning.js';
 import { ISLAND_ACTIVITIES } from '../src/island-activities.js';
 import { ACTIVITY_VOICE_LINES } from '../src/activity-voice-lines.js';
+import { readFileSync } from 'node:fs';
+import vm from 'node:vm';
+
+test('主画面の実物活動は英語へ接続し、別のおつかいとは同時に操作できない',()=>withFakeBrowser(()=>{
+  let enabled=true,harbor=false;
+  const said=[];
+  const learning=new IslandLearning({voice:{canSpeakEnglish:()=>true,say:line=>said.push(line),stop(){}},voiceEnabled:()=>enabled});
+  const main=readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
+  const wiring=main.slice(main.indexOf('learning.worldPresenter = new WorldActivity('),main.indexOf('let lastAssistTarget ='));
+  const adventure={focused:false,modal:false};
+  vm.runInNewContext(wiring,{learning,WorldActivity:class {constructor(options){Object.assign(this,options);}clear(){}show(){}feedback(){}},
+    scene:{},player:{},env:()=>({}),mode:'play',saveBlocked:false,islandLoading:false,forestLoading:false,transitioning:false,
+    homePaused:false,playTimer:{paused:false},document:{hidden:false},developerMenuOpen:()=>false,invitation:{dialogOpen:false},ui:{panelOpen:false},harborBusy:()=>harbor,adventure});
+  learning.open(4);learning.startActivity('I04-Q01');
+  const world=learning.worldPresenter;
+  assert.equal(world.canAct(),true);
+  assert.equal(world.isEnglishAvailable(),true);
+  assert.equal(world.onEnglish(),true);
+  assert.equal(said.at(-1).say,'triangle');assert.equal(said.at(-1).lang,'en');
+  enabled=false;assert.equal(world.isEnglishAvailable(),false);assert.equal(world.onEnglish(),false);
+  harbor=true;assert.equal(world.canAct(),false);harbor=false;
+  adventure.focused=true;assert.equal(world.canAct(),false);adventure.focused=false;
+  adventure.modal=true;assert.equal(world.canAct(),false);adventure.modal=false;
+  assert.equal(world.canAct(),true);
+  const connection=main.slice(main.indexOf('const learning = new IslandLearning('),main.indexOf('const invitationWorld ='));
+  const canOpen=connection.match(/canOpen: ([^\n]+),/)[1];
+  const allowed=vm.runInNewContext(canOpen,{mode:'play',islandNumber:()=>3,saveBlocked:false,islandLoading:false,transitioning:false,
+    playTimer:{paused:false},homePaused:false,developerMenuOpen:()=>false,ui:{panelOpen:false},help:{focused:false,modal:false},
+    adventure,harborBusy:()=>harbor,invitation:null,landmark:null,invitationOpening:false});
+  harbor=true;assert.equal(allowed(3),false);harbor=false;
+  adventure.focused=true;assert.equal(allowed(3),false);adventure.focused=false;
+  assert.equal(allowed(3),true);
+}));
 
 test('第四島からは実物と数字を１〜２０まで繰り返せて、第二島は10までを保つ',()=>{
   const found=new Set();
@@ -64,6 +97,67 @@ function findClass(node, className) {
   return [node, ...node.children.flatMap((child) => findClass(child,className))]
     .filter((item) => item.className?.split(' ').includes(className));
 }
+
+test('実物の活動中は歩行を止めず、選択画面と終了だけを切り替える',()=>withFakeBrowser(()=>{
+  let shown=0,cleared=0,changed=0;
+  const learning=new IslandLearning({saveProgress:()=>true});
+  learning.worldPresenter={clear(){cleared++;},show(){shown++;},feedback(){}};
+  learning.onPresentationChange=()=>changed++;
+  assert.equal(learning.open(5),true);assert.equal(learning.modal,true);
+  assert.equal(learning.startActivity('I05-Q02'),true);
+  assert.equal(learning.opened,true);assert.equal(learning.modal,false);
+  assert.equal(learning.mount.classList.contains('hidden'),true);
+  assert.equal(shown,1);
+  learning.renderMenu();assert.equal(learning.modal,true);
+  assert.equal(learning.mount.classList.contains('hidden'),false);
+  learning.close();assert.equal(learning.opened,false);assert.equal(learning.worldActive,false);
+  assert.ok(cleared>=3);assert.ok(changed>=3);
+}));
+
+test('保存に失敗した実物の操作は状態を変えず、完了で閉じても再表示しない',()=>withFakeBrowser(()=>{
+  let writable=true,shown=0,message='';
+  const learning=new IslandLearning({saveProgress:()=>writable,onCompleted:()=>learning.close()});
+  learning.worldPresenter={clear(){},show(){shown++;},feedback(text){message=text;}};
+  learning.open(4);learning.startActivity('I04-Q02');
+  const before=learning.activityState;
+  writable=false;assert.equal(learning.activityAction({value:'🔴'}),false);
+  assert.equal(learning.activityState,before);assert.match(message,/きろく/);
+  writable=true;assert.equal(learning.activityAction({value:'🔴'}),true);
+  assert.equal(learning.opened,false);assert.equal(shown,1);
+}));
+
+test('第二島と第三島の数は学校へ案内し、後の島は実物の復習を保つ',()=>withFakeBrowser(()=>{
+  const learning=new IslandLearning();let school=0,questions=0;
+  learning.onSchool=()=>{school++;learning.close();return true;};
+  learning.worldPresenter={clear(){},showQuestion(){questions++;}};
+  for(const island of [2,3]){learning.open(island);assert.equal(learning.start('count'),true);assert.equal(learning.opened,false);}
+  learning.open(4);learning.start('count');
+  assert.equal(school,2);assert.equal(questions,1);assert.equal(learning.modal,false);
+}));
+
+test('世界の実物表示でも第四島の段階を切り替え、11〜20へ進める',()=>withFakeBrowser(()=>{
+  const learning=new IslandLearning();
+  let actions;
+  learning.worldPresenter={clear(){},showQuestion(_question,next){actions=next;}};
+  for(const island of [4,5,6,7,8]){
+    learning.open(island);
+    assert.equal(learning.start('count'),true);
+    assert.equal(learning.question.target,'1');
+    assert.equal(learning.worldPresenter.onLevel(2),true);
+    assert.equal(learning.question.target,'11',`第${island}島の挑戦`);
+    assert.equal(learning.question.sample.split(' ').length,11);
+    if(island===4)for(let target=11;target<=20;target++){
+      assert.equal(learning.question.target,String(target));
+      assert.equal(learning.answer(String(target)),true);
+      if(target<20)actions.onNext();
+    }
+    assert.equal(learning.worldPresenter.onLevel(1),true);
+    assert.equal(learning.question.target,'1');
+    learning.renderMenu();
+    assert.equal(learning.setLevel(2),false);
+  }
+  learning.close();
+}));
 
 test('各分野の答えは表示した見本・絵・数に対応する', () => {
   for (const kind of ['hira', 'upper', 'count', 'word', 'lower', 'compare', 'missing', 'pattern', 'color', 'shape', 'animal']) {

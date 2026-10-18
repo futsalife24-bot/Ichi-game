@@ -1,0 +1,35 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><title>実物遊びの確認</title>
+<style>body{margin:0;background:#eef3ed;color:#243c31;font:14px sans-serif}nav{display:flex;gap:6px;padding:6px;flex-wrap:wrap}button,select{min-height:34px}iframe{width:100%;height:540px;border:0}pre{white-space:pre-wrap;margin:8px}h1{font-size:18px;margin:8px}</style>
+<h1>全島の実物遊び・一時データでの確認</h1><nav id="islands"></nav>
+<nav><select id="activity" aria-label="活動"></select><button id="start">活動を開始</button><button id="stop">活動を終了</button><button id="count">数の復習</button><button id="small">小さい横画面</button><button id="large">広い画面</button><button id="school">学校へ歩く</button></nav>
+<nav><select id="target" aria-label="実物の対象"></select><button id="walk">対象へ歩く</button><button id="touch">対象をタップ</button><button id="snapshot">検証状態を記録</button></nav>
+<iframe id="game" title="確認用のゲーム" src="../?dev=all&month=4"></iframe><pre id="state">準備中</pre><pre id="records"></pre>
+<script type="importmap">{"imports":{"three":"../vendor/three.module.js"}}</script>
+<script type="module">
+import {conceptRoute} from '../src/concept-route.js';
+import {ISLAND_ACTIVITIES} from '../src/island-activities.js';
+import {Vector2,Vector3,Raycaster} from 'three';
+const frame=document.querySelector('#game'),activity=document.querySelector('#activity'),target=document.querySelector('#target');
+const scenarios=['all','second','forest','workshop','market','nature','expedition','festival'];let island=1,walking=null,schoolRoute=[],records=[];
+function menu(){activity.replaceChildren(...ISLAND_ACTIVITIES.filter(a=>a.island===island).map(a=>new Option(a.title,a.id)));}
+for(let i=1;i<=8;i++){const b=document.createElement('button');b.textContent=`第${i}島`;b.onclick=()=>{island=i;frame.src=`../?dev=${scenarios[i-1]}&month=4`;menu();};document.querySelector('#islands').append(b);}menu();
+const game=()=>frame.contentWindow.__game;
+document.querySelector('#start').onclick=()=>{const g=game();if(!g)return;g.learning.close();if(g.learning.open(island))g.learning.startActivity(activity.value);};
+document.querySelector('#stop').onclick=()=>game()?.learning.close();
+document.querySelector('#count').onclick=()=>{const g=game();if(!g)return;g.learning.close();if(g.learning.open(island))g.learning.start('count');};
+document.querySelector('#small').onclick=()=>{frame.style.width='667px';frame.style.height='375px';};
+document.querySelector('#large').onclick=()=>{frame.style.width='100%';frame.style.height='540px';};
+document.querySelector('#school').onclick=()=>{const g=game();if(!g)return;g.learning.close();const door=g.environment.schoolDoor;if(door){schoolRoute=conceptRoute(g.player.pos,door,g.environment.conceptScenery?.solids??[],null,island).map(p=>new Vector3(p.x,g.environment.groundAt(p.x,p.z),p.z));g.player.setTarget(schoolRoute.shift());walking={name:'学校の入口',x:door.x,z:door.z,started:performance.now()};}};
+function selected(){return game()?.learning.worldPresenter.entries[Number(target.value)];}
+document.querySelector('#walk').onclick=()=>{const g=game(),e=selected();if(!e)return;g.learning.worldPresenter.walkTo(e);walking={name:e.name||e.kind,...e.spot,started:performance.now()};};
+document.querySelector('#touch').onclick=()=>{const g=game(),e=selected();if(!e)return;const p=e.root.position.clone();p.y+=.35;p.project(g.camera);const ray=new Raycaster();ray.setFromCamera(new Vector2(p.x,p.y),g.camera);g.learning.worldPresenter.tap(ray);};
+function data(){const g=game();if(!g)return{準備中:true};return{場所:g.place,位置:g.player.pos.toArray(),活動:g.learning.activity?.id,モーダル:g.learning.modal,持ち物:g.learning.worldPresenter.carry,進行:g.learning.activityState,対象数:g.learning.worldPresenter.entries.length};}
+document.querySelector('#snapshot').onclick=()=>{records.push(data());document.querySelector('#records').textContent=JSON.stringify(records,null,2);};
+let lastTargets='';
+setInterval(()=>{const g=game();if(!g)return;const title=frame.contentDocument.querySelector('#title');if(!title.classList.contains('hidden'))frame.contentDocument.querySelector('#btnPlay').click();
+ if(schoolRoute.length&&(!g.player.target||g.player.pos.distanceTo(g.player.target)<.6)){if(g.place==='school')schoolRoute=[];else g.player.setTarget(schoolRoute.shift());}
+ const entries=g.learning.worldPresenter.entries;const key=entries.map(e=>`${e.name}:${e.kind}:${e.spot.x}:${e.spot.z}`).join('|');if(key!==lastTargets){const old=target.value;target.replaceChildren(...entries.map((e,i)=>new Option(`${i}: ${e.kind} ${e.name}`,String(i))));if(old!==''&&Number(old)<entries.length)target.value=old;lastTargets=key;}
+ if(walking){const d=Math.hypot(g.player.pos.x-walking.x,g.player.pos.z-walking.z);if(d<1.5||performance.now()-walking.started>180000){records.push({歩行:walking.name,到達:d<1.5,距離:d,秒:(performance.now()-walking.started)/1000});document.querySelector('#records').textContent=JSON.stringify(records,null,2);walking=null;}}
+ document.querySelector('#state').textContent=JSON.stringify(data(),null,2);
+},300);
+</script></html>

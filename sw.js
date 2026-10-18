@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v63-camera-hud';
+const VERSION = 'kirakira-v64-world-play';
 const ASSETS = [
   './',
   './index.html',
@@ -14,6 +14,11 @@ const ASSETS = [
   './src/render-budget.js',
   './src/island-rules.js',
   './src/island-learning.js',
+  './src/world-activity.js',
+  './src/world-activity.css',
+  './src/growth-controls.js',
+  './src/growth-controls.css',
+  './src/jump-discovery.js',
   './src/island-learning.css',
   './src/island-activities.js',
   './src/island-activities.css',
