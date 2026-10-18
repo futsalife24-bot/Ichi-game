@@ -127,7 +127,7 @@ test('第八島の5人とパンは手前の旗に画面上で隠れず、歩い�
   const people=world.entries.filter((entry)=>entry.kind==='reference-person');
   const breads=world.entries.filter((entry)=>entry.kind==='reference-item');
   const missingBreads=world.entries.filter((entry)=>entry.kind==='source');
-  assert.equal(people.length,5);assert.equal(breads.length,3);assert.equal(missingBreads.length,2);
+  assert.equal(people.length,5);assert.equal(breads.length,3);assert.equal(missingBreads.length,5);
   world.scene.updateMatrixWorld(true);
   const reference=[...people,...breads,...missingBreads].map((entry)=>screen(new THREE.Box3().setFromObject(entry.root.children[0])));
   const flags=[];

@@ -202,7 +202,7 @@ test('第八島は客と既存パン・不足パン、客と必要な椅子を�
     assert.equal(guests.length,people,id);
     assert.equal(world.entries.filter((entry)=>entry.kind==='reference-slot').length,people,id);
     assert.equal(world.entries.filter((entry)=>entry.kind==='reference-item').length,fixed,id);
-    assert.equal(world.entries.filter((entry)=>entry.kind==='source').length,activity.id==='I08-Q01'?2:6,id);
+    assert.equal(world.entries.filter((entry)=>entry.kind==='source').length,activity.total,id);
     for(let i=0;i<needed;i++){
       world.entries.find((entry)=>entry.kind==='source'&&entry.value===i).action();
       world.entries.find((entry)=>entry.kind==='target').action();
@@ -211,6 +211,52 @@ test('第八島は客と既存パン・不足パン、客と必要な椅子を�
     assert.equal(result.length,people,id);
     for(let i=0;i<people;i++)assert.ok(Math.abs(result[i].spot.x-guests[i].spot.x)<.05,id);
   }
+}));
+
+test('第八島の古いパン番号も再開・返却・持ち運び・余りの修正ができる',()=>browser(()=>{
+  const {world}=fixture(),activity=ISLAND_ACTIVITIES.find((item)=>item.id==='I08-Q01');
+  const reopen=(picks)=>{
+    const state=initialActivityState(activity.id);state.picks=[...picks];
+    world.show(activity,state);
+  };
+  const placed=()=>world.entries.filter((entry)=>entry.kind==='placed');
+  const source=(index)=>world.entries.find((entry)=>entry.kind==='source'&&entry.value===index);
+  const guest=(index)=>world.entries.filter((entry)=>entry.kind==='reference-person').sort((a,b)=>a.spot.x-b.spot.x)[index];
+  const target=()=>world.entries.find((entry)=>entry.kind==='target');
+
+  reopen([4]);
+  assert.equal(world.entries.filter((entry)=>entry.kind==='reference-item').length,3);
+  assert.equal(world.entries.filter((entry)=>entry.kind==='source').length,4);
+  assert.equal(placed()[0].value,4);
+  assert.ok(Math.abs(placed()[0].spot.x-guest(3).spot.x)<.05);
+  source(2).action();
+  assert.equal(world.carry.index,2);
+  reopen([4]);
+  assert.equal(world.carry.index,2);
+  assert.equal(source(2),undefined);
+  target().action();
+  assert.deepEqual(world.state.picks,[4,2]);
+  assert.deepEqual(placed().map((entry)=>entry.value).sort(),[2,4]);
+  assert.ok(Math.abs(placed().find((entry)=>entry.value===2).spot.x-guest(4).spot.x)<.05);
+  placed().find((entry)=>entry.value===4).action();
+  assert.deepEqual(world.state.picks,[2]);
+  assert.ok(source(4));
+  source(0).action();target().action();target().action();
+  assert.deepEqual(world.state.picks,[2,0]);
+  assert.equal(world.state.done,true);
+
+  reopen([4,2,1]);
+  assert.equal(world.entries.filter((entry)=>entry.kind==='source').length,2);
+  assert.equal(placed().length,3);
+  const surplus=world.entries.find((entry)=>entry.kind==='surplus-tray');
+  assert.ok(surplus);
+  assert.ok(Math.abs(placed().find((entry)=>entry.value===1).spot.x-surplus.spot.x)<1.2);
+  target().action();
+  assert.equal(world.state.done,false);
+  placed().find((entry)=>entry.value===1).action();
+  assert.deepEqual(world.state.picks,[4,2]);
+  target().action();
+  assert.equal(world.state.done,true);
 }));
 
 test('歩行中は残り距離の文字だけが変わり、HUD全体は作り直さない',()=>browser(()=>{

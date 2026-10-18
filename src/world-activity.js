@@ -376,7 +376,7 @@ export class WorldActivity {
       const crown = ball(.85, 0x7aa879); crown.position.y = 2; tree.add(crown);
       this.add(tree, 'きを ゆらす', 1.5, 0, () => this.action({ type:'shake' }), { kind:'source' }); return;
     }
-    const count = type === 'combine' ? a.groups[1] : a.id==='I08-Q01' ? a.target : a.total;
+    const count = type === 'combine' ? a.groups[1] : a.total;
     if(['I08-Q01','I08-Q03'].includes(a.id)) {
       const people=a.id==='I08-Q01' ? 5 : 4;
       for(let i=0;i<people;i++) {
@@ -388,6 +388,10 @@ export class WorldActivity {
     if(type==='combine') {
       const board=box(4.15,.12,.75,0xd5bb91);board.position.y=.06;
       this.add(board,'',1.5,-1,null,{kind:'board',spread:.85});
+    }
+    if(a.id==='I08-Q01') {
+      const extra=tray('あまった パン','🥖');extra.scale.x=2;
+      this.add(extra,'',3,-2.55,null,{kind:'surplus-tray'});
     }
     for (let i = 0; i < count; i++) {
       const chosen = s.picks.includes(i), stored = s.bins.includes(i);
@@ -402,12 +406,14 @@ export class WorldActivity {
       else if (chosen && !(this.carry?.index === i)) {
         if(type==='combine')model.scale.setScalar(.65);
         if(a.id==='I04-Q04')model.scale.setScalar(.5);
-        const referenceSlot=a.id==='I08-Q01' ? i+3 : a.id==='I08-Q03' ? s.picks.indexOf(i) : null;
-        this.add(model, '', referenceSlot!==null ? referenceSlot-.5 : type==='combine' ? i+2.5 : column,
-          referenceSlot!==null ? -1.45 : type==='combine' ? -1 : -1+Math.floor(i/5)*.45,
+        const order=s.picks.indexOf(i);
+        const referenceSlot=a.id==='I08-Q01' ? order<2 ? order+3 : null : a.id==='I08-Q03' ? order : null;
+        const extra=a.id==='I08-Q01'&&order>=2;
+        this.add(model, '', extra ? 3+(order-3)*.38 : referenceSlot!==null ? referenceSlot-.5 : type==='combine' ? i+2.5 : column,
+          extra ? -2.55 : referenceSlot!==null ? -1.45 : type==='combine' ? -1 : -1+Math.floor(i/5)*.45,
           type === 'collect' || (type === 'deliver' && s.phase === 0) || (type === 'subtract' && s.phase === 0)
           ? () => this.action({ type:'return', index:i }) : null,
-          { kind:'placed', value:i, spread:referenceSlot!==null ? 1.05 : type==='combine' ? .85 : 1.55, height:type==='combine' ? .12 : 0,
+          { kind:'placed', value:i, spread:extra ? 1.65 : referenceSlot!==null ? 1.05 : type==='combine' ? .85 : 1.55, height:extra ? .5 : type==='combine' ? .12 : 0,
             separation:a.id==='I04-Q04' ? .85 : 0 });
       }
     }
