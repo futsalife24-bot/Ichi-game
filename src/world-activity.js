@@ -145,10 +145,11 @@ function disposeTree(root) {
 }
 
 export class WorldActivity {
-  constructor({ scene, player, getEnvironment, onAction, onClose, onRepeat, onHear, onGuide, onRestart, canAct = () => true } = {}) {
+  constructor({ scene, player, getEnvironment, onAction, onClose, onRepeat, onHear, onGuide, onRestart, onEnglish, isEnglishAvailable, canAct = () => true } = {}) {
     this.scene = scene; this.player = player; this.getEnvironment = getEnvironment;
     this.onAction = onAction; this.onClose = onClose; this.onRepeat = onRepeat;
     this.onHear = onHear; this.onGuide = onGuide; this.onRestart = onRestart;
+    this.onEnglish=onEnglish;this.isEnglishAvailable=isEnglishAvailable;
     this.canAct = canAct;
     this.group = new THREE.Group(); this.group.name = 'しまの じつぶつあそび'; scene.add(this.group);
     this.entries = []; this.closest = null; this.activity = null; this.state = null; this.question = null;
@@ -168,6 +169,7 @@ export class WorldActivity {
     for (const entry of this.entries) disposeTree(entry.root);
     this.entries = []; this.activity = null; this.state = null; this.question = null;
     this.anchor = null; this.guidanceSpot = null; this.guidanceName = ''; this.carry = null; this.questionSolved = false; this.helpOpen = false; this.feedbackText = '';
+    this.feedbackNode = null;
     if (this.carryMesh) { disposeTree(this.carryMesh); this.carryMesh = null; }
     this.hud.hidden = true; this.hud.replaceChildren();
   }
@@ -194,6 +196,8 @@ export class WorldActivity {
     if (spot) {
       const toward = new THREE.Vector2(-spot.x, -spot.z).normalize();
       const point = new THREE.Vector3(spot.x + toward.x * 2.6, p.y, spot.z + toward.y * 2.6);
+      // だいはちの ひろばは、てまえの はたが おきゃくさんに かぶらない ばしょを つかう。
+      if (environment?.number === 8) point.z += 4;
       environment?.clampPos?.(point);
       return { x:point.x, z:point.z };
     }
@@ -224,7 +228,7 @@ export class WorldActivity {
     return { x, z };
   }
 
-  add(model, name, column, row, action, { value = '', kind = '', height = 0, spread = 1.65, worldSpot = null, actionLabel = '' } = {}) {
+  add(model, name, column, row, action, { value = '', kind = '', height = 0, spread = 1.65, worldSpot = null, actionLabel = '', separation = 0 } = {}) {
     const spot = worldSpot ? {x:worldSpot.x,z:worldSpot.z} : this.position(column, row, spread);
     const point = new THREE.Vector3(spot.x, this.ground(spot.x, spot.z), spot.z);
     const environment = this.getEnvironment();
@@ -243,6 +247,17 @@ export class WorldActivity {
         const candidate=center.clone();candidate.x+=Math.cos(angle*Math.PI/6)*radius;candidate.z+=Math.sin(angle*Math.PI/6)*radius;
         environment?.clampPos?.(candidate);
         if (nearby(candidate,center)>3.6 || !this.routePointValid(candidate,environment)) continue;
+        point.copy(candidate);break outer;
+      }
+    }
+    if(separation&&this.entries.some((entry)=>entry.kind==='placed'&&nearby(point,entry.spot)<separation)){
+      const center=point.clone();
+      outer: for(const radius of [.4,.8,1.2,1.6,2,2.5,3,3.6,4.2])for(let angle=0;angle<24;angle++){
+        const candidate=center.clone();candidate.x+=Math.cos(angle*Math.PI/12)*radius;candidate.z+=Math.sin(angle*Math.PI/12)*radius;
+        const requested=candidate.clone();environment?.clampPos?.(candidate);
+        if(nearby(candidate,requested)>.2||!this.routePointValid(candidate,environment))continue;
+        if(environment?.colliders?.some((collider)=>collider.r&&nearby(candidate,collider)<collider.r+.85))continue;
+        if(this.entries.some((entry)=>entry.kind==='placed'&&nearby(candidate,entry.spot)<separation))continue;
         point.copy(candidate);break outer;
       }
     }
@@ -361,7 +376,15 @@ export class WorldActivity {
       const crown = ball(.85, 0x7aa879); crown.position.y = 2; tree.add(crown);
       this.add(tree, 'きを ゆらす', 1.5, 0, () => this.action({ type:'shake' }), { kind:'source' }); return;
     }
-    const count = type === 'combine' ? a.groups[1] : a.total;
+    const count = type === 'combine' ? a.groups[1] : a.id==='I08-Q01' ? a.target : a.total;
+    if(['I08-Q01','I08-Q03'].includes(a.id)) {
+      const people=a.id==='I08-Q01' ? 5 : 4;
+      for(let i=0;i<people;i++) {
+        this.add(objectFor(i%2?'👦':'👧'),i===0?`${people}にんの おきゃくさん`:'',i-.5,-1,null,{kind:'reference-person',spread:1.05});
+        this.add(disk(.27,.05,0xf2e5d0),'',i-.5,-1.45,null,{kind:'reference-slot',spread:1.05,height:.03});
+        if(a.id==='I08-Q01'&&i<3)this.add(objectFor('🥖'),i===0?'ある パン 3こ':'',i-.5,-1.45,null,{kind:'reference-item',spread:1.05});
+      }
+    }
     if(type==='combine') {
       const board=box(4.15,.12,.75,0xd5bb91);board.position.y=.06;
       this.add(board,'',1.5,-1,null,{kind:'board',spread:.85});
@@ -378,16 +401,26 @@ export class WorldActivity {
       }, { kind:'source', value:i, spread:1.55, actionLabel:`${itemName(a.icon)}を もつ` });
       else if (chosen && !(this.carry?.index === i)) {
         if(type==='combine')model.scale.setScalar(.65);
-        this.add(model, '', type==='combine' ? i+2.5 : column, type==='combine' ? -1 : -1+Math.floor(i/5)*.45, type === 'collect' || (type === 'deliver' && s.phase === 0) || (type === 'subtract' && s.phase === 0)
-          ? () => this.action({ type:'return', index:i }) : null, { kind:'placed', value:i, spread:type==='combine' ? .85 : 1.55, height:type==='combine' ? .12 : 0 });
+        if(a.id==='I04-Q04')model.scale.setScalar(.5);
+        const referenceSlot=a.id==='I08-Q01' ? i+3 : a.id==='I08-Q03' ? s.picks.indexOf(i) : null;
+        this.add(model, '', referenceSlot!==null ? referenceSlot-.5 : type==='combine' ? i+2.5 : column,
+          referenceSlot!==null ? -1.45 : type==='combine' ? -1 : -1+Math.floor(i/5)*.45,
+          type === 'collect' || (type === 'deliver' && s.phase === 0) || (type === 'subtract' && s.phase === 0)
+          ? () => this.action({ type:'return', index:i }) : null,
+          { kind:'placed', value:i, spread:referenceSlot!==null ? 1.05 : type==='combine' ? .85 : 1.55, height:type==='combine' ? .12 : 0,
+            separation:a.id==='I04-Q04' ? .85 : 0 });
       }
+    }
+    if(a.id==='I06-H02'&&s.bins.length)for(let j=0;j<s.bins.length;j++){
+      const stored=objectFor(a.icon);stored.scale.setScalar(.35);
+      this.add(stored,'',3+(j%3-1)*.2,-1.2-Math.floor(j/3)*.16,null,{kind:'stored',value:s.bins[j],height:.5});
     }
     if (type === 'combine') for (let i = 0; i < a.groups[0]; i++) {
       const model=objectFor(a.icon);model.scale.setScalar(.65);
       this.add(model, i===0 ? `${itemName(a.icon)}を ${a.groups[0]}こ` : '', i-.5, -1, null, { kind:'sample', spread:.85, height:.12 });
     }
-    const targetName = type === 'deliver' ? (s.phase === 1 && a.steps?.length === 3 ? 'のこりの かご' : 'とどける ところ') : type === 'subtract' ? 'わたす おさら' : 'あつめる おさら';
-    this.add(tray(targetName, type === 'deliver' ? '📦' : '🍽️'), '', 1.5, -2, () => {
+    const targetName = type === 'deliver' ? (s.phase >= 1 && a.steps?.length === 3 ? 'のこりの かご' : 'とどける ところ') : type === 'subtract' ? 'わたす おさら' : 'あつめる おさら';
+    this.add(tray(targetName, type === 'deliver' ? '📦' : '🍽️'), '', a.id==='I06-H02'&&s.phase>=1 ? 3 : 1.5, a.id==='I06-H02'&&s.phase>=1 ? -1 : -2, () => {
       if (this.carry) {
         const action = type === 'deliver' && s.phase === 1 ? { type:'store', index:this.carry.index } : { type:'take', index:this.carry.index };
         if (this.action(action)) { this.dropCarry(); this.rebuild(); }
@@ -491,14 +524,20 @@ export class WorldActivity {
       for(let i=0;i<4;i++){const blade=box(.17,.61,.06,0xf1dba7);blade.position.y=.32;const arm=new THREE.Group();arm.rotation.z=i*Math.PI/2;arm.add(blade);rotor.add(arm);}
       apparatus.add(rotor);this.rotors.push(rotor);
     } else {
+      const before=a.before?.trim().split(/\s+/)??[],after=a.after?.trim().split(/\s+/)??[];
       for(const side of [-1,1]) {
+        const index=side<0?0:1;
         const pot=mesh(new THREE.CylinderGeometry(.32,.24,.45,10),0xb98c6c);pot.position.set(side*.47,.55,0);apparatus.add(pot);
         const soil=disk(.29,.04,0x695643);soil.position.set(side*.47,.79,0);apparatus.add(soil);
         const stem=mesh(new THREE.CylinderGeometry(.025,.035,.48,6),0x76a56c);stem.position.set(side*.47,1.03,0);apparatus.add(stem);
         const head=ball((side<0&&s.observed) ? .23 : .12,(side<0&&s.observed) ? 0xec9bad : 0x87bb76);head.position.set(side*.47,1.28,0);apparatus.add(head);
+        const shown=s.observed ? after[index] : before[index];
+        const condition=label(`${a.conditions[index]} ${shown}`, .9,.34);
+        condition.position.set(side*.47,1.9,0);condition.userData.observation={condition:a.conditions[index],shown};apparatus.add(condition);
       }
       const can=box(.3,.34,.28,0x79b2c6);can.position.set(.8,.48,.25);apparatus.add(can);
       const spout=box(.4,.07,.07,0x79b2c6);spout.position.set(.51,.57,.25);apparatus.add(spout);
+      if(s.observed&&a.timeNote){const note=label('ほんとうの はなは ゆっくり そだつよ',2.2,.35);note.position.y=2.45;apparatus.add(note);}
     }
     this.add(apparatus, s.observed ? `みえた ${a.result}` : 'ためして みる', 1.5, -1,
       () => { if (!s.prediction) this.feedback('まず よそうしよう'); else this.action({ type:s.observed ? 'finish' : 'observe' }); }, { kind:'target' });
@@ -627,7 +666,7 @@ export class WorldActivity {
     this.stopWalk();
     while(best.length&&nearby(from,best[0])<=.55)best.shift();
     this.routeSteps=best.slice(1);this.waypoint=best[0]??null;this.player.setTarget(this.waypoint);
-    this.feedback(`${entry.name || 'もの'} の ちかくまで あるこう`);
+    this.feedbackText='';this.paintHud();
     return true;
   }
 
@@ -664,6 +703,18 @@ export class WorldActivity {
     const closest = this.entries.filter((e) => e.action && nearby(this.player.pos, e.spot) <= NEAR)
       .sort((a,b) => nearby(this.player.pos,a.spot) - nearby(this.player.pos,b.spot))[0];
     if (closest !== this.closest || this.lastCanAct !== this.canAct()) { this.closest = closest; this.lastCanAct = this.canAct(); this.paintHud(); }
+    this.refreshFeedback();
+  }
+
+  feedbackLine() {
+    const distance=nearby(this.player.pos,this.guidanceSpot??this.anchor);
+    return this.feedbackText || (this.carry ? `${itemName(this.carry.value)}を はこんでいるよ` : distance > 6 ? `🔻 ${this.guidanceName||'あそびの めじるし'}まで あと ${Math.round(distance)}m` : '');
+  }
+
+  refreshFeedback() {
+    if(!this.feedbackNode||this.hud.hidden)return;
+    const value=this.feedbackLine();
+    if(this.feedbackNode.textContent!==value){this.feedbackNode.textContent=value;this.feedbackNode.hidden=!value;}
   }
 
   button(text, callback, disabled = false) {
@@ -680,15 +731,17 @@ export class WorldActivity {
     const progress = document.createElement('span');
     const s = this.state, a = this.activity;
     progress.textContent = this.question ? (this.questionSolved ? '⭐ できたね！' : 'えらんでね') : a?.type==='combine' ? `${s.done?'⭐ ':''}あわせて ${a.groups[0]+s.picks.length}／${a.target}こ` : s.done ? '⭐ できたね！' :
+      a.id==='I08-Q01' ? `たりない パン ${s.picks.length}／${a.target}こ` :
+      a.id==='I08-Q03' ? `いすを おいた ${s.picks.length}／${a.target}こ` :
       a.type === 'festival' ? `${a.steps[s.phase] ?? 'できた'}　${s.picks.length}／${a.guests}` :
       ['sort','sort-two','distribute'].includes(a.type) ? `おいた ${s.picks.length}／${a.items?.length ?? a.total}` :
       ['collect','deliver','combine','subtract'].includes(a.type) ? `あつめた ${s.picks.length}／${a.target ?? a.take ?? a.groups?.[1]}` :
       `すすみ ${Math.max(s.picks.length, s.placed.length)}こ`;
     const heading = document.createElement('div'); heading.className = 'world-activity-heading'; heading.append(title,progress);
     const text = document.createElement('span'); text.className = 'world-activity-feedback'; text.setAttribute('role','status');
-    const distance = nearby(this.player.pos,this.guidanceSpot??this.anchor);
-    text.textContent = this.feedbackText || (this.carry ? `${itemName(this.carry.value)}を はこんでいるよ` : distance > 6 ? `🔻 ${this.guidanceName||'あそびの めじるし'}まで あと ${Math.round(distance)}m` : '');
+    text.textContent = this.feedbackLine();
     text.hidden = !text.textContent;
+    this.feedbackNode=text;
     const controls = document.createElement('div'); controls.className = 'world-activity-controls';
     if (this.question && this.onLevel) {
       const levels = document.createElement('div'); levels.className = 'world-activity-level';
@@ -724,10 +777,18 @@ export class WorldActivity {
           a.order?.[s.picks.length] ?? a.answer ?? a.result ?? a.target ?? a.icon;
         helpBody.append(sample);
       }
+      if(a.type==='observe'&&a.conditions?.length){
+        const conditions=document.createElement('p');conditions.className='world-activity-sample';
+        conditions.textContent=`くらべる：${a.conditions.join('／')}　${s.observed?a.after:a.before}`;helpBody.append(conditions);
+        if(a.timeNote){const note=document.createElement('p');note.className='world-activity-sample';note.textContent=a.timeNote;helpBody.append(note);}
+      }
     } else if (this.question) {
       const sample=document.createElement('p');sample.className='world-activity-sample';sample.textContent=`みほん：${this.question.sample}`;helpBody.append(sample);
     }
     if (this.onHear) helpBody.append(this.button('🔊 きく', this.onHear));
+    if (a?.english&&this.onEnglish&&this.isEnglishAvailable?.())helpBody.append(this.button('🔊 English', () => {
+      if(this.canAct()&&this.isEnglishAvailable?.())this.onEnglish();
+    }));
     if (a && !s.done) helpBody.append(this.button('↺ はじめから', () => {
       this.dropCarry(); (this.onRestart ?? this.onRepeat)?.();
     }));

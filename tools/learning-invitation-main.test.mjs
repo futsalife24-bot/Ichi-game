@@ -44,7 +44,7 @@ function browser(run) {
   try { run({ document, elements, button }); } finally { globalThis.document = oldDocument; globalThis.window = oldWindow; }
 }
 
-function setup({ failOn = Infinity, initialSave, languageFirst = false, questStartPersists = false } = {}) {
+function setup({ failOn = Infinity, initialSave, languageFirst = false } = {}) {
   const save = initialSave ?? freshSave();
   save.observations = { domains: { count: { started: 10 }, shape: { started: 10 }, language: { started: languageFirst ? 0 : 10 }, color: { started: languageFirst ? 10 : 0 } } };
   const scene = new THREE.Scene(), area = { scene, groundAt: (x, z) => conceptWalkHeight(1, x, z) };
@@ -65,7 +65,7 @@ function setup({ failOn = Infinity, initialSave, languageFirst = false, questSta
   const context = {
     IslandLearning, LearningInvitation, LearningInvitationWorld, THREE, scene, camera, window: globalThis.window, save,
     persist, voice, audio: {}, ui, input, player,
-    quests: { stop() {}, startInvitation(id) { questStarts.push(id); return questStartAllowed && (!questStartPersists || persist()); } }, help, adventure, harborErrands,
+    quests: { stop() {}, startInvitation(id) { questStarts.push(id); return questStartAllowed && persist(); } }, help, adventure, harborErrands,
     learningAreas: new Map(), endAllFishing() {}, refreshActivityInput() { refreshes++; input.enabled = !context.invitation?.dialogOpen && !context.learning?.opened; },
     islandNumber: () => 1, developerMenuOpen: () => false, harborBusy: () => false,
     playTimer: { paused: false }, saveBlocked: false, islandLoading: false, forestLoading: false, transitioning: false, homePaused: false,
@@ -162,7 +162,7 @@ test('第一島の保存失敗と開始不能時は、選択画面と移動を�
   context.invitation.talk(); context.invitation.respond('accept');
   const id = context.invitation.state.options[0];
   assert.equal(context.invitation.choose(id), false);
-  assert.deepEqual(s.questStarts, []);
+  assert.deepEqual(s.questStarts, [id]);
   assert.equal(context.learning.opened, false);
   assert.equal(context.invitation.state.phase, 'choice');
   assert.equal(context.invitation.dialogOpen, true);
@@ -170,42 +170,39 @@ test('第一島の保存失敗と開始不能時は、選択画面と移動を�
   const blockedWrites = s.writes;
   assert.equal(context.invitation.choose(id), false);
   assert.equal(s.writes, blockedWrites);
-  assert.deepEqual(s.questStarts, []);
+  assert.deepEqual(s.questStarts, [id]);
   context.ui.panelOpen = false;
   s.setQuestStart(false);
   assert.equal(context.invitation.choose(id), false);
   assert.equal(context.invitation.state.phase, 'choice');
   assert.equal(context.invitation.dialogOpen, true);
   assert.equal(context.learning.opened, false);
-  assert.deepEqual(s.questStarts, [id]);
+  assert.deepEqual(s.questStarts, [id, id]);
   s.setQuestStart(true);
   assert.equal(context.invitation.choose(id), true);
-  assert.deepEqual(s.questStarts, [id, id]);
+  assert.deepEqual(s.questStarts, [id, id, id]);
   assert.equal(context.invitation.dialogOpen, false);
   assert.equal(s.input.enabled, true);
   context.invitationWorld.dispose();
 }));
 
-test('開始と巻戻しの保存が続けて失敗しても、復旧後に同じおさそいを選べる', () => browser(() => {
-  const s = setup({ failOn: [4, 5], questStartPersists: true }), { context, save } = s;
+test('開始保存が失敗しても、選択は保存上も完了にならない', () => browser(() => {
+  const s = setup({ failOn: 3 }), { context, save } = s;
   visitResident(s);
   assert.equal(context.invitation.talk(), true);
   assert.equal(context.invitation.respond('accept'), true);
   const id = context.invitation.state.options[0];
   assert.equal(id, 'I01-Q01');
   assert.equal(context.invitation.choose(id), false);
-  assert.equal(s.writes, 5);
-  assert.equal(s.saved.learningInvitation.phase, 'done');
+  assert.equal(s.writes, 3);
+  assert.equal(s.saved.learningInvitation.phase, 'choice');
   assert.equal(context.invitation.state.phase, 'choice');
   assert.equal(context.invitation.dialogOpen, true);
   assert.equal(context.learning.opened, false);
   assert.equal(save.stars, 0);
   assert.equal(s.input.enabled, false);
-  assert.equal(context.invitation.choose(id), true);
-  assert.equal(context.invitation.state.phase, 'done');
-  assert.deepEqual(s.questStarts, [id, id]);
-  assert.equal(context.invitation.dialogOpen, false);
-  assert.equal(s.input.enabled, true);
+  assert.deepEqual(s.questStarts, [id]);
+  assert.equal(s.input.enabled, false);
   assert.equal(save.stars, 0);
   context.invitationWorld.dispose();
 }));

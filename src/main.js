@@ -264,13 +264,15 @@ function guideToSchool() {
   ui.subtitle('🏫 かずの がっこうへ あるいて いこう。とびらから はいれるよ。',9000);
 }
 learning.worldPresenter = new WorldActivity({scene,player,getEnvironment:env,
-  canAct:()=>mode==='play'&&learning.worldActive&&!saveBlocked&&!islandLoading&&!forestLoading&&!transitioning&&!homePaused&&!playTimer.paused&&!document.hidden&&!developerMenuOpen()&&!invitation.dialogOpen&&!ui.panelOpen,
+  canAct:()=>mode==='play'&&learning.worldActive&&!saveBlocked&&!islandLoading&&!forestLoading&&!transitioning&&!homePaused&&!playTimer.paused&&!document.hidden&&!developerMenuOpen()&&!invitation.dialogOpen&&!ui.panelOpen&&!harborBusy()&&!adventure.focused&&!adventure.modal,
   onAction:action=>learning.activityAction(action),
   onClose:()=>learning.close(),
   onRepeat:()=>learning.activity?learning.startActivity(learning.activity.id):learning.showQuestion(),
   onRestart:()=>learning.activity?learning.startActivity(learning.activity.id):learning.showQuestion(),
   onGuide:stage=>learning.activityAction({type:'guide',stage}),
   onHear:()=>learning.activity?learning.speakActivityLine(learning.activity.id):learning.speakEnglish(),
+  onEnglish:()=>learning.speakActivityEnglish(),
+  isEnglishAvailable:()=>Boolean(learning.activity?.english)&&learning.island>=2&&learning.englishAvailable(learning.activity.english),
 });
 let lastAssistTarget = null;
 function assistTargets(kind) {

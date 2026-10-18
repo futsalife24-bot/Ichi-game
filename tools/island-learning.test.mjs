@@ -3,6 +3,39 @@ import assert from 'node:assert/strict';
 import { IslandLearning, makeIslandQuestion, isIslandAnswerCorrect } from '../src/island-learning.js';
 import { ISLAND_ACTIVITIES } from '../src/island-activities.js';
 import { ACTIVITY_VOICE_LINES } from '../src/activity-voice-lines.js';
+import { readFileSync } from 'node:fs';
+import vm from 'node:vm';
+
+test('主画面の実物活動は英語へ接続し、別のおつかいとは同時に操作できない',()=>withFakeBrowser(()=>{
+  let enabled=true,harbor=false;
+  const said=[];
+  const learning=new IslandLearning({voice:{canSpeakEnglish:()=>true,say:line=>said.push(line),stop(){}},voiceEnabled:()=>enabled});
+  const main=readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
+  const wiring=main.slice(main.indexOf('learning.worldPresenter = new WorldActivity('),main.indexOf('let lastAssistTarget ='));
+  const adventure={focused:false,modal:false};
+  vm.runInNewContext(wiring,{learning,WorldActivity:class {constructor(options){Object.assign(this,options);}clear(){}show(){}feedback(){}},
+    scene:{},player:{},env:()=>({}),mode:'play',saveBlocked:false,islandLoading:false,forestLoading:false,transitioning:false,
+    homePaused:false,playTimer:{paused:false},document:{hidden:false},developerMenuOpen:()=>false,invitation:{dialogOpen:false},ui:{panelOpen:false},harborBusy:()=>harbor,adventure});
+  learning.open(4);learning.startActivity('I04-Q01');
+  const world=learning.worldPresenter;
+  assert.equal(world.canAct(),true);
+  assert.equal(world.isEnglishAvailable(),true);
+  assert.equal(world.onEnglish(),true);
+  assert.equal(said.at(-1).say,'triangle');assert.equal(said.at(-1).lang,'en');
+  enabled=false;assert.equal(world.isEnglishAvailable(),false);assert.equal(world.onEnglish(),false);
+  harbor=true;assert.equal(world.canAct(),false);harbor=false;
+  adventure.focused=true;assert.equal(world.canAct(),false);adventure.focused=false;
+  adventure.modal=true;assert.equal(world.canAct(),false);adventure.modal=false;
+  assert.equal(world.canAct(),true);
+  const connection=main.slice(main.indexOf('const learning = new IslandLearning('),main.indexOf('const invitationWorld ='));
+  const canOpen=connection.match(/canOpen: ([^\n]+),/)[1];
+  const allowed=vm.runInNewContext(canOpen,{mode:'play',islandNumber:()=>3,saveBlocked:false,islandLoading:false,transitioning:false,
+    playTimer:{paused:false},homePaused:false,developerMenuOpen:()=>false,ui:{panelOpen:false},help:{focused:false,modal:false},
+    adventure,harborBusy:()=>harbor,invitation:null,landmark:null,invitationOpening:false});
+  harbor=true;assert.equal(allowed(3),false);harbor=false;
+  adventure.focused=true;assert.equal(allowed(3),false);adventure.focused=false;
+  assert.equal(allowed(3),true);
+}));
 
 test('第四島からは実物と数字を１〜２０まで繰り返せて、第二島は10までを保つ',()=>{
   const found=new Set();

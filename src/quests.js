@@ -127,12 +127,13 @@ export class QuestManager {
   startInvitation(id) {
     if (!this.starter || !Object.hasOwn(INVITATION_QUESTS, id) || this.saveFailed) return false;
     const invitation = INVITATION_QUESTS[id];
-    return this.beginType(invitation.type, invitation.target, false);
+    return this.beginType(invitation.type, invitation.target, false, true);
   }
 
-  beginType(type, target = null, advance = true) {
+  beginType(type, target = null, advance = true, singleSave = false) {
     if (this.saveFailed) return false;
-    if (this.observationId !== null) this.stop();
+    const replacing=singleSave && this.observationId !== null;
+    if (this.observationId !== null && !replacing) this.stop();
     if (this.saveFailed) return false;
     this.activitySettings = resolvePlaySettings(this.save.playSettings,type,this.save.stars,this.save.adaptivePlay);
     // だいいちの しまは、ほしや せっていが ふえても やさしいまま。
@@ -140,8 +141,10 @@ export class QuestManager {
     this.countNeed = this.starter ? firstCount(this.save.questIdx) : null;
     const previousIdx = this.save.questIdx;
     if (advance) this.save.questIdx++;
-    const next = beginObservation(this.save.observations,type,this.activityLevel);
+    const previous=replacing ? finishObservation(this.save.observations,this.observationId,'interrupted') : this.save.observations;
+    const next = beginObservation(previous,type,this.activityLevel);
     if (!this.record(next)) { this.save.questIdx = previousIdx; return false; }
+    if(replacing)this.effects.hideGuide();
     this.observationId = next.active.id;
     this.clearItems();
     this.quest = { type, got: 0, need: 1 };

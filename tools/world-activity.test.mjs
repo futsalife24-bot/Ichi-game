@@ -149,6 +149,98 @@ test('12この集めものと10この仕分け結果を、ひとつずつ見分�
   assert.ok(placed.every((entry)=>entry.root.position.y>.4));
 }));
 
+test('花の二つの鉢に水やり条件と観察前後を示し、時間の注記を残す',()=>browser(()=>{
+  const {world}=fixture();
+  for(const id of ['I06-Q02','I06-H01']){
+    const activity=ISLAND_ACTIVITIES.find((item)=>item.id===id);
+    const signs=()=>world.entries.find((entry)=>entry.kind==='target').root.children[0].children
+      .filter((part)=>part.userData.observation).map((part)=>part.userData.observation);
+    const helpText=()=>world.hud.children.at(-1).children.find((child)=>child.className==='world-activity-help')
+      .children[1].children.map((child)=>child.textContent).join(' ');
+    world.show(activity,initialActivityState(id));
+    const before=activity.before.trim().split(/\s+/),after=activity.after.trim().split(/\s+/);
+    assert.deepEqual(signs().map((sign)=>sign.condition),activity.conditions,id);
+    assert.deepEqual(signs().map((sign)=>sign.shown),before,id);
+    assert.ok(helpText().includes(activity.timeNote),id);
+    world.entries.find((entry)=>entry.kind==='choice').action();
+    world.entries.find((entry)=>entry.kind==='target').action();
+    assert.deepEqual(signs().map((sign)=>sign.shown),after,id);
+    assert.ok(helpText().includes(activity.after),id);
+  }
+}));
+
+test('収穫の届けた2本と残りのかごの3本が途中再開後も別に見える',()=>browser(()=>{
+  const {world}=fixture(),activity=ISLAND_ACTIVITIES.find((item)=>item.id==='I06-H02');
+  world.show(activity,initialActivityState(activity.id));
+  for(let i=0;i<2;i++){
+    world.entries.find((entry)=>entry.kind==='source'&&entry.value===i).action();
+    world.entries.find((entry)=>entry.kind==='target').action();
+  }
+  world.entries.find((entry)=>entry.kind==='target').action();
+  assert.equal(world.state.phase,1);
+  for(let i=2;i<5;i++){
+    world.entries.find((entry)=>entry.kind==='source'&&entry.value===i).action();
+    world.entries.find((entry)=>entry.kind==='target').action();
+    const snapshot=structuredClone(world.state);
+    world.show(activity,snapshot);
+    assert.equal(world.entries.filter((entry)=>entry.kind==='placed').length,2);
+    assert.equal(world.entries.filter((entry)=>entry.kind==='stored').length,i-1);
+  }
+  assert.deepEqual(world.state.bins,[2,3,4]);
+  assert.equal(world.state.done,true);
+  const delivered=world.entries.filter((entry)=>entry.kind==='placed');
+  const stored=world.entries.filter((entry)=>entry.kind==='stored');
+  assert.ok(delivered.every((item)=>stored.every((other)=>Math.hypot(item.spot.x-other.spot.x,item.spot.z-other.spot.z)>1)));
+}));
+
+test('第八島は客と既存パン・不足パン、客と必要な椅子を実物で対応させる',()=>browser(()=>{
+  const {world}=fixture();
+  for(const [id,people,fixed,needed] of [['I08-Q01',5,3,2],['I08-Q03',4,0,4]]){
+    const activity=ISLAND_ACTIVITIES.find((item)=>item.id===id);
+    world.show(activity,initialActivityState(id));
+    const guests=world.entries.filter((entry)=>entry.kind==='reference-person').sort((a,b)=>a.spot.x-b.spot.x);
+    assert.equal(guests.length,people,id);
+    assert.equal(world.entries.filter((entry)=>entry.kind==='reference-slot').length,people,id);
+    assert.equal(world.entries.filter((entry)=>entry.kind==='reference-item').length,fixed,id);
+    assert.equal(world.entries.filter((entry)=>entry.kind==='source').length,activity.id==='I08-Q01'?2:6,id);
+    for(let i=0;i<needed;i++){
+      world.entries.find((entry)=>entry.kind==='source'&&entry.value===i).action();
+      world.entries.find((entry)=>entry.kind==='target').action();
+    }
+    const result=world.entries.filter((entry)=>['reference-item','placed'].includes(entry.kind)).sort((a,b)=>a.spot.x-b.spot.x);
+    assert.equal(result.length,people,id);
+    for(let i=0;i<people;i++)assert.ok(Math.abs(result[i].spot.x-guests[i].spot.x)<.05,id);
+  }
+}));
+
+test('歩行中は残り距離の文字だけが変わり、HUD全体は作り直さない',()=>browser(()=>{
+  const {world,player}=fixture(),activity=ISLAND_ACTIVITIES.find((item)=>item.id==='I07-H01');
+  world.show(activity,initialActivityState(activity.id));
+  assert.equal(world.walkTo(world.entries.find((entry)=>entry.kind==='route'&&entry.value===0)),true);
+  player.pos.set(80,0,80);world.update();
+  const [heading,feedback,controls]=world.hud.children,first=feedback.textContent;
+  player.pos.set(70,0,70);world.update();
+  assert.notEqual(feedback.textContent,first);
+  assert.equal(world.hud.children[0],heading);
+  assert.equal(world.hud.children[1],feedback);
+  assert.equal(world.hud.children[2],controls);
+}));
+
+test('Englishの声がある活動だけ補助内から再生できる',()=>browser(()=>{
+  const {world}=fixture();let available=true,calls=0;
+  world.onEnglish=()=>{calls++;};world.isEnglishAvailable=()=>available;
+  const activity=ISLAND_ACTIVITIES.find((item)=>item.id==='I04-Q01');
+  world.show(activity,initialActivityState(activity.id));
+  const help=world.hud.children.at(-1).children.find((child)=>child.className==='world-activity-help');
+  const english=help.children[1].children.find((child)=>child.textContent==='🔊 English');
+  assert.ok(english);
+  english.click();assert.equal(calls,1);
+  available=false;english.click();assert.equal(calls,1);
+  world.paintHud();
+  const updated=world.hud.children.at(-1).children.find((child)=>child.className==='world-activity-help');
+  assert.equal(updated.children[1].children.some((child)=>child.textContent==='🔊 English'),false);
+}));
+
 test('遠い物は歩行目標だけ、近い物を押して保存が成功した時だけ進む',()=>browser(()=>{
   const {world,player,actions}=fixture();
   const activity=ISLAND_ACTIVITIES.find((item)=>item.id==='I04-Q02');

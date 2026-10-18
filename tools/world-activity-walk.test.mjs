@@ -9,6 +9,8 @@ import { FOREST_ORIGIN } from '../src/adventure-state.js';
 import { LearningIsland, loadLearningIslandKit } from '../src/learning-islands.js';
 import { CONCEPT_LAYOUTS } from '../src/concept-island-layout.js';
 import { conceptLandDistance } from '../src/concept-terrain.js';
+import { setConceptCameraGoal } from '../src/concept-camera.js';
+import { CONCEPT_CAMERA } from '../src/concept-island-layout.js';
 import { WorldActivity } from '../src/world-activity.js';
 import { ISLAND_ACTIVITIES, initialActivityState } from '../src/island-activities.js';
 
@@ -88,6 +90,58 @@ test('第四島の実地形でも長い板が左右の柱に乗る',async()=>{
     assert.ok(board.min.z<support.max.z&&board.max.z>support.min.z);
     assert.ok(Math.abs(board.min.y-support.max.y)<.03);
   }
+  world.clear();
+});
+
+test('第四島の実地形に置いた12このりんご本体は互いに重ならない',async()=>{
+  const {world}=await setup(4),activity=ISLAND_ACTIVITIES.find((item)=>item.id==='I04-Q04');
+  const state=initialActivityState(activity.id);state.picks=Array.from({length:12},(_,i)=>i);
+  world.show(activity,state);
+  world.scene.updateMatrixWorld(true);
+  const apples=world.entries.filter((entry)=>entry.kind==='placed');
+  assert.equal(apples.length,12);
+  const bodies=apples.map((entry)=>entry.root.children[0].children[0].userData.inner.children[0]);
+  const boxes=bodies.map((body)=>new THREE.Box3().setFromObject(body));
+  for(let i=0;i<boxes.length;i++)for(let j=i+1;j<boxes.length;j++)
+    assert.equal(boxes[i].intersectsBox(boxes[j]),false,`りんご ${i+1}こ (${apples[i].spot.x.toFixed(2)},${apples[i].spot.z.toFixed(2)}) と ${j+1}こ (${apples[j].spot.x.toFixed(2)},${apples[j].spot.z.toFixed(2)}) が 重なる`);
+});
+
+test('第八島の5人とパンは手前の旗に画面上で隠れず、歩いて届く',async()=>{
+  const {world,player,area}=await setup(8);
+  const activity=ISLAND_ACTIVITIES.find((item)=>item.id==='I08-Q01');
+  world.show(activity,initialActivityState(activity.id));
+  const guide=world.entries.find((entry)=>entry.kind==='guide');
+  reach(world,player,area,8,guide,0);
+  const eye=new THREE.Vector3(),look=new THREE.Vector3();
+  setConceptCameraGoal(8,player.pos,CONCEPT_CAMERA,eye,look,true,true);
+  const camera=new THREE.PerspectiveCamera(50,660/371,.1,500);
+  camera.position.copy(eye);camera.lookAt(look);camera.updateMatrixWorld();camera.updateProjectionMatrix();
+  const screen=(bounds)=>{
+    const corners=[];
+    for(const x of [bounds.min.x,bounds.max.x])for(const y of [bounds.min.y,bounds.max.y])for(const z of [bounds.min.z,bounds.max.z]){
+      const point=new THREE.Vector3(x,y,z).project(camera);
+      corners.push({x:(point.x+1)*330,y:(1-point.y)*185.5});
+    }
+    return {left:Math.min(...corners.map(p=>p.x)),right:Math.max(...corners.map(p=>p.x)),top:Math.min(...corners.map(p=>p.y)),bottom:Math.max(...corners.map(p=>p.y))};
+  };
+  const people=world.entries.filter((entry)=>entry.kind==='reference-person');
+  const breads=world.entries.filter((entry)=>entry.kind==='reference-item');
+  const missingBreads=world.entries.filter((entry)=>entry.kind==='source');
+  assert.equal(people.length,5);assert.equal(breads.length,3);assert.equal(missingBreads.length,2);
+  world.scene.updateMatrixWorld(true);
+  const reference=[...people,...breads,...missingBreads].map((entry)=>screen(new THREE.Box3().setFromObject(entry.root.children[0])));
+  const flags=[];
+  for(const mesh of area.scenery.group.children.filter((item)=>item.isInstancedMesh&&item.geometry.type==='ShapeGeometry'&&item.count<100)){
+    mesh.geometry.computeBoundingBox();
+    for(let i=0;i<mesh.count;i++){
+      const matrix=new THREE.Matrix4();mesh.getMatrixAt(i,matrix);
+      const bounds=mesh.geometry.boundingBox.clone().applyMatrix4(matrix).applyMatrix4(mesh.matrixWorld);
+      if(Math.abs(bounds.getCenter(new THREE.Vector3()).z-20)<1&&bounds.min.y>8)flags.push(screen(bounds));
+    }
+  }
+  assert.ok(flags.length>0,'広場の旗の実物を確認する');
+  for(const object of reference)for(const flag of flags)
+    assert.ok(object.right<flag.left||object.left>flag.right||object.bottom<flag.top||object.top>flag.bottom,'客とパンは旗と画面で重ならない');
   world.clear();
 });
 

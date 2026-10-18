@@ -125,15 +125,17 @@ export class LearningInvitation {
     if (state.phase==='playing' && state.selected!==id) return false;
     if (this.worldActivity?.supports(id)) {
       if (!this.worldActivity.canStart(id)) return false;
-      // おさそいだけを とじて、しまの あそびへ わたす。ごほうびは あそびで きろくする。
-      if (!this.saveState({...state,phase:'done',selected:null,lastChoice:id,declined:false})) return false;
-      this.dialogOpen=false;this.stopOwnVoice();this.render(false);
-      const started=this.worldActivity.start(id);
+      // あそびの かいしと おさそいの しゅうりょうを、いちどに きろくする。
+      this.save.learningInvitation={...state,phase:'done',selected:null,lastChoice:id,declined:false};
+      let started=false;
+      try { started=this.worldActivity.start(id)===true; }
+      catch { started=false; }
       if (!started) {
-        if (!this.saveState(state)) this.save.learningInvitation=state;
+        this.save.learningInvitation=state;
         this.dialogOpen=true;this.render(true);
         this.onFree();return false;
       }
+      this.dialogOpen=false;this.stopOwnVoice();this.render(false);
       this.onFree();return true;
     }
     if (this.hasSavedCompletion()) return this.completeSavedActivity();
