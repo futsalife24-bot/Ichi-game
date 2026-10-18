@@ -1,0 +1,35 @@
+#growthControls {
+  position: fixed;
+  z-index: 13;
+  right: calc(var(--u) * 5 + var(--safe-r));
+  bottom: calc(var(--u) * 6 + var(--safe-b));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  max-width: calc(var(--u) * 26);
+  pointer-events: none;
+}
+#growthControls[hidden], #growthControls button[hidden], .landmark-playing #growthControls { display: none; }
+#growthControls button {
+  min-height: 44px;
+  max-width: 100%;
+  padding: 7px 10px;
+  border: 2px solid #fff;
+  border-radius: 15px;
+  background: #e9f8e5ee;
+  color: #315841;
+  box-shadow: 0 2px 6px #183b3040;
+  font-size: clamp(12px, 2.1vw, 16px);
+  font-weight: 800;
+  line-height: 1.2;
+  white-space: normal;
+  text-align: left;
+  touch-action: manipulation;
+  pointer-events: auto;
+}
+#growthControls button:focus-visible { outline: 3px solid #f3a629; outline-offset: 2px; }
+@media (max-height: 360px) {
+  #growthControls { gap: 4px; }
+  #growthControls button { min-height: 44px; padding: 4px 7px; font-size: 12px; }
+}

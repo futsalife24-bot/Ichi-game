@@ -44,13 +44,16 @@ function browser(run) {
   try { run({ document, elements, button }); } finally { globalThis.document = oldDocument; globalThis.window = oldWindow; }
 }
 
-function setup({ failOn = Infinity, initialSave } = {}) {
+function setup({ failOn = Infinity, initialSave, languageFirst = false, questStartPersists = false } = {}) {
   const save = initialSave ?? freshSave();
-  save.observations = { domains: { count: { started: 10 }, shape: { started: 10 }, language: { started: 10 }, color: { started: 0 } } };
+  save.observations = { domains: { count: { started: 10 }, shape: { started: 10 }, language: { started: languageFirst ? 0 : 10 }, color: { started: languageFirst ? 10 : 0 } } };
   const scene = new THREE.Scene(), area = { scene, groundAt: (x, z) => conceptWalkHeight(1, x, z) };
   const camera = new THREE.PerspectiveCamera(50, 1280 / 720, .1, 1000);
   camera.position.set(14, 12, 21); camera.lookAt(4, 1, 11);
-  let writes = 0, refreshes = 0, stopped = 0, blocked = false, mode = 'play', place = 'island';
+  let writes = 0, saved = null, refreshes = 0, stopped = 0, blocked = false, questStartAllowed = true, mode = 'play', place = 'island';
+  const failedWrites = new Set(Array.isArray(failOn) ? failOn : [failOn]);
+  const persist = () => { writes++; if (failedWrites.has(writes) || blocked) return false; saved = structuredClone(save); return true; };
+  const questStarts = [];
   const player = { pos: new THREE.Vector3(), setTarget() {} };
   const voice = { token: 0, say() { this.token++; }, stop() { stopped++; this.token++; }, busy: false };
   const input = { enabled: true, reset() {} };
@@ -61,8 +64,8 @@ function setup({ failOn = Infinity, initialSave } = {}) {
   const element = id => globalThis.document.getElementById(id);
   const context = {
     IslandLearning, LearningInvitation, LearningInvitationWorld, THREE, scene, camera, window: globalThis.window, save,
-    persist: () => ++writes !== failOn && !blocked, voice, audio: {}, ui, input, player,
-    quests: { stop() {} }, help, adventure, harborErrands,
+    persist, voice, audio: {}, ui, input, player,
+    quests: { stop() {}, startInvitation(id) { questStarts.push(id); return questStartAllowed && (!questStartPersists || persist()); } }, help, adventure, harborErrands,
     learningAreas: new Map(), endAllFishing() {}, refreshActivityInput() { refreshes++; input.enabled = !context.invitation?.dialogOpen && !context.learning?.opened; },
     islandNumber: () => 1, developerMenuOpen: () => false, harborBusy: () => false,
     playTimer: { paused: false }, saveBlocked: false, islandLoading: false, forestLoading: false, transitioning: false, homePaused: false,
@@ -71,7 +74,20 @@ function setup({ failOn = Infinity, initialSave } = {}) {
     invitationEnv: null, invitationNumber: 0, invitationDialogKnown: false,
   };
   vm.runInNewContext(`let landmark = null; let invitation = null; let invitationOpening = false;\n${connection}\n${presentation}\nthis.learning = learning; this.invitation = invitation; this.invitationWorld = invitationWorld; this.updateInvitation = updateInvitation; this.pauseInvitation = pauseInvitation; this.syncInvitationDialog = syncInvitationDialog;`, context);
-  return { context, save, scene, area, player, input, voice, setFail: value => { blocked = value; }, get writes() { return writes; }, get refreshes() { return refreshes; }, get stopped() { return stopped; } };
+  return { context, save, scene, area, player, input, voice, questStarts, setFail: value => { blocked = value; }, setQuestStart: value => { questStartAllowed = value; }, get saved() { return saved; }, get writes() { return writes; }, get refreshes() { return refreshes; }, get stopped() { return stopped; } };
+}
+
+function visitResident(s, number = 1) {
+  const { context, player, scene } = s;
+  const area = number === 1 ? s.area : { group: new THREE.Group(), groundAt: (x, z) => conceptWalkHeight(number, x, z) };
+  if (number !== 1) scene.add(area.group);
+  context.islandNumber = () => number;
+  context.place = number === 1 ? 'island' : number === 2 ? 'second' : `learning-${number}`;
+  context.env = () => area;
+  const [x, z] = INVITATION_WORLD_PLACES[number].resident;
+  player.pos.set(x, area.groundAt(x, z), z);
+  context.invitation.beginSession();
+  context.updateInvitation(.016, number * 1000);
 }
 
 test('主画面の接続で全８島の道脇に近づくと話せて、別画面では隠れる', () => browser(() => {
@@ -118,11 +134,9 @@ test('保留中に別の島へ渡っても、到着先の住民から話せる',
   context.invitationWorld.dispose();
 }));
 
-test('会話中は通常の学習入口を止め、二択からの開始と完了は一度だけ保存する', () => browser(() => {
-  const s = setup(), { context, player, save } = s;
-  const [x, z] = INVITATION_WORLD_PLACES[1].resident;
-  player.pos.set(x, s.area.groundAt(x, z), z);
-  context.invitation.beginSession(); context.updateInvitation(.016, 1000);
+test('第一島は会話中の学習入口を止め、選んだら歩く遊びへ戻る', () => browser(() => {
+  const s = setup(), { context, save } = s;
+  visitResident(s);
   assert.equal(context.invitation.talk(), true);
   context.syncInvitationDialog();
   assert.equal(s.input.enabled, false);
@@ -130,26 +144,78 @@ test('会話中は通常の学習入口を止め、二択からの開始と完�
   assert.equal(context.invitation.respond('accept'), true);
   const id = context.invitation.state.options[0];
   assert.equal(id, 'I01-Q01');
-  assert.equal(context.invitation.choose(id), true);
-  assert.equal(context.learning.opened, true);
-  assert.equal(context.learning.activity.id, id);
-  assert.equal(context.invitation.state.phase, 'playing');
   const before = s.writes;
-  assert.equal(context.learning.activityAction({ type: 'pick', value: '🔴' }), true);
+  assert.equal(context.invitation.choose(id), true);
+  assert.deepEqual(s.questStarts, [id]);
   assert.equal(context.learning.opened, false);
   assert.equal(context.invitation.state.phase, 'done');
-  assert.deepEqual(save.islandActivities.completed, [id]);
-  assert.equal(s.writes - before, 2);
+  assert.equal(context.invitation.dialogOpen, false);
+  assert.equal(s.input.enabled, true);
+  assert.equal(save.islandActivities?.completed?.includes(id) ?? false, false);
+  assert.equal(s.writes - before, 1);
   context.invitationWorld.dispose();
 }));
 
-test('おさそい状態の保存失敗では活動画面を閉じ、次回は同じ途中記録を再開する', () => browser(() => {
-  const s = setup({ failOn: 4 }), { context, player, save } = s;
-  const [x, z] = INVITATION_WORLD_PLACES[1].resident;
-  player.pos.set(x, s.area.groundAt(x, z), z);
-  context.invitation.beginSession(); context.updateInvitation(.016, 1000);
+test('第一島の保存失敗と開始不能時は、選択画面と移動を壊さない', () => browser(() => {
+  const s = setup({ failOn: 3 }), { context } = s;
+  visitResident(s);
   context.invitation.talk(); context.invitation.respond('accept');
   const id = context.invitation.state.options[0];
+  assert.equal(context.invitation.choose(id), false);
+  assert.deepEqual(s.questStarts, []);
+  assert.equal(context.learning.opened, false);
+  assert.equal(context.invitation.state.phase, 'choice');
+  assert.equal(context.invitation.dialogOpen, true);
+  context.ui.panelOpen = true;
+  const blockedWrites = s.writes;
+  assert.equal(context.invitation.choose(id), false);
+  assert.equal(s.writes, blockedWrites);
+  assert.deepEqual(s.questStarts, []);
+  context.ui.panelOpen = false;
+  s.setQuestStart(false);
+  assert.equal(context.invitation.choose(id), false);
+  assert.equal(context.invitation.state.phase, 'choice');
+  assert.equal(context.invitation.dialogOpen, true);
+  assert.equal(context.learning.opened, false);
+  assert.deepEqual(s.questStarts, [id]);
+  s.setQuestStart(true);
+  assert.equal(context.invitation.choose(id), true);
+  assert.deepEqual(s.questStarts, [id, id]);
+  assert.equal(context.invitation.dialogOpen, false);
+  assert.equal(s.input.enabled, true);
+  context.invitationWorld.dispose();
+}));
+
+test('開始と巻戻しの保存が続けて失敗しても、復旧後に同じおさそいを選べる', () => browser(() => {
+  const s = setup({ failOn: [4, 5], questStartPersists: true }), { context, save } = s;
+  visitResident(s);
+  assert.equal(context.invitation.talk(), true);
+  assert.equal(context.invitation.respond('accept'), true);
+  const id = context.invitation.state.options[0];
+  assert.equal(id, 'I01-Q01');
+  assert.equal(context.invitation.choose(id), false);
+  assert.equal(s.writes, 5);
+  assert.equal(s.saved.learningInvitation.phase, 'done');
+  assert.equal(context.invitation.state.phase, 'choice');
+  assert.equal(context.invitation.dialogOpen, true);
+  assert.equal(context.learning.opened, false);
+  assert.equal(save.stars, 0);
+  assert.equal(s.input.enabled, false);
+  assert.equal(context.invitation.choose(id), true);
+  assert.equal(context.invitation.state.phase, 'done');
+  assert.deepEqual(s.questStarts, [id, id]);
+  assert.equal(context.invitation.dialogOpen, false);
+  assert.equal(s.input.enabled, true);
+  assert.equal(save.stars, 0);
+  context.invitationWorld.dispose();
+}));
+
+test('第二島の招待保存が失敗したら活動画面を閉じ、次回は同じ途中記録を再開する', () => browser(() => {
+  const s = setup({ failOn: 4, languageFirst: true }), { context, save } = s;
+  visitResident(s, 2);
+  context.invitation.talk(); context.invitation.respond('accept');
+  const id = context.invitation.state.options[0];
+  assert.equal(id, 'I02-Q03');
   assert.equal(context.invitation.choose(id), false);
   assert.equal(context.learning.opened, false);
   assert.equal(context.invitation.state.phase, 'choice');
@@ -160,20 +226,19 @@ test('おさそい状態の保存失敗では活動画面を閉じ、次回は�
   context.invitationWorld.dispose();
 }));
 
-test('活動完了後の招待保存だけ失敗しても、再入場で報酬や活動を繰り返さない', () => browser(() => {
-  const s = setup({ failOn: 6 }), { context, player, save } = s;
-  const [x, z] = INVITATION_WORLD_PLACES[1].resident;
-  player.pos.set(x, s.area.groundAt(x, z), z);
-  context.invitation.beginSession(); context.updateInvitation(.016, 1000);
+test('第二島の活動完了後に招待保存だけ失敗しても、再入場で報酬や活動を繰り返さない', () => browser(() => {
+  const s = setup({ failOn: 6, languageFirst: true }), { context, save } = s;
+  visitResident(s, 2);
   context.invitation.talk(); context.invitation.respond('accept');
   const id = context.invitation.state.options[0];
+  assert.equal(id, 'I02-Q03');
   assert.equal(context.invitation.choose(id), true);
-  assert.equal(context.learning.activityAction({ type: 'pick', value: '🔴' }), true);
+  assert.equal(context.learning.activityAction({ type: 'pick', value: 'A' }), true);
   assert.equal(context.invitation.state.phase, 'playing');
   assert.equal(save.islandActivities.current.done, true);
   assert.deepEqual(save.islandActivities.completed, [id]);
   const resumed = setup({ initialSave: structuredClone(save) });
-  resumed.context.invitation.beginSession();
+  visitResident(resumed, 2);
   assert.equal(resumed.context.invitation.state.phase, 'done');
   assert.equal(resumed.context.learning.opened, false);
   assert.deepEqual(resumed.save.islandActivities.completed, [id]);

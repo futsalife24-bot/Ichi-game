@@ -37,9 +37,10 @@ export function invitationBubblePosition(anchor, size, viewport, obstacles = [])
 }
 
 export class LearningInvitation {
-  constructor({ save, persist, learning, voice, voiceEnabled = () => true, onFree = () => {} }) {
+  constructor({ save, persist, learning, voice, voiceEnabled = () => true, onFree = () => {}, worldActivity = null }) {
     this.save=save; this.persist=persist; this.learning=learning; this.voice=voice; this.voiceEnabled=voiceEnabled; this.onFree=onFree;
     this.active=false; this.offered=false; this.nearResident=false; this.lastVoice=-Infinity; this.callCount=0; this.dialogOpen=false;
+    this.worldActivity=worldActivity;
     if (typeof document !== 'undefined') this.mount();
   }
 
@@ -122,6 +123,19 @@ export class LearningInvitation {
     const state=this.state;
     if (!this.active || !this.dialogOpen || !state || !['choice','playing'].includes(state.phase) || !state.options.includes(id)) return false;
     if (state.phase==='playing' && state.selected!==id) return false;
+    if (this.worldActivity?.supports(id)) {
+      if (!this.worldActivity.canStart(id)) return false;
+      // おさそいだけを とじて、しまの あそびへ わたす。ごほうびは あそびで きろくする。
+      if (!this.saveState({...state,phase:'done',selected:null,lastChoice:id,declined:false})) return false;
+      this.dialogOpen=false;this.stopOwnVoice();this.render(false);
+      const started=this.worldActivity.start(id);
+      if (!started) {
+        if (!this.saveState(state)) this.save.learningInvitation=state;
+        this.dialogOpen=true;this.render(true);
+        this.onFree();return false;
+      }
+      this.onFree();return true;
+    }
     if (this.hasSavedCompletion()) return this.completeSavedActivity();
     if (!this.learning?.open?.(state.island)) {
       return false;

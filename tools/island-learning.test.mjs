@@ -65,6 +65,43 @@ function findClass(node, className) {
     .filter((item) => item.className?.split(' ').includes(className));
 }
 
+test('実物の活動中は歩行を止めず、選択画面と終了だけを切り替える',()=>withFakeBrowser(()=>{
+  let shown=0,cleared=0,changed=0;
+  const learning=new IslandLearning({saveProgress:()=>true});
+  learning.worldPresenter={clear(){cleared++;},show(){shown++;},feedback(){}};
+  learning.onPresentationChange=()=>changed++;
+  assert.equal(learning.open(5),true);assert.equal(learning.modal,true);
+  assert.equal(learning.startActivity('I05-Q02'),true);
+  assert.equal(learning.opened,true);assert.equal(learning.modal,false);
+  assert.equal(learning.mount.classList.contains('hidden'),true);
+  assert.equal(shown,1);
+  learning.renderMenu();assert.equal(learning.modal,true);
+  assert.equal(learning.mount.classList.contains('hidden'),false);
+  learning.close();assert.equal(learning.opened,false);assert.equal(learning.worldActive,false);
+  assert.ok(cleared>=3);assert.ok(changed>=3);
+}));
+
+test('保存に失敗した実物の操作は状態を変えず、完了で閉じても再表示しない',()=>withFakeBrowser(()=>{
+  let writable=true,shown=0,message='';
+  const learning=new IslandLearning({saveProgress:()=>writable,onCompleted:()=>learning.close()});
+  learning.worldPresenter={clear(){},show(){shown++;},feedback(text){message=text;}};
+  learning.open(4);learning.startActivity('I04-Q02');
+  const before=learning.activityState;
+  writable=false;assert.equal(learning.activityAction({value:'🔴'}),false);
+  assert.equal(learning.activityState,before);assert.match(message,/きろく/);
+  writable=true;assert.equal(learning.activityAction({value:'🔴'}),true);
+  assert.equal(learning.opened,false);assert.equal(shown,1);
+}));
+
+test('第二島と第三島の数は学校へ案内し、後の島は実物の復習を保つ',()=>withFakeBrowser(()=>{
+  const learning=new IslandLearning();let school=0,questions=0;
+  learning.onSchool=()=>{school++;learning.close();return true;};
+  learning.worldPresenter={clear(){},showQuestion(){questions++;}};
+  for(const island of [2,3]){learning.open(island);assert.equal(learning.start('count'),true);assert.equal(learning.opened,false);}
+  learning.open(4);learning.start('count');
+  assert.equal(school,2);assert.equal(questions,1);assert.equal(learning.modal,false);
+}));
+
 test('各分野の答えは表示した見本・絵・数に対応する', () => {
   for (const kind of ['hira', 'upper', 'count', 'word', 'lower', 'compare', 'missing', 'pattern', 'color', 'shape', 'animal']) {
     for (const level of [1, 2]) {

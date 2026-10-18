@@ -194,6 +194,13 @@ export class IslandLearning {
   }
 
   get opened() { return this.island !== null; }
+  get modal() { return this.opened && !this.worldActive; }
+
+  worldView() {
+    this.worldActive = true;
+    this.mount.classList.add('hidden');
+    this.onPresentationChange?.();
+  }
 
   open(islandNumber, options = {}) {
     if (!Number.isInteger(islandNumber) || islandNumber < 1 || islandNumber > 8 || !this.canOpen(islandNumber)) return false;
@@ -214,6 +221,8 @@ export class IslandLearning {
     if (!this.opened) return;
     this.stopSpeech();
     this.voice?.stop?.();
+    this.worldPresenter?.clear();
+    this.worldActive = false;
     this.island = null;
     this.kind = null;
     this.question = null;
@@ -276,6 +285,10 @@ export class IslandLearning {
 
   renderMenu(helpOnly = false) {
     if (!this.opened) return;
+    this.worldPresenter?.clear();
+    this.worldActive = false;
+    this.mount.classList.remove('hidden');
+    this.onPresentationChange?.();
     this.stopSpeech();
     this.voice?.stop?.();
     this.kind = null;
@@ -284,6 +297,10 @@ export class IslandLearning {
     this.activityState = null;
     const card = this.shell(`だい${this.island}の しまの まなび`);
     card.append(element('p', 'island-learning-help', 'あそびを えらんでね。まえの しまも ふくしゅうできるよ。'));
+    if (!helpOnly && [2,3].includes(this.island) && this.onSchool) {
+      const school = element('button', '', '🏫 かずの がっこうへ いこう');
+      school.type='button';school.onclick=()=>this.onSchool();card.append(school);
+    }
     for (const section of helpOnly ? [] : (MENUS[this.island] ?? [])) {
       card.append(element('h3', '', section.title));
       const grid = element('div', 'island-learning-menu');
@@ -354,12 +371,14 @@ export class IslandLearning {
     const outcome = playIslandActivity(activity, this.activityState, action);
     if (outcome.result === 'retry') {
       this.activityFeedback.textContent = 'だいじょうぶ。みほんを みて もういちど。';
+      this.worldPresenter?.feedback?.(this.activityFeedback.textContent);
       this.speakActivityLine('activity-retry');
       return false;
     }
     if (outcome.result === 'invalid') return false;
     if (!this.saveActivity(outcome.state, outcome.result === 'done')) {
       this.activityFeedback.textContent = 'きろくできませんでした。もういちど おしてね。';
+      this.worldPresenter?.feedback?.(this.activityFeedback.textContent);
       return false;
     }
     this.activityState = outcome.state;
@@ -378,6 +397,12 @@ export class IslandLearning {
   renderActivity() {
     const a = this.activity; const state = this.activityState;
     if (!a || !state || !this.opened) return;
+    if (this.worldPresenter) {
+      this.activityFeedback = {textContent:''};
+      this.worldPresenter.show(a, state);
+      this.worldView();
+      return;
+    }
     const card = this.shell(a.title);
     const back = element('button', 'island-activity-back', '← あそびを えらぶ');
     back.type = 'button'; back.onclick = () => this.renderMenu(a.help);
@@ -547,6 +572,7 @@ export class IslandLearning {
 
   start(kind, level = 1) {
     if (!this.opened || ![1, 2].includes(level) || !(MENUS[this.island]??[]).some((section) => section.kinds.includes(kind))) return false;
+    if (kind==='count' && [2,3].includes(this.island) && this.onSchool) return this.onSchool();
     this.stopSpeech();
     this.kind = kind;
     this.level = level;
@@ -560,6 +586,16 @@ export class IslandLearning {
     this.stopSpeech();
     this.question = makeIslandQuestion(this.kind, this.step, this.level, this.island);
     this.solved = false;
+    if (this.worldPresenter) {
+      this.feedback = {textContent:''};
+      this.next = {classList:{remove(){}}};
+      this.worldPresenter.showQuestion(this.question, {
+        onAnswer: value => this.answer(value),
+        onNext: () => { if (this.opened && this.solved) {this.step++;this.showQuestion();} },
+      });
+      this.worldView();
+      return;
+    }
     const card = this.shell(LABELS[this.kind]);
     const toolbar = element('div', 'island-learning-toolbar');
     const back = element('button', '', '← あそびを えらぶ');
@@ -602,10 +638,12 @@ export class IslandLearning {
     if (!this.opened || !this.question || this.solved) return false;
     if (!isIslandAnswerCorrect(this.question, value)) {
       this.feedback.textContent = 'もういちど えらんでね';
+      this.worldPresenter?.feedback?.(this.feedback.textContent);
       return false;
     }
     this.solved = true;
     this.feedback.textContent = this.kind === 'word' ? `せいかい！ ${this.question.sample}` : 'せいかい！';
+    this.worldPresenter?.feedback?.(this.feedback.textContent);
     this.next.classList.remove('hidden');
     this.onCompleted?.({ island: this.island, kind: this.kind, target: this.question.target });
     return true;

@@ -15,6 +15,11 @@ import { addEvidence } from './suggestions.js';
 import { addAdaptiveEvidence } from './adaptive-play.js';
 import { FIRST_TYPES, firstCount } from './island-rules.js';
 const HINT_AFTER = 18;
+const INVITATION_QUESTS = Object.freeze({
+  'I01-Q01': { type: 'color', target: COLORS[0] },
+  'I01-Q03': { type: 'shape', target: SHAPES[0] },
+  'I01-Q04': { type: 'animal', target: 'ushi' },
+});
 
 export const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 export const shuffle = (arr) => {
@@ -115,23 +120,32 @@ export class QuestManager {
 
   // ------------------------------------------------ クエスト じゅんび
   begin() {
-    if (this.saveFailed) return;
-    if (this.observationId !== null) this.stop();
-    if (this.saveFailed) return;
     const types = this.starter ? FIRST_TYPES : TYPES;
-    let type = types[this.save.questIdx % types.length];
+    return this.beginType(types[this.save.questIdx % types.length]);
+  }
+
+  startInvitation(id) {
+    if (!this.starter || !Object.hasOwn(INVITATION_QUESTS, id) || this.saveFailed) return false;
+    const invitation = INVITATION_QUESTS[id];
+    return this.beginType(invitation.type, invitation.target, false);
+  }
+
+  beginType(type, target = null, advance = true) {
+    if (this.saveFailed) return false;
+    if (this.observationId !== null) this.stop();
+    if (this.saveFailed) return false;
     this.activitySettings = resolvePlaySettings(this.save.playSettings,type,this.save.stars,this.save.adaptivePlay);
     // だいいちの しまは、ほしや せっていが ふえても やさしいまま。
     if (this.starter) this.activitySettings = { ...this.activitySettings, level: 0, automatic: false };
     this.countNeed = this.starter ? firstCount(this.save.questIdx) : null;
     const previousIdx = this.save.questIdx;
-    this.save.questIdx++;
+    if (advance) this.save.questIdx++;
     const next = beginObservation(this.save.observations,type,this.activityLevel);
-    if (!this.record(next)) { this.save.questIdx = previousIdx; return; }
+    if (!this.record(next)) { this.save.questIdx = previousIdx; return false; }
     this.observationId = next.active.id;
     this.clearItems();
     this.quest = { type, got: 0, need: 1 };
-    this['setup_' + type]();
+    this['setup_' + type](target);
     this.evidenceChallenge={target:this.quest.target?.id??this.quest.target?.ch,choices:this.items.length,need:this.quest.need};
     this.state = 'active';
     this.elapsed = 0;
@@ -139,11 +153,12 @@ export class QuestManager {
     this.ui.setQuest(this.quest.card);
     this.audio.sparkle();
     this.voice.say(this.quest.line);
+    return true;
   }
 
-  setup_color() {
+  setup_color(forcedTarget = null) {
     const pool = COLORS.slice(0, this.starter ? 3 : [4, 6, 7, 8][this.activityLevel]);
-    const target = pick(pool);
+    const target = forcedTarget ?? pick(pool);
     const others = shuffle(pool.filter((c) => c !== target)).slice(0, this.starter ? 1 : Math.min(pool.length - 1, 3 + this.activityLevel));
     const spots = this.spawnSpots(1 + others.length);
     const list = shuffle([target, ...others]);
@@ -173,9 +188,9 @@ export class QuestManager {
     });
   }
 
-  setup_shape() {
+  setup_shape(forcedTarget = null) {
     const pool = SHAPES.slice(0, this.starter ? 3 : [4, 5, 5, 5][this.activityLevel]);
-    const target = pick(pool);
+    const target = forcedTarget ?? pick(pool);
     const palette = shuffle(COLORS.slice(0, 7));
     const choices = this.starter ? shuffle([target, pick(pool.filter(s => s !== target))]) : shuffle(pool);
     const spots = this.spawnSpots(choices.length);
@@ -190,9 +205,9 @@ export class QuestManager {
     });
   }
 
-  setup_animal() {
+  setup_animal(forcedTarget = null) {
     const kinds = Object.keys(ANIMALS).filter((k) => k !== this.lastAnimal);
-    const kind = pick(kinds);
+    const kind = forcedTarget ?? pick(kinds);
     this.lastAnimal = kind;
     const a = ANIMALS[kind];
     Object.assign(this.quest, {
