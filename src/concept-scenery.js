@@ -18,7 +18,7 @@ const caches=new Map();
 async function loadPack(pack) {
   if(!caches.has(pack))caches.set(pack,(async()=>{
     const name=pack==='nature'?'concept-nature':`concept-${pack}`;
-    const response=await fetch(new URL(`../assets/islands/${name}.json`,import.meta.url));
+    const response=await fetch(new URL(`../assets/islands/${name}.json`,import.meta.url),{signal:AbortSignal.timeout(20000)});
     if(!response.ok)throw new Error('あたらしい しまを よめませんでした');
     const data=await response.json(),materials=Object.fromEntries(Object.entries(data.materials).map(([id,d])=>[id,conceptMaterial(pack==='nature'&&d.type==='stone'?{...d,type:'rock'}:d)]));
     const assets={};

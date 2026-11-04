@@ -88,10 +88,12 @@
     <h1 class="logo"><span>キ</span><span>ラ</span><span>キ</span><span>ラ</span><br><span>ア</span><span>イ</span><span>ラ</span><span>ン</span><span>ド</span></h1>
     <p id="titleStars"></p>
     <p id="developerStart" class="hidden"></p>
+    <p id="startupStatus" role="status">あそぶ じゅんびを しています…</p>
+    <button id="startupRetry" class="remake-btn hidden" type="button">もういちど よみこむ</button>
     <div class="title-actions">
       <button id="btnPlay" class="play-btn" disabled>しまを よみこみちゅう…</button>
-      <button id="btnQuickPlay" class="remake-btn">🐰 このこで すぐ あそぶ</button>
-      <button id="btnRemake" class="remake-btn">✏️ つくりなおす</button>
+      <button id="btnQuickPlay" class="remake-btn" disabled>🐰 このこで すぐ あそぶ</button>
+      <button id="btnRemake" class="remake-btn" disabled>✏️ つくりなおす</button>
     </div>
     <p class="parents">おうちの かたへ：よこむき で あそびます。おとが でます。</p>
     <p class="credit">こえ：Google Gemini 3.8 Flash TTS / Cleo</p>
@@ -312,6 +314,21 @@
     window.addEventListener('unhandledrejection',event=>showStartError(event.reason?.message||event.reason));
   }
   </script>
-  <script type="module" src="src/main.js"></script>
+  <script type="module">
+    const status = document.getElementById('startupStatus');
+    const retry = document.getElementById('startupRetry');
+    retry.onclick = () => location.reload();
+    import('./src/main.js').then(() => {
+      status.classList.add('hidden');
+      document.getElementById('btnQuickPlay').disabled = false;
+      document.getElementById('btnRemake').disabled = false;
+    }).catch(error => {
+      console.error('ゲームを起動できませんでした', error);
+      document.body.classList.add('startup-failed');
+      status.textContent = 'しまを よみこめませんでした。通信やブラウザーを確認して、もういちど おためしください。記録は消していません。';
+      retry.classList.remove('hidden');
+      for (const id of ['btnPlay', 'btnQuickPlay', 'btnRemake']) document.getElementById(id).disabled = true;
+    });
+  </script>
 </body>
 </html>

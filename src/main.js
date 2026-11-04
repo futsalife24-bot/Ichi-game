@@ -64,8 +64,9 @@ let save;
 let profileUI;
 let profiles;
 let developerScenario = null;
-// かくにんモードでは、きどうの どこで まっているかを よめるようにする。
+// きどうの どこで まっているかを、ふつうの いりぐちでも しらせる。
 function startupStage(stage) {
+  $('startupStatus').textContent = stage + '…';
   if(new URLSearchParams(location.search).has('dev')){ $('btnPlay').textContent='しまを よみこみちゅう';$('btnPlay').title=stage; }
 }
 startupStage('プロフィールの準備');
