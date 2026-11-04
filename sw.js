@@ -1,5 +1,5 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v64-world-play';
+const VERSION = 'kirakira-v65-startup-feedback';
 const ASSETS = [
   './',
   './index.html',

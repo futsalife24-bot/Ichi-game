@@ -224,6 +224,13 @@ button { font-family: inherit; color: inherit; border: none; cursor: pointer; to
 
 /* ---------- たてむき */
 #rotate { display: none; background: #6ec6ff; color: #fff; z-index: 10; font-size: 8vw; font-weight: 900; }
+#startupStatus { max-width: min(92vw, 560px); padding: 0 12px; line-height: 1.6; }
+body.startup-failed #title { z-index: 11; padding: 20px; background: #d9f3ff; justify-content: center; gap: 24px; }
+body.startup-failed #startupStatus { color: #234d45; font-size: 18px; }
+#startupRetry { min-height: 48px; padding: 12px 24px; font-size: 18px; }
+body.startup-failed .title-actions, body.startup-failed #titleStars,
+body.startup-failed .parents, body.startup-failed .credit,
+body.startup-failed .parent-actions, body.startup-failed #btnSave { display: none; }
 .rotate-icon { font-size: 25vw; animation: rot 2s ease-in-out infinite; }
 @keyframes rot { 0%, 20% { transform: rotate(0); } 50%, 80% { transform: rotate(-90deg); } }
 @media (orientation: portrait) and (max-width: 900px) {
