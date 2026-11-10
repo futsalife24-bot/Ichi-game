@@ -1,0 +1,102 @@
+{
+  "date": "2026-11-10",
+  "status": "実装・自動検査済み、実画面の仕上げ確認待ち",
+  "branch": "codex/island-ui-lightweight-polish",
+  "base": "d9a345a3061eb22fd3ee6fb22efcd1279125c56a",
+  "tests": {
+    "log": "output/island-polish-tests-final.log",
+    "total": 446,
+    "sha256": "C492CFFA16136469AFEFBA14F42B7B888EB51945E2695F1913C9BCDE5050C96E",
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "pass": 446
+  },
+  "voiceClips": 843,
+  "islandPacks": 8,
+  "sea": {
+    "oldVertices": 5041,
+    "oldTriangles": 9800,
+    "newTriangles": 6272,
+    "newVertices": 3249
+  },
+  "newMediaFiles": 0,
+  "browserVerified": [
+    "変更前第一島844x390",
+    "変更後第一島ラベル",
+    "第二島確認ボタンからの起動開始"
+  ],
+  "browserUnverified": [
+    "最終版の全島表示",
+    "ボタン重なりと実操作",
+    "FPS",
+    "実スマートフォン",
+    "検証viewport解除"
+  ],
+  "files": [
+    {
+      "path": "index.html",
+      "sha256": "C0929EB6A0C2F1A6BC9D7763E9D5DF384860EE159E1C5564240E33735CD0DCBD"
+    },
+    {
+      "path": "src/island-polish.css",
+      "sha256": "6C415C10F48F6AA700D28B1494FEF88693E423912FF87EBCB2708E74EE5ACBCF"
+    },
+    {
+      "path": "src/island-presentation.js",
+      "sha256": "A9933D10DC93677666BDF02AD053F4CF143EF29CE62C4D5A178B30784647B472"
+    },
+    {
+      "path": "src/main.js",
+      "sha256": "89449D7577CF59567FE50370E38F75F8F86DBD3EB696D54F96F3DE0DF45494FB"
+    },
+    {
+      "path": "src/ui.js",
+      "sha256": "FA4F4A3837B46C566DADE426E02B91DC6D56FDF86BAA3C1A79B41D5056AA2CBA"
+    },
+    {
+      "path": "src/input.js",
+      "sha256": "0413550FF560B0D29B3259016491435B40D7826EA8B5F986738FA3C38C6B6E43"
+    },
+    {
+      "path": "src/world.js",
+      "sha256": "0BF7EBB77F539A685A07DE02D09AD22D7C7F6ABC3AD45F54B3E780A9BD86E224"
+    },
+    {
+      "path": "src/concept-camera.js",
+      "sha256": "BD76423C5402CE48FA682F9199996B83712C4E49C172A8E91992FC355BC95BFB"
+    },
+    {
+      "path": "style.css",
+      "sha256": "6ADEBF7B708D64BBA0C08496B9B9960F79F713FA5FA8DCDD2DE6BAEB8482422E"
+    },
+    {
+      "path": "sw.js",
+      "sha256": "DF574E3E0F5ACD144107EB106852BFA3E315C54CE35159F9CD76AE95CB8626EC"
+    },
+    {
+      "path": "tools/input.test.mjs",
+      "sha256": "27D906114E7C11A14DF88DCDD418D2E1ED6ABC003E820722DFE4AA078BA0DC87"
+    },
+    {
+      "path": "tools/concept-camera.test.mjs",
+      "sha256": "9BA0228B4BB385F30B62DF5B783E064E77C584DDCC07EA51D22AA2A74255C9AC"
+    },
+    {
+      "path": "tools/developer-mode.test.mjs",
+      "sha256": "65A3346723DC80AADB6BEE0167A1740165C1B9B32AD8F4E476DB473932474D21"
+    },
+    {
+      "path": "tools/help-integration.test.mjs",
+      "sha256": "723D6704D701630F67ACC9CBCABE16BB9B7D85BB8755C2513971E497A1269643"
+    },
+    {
+      "path": "tools/play-time.test.mjs",
+      "sha256": "153412FF9C7AF8B083B11A056CFB3D617D7A23CB1CEA68B24CC9A9135768C30D"
+    },
+    {
+      "path": "tools/sw.test.mjs",
+      "sha256": "0F7012678E81E40A34ED9218EAB3A62B12BAB465EFB33CCBA108822BCA9D9148"
+    }
+  ]
+}

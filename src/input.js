@@ -7,6 +7,7 @@ export class Input {
     this.joyZone = joyZone;
     this.joyBase = joyBase;
     this.joyKnob = joyKnob;
+    this.jumpBtn = jumpBtn;
     this.joy = { x: 0, y: 0 };
     this.joyId = null;
     this.origin = { x: 0, y: 0 };
@@ -18,6 +19,7 @@ export class Input {
     this.onTap = null;
 
     joyZone.addEventListener('pointerdown', (e) => this.joyDown(e));
+    joyZone.addEventListener('lostpointercapture', (e) => this.onUp(e));
     window.addEventListener('pointermove', (e) => this.onMove(e), { passive: false });
     window.addEventListener('pointerup', (e) => this.onUp(e));
     window.addEventListener('pointercancel', (e) => this.onUp(e));
@@ -40,17 +42,25 @@ export class Input {
     });
 
     window.addEventListener('keydown', (e) => {
-      if (e.code === 'Space') { this.jumpQueued = this.enabled && this.jumpEnabled; e.preventDefault(); }
+      if (e.code === 'Space') {
+        if (e.target?.closest?.('button, input, select, textarea, dialog, [role="button"], [contenteditable]:not([contenteditable="false"])')) return;
+        if (this.enabled && this.jumpEnabled) {
+          e.preventDefault();
+          if (!e.repeat) this.jumpQueued = true;
+        }
+        return;
+      }
       this.keys.add(e.code);
     });
     window.addEventListener('keyup', (e) => this.keys.delete(e.code));
-    window.addEventListener('blur', () => this.keys.clear());
+    window.addEventListener('blur', () => this.reset());
   }
 
   joyDown(e) {
     if (!this.enabled || this.joyId !== null) return;
     e.preventDefault();
     this.joyId = e.pointerId;
+    try { this.joyZone.setPointerCapture?.(e.pointerId); } catch { /* ほかの そうさを つづける */ }
     const r = this.joyZone.getBoundingClientRect();
     this.origin = { x: r.left + r.width / 2, y: r.top + r.height / 2 };
     this.joyRadius = Math.max(30, r.width * 0.4);
@@ -112,8 +122,13 @@ export class Input {
   }
 
   reset() {
-    this.joy.x = this.joy.y = 0;
+    const joyId = this.joyId;
     this.joyId = null;
+    if (joyId !== null) try { this.joyZone.releasePointerCapture?.(joyId); } catch { /* ほかの そうさを つづける */ }
+    this.joy.x = this.joy.y = 0;
+    this.joyKnob.style.transform = 'translate(-50%, -50%)';
+    this.joyBase.classList.remove('active');
+    this.jumpBtn.classList.remove('pressed');
     this.pointer = null;
     this.jumpQueued = false;
     this.keys.clear();

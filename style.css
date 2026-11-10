@@ -645,3 +645,12 @@ body #subtitle.above-island-actions { bottom: calc(var(--island-actions-bottom) 
 #islandActions button { display:flex; align-items:center; gap:5px; height:var(--island-actions-height); white-space:nowrap; padding:8px 12px; border:2px solid #fff; border-radius:18px; background:#fff9e8; color:#365c49; box-shadow:0 2px 6px #0002; font-size:22px; cursor:pointer; }
 #islandActions button span { font-size:15px; font-weight:bold; }
 @media (max-height:400px) { :root { --island-actions-bottom: calc(6px + var(--safe-b)); --island-actions-height: 44px; } #islandActions { gap:5px; } #islandActions button { padding:6px 9px; } }
+
+/* あんないを うえに、しまの ぼたんを ひだりに まとめる。 */
+body #subtitle, body.developer-mode #subtitle, body #subtitle.above-island-actions, body.help-focus #subtitle, body.adventure-focus #subtitle {
+  top: calc(11vh + 8px); bottom: auto; max-width: 48vw; min-width: 0;
+  padding: calc(var(--u) * 1.5) calc(var(--u) * 3.2); font-size: calc(var(--u) * 3.6);
+}
+#islandActions { left: calc(var(--safe-l) + 10px); top: 28vh; bottom: auto; transform: none; flex-direction: column; gap: 4px; }
+#islandActions button { height: clamp(38px, 8vh, 48px); padding: 5px 9px; font-size: 20px; }
+#islandActions button span { font-size: 14px; }

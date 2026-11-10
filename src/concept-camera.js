@@ -65,8 +65,8 @@ export function setConceptCameraGoal(number, playerPosition, view, outPosition, 
       1 - smooth(0, 3, Math.hypot(playerPosition.x - 9, playerPosition.z - 4)),
       1 - smooth(4, 6.5, Math.hypot(playerPosition.x - 18, playerPosition.z)),
     ) : 0;
-    // みおろす むきを たもち、うさぎへ 12% ちかづく。
-    const distanceScale = .88;
+    // みおろす むきを たもち、うさぎへ 16% ちかづく。だいろくは けしきを たもつ。
+    const distanceScale = number === 6 ? .88 : .84;
     const eyeX = 2.4 * distanceScale;
     const eyeY = (18.7 - 5 * fourthWeight) * distanceScale;
     const eyeZ = (28 - 10 * fourthWeight) * distanceScale;

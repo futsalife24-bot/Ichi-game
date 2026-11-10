@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import { islandPresentation } from '../src/island-presentation.js';
 import { DEVELOPER_SCENARIOS, openPlayProfiles, developerScenario, developerURL } from '../src/developer-mode.js';
 import { createProfileStore } from '../src/profiles.js';
 import { validateGameSave } from '../src/save.js';
@@ -173,11 +174,13 @@ test('開発者メニュー中は時間を進めず、島の収集処理にも�
   let scheduled = 0;
   const ticks = [];
   const context = { developerMenuOpen: () => true, homePaused: false, playTimer: { tick: active => { ticks.push(active); return true; }, paused: false },
-    mode: 'play', place: 'forest', saveBlocked: false, islandLoading:false, document: { hidden: false }, help: { focused: false }, adventure: { focused: false }, invitation: {dialogOpen:false}, landmark:null, syncInvitationDialog(){}, pauseInvitation(){},
-    islandNumber: () => 3, islandRules: () => ({ name: 'みなと' }), input: {}, learning: { opened: false, close() {}, stopSpeech() {} },
-    ui: { panelOpen: false }, transitioning: false, harborBusy: () => false, quests: { state: 'idle' }, $: () => ({ classList: { toggle() {} }, querySelector: () => ({}), setAttribute() {} }),
+    mode: 'play', place: 'forest', hudPlace:null, saveBlocked: false, islandLoading:false, document: { hidden: false, body:{dataset:{}} }, help: { focused: false }, adventure: { focused: false }, invitation: {dialogOpen:false}, landmark:null, syncInvitationDialog(){}, pauseInvitation(){},
+    islandNumber: () => 3, islandPresentation, islandRules: () => ({ name: 'みなと' }), input: {}, learning: { opened: false, close() {}, stopSpeech() {} },
+    ui: { panelOpen: false }, transitioning: false, harborBusy: () => false, quests: { state: 'idle' }, $: () => ({ classList: { toggle() {} }, querySelector: () => ({textContent:''}), setAttribute() {} }),
     last: 0, time: 0, requestAnimationFrame() { scheduled++; } };
   vm.runInNewContext(frame + '\nframe(20);', context);
+  assert.equal(context.hudPlace, 'forest');
+  assert.equal(context.document.body.dataset.learningStage, islandPresentation(3).stage);
   assert.deepEqual(ticks, [false]);
   assert.equal(scheduled, 2);
 });

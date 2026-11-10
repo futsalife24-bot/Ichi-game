@@ -5,11 +5,12 @@ import {freshSave,validateGameSave} from '../src/save.js';
 import {beginObservation,finishObservation} from '../src/observations.js';
 import {createProfileStore} from '../src/profiles.js';
 import {setupTimeUI} from '../src/time-ui.js';
+import {islandPresentation} from '../src/island-presentation.js';
 import fs from 'node:fs';
 import vm from 'node:vm';
 const main=fs.readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
 const activityInput='const invitation = {dialogOpen:false};\nconst landmark = null;\n'+main.match(/const harborBusy = [^\n]+\nfunction refreshActivityInput\(\) \{[\s\S]*?\n\}/)[0];
-const hudElement=()=>({classList:{toggle(){}},querySelector(){return {textContent:''};},setAttribute(){}});
+const hudElement=()=>({textContent:'',classList:{toggle(){}},querySelector(){return {textContent:''};},setAttribute(){}});
 
 test('ホームの振り返りは活動を終了せず、戻ると同じ回の計測を再開する',()=>{
   const open=main.match(/function openHomeSummary\(\) \{[\s\S]*?\n\}/)[0];
@@ -34,11 +35,13 @@ test('ホーム画面中のフレームは島も活動も進めず、計測を�
   const frame=main.match(/function frame\(now\) \{[\s\S]*?\n\}\r?\nrequestAnimationFrame\(frame\);/)[0];
   for(const place of ['island','forest']){
     let active,advanced=0,closedLearning=0;
-    const context={homePaused:true,playTimer:{tick:x=>{active=x;return true;},paused:false},mode:'play',place,saveBlocked:false,islandLoading:false,forestLoading:false,document:{hidden:false},
+    const context={homePaused:true,playTimer:{tick:x=>{active=x;return true;},paused:false},mode:'play',place,hudPlace:null,saveBlocked:false,islandLoading:false,forestLoading:false,document:{hidden:false,body:{dataset:{}}},islandPresentation,
       islandNumber:()=>place==='island'?1:3,islandRules:()=>({name:'みなと'}),input:{},syncInvitationDialog(){},pauseInvitation(){},
       learning:{opened:true,close(){closedLearning++;this.opened=false;},stopSpeech(){}},
       help:{focused:false,update(){advanced++;}},adventure:{focused:false,update(){advanced++;}},harborErrands:{modal:false,focused:false,update(){advanced++;}},ui:{panelOpen:false},transitioning:false,quests:{state:'active',update(){advanced++;}},$:hudElement,last:0,time:0,requestAnimationFrame(){}};
     vm.runInNewContext(activityInput+'\n'+frame+'\nframe(10);',context);
+    assert.equal(context.hudPlace,place);
+    assert.equal(context.document.body.dataset.learningStage,islandPresentation(place==='island'?1:3).stage);
     assert.equal(active,false);assert.equal(advanced,0);assert.equal(closedLearning,1);assert.equal(context.learning.opened,false);
   }
 });
@@ -132,11 +135,13 @@ test('時間設定の保存失敗では元の値を保持する',()=>{
 test('期限画面を出しているフレームでは島の処理へ進まない',()=>{
   const frame=main.match(/function frame\(now\) \{[\s\S]*?\n\}\r?\nrequestAnimationFrame\(frame\);/)[0];
   for(const place of ['island','forest']){
-    let scheduled=0,advanced=0,closedLearning=0;const context={developerMenuOpen:()=>false,homePaused:false,playTimer:{tick:()=>true,paused:true},mode:'play',place,saveBlocked:false,islandLoading:false,forestLoading:false,document:{hidden:false},
+    let scheduled=0,advanced=0,closedLearning=0;const context={developerMenuOpen:()=>false,homePaused:false,playTimer:{tick:()=>true,paused:true},mode:'play',place,hudPlace:null,saveBlocked:false,islandLoading:false,forestLoading:false,document:{hidden:false,body:{dataset:{}}},islandPresentation,
       islandNumber:()=>place==='island'?1:3,islandRules:()=>({name:'みなと'}),input:{},syncInvitationDialog(){},pauseInvitation(){},
       learning:{opened:true,close(){closedLearning++;this.opened=false;},stopSpeech(){}},
       help:{focused:false,update(){advanced++;}},adventure:{focused:false,update(){advanced++;}},harborErrands:{modal:false,focused:false,update(){advanced++;}},ui:{panelOpen:false},transitioning:false,quests:{state:'active',update(){advanced++;}},$:hudElement,last:0,time:0,requestAnimationFrame(){scheduled++;}};
     vm.runInNewContext(activityInput+'\n'+frame+'\nframe(10);',context);
+    assert.equal(context.hudPlace,place);
+    assert.equal(context.document.body.dataset.learningStage,islandPresentation(place==='island'?1:3).stage);
     assert.equal(scheduled,2);assert.equal(advanced,0);assert.equal(closedLearning,1);assert.equal(context.learning.opened,false);
   }
 });

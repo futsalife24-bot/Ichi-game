@@ -375,7 +375,7 @@ export class World {
   }
 
   buildWater() {
-    const geo = new THREE.PlaneGeometry(220, 220, 70, 70);
+    const geo = new THREE.PlaneGeometry(220, 220, 56, 56);
     geo.rotateX(-Math.PI / 2);
     this.waterBase = Float32Array.from(geo.attributes.position.array);
     const mat = new THREE.MeshStandardMaterial({

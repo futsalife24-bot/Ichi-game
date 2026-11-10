@@ -1,9 +1,11 @@
 // オフラインでも あそべるように ファイルを キャッシュする
-const VERSION = 'kirakira-v64-world-play';
+const VERSION = 'kirakira-v66-island-polish';
 const ASSETS = [
   './',
   './index.html',
   './style.css',
+  './src/island-presentation.js',
+  './src/island-polish.css',
   './manifest.webmanifest',
   './vendor/three.module.js',
   './vendor/three.core.js',

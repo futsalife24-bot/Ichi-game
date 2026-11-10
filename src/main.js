@@ -36,6 +36,7 @@ import { Forest, FOREST_SPAWN, FOREST_DOCK, DOCK } from './forest.js';
 import { FOREST_ORIGIN, LEAF_HOST } from './adventure-state.js';
 import { setupSaveUI } from './save-ui.js';
 import { islandRules } from './island-rules.js';
+import { islandPresentation } from './island-presentation.js';
 import { IslandLearning } from './island-learning.js';
 import { WorldActivity } from './world-activity.js';
 import { GrowthControls } from './growth-controls.js';
@@ -383,14 +384,18 @@ async function prepareArea(number) {
 function openIslands() {
   if (mode !== 'play' || saveBlocked || islandLoading || transitioning || homePaused || playTimer.paused || help.modal || adventure.modal || harborErrands.modal || learning.opened || invitation.dialogOpen || Boolean(landmark?.active) || ui.panelOpen) return;
   quests.stop(); help.stop(); adventure.stop(); harborErrands.stop(); endAllFishing(); voice.stop(); player.setTarget(null);
-  openPanel({ title: 'どの しまへ いく？', onClose: () => { if (place === 'island' && mode === 'play' && !transitioning) help.start(); }, tabs: [{ id: 'islands', label: 'しまを えらぶ' }], grid: () => [
-    { emoji: '🌼', name: 'だいいちの しま', note: 'あるく・あつめる・はじめの れんしゅう', state: 'on', onClick: () => { ui.closePanel(); returnFirst(); } },
-    { emoji: '🌳', name: 'だいにの しま', note: 'もじ・ABC・きゆらし・ジャンプ', state: 'on', onClick: () => { ui.closePanel(); visitSecond(); } },
-    { emoji: '⛵', name: 'だいさんの しま', note: adventure.unlocked ? 'えいご・おつかい・くらし' : 'いぬさんに おはなを とどけると いけるよ', state: adventure.unlocked ? 'on' : 'lock', onClick: () => {
-      ui.closePanel(); if (adventure.unlocked) visitForest(); else { returnFirst(true); adventure.choose('flower'); }
-    } },
-    ...Object.entries(LEARNING_ISLAND_LAYOUTS).map(([key,layout])=>({emoji:layout.emoji,name:`だい${key}の しま`,note:layout.name,state:'on',onClick:()=>{ui.closePanel();visitLearningIsland(Number(key));}})),
-  ] });
+  openPanel({ title: 'どの しまへ いく？', onClose: () => { if (place === 'island' && mode === 'play' && !transitioning) help.start(); }, tabs: [{ id: 'islands', label: 'すきな しまへ あそびに いこう' }], grid: () => Array.from({ length: 8 }, (_, index) => {
+    const number = index + 1, view = islandPresentation(number), locked = number === 3 && !adventure.unlocked;
+    return { island: number, current: number === islandNumber(), emoji: view.icon, name: view.title,
+      note: locked ? 'いぬさんに おはなを とどけよう' : view.focus, detail: view.hint, state: locked ? 'lock' : 'on',
+      onClick: () => {
+        ui.closePanel();
+        if (number === 1) returnFirst();
+        else if (number === 2) visitSecond();
+        else if (number === 3) { if (adventure.unlocked) visitForest(); else { returnFirst(true); adventure.choose('flower'); } }
+        else visitLearningIsland(number);
+      } };
+  }) });
 }
 function leaveArea() {
   quests.stop(); help.stop(); adventure.stop(); harborErrands.stop(); learning.close(); endAllFishing(); voice.stop();
@@ -1078,6 +1083,7 @@ camera.position.set(30, 16, 30);
 let last = performance.now();
 let time = 0;
 let hudClock = 0;
+let hudPlace = null;
 
 function frame(now) {
   if(landmark?.active && (mode!=='play'||saveBlocked||islandLoading||homePaused||playTimer.paused||developerMenuOpen()||ui.panelOpen||transitioning))landmark.stop();
@@ -1092,16 +1098,24 @@ function frame(now) {
   $('btnLearning').classList.toggle('hidden', island === 1 || ['school','room'].includes(place));
   $('btnIslandHelp').classList.toggle('hidden', island === 1 || ['school','room'].includes(place));
   $('btnTown').classList.toggle('hidden', !['forest', 'town'].includes(place));
-  $('btnTown').querySelector('span').textContent = place === 'town' ? 'みなと' : 'くらし';
-  $('btnTown').setAttribute('aria-label', place === 'town' ? 'みなとへ もどる' : 'くらしの ひろばへ いく');
-  $('btnIslands').querySelector('span').textContent = place === 'island' ? 'つぎの しま' : 'しま';
-  $('btnIslands').setAttribute('aria-label', place === 'island' ? 'だいにの しまへ いく' : 'しまを えらぶ');
+  // しまが かわった ときだけ、かわらない もじと いろを ぬりなおす。
+  if (hudPlace !== place) {
+    hudPlace = place;
+    const view = islandPresentation(island);
+    document.body.dataset.island = String(island);
+    document.body.dataset.learningStage = view.stage;
+    $('btnTown').querySelector('span').textContent = place === 'town' ? 'みなと' : 'くらし';
+    $('btnTown').setAttribute('aria-label', place === 'town' ? 'みなとへ もどる' : 'くらしの ひろばへ いく');
+    $('btnIslands').querySelector('span').textContent = place === 'island' ? 'つぎの しま' : 'しま';
+    $('btnIslands').setAttribute('aria-label', place === 'island' ? 'だいにの しまへ いく' : 'しまを えらぶ');
+    $('btnAdventure').querySelector('.side-label').textContent = place === 'forest' ? 'おつかい' : 'ぼうけん';
+    $('btnAdventure').setAttribute('aria-label', place === 'forest' ? 'みなとの おつかい' : 'ぼうけん');
+    $('placeLabel').textContent = `${view.icon} ${island} / 8　${view.title}`;
+    $('placeLabel').setAttribute('aria-label', `だい${island}の しま。${view.title}。${view.focus}`);
+  }
   if (place !== 'forest') $('adventureBack').classList.toggle('hidden', true);
   $('bells').classList.toggle('hidden', island < 3);
   $('btnAdventure').classList.toggle('hidden', mode !== 'play' || place !== 'forest' || help.focused || adventure.focused || harborBusy() || learning.opened);
-  $('btnAdventure').querySelector('.side-label').textContent = place === 'forest' ? 'おつかい' : 'ぼうけん';
-  $('btnAdventure').setAttribute('aria-label', place === 'forest' ? 'みなとの おつかい' : 'ぼうけん');
-  $('placeLabel').textContent = `だい${['', 'いち', 'に', 'さん', 'よん', 'ご', 'ろく', 'なな', 'はち'][island]}の しま・${islandRules(island).name}`;
   $('placeLabel').classList.toggle('hidden', mode !== 'play' || adventure.focused || harborBusy() || learning.opened || ['school', 'room'].includes(place) || (place === 'island' && quests.state !== 'idle'));
   if(!playTimer.tick(mode==='play'&&!saveBlocked&&!document.hidden&&!homePaused&&!developerMenuOpen())) { pauseInvitation(); requestAnimationFrame(frame); return; }
   if(islandLoading){pauseInvitation();last=now;renderer.render(scene,camera);requestAnimationFrame(frame);return;}

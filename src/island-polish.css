@@ -1,0 +1,141 @@
+/* しまの しるし。いろと えを そろえて、あそぶ ものを かくさない。 */
+:root {
+  --safe-t: env(safe-area-inset-top, 0px);
+  --island-ink: #365d4b;
+  --island-paper: #f3f8e9;
+  --island-accent: #c7d9a2;
+  --control-shadow: 0 3px 0 #173c4326, 0 4px 12px #173c4310;
+}
+[data-island="1"] { --island-ink: #386343; --island-paper: #f3f8e9; --island-accent: #c7d9a2; }
+[data-island="2"] { --island-ink: #2a6556; --island-paper: #eaf6ef; --island-accent: #a7d9c3; }
+[data-island="3"] { --island-ink: #305e78; --island-paper: #eaf5fa; --island-accent: #a4cfdf; }
+[data-island="4"] { --island-ink: #7c4b31; --island-paper: #fff3e4; --island-accent: #e9c59d; }
+[data-island="5"] { --island-ink: #834128; --island-paper: #fff2df; --island-accent: #ecc090; }
+[data-island="6"] { --island-ink: #216575; --island-paper: #e8f8f9; --island-accent: #96d9db; }
+[data-island="7"] { --island-ink: #4d5688; --island-paper: #eff2ff; --island-accent: #c0c9ec; }
+[data-island="8"] { --island-ink: #774367; --island-paper: #fff0f7; --island-accent: #e8b6d1; }
+button:focus-visible, summary:focus-visible { outline: 3px solid #1e587e; outline-offset: 4px; }
+#hud button, #islandActions button { transition: transform .12s ease, background-color .12s ease; }
+#hud button:active, #islandActions button:active { transform: translateY(2px); }
+body #questCard:active { transform: translate(-50%, 2px); }
+
+/* うえは じょうたい、ひだりは おでかけ、みぎは もちもの。 */
+body #pills { top: calc(12px + var(--safe-t)); left: calc(12px + var(--safe-l)); gap: 7px; }
+body .pill { padding: 5px 12px; font-size: 23px; gap: 6px; box-shadow: var(--control-shadow); }
+body .pill.small { font-size: 14px; padding: 5px 10px; }
+body[data-island="1"] #clock { display: none; }
+body #settings { top: calc(12px + var(--safe-t)); right: calc(12px + var(--safe-r)); gap: 7px; }
+body .round-btn { width: 44px; height: 44px; font-size: 22px; box-shadow: var(--control-shadow); }
+body #placeLabel {
+  top: calc(12px + var(--safe-t)); max-width: calc(100vw - 350px); padding: 8px 14px;
+  border: 1px solid var(--island-accent); border-radius: 14px;
+  color: var(--island-ink); background: var(--island-paper); font-size: 16px; line-height: 1.4;
+  text-align: center; box-shadow: var(--control-shadow);
+}
+body #islandActions { left: calc(12px + var(--safe-l)); top: max(112px, 25vh); gap: 8px; }
+body #islandActions button {
+  min-width: 118px; min-height: 48px; height: auto; padding: 9px 12px; border-radius: 14px;
+  border: 1px solid var(--island-accent); background: var(--island-paper); color: var(--island-ink);
+  box-shadow: var(--control-shadow); font-size: 23px; gap: 8px;
+}
+body #islandActions button span { font-size: 15px; }
+body #btnResidentTalk { background: #fff0b8; border-color: #d7ac43; color: #624a20; }
+body #sideBtns { right: calc(16px + var(--safe-r)); top: max(84px, 23vh); bottom: auto; gap: 9px; }
+body .side-btn { width: 64px; height: 60px; border: 1px solid #d8e1d9; border-radius: 16px; box-shadow: var(--control-shadow); }
+body .side-emoji { font-size: 26px; }
+body .side-label { font-size: 13px; margin-top: 3px; color: #354d47; }
+body #joyZone { left: calc(20px + var(--safe-l)); bottom: calc(18px + var(--safe-b)); width: clamp(100px, 25vh, 156px); height: clamp(100px, 25vh, 156px); }
+body #joyBase { border: 2px solid #fffffff0; background: #f1f8f475; box-shadow: 0 2px 8px #234d4320; }
+body #joyBase::after { content: '＋'; position: absolute; inset: 0; display: grid; place-items: center; font-size: 72px; color: #ffffff90; z-index: -1; }
+body #btnJump { right: calc(18px + var(--safe-r)); bottom: calc(18px + var(--safe-b)); width: clamp(88px, 23vh, 136px); height: clamp(88px, 23vh, 136px); font-size: 16px; border: 2px solid #ffdfeb; box-shadow: 0 4px 0 #c54c70; }
+body #growthControls { right: calc(16px + var(--safe-r)); bottom: calc(18px + var(--safe-b)); max-width: 158px; }
+body #growthControls button { min-height: 48px; font-size: 15px; background: #fff9df; border: 1px solid #ccb87b; box-shadow: var(--control-shadow); }
+body #helpReturn, body #helpQuiz { left: calc(12px + var(--safe-l)); min-height: 44px; padding: 8px 12px; font-size: 15px; border-radius: 14px; box-shadow: var(--control-shadow); }
+body #helpReturn { top: 170px; }
+body #helpQuiz { top: 222px; }
+body #adventureBack { left: calc(12px + var(--safe-l)); top: auto; bottom: calc(180px + var(--safe-b)); }
+body #questCard { top: calc(12px + var(--safe-t)); max-width: calc(100vw - 350px); padding: 8px 14px; border-radius: 16px; gap: 10px; }
+body #questIcon { width: 38px; height: 38px; }
+body #questIcon .emoji, body #questIcon .moji { font-size: 32px; }
+body #questText { font-size: 17px; white-space: normal; }
+body #questProgress .slot { font-size: 20px; }
+body #questProgress { flex-wrap: wrap; }
+body #subtitle, body.developer-mode #subtitle, body #subtitle.above-island-actions, body.help-focus #subtitle, body.adventure-focus #subtitle {
+  top: calc(70px + var(--safe-t)); bottom: auto; max-width: min(48vw, 600px); min-width: 0;
+  padding: 10px 16px; font-size: 16px; border-radius: 16px; line-height: 1.5;
+}
+body #hud:has(#questCard:not(.hidden)) #subtitle { top: calc(112px + var(--safe-t)); }
+body #subName { font-size: 13px; top: -14px; padding: 3px 10px; transform: none; }
+body .learning-invitation-bubble { min-height: 44px; max-width: 180px; padding: 8px 12px; font-size: 14px; }
+body .world-activity-hud { border-color: var(--island-accent); background: var(--island-paper); color: var(--island-ink); box-shadow: var(--control-shadow); }
+body:has(.world-activity-hud:not([hidden])) #subtitle { top: auto; bottom: 20px; }
+body .island-learning-card { border-color: var(--island-accent); background: var(--island-paper); font-family: var(--font); }
+body .island-learning button { font-family: var(--font); min-height: 44px; }
+body .island-learning-sound { min-height: 44px !important; }
+
+/* えらぶ がめんは、すきな あそびと いまの ばしょが わかる えほん。 */
+body #panel.island-picker { justify-content: center; align-items: center; background: #173c4366; z-index: 130; }
+body #panel.island-picker .sheet { width: min(880px, calc(100vw - 32px)); height: min(740px, calc(100dvh - 32px)); border-radius: 24px; padding: 20px; background: #faf9f2; box-shadow: 0 14px 50px #15373538; }
+.island-picker #panelTitle { font-size: clamp(22px, 3vw, 30px); color: #304d49; }
+.island-picker #panelClose { width: 44px; height: 44px; flex: none; font-size: 20px; }
+.island-picker #panelCount { margin-left: auto; flex: none; }
+.island-picker #panelTabs { margin: 8px 0 14px; }
+.island-picker .tab { background: transparent; padding: 0; font-size: 15px; color: #526b64; box-shadow: none; pointer-events: none; }
+.island-picker #panelGrid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; padding: 4px; }
+.island-picker .card { position: relative; min-height: 186px; padding: 14px 10px; gap: 8px; border-radius: 18px; border: 1px solid var(--island-accent); background: var(--island-paper); color: var(--island-ink); box-shadow: 0 3px 0 #193b401a; }
+.island-picker .card[aria-current="location"] { outline: 3px solid var(--island-ink); outline-offset: -3px; }
+.island-card-number { align-self: stretch; display: flex; align-items: center; gap: 5px; text-align: left; font-size: 21px; font-weight: 900; }
+.island-card-number small { font-size: 12px; font-weight: 700; }
+.island-picker .card-emoji { font-size: 38px; line-height: 1; }
+.island-picker .card-name { font-size: 16px; line-height: 1.4; }
+.island-picker .card-note { font-size: 13px; color: var(--island-ink); line-height: 1.5; }
+.island-card-detail { font-size: 12px; line-height: 1.5; color: #50605c; }
+.island-picker .card.lock .card-name { color: var(--island-ink); }
+.island-picker .card.lock .card-emoji { filter: grayscale(.8); opacity: .6; }
+.island-picker .card:active { transform: translateY(2px); }
+@media (max-height: 540px) {
+  body #islandActions { top: 92px; display: grid; grid-template-columns: 118px auto; gap: 6px; }
+  body #islandActions button { min-height: 44px; min-width: 0; padding: 7px 8px; font-size: 21px; gap: 6px; }
+  body #islandActions button span { font-size: 14px; }
+  #btnIslands { grid-area: 1 / 1; } #btnLearning { grid-area: 2 / 1; } #btnIslandHelp { grid-area: 3 / 1; }
+  #btnTown { grid-area: 1 / 2; } #btnResidentTalk { grid-area: 3 / 2; }
+  body #sideBtns { top: 82px; gap: 7px; }
+  body .side-btn { width: 58px; height: 50px; }
+  body .side-emoji { font-size: 23px; }
+  body .side-label { font-size: 12px; margin-top: 1px; }
+  body #helpReturn { top: 142px; } body #helpQuiz { top: 192px; }
+  body #adventureBack { left: calc(136px + var(--safe-l)); top: 142px; bottom: auto; min-height: 44px; padding: 7px 9px; font-size: 14px; }
+  body #panel.island-picker .sheet { height: calc(100dvh - 20px); width: calc(100vw - 28px); padding: 12px 16px; border-radius: 18px; }
+  .island-picker #panelGrid { gap: 8px; }
+  .island-picker .card { min-height: 148px; padding: 10px 8px; gap: 5px; }
+  .island-picker .card-emoji { font-size: 30px; }
+  .island-picker .island-card-detail { display: none; }
+}
+@media (max-height: 360px) {
+  body #islandActions { top: 64px; }
+  body #sideBtns { top: 64px; flex-direction: row; }
+  body #helpReturn { top: 114px; } body #helpQuiz { top: 164px; }
+  body #adventureBack { top: 114px; }
+  body #placeLabel { font-size: 14px; padding: 6px 10px; }
+  body #pills .pill.small { font-size: 12px; }
+}
+@media (max-width: 700px) {
+  body #placeLabel, body #questCard { max-width: calc(100vw - 290px); }
+  body #placeLabel { font-size: 14px; padding: 6px 9px; }
+  body #islandActions { grid-template-columns: 108px auto; }
+  body #adventureBack { left: calc(126px + var(--safe-l)); }
+  body #islandActions button span { font-size: 13px; }
+  body #islandActions button { padding-inline: 6px; gap: 5px; }
+  body #subtitle { max-width: 46vw; font-size: 15px; }
+  .island-picker #panelGrid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .island-picker .card-name { font-size: 14px; }
+}
+@media (orientation: portrait) {
+  body #placeLabel { top: 66px; max-width: 78vw; }
+  body #islandActions { top: 154px; }
+  body #subtitle, body #subtitle.above-island-actions { top: 110px; max-width: 78vw; }
+  .island-picker #panelGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}

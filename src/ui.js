@@ -131,6 +131,7 @@ export class UI {
   renderPanel(tab) {
     const { tabs, grid, count } = this.panelOpts;
     this.panelTab = tab;
+    this.panel.classList.toggle('island-picker', tab === 'islands');
     $('panelCount').textContent = typeof count === 'function' ? count() : count;
     const tabsEl = $('panelTabs');
     tabsEl.replaceChildren(...tabs.map((t) => {
@@ -145,6 +146,14 @@ export class UI {
       const b = document.createElement('button');
       b.className = `card ${c.state}`;
       b.innerHTML = `<span class="card-emoji">${c.emoji}</span><span class="card-name">${noBreak(c.name)}</span>${c.note ? `<span class="card-note">${c.note}</span>` : ''}`;
+      if (c.island) {
+        b.dataset.island = c.island;
+        b.setAttribute('aria-current', c.current ? 'location' : 'false');
+        b.insertAdjacentHTML('afterbegin', `<span class="island-card-number">${c.island}<small>${c.current ? 'いま ここ' : 'の しま'}</small></span>`);
+        const detail = document.createElement('span');
+        detail.className = 'island-card-detail'; detail.textContent = c.detail;
+        b.append(detail);
+      }
       if (c.onClick) b.addEventListener('click', () => { c.onClick(); this.renderPanel(this.panelTab); });
       return b;
     }));

@@ -45,20 +45,20 @@ test('通常の大小画面は一段高い約25度の俯瞰方向を全八島で
         assert.ok(direction.distanceTo(reference) < 1e-12, `第${number}島の視線角が違う`);
         assert.ok(Math.abs((target.y - eye.y) + 17.75) < 1e-9, `第${number}島の地形追従と視線角`);
         if (number !== 4 || x !== layout.hero[0] || z !== layout.hero[1])
-          assert.ok(Math.abs(eye.y - position.y - 18.7 * .88) < 1e-9, `第${number}島の通常位置の高さ`);
+          assert.ok(Math.abs(eye.y - position.y - 18.7 * (number === 6 ? .88 : .84)) < 1e-9, `第${number}島の通常位置の高さ`);
       }
     }
   }
 });
 
-test('全八島の到着時は従来より12%近づき、俯角と画面の大小による距離を変えない', () => {
+test('全八島の到着時は従来より16%近づき、俯角と画面の大小による距離を変えない', () => {
   const previousDistance = Math.hypot(2.4, 18.7, 28);
   for (const [id, layout] of Object.entries(CONCEPT_LAYOUTS)) {
     const number = Number(id), [x, z] = layout.spawn;
     const position = new THREE.Vector3(x, conceptWalkHeight(number, x, z), z);
     for (const compactHud of [false, true]) {
       const { eye } = goals(number, position, compactHud, true);
-      assert.ok(Math.abs(eye.distanceTo(position) / previousDistance - .88) < 1e-9, `第${number}島の寄り具合が違う`);
+      assert.ok(Math.abs(eye.distanceTo(position) / previousDistance - (number === 6 ? .88 : .84)) < 1e-9, `第${number}島の寄り具合が違う`);
     }
   }
 });

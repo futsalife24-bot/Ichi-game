@@ -3,16 +3,17 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import { Life } from '../src/life.js';
+import { islandPresentation } from '../src/island-presentation.js';
 
 // 実際の接続コードを模擬環境で実行し、監査で見つかった切替の反例を守る。
 const main = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
 const activityInput = 'const invitation = {dialogOpen:false};\nconst landmark = null;\n' + main.match(/const harborBusy = [^\n]+\nfunction refreshActivityInput\(\) \{[\s\S]*?\n\}/)[0];
-const hudElement = () => ({ classList: { toggle() {} }, querySelector() { return { textContent: '' }; }, setAttribute() {} });
+const hudElement = () => ({ textContent:'', classList: { toggle() {} }, querySelector() { return { textContent: '' }; }, setAttribute() {} });
 
 test('報酬の保存失敗を検知したフレームでは後続の島イベントへ進まない', () => {
   const frame = main.match(/function frame\(now\) \{[\s\S]*?\n\}\r?\nrequestAnimationFrame\(frame\);/)[0];
   let events = 0, scheduled = 0;
-  const context = {developerMenuOpen:()=>false,homePaused:false, last: 0, time: 0, saveBlocked: false, islandLoading:false,forestLoading:false, document: { hidden: false }, mode: 'play',
+  const context = {developerMenuOpen:()=>false,homePaused:false, hudPlace:null, last: 0, time: 0, saveBlocked: false, islandLoading:false,forestLoading:false, document: { hidden: false, body:{dataset:{}} }, mode: 'play', islandPresentation,
     $: hudElement, harborErrands: { modal: false, focused: false },
     playTimer: {tick:()=>true,paused:false},
     input: { pointer: null }, place: 'island', islandNumber: () => 1, islandRules: () => ({ name: 'ひろば' }), learning: { opened: false, close() {}, stopSpeech() {} },
@@ -23,6 +24,8 @@ test('報酬の保存失敗を検知したフレームでは後続の島イベ�
     boatCheck() {}, syncInvitationDialog() {}, updateInvitation() {}, pauseInvitation() {},
   };
   vm.runInNewContext(activityInput + '\n' + frame + '\nframe(20);', context);
+  assert.equal(context.hudPlace, 'island');
+  assert.equal(context.document.body.dataset.learningStage, islandPresentation(1).stage);
   assert.equal(events, 0); assert.equal(scheduled, 2);
 });
 
@@ -44,13 +47,15 @@ test('お手伝いへの切替で釣りを解除し、自由遊びに戻って�
 test('贈り物の保存失敗後は動物・船・島の処理へ進まない', () => {
   const frame=main.match(/function frame\(now\) \{[\s\S]*?\n\}\r?\nrequestAnimationFrame\(frame\);/)[0];
   let later=0,scheduled=0;
-  const context={developerMenuOpen:()=>false,homePaused:false,last:0,time:0,saveBlocked:false,islandLoading:false,forestLoading:false,document:{hidden:false},mode:'play',place:'island',
+  const context={developerMenuOpen:()=>false,homePaused:false,hudPlace:null,last:0,time:0,saveBlocked:false,islandLoading:false,forestLoading:false,document:{hidden:false,body:{dataset:{}}},mode:'play',place:'island',islandPresentation,
     $:hudElement,harborErrands:{modal:false,focused:false},playTimer:{tick:()=>true,paused:false},input:{pointer:null},
     islandNumber: () => 1, islandRules: () => ({ name: 'ひろば' }), learning: { opened: false, close() {}, stopSpeech() {} }, help:{modal:false,focused:false},
     adventure:{modal:false,focused:true,update(){context.saveBlocked=true;}},ui:{panelOpen:false},transitioning:false,
     player:{update(){}},env(){},audio:{},boatCheck(){later++;},animals:{update(){later++;}},worldEvents(){later++;},
     quests:{state:'idle'},syncInvitationDialog() {},updateInvitation() {},pauseInvitation() {},requestAnimationFrame(){scheduled++;}};
   vm.runInNewContext(activityInput+'\n'+frame+'\nframe(20);',context);assert.equal(later,0);assert.equal(scheduled,2);
+  assert.equal(context.hudPlace, 'island');
+  assert.equal(context.document.body.dataset.learningStage, islandPresentation(1).stage);
 });
 
 test('船の暗転中に休憩や案内が開いた場合は、到着で入力を有効にしない', () => {
