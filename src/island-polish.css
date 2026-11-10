@@ -93,6 +93,9 @@ body #panel.island-picker .sheet { width: min(880px, calc(100vw - 32px)); height
 .island-picker .card.lock .card-name { color: var(--island-ink); }
 .island-picker .card.lock .card-emoji { filter: grayscale(.8); opacity: .6; }
 .island-picker .card:active { transform: translateY(2px); }
+@media (min-height: 541px) and (orientation: landscape) {
+  body[data-island="1"] #islandActions { top: 112px; }
+}
 @media (max-height: 540px) {
   body #islandActions { top: 92px; display: grid; grid-template-columns: 118px auto; gap: 6px; }
   body #islandActions button { min-height: 44px; min-width: 0; padding: 7px 8px; font-size: 21px; gap: 6px; }
@@ -113,6 +116,7 @@ body #panel.island-picker .sheet { width: min(880px, calc(100vw - 32px)); height
 }
 @media (max-height: 360px) {
   body #islandActions { top: 64px; }
+  body #joyZone { width: 88px; height: 88px; bottom: calc(12px + var(--safe-b)); }
   body #sideBtns { top: 64px; flex-direction: row; }
   body #helpReturn { top: 114px; } body #helpQuiz { top: 164px; }
   body #adventureBack { top: 114px; }

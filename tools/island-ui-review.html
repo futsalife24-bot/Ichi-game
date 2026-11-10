@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<title>八島の画面と軽量化の確認</title>
+<style>
+  body{margin:0;background:#edf3ed;color:#254438;font:15px sans-serif}
+  h1{font-size:20px;margin:12px}
+  p{margin:8px 12px}
+  nav{display:flex;flex-wrap:wrap;gap:8px;margin:8px 12px;align-items:center}
+  button,select,input{min-height:44px;font:inherit}
+  button{border:1px solid #688d7b;border-radius:8px;background:white;padding:7px 12px;cursor:pointer}
+  button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #2e7e68}
+  label{display:inline-flex;gap:6px;align-items:center}
+  iframe{display:block;border:1px solid #668477;background:white;margin:12px}
+  pre{white-space:pre-wrap;overflow:auto;margin:12px;padding:12px;background:#fff;border:1px solid #c6d8cc}
+</style>
+<h1>八島の画面と軽量化の確認</h1>
+<p>一時データで動く実ゲームです。島を選ぶとゲームを読み直します。同じ端末と操作で「変更前」「変更後」を計測してください。</p>
+<nav id="islands" aria-label="島の切り替え"></nav>
+<nav>
+  <label>画面サイズ <select id="size" aria-label="画面サイズ">
+    <option value="844x390">844×390</option><option value="667x375">667×375</option>
+    <option value="568x320">568×320</option><option value="1280x720">1280×720</option>
+  </select></label>
+  <button id="start">ゲームを開始</button>
+  <button id="inspect">操作ボタンを確認</button>
+  <label>計測名 <input id="label" value="現行" aria-label="計測名"></label>
+  <button id="measure">8秒間を計測</button>
+</nav>
+<iframe id="game" title="確認用の実ゲーム" src="../?dev=all&amp;month=4"></iframe>
+<p><a href="./world-play-review.html">実物活動の開始・停止・歩行確認</a>は既存の検証ページで行えます。</p>
+<pre id="status" aria-live="polite">ゲームを読み込んでいます。</pre>
+<pre id="records" aria-label="計測記録">計測記録はまだありません。</pre>
+<script type="module">
+const frame=document.querySelector('#game');
+const status=document.querySelector('#status');
+const records=document.querySelector('#records');
+const sizes=document.querySelector('#size');
+const islandButtons=[];
+const scenarios=['all','second','forest','workshop','market','nature','expedition','festival'];
+let selectedIsland=1,measuring=false;
+function unlockControls(){measuring=false;sizes.disabled=false;for(const button of islandButtons)button.disabled=false;}
+frame.addEventListener('load',()=>{if(measuring){unlockControls();status.textContent='ゲームの読み直しで計測を中止しました。';}});
+const history=[];
+const game=()=>frame.contentWindow?.__game;
+const rectData=r=>({x:Math.round(r.x),y:Math.round(r.y),幅:Math.round(r.width),高さ:Math.round(r.height)});
+function setSize(){const [width,height]=sizes.value.split('x').map(Number);frame.style.width=`${width}px`;frame.style.height=`${height}px`;}
+sizes.addEventListener('change',()=>{setSize();status.textContent=`画面を ${sizes.value} に変更しました。`;});
+setSize();
+for(let index=0;index<8;index++){
+  const button=document.createElement('button');
+  button.textContent=`第${index+1}島`;
+  button.addEventListener('click',()=>{
+    if(measuring)return;
+    selectedIsland=index+1;
+    frame.src=`../?dev=${scenarios[index]}&month=4`;
+    status.textContent=`第${selectedIsland}島を読み込んでいます。ゲームを開始してください。`;
+  });
+  islandButtons.push(button);
+  document.querySelector('#islands').append(button);
+}
+document.querySelector('#start').addEventListener('click',()=>{
+  const button=frame.contentDocument?.querySelector('#btnPlay');
+  if(!button){status.textContent='開始ボタンの読み込み待ちです。';return;}
+  if(!frame.contentDocument.querySelector('#title')?.classList.contains('hidden'))button.click();
+  status.textContent=`第${selectedIsland}島の開始操作をしました。`;
+});
+function inspect(){
+  const doc=frame.contentDocument;
+  if(!doc)return{状態:'ゲームの読み込み待ち'};
+  const viewport={width:doc.defaultView.innerWidth,height:doc.defaultView.innerHeight};
+  const controls=[...doc.querySelectorAll('button, [role="button"], #joyZone')].filter(element=>{
+    if(element.closest('#developerTools, #developerPanel'))return false;
+    const rect=element.getBoundingClientRect(),style=doc.defaultView.getComputedStyle(element);
+    return rect.width>0&&rect.height>0&&style.visibility!=='hidden'&&style.opacity!=='0'&&
+      rect.right>0&&rect.bottom>0&&rect.left<viewport.width&&rect.top<viewport.height;
+  }).map(element=>({
+    名前:element.getAttribute('aria-label')||element.textContent?.trim().slice(0,24)||element.id||element.tagName,
+    id:element.id||null,rect:element.getBoundingClientRect(),
+  }));
+  const small=controls.filter(item=>item.rect.width<44||item.rect.height<44)
+    .map(item=>({名前:item.名前,id:item.id,矩形:rectData(item.rect)}));
+  const outside=controls.filter(item=>item.rect.left<0||item.rect.top<0||
+    item.rect.right>viewport.width||item.rect.bottom>viewport.height)
+    .map(item=>({名前:item.名前,id:item.id,矩形:rectData(item.rect)}));
+  const overlap=[];
+  for(let i=0;i<controls.length;i++)for(let j=i+1;j<controls.length;j++){
+    const a=controls[i],b=controls[j];
+    const width=Math.min(a.rect.right,b.rect.right)-Math.max(a.rect.left,b.rect.left);
+    const height=Math.min(a.rect.bottom,b.rect.bottom)-Math.max(a.rect.top,b.rect.top);
+    if(width>1&&height>1)overlap.push({操作:[a.名前,b.名前],重なり:{幅:Math.round(width),高さ:Math.round(height)}});
+  }
+  return{表示中の操作数:controls.length,'44px未満':small,画面外にはみ出す操作:outside,
+    画面外にはみ出す件数:outside.length,操作同士の重なり:overlap};
+}
+document.querySelector('#inspect').addEventListener('click',()=>{
+  const result={島:selectedIsland,画面:sizes.value,場所:game()?.place??null,操作:inspect()};
+  status.textContent=JSON.stringify(result,null,2);
+});
+function percentile(sorted,fraction){return Number(sorted[Math.min(sorted.length-1,Math.floor(sorted.length*fraction))]?.toFixed(2)??0);}
+document.querySelector('#measure').addEventListener('click',()=>{
+  if(measuring)return;
+  const startedGame=game();
+  if(!startedGame||!frame.contentDocument.querySelector('#title')?.classList.contains('hidden')){
+    status.textContent='ゲームの開始後に計測してください。';return;
+  }
+  measuring=true;
+  sizes.disabled=true;
+  for(const button of islandButtons)button.disabled=true;
+  const label=document.querySelector('#label').value.trim()||'名称なし';
+  const island=selectedIsland,size=sizes.value,place=startedGame.place;
+  const viewport=`${frame.contentWindow.innerWidth}x${frame.contentWindow.innerHeight}`;
+  const position=startedGame.player?.pos?.toArray();
+  const before=startedGame.renderInfo;
+  const intervals=[];
+  const requestFrame=frame.contentWindow.requestAnimationFrame.bind(frame.contentWindow);
+  let start=null,previous=null;
+  status.textContent=`${label}：第${island}島、${size}、${place} を8秒間計測中です。`;
+  function sample(now){
+    if(start===null){start=now;previous=now;requestFrame(sample);return;}
+    intervals.push(now-previous);previous=now;
+    if(now-start<8000){requestFrame(sample);return;}
+    const sorted=intervals.slice().sort((a,b)=>a-b),duration=now-start;
+    const current=game();
+    const endViewport=`${frame.contentWindow.innerWidth}x${frame.contentWindow.innerHeight}`;
+    const same=selectedIsland===island&&sizes.value===size&&endViewport===viewport&&
+      current===startedGame&&current?.place===place;
+    const result={計測名:label,島:island,画面:size,場所:place,
+      開始時の位置:position,終了時の場所:current?.place??null,終了時の位置:current?.player?.pos?.toArray()??null,
+      条件一致:same,開始時の画面実寸:viewport,終了時の画面実寸:endViewport,
+      経過秒:Number((duration/1000).toFixed(2)),
+      フレーム数:intervals.length,推定FPS:Number((intervals.length*1000/duration).toFixed(1)),
+      フレーム間隔p50ms:percentile(sorted,.5),フレーム間隔p95ms:percentile(sorted,.95),
+      描画情報:{開始:before,終了:current?.renderInfo??null},操作:inspect(),
+      注意:'実ゲームのブラウザー表示間隔を計測。実端末のGPU処理時間や消費電力ではありません。'};
+    history.push(result);records.textContent=JSON.stringify(history,null,2);
+    status.textContent=`${label} の計測が終わりました。次の計測名と同じ操作で比較してください。`;
+    unlockControls();
+  }
+  requestFrame(sample);
+});
+</script>
+</html>

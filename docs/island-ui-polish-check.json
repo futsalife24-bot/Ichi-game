@@ -1,6 +1,6 @@
 {
   "date": "2026-11-10",
-  "status": "実装・自動検査済み、実画面の仕上げ確認待ち",
+  "status": "実装・自動検査済み、再開時の配置修正と全島の実画面確認待ち",
   "branch": "codex/island-ui-lightweight-polish",
   "base": "d9a345a3061eb22fd3ee6fb22efcd1279125c56a",
   "tests": {
@@ -10,7 +10,8 @@
     "fail": 0,
     "skipped": 0,
     "cancelled": 0,
-    "pass": 446
+    "pass": 446,
+    "scope": "先行実装c7af8e9の全件検査。再開時のCSS・キャッシュ修正前"
   },
   "voiceClips": 843,
   "islandPacks": 8,
@@ -23,15 +24,17 @@
   "newMediaFiles": 0,
   "browserVerified": [
     "変更前第一島844x390",
-    "変更後第一島ラベル",
-    "第二島確認ボタンからの起動開始"
+    "変更後第一島844x390の画面",
+    "第一島の移動補助と風船取得、星20から21",
+    "第二島への渡航と星21保持"
   ],
   "browserUnverified": [
-    "最終版の全島表示",
-    "ボタン重なりと実操作",
+    "再開時の配置修正後の実画面",
+    "最終版の全島・全サイズ表示と操作",
     "FPS",
-    "実スマートフォン",
-    "検証viewport解除"
+    "実スマートフォンとセーフエリア",
+    "最終viewport解除",
+    "ブラウザー接続の恒久復旧"
   ],
   "files": [
     {
@@ -40,7 +43,7 @@
     },
     {
       "path": "src/island-polish.css",
-      "sha256": "6C415C10F48F6AA700D28B1494FEF88693E423912FF87EBCB2708E74EE5ACBCF"
+      "sha256": "191F7B6CF2BC36572C29E8E50605B13CCAA406EA62115087968D919ABA639AE2"
     },
     {
       "path": "src/island-presentation.js",
@@ -72,7 +75,7 @@
     },
     {
       "path": "sw.js",
-      "sha256": "DF574E3E0F5ACD144107EB106852BFA3E315C54CE35159F9CD76AE95CB8626EC"
+      "sha256": "3C3262217F36087FDD994315418002EB3F7CEF4106206E5388ACDA4EE7E98A59"
     },
     {
       "path": "tools/input.test.mjs",
@@ -97,6 +100,34 @@
     {
       "path": "tools/sw.test.mjs",
       "sha256": "0F7012678E81E40A34ED9218EAB3A62B12BAB465EFB33CCBA108822BCA9D9148"
+    },
+    {
+      "path": "tools/serve.mjs",
+      "sha256": "67B5002CEDCB178AD90D6C75E5074318594F073D1051BC3681B25A953C6EA577"
+    },
+    {
+      "path": "tools/island-ui-review.html",
+      "sha256": "60E975FF127B08F9B87806238B5E2964D86BA0D0B7D911DD39F9A7A426BB7B7D"
     }
-  ]
+  ],
+  "resumeTests": {
+    "log": "output/island-polish-resume-tests.log",
+    "pass": 14,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "sha256": "6A471DAB7DAA4B1ED7098287297C5BED710BBA4E1D186A7373F7FEBC0C12E901"
+  },
+  "browserBlockers": [
+    "デバッガー切断",
+    "Windowsで対象URLを安全に確認できず操作停止",
+    "再開後の既存タブ取得と新規検証タブ作成でタイムアウト・カーネルリセット"
+  ],
+  "reviewPage": {
+    "path": "tools/island-ui-review.html",
+    "syntax": "成功",
+    "http": 200,
+    "ui": "未確認",
+    "measurements": []
+  }
 }
